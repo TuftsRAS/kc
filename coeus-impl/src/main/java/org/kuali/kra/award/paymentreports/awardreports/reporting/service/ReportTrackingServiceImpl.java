@@ -211,7 +211,8 @@ public class ReportTrackingServiceImpl implements ReportTrackingService {
         reportTracking.setFrequencyCode(awardTerm.getFrequencyCode());
         reportTracking.setOspDistributionCode(awardTerm.getOspDistributionCode());
         reportTracking.setLastUpdateDate(new Timestamp(new java.util.Date().getTime()));
-        reportTracking.setLastUpdateUser(StringUtils.EMPTY);
+        // Oracle fix -- cannot use an empty string since it will be treated as null
+        reportTracking.setLastUpdateUser(" ");
         reportTracking.setLeadUnit(award.getLeadUnit());
         reportTracking.setLeadUnitNumber(award.getLeadUnitNumber());
         reportTracking.setOverdue(0);
