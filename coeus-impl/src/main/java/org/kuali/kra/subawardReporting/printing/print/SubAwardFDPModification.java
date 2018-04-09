@@ -11,7 +11,6 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.kuali.kra.award.printing.schema.AwardType;
-import org.kuali.kra.subaward.printing.schema.PersonDetailsType;
 import org.kuali.kra.subaward.printing.schema.SubContractDataDocument;
 
 import static org.kuali.coeus.sys.framework.util.PdfBoxUtils.setField;
@@ -42,21 +41,23 @@ public class SubAwardFDPModification extends SubawardFdp {
     @Override
     protected void setPteInfo(PDDocument document, SubContractDataDocument xmlObject) {
         final SubContractDataDocument.SubContractData.PrimeRecipientContacts primeRecipientContacts = xmlObject.getSubContractData().getPrimeRecipientContacts() != null ? xmlObject.getSubContractData().getPrimeRecipientContacts() : SubContractDataDocument.SubContractData.PrimeRecipientContacts.Factory.newInstance();
-        final PersonDetailsType primePrincipalInvestigator = ArrayUtils.isNotEmpty(xmlObject.getSubContractData().getPrimePrincipalInvestigatorArray()) ? xmlObject.getSubContractData().getPrimePrincipalInvestigatorArray()[0] : PersonDetailsType.Factory.newInstance();
+        final SubContractDataDocument.SubContractData.PrimePrincipalInvestigator primePrincipalInvestigator = ArrayUtils.isNotEmpty(xmlObject.getSubContractData().getPrimePrincipalInvestigatorArray()) ? xmlObject.getSubContractData().getPrimePrincipalInvestigatorArray()[0] : SubContractDataDocument.SubContractData.PrimePrincipalInvestigator.Factory.newInstance();
 
         if (primeRecipientContacts.getRequisitionerOrgDetails() != null) {
             setFieldAppearance(document, ModificationPdf.Field.PTE_ENTITY_NAME.getfName(), ModificationPdf.Field.DEFAULT_APPEARANCE_STR_FONT_8);
             setField(document, ModificationPdf.Field.PTE_ENTITY_NAME.getfName(), primeRecipientContacts.getRequisitionerOrgDetails().getOrganizationName());
         }
 
-        if (StringUtils.isNotBlank(primePrincipalInvestigator.getFullName())) {
-            setFieldAppearance(document, ModificationPdf.Field.PTEPI.getfName(), ModificationPdf.Field.DEFAULT_APPEARANCE_STR_FONT_8);
-            setField(document, ModificationPdf.Field.PTEPI.getfName(), primePrincipalInvestigator.getFullName());
-        }
+        if (primePrincipalInvestigator.getPersonDetailsType() != null) {
+            if (StringUtils.isNotBlank(primePrincipalInvestigator.getPersonDetailsType().getFullName())) {
+                setFieldAppearance(document, ModificationPdf.Field.PTEPI.getfName(), ModificationPdf.Field.DEFAULT_APPEARANCE_STR_FONT_8);
+                setField(document, ModificationPdf.Field.PTEPI.getfName(), primePrincipalInvestigator.getPersonDetailsType().getFullName());
+            }
 
-        if (StringUtils.isNotBlank(primePrincipalInvestigator.getFullName())) {
-            setFieldAppearance(document, ModificationPdf.Field.PTE_EMAIL.getfName(), ModificationPdf.Field.DEFAULT_APPEARANCE_STR_FONT_8);
-            setField(document, ModificationPdf.Field.PTE_EMAIL.getfName(), primePrincipalInvestigator.getEmailAddress());
+            if (StringUtils.isNotBlank(primePrincipalInvestigator.getPersonDetailsType().getFullName())) {
+                setFieldAppearance(document, ModificationPdf.Field.PTE_EMAIL.getfName(), ModificationPdf.Field.DEFAULT_APPEARANCE_STR_FONT_8);
+                setField(document, ModificationPdf.Field.PTE_EMAIL.getfName(), primePrincipalInvestigator.getPersonDetailsType().getEmailAddress());
+            }
         }
     }
 

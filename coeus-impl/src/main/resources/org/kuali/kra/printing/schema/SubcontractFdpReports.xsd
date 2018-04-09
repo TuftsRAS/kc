@@ -74,7 +74,15 @@
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
-                <xs:element name="PrimePrincipalInvestigator" type="subcontract:PersonDetailsType" minOccurs="0" maxOccurs="unbounded"/>
+                <xs:element name="PrimePrincipalInvestigator" minOccurs="0" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="ContactTypeCode" type="xs:string" nillable="true" minOccurs="0"/>
+                            <xs:element name="ContactTypeDesc" type="xs:string" nillable="true" minOccurs="0"/>
+                            <xs:element name="PersonDetailsType" type="subcontract:PersonDetailsType" minOccurs="0"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
                 <xs:element name="SubcontractTemplateInfo" minOccurs="0" maxOccurs="unbounded">
                     <xs:complexType>
                         <xs:sequence>
@@ -308,6 +316,5 @@
             <xs:element name="MobilePhoneNumber" type="xs:string" minOccurs="0"/>
         </xs:sequence>
     </xs:complexType>
-
 
 </xs:schema>

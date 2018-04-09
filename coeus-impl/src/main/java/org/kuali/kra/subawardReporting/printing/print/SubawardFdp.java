@@ -20,7 +20,6 @@ import org.kuali.coeus.sys.framework.util.CollectionUtils;
 import org.kuali.coeus.sys.framework.util.PdfBoxUtils;
 import org.kuali.kra.award.printing.schema.AwardType;
 import org.kuali.kra.subaward.bo.*;
-import org.kuali.kra.subaward.printing.schema.PersonDetailsType;
 import org.kuali.kra.subaward.printing.schema.SubContractDataDocument;
 import org.kuali.kra.subaward.reporting.printing.SubAwardPrintType;
 import org.kuali.kra.subaward.reporting.printing.service.SubAwardPrintingService;
@@ -216,7 +215,7 @@ public abstract class SubawardFdp extends AbstractPrint {
         final AwardType award = ArrayUtils.isNotEmpty(xmlObject.getSubContractData().getAwardArray()) ? xmlObject.getSubContractData().getAwardArray(0) : AwardType.Factory.newInstance();
 
         final SubContractDataDocument.SubContractData.PrimeAuthorizedOfficial primeAuthorizedOfficial = ArrayUtils.isNotEmpty(xmlObject.getSubContractData().getPrimeAuthorizedOfficialArray()) ? xmlObject.getSubContractData().getPrimeAuthorizedOfficialArray()[0] : SubContractDataDocument.SubContractData.PrimeAuthorizedOfficial.Factory.newInstance();
-        final PersonDetailsType primePrincipalInvestigator = ArrayUtils.isNotEmpty(xmlObject.getSubContractData().getPrimePrincipalInvestigatorArray()) ? xmlObject.getSubContractData().getPrimePrincipalInvestigatorArray()[0] : PersonDetailsType.Factory.newInstance();
+        final SubContractDataDocument.SubContractData.PrimePrincipalInvestigator primePrincipalInvestigator = ArrayUtils.isNotEmpty(xmlObject.getSubContractData().getPrimePrincipalInvestigatorArray()) ? xmlObject.getSubContractData().getPrimePrincipalInvestigatorArray()[0] : SubContractDataDocument.SubContractData.PrimePrincipalInvestigator.Factory.newInstance();
         final SubContractDataDocument.SubContractData.PrimeAdministrativeContact primeAdministrativeContact = ArrayUtils.isNotEmpty(xmlObject.getSubContractData().getPrimeAdministrativeContactArray()) ? xmlObject.getSubContractData().getPrimeAdministrativeContactArray()[0] : SubContractDataDocument.SubContractData.PrimeAdministrativeContact.Factory.newInstance();
         final SubContractDataDocument.SubContractData.PrimeFinancialContact primeFinancialContact = ArrayUtils.isNotEmpty(xmlObject.getSubContractData().getPrimeFinancialContactArray()) ? xmlObject.getSubContractData().getPrimeFinancialContactArray()[0] : SubContractDataDocument.SubContractData.PrimeFinancialContact.Factory.newInstance();
 
@@ -383,7 +382,7 @@ public abstract class SubawardFdp extends AbstractPrint {
     }
 
     private void setHumanAnimalSubjects(PDDocument document, SubContractDataDocument.SubContractData.SubcontractTemplateInfo templateInfo,
-                                        SubContractDataDocument.SubContractData.PrimeAuthorizedOfficial primeAuthorizedOfficial, PersonDetailsType primePrincipalInvestigator,
+                                        SubContractDataDocument.SubContractData.PrimeAuthorizedOfficial primeAuthorizedOfficial, SubContractDataDocument.SubContractData.PrimePrincipalInvestigator primePrincipalInvestigator,
                                         SubContractDataDocument.SubContractData.PrimeAdministrativeContact primeAdministrativeContact, SubContractDataDocument.SubContractData.PrimeFinancialContact primeFinancialContact) {
         final boolean human = fromYN(templateInfo.getHumanFlag());
         final boolean animal = fromYN(templateInfo.getAnimalFlag());
@@ -418,7 +417,7 @@ public abstract class SubawardFdp extends AbstractPrint {
                 pteVerContact = "";
             } else if (templateInfo.getIrbIacucContactCd().equals(primeAuthorizedOfficial.getContactTypeCode())) {
                 pteVerContact = Attachment2Pdf.Field.VERIFICATION_CONTACT_AUTHORIZED_OFFICIAL_VALUE;
-            } else if (templateInfo.getIrbIacucContactCd().equals("?")) {
+            } else if (templateInfo.getIrbIacucContactCd().equals(primePrincipalInvestigator.getContactTypeCode())) {
                 pteVerContact = Attachment2Pdf.Field.VERIFICATION_CONTACT_PI_VALUE;
             } else if (templateInfo.getIrbIacucContactCd().equals(primeAdministrativeContact.getContactTypeCode())) {
                 pteVerContact = Attachment2Pdf.Field.VERIFICATION_CONTACT_ADMINISTRATIVE_CONTACT_VALUE;
@@ -466,7 +465,7 @@ public abstract class SubawardFdp extends AbstractPrint {
     }
 
     private void setGenTermsAndConditions(PDDocument document, SubContractDataDocument.SubContractData.OtherConfigInfo configInfo, SubContractDataDocument.SubContractData.SubcontractTemplateInfo templateInfo,
-                                          SubContractDataDocument.SubContractData.PrimeAuthorizedOfficial primeAuthorizedOfficial, PersonDetailsType primePrincipalInvestigator,
+                                          SubContractDataDocument.SubContractData.PrimeAuthorizedOfficial primeAuthorizedOfficial, SubContractDataDocument.SubContractData.PrimePrincipalInvestigator primePrincipalInvestigator,
                                           SubContractDataDocument.SubContractData.PrimeAdministrativeContact primeAdministrativeContact, SubContractDataDocument.SubContractData.PrimeFinancialContact primeFinancialContact,
                                           Attachment2SponsorFormType type) {
 
@@ -475,7 +474,7 @@ public abstract class SubawardFdp extends AbstractPrint {
             nceContact = "";
         } else if (templateInfo.getNoCostExtensionContactCd().equals(primeAuthorizedOfficial.getContactTypeCode())) {
             nceContact = Attachment2Pdf.Field.NCE_CONTACT_AUTHORIZED_OFFICIAL;
-        } else if (templateInfo.getNoCostExtensionContactCd().equals("?")) {
+        } else if (templateInfo.getNoCostExtensionContactCd().equals(primePrincipalInvestigator.getContactTypeCode())) {
             nceContact = Attachment2Pdf.Field.NCE_CONTACT_PI;
         } else if (templateInfo.getNoCostExtensionContactCd().equals(primeAdministrativeContact.getContactTypeCode())) {
             nceContact = Attachment2Pdf.Field.NCE_CONTACT_ADMINISTRATIVE;
@@ -571,7 +570,7 @@ public abstract class SubawardFdp extends AbstractPrint {
         final SubContractDataDocument.SubContractData.SubcontractDetail subcontractDetail = xmlObject.getSubContractData().getSubcontractDetail() != null ? xmlObject.getSubContractData().getSubcontractDetail() : SubContractDataDocument.SubContractData.SubcontractDetail.Factory.newInstance();
         final SubContractDataDocument.SubContractData.PrimeRecipientContacts primeRecipientContacts = xmlObject.getSubContractData().getPrimeRecipientContacts() != null ? xmlObject.getSubContractData().getPrimeRecipientContacts() : SubContractDataDocument.SubContractData.PrimeRecipientContacts.Factory.newInstance();
         final SubContractDataDocument.SubContractData.PrimeAuthorizedOfficial primeAuthorizedOfficial = ArrayUtils.isNotEmpty(xmlObject.getSubContractData().getPrimeAuthorizedOfficialArray()) ? xmlObject.getSubContractData().getPrimeAuthorizedOfficialArray()[0] : SubContractDataDocument.SubContractData.PrimeAuthorizedOfficial.Factory.newInstance();
-        final PersonDetailsType primePrincipalInvestigator = ArrayUtils.isNotEmpty(xmlObject.getSubContractData().getPrimePrincipalInvestigatorArray()) ? xmlObject.getSubContractData().getPrimePrincipalInvestigatorArray()[0] : PersonDetailsType.Factory.newInstance();
+        final SubContractDataDocument.SubContractData.PrimePrincipalInvestigator primePrincipalInvestigator = ArrayUtils.isNotEmpty(xmlObject.getSubContractData().getPrimePrincipalInvestigatorArray()) ? xmlObject.getSubContractData().getPrimePrincipalInvestigatorArray()[0] : SubContractDataDocument.SubContractData.PrimePrincipalInvestigator.Factory.newInstance();
         final SubContractDataDocument.SubContractData.PrimeAdministrativeContact primeAdministrativeContact = ArrayUtils.isNotEmpty(xmlObject.getSubContractData().getPrimeAdministrativeContactArray()) ? xmlObject.getSubContractData().getPrimeAdministrativeContactArray()[0] : SubContractDataDocument.SubContractData.PrimeAdministrativeContact.Factory.newInstance();
         final SubContractDataDocument.SubContractData.PrimeFinancialContact primeFinancialContact = ArrayUtils.isNotEmpty(xmlObject.getSubContractData().getPrimeFinancialContactArray()) ? xmlObject.getSubContractData().getPrimeFinancialContactArray()[0] : SubContractDataDocument.SubContractData.PrimeFinancialContact.Factory.newInstance();
 
@@ -604,25 +603,26 @@ public abstract class SubawardFdp extends AbstractPrint {
     }
 
     private void setPteContacts(PDDocument document, SubContractDataDocument.SubContractData.PrimeAuthorizedOfficial primeAuthorizedOfficial,
-                                PersonDetailsType primePrincipalInvestigator, SubContractDataDocument.SubContractData.PrimeAdministrativeContact primeAdministrativeContact,
+                                SubContractDataDocument.SubContractData.PrimePrincipalInvestigator primePrincipalInvestigator, SubContractDataDocument.SubContractData.PrimeAdministrativeContact primeAdministrativeContact,
                                 SubContractDataDocument.SubContractData.PrimeFinancialContact primeFinancialContact) {
 
         if (StringUtils.isNotBlank(primeAuthorizedOfficial.getCentralEmail())) {
             setField(document, Attachment3aPdf.Field.PTE_CONTACTS_CENTRAL_EMAIL.getfName(), primeAuthorizedOfficial.getCentralEmail());
         }
 
-        if (StringUtils.isNotBlank(primePrincipalInvestigator.getFullName())) {
-            setField(document, Attachment3aPdf.Field.PTE_CONTACTS_PI_NAME.getfName(), primePrincipalInvestigator.getFullName());
-        }
+        if (primePrincipalInvestigator.getPersonDetailsType() != null) {
+            if (StringUtils.isNotBlank(primePrincipalInvestigator.getPersonDetailsType().getFullName())) {
+                setField(document, Attachment3aPdf.Field.PTE_CONTACTS_PI_NAME.getfName(), primePrincipalInvestigator.getPersonDetailsType().getFullName());
+            }
 
-        if (StringUtils.isNotBlank(primePrincipalInvestigator.getEmailAddress())) {
-            setField(document, Attachment3aPdf.Field.PTE_CONTACTS_PI_EMAIL.getfName(), primePrincipalInvestigator.getEmailAddress());
-        }
+            if (StringUtils.isNotBlank(primePrincipalInvestigator.getPersonDetailsType().getEmailAddress())) {
+                setField(document, Attachment3aPdf.Field.PTE_CONTACTS_PI_EMAIL.getfName(), primePrincipalInvestigator.getPersonDetailsType().getEmailAddress());
+            }
 
-        if (StringUtils.isNotBlank(primePrincipalInvestigator.getMobilePhoneNumber())) {
-            setField(document, Attachment3aPdf.Field.PTE_CONTACTS_PI_PHONE.getfName(), primePrincipalInvestigator.getMobilePhoneNumber());
+            if (StringUtils.isNotBlank(primePrincipalInvestigator.getPersonDetailsType().getMobilePhoneNumber())) {
+                setField(document, Attachment3aPdf.Field.PTE_CONTACTS_PI_PHONE.getfName(), primePrincipalInvestigator.getPersonDetailsType().getMobilePhoneNumber());
+            }
         }
-
         if (primeAdministrativeContact.getRolodexDetails() != null) {
             if (StringUtils.isNotBlank(primeAdministrativeContact.getRolodexDetails().getRolodexName())) {
                 setField(document, Attachment3aPdf.Field.PTE_CONTACTS_ADMIN_NAME.getfName(), primeAdministrativeContact.getRolodexDetails().getRolodexName());
@@ -677,17 +677,18 @@ public abstract class SubawardFdp extends AbstractPrint {
 
     }
 
-    private void setPteAddresses(PDDocument document, PersonDetailsType primePrincipalInvestigator,
+    private void setPteAddresses(PDDocument document, SubContractDataDocument.SubContractData.PrimePrincipalInvestigator primePrincipalInvestigator,
                                  SubContractDataDocument.SubContractData.PrimeAdministrativeContact primeAdministrativeContact,
                                  SubContractDataDocument.SubContractData.PrimeFinancialContact primeFinancialContact) {
 
+        if (primePrincipalInvestigator.getPersonDetailsType() != null) {
+            final String piAddress = createAddress(primePrincipalInvestigator.getPersonDetailsType().getAddressLine1(), primePrincipalInvestigator.getPersonDetailsType().getAddressLine2(),
+                    primePrincipalInvestigator.getPersonDetailsType().getAddressLine3(), primePrincipalInvestigator.getPersonDetailsType().getCity(),
+                    primePrincipalInvestigator.getPersonDetailsType().getState(), primePrincipalInvestigator.getPersonDetailsType().getPostalCode());
 
-        final String piAddress = createAddress(primePrincipalInvestigator.getAddressLine1(), primePrincipalInvestigator.getAddressLine2(),
-                primePrincipalInvestigator.getAddressLine3(), primePrincipalInvestigator.getCity(),
-                primePrincipalInvestigator.getState(), primePrincipalInvestigator.getPostalCode());
-
-        if (StringUtils.isNotBlank(piAddress)) {
-            setField(document, Attachment3aPdf.Field.PTE_CONTACTS_PI_ADDRESS.getfName(), piAddress);
+            if (StringUtils.isNotBlank(piAddress)) {
+                setField(document, Attachment3aPdf.Field.PTE_CONTACTS_PI_ADDRESS.getfName(), piAddress);
+            }
         }
 
         if (primeAdministrativeContact.getRolodexDetails() != null) {
@@ -695,7 +696,7 @@ public abstract class SubawardFdp extends AbstractPrint {
                     primeAdministrativeContact.getRolodexDetails().getAddress3(), primeAdministrativeContact.getRolodexDetails().getCity(),
                     primeAdministrativeContact.getRolodexDetails().getStateDescription(), primeAdministrativeContact.getRolodexDetails().getPincode());
 
-            if (StringUtils.isNotBlank(piAddress)) {
+            if (StringUtils.isNotBlank(adminAddress)) {
                 setField(document, Attachment3aPdf.Field.PTE_CONTACTS_ADMIN_ADDRESS.getfName(), adminAddress);
             }
         }

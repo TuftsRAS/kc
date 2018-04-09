@@ -18,7 +18,6 @@ import org.kuali.coeus.common.framework.rolodex.NonOrganizationalRolodex;
 import org.kuali.coeus.common.framework.rolodex.Rolodex;
 import org.kuali.coeus.sys.framework.model.KcPersistableBusinessObjectBase;
 import org.kuali.kra.award.contacts.AwardPerson;
-import org.kuali.kra.award.home.ContactType;
 import org.kuali.kra.award.home.ContactUsage;
 import org.kuali.kra.award.printing.schema.AwardHeaderType;
 import org.kuali.kra.award.printing.schema.AwardType;
@@ -26,6 +25,7 @@ import org.kuali.kra.award.printing.schema.AwardType.AwardDetails;
 import org.kuali.kra.award.printing.schema.AwardType.AwardDetails.OtherHeaderDetails;
 import org.kuali.kra.infrastructure.Constants;
 import org.kuali.kra.subaward.bo.*;
+import org.kuali.kra.subaward.lookup.keyvalue.SubawardTemplateContactFinder;
 import org.kuali.kra.subaward.printing.schema.OrganizationType;
 import org.kuali.kra.subaward.printing.schema.PersonDetailsType;
 import org.kuali.kra.subaward.printing.schema.RolodexDetailsType;
@@ -426,28 +426,28 @@ public class SubAwardFDPPrintXmlStream implements XmlStream  {
         if(subaward.getSubAwardTemplateInfo() != null && !subaward.getSubAwardTemplateInfo().isEmpty()) {
             subawardTemplate = subaward.getSubAwardTemplateInfo().get(0);
 
-            Collection<ContactType> contact = getBusinessObjectService().findAll(ContactType.class);
-            for(ContactType contactType : contact){
-                if(subawardTemplate.getInvoiceOrPaymentContact()!= null && contactType.getContactTypeCode().equals(subawardTemplate.getInvoiceOrPaymentContact().toString())) {
-                    subContractTemplateInfo.setInvoiceOrPaymentContactCd(contactType.getContactTypeCode());
-                }
+            if(subawardTemplate.getInvoiceOrPaymentContact()!= null) {
+                subContractTemplateInfo.setInvoiceOrPaymentContactCd(subawardTemplate.getInvoiceOrPaymentContact().toString());
+            }
 
-                if (subawardTemplate.getIrbIacucContact() != null && contactType.getContactTypeCode().equals(subawardTemplate.getIrbIacucContact().toString())) {
-                    subContractTemplateInfo.setIrbIacucContactCd(contactType.getContactTypeCode());
-                }
+            if (subawardTemplate.getIrbIacucContact() != null) {
+                subContractTemplateInfo.setIrbIacucContactCd(subawardTemplate.getIrbIacucContact().toString());
+            }
 
-                if(subawardTemplate.getFinalStmtOfCostscontact()!=null && contactType.getContactTypeCode().equals(subawardTemplate.getFinalStmtOfCostscontact().toString())) {
-                    subContractTemplateInfo.setFinalStmtOfCostsContactCd(contactType.getContactTypeCode());
-                }
-                if(subawardTemplate.getChangeRequestsContact()!= null && contactType.getContactTypeCode().equals(subawardTemplate.getChangeRequestsContact().toString())) {
-                    subContractTemplateInfo.setChangeRequestsContactCd(contactType.getContactTypeCode());
-                }
-                if(subawardTemplate.getTerminationContact()!= null && contactType.getContactTypeCode().equals(subawardTemplate.getTerminationContact().toString())) {
-                    subContractTemplateInfo.setTerminationContactCd(contactType.getContactTypeCode());
-                }
-                if(subawardTemplate.getNoCostExtensionContact() != null && contactType.getContactTypeCode().equals(subawardTemplate.getNoCostExtensionContact().toString())) {
-                    subContractTemplateInfo.setNoCostExtensionContactCd(contactType.getContactTypeCode());
-                }
+            if(subawardTemplate.getFinalStmtOfCostscontact()!=null) {
+                subContractTemplateInfo.setFinalStmtOfCostsContactCd(subawardTemplate.getFinalStmtOfCostscontact().toString());
+            }
+
+            if(subawardTemplate.getChangeRequestsContact()!= null) {
+                subContractTemplateInfo.setChangeRequestsContactCd(subawardTemplate.getChangeRequestsContact().toString());
+            }
+
+            if(subawardTemplate.getTerminationContact()!= null ) {
+                subContractTemplateInfo.setTerminationContactCd(subawardTemplate.getTerminationContact().toString());
+            }
+
+            if(subawardTemplate.getNoCostExtensionContact() != null) {
+                subContractTemplateInfo.setNoCostExtensionContactCd(subawardTemplate.getNoCostExtensionContact().toString());
             }
 
             if(subawardTemplate.getCopyRightType() != null) {
@@ -784,8 +784,8 @@ public class SubAwardFDPPrintXmlStream implements XmlStream  {
         subContractData.setPrimeAdministrativeContactArray(rolodexDetailsList.toArray(new PrimeAdministrativeContact[0]));
     }
     public void setPrimePrincipalInvestigator(SubContractData subContractData) {
-        PersonDetailsType personDetails = PersonDetailsType.Factory.newInstance();
-        List<PersonDetailsType> personDetailsList = new ArrayList<>();
+        PrimePrincipalInvestigator primePrincipalInvestigator = PrimePrincipalInvestigator.Factory.newInstance();
+        List<PrimePrincipalInvestigator> primePrincipalInvestigatorsList = new ArrayList<>();
         Map<String, String> awardNum = new HashMap<>();
         if(awardNumber != null){
             awardNum.put(AWARD_NUMBER, awardNumber);
@@ -794,6 +794,7 @@ public class SubAwardFDPPrintXmlStream implements XmlStream  {
             if (CollectionUtils.isNotEmpty(awardNumList)) {
                 AwardPerson awardPerson = awardNumList.get(awardNumList.size() - 1);
                 KcPerson awardPersons = awardPerson.getPerson();
+                PersonDetailsType personDetails = PersonDetailsType.Factory.newInstance();
                 if (awardPersons != null) {
                     personDetails.setFullName(awardPersons.getFullName());
                     personDetails.setAddressLine1(awardPersons.getAddressLine1());
@@ -824,10 +825,13 @@ public class SubAwardFDPPrintXmlStream implements XmlStream  {
                         personDetails.setEmailAddress(rolodex.getEmailAddress());
                     }
                 }
+                primePrincipalInvestigator.setContactTypeCode(SubawardTemplateContactFinder.PI.getKey());
+                primePrincipalInvestigator.setContactTypeDesc(SubawardTemplateContactFinder.PI.getValue());
+                primePrincipalInvestigator.setPersonDetailsType(personDetails);
             }
         }
-        personDetailsList.add(personDetails);
-        subContractData.setPrimePrincipalInvestigatorArray(personDetailsList.toArray(new PersonDetailsType [0]));
+        primePrincipalInvestigatorsList.add(primePrincipalInvestigator);
+        subContractData.setPrimePrincipalInvestigatorArray(primePrincipalInvestigatorsList.toArray(new PrimePrincipalInvestigator [0]));
     }
 
     private String getStateName(String countryCode, String stateName) {
