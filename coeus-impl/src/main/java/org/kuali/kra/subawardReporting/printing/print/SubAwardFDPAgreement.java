@@ -12,7 +12,6 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.kuali.kra.award.printing.schema.AwardType;
 import org.kuali.kra.subaward.bo.FinalStatementDue;
-import org.kuali.kra.subaward.printing.schema.PersonDetailsType;
 import org.kuali.kra.subaward.printing.schema.SubContractDataDocument;
 
 import static org.kuali.coeus.sys.framework.util.PdfBoxUtils.hideField;
@@ -23,13 +22,8 @@ public class SubAwardFDPAgreement extends SubawardFdp {
 
     @Override
     protected void setSubrecipientInfo(PDDocument document, SubContractDataDocument.SubContractData.SubcontractDetail subcontractDetail) {
-        if (StringUtils.isNotBlank(subcontractDetail.getSubcontractorName())) {
-            setField(document, AgreementPdf.Field.SUBRECIPIENT.getfName(), subcontractDetail.getSubcontractorName());
-        }
-
-        if (StringUtils.isNotBlank(subcontractDetail.getSiteInvestigator())) {
-            setField(document, AgreementPdf.Field.SUB_PI.getfName(), subcontractDetail.getSiteInvestigator());
-        }
+        setField(document, AgreementPdf.Field.SUBRECIPIENT.getfName(), subcontractDetail.getSubcontractorName());
+        setField(document, AgreementPdf.Field.SUB_PI.getfName(), subcontractDetail.getSiteInvestigator());
     }
 
     @Override
@@ -41,32 +35,30 @@ public class SubAwardFDPAgreement extends SubawardFdp {
     protected void setPteInfo(PDDocument document, SubContractDataDocument xmlObject) {
 
         final SubContractDataDocument.SubContractData.PrimeRecipientContacts primeRecipientContacts = xmlObject.getSubContractData().getPrimeRecipientContacts() != null ? xmlObject.getSubContractData().getPrimeRecipientContacts() : SubContractDataDocument.SubContractData.PrimeRecipientContacts.Factory.newInstance();
-        final PersonDetailsType primePrincipalInvestigator = ArrayUtils.isNotEmpty(xmlObject.getSubContractData().getPrimePrincipalInvestigatorArray()) ? xmlObject.getSubContractData().getPrimePrincipalInvestigatorArray()[0] : PersonDetailsType.Factory.newInstance();
+        final SubContractDataDocument.SubContractData.PrimePrincipalInvestigator primePrincipalInvestigator = ArrayUtils.isNotEmpty(xmlObject.getSubContractData().getPrimePrincipalInvestigatorArray()) ? xmlObject.getSubContractData().getPrimePrincipalInvestigatorArray()[0] : SubContractDataDocument.SubContractData.PrimePrincipalInvestigator.Factory.newInstance();
 
         if (primeRecipientContacts.getRequisitionerOrgDetails() != null) {
             setField(document, AgreementPdf.Field.PASS_THROUGH_ENTITY.getfName(), primeRecipientContacts.getRequisitionerOrgDetails().getOrganizationName());
         }
 
-        if (StringUtils.isNotBlank(primePrincipalInvestigator.getFullName())) {
-            setField(document, AgreementPdf.Field.PTE_PI.getfName(), primePrincipalInvestigator.getFullName());
+        if (primePrincipalInvestigator.getPersonDetailsType() != null) {
+            setField(document, AgreementPdf.Field.PTE_PI.getfName(), primePrincipalInvestigator.getPersonDetailsType().getFullName());
         }
     }
 
     @Override
     protected void setAwardSubawardNumbers(PDDocument document, SubContractDataDocument.SubContractData.SubcontractDetail subcontractDetail, AwardType award) {
 
-        if (award.getAwardDetails() != null && award.getAwardDetails().getAwardHeader() != null && StringUtils.isNotBlank(award.getAwardDetails().getAwardHeader().getSponsorAwardNumber())) {
+        if (award.getAwardDetails() != null && award.getAwardDetails().getAwardHeader() != null) {
             setField(document, AgreementPdf.Field.PTE_FEDERAL_AWARD_NO.getfName(), award.getAwardDetails().getAwardHeader().getSponsorAwardNumber());
         }
 
-        if (StringUtils.isNotBlank(subcontractDetail.getFsrsSubawardNumber())) {
-            setField(document, AgreementPdf.Field.SUBAWARD_NO.getfName(), subcontractDetail.getFsrsSubawardNumber());
-        }
+        setField(document, AgreementPdf.Field.SUBAWARD_NO.getfName(), subcontractDetail.getFsrsSubawardNumber());
     }
 
     @Override
     protected void setTitle(PDDocument document, AwardType award) {
-        if (award.getAwardDetails() != null && award.getAwardDetails().getAwardHeader() != null && StringUtils.isNotBlank(award.getAwardDetails().getAwardHeader().getTitle())) {
+        if (award.getAwardDetails() != null && award.getAwardDetails().getAwardHeader() != null) {
             setField(document, AgreementPdf.Field.PROJECT_TITLE.getfName(), award.getAwardDetails().getAwardHeader().getTitle());
         }
     }
@@ -115,7 +107,7 @@ public class SubAwardFDPAgreement extends SubawardFdp {
         final SubContractDataDocument.SubContractData.SubcontractTemplateInfo templateInfo = ArrayUtils.isNotEmpty(xmlObject.getSubContractData().getSubcontractTemplateInfoArray()) ? xmlObject.getSubContractData().getSubcontractTemplateInfoArray(0) : SubContractDataDocument.SubContractData.SubcontractTemplateInfo.Factory.newInstance();
 
         final SubContractDataDocument.SubContractData.PrimeAuthorizedOfficial primeAuthorizedOfficial = ArrayUtils.isNotEmpty(xmlObject.getSubContractData().getPrimeAuthorizedOfficialArray()) ? xmlObject.getSubContractData().getPrimeAuthorizedOfficialArray()[0] : SubContractDataDocument.SubContractData.PrimeAuthorizedOfficial.Factory.newInstance();
-        final PersonDetailsType primePrincipalInvestigator = ArrayUtils.isNotEmpty(xmlObject.getSubContractData().getPrimePrincipalInvestigatorArray()) ? xmlObject.getSubContractData().getPrimePrincipalInvestigatorArray()[0] : PersonDetailsType.Factory.newInstance();
+        final SubContractDataDocument.SubContractData.PrimePrincipalInvestigator primePrincipalInvestigator = ArrayUtils.isNotEmpty(xmlObject.getSubContractData().getPrimePrincipalInvestigatorArray()) ? xmlObject.getSubContractData().getPrimePrincipalInvestigatorArray()[0] : SubContractDataDocument.SubContractData.PrimePrincipalInvestigator.Factory.newInstance();
         final SubContractDataDocument.SubContractData.PrimeAdministrativeContact primeAdministrativeContact = ArrayUtils.isNotEmpty(xmlObject.getSubContractData().getPrimeAdministrativeContactArray()) ? xmlObject.getSubContractData().getPrimeAdministrativeContactArray()[0] : SubContractDataDocument.SubContractData.PrimeAdministrativeContact.Factory.newInstance();
         final SubContractDataDocument.SubContractData.PrimeFinancialContact primeFinancialContact = ArrayUtils.isNotEmpty(xmlObject.getSubContractData().getPrimeFinancialContactArray()) ? xmlObject.getSubContractData().getPrimeFinancialContactArray()[0] : SubContractDataDocument.SubContractData.PrimeFinancialContact.Factory.newInstance();
 
@@ -135,14 +127,14 @@ public class SubAwardFDPAgreement extends SubawardFdp {
 
 
     private String getTermContactFromCode(String contactCode,
-                                          SubContractDataDocument.SubContractData.PrimeAuthorizedOfficial primeAuthorizedOfficial, PersonDetailsType primePrincipalInvestigator,
+                                          SubContractDataDocument.SubContractData.PrimeAuthorizedOfficial primeAuthorizedOfficial, SubContractDataDocument.SubContractData.PrimePrincipalInvestigator primePrincipalInvestigator,
                                           SubContractDataDocument.SubContractData.PrimeAdministrativeContact primeAdministrativeContact, SubContractDataDocument.SubContractData.PrimeFinancialContact primeFinancialContact) {
         final String termContact;
         if (StringUtils.isBlank(contactCode)) {
             termContact = "";
         } else if (contactCode.equals(primeAuthorizedOfficial.getContactTypeCode())) {
             termContact = AgreementPdf.Field.TERM_CONTACT_AUTH;
-        } else if (contactCode.equals("?")) {
+        } else if (contactCode.equals(primePrincipalInvestigator.getContactTypeCode())) {
             termContact = AgreementPdf.Field.TERM_CONTACT_PI;
         } else if (contactCode.equals(primeAdministrativeContact.getContactTypeCode())) {
             termContact = AgreementPdf.Field.TERM_CONTACT_ADMIN;
