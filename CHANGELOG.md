@@ -1,6 +1,10 @@
 
 
 ## CURRENT
+* RESKC-2857: supporting PI contacts for FDP
+  * Travis Schneeberger on Mon, 9 Apr 2018 13:36:51 -0400 [View Commit](../../commit/807395fab2a95fadf7159cf916fd07ef3bf8888c)
+
+## coeus-1804.0012
 * RESKC-2268: Ensured that calculated amounts are reset when Award Budget rate type changes
   * Jeff Largent on Fri, 6 Apr 2018 15:34:28 -0400 [View Commit](../../commit/e4d28a85b2e2d360da52571e02ebcece7da68c2b)
 
