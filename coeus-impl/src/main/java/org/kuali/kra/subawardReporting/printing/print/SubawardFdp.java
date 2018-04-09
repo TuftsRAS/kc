@@ -188,7 +188,7 @@ public abstract class SubawardFdp extends AbstractPrint {
 
     protected void setFederalAwardingAgency(PDDocument document, AwardType award) {
 
-        if (award.getAwardDetails() != null && award.getAwardDetails().getAwardHeader() != null && StringUtils.isNotBlank(award.getAwardDetails().getAwardHeader().getSponsorDescription())) {
+        if (award.getAwardDetails() != null && award.getAwardDetails().getAwardHeader() != null) {
             setField(document, AgreementPdf.Field.FEDERAL_AWARDING_AGENCY.getfName(), award.getAwardDetails().getAwardHeader().getSponsorDescription());
         }
     }
@@ -299,9 +299,7 @@ public abstract class SubawardFdp extends AbstractPrint {
     }
 
     private void setAdditionalTerms(PDDocument document, SubContractDataDocument.SubContractData.SubcontractTemplateInfo templateInfo) {
-        if (StringUtils.isNotBlank(templateInfo.getAdditionalTerms())) {
-            setField(document, Attachment2Pdf.Field.HUMAN_SUBJECTS_DATA_ADD_TERMS_TEXT.getfName(), templateInfo.getAdditionalTerms());
-        }
+        setField(document, Attachment2Pdf.Field.HUMAN_SUBJECTS_DATA_ADD_TERMS_TEXT.getfName(), templateInfo.getAdditionalTerms());
     }
 
     private void setHumanSubjectsDataExchange(PDDocument document, SubContractDataDocument.SubContractData.SubcontractTemplateInfo templateInfo) {
@@ -514,10 +512,7 @@ public abstract class SubawardFdp extends AbstractPrint {
         } else {
             showField(document, Attachment2Pdf.Field.TREATMENT_OF_PROGRAM_INCOME_OTHER_SPECIFY.getfName());
             setField(document, Attachment2Pdf.Field.TREATMENT_OF_PROGRAM_INCOME.getfName(), Attachment2Pdf.Field.TPI_OTHER_VALUE);
-
-            if (StringUtils.isNotBlank(templateInfo.getTreatmentOfIncome())) {
-                setField(document, Attachment2Pdf.Field.TREATMENT_OF_PROGRAM_INCOME_OTHER_SPECIFY.getfName(), templateInfo.getTreatmentOfIncome());
-            }
+            setField(document, Attachment2Pdf.Field.TREATMENT_OF_PROGRAM_INCOME_OTHER_SPECIFY.getfName(), templateInfo.getTreatmentOfIncome());
         }
     }
 
@@ -552,13 +547,8 @@ public abstract class SubawardFdp extends AbstractPrint {
                 setField(document, Attachment2Pdf.Field.FAID.getfName(), formatDate(award.getAwardDetails().getOtherHeaderDetails().getFAID().getTime()));
             }
 
-            if (StringUtils.isNotBlank(award.getAwardDetails().getOtherHeaderDetails().getFAIN())) {
-                setField(document, Attachment2Pdf.Field.FAIN.getfName(), award.getAwardDetails().getOtherHeaderDetails().getFAIN());
-            }
-
-            if (StringUtils.isNotBlank(award.getAwardDetails().getOtherHeaderDetails().getCFDANumber())) {
-                setField(document, Attachment2Pdf.Field.CFDA.getfName(), award.getAwardDetails().getOtherHeaderDetails().getCFDANumber());
-            }
+            setField(document, Attachment2Pdf.Field.FAIN.getfName(), award.getAwardDetails().getOtherHeaderDetails().getFAIN());
+            setField(document, Attachment2Pdf.Field.CFDA.getfName(), award.getAwardDetails().getOtherHeaderDetails().getCFDANumber());
         }
     }
 
@@ -586,9 +576,7 @@ public abstract class SubawardFdp extends AbstractPrint {
 
     private void setPteInfoAtt3a(PDDocument document, SubContractDataDocument.SubContractData.PrimeRecipientContacts primeRecipientContacts) {
         if (primeRecipientContacts.getRequisitionerOrgDetails() != null) {
-            if (StringUtils.isNotBlank(primeRecipientContacts.getRequisitionerOrgDetails().getOrganizationName())) {
-                setField(document, Attachment3aPdf.Field.PTE_INFO_ENTITY_NAME.getfName(), primeRecipientContacts.getRequisitionerOrgDetails().getOrganizationName());
-            }
+            setField(document, Attachment3aPdf.Field.PTE_INFO_ENTITY_NAME.getfName(), primeRecipientContacts.getRequisitionerOrgDetails().getOrganizationName());
         }
 
         if (primeRecipientContacts.getOrgRolodexDetails() != null) {
@@ -596,9 +584,7 @@ public abstract class SubawardFdp extends AbstractPrint {
                     primeRecipientContacts.getOrgRolodexDetails().getAddress3(), primeRecipientContacts.getOrgRolodexDetails().getCity(),
                     primeRecipientContacts.getOrgRolodexDetails().getStateDescription(), primeRecipientContacts.getOrgRolodexDetails().getPincode());
 
-            if (StringUtils.isNotBlank(address)) {
-                setField(document, Attachment3aPdf.Field.PTE_INFO_LEGAL_ADDRESS.getfName(), address);
-            }
+            setField(document, Attachment3aPdf.Field.PTE_INFO_LEGAL_ADDRESS.getfName(), address);
         }
     }
 
@@ -606,73 +592,38 @@ public abstract class SubawardFdp extends AbstractPrint {
                                 SubContractDataDocument.SubContractData.PrimePrincipalInvestigator primePrincipalInvestigator, SubContractDataDocument.SubContractData.PrimeAdministrativeContact primeAdministrativeContact,
                                 SubContractDataDocument.SubContractData.PrimeFinancialContact primeFinancialContact) {
 
-        if (StringUtils.isNotBlank(primeAuthorizedOfficial.getCentralEmail())) {
-            setField(document, Attachment3aPdf.Field.PTE_CONTACTS_CENTRAL_EMAIL.getfName(), primeAuthorizedOfficial.getCentralEmail());
-        }
+        setField(document, Attachment3aPdf.Field.PTE_CONTACTS_CENTRAL_EMAIL.getfName(), primeAuthorizedOfficial.getCentralEmail());
+
 
         if (primePrincipalInvestigator.getPersonDetailsType() != null) {
-            if (StringUtils.isNotBlank(primePrincipalInvestigator.getPersonDetailsType().getFullName())) {
-                setField(document, Attachment3aPdf.Field.PTE_CONTACTS_PI_NAME.getfName(), primePrincipalInvestigator.getPersonDetailsType().getFullName());
-            }
-
-            if (StringUtils.isNotBlank(primePrincipalInvestigator.getPersonDetailsType().getEmailAddress())) {
-                setField(document, Attachment3aPdf.Field.PTE_CONTACTS_PI_EMAIL.getfName(), primePrincipalInvestigator.getPersonDetailsType().getEmailAddress());
-            }
-
-            if (StringUtils.isNotBlank(primePrincipalInvestigator.getPersonDetailsType().getMobilePhoneNumber())) {
-                setField(document, Attachment3aPdf.Field.PTE_CONTACTS_PI_PHONE.getfName(), primePrincipalInvestigator.getPersonDetailsType().getMobilePhoneNumber());
-            }
+            setField(document, Attachment3aPdf.Field.PTE_CONTACTS_PI_NAME.getfName(), primePrincipalInvestigator.getPersonDetailsType().getFullName());
+            setField(document, Attachment3aPdf.Field.PTE_CONTACTS_PI_EMAIL.getfName(), primePrincipalInvestigator.getPersonDetailsType().getEmailAddress());
+            setField(document, Attachment3aPdf.Field.PTE_CONTACTS_PI_PHONE.getfName(), primePrincipalInvestigator.getPersonDetailsType().getMobilePhoneNumber());
         }
+
         if (primeAdministrativeContact.getRolodexDetails() != null) {
-            if (StringUtils.isNotBlank(primeAdministrativeContact.getRolodexDetails().getRolodexName())) {
-                setField(document, Attachment3aPdf.Field.PTE_CONTACTS_ADMIN_NAME.getfName(), primeAdministrativeContact.getRolodexDetails().getRolodexName());
-            }
-
-            if (StringUtils.isNotBlank(primeAdministrativeContact.getRolodexDetails().getEmail())) {
-                setField(document, Attachment3aPdf.Field.PTE_CONTACTS_ADMIN_EMAIL.getfName(), primeAdministrativeContact.getRolodexDetails().getEmail());
-            }
-
-            if (StringUtils.isNotBlank(primeAdministrativeContact.getRolodexDetails().getPhoneNumber())) {
-                setField(document, Attachment3aPdf.Field.PTE_CONTACTS_ADMIN_PHONE.getfName(), primeAdministrativeContact.getRolodexDetails().getPhoneNumber());
-            }
+            setField(document, Attachment3aPdf.Field.PTE_CONTACTS_ADMIN_NAME.getfName(), primeAdministrativeContact.getRolodexDetails().getRolodexName());
+            setField(document, Attachment3aPdf.Field.PTE_CONTACTS_ADMIN_EMAIL.getfName(), primeAdministrativeContact.getRolodexDetails().getEmail());
+            setField(document, Attachment3aPdf.Field.PTE_CONTACTS_ADMIN_PHONE.getfName(), primeAdministrativeContact.getRolodexDetails().getPhoneNumber());
         }
 
-        if (StringUtils.isNotBlank(primeAdministrativeContact.getCoiContactEmail())) {
-            setField(document, Attachment3aPdf.Field.PTE_CONTACTS_COI_EMAIL.getfName(), primeAdministrativeContact.getCoiContactEmail());
-        }
+        setField(document, Attachment3aPdf.Field.PTE_CONTACTS_COI_EMAIL.getfName(), primeAdministrativeContact.getCoiContactEmail());
+
 
         if (primeFinancialContact.getRolodexDetails() != null) {
-            if (StringUtils.isNotBlank(primeFinancialContact.getRolodexDetails().getRolodexName())) {
-                setField(document, Attachment3aPdf.Field.PTE_CONTACTS_FIN_NAME.getfName(), primeFinancialContact.getRolodexDetails().getRolodexName());
-            }
-
-            if (StringUtils.isNotBlank(primeFinancialContact.getRolodexDetails().getEmail())) {
-                setField(document, Attachment3aPdf.Field.PTE_CONTACTS_FIN_EMAIL.getfName(), primeFinancialContact.getRolodexDetails().getEmail());
-            }
-
-            if (StringUtils.isNotBlank(primeFinancialContact.getRolodexDetails().getPhoneNumber())) {
-                setField(document, Attachment3aPdf.Field.PTE_CONTACTS_FIN_PHONE.getfName(), primeFinancialContact.getRolodexDetails().getPhoneNumber());
-            }
+            setField(document, Attachment3aPdf.Field.PTE_CONTACTS_FIN_NAME.getfName(), primeFinancialContact.getRolodexDetails().getRolodexName());
+            setField(document, Attachment3aPdf.Field.PTE_CONTACTS_FIN_EMAIL.getfName(), primeFinancialContact.getRolodexDetails().getEmail());
+            setField(document, Attachment3aPdf.Field.PTE_CONTACTS_FIN_PHONE.getfName(), primeFinancialContact.getRolodexDetails().getPhoneNumber());
         }
 
         setField(document, Attachment3aPdf.Field.PTE_CONTACTS_EMAIL_INVOICES.getfName(), fromYN(primeFinancialContact.getInvoicesEmailed()) ? Attachment3aPdf.Field.EMAIL_INVOICES_TRUE : Attachment3aPdf.Field.EMAIL_INVOICES_FALSE);
+        setField(document, Attachment3aPdf.Field.PTE_CONTACTS_INVOICE_EMAIL.getfName(), primeFinancialContact.getInvoiceEmailDifferent());
 
-        if (StringUtils.isNotBlank(primeFinancialContact.getInvoiceEmailDifferent())) {
-            setField(document, Attachment3aPdf.Field.PTE_CONTACTS_INVOICE_EMAIL.getfName(), primeFinancialContact.getInvoiceEmailDifferent());
-        }
 
         if (primeAuthorizedOfficial.getRolodexDetails() != null) {
-            if (StringUtils.isNotBlank(primeAuthorizedOfficial.getRolodexDetails().getRolodexName())) {
-                setField(document, Attachment3aPdf.Field.PTE_CONTACTS_AUTH_OFFICIAL_NAME.getfName(), primeAuthorizedOfficial.getRolodexDetails().getRolodexName());
-            }
-
-            if (StringUtils.isNotBlank(primeAuthorizedOfficial.getRolodexDetails().getEmail())) {
-                setField(document, Attachment3aPdf.Field.PTE_CONTACTS_AUTH_OFFICIAL_EMAIL.getfName(), primeAuthorizedOfficial.getRolodexDetails().getEmail());
-            }
-
-            if (StringUtils.isNotBlank(primeAuthorizedOfficial.getRolodexDetails().getPhoneNumber())) {
-                setField(document, Attachment3aPdf.Field.PTE_CONTACTS_AUTH_OFFCIAL_PHONE.getfName(), primeAuthorizedOfficial.getRolodexDetails().getPhoneNumber());
-            }
+            setField(document, Attachment3aPdf.Field.PTE_CONTACTS_AUTH_OFFICIAL_NAME.getfName(), primeAuthorizedOfficial.getRolodexDetails().getRolodexName());
+            setField(document, Attachment3aPdf.Field.PTE_CONTACTS_AUTH_OFFICIAL_EMAIL.getfName(), primeAuthorizedOfficial.getRolodexDetails().getEmail());
+            setField(document, Attachment3aPdf.Field.PTE_CONTACTS_AUTH_OFFCIAL_PHONE.getfName(), primeAuthorizedOfficial.getRolodexDetails().getPhoneNumber());
         }
 
     }
@@ -686,9 +637,8 @@ public abstract class SubawardFdp extends AbstractPrint {
                     primePrincipalInvestigator.getPersonDetailsType().getAddressLine3(), primePrincipalInvestigator.getPersonDetailsType().getCity(),
                     primePrincipalInvestigator.getPersonDetailsType().getState(), primePrincipalInvestigator.getPersonDetailsType().getPostalCode());
 
-            if (StringUtils.isNotBlank(piAddress)) {
-                setField(document, Attachment3aPdf.Field.PTE_CONTACTS_PI_ADDRESS.getfName(), piAddress);
-            }
+            setField(document, Attachment3aPdf.Field.PTE_CONTACTS_PI_ADDRESS.getfName(), piAddress);
+
         }
 
         if (primeAdministrativeContact.getRolodexDetails() != null) {
@@ -696,9 +646,9 @@ public abstract class SubawardFdp extends AbstractPrint {
                     primeAdministrativeContact.getRolodexDetails().getAddress3(), primeAdministrativeContact.getRolodexDetails().getCity(),
                     primeAdministrativeContact.getRolodexDetails().getStateDescription(), primeAdministrativeContact.getRolodexDetails().getPincode());
 
-            if (StringUtils.isNotBlank(adminAddress)) {
-                setField(document, Attachment3aPdf.Field.PTE_CONTACTS_ADMIN_ADDRESS.getfName(), adminAddress);
-            }
+
+            setField(document, Attachment3aPdf.Field.PTE_CONTACTS_ADMIN_ADDRESS.getfName(), adminAddress);
+
         }
         if (StringUtils.isNotBlank(primeFinancialContact.getInvoiceAddressDifferent())) {
             setField(document, Attachment3aPdf.Field.PTE_CONTACTS_INVOICE_ADDRESS.getfName(), primeFinancialContact.getInvoiceAddressDifferent());
@@ -707,9 +657,8 @@ public abstract class SubawardFdp extends AbstractPrint {
                     primeFinancialContact.getRolodexDetails().getAddress3(), primeFinancialContact.getRolodexDetails().getCity(),
                     primeFinancialContact.getRolodexDetails().getStateDescription(), primeFinancialContact.getRolodexDetails().getPincode());
 
-            if (StringUtils.isNotBlank(invoiceAddress)) {
-                setField(document, Attachment3aPdf.Field.PTE_CONTACTS_INVOICE_ADDRESS.getfName(), invoiceAddress);
-            }
+            setField(document, Attachment3aPdf.Field.PTE_CONTACTS_INVOICE_ADDRESS.getfName(), invoiceAddress);
+
         }
     }
 
@@ -758,14 +707,8 @@ public abstract class SubawardFdp extends AbstractPrint {
                 SubContractDataDocument.SubContractData.SubcontractDetail.Factory.newInstance();
 
         setField(document, Attachment3bPage2Pdf.Field.SUBAWARD_NUMBER.getfName(), subcontractDetail.getFsrsSubawardNumber());
-
-        if (StringUtils.isNotBlank(subcontractDetail.getSubcontractorName())) {
-            setField(document, Attachment3bPage2Pdf.Field.ENTITY_NAME.getfName(), subcontractDetail.getSubcontractorName());
-        }
-
-        if (StringUtils.isNotBlank(subcontractDetail.getSiteInvestigator())) {
-            setField(document, Attachment3bPage2Pdf.Field.PI_NAME.getfName(), subcontractDetail.getSiteInvestigator());
-        }
+        setField(document, Attachment3bPage2Pdf.Field.ENTITY_NAME.getfName(), subcontractDetail.getSubcontractorName());
+        setField(document, Attachment3bPage2Pdf.Field.PI_NAME.getfName(), subcontractDetail.getSiteInvestigator());
     }
 
     @Override

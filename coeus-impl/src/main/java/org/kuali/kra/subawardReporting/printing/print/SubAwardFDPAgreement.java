@@ -22,13 +22,8 @@ public class SubAwardFDPAgreement extends SubawardFdp {
 
     @Override
     protected void setSubrecipientInfo(PDDocument document, SubContractDataDocument.SubContractData.SubcontractDetail subcontractDetail) {
-        if (StringUtils.isNotBlank(subcontractDetail.getSubcontractorName())) {
-            setField(document, AgreementPdf.Field.SUBRECIPIENT.getfName(), subcontractDetail.getSubcontractorName());
-        }
-
-        if (StringUtils.isNotBlank(subcontractDetail.getSiteInvestigator())) {
-            setField(document, AgreementPdf.Field.SUB_PI.getfName(), subcontractDetail.getSiteInvestigator());
-        }
+        setField(document, AgreementPdf.Field.SUBRECIPIENT.getfName(), subcontractDetail.getSubcontractorName());
+        setField(document, AgreementPdf.Field.SUB_PI.getfName(), subcontractDetail.getSiteInvestigator());
     }
 
     @Override
@@ -46,7 +41,7 @@ public class SubAwardFDPAgreement extends SubawardFdp {
             setField(document, AgreementPdf.Field.PASS_THROUGH_ENTITY.getfName(), primeRecipientContacts.getRequisitionerOrgDetails().getOrganizationName());
         }
 
-        if (primePrincipalInvestigator.getPersonDetailsType() != null && StringUtils.isNotBlank(primePrincipalInvestigator.getPersonDetailsType().getFullName())) {
+        if (primePrincipalInvestigator.getPersonDetailsType() != null) {
             setField(document, AgreementPdf.Field.PTE_PI.getfName(), primePrincipalInvestigator.getPersonDetailsType().getFullName());
         }
     }
@@ -54,18 +49,16 @@ public class SubAwardFDPAgreement extends SubawardFdp {
     @Override
     protected void setAwardSubawardNumbers(PDDocument document, SubContractDataDocument.SubContractData.SubcontractDetail subcontractDetail, AwardType award) {
 
-        if (award.getAwardDetails() != null && award.getAwardDetails().getAwardHeader() != null && StringUtils.isNotBlank(award.getAwardDetails().getAwardHeader().getSponsorAwardNumber())) {
+        if (award.getAwardDetails() != null && award.getAwardDetails().getAwardHeader() != null) {
             setField(document, AgreementPdf.Field.PTE_FEDERAL_AWARD_NO.getfName(), award.getAwardDetails().getAwardHeader().getSponsorAwardNumber());
         }
 
-        if (StringUtils.isNotBlank(subcontractDetail.getFsrsSubawardNumber())) {
-            setField(document, AgreementPdf.Field.SUBAWARD_NO.getfName(), subcontractDetail.getFsrsSubawardNumber());
-        }
+        setField(document, AgreementPdf.Field.SUBAWARD_NO.getfName(), subcontractDetail.getFsrsSubawardNumber());
     }
 
     @Override
     protected void setTitle(PDDocument document, AwardType award) {
-        if (award.getAwardDetails() != null && award.getAwardDetails().getAwardHeader() != null && StringUtils.isNotBlank(award.getAwardDetails().getAwardHeader().getTitle())) {
+        if (award.getAwardDetails() != null && award.getAwardDetails().getAwardHeader() != null) {
             setField(document, AgreementPdf.Field.PROJECT_TITLE.getfName(), award.getAwardDetails().getAwardHeader().getTitle());
         }
     }
