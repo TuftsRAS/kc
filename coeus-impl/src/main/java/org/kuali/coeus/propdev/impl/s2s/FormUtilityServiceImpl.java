@@ -207,72 +207,89 @@ public class FormUtilityServiceImpl implements FormUtilityService {
 
     @Override
     public void correctAttachmentXml(Document document, Map<String, KcFile> atts) {
-       final NodeList attachments = document.getElementsByTagNameNS(ATTACHMENTS_NS, ATTACHED_FILE);
-       if (attachments != null) {
+        final NodeList attachments = document.getElementsByTagNameNS(ATTACHMENTS_NS, ATTACHED_FILE);
+        if (attachments != null) {
            for (int i = 0; i < attachments.getLength(); i++) {
                final Node attachment = attachments.item(i);
-               final NodeList attachmentElements = attachment.getChildNodes();
-               if (attachmentElements != null) {
-                   Node fileName = null;
-                   Node fileLocation = null;
-                   Node hashValue = null;
-                   Node mimeType = null;
-                   for (int j = 0; j < attachmentElements.getLength(); j++) {
-                       final Node node = attachmentElements.item(j);
-                       if (FILE_NAME.equals(node.getLocalName()) && ATTACHMENTS_NS.equals(node.getNamespaceURI())) {
-                           fileName = node;
-                       } else if (FILE_LOCATION.equals(node.getLocalName()) && ATTACHMENTS_NS.equals(node.getNamespaceURI())) {
-                           fileLocation = node;
-                       } else if (MIME_TYPE.equals(node.getLocalName()) && ATTACHMENTS_NS.equals(node.getNamespaceURI())) {
-                           mimeType = node;
-                       } else if (HASH_VALUE.equals(node.getLocalName()) && GLOBAL_NS.equals(node.getNamespaceURI())) {
-                           hashValue = node;
-                       }
-                   }
-
-                   if (fileLocation == null) {
-                       fileLocation = document.createElementNS(ATTACHMENTS_NS, FILE_LOCATION);
-                       attachment.appendChild(fileLocation);
-                   }
-
-                   if (fileName != null) {
-                       final Node location = fileLocation.getAttributes().getNamedItemNS(ATTACHMENTS_NS, HREF);
-                       if (location == null || !StringUtils.equals(fileName.getTextContent(), location.getTextContent())) {
-                           final Attr href = document.createAttributeNS(ATTACHMENTS_NS, HREF);
-                           href.setValue(fileName.getTextContent());
-                           ((Element) fileLocation).setAttributeNode(href);
-                       }
-                   }
-
-                   if (mimeType == null) {
-                       mimeType = document.createElementNS(ATTACHMENTS_NS, MIME_TYPE);
-                       attachment.appendChild(mimeType);
-                   }
-
-                   final String mime = mimeType.getTextContent();
-                   if (StringUtils.isBlank(mime) && fileName != null && StringUtils.isNotBlank(fileName.getTextContent()) && atts.containsKey(fileName.getTextContent())) {
-                       mimeType.setTextContent(atts.get(fileName.getTextContent()).getType());
-                   }
-
-                   if (hashValue == null) {
-                       hashValue = document.createElementNS(GLOBAL_NS, HASH_VALUE);
-                       attachment.appendChild(hashValue);
-                   }
-
-                   final Attr hashAlgorithm = (Attr) hashValue.getAttributes().getNamedItemNS(GLOBAL_NS, HASH_ALGORITHM);
-                   if (hashAlgorithm == null || StringUtils.isBlank(hashAlgorithm.getValue())) {
-                       final Attr newHashAlgorithm = document.createAttributeNS(GLOBAL_NS, HASH_ALGORITHM);
-                       newHashAlgorithm.setValue(InfastructureConstants.HASH_ALGORITHM);
-                       ((Element) hashValue).setAttributeNode(newHashAlgorithm);
-                   }
-
-                   final String hash = hashValue.getTextContent();
-                   if (StringUtils.isBlank(hash) && fileName != null && StringUtils.isNotBlank(fileName.getTextContent()) && atts.containsKey(fileName.getTextContent())) {
-                       hashValue.setTextContent(getGrantApplicationHashService().computeAttachmentHash(atts.get(fileName.getTextContent()).getData()));
-                   }
-               }
+               correctAttachmentXml(document, attachment, atts);
            }
-       }
+        }
+
+        //not all AttachedFile elements use the Attachments Namespace.  In some cases they inherit from the namespace.
+        //In these cases, start from the FileName and go to the parent to get the attachment.
+        final NodeList fileNames = document.getElementsByTagNameNS(ATTACHMENTS_NS, FILE_NAME);
+        if (fileNames != null) {
+            for (int i = 0; i < fileNames.getLength(); i++) {
+                final Node fileName = fileNames.item(i);
+                final Node attachment = fileName.getParentNode();
+                correctAttachmentXml(document, attachment, atts);
+            }
+        }
+    }
+
+    protected void correctAttachmentXml(Document document, Node attachment, Map<String, KcFile> atts) {
+        if (attachment != null) {
+            final NodeList attachmentElements = attachment.getChildNodes();
+            if (attachmentElements != null) {
+                Node fileName = null;
+                Node fileLocation = null;
+                Node hashValue = null;
+                Node mimeType = null;
+                for (int j = 0; j < attachmentElements.getLength(); j++) {
+                    final Node node = attachmentElements.item(j);
+                    if (FILE_NAME.equals(node.getLocalName()) && ATTACHMENTS_NS.equals(node.getNamespaceURI())) {
+                        fileName = node;
+                    } else if (FILE_LOCATION.equals(node.getLocalName()) && ATTACHMENTS_NS.equals(node.getNamespaceURI())) {
+                        fileLocation = node;
+                    } else if (MIME_TYPE.equals(node.getLocalName()) && ATTACHMENTS_NS.equals(node.getNamespaceURI())) {
+                        mimeType = node;
+                    } else if (HASH_VALUE.equals(node.getLocalName()) && GLOBAL_NS.equals(node.getNamespaceURI())) {
+                        hashValue = node;
+                    }
+                }
+
+                if (fileLocation == null) {
+                    fileLocation = document.createElementNS(ATTACHMENTS_NS, FILE_LOCATION);
+                    attachment.appendChild(fileLocation);
+                }
+
+                if (fileName != null) {
+                    final Node location = fileLocation.getAttributes().getNamedItemNS(ATTACHMENTS_NS, HREF);
+                    if (location == null || !StringUtils.equals(fileName.getTextContent(), location.getTextContent())) {
+                        final Attr href = document.createAttributeNS(ATTACHMENTS_NS, HREF);
+                        href.setValue(fileName.getTextContent());
+                        ((Element) fileLocation).setAttributeNode(href);
+                    }
+                }
+
+                if (mimeType == null) {
+                    mimeType = document.createElementNS(ATTACHMENTS_NS, MIME_TYPE);
+                    attachment.appendChild(mimeType);
+                }
+
+                final String mime = mimeType.getTextContent();
+                if (StringUtils.isBlank(mime) && fileName != null && StringUtils.isNotBlank(fileName.getTextContent()) && atts.containsKey(fileName.getTextContent())) {
+                    mimeType.setTextContent(atts.get(fileName.getTextContent()).getType());
+                }
+
+                if (hashValue == null) {
+                    hashValue = document.createElementNS(GLOBAL_NS, HASH_VALUE);
+                    attachment.appendChild(hashValue);
+                }
+
+                final Attr hashAlgorithm = (Attr) hashValue.getAttributes().getNamedItemNS(GLOBAL_NS, HASH_ALGORITHM);
+                if (hashAlgorithm == null || StringUtils.isBlank(hashAlgorithm.getValue())) {
+                    final Attr newHashAlgorithm = document.createAttributeNS(GLOBAL_NS, HASH_ALGORITHM);
+                    newHashAlgorithm.setValue(InfastructureConstants.HASH_ALGORITHM);
+                    ((Element) hashValue).setAttributeNode(newHashAlgorithm);
+                }
+
+                final String hash = hashValue.getTextContent();
+                if (StringUtils.isBlank(hash) && fileName != null && StringUtils.isNotBlank(fileName.getTextContent()) && atts.containsKey(fileName.getTextContent())) {
+                    hashValue.setTextContent(getGrantApplicationHashService().computeAttachmentHash(atts.get(fileName.getTextContent()).getData()));
+                }
+            }
+        }
     }
 
     /**
