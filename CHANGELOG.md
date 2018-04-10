@@ -1,6 +1,10 @@
 
 
 ## CURRENT
+* RESKC-2877: handling attachments that don't use the common attachment namespace directly.
+  * Travis Schneeberger on Mon, 9 Apr 2018 21:00:48 -0400 [View Commit](../../commit/497c349dc1725a0868aca1a7702572fad5b5162c)
+
+## coeus-1804.0013
 * RESKC-2857: supporting PI contacts for FDP
   * Travis Schneeberger on Mon, 9 Apr 2018 13:36:51 -0400 [View Commit](../../commit/807395fab2a95fadf7159cf916fd07ef3bf8888c)
 
