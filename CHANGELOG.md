@@ -1,6 +1,10 @@
 
 
 ## CURRENT
+* RESKC-2182: Update Rice version for priority parallel routing fix
+  * Jeff Largent on Tue, 10 Apr 2018 14:24:20 -0400 [View Commit](../../commit/19df60f8895cc0dbe4cdc93f0b5faa9d097a89e3)
+
+## coeus-1804.0014
 * RESKC-2877: handling attachments that don't use the common attachment namespace directly.
   * Travis Schneeberger on Mon, 9 Apr 2018 21:00:48 -0400 [View Commit](../../commit/497c349dc1725a0868aca1a7702572fad5b5162c)
 
