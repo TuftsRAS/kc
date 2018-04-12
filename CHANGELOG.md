@@ -1,6 +1,25 @@
 
 
 ## CURRENT
+* RESKC-2871: Certification fix (#2846)
+
+* RESKC-2871: Certification fix
+  * Summary: When the ENABLE_ADDRESSBOOK_CERTIFICATION parameter is set to N it should not require certifications for non-employee key personnel in the proposal. However, if you set to N it's still requiring and throwing a validation error prior to submit if the KEY_PERSON_CERTIFICATION_DEFERRAL is set to BS. It will require prior to person approval when set to BA. Since non-employees aren't associated with the institution and typically don't have access to the system they should not have to certify and could complicate/delay GG submissions that may contain non-employees. This may relate to recent updates to the Proposal Award Person Role table in   RESKC-2498 DELIVERED .
+  * 
+  * Steps to Reproduce:
+  * 
+  * change parameter ENABLE_ADDRESSBOOK_CERTIFICATION to N
+  * change parameter KEY_PERSON_CERTIFICATION_DEFERRAL to BS
+  * create a proposal with non-employees added to the Key Personnel tab (or use 14712 in res-tst1)
+  * validate proposal - see certification required validations
+  * Actual Result: when the ENABLE_ADDRESSBOOK_CERTIFICATION is set to N it is still requiring person certification.
+  * 
+  * Expected Result: when the ENABLE_ADDRESSBOOK_CERTIFICATION is set to N it will not require person certification. If set to Y it should require. Need to test with both KEY_PERSON_CERTIFICATION_DEFERRAL set to BS and BA.
+  * 
+* Refactored.
+  * Gayathri Athreya on Thu, 12 Apr 2018 12:16:20 -0600 [View Commit](../../commit/5412902ebddc3f64ab95f8fd530861a721fb9ed9)
+
+## coeus-1804.0016
 * RESKC-1570: Fix fringe benefits calculation on Budget CostShare Summary Report and create a Test for it. (#2845)
 
   * Omar Soto Fortuño on Thu, 12 Apr 2018 09:33:33 -0600 [View Commit](../../commit/ad04655ccd9ab34a11bf7a9ba0b3c0b07b64514b)
