@@ -9,6 +9,7 @@ package org.kuali.coeus.common.budget.impl.print;
 
 import static org.mockito.Mockito.*;
 
+import org.apache.xmlbeans.XmlObject;
 import org.junit.Assert;
 
 import org.junit.Test;
@@ -16,20 +17,22 @@ import org.kuali.coeus.common.budget.api.rate.RateClassType;
 import org.kuali.coeus.common.budget.framework.calculator.ValidCalcType;
 import org.kuali.coeus.common.budget.framework.core.Budget;
 import org.kuali.coeus.common.budget.framework.core.category.BudgetCategory;
-import org.kuali.coeus.common.budget.framework.nonpersonnel.BudgetLineItem;
-import org.kuali.coeus.common.budget.framework.nonpersonnel.BudgetLineItemCalculatedAmount;
-import org.kuali.coeus.common.budget.framework.nonpersonnel.BudgetRateAndBase;
+import org.kuali.coeus.common.budget.framework.nonpersonnel.*;
 import org.kuali.coeus.common.budget.framework.period.BudgetPeriod;
+import org.kuali.coeus.common.budget.framework.personnel.BudgetPerson;
+import org.kuali.coeus.common.budget.framework.personnel.BudgetPersonnelDetails;
 import org.kuali.coeus.common.budget.framework.personnel.BudgetPersonnelRateAndBase;
 import org.kuali.coeus.propdev.impl.budget.ProposalDevelopmentBudgetExt;
 import org.kuali.coeus.propdev.impl.core.DevelopmentProposal;
 import org.kuali.coeus.sys.api.model.ScaleTwoDecimal;
+import org.kuali.coeus.sys.framework.model.KcPersistableBusinessObjectBase;
 import org.kuali.kra.printing.schema.ReportType;
 import org.kuali.rice.krad.service.BusinessObjectService;
 
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class BudgetSummaryPrintTest extends BudgetPrintTestBase {
 
@@ -774,11 +777,93 @@ public class BudgetSummaryPrintTest extends BudgetPrintTestBase {
         lineItem.setBudgetPeriod(1);
         lineItem.setBudgetLineItemId(5L);
         lineItem.setLineItemNumber(3);
-		lineItem.setBudgetCategoryCode(PERSONNEL_CATEGORY_CODE);
+        lineItem.setBudgetCategoryCode(PERSONNEL_CATEGORY_CODE);
         final BudgetCategory budgetCategory = new BudgetCategory();
         budgetCategory.setBudgetCategoryTypeCode(PERSONNEL_CATEGORY_CODE);
-		lineItem.setBudgetCategory(budgetCategory);
+        lineItem.setBudgetCategory(budgetCategory);
         lineItem.setCostElementBO(getCostElementPersonnel());
         return lineItem;
+    }
+
+    @Test
+    public void testCostShareFringeWithoutNeedingIt() {
+        BudgetSummaryXmlStream stream = new BudgetSummaryXmlStreamMock();
+        Budget budget = new Budget();
+        final BudgetPeriod budgetPeriod = getBudgetPeriodWithPersonnelLineItem();
+        budget.getBudgetPeriods().add(budgetPeriod);
+
+        BudgetLineItem budgetLineItem = budgetPeriod.getBudgetLineItem(0);
+        budgetLineItem.setCostElement("400355");
+        budgetLineItem.getBudgetPersonnelDetails(0).setPercentCharged(ScaleTwoDecimal.ZERO);
+
+        List<BudgetLineItemCalculatedAmount> lineItemCalculatedAmounts = new ArrayList<>();
+
+        BudgetLineItemCalculatedAmount lineItemCalculatedAmount1 = getBudgetLineItemCalculatedAmount("5", "1", "EB on LA", ScaleTwoDecimal.ONE_HUNDRED);
+        lineItemCalculatedAmounts.add(lineItemCalculatedAmount1);
+
+        BudgetLineItemCalculatedAmount lineItemCalculatedAmount2 = getBudgetLineItemCalculatedAmount("8", "2", "Vacation on LA", ScaleTwoDecimal.ONE_HUNDRED);
+        lineItemCalculatedAmounts.add(lineItemCalculatedAmount2);
+
+        budgetLineItem.setBudgetLineItemCalculatedAmounts(lineItemCalculatedAmounts);
+
+        List<BudgetRateAndBase> rateAndBases = new ArrayList<>();
+
+        BudgetRateAndBase ebLABudgetRateAndBase = getNewBudgetRateAndBase(new ScaleTwoDecimal(27L), "5", "1", new ScaleTwoDecimal(27L),
+                new ScaleTwoDecimal(100L), RateClassType.EMPLOYEE_BENEFITS.getRateClassType(), getDate(2016, 1, 1), getDate(2016, 6, 30));
+        rateAndBases.add(ebLABudgetRateAndBase);
+
+        BudgetRateAndBase vacLABudgetRateAndBase = getNewBudgetRateAndBase(new ScaleTwoDecimal(9L), "8", "2", new ScaleTwoDecimal(9L),
+                new ScaleTwoDecimal(100L), RateClassType.VACATION.getRateClassType(), getDate(2016, 1, 1), getDate(2016, 6, 30));
+        rateAndBases.add(vacLABudgetRateAndBase);
+
+        budgetPeriod.getBudgetLineItem(0).setBudgetRateAndBaseList(rateAndBases);
+
+        stream.setBudget(budget);
+        stream.setBudgetPeriod(budgetPeriod);
+        List<ReportTypeVO> tempReportTypeVOList = new ArrayList<>();
+
+        BudgetBaseStream baseStream = new BudgetBaseSalaryStream() {
+            @Override
+            public Map<String, XmlObject> generateXmlStream(KcPersistableBusinessObjectBase printableBusinessObject, Map<String, Object> reportParameters) {
+                return null;
+            }
+
+            @Override
+            protected String getPersonNameFromBudgetPersonByRateAndBase(BudgetPerson budgetPerson, BudgetPersonnelRateAndBase budgetPersRateAndBase, Integer quantity) {
+                return "Test";
+            }
+
+            @Override
+            protected ScaleTwoDecimal getPercentEffortForBudgetPersonnelRateBase(BudgetLineItem budgetLineItem, BudgetPersonnelDetails budgetPersDetails,
+                                                                                 BudgetPersonnelRateAndBase budgetPersRateAndBase) {
+                return ScaleTwoDecimal.ONE_HUNDRED;
+            }
+
+            @Override
+            protected ScaleTwoDecimal getPercentChargedForBudgetPersonnelRateBase(BudgetLineItem budgetLineItem, BudgetPersonnelDetails budgetPersDetails,
+                                                                                  BudgetPersonnelRateAndBase budgetPersRateAndBase) {
+                return ScaleTwoDecimal.ZERO;
+            }
+
+            @Override
+            protected Integer getInvestigatorFlag(BudgetPersonnelDetails budgetPersonDetails) {
+                return 3;
+            }
+
+            @Override
+            protected String getBudgetCategoryDescForSalarySummary(BudgetLineItem budgetLineItem, BudgetLineItemBase budgetDetails, AbstractBudgetRateAndBase budgetRateAndBase) {
+                return "Other Professionals";
+            }
+
+            @Override
+            protected List<AbstractBudgetRateAndBase> getVAAndEBRates(List<? extends AbstractBudgetRateAndBase> rates) {
+                return new ArrayList<>();
+            }
+        };
+
+        budgetLineItem.getBudgetPersonnelDetails(0).setCostSharingAmount(new ScaleTwoDecimal(10000L));
+        baseStream.addReportTypeVO(tempReportTypeVOList, budgetLineItem, budgetLineItem.getBudgetPersonnelDetails(0), rateAndBases);
+
+        Assert.assertEquals(ScaleTwoDecimal.ZERO, tempReportTypeVOList.get(0).getCalculatedCost());
     }
 }

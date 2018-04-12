@@ -242,6 +242,18 @@ public abstract class BudgetPrintTestBase {
         return  budgetPeriod;
     }
 
+    protected BudgetPeriod getBudgetPeriodWithPersonnelLineItem() {
+        BudgetPeriod budgetPeriod = new BudgetPeriod();
+        budgetPeriod.setEndDate(getDate(2016, 6, 30));
+        budgetPeriod.setStartDate(getDate(2015, 7, 1));
+        final BudgetLineItem budgetLineItem = getPersonnelLineItem(budgetPeriod, getDate(2015, 7, 1), getDate(2016, 6, 30));
+        budgetLineItem.setBudgetPeriodBO(budgetPeriod);
+        budgetLineItem.setBudgetPeriod(1);
+        budgetLineItem.setLineItemNumber(1);
+        budgetPeriod.getBudgetLineItems().add(budgetLineItem);
+        return  budgetPeriod;
+    }
+
     protected java.sql.Date getDate(Integer year, Integer month, Integer day) {
         Calendar cal = Calendar.getInstance();
         cal.set(cal.YEAR, year);

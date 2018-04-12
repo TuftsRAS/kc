@@ -1401,7 +1401,7 @@ public abstract class BudgetBaseStream implements XmlStream {
         return reportTypeVOList;
     }
     
-    private void addReportTypeVO(List<ReportTypeVO> reportTypeVOList, BudgetLineItem budgetLineItem,
+    protected void addReportTypeVO(List<ReportTypeVO> reportTypeVOList, BudgetLineItem budgetLineItem,
                                  BudgetLineItemBase budgetDetails, List<? extends AbstractBudgetRateAndBase> rates) {
         List<AbstractBudgetRateAndBase> fringeRates = getVAAndEBRates(rates);
         if (fringeRates != null && !fringeRates.isEmpty()) {
@@ -1415,7 +1415,7 @@ public abstract class BudgetBaseStream implements XmlStream {
         }       
     }
     
-    private List<AbstractBudgetRateAndBase> getVAAndEBRates(List<? extends AbstractBudgetRateAndBase> rates) {
+    protected List<AbstractBudgetRateAndBase> getVAAndEBRates(List<? extends AbstractBudgetRateAndBase> rates) {
         List<AbstractBudgetRateAndBase> result = new ArrayList<AbstractBudgetRateAndBase>();
         for (AbstractBudgetRateAndBase rate : rates) {
             if (!(isRateAndBaseEBonLA(rate) || isRateAndBaseVAonLA(rate) || isRateAndBaseLASalary(rate))
@@ -1499,7 +1499,7 @@ public abstract class BudgetBaseStream implements XmlStream {
         reportTypeVO.setVacationRate(ScaleTwoDecimal.ZERO);
         reportTypeVO.setEmployeeBenefitRate(ScaleTwoDecimal.ZERO);
         reportTypeVO.setCostSharingAmount(budgetDetails.getCostSharingAmount());
-        reportTypeVO.setCalculatedCost(budgetDetails.getCostSharingAmount());
+        reportTypeVO.setCalculatedCost(ScaleTwoDecimal.ZERO);
         reportTypeVO.setFringe(ScaleTwoDecimal.ZERO);
         reportTypeVO.setCostElementDesc(budgetDetails.getCostElementBO().getDescription());
         reportTypeVO.setBudgetCategoryCode(getBudgetCategoryCodeFroBudgetSalarySummary(null, budgetDetails));
