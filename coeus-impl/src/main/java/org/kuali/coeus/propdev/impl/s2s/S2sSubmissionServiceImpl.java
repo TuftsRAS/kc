@@ -258,7 +258,7 @@ public class S2sSubmissionServiceImpl implements S2sSubmissionService {
                 && ggApplication.getAgencyTrackingNumber().length() > 0) {
             appSubmission
                     .setComments(S2sAppSubmissionConstants.STATUS_AGENCY_TRACKING_NUMBER_ASSIGNED);
-            populateSponsorProposalId(pdDoc, appSubmission);
+            populateSponsorProposalId(pdDoc.getDevelopmentProposal(), appSubmission.getAgencyTrackingId());
         } else {
             appSubmission.setComments(ggApplication
                     .getGrantsGovApplicationStatus().toString());
@@ -284,19 +284,19 @@ public class S2sSubmissionServiceImpl implements S2sSubmissionService {
      * set on both the proposal development doc and the related institutional proposal doc
      * if there is not a sponsor proposal id already.
      */
-    protected void populateSponsorProposalId(ProposalDevelopmentDocument pdDoc, S2sAppSubmission appSubmission) {
-        if (StringUtils.isNotBlank(appSubmission.getAgencyTrackingId())) {
-            if (StringUtils.isBlank(pdDoc.getDevelopmentProposal().getSponsorProposalNumber())) {
-                pdDoc.getDevelopmentProposal().setSponsorProposalNumber(appSubmission.getAgencyTrackingId());
-                getBusinessObjectService().save(pdDoc.getDevelopmentProposal());
+    protected void populateSponsorProposalId(DevelopmentProposal developmentProposal, String agencyTrackingId) {
+       if (StringUtils.isNotBlank(agencyTrackingId)) {
+            if (StringUtils.isBlank(developmentProposal.getSponsorProposalNumber())) {
+                developmentProposal.setSponsorProposalNumber(agencyTrackingId);
+                developmentProposal = getDataObjectService().save(developmentProposal);
             }
 
             //find and populate the inst proposal sponsor proposal id as well
-            Collection<? extends ProposalAdminDetailsContract> proposalAdminDetails = proposalAdminDetailsService.findProposalAdminDetailsByPropDevNumber(pdDoc.getDevelopmentProposal().getProposalNumber());
+            Collection<? extends ProposalAdminDetailsContract> proposalAdminDetails = proposalAdminDetailsService.findProposalAdminDetailsByPropDevNumber(developmentProposal.getProposalNumber());
 
             for(ProposalAdminDetailsContract pad : proposalAdminDetails){
             	if (pad.getInstProposalId() != null) {
-            		instPropSponsorService.updateSponsorProposalNumber(pad.getInstProposalId(), appSubmission.getAgencyTrackingId());
+            		instPropSponsorService.updateSponsorProposalNumber(pad.getInstProposalId(), agencyTrackingId);
             	}
             }
 
