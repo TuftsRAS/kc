@@ -409,9 +409,7 @@ public class ProposalDevelopmentDocumentAuthorizer extends KcKradTransactionalDo
 
     protected boolean canSaveCertification(ProposalDevelopmentDocument document, Person user) {
         final DevelopmentProposal proposal = document.getDevelopmentProposal();
-
         DocumentRequestAuthorizationCache documentRequestAuthorizationCache = getDocumentRequestAuthorizationCache(document);
-
         boolean hasSaveCertificationPermission;
 
         final String saveCertificationCacheKey = buildPermissionCacheKey(document, user, SAVE_CERTIFICATION);
@@ -954,9 +952,7 @@ public class ProposalDevelopmentDocumentAuthorizer extends KcKradTransactionalDo
     }
 
     protected boolean isAuthorizedToAddNote(Document document, Person user) {
-
         final ProposalDevelopmentDocument pdDocument = ((ProposalDevelopmentDocument) document);
-
         String proposalNbr = pdDocument.getDevelopmentProposal().getProposalNumber();
 
         final boolean hasPermission;

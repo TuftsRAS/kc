@@ -48,6 +48,7 @@ public class KeyPersonnelCertificationRule extends KcTransactionalDocumentRuleBa
     private QuestionnaireAnswerService questionnaireAnswerService;
     private ProposalDevelopmentPermissionsService permissionsService;
     private ParameterService parameterService;
+    private ProposalDevelopmentPermissionsService proposalDevelopmentPermissionsService;
 
     protected QuestionnaireAnswerService getQuestionnaireAnswerService(){
         if (questionnaireAnswerService == null)
@@ -74,7 +75,6 @@ public class KeyPersonnelCertificationRule extends KcTransactionalDocumentRuleBa
         return valid;
     }
 
-
     public boolean doesNonEmployeeHaveCertification(List<ProposalPerson> proposalPersons) {
         final Boolean validationEnabled = getParameterService().getParameterValueAsBoolean(Constants.MODULE_NAMESPACE_PROPOSAL_DEVELOPMENT, Constants.PARAMETER_COMPONENT_DOCUMENT,
                 ENABLE_KEY_PERSON_VALIDATION_FOR_NON_EMPLOYEE_PERSONNEL);
@@ -96,6 +96,12 @@ public class KeyPersonnelCertificationRule extends KcTransactionalDocumentRuleBa
         return person.getPersonId() == null && getPermissionsService().doesPersonRequireCertification(person) && !validKeyPersonCertification(person);
     }
 
+    protected ProposalDevelopmentPermissionsService getProposalDevelopmentPermissionsService(){
+        if (proposalDevelopmentPermissionsService == null)
+            proposalDevelopmentPermissionsService = KcServiceLocator.getService(ProposalDevelopmentPermissionsService.class);
+        return proposalDevelopmentPermissionsService;
+    }
+
     protected ParameterService getParameterService(){
         if (parameterService == null)
             parameterService = KcServiceLocator.getService(ParameterService.class);
@@ -113,7 +119,7 @@ public class KeyPersonnelCertificationRule extends KcTransactionalDocumentRuleBa
         String loggedInUser = getLoggedInUser();
         for (ProposalPerson person : pdDoc.getDevelopmentProposal().getProposalPersons()) {
             if (isPersonLoggedInPiOrCoi(loggedInUser, person)) {
-                if (hasCertification(person) && !validKeyPersonCertification(person)) {
+                if (needsCertification(person) && !validKeyPersonCertification(person)) {
                     generateAuditError(0,person.getFullName(), ERROR_PROPOSAL_PERSON_CERTIFICATION_INCOMPLETE);
                     return false;
                 }
@@ -153,7 +159,7 @@ public class KeyPersonnelCertificationRule extends KcTransactionalDocumentRuleBa
         boolean retval = true;
         int count = 0;
         for (ProposalPerson person : document.getDevelopmentProposal().getProposalPersons()) {
-            if (hasCertification(person) && !validKeyPersonCertification(person)) {
+            if (needsCertification(person) && !validKeyPersonCertification(person)) {
                 generateAuditError(count,person.getFullName(), ERROR_PROPOSAL_PERSON_CERTIFICATION_INCOMPLETE);
                 retval = false;
             }
@@ -171,7 +177,7 @@ public class KeyPersonnelCertificationRule extends KcTransactionalDocumentRuleBa
         int count = 0;
         for (ProposalPerson person : document.getDevelopmentProposal().getProposalPersons()) {
             if(StringUtils.equals(user.getPrincipalId(),person.getPersonId())
-                    && hasCertification(person) && !validKeyPersonCertification(person)) {
+                    && needsCertification(person) && !validKeyPersonCertification(person)) {
                 generateAuditError(count,person.getFullName(), ERROR_PROPOSAL_PERSON_CERTIFICATION_INCOMPLETE);
                 return false;
             }
@@ -184,21 +190,24 @@ public class KeyPersonnelCertificationRule extends KcTransactionalDocumentRuleBa
         return validateYesNoQuestions(person);
     }
 
-    protected boolean hasCertification(ProposalPerson person) {
-        
+    public boolean isRolodexCertificationEnabled(ProposalPerson person) {
+        return person.getPersonId() == null ? getProposalDevelopmentPermissionsService().isRolodexCertificationEnabled() : Boolean.TRUE;
+    }
+
+    protected boolean needsCertification(ProposalPerson person) {
         //questionnaires should continue to be answerable only to the following approvers,
         //possibly as well as other roles. i.e. Aggregator.
         PropAwardPersonRole personRole = person.getRole();
-        if (personRole.getCertificationRequired() &&
-                (personRole.getRoleCode().equals(Constants.CO_INVESTIGATOR_ROLE)
-                || personRole.getRoleCode().equals(Constants.PRINCIPAL_INVESTIGATOR_ROLE)
-                || (personRole.getRoleCode().equals(Constants.KEY_PERSON_ROLE) && person.getOptInCertificationStatus()))) {
-                return true;
-        }
-        
-        return false;
+        return (personRole.getCertificationRequired() && isRolodexCertificationEnabled(person) &&
+                doesRoleRequireCertification(person, personRole));
     }
-    
+
+    protected boolean doesRoleRequireCertification(ProposalPerson person, PropAwardPersonRole personRole) {
+        return personRole.getRoleCode().equals(Constants.CO_INVESTIGATOR_ROLE)
+        || personRole.getRoleCode().equals(Constants.PRINCIPAL_INVESTIGATOR_ROLE)
+        || (personRole.getRoleCode().equals(Constants.KEY_PERSON_ROLE) && person.getOptInCertificationStatus());
+    }
+
     /**
      * Yes/No questions have to be submitted to Grants.gov on document route. If the submitter has not completed the certifications,
      * errors should be displayed in audit mode.
