@@ -1,6 +1,11 @@
 
 
 ## CURRENT
+* RESKC-1570: Fix fringe benefits calculation on Budget CostShare Summary Report and create a Test for it. (#2845)
+
+  * Omar Soto Fortuño on Thu, 12 Apr 2018 09:33:33 -0600 [View Commit](../../commit/ad04655ccd9ab34a11bf7a9ba0b3c0b07b64514b)
+
+## coeus-1804.0015
 * RESKC-2182: Update Rice version for priority parallel routing fix
   * Jeff Largent on Tue, 10 Apr 2018 14:24:20 -0400 [View Commit](../../commit/19df60f8895cc0dbe4cdc93f0b5faa9d097a89e3)
 
