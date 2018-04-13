@@ -272,10 +272,29 @@ public class S2sUserAttachedFormServiceImpl implements S2sUserAttachedFormServic
     private void doHumanStudiesWorkaround(Document doc, Map<String, KcFile> attachments) {
         final Map<String, KcFile> allHsAttachments = new HashMap<>();
 
+        //remove the "empty" HumanSubjectStudy popout form from the list of attachments if it isn't a part of the xml submission
+        if (attachments.containsKey("HumanSubjectStudy-V1.0.pdf")) {
+            final NodeList files = doc.getElementsByTagNameNS("http://apply.grants.gov/system/Attachments-V1.0", "FileName");
+            boolean found = false;
+            for (int i = 0; i < files.getLength(); i++) {
+                final Node attachmentName = files.item(i);
+                if ("HumanSubjectStudy-V1.0.pdf".equals(attachmentName.getTextContent())) {
+                    found = true;
+                }
+            }
+
+            if (!found) {
+                attachments.remove("HumanSubjectStudy-V1.0.pdf");
+            }
+        }
+
         final NodeList hsAtt = doc.getElementsByTagNameNS("http://apply.grants.gov/forms/PHSHumanSubjectsAndClinicalTrialsInfo-V1.0", "ATT");
         for (int i = 0; i < hsAtt.getLength(); i++) {
             final Node attachmentName = hsAtt.item(i);
             final KcFile hsAttPdf = attachments.get(attachmentName.getTextContent());
+
+            //remove the attachment from the attachment list because it is extracted and not included as a normal attachment
+            attachments.remove(attachmentName.getTextContent());
             if (hsAttPdf != null) {
                 try {
                     final Map<String, Object> hsAttinfo = proposalSpecialReviewHumanSubjectsAttachmentService.getSpecialReviewAttachmentXmlFileData(hsAttPdf.getData());
