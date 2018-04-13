@@ -49,8 +49,11 @@ import org.kuali.rice.kew.api.action.ActionTaken;
 import org.kuali.rice.kew.api.action.ActionType;
 import org.kuali.rice.kew.api.action.WorkflowDocumentActionsService;
 import org.kuali.rice.kew.api.document.WorkflowDocumentService;
+import org.kuali.rice.kew.engine.node.RouteNodeInstance;
+import org.kuali.rice.kew.engine.node.service.RouteNodeService;
 import org.kuali.rice.kew.framework.postprocessor.ActionTakenEvent;
 import org.kuali.rice.kew.framework.postprocessor.DocumentRouteStatusChange;
+import org.kuali.rice.kew.service.KEWServiceLocator;
 import org.kuali.rice.kim.api.identity.Person;
 import org.kuali.rice.kim.api.services.KimApiServiceLocator;
 import org.kuali.rice.kns.web.ui.ExtraButton;
@@ -73,6 +76,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @NAMESPACE(namespace = Constants.MODULE_NAMESPACE_PROPOSAL_DEVELOPMENT)
 @COMPONENT(component = ParameterConstants.DOCUMENT_COMPONENT)
@@ -114,7 +118,9 @@ public class ProposalDevelopmentDocument extends BudgetParentDocument<Developmen
     @Transient
     private transient WorkflowDocumentActionsService  workflowDocumentActionsService;
 
-    
+    @Transient
+    private transient RouteNodeService routeNodeService;
+
     @Transient
     private transient DataDictionaryService dataDictionaryService  ;
     
@@ -683,7 +689,6 @@ public class ProposalDevelopmentDocument extends BudgetParentDocument<Developmen
         if (projectPublisher == null) {
             projectPublisher = KcServiceLocator.getService(ProjectPublisher.class);
         }
-
         return projectPublisher;
     }
 
@@ -695,7 +700,6 @@ public class ProposalDevelopmentDocument extends BudgetParentDocument<Developmen
         if (propDevProjectRetrievalService == null) {
             propDevProjectRetrievalService = KcServiceLocator.getService("propDevProjectRetrievalService");
         }
-
         return propDevProjectRetrievalService;
     }
 
@@ -705,6 +709,20 @@ public class ProposalDevelopmentDocument extends BudgetParentDocument<Developmen
 
     @Override
     public String getAdHocRouteNodeName() {
-        return getDocumentHeader().getWorkflowDocument().isSaved() ? null : PEOPLE_FLOWS;
+        List<RouteNodeInstance> nodes = getRouteNodeService().getCurrentNodeInstances(getDocumentNumber());
+        if (Objects.isNull(nodes) || nodes.isEmpty()) {
+            return null;
+        }
+        RouteNodeInstance nodeToAdhocRoute = nodes.stream().filter(
+                node -> node.getRouteNode().getRouteNodeName().equalsIgnoreCase(PEOPLE_FLOWS)).
+                findFirst().orElse(nodes.get(0));
+        return nodeToAdhocRoute.getName();
+    }
+
+    public RouteNodeService getRouteNodeService() {
+        if (routeNodeService == null) {
+            routeNodeService = KEWServiceLocator.getRouteNodeService();
+        }
+        return routeNodeService;
     }
 }
