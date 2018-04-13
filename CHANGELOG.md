@@ -1,6 +1,11 @@
 
 
 ## CURRENT
+* RESKC-1681: Fix an issue when trying to create a new Award Budget while being in Do Not Post status. (#2849)
+
+  * Omar Soto Fortuño on Fri, 13 Apr 2018 10:19:08 -0400 [View Commit](../../commit/07d0fc3b132b4f3a845a96eb6a46ab384aef2f04)
+
+## coeus-1804.0018
 * RESKC-2436: Fix S2S bug when sponsor has Agency Tracking Number. (#2847)
 
   * Omar Soto Fortuño on Thu, 12 Apr 2018 17:36:44 -0600 [View Commit](../../commit/6a3c54be4d5e0c4d3cdfc5435b5fbd4087f5b3c1)
