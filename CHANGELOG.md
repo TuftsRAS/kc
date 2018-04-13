@@ -1,6 +1,29 @@
 
 
 ## CURRENT
+* RESKC-2597: Fix adhoc routing STE (#2848)
+
+* RESKC-2597: Fix adhoc routing STE
+  * Summary: If you attempt to add an ad-hoc recipient at a non-PeopleFlow workflow stop (KEW) it will give the below STE error upon clicking the 'send ad-hoc request' button. Relates to work done in   RESKC-2226 DELIVERED  .
+  * 
+  * Steps to Reproduce:
+  * 
+  * create proposal - use environment where KEW workflow exists like in res-demo1
+  * complete and route
+  * approve until to KC-WKFLW OSPApprover stop
+  * add an ad-hoc approver
+  * click the 'send ad-hoc recipients' button and get below STE
+  * Testing Information:
+  * res-demo1 doc 24714
+  * 
+  * Actual Result: get below STE on clicking 'send adhoc requests'
+  * 
+  * Expected Result: should add ad-hoc recipient to workflow as expected.
+  * 
+* Added null check
+  * Gayathri Athreya on Fri, 13 Apr 2018 10:01:40 -0600 [View Commit](../../commit/6fa6e6f4d577a94e3e95df682257c4fe00371602)
+
+## coeus-1804.0019
 * RESKC-1681: Fix an issue when trying to create a new Award Budget while being in Do Not Post status. (#2849)
 
   * Omar Soto Fortuño on Fri, 13 Apr 2018 10:19:08 -0400 [View Commit](../../commit/07d0fc3b132b4f3a845a96eb6a46ab384aef2f04)
