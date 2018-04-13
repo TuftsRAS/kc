@@ -1008,7 +1008,8 @@ public class AwardBudgetServiceImpl extends AbstractBudgetService<Award> impleme
         for (AwardBudgetExt awardBudget : award.getBudgets()) {
             if (!(StringUtils.equals(awardBudget.getAwardBudgetStatusCode(), getPostedBudgetStatus())
                     || StringUtils.equals(awardBudget.getAwardBudgetStatusCode(), getRejectedBudgetStatus())
-                    || StringUtils.equals(awardBudget.getAwardBudgetStatusCode(), getCancelledBudgetStatus()))) {
+                    || StringUtils.equals(awardBudget.getAwardBudgetStatusCode(), getCancelledBudgetStatus())
+                    || StringUtils.equals(awardBudget.getAwardBudgetStatusCode(), getDoNotPostBudgetStatus()))) {
                 result = true;
                 GlobalVariables.getMessageMap().putError(BUDGET_VERSION_ERROR_PREFIX, 
                         KeyConstants.ERROR_AWARD_UNFINALIZED_BUDGET_EXISTS, (StringUtils.isBlank(awardBudget.getName()) ? UNNAMED : awardBudget.getName()));
