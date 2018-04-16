@@ -1,6 +1,10 @@
 
 
 ## CURRENT
+* No Changes
+
+
+## coeus-1804.0021
 * RESKC-2893: removing certain internal attachments that should not be included for HumanSubjectsClinicalTrials form
   * Travis Schneeberger on Fri, 13 Apr 2018 16:30:59 -0400 [View Commit](../../commit/b5fc463ecbd3657f3a7b5935c9c5fde8a81332bf)
 
