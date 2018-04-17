@@ -52,6 +52,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import static org.kuali.kra.infrastructure.FeatureFlagConstants.STANDALONE_BUDGET_ENABLED_FLAG;
+
 @Service("proposalBudgetViewHelperService")
 @Scope("prototype")
 public class ProposalBudgetViewHelperServiceImpl extends KcViewHelperServiceImpl {
@@ -332,6 +334,11 @@ public class ProposalBudgetViewHelperServiceImpl extends KcViewHelperServiceImpl
 
     public boolean isSinglePointEntry() {
         return getParameterService().getParameterValueAsBoolean(Constants.MODULE_NAMESPACE_PROPOSAL_DEVELOPMENT,Constants.PARAMETER_COMPONENT_DOCUMENT, SINGLE_POINT_ENTRY_FLAG);
+    }
+
+
+    public boolean isStandaloneBudgetEnabled() {
+        return getParameterService().getParameterValueAsBoolean(Constants.MODULE_NAMESPACE_BUDGET, Constants.KC_ALL_PARAMETER_DETAIL_TYPE_CODE, STANDALONE_BUDGET_ENABLED_FLAG, false);
     }
 
     public BudgetCalculationService getBudgetCalculationService() {

@@ -139,4 +139,10 @@
   <bean id="Kc-InlineEdit-InputField" parent="Kc-InlineEdit-InputField-parentBean"/>
   <bean id="Kc-InlineEdit-InputField-parentBean" abstract="true" parent="Uif-InputField"
         p:additionalCssClasses="@{!#isAddLine ? 'uif-inline' : ''}" />
+
+  <bean id="Kc-PopoutActionLink" parent="Kc-PopoutActionLink-parentBean"/>
+  <bean id="Kc-PopoutActionLink-parentBean" abstract="true" parent="Uif-ActionLink-parentBean">
+      <property name="template" value="/WEB-INF/ftl/krad/components/element/popoutActionLink.ftl"/>
+      <property name="templateName" value="uif_popoutActionLink"/>
+  </bean>
 </beans>

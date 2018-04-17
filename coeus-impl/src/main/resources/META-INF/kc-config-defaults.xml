@@ -288,6 +288,8 @@
 	<param name="protocols.standalone.enabled">false</param>
 	<param name="protocols.standalone.base.url">${application.rest.services.base.url}</param>
 
+	<param name="budget.standalone.base.url">${application.rest.services.base.url}</param>
+
 	<param name="auth.rest.urls.regex">.*/api/v1/.*,.*/api/v2/.*,.*/hr-import/hrimport/.*</param>
 	<param name="auth.core.enabled">false</param>
 
