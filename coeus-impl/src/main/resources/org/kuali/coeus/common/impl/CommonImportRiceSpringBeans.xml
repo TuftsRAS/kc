@@ -35,6 +35,7 @@
     <bean id="dbPlatform" parent="grlImporter" p:serviceName="dbPlatform" />
     <bean id="stateService" parent="grlImporter" p:serviceName="stateService" />
     <bean id="persistenceStructureService" parent="grlImporter" p:serviceName="persistenceStructureService" />
+    <bean id="personService" parent="grlImporter" p:serviceName="personService" />
     <bean id="encryptionService" parent="grlImporter" p:serviceName="encryptionService" />
     <bean id="lookupService" parent="grlImporter" p:serviceName="lookupService" />
     <bean id="businessObjectMetaDataService" parent="grlImporter" p:serviceName="businessObjectMetaDataService" />
@@ -42,6 +43,7 @@
     <bean id="dateTimeService" parent="grlImporter" p:serviceName="dateTimeService" />
     <bean id="rice.ksb.serviceBus" parent="grlImporter" p:serviceName="rice.ksb.serviceBus" />
     <bean id="documentService" parent="grlImporter" p:serviceName="documentService" />
+    <bean id="documentDictionaryService" parent="grlImporter" p:serviceName="documentDictionaryService" />
     <bean id="functionRepositoryService" parent="grlImporter" p:serviceName="functionRepositoryService" />
     <bean id="maintenanceDocumentDictionaryService" parent="grlImporter" p:serviceName="maintenanceDocumentDictionaryService" />
     <bean id="pessimisticLockService" parent="grlImporter" p:serviceName="pessimisticLockService" />
@@ -61,7 +63,12 @@
     <bean id="kradApplicationDataSource" parent="grlImporter" p:serviceName="kradApplicationDataSource"/>
     <bean id="documentTypeService" parent="grlImporter" p:serviceName="rice.kew.documentTypeService" />
     <bean id="dictionaryValidationService" parent="grlImporter" p:serviceName="dictionaryValidationService"/>
+    <bean id="workflowDocumentActionsService" parent="grlImporter" p:serviceName="workflowDocumentActionsService" />
+    <bean id="actionRequestService" parent="grlImporter" p:serviceName="enActionRequestService" />
     <bean id="globalCacheManager" parent="grlImporter" p:serviceName="globalCacheManager"/>
+    <bean id="groupService" parent="grlImporter" p:serviceName="groupService"/>
+    <bean id="documentRouteHeaderService" parent="grlImporter" p:serviceName="enDocumentRouteHeaderService"/>
+    <bean id="documentSearchService" parent="grlImporter" p:serviceName="enDocumentSearchService"/>
 
     <bean id="ccImporter" abstract="true" class="org.kuali.coeus.sys.framework.service.ConfigContextConfigObjectFactoryBean" p:singleton="true" p:mustExist="true" />
 

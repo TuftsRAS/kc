@@ -23,7 +23,7 @@ import org.kuali.coeus.dc.common.db.ConnectionDaoService;
 public class KewDocHeaderDaoImpl implements KewDocHeaderDao {
 	
     private static final String TIME_AND_MONEY_DOCUMENT = "TimeAndMoneyDocument";
-	private static final String DOCUMENT_HEADER_QUERY = "select DOC_HDR_ID, DOC_HDR_STAT_CD from KREW_DOC_HDR_T where DOC_TYP_ID in (select doc_typ_id from KREW_DOC_TYP_T where DOC_TYP_NM = ?)";
+    private static final String DOCUMENT_HEADER_QUERY = "select DOC_HDR_ID, DOC_HDR_STAT_CD from KREW_DOC_HDR_T where DOC_TYP_ID in (select doc_typ_id from KREW_DOC_TYP_T where DOC_TYP_NM = ?)";
 
 	private static final Logger LOG = Logger.getLogger(KewDocHeaderDaoImpl.class.getName());
 

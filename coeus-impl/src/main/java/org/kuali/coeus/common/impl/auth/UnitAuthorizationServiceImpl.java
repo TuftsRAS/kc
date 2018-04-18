@@ -72,7 +72,7 @@ public class UnitAuthorizationServiceImpl implements UnitAuthorizationService {
             qualifiedRoleAttributes.put(UNIT_NUMBER, unitNumber);
             
             //The UnitHierarchyRoleTypeService takes care of traversing the Unit tree.
-            userHasPermission = permissionService.isAuthorized(userId, namespaceCode, permissionName, qualifiedRoleAttributes); 
+            userHasPermission = permissionService.isAuthorized(userId, namespaceCode, permissionName, qualifiedRoleAttributes);
         }
         return userHasPermission;
     }
