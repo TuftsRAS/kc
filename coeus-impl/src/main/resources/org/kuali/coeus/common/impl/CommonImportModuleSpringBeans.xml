@@ -29,7 +29,6 @@
     <!-- making singleton false to prevent caching and avoid an NPE, this indicates a dependency issue across modules -->
     <bean id="awardAmountInfoService" parent="grlImporter" p:serviceName="awardAmountInfoService" p:singleton="false" />
     <bean id="negotiationService" parent="grlImporter" p:serviceName="negotiationService" p:singleton="false"/>
-    <bean id="connectionDaoService" parent="grlImporter" p:serviceName="connectionDaoService" p:singleton="false"/>
     <bean id="subAwardService" parent="grlImporter" p:serviceName="subAwardService" p:singleton="false" />
     <bean id="awardService" parent="grlImporter" p:serviceName="awardService" p:singleton="false"/>
     <bean id="institutionalProposalService" parent="grlImporter" p:serviceName="institutionalProposalService" p:singleton="false"/>
