@@ -1,6 +1,11 @@
 
 
 ## CURRENT
+* RESKC-2902: Fix Oracle integration test on a clean database (#2859)
+
+  * Douglas Pace on Thu, 19 Apr 2018 22:08:16 -0700 [View Commit](../../commit/695755c97c3c9de2b41ef56db3d81dc8ae22e08c)
+
+## coeus-1804.0025
 * No Changes
 
 
