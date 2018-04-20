@@ -1,6 +1,11 @@
 
 
 ## CURRENT
+* RESKC-2613: Fix SQL Flywheel sequence for award sequencing migration script. (#2860)
+
+  * Omar Soto Fortuño on Fri, 20 Apr 2018 12:45:02 -0400 [View Commit](../../commit/a262177cc9f582c24d8558d165c8a1ab9a02452c)
+
+## coeus-1804.0028
 * RESKC-2306: Added full name to the Last Updated By field on the Header of Sub Award Document.
 
   * Omar Soto Fortuño on Fri, 20 Apr 2018 10:39:42 -0400 [View Commit](../../commit/c767fd3f572e10d45ac2454aa2449dcb2f803cde)

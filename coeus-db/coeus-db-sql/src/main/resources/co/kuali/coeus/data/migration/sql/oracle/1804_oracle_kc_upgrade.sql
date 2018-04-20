@@ -21,5 +21,5 @@ set define off
 set sqlblanklines on
 
 spool 1804_oracle_kc_upgrade.sql.log
-@./kc/bootstrap/V1804_004__fix_sequence_numbers_in_award_tables.sql
+@./kc/bootstrap/V1804_005__fix_sequence_numbers_in_award_tables.sql
 commit;
