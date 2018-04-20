@@ -63,12 +63,6 @@ public class ProposalWorkflowTest extends ProposalDevelopmentRuleTestBase {
     @Override
 	public void setUp() throws Exception {
         documentService = KRADServiceLocatorWeb.getDocumentService();
-        AgendaBoService agendaBoService = KcServiceLocator.getService(AgendaBoService.class);
-        AgendaDefinition agendaDefOrig = agendaBoService.getAgendaByAgendaId("KC10001");
-        AgendaDefinition.Builder builder = AgendaDefinition.Builder.create(agendaDefOrig);
-        builder.setActive(true);
-        AgendaDefinition updatedAgenda = builder.build();
-        agendaBoService.updateAgenda(updatedAgenda);
         updateParameterForTesting("KC-PD", "Document", "proposaldevelopment.creditsplit.enabled", "N");
         updateParameterForTesting("KC-PD", "Document", "KEY_PERSON_CERTIFICATION_DEFERRAL", "BA");
         Map<String, Object> questionnaireCriteria = new HashMap<>();
