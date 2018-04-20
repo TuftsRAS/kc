@@ -1,6 +1,11 @@
 
 
 ## CURRENT
+* RESKC-2613: Fix an issue that created a syncing problem with award_person (and other award associated tables) table when editing an award that was cancelled in the previous version. Changed how we handle sequencing when creating a new Award Version using SequenceUtils. Created integration test for this scenario. Created migration scripts to fix the issue in current data.
+
+  * Omar Soto Fortuño on Fri, 20 Apr 2018 08:49:17 -0400 [View Commit](../../commit/ff01de2c508bb6ddbbc79022b7e49531d066dda2)
+
+## coeus-1804.0026
 * RESKC-2902: Fix Oracle integration test on a clean database (#2859)
 
   * Douglas Pace on Thu, 19 Apr 2018 22:08:16 -0700 [View Commit](../../commit/695755c97c3c9de2b41ef56db3d81dc8ae22e08c)
