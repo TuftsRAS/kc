@@ -11,7 +11,6 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.aspectj.apache.bcel.classfile.Constant;
 import org.kuali.coeus.award.AccountInformationBean;
 import org.kuali.coeus.award.finance.AwardAccount;
 import org.kuali.coeus.award.finance.AwardPostHistoryBean;
@@ -22,15 +21,18 @@ import org.kuali.coeus.award.finance.timeAndMoney.TimeAndMoneyPosts;
 import org.kuali.coeus.award.finance.timeAndMoney.dao.TimeAndMoneyPostsDao;
 import org.kuali.coeus.coi.framework.DisclosureProjectStatus;
 import org.kuali.coeus.coi.framework.DisclosureStatusRetrievalService;
+import org.kuali.coeus.common.budget.framework.core.BudgetVersionFormBase;
+import org.kuali.coeus.common.framework.custom.CustomDataDocumentForm;
+import org.kuali.coeus.common.framework.medusa.MedusaBean;
 import org.kuali.coeus.common.framework.person.KcPerson;
 import org.kuali.coeus.common.framework.person.KcPersonService;
 import org.kuali.coeus.common.framework.version.VersionStatus;
 import org.kuali.coeus.common.framework.version.history.VersionHistoryService;
 import org.kuali.coeus.common.notification.impl.NotificationHelper;
 import org.kuali.coeus.common.permissions.impl.web.struts.form.PermissionsForm;
-import org.kuali.coeus.sys.framework.validation.Auditable;
 import org.kuali.coeus.sys.framework.model.MultiLookupForm;
 import org.kuali.coeus.sys.framework.service.KcServiceLocator;
+import org.kuali.coeus.sys.framework.validation.Auditable;
 import org.kuali.kra.authorization.KraAuthorizationConstants;
 import org.kuali.kra.award.awardhierarchy.AwardHierarchy;
 import org.kuali.kra.award.awardhierarchy.AwardHierarchyBean;
@@ -66,16 +68,12 @@ import org.kuali.kra.award.paymentreports.specialapproval.foreigntravel.Approved
 import org.kuali.kra.award.permissions.PermissionsHelper;
 import org.kuali.kra.award.printing.AwardPrintNotice;
 import org.kuali.kra.award.printing.AwardTransactionSelectorBean;
+import org.kuali.kra.award.service.AwardHierarchyUIService;
 import org.kuali.kra.award.specialreview.SpecialReviewHelper;
 import org.kuali.kra.award.web.struts.action.SponsorTermFormHelper;
 import org.kuali.kra.external.award.AwardAccountService;
 import org.kuali.kra.external.award.web.AccountCreationPresentationHelper;
 import org.kuali.kra.infrastructure.Constants;
-import org.kuali.coeus.common.framework.medusa.MedusaBean;
-import org.kuali.kra.award.service.AwardHierarchyUIService;
-import org.kuali.coeus.common.budget.framework.core.BudgetVersionFormBase;
-import org.kuali.coeus.common.framework.custom.CustomDataDocumentForm;
-import org.kuali.kra.infrastructure.FeatureFlagConstants;
 import org.kuali.rice.core.api.CoreApiServiceLocator;
 import org.kuali.rice.core.api.config.property.ConfigurationService;
 import org.kuali.rice.core.api.criteria.CountFlag;
@@ -1265,7 +1263,7 @@ public class AwardForm extends BudgetVersionFormBase implements MultiLookupForm,
         getDocInfo().add(new HeaderField("DataDictionary.Award.attributes.awardIdAccount", "<div id = \"awardIdAccount\">" + getAwardIdAccount(awardDocument) + "</div>"));
 
         setupSponsor(awardDocument);
-        setupLastUpdate(awardDocument);
+        setupLastUpdate(awardDocument, UPDATE_TIMESTAMP_DD_NAME);
 
     }
 
@@ -1274,23 +1272,6 @@ public class AwardForm extends BudgetVersionFormBase implements MultiLookupForm,
         String account = awardDocument.getAward().getAccountNumber() != null ? awardDocument.getAward().getAccountNumber()
                 : Constants.EMPTY_STRING;
         return awardNum + COLUMN + account;
-    }
-
-    private void setupLastUpdate(AwardDocument awardDocument) {
-        if (awardDocument.getUpdateTimestamp() != null) {
-            String createDateStr = CoreApiServiceLocator.getDateTimeService().toString(awardDocument.getUpdateTimestamp(), Constants.MM_DD_YY_DATE_FORMAT);
-            String lastUpdatedBy = awardDocument.getUpdateUser();
-            KcPerson user = getKcPersonService().getKcPersonByUserName(awardDocument.getUpdateUser());
-
-            if (user != null && isShowFullNameEnabled()) {
-                lastUpdatedBy = user.getFullName() + " (" + awardDocument.getUpdateUser() + ")";
-            }
-            lastUpdatedBy = StringUtils.substring(lastUpdatedBy, 0, NUMBER_30);
-            getDocInfo().add(
-                    new HeaderField(UPDATE_TIMESTAMP_DD_NAME, createDateStr + " by " + lastUpdatedBy));
-        } else {
-            getDocInfo().add(new HeaderField(UPDATE_TIMESTAMP_DD_NAME, Constants.EMPTY_STRING));
-        }
     }
 
     private void setupSponsor(AwardDocument awardDocument) {
@@ -1444,11 +1425,6 @@ public class AwardForm extends BudgetVersionFormBase implements MultiLookupForm,
     protected boolean isAutoPostAward() {
         return getParameterService().getParameterValueAsBoolean(
                 Constants.PARAMETER_MODULE_AWARD, ParameterConstants.ALL_COMPONENT, Constants.AWARD_AUTO_POST_ENABLED);
-    }
-
-    protected boolean isShowFullNameEnabled() {
-        return getParameterService().getParameterValueAsBoolean(
-                Constants.MODULE_NAMESPACE_GEN, ParameterConstants.ALL_COMPONENT, FeatureFlagConstants.SHOW_FULL_NAME_IN_LAST_UPDATED_BY, false);
     }
 
     public List<ExtraButton> getExtraActionsButtons() {

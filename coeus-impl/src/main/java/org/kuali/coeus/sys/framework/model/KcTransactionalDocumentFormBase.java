@@ -9,19 +9,27 @@ package org.kuali.coeus.sys.framework.model;
 
 import org.apache.commons.lang3.StringUtils;
 import org.kuali.coeus.common.framework.medusa.MedusaService;
+import org.kuali.coeus.common.framework.person.KcPerson;
+import org.kuali.coeus.common.framework.person.KcPersonService;
 import org.kuali.coeus.common.framework.person.attr.PersonEditableField;
 import org.kuali.coeus.common.questionnaire.framework.core.MultiQuestionableFormInterface;
 import org.kuali.coeus.common.questionnaire.framework.core.QuestionableFormInterface;
 import org.kuali.coeus.sys.framework.service.KcServiceLocator;
 import org.kuali.coeus.sys.framework.validation.SoftError;
 import org.kuali.kra.authorization.KraAuthorizationConstants;
+import org.kuali.kra.infrastructure.Constants;
+import org.kuali.kra.infrastructure.FeatureFlagConstants;
 import org.kuali.kra.infrastructure.KeyConstants;
 import org.kuali.kra.krms.KcKrmsConstants;
 import org.kuali.rice.core.api.config.property.ConfigurationService;
+import org.kuali.rice.core.api.datetime.DateTimeService;
+import org.kuali.rice.coreservice.framework.parameter.ParameterConstants;
+import org.kuali.rice.coreservice.framework.parameter.ParameterService;
 import org.kuali.rice.kim.api.KimConstants;
 import org.kuali.rice.kns.document.authorization.DocumentAuthorizerBase;
 import org.kuali.rice.kns.web.struts.form.KualiTransactionalDocumentFormBase;
 import org.kuali.rice.kns.web.ui.ExtraButton;
+import org.kuali.rice.kns.web.ui.HeaderField;
 import org.kuali.rice.krad.document.Document;
 import org.kuali.rice.krad.document.authorization.PessimisticLock;
 import org.kuali.rice.krad.service.BusinessObjectService;
@@ -39,6 +47,10 @@ public abstract class KcTransactionalDocumentFormBase extends KualiTransactional
 
     private static final long serialVersionUID = 1161569719154606103L;
 
+    private static final int LAST_UPDATED_BY_MAX_LENGTH = 30;
+    private static final int LAST_UPDATED_BY_USERNAME_MAX_LENGTH = 15;
+    private static final int LAST_UPDATED_BY_FULL_NAME_MAX_LENGTH = 30;
+
     protected String actionName;
     protected String navigateTo;
     
@@ -47,6 +59,10 @@ public abstract class KcTransactionalDocumentFormBase extends KualiTransactional
     
     private boolean medusaOpenedDoc;
     private Map<String, Boolean> personEditableFields;
+
+    private transient KcPersonService kcPersonService;
+    private transient ParameterService parameterService;
+    private transient DateTimeService dateTimeService;
     
     private List<String> unitRulesMessages = new ArrayList<String>();
 
@@ -386,5 +402,49 @@ public abstract class KcTransactionalDocumentFormBase extends KualiTransactional
 
     protected MedusaService getMedusaService() {
         return KcServiceLocator.getService(MedusaService.class);
+    }
+
+    protected void setupLastUpdate(KcTransactionalDocumentBase document, String updateTimestampDdName) {
+        if (document.getUpdateTimestamp() != null) {
+            String createDateStr = getDateTimeService().toString(document.getUpdateTimestamp(), Constants.MM_DD_YY_DATE_FORMAT);
+            String lastUpdatedBy = StringUtils.substring(document.getUpdateUser(), 0, LAST_UPDATED_BY_MAX_LENGTH);
+            KcPerson user = getKcPersonService().getKcPersonByUserName(document.getUpdateUser());
+
+            if (user != null && isShowFullNameEnabled()) {
+                lastUpdatedBy = StringUtils.substring(user.getFullName(), 0, LAST_UPDATED_BY_FULL_NAME_MAX_LENGTH) + " (" + StringUtils.substring(document.getUpdateUser(), 0, LAST_UPDATED_BY_USERNAME_MAX_LENGTH) + ")";
+            }
+
+            getDocInfo().add(
+                    new HeaderField(updateTimestampDdName, createDateStr + " by " + lastUpdatedBy));
+        } else {
+            getDocInfo().add(new HeaderField(updateTimestampDdName, Constants.EMPTY_STRING));
+        }
+    }
+
+    private ParameterService getParameterService() {
+        if (parameterService == null) {
+            parameterService = KcServiceLocator.getService(ParameterService.class);
+        }
+
+        return parameterService;
+    }
+
+    private KcPersonService getKcPersonService() {
+        if(kcPersonService == null) {
+            kcPersonService = KcServiceLocator.getService(KcPersonService.class);
+        }
+        return kcPersonService;
+    }
+
+    private DateTimeService getDateTimeService() {
+        if(dateTimeService == null) {
+            dateTimeService = KcServiceLocator.getService(DateTimeService.class);
+        }
+        return dateTimeService;
+    }
+
+    protected boolean isShowFullNameEnabled() {
+        return getParameterService().getParameterValueAsBoolean(
+                Constants.MODULE_NAMESPACE_GEN, ParameterConstants.ALL_COMPONENT, FeatureFlagConstants.SHOW_FULL_NAME_IN_LAST_UPDATED_BY, false);
     }
 }

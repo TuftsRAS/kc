@@ -8,7 +8,6 @@
 package org.kuali.kra.timeandmoney;
 
 import org.apache.commons.lang3.StringUtils;
-import org.kuali.coeus.common.framework.person.KcPerson;
 import org.kuali.coeus.common.framework.person.KcPersonService;
 import org.kuali.coeus.common.framework.version.VersionStatus;
 import org.kuali.coeus.sys.framework.model.KcTransactionalDocumentFormBase;
@@ -17,11 +16,10 @@ import org.kuali.coeus.sys.framework.workflow.KcWorkflowService;
 import org.kuali.kra.authorization.KraAuthorizationConstants;
 import org.kuali.kra.award.document.AwardDocument;
 import org.kuali.kra.award.home.Award;
+import org.kuali.kra.award.service.AwardHierarchyUIService;
 import org.kuali.kra.award.timeandmoney.AwardDirectFandADistributionBean;
 import org.kuali.kra.award.version.service.AwardVersionService;
 import org.kuali.kra.infrastructure.Constants;
-import org.kuali.kra.award.service.AwardHierarchyUIService;
-import org.kuali.kra.infrastructure.FeatureFlagConstants;
 import org.kuali.kra.timeandmoney.document.TimeAndMoneyDocument;
 import org.kuali.kra.timeandmoney.transactions.TransactionBean;
 import org.kuali.rice.core.api.CoreApiServiceLocator;
@@ -38,7 +36,6 @@ import org.kuali.rice.krad.util.GlobalVariables;
 import org.springframework.util.AutoPopulatingList;
 
 import javax.servlet.http.HttpServletRequest;
-
 import java.text.ParseException;
 import java.util.*;
 
@@ -583,7 +580,7 @@ public class TimeAndMoneyForm extends KcTransactionalDocumentFormBase {
         getDocInfo().add(new HeaderField("DataDictionary.Award.attributes.awardIdAccount", "<div id = \"awardIdAccount\">" + getAwardIdAccount(awardDocument) + "</div>"));
 
         setupSponsor(awardDocument);
-        setupLastUpdate(awardDocument);
+        setupLastUpdate(awardDocument, UPDATE_TIMESTAMP_DD_NAME);
 
     }
     
@@ -592,23 +589,6 @@ public class TimeAndMoneyForm extends KcTransactionalDocumentFormBase {
         String account = awardDocument.getAward().getAccountNumber() != null ? awardDocument.getAward().getAccountNumber()
                 : Constants.EMPTY_STRING;
         return awardNum + COLUMN + account;
-    }
-
-    private void setupLastUpdate(AwardDocument awardDocument) {
-        if (awardDocument.getUpdateTimestamp() != null) {
-            String createDateStr = CoreApiServiceLocator.getDateTimeService().toString(awardDocument.getUpdateTimestamp(), Constants.MM_DD_YY_DATE_FORMAT);
-            String lastUpdatedBy = awardDocument.getUpdateUser();
-            KcPerson user = getKcPersonService().getKcPersonByUserName(awardDocument.getUpdateUser());
-
-            if (user != null && isShowFullNameEnabled()) {
-                lastUpdatedBy = user.getFullName() + " (" + awardDocument.getUpdateUser() + ")";
-            }
-            lastUpdatedBy = StringUtils.substring(lastUpdatedBy, 0, NUMBER_30);
-            getDocInfo().add(
-                    new HeaderField(UPDATE_TIMESTAMP_DD_NAME, createDateStr + " by " + lastUpdatedBy));
-        } else {
-            getDocInfo().add(new HeaderField(UPDATE_TIMESTAMP_DD_NAME, Constants.EMPTY_STRING));
-        }
     }
 
     private void setupSponsor(AwardDocument awardDocument) {
@@ -700,10 +680,6 @@ public class TimeAndMoneyForm extends KcTransactionalDocumentFormBase {
                 Constants.PARAMETER_TIME_MONEY, ParameterConstants.ALL_COMPONENT, Constants.TM_AUTO_POST_ENABLED);
     }
 
-    protected boolean isShowFullNameEnabled() {
-        return getParameterService().getParameterValueAsBoolean(
-                Constants.MODULE_NAMESPACE_GEN, ParameterConstants.ALL_COMPONENT, FeatureFlagConstants.SHOW_FULL_NAME_IN_LAST_UPDATED_BY, false);
-    }
     /**
      * This is a utility method to add a new button to the extra buttons
      * collection.

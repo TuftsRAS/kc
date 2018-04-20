@@ -9,20 +9,21 @@
 package org.kuali.kra.subaward;
 
 import org.apache.struts.upload.FormFile;
+import org.kuali.coeus.common.framework.auth.task.TaskAuthorizationService;
+import org.kuali.coeus.common.framework.custom.CustomDataDocumentForm;
+import org.kuali.coeus.common.framework.medusa.MedusaBean;
 import org.kuali.coeus.common.framework.rolodex.Rolodex;
 import org.kuali.coeus.common.framework.version.VersionStatus;
 import org.kuali.coeus.common.framework.version.history.VersionHistoryService;
 import org.kuali.coeus.common.notification.impl.NotificationHelper;
 import org.kuali.coeus.common.permissions.impl.web.struts.form.PermissionsForm;
 import org.kuali.coeus.common.permissions.impl.web.struts.form.PermissionsHelperBase;
-import org.kuali.coeus.common.framework.auth.task.TaskAuthorizationService;
-import org.kuali.coeus.sys.framework.validation.Auditable;
 import org.kuali.coeus.sys.framework.model.KcTransactionalDocumentFormBase;
 import org.kuali.coeus.sys.framework.service.KcServiceLocator;
+import org.kuali.coeus.sys.framework.validation.Auditable;
 import org.kuali.kra.award.home.Award;
 import org.kuali.kra.infrastructure.Constants;
 import org.kuali.kra.infrastructure.TaskName;
-import org.kuali.coeus.common.framework.medusa.MedusaBean;
 import org.kuali.kra.subaward.bo.*;
 import org.kuali.kra.subaward.customdata.CustomDataHelper;
 import org.kuali.kra.subaward.document.SubAwardDocument;
@@ -30,7 +31,6 @@ import org.kuali.kra.subaward.document.authorization.SubAwardTask;
 import org.kuali.kra.subaward.notification.SubAwardNotificationContext;
 import org.kuali.kra.subaward.service.SubAwardService;
 import org.kuali.kra.subaward.templateAttachments.SubAwardAttachmentFormBean;
-import org.kuali.coeus.common.framework.custom.CustomDataDocumentForm;
 import org.kuali.rice.core.api.CoreApiServiceLocator;
 import org.kuali.rice.core.api.config.property.ConfigurationService;
 import org.kuali.rice.coreservice.framework.parameter.ParameterService;
@@ -41,10 +41,9 @@ import org.kuali.rice.kns.web.ui.ExtraButton;
 import org.kuali.rice.kns.web.ui.HeaderField;
 import org.kuali.rice.krad.util.GlobalVariables;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
 
 public class SubAwardForm extends KcTransactionalDocumentFormBase
 implements PermissionsForm, Auditable, CustomDataDocumentForm {
@@ -53,6 +52,8 @@ implements PermissionsForm, Auditable, CustomDataDocumentForm {
 
     private static final String COLUMN = ":";
     private static final String USE_SUBAWARD_INVOICE_INQUIRY = "USE_SUBAWARD_INVOICE_INQUIRY";
+
+    public static final String UPDATE_TIMESTAMP_DD_NAME = "DataDictionary.SubAward.attributes.lastUpdate";
 
     private String lookupResultsSequenceNumber;
     private String lookupResultsBOClassName;
@@ -215,39 +216,23 @@ implements PermissionsForm, Auditable, CustomDataDocumentForm {
             docIdAndStatus = getDocument().getDocumentNumber()
             + COLUMN + workflowDocument.getStatus().getLabel();
         }
-        String lastUpdated ="";
-        if (subAwardDocument.getSubAward().getUpdateTimestamp() != null
-        && subAwardDocument.getSubAward().getUpdateUser() != null) {
 
-            lastUpdated = subAwardDocument.getSubAward().getUpdateTimestamp().
-            toString() + " By " +  subAwardDocument.getSubAward().
-            getUpdateUser();
-        }
-
-        getDocInfo().add(new HeaderField(
-        "DataDictionary.SubAward.attributes.requisitionerId",
-        subAwardDocument.getSubAward().getRequisitionerUserName()));
-        getDocInfo().add(new HeaderField(
-        "DataDictionary.SubAward.attributes.docIdStatus", docIdAndStatus));
+        getDocInfo().add(new HeaderField("DataDictionary.SubAward.attributes.requisitionerId",
+                subAwardDocument.getSubAward().getRequisitionerUserName()));
+        getDocInfo().add(new HeaderField("DataDictionary.SubAward.attributes.docIdStatus", docIdAndStatus));
         if (subAwardDocument.getSubAward().getUnit() != null) {
-            getDocInfo().add(new HeaderField(""
-          +  "DataDictionary.SubAward.attributes.requisitionerUnit",
-          subAwardDocument.getSubAward().getUnit().getUnitName()));
+            getDocInfo().add(new HeaderField("" +  "DataDictionary.SubAward.attributes.requisitionerUnit",
+                    subAwardDocument.getSubAward().getUnit().getUnitName()));
         } else {
-            getDocInfo().add(new HeaderField(
-            "DataDictionary.SubAward.attributes.requisitionerUnit", ""));
+            getDocInfo().add(new HeaderField("DataDictionary.SubAward.attributes.requisitionerUnit", ""));
 
         }
-        getDocInfo().add(new HeaderField(""
-        + "DataDictionary.SubAward.attributes.subAwardId",
-        subAwardDocument.getSubAward().getSubAwardCode()));
-        getDocInfo().add(new HeaderField(""
-      + "DataDictionary.SubAward.attributes.organizationId",
-       subAwardDocument.getSubAward().getOrganizationName()));
-        getDocInfo().add(new HeaderField(""
-       + "DataDictionary.SubAward.attributes.lastUpdate", lastUpdated));
+        getDocInfo().add(new HeaderField("" + "DataDictionary.SubAward.attributes.subAwardId",
+                subAwardDocument.getSubAward().getSubAwardCode()));
+        getDocInfo().add(new HeaderField("" + "DataDictionary.SubAward.attributes.organizationId",
+                subAwardDocument.getSubAward().getOrganizationName()));
 
-
+        setupLastUpdate(subAwardDocument, UPDATE_TIMESTAMP_DD_NAME);
     }
 
     public void initializeFormOrDocumentBasedOnCommand(){
@@ -397,4 +382,6 @@ implements PermissionsForm, Auditable, CustomDataDocumentForm {
     public void setParameterService(ParameterService parameterService) {
         this.parameterService = parameterService;
     }
+
+
 }
