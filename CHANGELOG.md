@@ -1,6 +1,11 @@
 
 
 ## CURRENT
+* RESKC-2613: Fix Oracle Scripts for Award Sequencing. (#2861)
+
+  * Omar Soto Fortuño on Fri, 20 Apr 2018 15:57:04 -0400 [View Commit](../../commit/da40d15c0547ee94808ac3618fe844b80566b368)
+
+## coeus-1804.0029
 * RESKC-2613: Fix SQL Flywheel sequence for award sequencing migration script. (#2860)
 
   * Omar Soto Fortuño on Fri, 20 Apr 2018 12:45:02 -0400 [View Commit](../../commit/a262177cc9f582c24d8558d165c8a1ab9a02452c)
