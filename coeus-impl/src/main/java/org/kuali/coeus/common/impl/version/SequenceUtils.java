@@ -104,7 +104,7 @@ public class SequenceUtils {
         }
     }
 
-    private void sequenceAssociations(SequenceAssociate<?> associate) {
+    public void sequenceAssociations(SequenceAssociate<?> associate) {
         this.alreadySequencedAssociates.add(associate);
         sequenceOneToOneAssociations(associate);
         sequenceCollections(associate);

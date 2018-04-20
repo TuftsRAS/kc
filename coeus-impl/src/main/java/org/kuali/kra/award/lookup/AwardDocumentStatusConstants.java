@@ -13,7 +13,8 @@ public enum AwardDocumentStatusConstants {
 
     ACTIVE ("ACTIVE", "Final"),
     PENDING("PENDING", "Saved"),
-    BOTH("BOTH", "Both");
+    BOTH("BOTH", "Both"),
+    CANCELED("CANCELED", "Canceled");
 
     private final String code;
     private final String description;

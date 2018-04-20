@@ -12,20 +12,27 @@ import org.apache.commons.logging.LogFactory;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.kuali.coeus.common.framework.attachment.AttachmentDocumentStatus;
+import org.kuali.coeus.common.framework.attachment.AttachmentFile;
 import org.kuali.coeus.common.framework.version.sequence.associate.SequenceAssociate;
 import org.kuali.coeus.common.framework.version.VersionException;
 import org.kuali.coeus.common.framework.version.VersioningService;
 import org.kuali.coeus.sys.framework.service.KcServiceLocator;
 import org.kuali.kra.award.commitments.AwardCostShare;
 import org.kuali.kra.award.commitments.AwardFandaRate;
+import org.kuali.kra.award.contacts.AwardPerson;
+import org.kuali.kra.award.contacts.AwardPersonUnit;
 import org.kuali.kra.award.document.AwardDocument;
-import org.kuali.kra.award.home.Award;
-import org.kuali.kra.award.home.AwardComment;
-import org.kuali.kra.award.home.AwardSponsorTerm;
+import org.kuali.kra.award.home.*;
 import org.kuali.kra.award.home.approvedsubawards.AwardApprovedSubaward;
+import org.kuali.kra.award.notesandattachments.attachments.AwardAttachment;
+import org.kuali.kra.award.notesandattachments.attachments.AwardAttachmentType;
 import org.kuali.kra.award.paymentreports.awardreports.AwardReportTerm;
 import org.kuali.kra.award.paymentreports.specialapproval.approvedequipment.AwardApprovedEquipment;
 import org.kuali.kra.award.specialreview.AwardSpecialReview;
+import org.kuali.kra.award.version.service.AwardVersionService;
+import org.kuali.kra.bo.CommentType;
+import org.kuali.kra.infrastructure.Constants;
 import org.kuali.kra.test.infrastructure.KcIntegrationTestBase;
 import org.kuali.coeus.sys.api.model.ScaleTwoDecimal;
 import org.kuali.rice.kew.api.exception.WorkflowException;
@@ -60,9 +67,11 @@ public class AwardVersioningTest extends KcIntegrationTestBase {
     private BusinessObjectService bos;
     private DocumentService documentService;
     private VersioningService versioningService;
+    private AwardVersionService awardVersionService;
     private List<AwardDocument> savedDocuments;
     private List<Award> awards;
-    
+
+    private Integer awardAttachmentDocumentId = 0;
 
     @Before
     public void setUp() throws Exception {
@@ -82,21 +91,14 @@ public class AwardVersioningTest extends KcIntegrationTestBase {
     @Test
     public void testVersioningAward_Level1() throws VersionException, WorkflowException {
         Award awardVersion2 = versionAward(savedDocuments.get(0));
-        
-        addSomeApprovedEquipmentAndVerifyBaseline(awardVersion2);
-        addSomeAwardCommentsAndVerifyBaseline(awardVersion2);
-        addSomeAwardCostSharesAndVerifyBaseline(awardVersion2);
-        addSomeAwardFandaRatesAndVerifyBaseline(awardVersion2);
-        addSomeAwardReportTermsAndVerifyBaseline(awardVersion2);
-        addSomeAwardSponsorTermsAndVerifyBaseline(awardVersion2);
-        addSomeAwardSubawardsAndVerifyBaseline(awardVersion2);
-        addSomeAwardSpecialReviewsAndVerifyBaseline(awardVersion2);
+
+        addSomeAwardAssociates(awardVersion2);
         
         Award awardVersion3 = versioningService.createNewVersion(awardVersion2);
         assertEquals(2, awardVersion2.getApprovedEquipmentItemCount());
         assertEquals(2, awardVersion3.getApprovedEquipmentItemCount());
         
-        AwardDocument document = (AwardDocument) documentService.saveDocument(initializeNewDocument(awardVersion3));
+        AwardDocument document = getAwardDocumentFromNewAwardVersion(awardVersion3);
         awardVersion3 = document.getAward();
         
         verifySequenceAssociatesAfterVersioning(awardVersion2.getApprovedEquipmentItems(), awardVersion3.getApprovedEquipmentItems());
@@ -107,61 +109,105 @@ public class AwardVersioningTest extends KcIntegrationTestBase {
         verifySequenceAssociatesAfterVersioning(awardVersion2.getAwardSponsorTerms(), awardVersion3.getAwardSponsorTerms());
         verifySequenceAssociatesAfterVersioning(awardVersion2.getAwardApprovedSubawards(), awardVersion3.getAwardApprovedSubawards());
         verifySequenceAssociatesAfterVersioning(awardVersion2.getSpecialReviews(), awardVersion3.getSpecialReviews());
+        verifySequenceAssociatesAfterVersioning(awardVersion2.getProjectPersons(), awardVersion3.getProjectPersons());
     }
 
-    private void addSomeApprovedEquipmentAndVerifyBaseline(Award awardVersion2) {
-        awardVersion2.add(new AwardApprovedEquipment(VENDOR_A, MODEL_A, ITEM_A, AMOUNT));
-        awardVersion2.add(new AwardApprovedEquipment(VENDOR_A, MODEL_A, ITEM_B, AMOUNT));
-        saveAndVerifySequenceAssociateValues(awardVersion2, awardVersion2.getApprovedEquipmentItems());        
+    private void addSomeAwardAssociates(Award awardVersion) {
+        addSomeApprovedEquipmentAndVerifyBaseline(awardVersion);
+        addSomeAwardCommentsAndVerifyBaseline(awardVersion);
+        addSomeAwardCostSharesAndVerifyBaseline(awardVersion);
+        addSomeAwardFandaRatesAndVerifyBaseline(awardVersion);
+        addSomeAwardReportTermsAndVerifyBaseline(awardVersion);
+        addSomeAwardSponsorTermsAndVerifyBaseline(awardVersion);
+        addSomeAwardSubawardsAndVerifyBaseline(awardVersion);
+        addSomeAwardSpecialReviewsAndVerifyBaseline(awardVersion);
+        addSomeAwardPersonsAndVerifyBaseLine(awardVersion);
+        addSomeAwardAttachmentsAndVerifyBaseLine(awardVersion);
     }
 
-    private void addSomeAwardCommentsAndVerifyBaseline(Award awardVersion2) {
-        awardVersion2.add(createComment("Comment 1"));
-        awardVersion2.add(createComment("Comment 2"));
-        awardVersion2.add(createComment("Comment 3"));
-        saveAndVerifySequenceAssociateValues(awardVersion2, awardVersion2.getAwardComments());
+    @Test
+    public void testVersioningAwardAfterCancellingIt() throws Exception {
+        Award awardVersion2 = getAwardVersionService().createAndSaveNewAwardVersion(savedDocuments.get(0)).getAward();
+        addSomeAwardAssociates(awardVersion2);
+        AwardDocument document2 = (AwardDocument)documentService.getByDocumentHeaderId(awardVersion2.getAwardDocument().getDocumentNumber());
+
+        AwardDocument document3 = getAwardVersionService().createAndSaveNewAwardVersion(document2);
+        document3 = (AwardDocument)documentService.saveDocument(documentService.cancelDocument(document3,""));
+        Award awardVersion3 = document3.getAward();
+
+        Award awardVersion4 = getAwardVersionService().createAndSaveNewAwardVersion(document3).getAward();
+
+        verifySequenceAssociatesAfterVersioning(awardVersion3.getApprovedEquipmentItems(), awardVersion4.getApprovedEquipmentItems());
+        verifySequenceAssociatesAfterVersioning(awardVersion3.getAwardComments(), awardVersion4.getAwardComments());
+        verifySequenceAssociatesAfterVersioning(awardVersion3.getAwardCostShares(), awardVersion4.getAwardCostShares());
+        verifySequenceAssociatesAfterVersioning(awardVersion3.getAwardFandaRate(), awardVersion4.getAwardFandaRate());
+        verifySequenceAssociatesAfterVersioning(awardVersion3.getAwardReportTermItems(), awardVersion4.getAwardReportTermItems());
+        verifySequenceAssociatesAfterVersioning(awardVersion3.getAwardSponsorTerms(), awardVersion4.getAwardSponsorTerms());
+        verifySequenceAssociatesAfterVersioning(awardVersion3.getAwardApprovedSubawards(), awardVersion4.getAwardApprovedSubawards());
+        verifySequenceAssociatesAfterVersioning(awardVersion3.getSpecialReviews(), awardVersion4.getSpecialReviews());
+        verifySequenceAssociatesAfterVersioning(awardVersion3.getProjectPersons(), awardVersion4.getProjectPersons());
+    }
+
+    private AwardDocument getAwardDocumentFromNewAwardVersion(Award awardVersion) throws WorkflowException {
+        return (AwardDocument)documentService.saveDocument(initializeNewDocument(awardVersion));
+    }
+
+    private void addSomeApprovedEquipmentAndVerifyBaseline(Award awardVersion) {
+        awardVersion.add(new AwardApprovedEquipment(VENDOR_A, MODEL_A, ITEM_A, AMOUNT));
+        awardVersion.add(new AwardApprovedEquipment(VENDOR_A, MODEL_A, ITEM_B, AMOUNT));
+        saveAndVerifySequenceAssociateValues(awardVersion, awardVersion.getApprovedEquipmentItems());
+    }
+
+    private void addSomeAwardCommentsAndVerifyBaseline(Award awardVersion) {
+        awardVersion.add(createComment("Comment 1"));
+        awardVersion.add(createComment("Comment 2"));
+        awardVersion.add(createComment("Comment 3"));
+        saveAndVerifySequenceAssociateValues(awardVersion, awardVersion.getAwardComments());
     }
     
-    private void addSomeAwardCostSharesAndVerifyBaseline(Award awardVersion2) {
-        awardVersion2.add(createCostShare(0.75, COST_SHARE_DEST1));
-        awardVersion2.add(createCostShare(0.25, COST_SHARE_DEST2));
-        saveAndVerifySequenceAssociateValues(awardVersion2, awardVersion2.getAwardCostShares());
+    private void addSomeAwardCostSharesAndVerifyBaseline(Award awardVersion) {
+        awardVersion.add(createCostShare(0.75, COST_SHARE_DEST1));
+        awardVersion.add(createCostShare(0.25, COST_SHARE_DEST2));
+        saveAndVerifySequenceAssociateValues(awardVersion, awardVersion.getAwardCostShares());
     }
     
-    private void addSomeAwardFandaRatesAndVerifyBaseline(Award awardVersion2) {
-        awardVersion2.add(createAwardFandaRate("N"));
-        awardVersion2.add(createAwardFandaRate("F"));
-        saveAndVerifySequenceAssociateValues(awardVersion2, awardVersion2.getAwardFandaRate());
+    private void addSomeAwardFandaRatesAndVerifyBaseline(Award awardVersion) {
+        awardVersion.add(createAwardFandaRate("N"));
+        awardVersion.add(createAwardFandaRate("F"));
+        saveAndVerifySequenceAssociateValues(awardVersion, awardVersion.getAwardFandaRate());
     } 
 
-    private void addSomeAwardReportTermsAndVerifyBaseline(Award awardVersion2) {
-        /*  Sample Code From Varun:
-            report class - 2
-            report code - 39
-            frequency code - 14
-            frequency base code - 2 
-            
-            report class - 1
-            report code - 5
-            frequency code - 14
-            frequency base code - 2
-         */
-        awardVersion2.add(createAwardReportTerm("2", "39", "14", "2"));
-        awardVersion2.add(createAwardReportTerm("1", "5", "14", "2"));
+    private void addSomeAwardReportTermsAndVerifyBaseline(Award awardVersion) {
+        awardVersion.add(createAwardReportTerm("2", "39", "14", "2"));
+        awardVersion.add(createAwardReportTerm("1", "5", "14", "2"));
     }
     
-    private void addSomeAwardSponsorTermsAndVerifyBaseline(Award awardVersion2) {
-        awardVersion2.add(createAwardSponsorTerm());
+    private void addSomeAwardSponsorTermsAndVerifyBaseline(Award awardVersion) {
+        awardVersion.add(createAwardSponsorTerm());
+        saveAndVerifySequenceAssociateValues(awardVersion, awardVersion.getAwardSponsorTerms());
     }
     
-    private void addSomeAwardSubawardsAndVerifyBaseline(Award awardVersion2) {
-        awardVersion2.add(createApprovedSubaward("Org A"));
-        awardVersion2.add(createApprovedSubaward("Org B"));
+    private void addSomeAwardSubawardsAndVerifyBaseline(Award awardVersion) {
+        awardVersion.add(createApprovedSubaward("Org A"));
+        awardVersion.add(createApprovedSubaward("Org B"));
+        saveAndVerifySequenceAssociateValues(awardVersion, awardVersion.getAwardApprovedSubawards());
     }
     
-    private void addSomeAwardSpecialReviewsAndVerifyBaseline(Award awardVersion2) {
-        awardVersion2.add(createSpecialReview(1, "2", "1"));
-        awardVersion2.add(createSpecialReview(2, "2", "2"));
+    private void addSomeAwardSpecialReviewsAndVerifyBaseline(Award awardVersion) {
+        awardVersion.add(createSpecialReview(1, "2", "1"));
+        awardVersion.add(createSpecialReview(2, "2", "2"));
+        saveAndVerifySequenceAssociateValues(awardVersion, awardVersion.getSpecialReviews());
+    }
+
+    private void addSomeAwardPersonsAndVerifyBaseLine(Award awardVersion) {
+        awardVersion.add(createAwardPerson(awardVersion, ContactRole.PI_CODE, "10000000001", "IN-CARD"));
+        awardVersion.add(createAwardPerson(awardVersion, ContactRole.COI_CODE, "10000000006", "IN-CARD"));
+        saveAndVerifySequenceAssociateValues(awardVersion, awardVersion.getProjectPersons());
+    }
+
+    private void addSomeAwardAttachmentsAndVerifyBaseLine(Award awardVersion) {
+        awardVersion.addAttachment(createAwardAttachment(awardVersion));
+        saveAndVerifySequenceAssociateValues(awardVersion, awardVersion.getAwardAttachments());
     }
     
     private AwardApprovedSubaward createApprovedSubaward(String organizationName) {
@@ -191,10 +237,13 @@ public class AwardVersioningTest extends KcIntegrationTestBase {
     
 
     private AwardComment createComment(String commentText) {
+        CommentType commentType = new CommentType();
         AwardComment comment = new AwardComment();
+        commentType.setCommentTypeCode(Constants.GENERAL_COMMENT_TYPE_CODE);
         comment.setComments(commentText);
         comment.setChecklistPrintFlag(Boolean.TRUE);
-        comment.setCommentTypeCode("1");
+        comment.setCommentTypeCode(commentType.getCommentTypeCode());
+        comment.setCommentType(commentType);
         return comment;
     }
     
@@ -228,6 +277,40 @@ public class AwardVersioningTest extends KcIntegrationTestBase {
         review.setSpecialReviewTypeCode(specialReviewCode);
         review.setApprovalTypeCode(approvalTypeCode);
         return review;
+    }
+
+    private AwardPerson createAwardPerson(Award award, String contactRole, String personId, String unitNumber) {
+        AwardPerson person = new AwardPerson();
+        person.setAward(award);
+        person.setAcademicYearEffort(new ScaleTwoDecimal(100.00));
+        person.setCalendarYearEffort(new ScaleTwoDecimal(100.00));
+        person.setRoleCode(contactRole);
+        person.setFaculty(false);
+        person.setPersonId(personId);
+
+        AwardPersonUnit unit = new AwardPersonUnit();
+        unit.setAwardPerson(person);
+        unit.setLeadUnit(true);
+        unit.setUnitNumber(unitNumber);
+        person.add(unit);
+        unit.setAwardPerson(person);
+
+        return person;
+    }
+
+    private AwardAttachment createAwardAttachment(Award award) {
+        AwardAttachment attachment = new AwardAttachment(award);
+        AwardAttachmentType attachmentType = new AwardAttachmentType("7", "Other Document");
+        AttachmentFile attachmentFile = new AttachmentFile("Test File", attachmentType.getTypeCode(), "test contents".getBytes());
+
+        attachment.setDocumentId(++awardAttachmentDocumentId);
+        attachment.setAwardId(award.getAwardId());
+        attachment.setDocumentStatusCode(AttachmentDocumentStatus.ACTIVE.getCode());
+        attachment.setFile(attachmentFile);
+        attachment.setType(attachmentType);
+        attachment.setTypeCode(attachmentType.getTypeCode());
+
+        return attachment;
     }
     
     private void initializeAward() {
@@ -263,6 +346,13 @@ public class AwardVersioningTest extends KcIntegrationTestBase {
         documentService = KcServiceLocator.getService(DocumentService.class);
         bos = KcServiceLocator.getService(BusinessObjectService.class);
         versioningService = KcServiceLocator.getService(VersioningService.class);
+    }
+
+    private AwardVersionService getAwardVersionService() {
+        if (awardVersionService == null) {
+            awardVersionService = KcServiceLocator.getService(AwardVersionService.class);;
+        }
+        return awardVersionService;
     }
 
     private void saveAndVerifySequenceAssociateValues(Award award, List<? extends SequenceAssociate> items) {

@@ -19,6 +19,7 @@ import org.kuali.coeus.common.framework.version.VersionStatus;
 import org.kuali.coeus.common.framework.version.VersioningService;
 import org.kuali.coeus.common.framework.version.history.VersionHistory;
 import org.kuali.coeus.common.framework.version.history.VersionHistoryService;
+import org.kuali.coeus.common.impl.version.SequenceUtils;
 import org.kuali.coeus.propdev.impl.person.creditsplit.CreditSplitConstants;
 import org.kuali.coeus.sys.api.model.ScaleTwoDecimal;
 import org.kuali.coeus.sys.framework.service.KcServiceLocator;
@@ -226,7 +227,7 @@ public class AwardServiceImpl implements AwardService {
         newVersion.setAwardAmountInfos(minimizeAwardAmountInfoCollection(newVersion.getAwardAmountInfos()));
         newVersion.getAwardAmountInfos().get(0).setOriginatingAwardVersion(newVersion.getSequenceNumber());
         newVersion.getAwardAmountInfos().get(0).setTimeAndMoneyDocumentNumber(null);
-        newVersion.getAwardAmountInfos().get(0).setSequenceNumber(newVersion.getSequenceNumber());
+        new SequenceUtils().sequenceAssociations(newVersion);
 
         synchNewCustomAttributes(newVersion, oldAwardDocument.getAward());
         return newAwardDocument;
