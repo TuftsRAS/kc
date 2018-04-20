@@ -1,6 +1,11 @@
 
 
 ## CURRENT
+* RESKC-2306: Added full name to the Last Updated By field on the Header of Sub Award Document.
+
+  * Omar Soto Fortuño on Fri, 20 Apr 2018 10:39:42 -0400 [View Commit](../../commit/c767fd3f572e10d45ac2454aa2449dcb2f803cde)
+
+## coeus-1804.0027
 * RESKC-2613: Fix an issue that created a syncing problem with award_person (and other award associated tables) table when editing an award that was cancelled in the previous version. Changed how we handle sequencing when creating a new Award Version using SequenceUtils. Created integration test for this scenario. Created migration scripts to fix the issue in current data.
 
   * Omar Soto Fortuño on Fri, 20 Apr 2018 08:49:17 -0400 [View Commit](../../commit/ff01de2c508bb6ddbbc79022b7e49531d066dda2)
