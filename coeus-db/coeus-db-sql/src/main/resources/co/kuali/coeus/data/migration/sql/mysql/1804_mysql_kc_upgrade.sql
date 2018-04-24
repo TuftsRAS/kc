@@ -19,4 +19,5 @@
 
 
 \. ./kc/bootstrap/V1804_005__fix_sequence_numbers_in_award_tables.sql
+\. ./kc/bootstrap/V1804_006__create_missing_nih_printing_budget_category_mappings.sql
 commit;

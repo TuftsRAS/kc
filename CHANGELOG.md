@@ -1,6 +1,11 @@
 
 
 ## CURRENT
+* RESKC-1772: Fix calculation issues on Budget Summary Total - Generic Print Form while using NIH as sponsor. (#2862)
+
+  * Omar Soto Fortuño on Tue, 24 Apr 2018 16:29:27 -0400 [View Commit](../../commit/52044e9235ec55a2f7fe4192103c2928fde44d40)
+
+## coeus-1804.0030
 * RESKC-2613: Fix Oracle Scripts for Award Sequencing. (#2861)
 
   * Omar Soto Fortuño on Fri, 20 Apr 2018 15:57:04 -0400 [View Commit](../../commit/da40d15c0547ee94808ac3618fe844b80566b368)
