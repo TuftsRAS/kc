@@ -144,6 +144,7 @@ public class NIHResearchAndRelatedXmlStream extends
     public static final String EB_ON_LA = "3";
     public static final String VACATION_ON_LA = "2";
     public static final String CATEGORY_PERSONNEL = "P";
+    public static final String SENIOR_PERSONNEL_CATEGORY_CODE = "01";
 
     @Autowired
     @Qualifier("awardService")
@@ -638,7 +639,9 @@ public class NIHResearchAndRelatedXmlStream extends
             budgetSummaryType.setBudgetIndirectCostsTotal(budget.getTotalIndirectCost().bigDecimalValue());
             budgetSummaryType.setBudgetPeriodArray(getBudgetPeriodArray(developmentProposal,budget.getBudgetPeriods()));
             budgetSummaryType.setBudgetJustification(getBudgetJustification(developmentProposal.getProposalNumber()));
-            setAllNSFSeniorPersonnels(developmentProposal,budget,budgetSummaryType);
+            setAllSeniorPersonnel(developmentProposal, budget, budgetSummaryType);
+            setAllPersonnelTotals(developmentProposal, budget, budgetSummaryType);
+            budgetSummaryType.setIndirectCostRateDetails(getIndirectCostDetails(developmentProposal));
             budgetSummaryType.setModularBudgetQuestion(budget.getModularBudgetFlag());
             budgetSummaryType.setBudgetCostsTotal(budget.getTotalCost().bigDecimalValue());
             budgetSummaryType.setBudgetDirectCostsTotal(budget.getTotalDirectCost().bigDecimalValue());
@@ -647,22 +650,46 @@ public class NIHResearchAndRelatedXmlStream extends
         return budgetSummaryType;
     }
 
-    private void setAllNSFSeniorPersonnels(DevelopmentProposal developmentProposal, Budget budget, BudgetSummaryType budgetSummaryType) {
-        List<KeyPersonInfo> nsfSeniorPersons = getBudgetPersonsForCategoryMap(developmentProposal, budget, "01", "NSF_PRINTING");
+    private void setAllSeniorPersonnel(DevelopmentProposal developmentProposal, Budget budget, BudgetSummaryType budgetSummaryType) {
+        List<KeyPersonInfo> nsfSeniorPersons = getBudgetPersonsForCategoryMap(developmentProposal, budget, SENIOR_PERSONNEL_CATEGORY_CODE, getCategoryMappingName(developmentProposal));
         int rowNumber = 0;
-        ScaleTwoDecimal totalFringe = ScaleTwoDecimal.ZERO;
-        ScaleTwoDecimal totalSalary = ScaleTwoDecimal.ZERO;
 
         for (KeyPersonInfo keyPersonInfo : nsfSeniorPersons) {
             NSFSeniorPersonnelType nsfSeniorPersonnel = budgetSummaryType.addNewNSFSeniorPersonnel();
-            setNSFSeniorPersonnel(keyPersonInfo, nsfSeniorPersonnel,rowNumber++);
-            totalFringe = totalFringe.add(keyPersonInfo.getFringe());
-            totalSalary = totalSalary.add(keyPersonInfo.getRequestedSalary());
+            setNSFSeniorPersonnel(keyPersonInfo, nsfSeniorPersonnel, rowNumber++);
         }
+    }
+
+    // This should maybe be ALWAYS NIH_PRINTING but, will keep this as a safeguard.
+    private String getCategoryMappingName(DevelopmentProposal developmentProposal) {
+        boolean isNih = getSponsorHierarchyService().isSponsorNihOsc(developmentProposal.getSponsorCode()) || getSponsorHierarchyService().isSponsorNihMultiplePi(developmentProposal.getSponsorCode());
+        return isNih ? "NIH_PRINTING" : "NSF_PRINTING";
+    }
+
+    private void setAllPersonnelTotals(DevelopmentProposal developmentProposal, Budget budget, BudgetSummaryType budgetSummaryType) {
+        String mappingName = getCategoryMappingName(developmentProposal);
+        ScaleTwoDecimal totalFringe = ScaleTwoDecimal.ZERO;
+        ScaleTwoDecimal totalSalary = ScaleTwoDecimal.ZERO;;
+        Map<String, String> categoryMap = new HashMap<>();
+
+        categoryMap.put(KEY_MAPPING_NAME, mappingName);
+        List<BudgetCategoryMapping> budgetCategoryList = getBudgetCategoryMappings(categoryMap);
+
+        List<BudgetPersonnelDetails> budgetPersonnelDetailsList = budget.getBudgetPeriods()
+                .stream().flatMap(budgetPeriod -> budgetPeriod.getBudgetLineItems().stream())
+                .filter(budgetLineItem -> budgetLineItem.getBudgetCategory().getBudgetCategoryTypeCode().equalsIgnoreCase(CATEGORY_PERSONNEL))
+                .filter(budgetLineItem -> budgetCategoryList.stream().anyMatch(categoryMapping -> categoryMapping.getBudgetCategoryCode().equals(budgetLineItem.getBudgetCategoryCode())))
+                .flatMap(budgetLineItem -> budgetLineItem.getBudgetPersonnelDetailsList().stream())
+                .collect(Collectors.toList());
+
+        for (BudgetPersonnelDetails budgetPersonnelDetails : budgetPersonnelDetailsList) {
+            totalFringe = totalFringe.add(budgetPersonnelDetails.getCalculatedFringe());
+            totalSalary = totalSalary.add(budgetPersonnelDetails.getSalaryRequested());
+        }
+
         budgetSummaryType.setTotalFringe(totalFringe.bigDecimalValue());
         budgetSummaryType.setTotalSalariesAndWages(totalSalary.bigDecimalValue());
-        budgetSummaryType.setTotalSalariesWagesAndFringe(totalSalary.add(totalFringe).bigDecimalValue());
-        budgetSummaryType.setIndirectCostRateDetails(getIndirectCostDetails(developmentProposal));
+        budgetSummaryType.setTotalSalariesWagesAndFringe(totalSalary.bigDecimalValue().add(totalFringe.bigDecimalValue()));
     }
 
     private IndirectCostRateDetails getIndirectCostDetails(DevelopmentProposal developmentProposal) {
@@ -715,7 +742,7 @@ public class NIHResearchAndRelatedXmlStream extends
 
     private int setNSFSeniorPersonnels(DevelopmentProposal developmentProposal, BudgetPeriod budgetPeriod,
             gov.nih.era.projectmgmt.sbir.cgap.nihspecificNamespace.BudgetSummaryType.BudgetPeriod  BudgetPeriodType) {
-        List<KeyPersonInfo> nsfSeniorPersons = getBudgetPersonsForCategoryMap(developmentProposal, budgetPeriod, "01", "NSF_PRINTING");
+        List<KeyPersonInfo> nsfSeniorPersons = getBudgetPersonsForCategoryMap(developmentProposal, budgetPeriod, SENIOR_PERSONNEL_CATEGORY_CODE, getCategoryMappingName(developmentProposal));
         int rowNumber = 0;
         int period = budgetPeriod.getBudgetPeriod();
         for (KeyPersonInfo keyPersonInfo : nsfSeniorPersons) {
@@ -888,15 +915,12 @@ public class NIHResearchAndRelatedXmlStream extends
             BudgetModular budgetModular = budgetPeriod.getBudgetModular();
             consortiumDirectCost = budgetModular.getConsortiumFna();
         }else{
-            boolean isNih = getSponsorHierarchyService().isSponsorNihOsc(developmentProposal.getSponsorCode()) || getSponsorHierarchyService().isSponsorNihMultiplePi(developmentProposal.getSponsorCode());
-            String mappingName = isNih?"NIH_PRINTING":"NSF_PRINTING";
-
             String fnaGt25KParamValue = getParameterService().getParameterValueAsString(Budget.class, "SUBCONTRACTOR_F_AND_A_GT_25K");
             String fnaLt25KParamValue = getParameterService().getParameterValueAsString(Budget.class, "SUBCONTRACTOR_F_AND_A_LT_25K");
             String fnaBroadParamValue = getParameterService().getParameterValueAsString(Budget.class, "BROAD_F_AND_A");
             Map<String, String> categoryMap = new HashMap<>();
             categoryMap.put(KEY_TARGET_CATEGORY_CODE, "04");
-            categoryMap.put(KEY_MAPPING_NAME, mappingName);
+            categoryMap.put(KEY_MAPPING_NAME, getCategoryMappingName(developmentProposal));
             List<BudgetCategoryMapping> budgetCategoryList = getBudgetCategoryMappings(categoryMap);
             for (BudgetLineItem lineItem : budgetPeriod.getBudgetLineItems()) {
                 for (BudgetCategoryMapping categoryMapping : budgetCategoryList) {
@@ -973,8 +997,7 @@ public class NIHResearchAndRelatedXmlStream extends
     private void setNSFOtherPersonnels(DevelopmentProposal developmentProposal, BudgetPeriod budgetPeriod,
             gov.nih.era.projectmgmt.sbir.cgap.nihspecificNamespace.BudgetSummaryType.BudgetPeriod budgetPeriodType) {
         NSFOtherPersonnelType otherPersonnelType  = budgetPeriodType.addNewNSFOtherPersonnel();
-        boolean isNih = getSponsorHierarchyService().isSponsorNihOsc(developmentProposal.getSponsorCode()) || getSponsorHierarchyService().isSponsorNihMultiplePi(developmentProposal.getSponsorCode());
-        String mappingName = isNih?"NIH_PRINTING":"NSF_PRINTING";
+        String mappingName = getCategoryMappingName(developmentProposal);
 
         OtherPersonInfo otherPersonInfo = getOtherPersonInfo(budgetPeriod,mappingName,"01-Secretarial");
         otherPersonnelType.setClericalCount(BigInteger.valueOf(otherPersonInfo.getCount()));
@@ -1756,7 +1779,7 @@ public class NIHResearchAndRelatedXmlStream extends
                 fundingMonths = fundingMonths.divide(new ScaleTwoDecimal(100).bigDecimalValue(), RoundingMode.HALF_UP);
 
         }
-        return fundingMonths.setScale(0);
+        return fundingMonths.setScale(0, RoundingMode.HALF_UP);
     }
 
     public ParameterService getParameterService() {
