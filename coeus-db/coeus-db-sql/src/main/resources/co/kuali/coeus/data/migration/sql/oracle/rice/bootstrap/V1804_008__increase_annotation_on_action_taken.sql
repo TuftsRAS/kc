@@ -7,6 +7,6 @@
 -- You should have received a copy of the Kuali, Inc. Pre-Release License
 -- Agreement with this file. If not, please write to license@kuali.co.
 --
-  
-ALTER TABLE narrative
-  MODIFY comments varchar(4000);
+
+ALTER TABLE krew_actn_tkn_t
+  MODIFY annotn varchar2(4000);
