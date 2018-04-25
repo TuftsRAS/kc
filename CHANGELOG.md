@@ -1,6 +1,11 @@
 
 
 ## CURRENT
+* RESKC-2881: Fix misplaced SQL rice code on DB scripts. (#2863)
+
+  * Omar Soto Fortuño on Tue, 24 Apr 2018 20:27:16 -0400 [View Commit](../../commit/9146567bcf8644aff6143cd28023076f04d065b4)
+
+## coeus-1804.0032
 * RESKC-2881: Fix Narrative comments not large enough to hold Route Annotation. (#2855)
 
   * timbui1 on Tue, 24 Apr 2018 16:27:09 -0700 [View Commit](../../commit/50ca9b4ffb2e67288f95fa213e52555e0e596ad1)
