@@ -1,6 +1,11 @@
 
 
 ## CURRENT
+* Add protocol viewer roles as predefined for groups push (#2864)
+
+  * Douglas Pace on Thu, 26 Apr 2018 13:00:08 -0700 [View Commit](../../commit/5b92ffa45f043d811a4093b0acf05447045c7568)
+
+## coeus-1804.0034
 * No Changes
 
 
