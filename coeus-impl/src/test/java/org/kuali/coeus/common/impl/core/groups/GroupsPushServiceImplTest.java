@@ -173,7 +173,7 @@ public class GroupsPushServiceImplTest {
 			assertEquals(parentId, category.getParentId());
 			assertNotNull(category.getFieldSchemas().stream().filter(s -> StringUtils.equals(s.getId(), CoreGroupsService.UNIT_NUMBER_FIELD_ID)).findFirst().orElse(null));
 			assertNotNull(category.getFieldSchemas().stream().filter(s -> StringUtils.equals(s.getId(), CoreGroupsService.ACTIVE_FIELD_ID)).findFirst().orElse(null));
-			assertEquals(5, category.getRoleSchemas().size());
+			assertEquals(7, category.getRoleSchemas().size());
 			CategoryDto newCategory = getCategoryClone(category);
 			newCategory.setId(newId);
 			return new ResponseEntity<CategoryDto>(newCategory, HttpStatus.CREATED);
@@ -246,7 +246,7 @@ public class GroupsPushServiceImplTest {
 			assertEquals(parentId, category.getParentId());
 			assertNotNull(category.getFieldSchemas().stream().filter(s -> StringUtils.equals(s.getId(), CoreGroupsService.UNIT_NUMBER_FIELD_ID)).findFirst().orElse(null));
 			assertNotNull(category.getFieldSchemas().stream().filter(s -> StringUtils.equals(s.getId(), CoreGroupsService.ACTIVE_FIELD_ID)).findFirst().orElse(null));
-			assertEquals(5, category.getRoleSchemas().size());
+			assertEquals(7, category.getRoleSchemas().size());
 			return new ResponseEntity<String>("updated", HttpStatus.OK);
 		}
 	}

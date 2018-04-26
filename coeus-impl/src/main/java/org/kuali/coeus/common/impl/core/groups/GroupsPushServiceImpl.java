@@ -63,7 +63,7 @@ public class GroupsPushServiceImpl implements GroupsPushService {
 	private static final Log LOG = LogFactory.getLog(GroupsPushServiceImpl.class);
 	private static final Integer NUMBER_OF_USERS_LIMIT = 100000;
 	private static final String LIMIT_PARAM = "limit";
-	private static final String[] PREDEFINED_ROLE_IDS = { "IRB Admin", "IACUC Admin", "IRB User", "IACUC User" };
+	private static final String[] PREDEFINED_ROLE_IDS = { "IRB Admin", "IACUC Admin", "IRB User", "IACUC User", "IRB Viewer", "IACUC Viewer" };
 
 	@Autowired
 	@Qualifier("unitService")
