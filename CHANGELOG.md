@@ -1,6 +1,10 @@
 
 
 ## CURRENT
+* No Changes
+
+
+## coeus-1804.0033
 * RESKC-2881: Fix misplaced SQL rice code on DB scripts. (#2863)
 
   * Omar Soto Fortuño on Tue, 24 Apr 2018 20:27:16 -0400 [View Commit](../../commit/9146567bcf8644aff6143cd28023076f04d065b4)
