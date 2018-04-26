@@ -18,6 +18,7 @@ import org.kuali.kra.award.contacts.AwardPerson;
 import org.kuali.kra.award.home.Award;
 import org.kuali.rice.krad.UserSession;
 import org.kuali.rice.krad.util.GlobalVariables;
+import org.kuali.rice.krad.util.MessageMap;
 
 import static org.mockito.Mockito.*;
 
@@ -25,7 +26,7 @@ public class AwardContactsActionTest {
 
     @Before
     public void setUp() {
-        GlobalVariables.getMessageMap().clearErrorMessages();
+    	GlobalVariables.setMessageMap(new MessageMap());
     }
 
     @Test
