@@ -1,6 +1,14 @@
 
 
 ## CURRENT
+* RESKC-2910: Add PATCH support for simple crud rest endpoints (#2866)
+
+  * Terry Durkin on Fri, 27 Apr 2018 14:39:19 -0400 [View Commit](../../commit/0593cb79dba0c08309fb9b88386861e8141a92f7)
+* RESKC-2909:Avoid NPE when tests run in different order (#2865)
+
+  * Douglas Pace on Thu, 26 Apr 2018 16:06:29 -0700 [View Commit](../../commit/68a95c24e61b0b6c1a74903fd16f8ce0dec3a13b)
+
+## coeus-1804.0035
 * Add protocol viewer roles as predefined for groups push (#2864)
 
   * Douglas Pace on Thu, 26 Apr 2018 13:00:08 -0700 [View Commit](../../commit/5b92ffa45f043d811a4093b0acf05447045c7568)
