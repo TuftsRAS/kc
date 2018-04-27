@@ -74,6 +74,17 @@ public class SimpleCrudMapBasedRestController<T> extends SimpleCrudRestControlle
 	}
 
 	@Override
+	protected void mergeDataObjectFromDto(T existingDataObject, Map<String, Object> input) {
+		BeanWrapper beanWrapper = getRestBeanWrapperFactory().newInstance(existingDataObject);
+		beanWrapper.setAutoGrowNestedPaths(true);
+		try {
+			input.forEach(beanWrapper::setPropertyValue);
+		} catch (TypeMismatchException e) {
+			throw new UnprocessableEntityException(e.getMessage(), e);
+		}
+	}
+
+	@Override
 	protected List<String> getListOfTrackedProperties() {
 		return getExposedProperties().stream().filter(p -> !SYNTHETIC_FIELD_PK.equals(p)).collect(Collectors.toList());
 	}

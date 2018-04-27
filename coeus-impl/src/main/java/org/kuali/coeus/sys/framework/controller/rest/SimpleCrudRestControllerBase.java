@@ -125,6 +125,9 @@ public abstract class SimpleCrudRestControllerBase<T, R> extends RestController 
 	@Value("classpath:org/kuali/coeus/sys/framework/controller/rest/SimpleCrudRestControllerBlueprintTemplatePut.md")
 	private Resource blueprintTemplatePut;
 
+	@Value("classpath:org/kuali/coeus/sys/framework/controller/rest/SimpleCrudRestControllerBlueprintTemplatePatch.md")
+	private Resource blueprintTemplatePatch;
+
 	@Value("classpath:org/kuali/coeus/sys/framework/controller/rest/SimpleCrudRestControllerBlueprintTemplatePost.md")
 	private Resource blueprintTemplatePost;
 
@@ -162,7 +165,7 @@ public abstract class SimpleCrudRestControllerBase<T, R> extends RestController 
 	private String camelCasePluralName;
 
 	private Set<RequestMethod> supportedMethods =
-			Stream.of(RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE)
+			Stream.of(RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.PATCH)
 			.collect(Collectors.toSet());
 
 	@RequestMapping(method=RequestMethod.GET)
@@ -219,6 +222,10 @@ public abstract class SimpleCrudRestControllerBase<T, R> extends RestController 
 			templateText += getTemplateAsString(getBlueprintTemplatePut());
 		}
 
+		if (isMethodSupported(RequestMethod.PATCH)) {
+			templateText += getTemplateAsString(getBlueprintTemplatePatch());
+		}
+
 		if (isMethodSupported(RequestMethod.POST)) {
 			templateText += getTemplateAsString(getBlueprintTemplatePost());
 		}
@@ -267,6 +274,26 @@ public abstract class SimpleCrudRestControllerBase<T, R> extends RestController 
 		save(dataObject);
 		logger.saveAuditLog();
 	}
+
+	@RequestMapping(value="/{code}", method=RequestMethod.PATCH)
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void patch(@PathVariable String code, @Valid @RequestBody R dto) {
+		assertMethodSupported(RequestMethod.PATCH);
+		assertUserHasWriteAccess();
+		T dataObject = getFromDataStore(code);
+		if (dataObject == null) {
+			throw new ResourceNotFoundException("not found for key " + code);
+		}
+		RestAuditLogger logger = getAuditLogger();
+		logUpdateToObject(dataObject, dto, logger);
+		mergeDataObjectFromDto(dataObject, dto);
+
+		validateBusinessObject(dataObject);
+		validateUpdateDataObject(dataObject);
+		save(dataObject);
+		logger.saveAuditLog();
+	}
+
 
 	@RequestMapping(method=RequestMethod.PUT)
 	@ResponseStatus(HttpStatus.NO_CONTENT)
@@ -331,6 +358,8 @@ public abstract class SimpleCrudRestControllerBase<T, R> extends RestController 
 	protected abstract Object getPropertyValueFromDto(String propertyName, R dto);
 
 	protected abstract void updateDataObjectFromDto(T dataObject, R dto);
+
+	protected abstract void mergeDataObjectFromDto(T dataObject, R dto);
 
 	protected abstract List<String> getExposedProperties();
 
@@ -952,6 +981,14 @@ public abstract class SimpleCrudRestControllerBase<T, R> extends RestController 
 
 	public void setBlueprintTemplatePut(Resource blueprintTemplatePut) {
 		this.blueprintTemplatePut = blueprintTemplatePut;
+	}
+
+	public Resource getBlueprintTemplatePatch() {
+		return blueprintTemplatePatch;
+	}
+
+	public void setBlueprintTemplatePatch(Resource blueprintTemplatePatch) {
+		this.blueprintTemplatePatch = blueprintTemplatePatch;
 	}
 
 	public Resource getBlueprintTemplatePost() {

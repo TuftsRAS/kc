@@ -67,6 +67,11 @@ public class SimpleCrudDtoRestController<T, R> extends SimpleCrudRestControllerB
 	}
 
 	@Override
+	protected void mergeDataObjectFromDto(T existingDataObject, R input) {
+		updateDataObjectFromDto(existingDataObject, input);
+	}
+
+	@Override
 	protected List<String> getExposedProperties() {
 		BeanInfo beanInfo;
 		try {

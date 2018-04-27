@@ -123,6 +123,12 @@ public class SimpleCrudRestControllerTest {
         protected void updateDataObjectFromDto(TestBo existingDataObject, Map<String, Object> input) {
 
         }
+
+        @Override
+        protected void mergeDataObjectFromDto(TestBo existingDataObject, Map<String, Object> input) {
+
+        }
+
     }
 
     static class TestBo extends KcPersistableBusinessObjectBase {
