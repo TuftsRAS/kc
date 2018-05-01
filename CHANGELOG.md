@@ -1,6 +1,11 @@
 
 
 ## CURRENT
+* RESKC-1772: Fix rounding issues on forms: Budget Summary Period (1 - 5) and Budget Summary Total from the Generic Printing Forms (Coeus 4.x) package and, create tool to generate Oracle SQL. (#2867)
+
+  * Omar Soto Fortuño on Tue, 1 May 2018 08:28:08 -0400 [View Commit](../../commit/725b37ea670ff650d5319565757b4b5547308992)
+
+## coeus-1804.0036
 * RESKC-2910: Add PATCH support for simple crud rest endpoints (#2866)
 
   * Terry Durkin on Fri, 27 Apr 2018 14:39:19 -0400 [View Commit](../../commit/0593cb79dba0c08309fb9b88386861e8141a92f7)
