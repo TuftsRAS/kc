@@ -1,6 +1,11 @@
 
 
 ## CURRENT
+* RESKC-2858: Fix issue that created duplicated budget versions when clicking the Create Budget button multiple times. (#2870)
+
+  * Omar Soto Fortuño on Wed, 2 May 2018 17:52:43 -0400 [View Commit](../../commit/cee319086a85ce80eb702d8388827b3ace68c6eb)
+
+## coeus-1805.0003
 * No Changes
 
 
