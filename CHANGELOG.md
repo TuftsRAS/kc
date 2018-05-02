@@ -1,6 +1,14 @@
 
 
 ## CURRENT
+* RESKC-2726: Save in route proposal only when the form is dirty. (#2869)
+
+  * Omar Soto Fortuño on Wed, 2 May 2018 09:25:35 -0400 [View Commit](../../commit/110ee98e8703bae8a64df8cab33407f92156ef0e)
+* RESKC-2901: Add the ability to add the Full Name to the document initiator field on Document Headers. (#2868)
+
+  * Omar Soto Fortuño on Wed, 2 May 2018 08:45:50 -0400 [View Commit](../../commit/11bf2e9664aafcc94d9499816fa95df3f3b2a39d)
+
+## coeus-1805.0001
 * RESKC-1772: Fix rounding issues on forms: Budget Summary Period (1 - 5) and Budget Summary Total from the Generic Printing Forms (Coeus 4.x) package and, create tool to generate Oracle SQL. (#2867)
 
   * Omar Soto Fortuño on Tue, 1 May 2018 08:28:08 -0400 [View Commit](../../commit/725b37ea670ff650d5319565757b4b5547308992)
