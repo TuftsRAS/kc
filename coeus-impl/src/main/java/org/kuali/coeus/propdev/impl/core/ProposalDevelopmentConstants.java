@@ -46,6 +46,7 @@ public class ProposalDevelopmentConstants {
         public static final String PROP_DEV_PERSONNEL_PAGE_VERIFY_NOTIFICATION_DIALOG = "PropDev-PersonnelPage-VerifyNotification-Dialog";
         public static final String PROP_DEV_PERSONNEL_PAGE_COLLECTION = "PropDev-PersonnelPage-Collection";
         public static final String PROP_DEV_PERSONNEL_PAGE_WIZARD = "PropDev-PersonnelPage-Wizard";
+        public static final String PAGE_IS_DIRTY = "pageIsDirty";
     }
 
     public static class S2sConstants {
