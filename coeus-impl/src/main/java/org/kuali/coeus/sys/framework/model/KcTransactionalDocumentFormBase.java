@@ -25,7 +25,9 @@ import org.kuali.rice.core.api.config.property.ConfigurationService;
 import org.kuali.rice.core.api.datetime.DateTimeService;
 import org.kuali.rice.coreservice.framework.parameter.ParameterConstants;
 import org.kuali.rice.coreservice.framework.parameter.ParameterService;
+import org.kuali.rice.kew.api.WorkflowDocument;
 import org.kuali.rice.kim.api.KimConstants;
+import org.kuali.rice.kim.api.identity.Person;
 import org.kuali.rice.kns.document.authorization.DocumentAuthorizerBase;
 import org.kuali.rice.kns.web.struts.form.KualiTransactionalDocumentFormBase;
 import org.kuali.rice.kns.web.ui.ExtraButton;
@@ -404,6 +406,25 @@ public abstract class KcTransactionalDocumentFormBase extends KualiTransactional
         return KcServiceLocator.getService(MedusaService.class);
     }
 
+    @Override
+    protected List<HeaderField> getStandardHeaderFields(WorkflowDocument workflowDocument) {
+        List<HeaderField> headerFields = super.getStandardHeaderFields(workflowDocument);
+
+        if (isShowFullNameEnabled()) {
+            headerFields.stream()
+                    .filter(headerField -> KRADConstants.DocumentFormHeaderFieldIds.DOCUMENT_INITIATOR.equals(headerField.getId()))
+                    .forEach(headerField -> {
+                        Person initiator = getInitiator();
+                        KcPerson user = getKcPersonService().getKcPersonByUserName(initiator.getPrincipalName());
+
+                        headerField.setDisplayValue(StringUtils.substring(user.getFullName(), 0, LAST_UPDATED_BY_FULL_NAME_MAX_LENGTH) + " (" + StringUtils.substring(user.getUserName(), 0, LAST_UPDATED_BY_USERNAME_MAX_LENGTH) + ")");
+                        headerField.setNonLookupValue(getPersonInquiryUrlLink(initiator, headerField.getDisplayValue()));
+                    });
+        }
+
+        return headerFields;
+    }
+
     protected void setupLastUpdate(KcTransactionalDocumentBase document, String updateTimestampDdName) {
         if (document.getUpdateTimestamp() != null) {
             String createDateStr = getDateTimeService().toString(document.getUpdateTimestamp(), Constants.MM_DD_YY_DATE_FORMAT);
@@ -445,6 +466,6 @@ public abstract class KcTransactionalDocumentFormBase extends KualiTransactional
 
     protected boolean isShowFullNameEnabled() {
         return getParameterService().getParameterValueAsBoolean(
-                Constants.MODULE_NAMESPACE_GEN, ParameterConstants.ALL_COMPONENT, FeatureFlagConstants.SHOW_FULL_NAME_IN_LAST_UPDATED_BY, false);
+                Constants.MODULE_NAMESPACE_GEN, ParameterConstants.ALL_COMPONENT, FeatureFlagConstants.SHOW_FULL_NAME_IN_HEADER_FIELDS, false);
     }
 }

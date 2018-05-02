@@ -212,7 +212,7 @@
                                </property>
                         </bean>
 						<bean parent="Uif-MessageField" p:label="Initiator" p:labelLeft="true"
-							p:messageText="@{documentInitiatorNetworkId}" p:order="40" />
+							p:messageText="@{documentInitiator}" p:order="40" />
 						<bean parent="Uif-MessageField" p:label="Status" p:labelLeft="true"
 							p:messageText="@{#ViewHelper.getProposalStatusForDisplay(document.developmentProposal)}"
 							p:order="50" />
@@ -275,7 +275,8 @@
 					<list>
 						<bean parent="Uif-MessageField" p:messageText="@{document.documentNumber}"
 							p:fieldLabel.renderColon="false" p:label="Doc Nbr" p:order="10" />
-						<bean parent="Uif-LinkField" p:linkText="@{documentInitiatorNetworkId}"
+						<bean parent="Uif-LinkField" p:linkText="@{documentInitiator}"
+							p:href="@{#ConfigProperties['application.url']}/kim/identityManagementPersonInquiry.do?businessObjectClassName=org.kuali.rice.kim.impl.identity.PersonImpl&amp;methodToCall=inquiry&amp;principalName=@{documentInitiatorNetworkId}&amp;command=initiate"
 							p:fieldLabel.renderColon="false" p:label="Initiator" p:order="20" />
 						<bean parent="Uif-MessageField"
 							p:messageText="@{#ViewHelper.getProposalStatusForDisplay(document.developmentProposal)}"

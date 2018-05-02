@@ -13,6 +13,8 @@ import org.kuali.coeus.coi.framework.DisclosureStatusRetrievalService;
 import org.kuali.coeus.common.framework.medusa.MedusaNode;
 import org.kuali.coeus.common.framework.medusa.MedusaService;
 import org.kuali.coeus.common.framework.module.CoeusModule;
+import org.kuali.coeus.common.framework.person.KcPerson;
+import org.kuali.coeus.common.framework.person.KcPersonService;
 import org.kuali.coeus.common.framework.person.attr.PersonEditableField;
 import org.kuali.coeus.common.framework.print.ReportHelper;
 import org.kuali.coeus.common.framework.sponsor.form.SponsorFormTemplateList;
@@ -26,10 +28,13 @@ import org.kuali.coeus.propdev.impl.auth.perm.ProposalDevelopmentPermissionsServ
 import org.kuali.coeus.propdev.impl.budget.ProposalDevelopmentBudgetExt;
 import org.kuali.coeus.propdev.impl.budget.core.AddBudgetDto;
 import org.kuali.coeus.propdev.impl.budget.core.SelectableBudget;
+import org.kuali.coeus.propdev.impl.coi.CoiConstants;
+import org.kuali.coeus.propdev.impl.copy.ProposalCopyCriteria;
 import org.kuali.coeus.propdev.impl.custom.ProposalDevelopmentCustomDataGroupDto;
 import org.kuali.coeus.propdev.impl.custom.ProposalDevelopmentCustomDataHelper;
 import org.kuali.coeus.propdev.impl.docperm.ProposalUserRoles;
 import org.kuali.coeus.propdev.impl.editable.ProposalChangedData;
+import org.kuali.coeus.propdev.impl.location.OrganizationAddWizardHelper;
 import org.kuali.coeus.propdev.impl.notification.ProposalDevelopmentNotificationContext;
 import org.kuali.coeus.propdev.impl.person.AddEmployeePiHelper;
 import org.kuali.coeus.propdev.impl.person.ProposalPerson;
@@ -37,22 +42,22 @@ import org.kuali.coeus.propdev.impl.person.ProposalPersonCoiIntegrationService;
 import org.kuali.coeus.propdev.impl.person.creditsplit.ProposalCreditSplitListDto;
 import org.kuali.coeus.propdev.impl.person.question.ProposalPersonQuestionnaireHelper;
 import org.kuali.coeus.propdev.impl.questionnaire.ProposalDevelopmentQuestionnaireHelper;
-import org.kuali.coeus.propdev.impl.coi.CoiConstants;
-import org.kuali.coeus.propdev.impl.copy.ProposalCopyCriteria;
 import org.kuali.coeus.propdev.impl.s2s.S2sAppSubmission;
 import org.kuali.coeus.propdev.impl.s2s.S2sOppForms;
+import org.kuali.coeus.propdev.impl.s2s.S2sOpportunity;
 import org.kuali.coeus.propdev.impl.s2s.S2sUserAttachedForm;
 import org.kuali.coeus.propdev.impl.s2s.question.ProposalDevelopmentS2sQuestionnaireHelper;
 import org.kuali.coeus.propdev.impl.specialreview.SpecialReviewHelper;
-import org.kuali.coeus.propdev.impl.location.OrganizationAddWizardHelper;
-import org.kuali.coeus.propdev.impl.s2s.S2sOpportunity;
-import org.kuali.coeus.sys.framework.validation.Auditable;
 import org.kuali.coeus.sys.framework.service.KcServiceLocator;
+import org.kuali.coeus.sys.framework.validation.Auditable;
 import org.kuali.coeus.sys.impl.validation.DataValidationItem;
 import org.kuali.kra.infrastructure.Constants;
+import org.kuali.kra.infrastructure.FeatureFlagConstants;
 import org.kuali.kra.krms.KcKrmsConstants;
 import org.kuali.rice.core.api.config.property.ConfigurationService;
 import org.kuali.rice.core.api.util.tree.Tree;
+import org.kuali.rice.coreservice.framework.parameter.ParameterConstants;
+import org.kuali.rice.coreservice.framework.parameter.ParameterService;
 import org.kuali.rice.krad.data.util.Link;
 import org.kuali.rice.krad.service.LegacyDataAdapter;
 import org.kuali.rice.krad.uif.component.Component;
@@ -137,6 +142,14 @@ public class ProposalDevelopmentDocumentForm extends TransactionalDocumentFormBa
     private transient List<DisclosureProjectStatus> disclosureProjectStatuses;
     @Transient
     private transient DisclosureStatusRetrievalService disclosureStatusRetrievalService;
+    @Transient
+    private transient KcPersonService kcPersonService;
+    @Transient
+    private transient ParameterService parameterService;
+
+    private static final int LAST_UPDATED_BY_MAX_LENGTH = 30;
+    private static final int LAST_UPDATED_BY_USERNAME_MAX_LENGTH = 15;
+    private static final int LAST_UPDATED_BY_FULL_NAME_MAX_LENGTH = 30;
 
     public ProposalPersonQuestionnaireHelper getProposalPersonQuestionnaireHelper() {
         return proposalPersonQuestionnaireHelper;
@@ -762,5 +775,37 @@ public class ProposalDevelopmentDocumentForm extends TransactionalDocumentFormBa
             disclosureStatusRetrievalService = KcServiceLocator.getService(DisclosureStatusRetrievalService.class);
         }
         return disclosureStatusRetrievalService;
+    }
+
+    public String getDocumentInitiator() {
+        String documentInitiator = getDocumentInitiatorNetworkId();
+
+        if (isShowFullNameEnabled()) {
+            KcPerson user = getKcPersonService().getKcPersonByUserName(documentInitiator);
+
+            return StringUtils.substring(user.getFullName(), 0, LAST_UPDATED_BY_FULL_NAME_MAX_LENGTH) + " (" + StringUtils.substring(user.getUserName(), 0, LAST_UPDATED_BY_USERNAME_MAX_LENGTH) + ")";
+        }
+
+        return documentInitiator;
+    }
+
+    private KcPersonService getKcPersonService() {
+        if(kcPersonService == null) {
+            kcPersonService = KcServiceLocator.getService(KcPersonService.class);
+        }
+        return kcPersonService;
+    }
+
+    private ParameterService getParameterService() {
+        if (parameterService == null) {
+            parameterService = KcServiceLocator.getService(ParameterService.class);
+        }
+
+        return parameterService;
+    }
+
+    protected boolean isShowFullNameEnabled() {
+        return getParameterService().getParameterValueAsBoolean(
+                Constants.MODULE_NAMESPACE_GEN, ParameterConstants.ALL_COMPONENT, FeatureFlagConstants.SHOW_FULL_NAME_IN_HEADER_FIELDS, false);
     }
 }
