@@ -24,3 +24,15 @@ tr.finalBudget div.submissionMessage {
 .replaceAttachment .subAwardDetailsFileUpload-replace {
 	display: block;
 }
+
+section#PropDev-BudgetPage-NewBudgetDialog {
+	z-index: 1041 !important;
+}
+
+.blockUI.blockOverlay {
+	z-index: 1060 !important;
+}
+
+.blockUI.blockMsg {
+	z-index: 1061 !important;
+}
