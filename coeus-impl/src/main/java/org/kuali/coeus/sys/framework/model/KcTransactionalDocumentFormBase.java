@@ -290,8 +290,7 @@ public abstract class KcTransactionalDocumentFormBase extends KualiTransactional
 
     /**
      * 
-     * This method should be overriden by modules that is using person editable field.
-     * @return
+     * This method should be overridden by modules that is using person editable field.
      */
     public String getModuleCode() {
         return "0";

@@ -223,8 +223,7 @@ public class FinancialEntityAction extends KualiAction {
     }
 
     /**
-     * This is specifically for 'sponsor' lookup'  when return a value, the addresses fields will be overriden.
-     * @see org.kuali.rice.kns.web.struts.action.KualiAction#refresh(org.apache.struts.action.ActionMapping, org.apache.struts.action.ActionForm, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+     * This is specifically for 'sponsor' lookup'  when return a value, the addresses fields will be overridden.
      */
     @Override
     public ActionForward refresh(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)

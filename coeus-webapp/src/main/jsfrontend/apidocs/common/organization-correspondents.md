@@ -46,7 +46,7 @@
     + correspondentId (optional) - 
     + organizationId (optional) - Organization Id. Maximum length is 8.
     + correspondentTypeCode (optional) - Correspondent Type Code. Maximum length is 22.
-    + personId (optional) - This is a generic implementation of a 'SystemId' attribute. It should always be overriden on the label, shortLabel, summary, and description, as these are only generic placeholders. Maximum length is 40.
+    + personId (optional) - This is a generic implementation of a 'SystemId' attribute. It should always be overridden on the label, shortLabel, summary, and description, as these are only generic placeholders. Maximum length is 40.
     + nonEmployeeFlag (optional) - Non Employee Flag. Maximum length is 1.
     + description (optional) - Description. Maximum length is 2000.
 
@@ -220,7 +220,7 @@
     + correspondentId (optional) - 
     + organizationId (optional) - Organization Id. Maximum length is 8.
     + correspondentTypeCode (optional) - Correspondent Type Code. Maximum length is 22.
-    + personId (optional) - This is a generic implementation of a 'SystemId' attribute. It should always be overriden on the label, shortLabel, summary, and description, as these are only generic placeholders. Maximum length is 40.
+    + personId (optional) - This is a generic implementation of a 'SystemId' attribute. It should always be overridden on the label, shortLabel, summary, and description, as these are only generic placeholders. Maximum length is 40.
     + nonEmployeeFlag (optional) - Non Employee Flag. Maximum length is 1.
     + description (optional) - Description. Maximum length is 2000.
 

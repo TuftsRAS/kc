@@ -185,30 +185,21 @@ public class AwardReportsServiceImpl implements AwardReportsService {
     }
     
     /**
-     * 
-     * This method returns a new instance of FrequencyCodeValuesFinder which can be overriden in unit test to test the service method only.
-     * @param reportClassCode
-     * @param reportCode
-     * @return
+     * This method returns a new instance of FrequencyCodeValuesFinder which can be overridden in unit test to test the service method only.
      */
     protected FrequencyCodeValuesFinder getFrequencyCodeValuesFinder(String reportClassCode, String reportCode){
         return new FrequencyCodeValuesFinder(reportClassCode, reportCode);
     }
     
     /**
-     * 
-     * This method returns a new instance of FrequencyBaseCodeValuesFinder which can be overriden in unit test to test the service method only.
-     * @param frequencyCode
-     * @return
+     * This method returns a new instance of FrequencyBaseCodeValuesFinder which can be overridden in unit test to test the service method only.
      */
     protected FrequencyBaseCodeValuesFinder getFrequencyBaseCodeValuesFinder(String frequencyCode){
         return new FrequencyBaseCodeValuesFinder(frequencyCode);
     }
     
     /**
-     * 
-     * This method returns a new instance of ReportClassValuesFinder which can be overriden in unit test to test the service method only. 
-     * @return
+     * This method returns a new instance of ReportClassValuesFinder which can be overridden in unit test to test the service method only.
      */
     protected ReportClassValuesFinder getReportClassValuesFinder() {
         return new ReportClassValuesFinder();

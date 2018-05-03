@@ -30,7 +30,6 @@ import org.kuali.coeus.propdev.impl.budget.subaward.BudgetSubAwards;
 import org.kuali.coeus.propdev.impl.budget.modular.BudgetModularIdc;
 import org.kuali.coeus.propdev.impl.budget.modular.BudgetModularSummary;
 import org.kuali.coeus.propdev.impl.hierarchy.HierarchyProposalSummary;
-import org.kuali.coeus.propdev.impl.hierarchy.ProposalHierarchyService;
 import org.kuali.rice.core.api.CoreApiServiceLocator;
 import org.kuali.rice.core.api.config.property.ConfigurationService;
 import org.kuali.rice.kew.api.WorkflowDocument;
@@ -117,8 +116,6 @@ public class BudgetForm extends BudgetVersionFormBase implements CostShareFuncti
     private transient String enableBudgetSalaryByPeriod;
     
     private BudgetFormulatedCostDetail newBudgetFormulatedCost;
-    
-    private transient ProposalHierarchyService proposalHierarchyService;
     
     /**
      * Gets the selectedToPrintComment attribute. 
@@ -901,9 +898,8 @@ public class BudgetForm extends BudgetVersionFormBase implements CostShareFuncti
     
     /**
      * 
-     * This method determines if the budget rates are editable.  Note, this function should be overriden if this form
+     * This method determines if the budget rates are editable.  Note, this function should be overridden if this form
      * gets extended.  Such as in the case of AwardBudgetForm, as that form has different requirements for editing budget rates.
-     * @return
      */
     public boolean getCanModifyBudgetRates() {
         boolean retVal = this.getEditingMode().containsKey("modifyProposalBudgetRates");
@@ -956,17 +952,6 @@ public class BudgetForm extends BudgetVersionFormBase implements CostShareFuncti
 
     public void setNewBudgetFormulatedCost(BudgetFormulatedCostDetail newBudgetFormulatedCost) {
         this.newBudgetFormulatedCost = newBudgetFormulatedCost;
-    }
-
-    protected ProposalHierarchyService getProposalHierarchyService() {
-        if (proposalHierarchyService == null) {
-            proposalHierarchyService = KcServiceLocator.getService(ProposalHierarchyService.class);
-        }
-        return proposalHierarchyService;
-    }
-
-    public void setProposalHierarchyService(ProposalHierarchyService proposalHierarchyService) {
-        this.proposalHierarchyService = proposalHierarchyService;
     }
     
     public Budget getBudget() {
