@@ -22,6 +22,7 @@ public interface PermissionConstants {
     String VIEW_CERTIFICATION = "View Certification";
     String MODIFY_NARRATIVE = "Modify Narrative";
     String VIEW_NARRATIVE = "View Narratives";
+    String MODIFY_S2S_OVERRIDE = "Modify S2S Override";
     String MODIFY_BUDGET = "Modify Budget";
     String MODIFY_PROPOSAL_RATES = "Modify Proposal Rates";
     String VIEW_BUDGET = "View Budget";

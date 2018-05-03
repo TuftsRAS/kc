@@ -123,6 +123,7 @@ public interface Constants {
     String GRANTSGOV_ERROR_SEVIRITY_KEY = "Grants.Gov Error";
     String AUDIT_WARNINGS = "Warnings";
     String GRANTSGOV_ERRORS= "Grants.Gov Errors";
+    String GRANTSGOV_WARNINGS= "Grants.Gov Warnings";
     String KNS_AUDIT_ERRORS = AUDIT_ERRORS;
     
     String CURRENT_PENDING_REPORT_GROUP_NAME = "CURRENT_PENDING_REPORT_GROUP_NAME";

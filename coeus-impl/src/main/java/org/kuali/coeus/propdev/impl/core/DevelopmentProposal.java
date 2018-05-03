@@ -47,6 +47,7 @@ import org.kuali.coeus.propdev.impl.person.ProposalPersonUnit;
 import org.kuali.coeus.propdev.impl.person.attachment.ProposalPersonBiography;
 import org.kuali.coeus.propdev.impl.person.attachment.ProposalPersonBiographyService;
 import org.kuali.coeus.propdev.impl.person.creditsplit.CreditSplitConstants;
+import org.kuali.coeus.propdev.impl.s2s.override.S2sOverride;
 import org.kuali.coeus.propdev.impl.state.ProposalState;
 import org.kuali.coeus.propdev.impl.ynq.ProposalYnq;
 import org.kuali.coeus.sys.framework.model.KcPersistableBusinessObjectBase;
@@ -307,6 +308,9 @@ public class DevelopmentProposal extends KcPersistableBusinessObjectBase impleme
     @OneToMany(cascade = { CascadeType.REFRESH })
     @JoinColumn(name = PROPOSAL_NUMBER, referencedColumnName = PROPOSAL_NUMBER)
     private List<S2sAppSubmission> s2sAppSubmission;
+
+    @OneToOne(mappedBy="developmentProposal", cascade = { CascadeType.ALL })
+    private S2sOverride s2sOverride;
 
     @OneToMany(mappedBy="developmentProposal", cascade = { CascadeType.ALL })
     private List<S2sUserAttachedForm> s2sUserAttachedForms;
@@ -1597,6 +1601,15 @@ public class DevelopmentProposal extends KcPersistableBusinessObjectBase impleme
             return getS2sAppSubmission().get(getS2sAppSubmission().size()-1);
         }
         return null;
+    }
+
+    @Override
+    public S2sOverride getS2sOverride() {
+        return s2sOverride;
+    }
+
+    public void setS2sOverride(S2sOverride s2sOverride) {
+        this.s2sOverride = s2sOverride;
     }
 
     @Override

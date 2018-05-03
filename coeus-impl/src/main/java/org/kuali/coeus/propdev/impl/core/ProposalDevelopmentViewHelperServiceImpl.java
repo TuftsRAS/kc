@@ -57,6 +57,7 @@ import org.kuali.coeus.propdev.impl.person.question.ProposalPersonQuestionnaireH
 import org.kuali.coeus.propdev.impl.questionnaire.ProposalDevelopmentQuestionnaireHelper;
 import org.kuali.coeus.propdev.impl.s2s.S2sOpportunity;
 import org.kuali.coeus.propdev.impl.s2s.S2sRevisionTypeConstants;
+import org.kuali.coeus.propdev.impl.s2s.override.S2sOverride;
 import org.kuali.coeus.propdev.impl.s2s.question.ProposalDevelopmentS2sQuestionnaireHelper;
 import org.kuali.coeus.propdev.impl.specialreview.ProposalSpecialReview;
 import org.kuali.coeus.propdev.impl.state.ProposalState;
@@ -84,6 +85,7 @@ import org.kuali.rice.krad.uif.UifConstants;
 import org.kuali.rice.krad.uif.UifParameters;
 import org.kuali.rice.krad.uif.element.Action;
 import org.kuali.rice.krad.uif.lifecycle.ViewLifecycle;
+import org.kuali.rice.krad.uif.util.LifecycleElement;
 import org.kuali.rice.krad.uif.util.ObjectPropertyUtils;
 import org.kuali.rice.krad.uif.view.ViewModel;
 import org.kuali.rice.krad.util.KRADConstants;
@@ -215,6 +217,16 @@ public class ProposalDevelopmentViewHelperServiceImpl extends KcViewHelperServic
     @Autowired
     @Qualifier("medusaService")
     private MedusaService medusaService;
+
+    @Override
+    public void performCustomFinalize(LifecycleElement element, Object model, LifecycleElement parent) {
+
+        final S2sOverride s2sOverride = ((ProposalDevelopmentDocumentForm) model).getDevelopmentProposal().getS2sOverride();
+        if (s2sOverride != null && s2sOverride.isActive() && s2sOverride.getApplicationOverride() != null && s2sOverride.getApplicationOverride().getApplication() != null) {
+            getGlobalVariableService().getMessageMap().putWarning(KRADConstants.GLOBAL_ERRORS, KeyConstants.S2S_OVERRIDDE_PRESENT);
+        }
+        super.performCustomFinalize(element, model, parent);
+    }
 
     @Override
     public void processBeforeAddLine(ViewModel model, Object addLine, String collectionId, final String collectionPath) {
@@ -491,6 +503,14 @@ public class ProposalDevelopmentViewHelperServiceImpl extends KcViewHelperServic
         else{
             return "";
         }
+    }
+
+    public boolean containsOpportunity(ProposalDevelopmentDocument document) {
+        return document.getDevelopmentProposal().getS2sOpportunity() != null && document.getDevelopmentProposal().getS2sOpportunity().getOpportunityId() != null;
+    }
+
+    public boolean containsOverride(ProposalDevelopmentDocument document) {
+        return document.getDevelopmentProposal().getS2sOverride() != null;
     }
 
     public boolean isCollectionLineEditable(String selectedCollectionPath, String index, Map<String,List<String>> editableCollectionLines) {
@@ -1219,6 +1239,11 @@ public class ProposalDevelopmentViewHelperServiceImpl extends KcViewHelperServic
         proposal.setProgramAnnouncementNumber("");
         proposal.setCfdaNumber("");
         proposal.setOpportunityIdForGG("");
+    }
+
+    @Override
+    protected Class<?> getParameterClass() {
+        return ProposalDevelopmentDocument.class;
     }
 
     public String getMaxUploadSizeParameter() {

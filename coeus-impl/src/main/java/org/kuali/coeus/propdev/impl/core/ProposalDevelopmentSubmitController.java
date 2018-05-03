@@ -23,6 +23,7 @@ import org.kuali.coeus.propdev.impl.notification.ProposalDevelopmentNotification
 import org.kuali.coeus.propdev.impl.notification.ProposalDevelopmentNotificationRenderer;
 import org.kuali.coeus.propdev.impl.s2s.S2sSubmissionService;
 import org.kuali.coeus.propdev.impl.s2s.connect.S2sCommunicationException;
+import org.kuali.coeus.propdev.impl.s2s.override.S2sOverride;
 import org.kuali.coeus.propdev.impl.specialreview.ProposalSpecialReview;
 import org.kuali.coeus.propdev.impl.state.ProposalState;
 import org.kuali.coeus.propdev.impl.state.ProposalStateService;
@@ -93,6 +94,9 @@ public class ProposalDevelopmentSubmitController extends
     private static final String APPROVE_CHECK = "approveCheck";
     private static final String APPROVE = "approve";
     private static final String DATAVALIDATION = "datavalidation";
+    private static final String PROP_DEV_SUBMIT_PAGE_S2S_OVERRIDE_EXISTS = "PropDev-SubmitPage-S2sOverride-Exists";
+    private static final String PROP_DEV_OPPORTUNITY_PAGE = "PropDev-OpportunityPage";
+    private static final String PROP_DEV_RESUMBIT_OPTIONS_SECTION = "PropDev-Resumbit-OptionsSection";
 
     private final Logger LOGGER = Logger.getLogger(ProposalDevelopmentSubmitController.class);
 
@@ -322,27 +326,43 @@ public class ProposalDevelopmentSubmitController extends
     			if(autogenerateInstitutionalProposal() && ! hasInstitutionalProposal(form.getProposalDevelopmentDocument().getDevelopmentProposal().getProposalNumber())) {
     				submitApplication(form);
     			}
-                handleSubmissionToS2S(form);
-                return getModelAndViewService().getModelAndView(form,"PropDev-OpportunityPage");
+                final S2sOverride s2sOverride = form.getDevelopmentProposal().getS2sOverride();
+                if (s2sOverride != null && s2sOverride.getApplicationOverride() != null && s2sOverride.getApplicationOverride().getApplication() != null) {
+                    final DialogResponse dialogResponse = form.getDialogResponse(PROP_DEV_SUBMIT_PAGE_S2S_OVERRIDE_EXISTS);
+                    if(dialogResponse == null) {
+                        return getModelAndViewService().showDialog(PROP_DEV_SUBMIT_PAGE_S2S_OVERRIDE_EXISTS, false, form);
+                    } else if (dialogResponse.getResponseAsBoolean()){
+                        handleSubmissionToS2S(form);
+                        return getModelAndViewService().getModelAndView(form, PROP_DEV_OPPORTUNITY_PAGE);
+                    } else {
+                        return getModelAndViewService().getModelAndView(form);
+                    }
+                } else {
+                    handleSubmissionToS2S(form);
+                    return getModelAndViewService().getModelAndView(form, PROP_DEV_OPPORTUNITY_PAGE);
+                }
             } else {
                 form.setDataValidationItems(((ProposalDevelopmentViewHelperServiceImpl)form.getViewHelperService()).populateDataValidation());
     			return getModelAndViewService().showDialog(ProposalDevelopmentConstants.KradConstants.DATA_VALIDATION_DIALOG_ID, true, form);
     		}
         } else {
-        	return getModelAndViewService().showDialog("PropDev-Resumbit-OptionsSection", true, form);
+        	return getModelAndViewService().showDialog(PROP_DEV_RESUMBIT_OPTIONS_SECTION, true, form);
         }
     }
 
     protected void handleSubmissionToS2S(ProposalDevelopmentDocumentForm form) {
         ProposalDevelopmentDocument proposalDevelopmentDocument = form.getProposalDevelopmentDocument();
         try {
-            submitS2sApplication(proposalDevelopmentDocument);
-        } catch(S2SException ex) {
-            LOGGER.error("Error submitting to s2s", ex);
-            getGlobalVariableService().getMessageMap().putError(Constants.NO_FIELD, KeyConstants.ERROR_ON_GRANTS_GOV_SUBMISSION,ex.getErrorMessage());
-        } catch (S2sCommunicationException ex) {
-        	LOGGER.error("Error submitting to s2s", ex);
-        	getGlobalVariableService().getMessageMap().putError(Constants.NO_FIELD, ex.getErrorKey(), ex.getMessageWithParams());
+            final boolean submitted = submitS2sApplication(proposalDevelopmentDocument);
+            if (!submitted) {
+                getGlobalVariableService().getMessageMap().putError(Constants.NO_FIELD, KeyConstants.ERROR_ON_GRANTS_GOV_SUBMISSION, "Submission Failed. Please correct any validation errors and try again.");
+            }
+        } catch(S2SException e) {
+            LOGGER.error("Error submitting to s2s", e);
+            getGlobalVariableService().getMessageMap().putError(Constants.NO_FIELD, KeyConstants.ERROR_ON_GRANTS_GOV_SUBMISSION, StringUtils.isNotBlank(e.getErrorMessage()) ? e.getErrorMessage() : e.getMessage());
+        } catch (S2sCommunicationException e) {
+        	LOGGER.error("Error submitting to s2s", e);
+        	getGlobalVariableService().getMessageMap().putError(Constants.NO_FIELD, e.getErrorKey(), e.getMessageWithParams());
         }
     }
 
@@ -365,7 +385,7 @@ public class ProposalDevelopmentSubmitController extends
                 return getModelAndViewService().showDialog(ProposalDevelopmentConstants.KradConstants.DATA_VALIDATION_DIALOG_ID, true, form);
     		}
     	} else {
-            return getModelAndViewService().showDialog("PropDev-Resumbit-OptionsSection", true, form);
+            return getModelAndViewService().showDialog(PROP_DEV_RESUMBIT_OPTIONS_SECTION, true, form);
     	}
     }
 
@@ -908,8 +928,8 @@ public class ProposalDevelopmentSubmitController extends
         return getTransactionalDocumentControllerService().sendAdHocRequests(form);
     }
 
-	private void submitS2sApplication(ProposalDevelopmentDocument proposalDevelopmentDocument) {
-	    getS2sSubmissionService().submitApplication(proposalDevelopmentDocument);
+	private boolean submitS2sApplication(ProposalDevelopmentDocument proposalDevelopmentDocument) {
+	    return getS2sSubmissionService().submitApplication(proposalDevelopmentDocument);
 	}
 
 	public S2sSubmissionService getS2sSubmissionService() {

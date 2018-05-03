@@ -28,6 +28,7 @@ import org.kuali.coeus.propdev.api.s2s.S2SConfigurationService;
 import org.kuali.coeus.propdev.impl.s2s.connect.S2sCommunicationException;
 import org.kuali.coeus.s2sgen.api.core.ConfigurationConstants;
 import org.kuali.coeus.s2sgen.api.generate.AttachmentData;
+import org.kuali.coeus.sys.framework.util.JaxbUtils;
 import org.kuali.kra.infrastructure.KeyConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -37,13 +38,10 @@ import javax.net.ssl.KeyManager;
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.TrustManagerFactory;
-import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
 import javax.xml.ws.soap.SOAPFaultException;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.StringWriter;
 import java.security.*;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
@@ -164,12 +162,7 @@ public class NihSubmissionValidationServiceImpl implements NihSubmissionValidati
     private <T> void debugLogJaxbObject(Class<? extends T> clazz, T o) {
         if (LOG.isDebugEnabled()) {
             try {
-                final JAXBContext context = JAXBContext.newInstance(clazz);
-                final Marshaller m = context.createMarshaller();
-                m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-                final StringWriter sw = new StringWriter();
-                m.marshal(o, sw);
-                LOG.debug(sw.toString());
+                LOG.debug(JaxbUtils.toString(clazz, o));
             } catch (JAXBException e) {
                 LOG.debug("Unable to marshall object", e);
             }

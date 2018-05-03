@@ -36,10 +36,11 @@ import org.kuali.coeus.propdev.impl.person.creditsplit.ProposalUnitCreditSplit;
 import org.kuali.coeus.common.framework.auth.perm.KcAuthorizationService;
 import org.kuali.coeus.propdev.impl.questionnaire.ProposalDevelopmentModuleQuestionnaireBean;
 import org.kuali.coeus.propdev.impl.s2s.*;
+import org.kuali.coeus.propdev.impl.s2s.override.S2sOverride;
+import org.kuali.coeus.propdev.impl.s2s.override.S2sOverrideApplicationData;
 import org.kuali.coeus.propdev.impl.s2s.question.ProposalDevelopmentS2sModuleQuestionnaireBean;
 import org.kuali.coeus.propdev.impl.state.ProposalState;
 import org.kuali.coeus.sys.framework.gv.GlobalVariableService;
-import org.kuali.coeus.sys.framework.model.KcDataObject;
 import org.kuali.kra.bo.*;
 import org.kuali.kra.infrastructure.Constants;
 import org.kuali.kra.infrastructure.RoleConstants;
@@ -50,6 +51,7 @@ import org.kuali.coeus.propdev.impl.person.KeyPersonnelService;
 import org.kuali.coeus.common.questionnaire.framework.answer.QuestionnaireAnswerService;
 import org.kuali.rice.core.api.criteria.QueryByCriteria;
 import org.kuali.rice.coreservice.framework.parameter.ParameterService;
+import org.kuali.rice.kew.api.exception.WorkflowException;
 import org.kuali.rice.krad.bo.*;
 import org.kuali.rice.krad.data.CopyOption;
 import org.kuali.rice.krad.data.DataObjectService;
@@ -205,6 +207,8 @@ public class ProposalCopyServiceImpl implements ProposalCopyService {
                 // all copied proposals should always be in progress.
                 newDoc.getDevelopmentProposal().setProposalStateTypeCode(ProposalState.IN_PROGRESS);
 
+                fixS2sOverride(newDoc);
+
                 newDoc = (ProposalDevelopmentDocument) getDocumentService().saveDocument(newDoc);
 
                 newDoc.getDevelopmentProposal().getBudgets().forEach(budget -> getProposalBudgetService().syncBudgetReferencesForCopy(budget));
@@ -249,7 +253,7 @@ public class ProposalCopyServiceImpl implements ProposalCopyService {
         final List<Note> notes = doc.getNotes();
         final List<Note> newNotes = new ArrayList<>();
         for (Note note : notes) {
-            Note noteCopy = getDataObjectService().copyInstance(note, CopyOption.RESET_PK_FIELDS, CopyOption.RESET_VERSION_NUMBER, CopyOption.RESET_OBJECT_ID);
+            Note noteCopy = deepCopy(note);
             // you should not need to do this since the version number should have been reset but for some reason it is not and an OLE is thrown if we do not explicitly set.
             noteCopy.setVersionNumber(0L);
             newNotes.add(noteCopy);
@@ -257,11 +261,11 @@ public class ProposalCopyServiceImpl implements ProposalCopyService {
         newDoc.setNotes(newNotes);
     }
 
-    protected List<ProposalAbstract> copyAbstracts(ProposalDevelopmentDocument oldDoc, ProposalDevelopmentDocument newDoc) throws Exception {
+    protected List<ProposalAbstract> copyAbstracts(ProposalDevelopmentDocument oldDoc, ProposalDevelopmentDocument newDoc) {
         newDoc.getDevelopmentProposal().setProposalAbstracts(null);
         List<ProposalAbstract> abstracts = new ArrayList<>();
         for (ProposalAbstract abs : oldDoc.getDevelopmentProposal().getProposalAbstracts()) {
-            ProposalAbstract absCopy = (ProposalAbstract) deepCopy(abs);
+            ProposalAbstract absCopy = deepCopy(abs);
             absCopy.setAbstractType(abs.getAbstractType());
             abstracts.add(absCopy);
         }
@@ -304,7 +308,7 @@ public class ProposalCopyServiceImpl implements ProposalCopyService {
      * give us the proposal number to use when copying over the remainder of the
      * proposal.
      */
-    protected ProposalDevelopmentDocument createNewProposal(ProposalDevelopmentDocument srcDoc, ProposalCopyCriteria criteria) throws Exception {
+    protected ProposalDevelopmentDocument createNewProposal(ProposalDevelopmentDocument srcDoc, ProposalCopyCriteria criteria) throws WorkflowException {
         
         ProposalDevelopmentDocument newDoc = (ProposalDevelopmentDocument) getDocumentService().getNewDocument(srcDoc.getClass());
         
@@ -394,7 +398,7 @@ public class ProposalCopyServiceImpl implements ProposalCopyService {
                 S2sUserAttachedForm copiedForm;
                 try {
                 	refreshUserAttachedFormAttachments(s2sUserAttachedForm.getS2sUserAttachedFormFileList());
-                    copiedForm = (S2sUserAttachedForm) deepCopy(s2sUserAttachedForm);
+                    copiedForm = deepCopy(s2sUserAttachedForm);
                 } catch (Exception e) {
                     throw new RuntimeException("Error while copying user attached form ", e);
                 }
@@ -412,9 +416,7 @@ public class ProposalCopyServiceImpl implements ProposalCopyService {
     }
     
     protected void refreshUserAttachedFormAttachments(List<S2sUserAttachedFormFile> s2sUserAttachedFormFileList) {
-    	s2sUserAttachedFormFileList.forEach(s2sUserAttachedFormFile -> {
- 			 s2sUserAttachedFormFile.getFormFile();
-        });
+    	s2sUserAttachedFormFileList.forEach(S2sUserAttachedFormFile::getFormFile);
     }
 
     /**
@@ -424,14 +426,25 @@ public class ProposalCopyServiceImpl implements ProposalCopyService {
      *
      * @param oldDoc the source proposal development document, i.e. the original.
      * @param newDoc the destination proposal development document, i.e. the new document.
-     * @throws Exception if the copy fails for any reason.
      */
-    protected void copyProposal(ProposalDevelopmentDocument oldDoc, ProposalDevelopmentDocument newDoc)  throws Exception {
+    protected void copyProposal(ProposalDevelopmentDocument oldDoc, ProposalDevelopmentDocument newDoc) {
 
         //We need to copy DocumentNextValues to properly handle copied collections
         fixNextValues(oldDoc, newDoc);
 
-        DevelopmentProposal copy = (DevelopmentProposal) deepCopy(oldDoc.getDevelopmentProposal());
+        //deepCopy is not resetting primary keys correctly.  This is the workaround.
+        final S2sOverride s2sOverride = oldDoc.getDevelopmentProposal().getS2sOverride();
+        if (s2sOverride != null) {
+            oldDoc.getDevelopmentProposal().setS2sOverride(null);
+        }
+
+        DevelopmentProposal copy = deepCopy(oldDoc.getDevelopmentProposal());
+
+        if (s2sOverride != null) {
+            copy.setS2sOverride(deepCopy(s2sOverride));
+            oldDoc.getDevelopmentProposal().setS2sOverride(s2sOverride);
+        }
+
         // remove attachments since they cause issues in oracle while persisting. They
         // are repopulated later at any rate.
         removeBioAttachments(copy);
@@ -451,7 +464,7 @@ public class ProposalCopyServiceImpl implements ProposalCopyService {
         }
     }
 
-    protected KcDataObject deepCopy(KcDataObject src) throws Exception {
+    protected <T> T deepCopy(T src) {
         return getDataObjectService().copyInstance(src, CopyOption.RESET_PK_FIELDS, CopyOption.RESET_VERSION_NUMBER, CopyOption.RESET_OBJECT_ID );
     }
     
@@ -504,7 +517,7 @@ public class ProposalCopyServiceImpl implements ProposalCopyService {
      * Once the proposal is copied, we need to make changes based on the lead unit
      * and change other properties to make the proposal usable.
      */
-    protected void modifyNewProposal(ProposalDevelopmentDocument srcDoc, ProposalDevelopmentDocument newDoc, ProposalCopyCriteria criteria) throws Exception {
+    protected void modifyNewProposal(ProposalDevelopmentDocument srcDoc, ProposalDevelopmentDocument newDoc, ProposalCopyCriteria criteria) {
 
          // Fixing the title
         newDoc.setDefaultDocumentDescription();
@@ -547,7 +560,6 @@ public class ProposalCopyServiceImpl implements ProposalCopyService {
         copyOpportunity(newDoc, srcDoc);
 
         fixS2sUserAttachedForms(newDoc);
-
     }
 
     private void modifyBudgetModular(ProposalDevelopmentDocument newDoc) {
@@ -566,13 +578,44 @@ public class ProposalCopyServiceImpl implements ProposalCopyService {
      */
     protected void copyOpportunity(ProposalDevelopmentDocument newDoc, ProposalDevelopmentDocument srcDoc) {
         if (srcDoc.getDevelopmentProposal().getS2sOpportunity() != null) {
-            S2sOpportunity opportunity = getDataObjectService().copyInstance(srcDoc.getDevelopmentProposal().getS2sOpportunity(), CopyOption.RESET_PK_FIELDS, CopyOption.RESET_VERSION_NUMBER, CopyOption.RESET_OBJECT_ID);
+            S2sOpportunity opportunity = deepCopy(srcDoc.getDevelopmentProposal().getS2sOpportunity());
 
             opportunity.setDevelopmentProposal(newDoc.getDevelopmentProposal());
             newDoc.getDevelopmentProposal().setS2sOpportunity(opportunity);
 
             for (S2sOppForms form : opportunity.getS2sOppForms()) {
                 form.getS2sOppFormsId().setProposalNumber(newDoc.getDevelopmentProposal().getProposalNumber());
+            }
+        }
+    }
+
+    protected void fixS2sOverride(ProposalDevelopmentDocument newDoc) {
+        final S2sOverride s2sOverride = newDoc.getDevelopmentProposal().getS2sOverride();
+        if (s2sOverride != null) {
+            //purposefully making inactive.  The S2S Admin person can reactivate if needed.
+            s2sOverride.setActive(false);
+            s2sOverride.setUpdateUser(null);
+            s2sOverride.setUpdateTimestamp(null);
+
+            resetS2sOverrideAppData(s2sOverride.getApplication());
+            resetS2sOverrideAppData(s2sOverride.getApplicationOverride());
+
+            s2sOverride.setDevelopmentProposal(newDoc.getDevelopmentProposal());
+        }
+    }
+
+    private void resetS2sOverrideAppData(S2sOverrideApplicationData application) {
+        if (application != null) {
+            application.setUpdateUser(null);
+            application.setUpdateTimestamp(null);
+
+            if (application.getAttachments() != null) {
+                application.getAttachments().forEach(a -> {
+                    a.setUpdateUser(null);
+                    a.setUpdateTimestamp(null);
+                    a.setUploadUser(null);
+                    a.setUploadTimestamp(null);
+                });
             }
         }
     }
@@ -749,9 +792,8 @@ public class ProposalCopyServiceImpl implements ProposalCopyService {
      * @param doc the proposal development document
      * @param oldLeadUnitNumber the old lead unit number
      * @param newLeadUnitNumber the new lead unit number
-     * @throws Exception 
      */
-    protected void changeKeyPersonnelUnits(ProposalDevelopmentDocument doc, String oldLeadUnitNumber, String newLeadUnitNumber) throws Exception {
+    protected void changeKeyPersonnelUnits(ProposalDevelopmentDocument doc, String oldLeadUnitNumber, String newLeadUnitNumber) {
        
         List<ProposalPerson> persons = doc.getDevelopmentProposal().getProposalPersons();
         for (ProposalPerson person : persons) {
@@ -844,7 +886,7 @@ public class ProposalCopyServiceImpl implements ProposalCopyService {
      * @param src the source proposal development document, i.e. the original.
      * @param dest the destination proposal development document, i.e. the new document.
      */
-    protected void copyBudgets(ProposalDevelopmentDocument src, ProposalDevelopmentDocument dest, String budgetVersions) throws Exception {
+    protected void copyBudgets(ProposalDevelopmentDocument src, ProposalDevelopmentDocument dest, String budgetVersions) {
     	dest.getDevelopmentProposal().getBudgets().clear();
     	ProposalDevelopmentBudgetExt finalBudgetVersion =  src.getDevelopmentProposal().getFinalBudget();
         if (budgetVersions.equals(ProposalCopyCriteria.BUDGET_FINAL_VERSION) && finalBudgetVersion != null) {

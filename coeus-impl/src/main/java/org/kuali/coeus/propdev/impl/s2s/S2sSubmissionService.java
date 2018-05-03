@@ -50,11 +50,8 @@ public interface S2sSubmissionService {
      *
      * This method is used to submit forms to the grants.guv
      *
-     * @param pdDoc
-     *            Proposal Development Document.
      */
-    void submitApplication(ProposalDevelopmentDocument pdDoc)
-            throws S2sCommunicationException;
+    boolean submitApplication(ProposalDevelopmentDocument pdDoc) throws S2sCommunicationException;
 
     /**
      * This method is to find the list of available opportunities

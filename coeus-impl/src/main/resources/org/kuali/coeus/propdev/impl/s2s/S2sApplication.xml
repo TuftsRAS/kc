@@ -60,13 +60,6 @@
     <property name="forceUppercase" value="false" />
     <property name="label" value="Application" />
     <property name="shortLabel" value="Application" />
-    <property name="maxLength" value="4000" />
-    <property name="validationPattern" >
-      <bean parent="NumericValidationPattern" />
-    </property>
-    <property name="validCharactersConstraint">
-      <bean parent="NumericPatternConstraint"/>
-    </property>
     <property name="control" >
       <bean parent="HiddenControlDefinition" />
     </property>

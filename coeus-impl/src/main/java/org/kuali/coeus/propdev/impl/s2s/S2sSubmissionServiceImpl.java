@@ -11,7 +11,6 @@ import gov.grants.apply.services.applicantwebservices_v2.GetApplicationListRespo
 import gov.grants.apply.services.applicantwebservices_v2.GetApplicationStatusDetailResponse;
 import gov.grants.apply.services.applicantwebservices_v2.GetOpportunitiesResponse;
 import gov.grants.apply.services.applicantwebservices_v2.SubmitApplicationResponse;
-import gov.nih.era.svs.types.ValidateApplicationResponse;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
@@ -25,13 +24,9 @@ import org.kuali.coeus.propdev.impl.core.ProposalDevelopmentDocument;
 import org.kuali.coeus.propdev.impl.s2s.connect.OpportunitySchemaParserService;
 import org.kuali.coeus.propdev.impl.s2s.connect.S2SConnectorService;
 import org.kuali.coeus.propdev.impl.s2s.connect.S2sCommunicationException;
-import org.kuali.coeus.propdev.impl.s2s.nih.NihSubmissionValidationService;
-import org.kuali.coeus.propdev.impl.s2s.nih.ValidationMessageDto;
 import org.kuali.coeus.s2sgen.api.core.ConfigurationConstants;
-import org.kuali.coeus.s2sgen.api.generate.AttachmentData;
 import org.kuali.coeus.s2sgen.api.generate.FormGenerationResult;
 import org.kuali.coeus.s2sgen.api.generate.FormGeneratorService;
-import org.kuali.coeus.sys.framework.gv.GlobalVariableService;
 import org.kuali.coeus.sys.framework.service.KcServiceLocator;
 import org.kuali.kra.infrastructure.Constants;
 import org.kuali.kra.infrastructure.KeyConstants;
@@ -39,7 +34,6 @@ import org.kuali.rice.core.api.criteria.QueryByCriteria;
 import org.kuali.rice.core.api.criteria.QueryResults;
 import org.kuali.rice.coreservice.framework.parameter.ParameterService;
 import org.kuali.rice.krad.data.DataObjectService;
-import org.kuali.rice.krad.service.BusinessObjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -53,7 +47,10 @@ import java.io.InputStream;
 import java.net.URL;
 import java.sql.Timestamp;
 import java.util.*;
+import java.util.stream.Collectors;
 
+import static org.kuali.coeus.sys.framework.util.CollectionUtils.entriesToMap;
+import static org.kuali.coeus.sys.framework.util.CollectionUtils.entry;
 import static org.kuali.rice.core.api.criteria.PredicateFactory.*;
 
 
@@ -78,16 +75,8 @@ public class S2sSubmissionServiceImpl implements S2sSubmissionService {
     private S2sOpportunityService s2sOpportunityService;
 
     @Autowired
-    @Qualifier("businessObjectService")
-    private BusinessObjectService businessObjectService;
-
-    @Autowired
     @Qualifier("formGeneratorService")
-    private FormGeneratorService s2SService;
-
-    @Autowired
-    @Qualifier("nihSubmissionValidationService")
-    private NihSubmissionValidationService nihSubmissionValidationService;
+    private FormGeneratorService formGeneratorService;
 
     @Autowired
     @Qualifier("s2sProviderService")
@@ -104,10 +93,6 @@ public class S2sSubmissionServiceImpl implements S2sSubmissionService {
     @Autowired
     @Qualifier("s2sFormConfigurationService")
     private S2sFormConfigurationService s2sFormConfigurationService;
-
-    @Autowired
-    @Qualifier("globalVariableService")
-    private GlobalVariableService globalVariableService;
     
     @Autowired
     @Qualifier("dataObjectService")
@@ -303,6 +288,22 @@ public class S2sSubmissionServiceImpl implements S2sSubmissionService {
         }
     }
 
+    private boolean doubleSubmissionViolation(String proposalNumber) {
+        if (getParameterService().getParameterValueAsBoolean(Constants.KC_S2S_PARAMETER_NAMESPACE, Constants.KC_ALL_PARAMETER_DETAIL_TYPE_CODE, PREVENT_MULTIPLE_S2S_SUBMISSIONS)) {
+            final QueryResults<S2sAppSubmission> submissions = getDataObjectService().findMatching(S2sAppSubmission.class,
+                    QueryByCriteria.Builder.create().setPredicates(and(equal("proposalNumber", proposalNumber),
+                            isNotNull("ggTrackingId"))).build());
+
+            if (submissions.getResults().stream().anyMatch(submission -> StringUtils.isNotBlank(submission.getGgTrackingId())) ) {
+                if (LOG.isInfoEnabled()) {
+                    LOG.info("Proposal Number: " + proposalNumber + " is already submitted.");
+                }
+                return true;
+            }
+        }
+        return false;
+    }
+
     /**
      * This method is used to submit forms to Grants.gov. It generates forms for
      * a given {@link ProposalDevelopmentDocument}, validates and then submits
@@ -311,61 +312,33 @@ public class S2sSubmissionServiceImpl implements S2sSubmissionService {
      * @param pdDoc Proposal Development Document.
      */
     @Override
-    public void submitApplication(ProposalDevelopmentDocument pdDoc) throws S2sCommunicationException {
-        if (getParameterService().getParameterValueAsBoolean(Constants.KC_S2S_PARAMETER_NAMESPACE, Constants.KC_ALL_PARAMETER_DETAIL_TYPE_CODE, PREVENT_MULTIPLE_S2S_SUBMISSIONS)) {
-            final QueryResults<S2sAppSubmission> submissions = getDataObjectService().findMatching(S2sAppSubmission.class,
-                    QueryByCriteria.Builder.create().setPredicates(and(equal("proposalNumber", pdDoc.getDevelopmentProposal().getProposalNumber()),
-                            isNotNull("ggTrackingId"))).build());
+    public boolean submitApplication(ProposalDevelopmentDocument pdDoc) throws S2sCommunicationException {
+        final DevelopmentProposal proposal = pdDoc.getDevelopmentProposal();
+        final String proposalNumber = proposal.getProposalNumber();
 
-            if (submissions.getResults().stream().anyMatch(submission -> StringUtils.isNotBlank(submission.getGgTrackingId())) ) {
-                if (LOG.isInfoEnabled()) {
-                        LOG.info("Proposal Number: " + pdDoc.getDevelopmentProposal().getProposalNumber() + " is already submitted.");
-                }
-                return;
-            }
+        if (doubleSubmissionViolation(proposalNumber)) {
+            return true;
         }
 
-        final FormGenerationResult result = s2SService.generateAndValidateForms(pdDoc);
+        //form generation validation along with nih integration should have been done by ProposalDevelopmentGrantsGovAuditRule which is required in
+        //order to submit.  Therefore, the specific failures are ignored here as this should not happen. If this step returns a not valid result,
+        //then this indicates a bug.
+        final FormGenerationResult result = formGeneratorService.generateAndValidateForms(pdDoc);
         if (result.isValid()) {
+            final Map<String, DataHandler> attachments = result.getAttachments()
+                    .stream()
+                    .map(attachment -> entry(attachment.getContentId(), new DataHandler(new ByteArrayDataSource(attachment.getContent(), attachment.getContentType()))))
+                    .collect(entriesToMap());
 
-            try {
-                final List<ValidationMessageDto> response = nihSubmissionValidationService.validateApplication(result.getApplicationXml(), result.getAttachments(), pdDoc.getDevelopmentProposal().getApplicantOrganization().getOrganization().getDunsNumber());
-                result.setValid(response.isEmpty());
-            } catch (S2sCommunicationException ex) {
-                result.setValid(false);
-                LOG.error("Error validating with nih.gov", ex);
-                getGlobalVariableService().getMessageMap().putError(Constants.NO_FIELD, ex.getErrorKey(), ex.getMessageWithParams());
-            }
-            Map<String, DataHandler> attachments = new HashMap<>();
-            List<S2sAppAttachments> s2sAppAttachmentList = new ArrayList<>();
-            DataHandler attachmentFile;
-            for (AttachmentData attachmentData : result.getAttachments()) {
-                attachmentFile = new DataHandler(new ByteArrayDataSource(
-                        attachmentData.getContent(), attachmentData
-                        .getContentType()));
+            final S2SConnectorService connectorService = getS2sConnectorService(proposal.getS2sOpportunity());
+            final SubmitApplicationResponse response = connectorService.submitApplication(result.getApplicationXml(), attachments, proposalNumber);
 
-                attachments.put(attachmentData.getContentId(), attachmentFile);
-                S2sAppAttachments appAttachments = new S2sAppAttachments();
-                appAttachments.setContentId(attachmentData.getContentId());
-                appAttachments.setProposalNumber(pdDoc.getDevelopmentProposal()
-                        .getProposalNumber());
-                s2sAppAttachmentList.add(appAttachments);
-            }
-            S2sAppSubmission appSubmission = new S2sAppSubmission();
-            appSubmission.setStatus(S2sAppSubmissionConstants.GRANTS_GOV_STATUS_MESSAGE);
-            appSubmission.setComments(S2sAppSubmissionConstants.GRANTS_GOV_COMMENTS_MESSAGE);
-
-            S2sOpportunity s2sOpportunity = pdDoc.getDevelopmentProposal().getS2sOpportunity();
-            S2SConnectorService connectorService = getS2sConnectorService(s2sOpportunity);
-
-            SubmitApplicationResponse response = connectorService.submitApplication(
-                    result.getApplicationXml(), attachments, pdDoc
-                            .getDevelopmentProposal().getProposalNumber());
-            appSubmission.setStatus(S2sAppSubmissionConstants.GRANTS_GOV_SUBMISSION_MESSAGE);
-            saveSubmissionDetails(pdDoc, appSubmission, response,
-                    result.getApplicationXml(), s2sAppAttachmentList);
-            result.setValid(true);
+            saveSubmissionDetails(pdDoc, response, result);
+            return true;
         }
+
+        LOG.error("Submission errors exist that were not prevented by ProposalDevelopmentGrantsGovAuditRule.  Proposal Number: " + proposalNumber + " Errors: " + result.getErrors());
+        return false;
     }
 
     /**
@@ -536,27 +509,31 @@ public class S2sSubmissionServiceImpl implements S2sSubmissionService {
      * This method saves the submission details after successful submission of
      * proposal
      *
-     * @param pdDoc
-     *            {@link ProposalDevelopmentDocument} that was submitted
-     * @param appSubmission
-     *            {@link S2sAppSubmission} submission details of proposal
-     * @param response
-     *            {@link SubmitApplicationResponse} submission response from
-     *            grants gov
-     * @param grantApplicationXml
-     *            {@link String} XML content of submission
-     * @param s2sAppAttachmentList
-     *            {@link S2sAppAttachments} attachments included in submission
+     * @param pdDoc {@link ProposalDevelopmentDocument} that was submitted
+     * @param response {@link SubmitApplicationResponse} submission response from grants gov
      */
-    protected void saveSubmissionDetails(ProposalDevelopmentDocument pdDoc,
-                                         S2sAppSubmission appSubmission, SubmitApplicationResponse response,
-                                         String grantApplicationXml,
-                                         List<S2sAppAttachments> s2sAppAttachmentList) {
+    protected void saveSubmissionDetails(ProposalDevelopmentDocument pdDoc, SubmitApplicationResponse response, FormGenerationResult result) {
         if (response != null) {
-            String proposalNumber = pdDoc.getDevelopmentProposal()
-                    .getProposalNumber();
+            String proposalNumber = pdDoc.getDevelopmentProposal().getProposalNumber();
+
+            final S2sAppSubmission appSubmission = new S2sAppSubmission();
+            appSubmission.setStatus(S2sAppSubmissionConstants.GRANTS_GOV_SUBMISSION_MESSAGE);
+            appSubmission.setComments(S2sAppSubmissionConstants.GRANTS_GOV_COMMENTS_MESSAGE);
+
+            final List<S2sAppAttachments> s2sAppAttachmentList = result.getAttachments()
+                    .stream()
+                    .map(attachment -> {
+                        final S2sAppAttachments appAttachments = new S2sAppAttachments();
+                        appAttachments.setContentId(attachment.getContentId());
+                        appAttachments.setProposalNumber(proposalNumber);
+                        appAttachments.setContentType(attachment.getContentType());
+                        appAttachments.setHashCode(attachment.getHashValue());
+                        return appAttachments;
+                    }).collect(Collectors.toList());
+
+
             S2sApplication application = new S2sApplication();
-            application.setApplication(grantApplicationXml);
+            application.setApplication(result.getApplicationXml());
             application.setProposalNumber(proposalNumber);
             application.setS2sAppAttachmentList(s2sAppAttachmentList);
             List<S2sApplication> s2sApplicationList = new ArrayList<>();
@@ -635,20 +612,12 @@ public class S2sSubmissionServiceImpl implements S2sSubmissionService {
         this.instPropSponsorService = instPropSponsorService;
     }
 
-    public BusinessObjectService getBusinessObjectService() {
-        return businessObjectService;
+    public FormGeneratorService getFormGeneratorService() {
+        return formGeneratorService;
     }
 
-    public void setBusinessObjectService(BusinessObjectService businessObjectService) {
-        this.businessObjectService = businessObjectService;
-    }
-
-    public FormGeneratorService getS2SService() {
-        return s2SService;
-    }
-
-    public void setS2SService(FormGeneratorService s2SService) {
-        this.s2SService = s2SService;
+    public void setFormGeneratorService(FormGeneratorService formGeneratorService) {
+        this.formGeneratorService = formGeneratorService;
     }
 
     public S2sProviderService getS2sProviderService() {
@@ -675,28 +644,12 @@ public class S2sSubmissionServiceImpl implements S2sSubmissionService {
         this.opportunitySchemaParserService = opportunitySchemaParserService;
     }
 
-    public GlobalVariableService getGlobalVariableService() {
-        return globalVariableService;
-    }
-
-    public void setGlobalVariableService(GlobalVariableService globalVariableService) {
-        this.globalVariableService = globalVariableService;
-    }
-
     public DataObjectService getDataObjectService() {
         return dataObjectService;
     }
 
     public void setDataObjectService(DataObjectService dataObjectService) {
         this.dataObjectService = dataObjectService;
-    }
-
-    public NihSubmissionValidationService getNihSubmissionValidationService() {
-        return nihSubmissionValidationService;
-    }
-
-    public void setNihSubmissionValidationService(NihSubmissionValidationService nihSubmissionValidationService) {
-        this.nihSubmissionValidationService = nihSubmissionValidationService;
     }
 
     public S2sFormConfigurationService getS2sFormConfigurationService() {

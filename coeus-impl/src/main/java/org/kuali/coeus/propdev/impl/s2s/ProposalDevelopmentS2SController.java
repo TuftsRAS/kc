@@ -9,6 +9,7 @@ package org.kuali.coeus.propdev.impl.s2s;
 
 
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.kuali.coeus.propdev.api.s2s.S2sFormConfigurationContract;
 import org.kuali.coeus.propdev.api.s2s.S2sFormConfigurationService;
@@ -19,7 +20,12 @@ import org.kuali.coeus.propdev.impl.auth.ProposalDevelopmentDocumentViewAuthoriz
 import org.kuali.coeus.propdev.impl.core.*;
 import org.kuali.coeus.propdev.impl.datavalidation.ProposalDevelopmentDataValidationConstants;
 import org.kuali.coeus.propdev.impl.s2s.connect.S2sCommunicationException;
+import org.kuali.coeus.propdev.impl.s2s.override.S2sOverride;
+import org.kuali.coeus.propdev.impl.s2s.override.S2sOverrideApplicationData;
+import org.kuali.coeus.propdev.impl.s2s.override.S2sOverrideAttachment;
 import org.kuali.coeus.s2sgen.api.core.S2SException;
+import org.kuali.coeus.s2sgen.api.generate.FormGenerationResult;
+import org.kuali.coeus.s2sgen.api.generate.FormGeneratorService;
 import org.kuali.coeus.s2sgen.api.print.FormPrintResult;
 import org.kuali.coeus.s2sgen.api.print.FormPrintService;
 import org.kuali.coeus.sys.api.model.KcFile;
@@ -28,8 +34,10 @@ import org.kuali.kra.infrastructure.Constants;
 import org.kuali.kra.infrastructure.KeyConstants;
 import org.kuali.rice.krad.exception.AuthorizationException;
 import org.kuali.rice.krad.uif.UifParameters;
+import org.kuali.rice.krad.uif.util.ObjectPropertyUtils;
 import org.kuali.rice.krad.util.AuditCluster;
 import org.kuali.rice.krad.util.AuditError;
+import org.kuali.rice.krad.util.KRADUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
@@ -62,6 +70,9 @@ public class ProposalDevelopmentS2SController extends ProposalDevelopmentControl
     private static final String CONTENT_TYPE_PDF = "application/pdf";
 
     private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(ProposalDevelopmentS2SController.class);
+    private static final String GRANTS_GOV_FORM_VALIDATION_ERRORS = "grantsGovFormValidationErrors";
+    private static final String CURRENT_GRANT_APPLICATION_XML = "Current Grant Application.xml";
+    private static final String OVERRRIDDEN_GRANT_APPLICATION_XML = "Overridden Grant Application.xml";
 
     @Autowired
     @Qualifier("s2sSubmissionService")
@@ -86,6 +97,10 @@ public class ProposalDevelopmentS2SController extends ProposalDevelopmentControl
     @Autowired
     @Qualifier("s2sFormConfigurationService")
     private S2sFormConfigurationService s2sFormConfigurationService;
+
+    @Autowired
+    @Qualifier("formGeneratorService")
+    private FormGeneratorService formGeneratorService;
 
     private static final String ERROR_NO_GRANTS_GOV_FORM_SELECTED = "error.proposalDevelopment.no.grants.gov.form.selected";
 
@@ -163,8 +178,7 @@ public class ProposalDevelopmentS2SController extends ProposalDevelopmentControl
 
 
     @Transactional @RequestMapping(value = "/proposalDevelopment", params={"methodToCall=clearOpportunity"})
-   public ModelAndView clearOpportunity(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm form, BindingResult result, HttpServletRequest request, HttpServletResponse response)
-           throws Exception {
+   public ModelAndView clearOpportunity(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm form, BindingResult result, HttpServletRequest request, HttpServletResponse response) {
        ((ProposalDevelopmentViewHelperServiceImpl)form.getViewHelperService()).clearOpportunity(form.getDevelopmentProposal());
        return getRefreshControllerService().refresh(form);
    }
@@ -218,9 +232,9 @@ public class ProposalDevelopmentS2SController extends ProposalDevelopmentControl
         KcFile attachmentDataSource = formPrintResult.getFile();
         if(((attachmentDataSource==null || attachmentDataSource.getData()==null || attachmentDataSource.getData().length==0) && !proposalDevelopmentDocument.getDevelopmentProposal().getGrantsGovSelectFlag())
                 || CollectionUtils.isNotEmpty(formPrintResult.getErrors())){
-            boolean grantsGovErrorExists = copyAuditErrorsToPage(Constants.GRANTSGOV_ERRORS);
+            boolean grantsGovErrorExists = copyAuditErrorsToPage();
             if(grantsGovErrorExists){
-                getGlobalVariableService().getMessageMap().putError("grantsGovFormValidationErrors", KeyConstants.VALIDATTION_ERRORS_BEFORE_GRANTS_GOV_SUBMISSION);
+                getGlobalVariableService().getMessageMap().putError(GRANTS_GOV_FORM_VALIDATION_ERRORS, KeyConstants.VALIDATTION_ERRORS_BEFORE_GRANTS_GOV_SUBMISSION);
             }
             proposalDevelopmentDocument.getDevelopmentProposal().setGrantsGovSelectFlag(false);
             return getModelAndViewService().getModelAndView(form);
@@ -246,13 +260,21 @@ public class ProposalDevelopmentS2SController extends ProposalDevelopmentControl
 
     protected void setValidationErrorMessage(List<org.kuali.coeus.s2sgen.api.core.AuditError> errors) {
         if (errors != null) {
-            LOG.info("Error list size:" + errors.size() + errors.toString());
-            List<org.kuali.rice.krad.util.AuditError> auditErrors = new ArrayList<>();
-            for (org.kuali.coeus.s2sgen.api.core.AuditError error : errors) {
-                auditErrors.add(new org.kuali.rice.krad.util.AuditError(error.getErrorKey(),
-                        Constants.GRANTS_GOV_GENERIC_ERROR_KEY, error.getLink(),
-                        new String[]{error.getMessageKey()}));
+            if (LOG.isDebugEnabled()) {
+                LOG.debug("Error list size:" + errors.size() + errors.toString());
             }
+            final List<org.kuali.rice.krad.util.AuditError> auditErrors = errors
+                    .stream()
+                    .filter(error -> error.getLevel() != org.kuali.coeus.s2sgen.api.core.AuditError.Level.WARNING)
+                    .map(error -> new org.kuali.rice.krad.util.AuditError(error.getErrorKey(), Constants.GRANTS_GOV_GENERIC_ERROR_KEY, error.getLink(), new String[]{error.getMessageKey()}))
+                    .collect(Collectors.toList());
+
+            final List<org.kuali.rice.krad.util.AuditError> auditWarnings = errors
+                    .stream()
+                    .filter(error -> error.getLevel() == org.kuali.coeus.s2sgen.api.core.AuditError.Level.WARNING)
+                    .map(error -> new org.kuali.rice.krad.util.AuditError(error.getErrorKey(), Constants.GRANTS_GOV_GENERIC_ERROR_KEY, error.getLink(), new String[]{error.getMessageKey()}))
+                    .collect(Collectors.toList());
+
             if (!auditErrors.isEmpty()) {
                 getGlobalVariableService().getAuditErrorMap().put(
                         "grantsGovAuditErrors",
@@ -260,18 +282,34 @@ public class ProposalDevelopmentS2SController extends ProposalDevelopmentControl
                                 auditErrors, Constants.GRANTSGOV_ERRORS)
                 );
             }
+
+            if (!auditWarnings.isEmpty()) {
+                getGlobalVariableService().getAuditErrorMap().put(
+                        "grantsGovAuditErrors",
+                        new AuditCluster(Constants.GRANTS_GOV_OPPORTUNITY_PANEL,
+                                auditErrors, Constants.GRANTSGOV_WARNINGS)
+                );
+            }
         }
     }
 
-    protected boolean copyAuditErrorsToPage(String auditClusterCategory) {
+    protected boolean copyAuditErrorsToPage() {
         boolean auditClusterFound = false;
         for (String errorKey : getGlobalVariableService().getAuditErrorMap().keySet()) {
             AuditCluster auditCluster = getGlobalVariableService().getAuditErrorMap().get(errorKey);
-            if (auditClusterCategory == null || StringUtils.equalsIgnoreCase(auditCluster.getCategory(), auditClusterCategory)) {
+            if (StringUtils.equalsIgnoreCase(auditCluster.getCategory(), Constants.GRANTSGOV_ERRORS)) {
                 auditClusterFound = true;
                 for (Object error : auditCluster.getAuditErrorList()) {
                     AuditError auditError = (AuditError) error;
                     getGlobalVariableService().getMessageMap().putError(errorKey == null ? auditError.getErrorKey() : errorKey,
+                            auditError.getMessageKey(), auditError.getParams());
+                }
+            }
+
+            if (StringUtils.equalsIgnoreCase(auditCluster.getCategory(), Constants.GRANTSGOV_WARNINGS)) {
+                for (Object error : auditCluster.getAuditErrorList()) {
+                    AuditError auditError = (AuditError) error;
+                    getGlobalVariableService().getMessageMap().putWarning(errorKey == null ? auditError.getErrorKey() : errorKey,
                             auditError.getMessageKey(), auditError.getParams());
                 }
             }
@@ -374,6 +412,172 @@ public class ProposalDevelopmentS2SController extends ProposalDevelopmentControl
         return super.save(form);
     }
 
+    @Transactional @RequestMapping(value = "/proposalDevelopment", params={"methodToCall=addNewS2sOverride"})
+    public ModelAndView addNewS2sOverride(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm form) {
+        final ProposalDevelopmentDocument document = form.getProposalDevelopmentDocument();
+
+        final S2sOverride s2sOverride = form.getNewS2sOverride();
+        s2sOverride.setDevelopmentProposal(document.getDevelopmentProposal());
+        s2sOverride.getDevelopmentProposal().setS2sOverride(s2sOverride);
+        form.setNewS2sOverride(new S2sOverride());
+
+        if (document.getDevelopmentProposal().getS2sOpportunity() != null) {
+            try {
+                final FormGenerationResult result = generateWithoutOverride(document);
+                if (result.isValid()) {
+                    syncGenerationResultToOverride(result, document.getDevelopmentProposal().getS2sOverride());
+                }
+            } catch (S2SException e) {
+                if (LOG.isInfoEnabled()) {
+                    LOG.info("Error creating submission information for override", e);
+                }
+            }
+        }
+
+        return super.save(form);
+    }
+
+    /**
+     * When calling the generateAndValidateForms we need to temporarily disable the S2S Override so that the generation will not use it to create
+     * the FormGenerationResult
+     */
+    private FormGenerationResult generateWithoutOverride(ProposalDevelopmentDocument document) {
+        if (document.getDevelopmentProposal().getS2sOverride() != null && document.getDevelopmentProposal().getS2sOverride().isActive()) {
+            try {
+                document.getDevelopmentProposal().getS2sOverride().setActive(false);
+                return getFormGeneratorService().generateAndValidateForms(document);
+            } finally {
+                document.getDevelopmentProposal().getS2sOverride().setActive(true);
+            }
+        } else {
+            return getFormGeneratorService().generateAndValidateForms(document);
+        }
+    }
+
+    @Transactional @RequestMapping(value = "/proposalDevelopment", params={"methodToCall=removeExistingS2sOverride"})
+    public ModelAndView removeExistingS2sOverride(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm form) {
+        //have to do explicit delete or the database record doesn't actually get deleted.
+        getDataObjectService().delete(form.getDevelopmentProposal().getS2sOverride());
+        form.getDevelopmentProposal().setS2sOverride(null);
+        return super.save(form);
+    }
+
+    @Transactional @RequestMapping(value = "/proposalDevelopment", params="methodToCall=syncCurrentGrantInformation")
+    public ModelAndView syncCurrentGrantInformation(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm form) {
+
+        final ProposalDevelopmentDocument document = form.getProposalDevelopmentDocument();
+        if (document.getDevelopmentProposal().getS2sOpportunity() != null) {
+            try {
+                final FormGenerationResult result = generateWithoutOverride(document);
+                if (result.isValid()) {
+                    syncGenerationResultToOverride(result, document.getDevelopmentProposal().getS2sOverride());
+                }
+
+                setValidationErrorMessage(result.getErrors());
+                if (copyAuditErrorsToPage()) {
+                    getGlobalVariableService().getMessageMap().putError(GRANTS_GOV_FORM_VALIDATION_ERRORS, KeyConstants.VALIDATTION_ERRORS_BEFORE_GRANTS_GOV_SUBMISSION);
+                }
+            } catch (S2SException e) {
+                if (LOG.isInfoEnabled()) {
+                    LOG.info("Error creating submission information for override", e);
+                }
+                getGlobalVariableService().getMessageMap().putError(Constants.NO_FIELD, Constants.GRANTS_GOV_GENERIC_ERROR_KEY, StringUtils.isNotBlank(e.getErrorMessage()) ? e.getErrorMessage() : e.getMessage());
+            }
+        }
+
+        return getModelAndViewService().getModelAndView(form);
+    }
+
+    protected void syncGenerationResultToOverride(FormGenerationResult result, S2sOverride s2sOverride) {
+
+        if (s2sOverride.getApplication() == null) {
+            s2sOverride.setApplication(new S2sOverrideApplicationData());
+        }
+
+        final S2sOverrideApplicationData data = s2sOverride.getApplication();
+
+        data.setApplication(result.getApplicationXml());
+        data.setName(CURRENT_GRANT_APPLICATION_XML);
+        data.setAttachments(result.getAttachments()
+                .stream()
+                .map(attachment -> {
+                    final S2sOverrideAttachment s2sOverrideAttachment = new S2sOverrideAttachment();
+                    s2sOverrideAttachment.setApplication(data);
+                    s2sOverrideAttachment.setContentId(attachment.getContentId());
+                    s2sOverrideAttachment.setName(attachment.getFileName());
+                    s2sOverrideAttachment.setData(attachment.getContent());
+                    s2sOverrideAttachment.setContentType(attachment.getContentType());
+                    return s2sOverrideAttachment;
+                }).collect(Collectors.toList()));
+    }
+
+    @Transactional @RequestMapping(value = "/proposalDevelopment", params="methodToCall=pushCurrentToOverride")
+    public ModelAndView pushCurrentToOverride(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm form) {
+        final S2sOverride s2sOverride = form.getDevelopmentProposal().getS2sOverride();
+        if (s2sOverride != null && s2sOverride.getApplication() != null && s2sOverride.getApplication().getApplication() != null) {
+            final S2sOverrideApplicationData current = s2sOverride.getApplication();
+            if (s2sOverride.getApplicationOverride() == null) {
+                s2sOverride.setApplicationOverride(new S2sOverrideApplicationData());
+            }
+
+            final S2sOverrideApplicationData override = s2sOverride.getApplicationOverride();
+            override.setApplication(current.getApplication());
+            override.setName(OVERRRIDDEN_GRANT_APPLICATION_XML);
+            override.setAttachments(current.getAttachments()
+                    .stream()
+                    .map(currentAttachment -> {
+                        final S2sOverrideAttachment s2sOverrideAttachment = new S2sOverrideAttachment();
+                        s2sOverrideAttachment.setApplication(override);
+                        s2sOverrideAttachment.setContentId(currentAttachment.getContentId());
+                        s2sOverrideAttachment.setName(currentAttachment.getName());
+                        s2sOverrideAttachment.setData(currentAttachment.getData());
+                        s2sOverrideAttachment.setContentType(currentAttachment.getContentType());
+                        return s2sOverrideAttachment;
+                    }).collect(Collectors.toList()));
+        }
+        return getModelAndViewService().getModelAndView(form);
+    }
+
+    @Transactional @RequestMapping(value = "/proposalDevelopment", params="methodToCall=retrieveApplicationXml")
+    public ModelAndView retrieveApplicationXml(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm form, HttpServletResponse response) throws IOException {
+        final HttpServletRequest request = form.getRequest();
+        final String attachmentPath = request.getParameter("propertyPath");
+
+        if (StringUtils.isBlank(attachmentPath)) {
+            throw new RuntimeException("Selected attachment was not set for line action");
+        }
+
+        final KcFile attachment = ObjectPropertyUtils.getPropertyValue(form, attachmentPath);
+        final byte[] data = attachment.getData();
+        KRADUtils.addAttachmentToResponse(response, new ByteArrayInputStream(data), attachment.getType(), attachment.getName(), data.length);
+        response.flushBuffer();
+        return null;
+    }
+
+    @Transactional @RequestMapping(value = "/proposalDevelopment", params={"methodToCall=save", "pageId=PropDev-OpportunityPage"})
+    public ModelAndView saveOpportunityPage(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm form) throws IOException {
+        setApplicationOverride(form.getDevelopmentProposal().getS2sOverride());
+        return super.save(form);
+    }
+
+    protected void setApplicationOverride(S2sOverride s2sOverride) throws IOException {
+        if (s2sOverride != null && s2sOverride.getApplicationOverride() != null && s2sOverride.getApplicationOverride().getMultipartFile() != null) {
+            final S2sOverrideApplicationData applicationOverride = s2sOverride.getApplicationOverride();
+            final MultipartFile file = applicationOverride.getMultipartFile();
+            final byte[] content = file.getBytes();
+            if (ArrayUtils.isNotEmpty(content)) {
+                applicationOverride.setApplication(new String(content));
+                applicationOverride.setName(file.getOriginalFilename());
+            }
+        }
+    }
+
+    @Transactional @RequestMapping(value = "/proposalDevelopment", params="methodToCall=replaceS2sOverrideApplication")
+    public ModelAndView replaceS2sOverrideApplication(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm form) throws IOException {
+        setApplicationOverride(form.getDevelopmentProposal().getS2sOverride());
+        return super.save(form);
+    }
+
     public S2sSubmissionService getS2sSubmissionService() {
         return s2sSubmissionService;
     }
@@ -420,6 +624,14 @@ public class ProposalDevelopmentS2SController extends ProposalDevelopmentControl
 
     public void setS2sFormConfigurationService(S2sFormConfigurationService s2sFormConfigurationService) {
         this.s2sFormConfigurationService = s2sFormConfigurationService;
+    }
+
+    public FormGeneratorService getFormGeneratorService() {
+        return formGeneratorService;
+    }
+
+    public void setFormGeneratorService(FormGeneratorService formGeneratorService) {
+        this.formGeneratorService = formGeneratorService;
     }
 }
 

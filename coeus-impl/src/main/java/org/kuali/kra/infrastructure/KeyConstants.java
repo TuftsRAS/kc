@@ -239,6 +239,7 @@ public final class KeyConstants {
     public static final String S2S_REVISIONTYPE_OTHER = "s2s.revisiontype.other";
     public static final String S2S_SUBMISSIONTYPE_CHANGEDCORRECTED = "s2s.submissiontype.changedCorrected";
     public static final String S2S_SUBMISSIONTYPE_APPLICATION = "s2s.submissiontype.application";
+    public static final String S2S_OVERRIDDE_PRESENT="warn.s2s.override.present";
 
     public static final String SESSION_EXPIRED_IND = "sessionExpired";
     public static final String ERROR_INVALID_CUSTOM_ATT_ID = "error.invalid.customAttributeid";
@@ -297,7 +298,7 @@ public final class KeyConstants {
     
     // delete proposal
     public static final String ERROR_DELETE_PROPOSAL_IN_HIERARCHY="error.proposalDevelopment.deleteproposal.inhierarchy";
-    
+
     // parameter name to allow/disallow PD notes deletion
     public static final String ALLOW_PROPOSAL_DEVELOPMENT_NOTES_DELETION="allowProposalDevelopmentNotesDeletion";
     

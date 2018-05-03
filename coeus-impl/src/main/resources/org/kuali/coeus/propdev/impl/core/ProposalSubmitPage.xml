@@ -146,6 +146,9 @@
     <bean id="PropDev-SubmitPage-ReceiveFutureRequests" parent="Uif-DialogGroup-YesNo"
           p:promptText="Do you want to receive future approval requests?"/>
 
+    <bean id="PropDev-SubmitPage-S2sOverride-Exists" parent="Uif-DialogGroup-YesNo"
+          p:promptText="Proposal S2S Submission data has been overridden. Do you want to continue?"/>
+
     <bean id="PropDev-SubmitPage-RejectDialog" parent="Uif-DialogGroup-YesNo"
           p:fieldBindingObjectPath="proposalDevelopmentRejectionBean"
           p:readOnly="false">

@@ -342,9 +342,15 @@ public class S2sUserAttachedFormServiceImpl implements S2sUserAttachedFormServic
     }
 
     protected void setValidationErrorMessage(FormGenerationResult result) {
-        for (AuditError error : result.getErrors()) {
-            globalVariableService.getMessageMap().putError(USER_ATTACHED_FORMS_ERRORS, KeyConstants.S2S_USER_ATTACHED_FORM_NOT_VALID, error.getMessageKey());
-        }
+        result.getErrors()
+                .stream()
+                .filter(error -> error.getLevel() == AuditError.Level.WARNING)
+                .forEach(error -> globalVariableService.getMessageMap().putWarning(USER_ATTACHED_FORMS_ERRORS, KeyConstants.S2S_USER_ATTACHED_FORM_NOT_VALID, error.getMessageKey()));
+
+        result.getErrors()
+                .stream()
+                .filter(error -> error.getLevel() != AuditError.Level.WARNING)
+                .forEach(error -> globalVariableService.getMessageMap().putError(USER_ATTACHED_FORMS_ERRORS, KeyConstants.S2S_USER_ATTACHED_FORM_NOT_VALID, error.getMessageKey()));
     }
 
 
