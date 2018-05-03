@@ -1,6 +1,11 @@
 
 
 ## CURRENT
+* RESKC-2821: Relax PersonID validation on NotificationTypeRecipient. (#2871)
+
+  * Omar Soto Fortuño on Thu, 3 May 2018 12:44:24 -0400 [View Commit](../../commit/9bc9c9e1b9a0160ee7638e0a3519dd0945e0d852)
+
+## coeus-1805.0004
 * RESKC-2858: Fix issue that created duplicated budget versions when clicking the Create Budget button multiple times. (#2870)
 
   * Omar Soto Fortuño on Wed, 2 May 2018 17:52:43 -0400 [View Commit](../../commit/cee319086a85ce80eb702d8388827b3ace68c6eb)
