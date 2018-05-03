@@ -138,23 +138,15 @@
     </bean>
     
     <bean id="NotificationTypeRecipient-personId" parent="NotificationTypeRecipient-personId-parentBean" />
-    <bean id="NotificationTypeRecipient-personId-parentBean" abstract="true" parent="AttributeDefinition" >
-        <property name="name" value="personId" />
+    <bean id="NotificationTypeRecipient-personId-parentBean" abstract="true" parent="KcPerson-personId" >
         <property name="forceUppercase" value="false" />
         <property name="label" value="Employee" />
         <property name="shortLabel" value="Employee" />
-        <property name="maxLength" value="40" />
-        <property name="validationPattern" >
-            <bean parent="AlphaNumericValidationPattern" />
-        </property>
-    <property name="validCharactersConstraint">
-      <bean parent="AlphaNumericPatternConstraint"/>
-    </property>
         <property name="control" >
-      <bean parent="TextControlDefinition" p:size="9"/>
-    </property>
-    <property name="controlField">
-      <bean p:size="9" parent="Uif-TextControl"/>
+            <bean parent="TextControlDefinition" p:size="9"/>
+        </property>
+        <property name="controlField">
+            <bean p:size="9" parent="Uif-TextControl"/>
         </property>
         <property name="summary" value="Employee" />
         <property name="description" value="Employee" />
