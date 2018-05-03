@@ -1,6 +1,10 @@
 
 
 ## CURRENT
+* No Changes
+
+
+## coeus-1805.0005
 * RESKC-2821: Relax PersonID validation on NotificationTypeRecipient. (#2871)
 
   * Omar Soto Fortuño on Thu, 3 May 2018 12:44:24 -0400 [View Commit](../../commit/9bc9c9e1b9a0160ee7638e0a3519dd0945e0d852)
