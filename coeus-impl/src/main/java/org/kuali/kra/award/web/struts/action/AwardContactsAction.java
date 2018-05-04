@@ -62,6 +62,7 @@ public class AwardContactsAction extends AwardAction {
         awardForm.refreshDisclosureProjectStatuses();
         Award award = awardForm.getAwardDocument().getAward();
         ActionForward forward;
+        updateContactsBasedOnRoleChange(award);
         if (isValidSave(awardForm.getAwardDocument().getAward())) {
             setLeadUnitOnAwardFromPILeadUnit(award, awardForm);
             award.initCentralAdminContacts();
@@ -152,6 +153,14 @@ public class AwardContactsAction extends AwardAction {
             return false;
         }
         return true;
+    }
+    protected void updateContactsBasedOnRoleChange(Award award) {
+        for (AwardPerson person : award.getProjectPersons()) {
+            if (person.isRoleChanged()) {
+                person.updateBasedOnRoleChange();
+                person.setRoleChanged(false);
+            }
+        }
     }
     
     @Override
