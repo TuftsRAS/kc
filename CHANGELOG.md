@@ -1,6 +1,11 @@
 
 
 ## CURRENT
+* Revert "RESKC-2726: Save in route proposal only when the form is dirty. (#2869)" (#2878)
+
+  * This reverts commit 110ee98e8703bae8a64df8cab33407f92156ef0e.  * Omar Soto Fortuño on Fri, 4 May 2018 15:49:24 -0400 [View Commit](../../commit/1b96ac40313b807889725bc8456c4cbe7b21fe7b)
+
+## coeus-1805.0008
 * No Changes
 
 
