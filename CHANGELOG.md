@@ -1,6 +1,10 @@
 
 
 ## CURRENT
+* No Changes
+
+
+## coeus-1805.0007
 * Revert "RESKC-2870: Fix leadUnit issue when swapping award persons roles. (#2873)" (#2875)
 
   * This reverts commit 137b8db0c8ef3ee42c9426084098f1b56886dfb2.  * Omar Soto Fortuño on Fri, 4 May 2018 12:26:08 -0400 [View Commit](../../commit/4f2e369ae513780f49d6d20250de883d3ceb2c29)
