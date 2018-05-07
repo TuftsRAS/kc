@@ -292,10 +292,15 @@ public class AwardPerson extends AwardContact implements PersonRolodex, Comparab
             }
         }
 
-        getUnits().stream().forEach(awardPersonUnit -> {
-            Boolean isLeadUnit = awardPersonUnit.getUnitNumber().equals(getPerson().getUnit().getUnitNumber()) && isPrincipalInvestigator();
-            awardPersonUnit.setLeadUnit(isLeadUnit);
-        });
+        getUnits().stream().forEach(awardPersonUnit -> awardPersonUnit.setLeadUnit(false));
+
+        if (isPrincipalInvestigator()) {
+            Optional<AwardPersonUnit> awardPersonUnit = getUnits().stream().findFirst();
+
+            if (awardPersonUnit.isPresent()) {
+                awardPersonUnit.get().setLeadUnit(true);
+            }
+        }
     }
 
     @Override

@@ -422,6 +422,7 @@ public class ReportTrackingNotificationServiceTest extends KcIntegrationTestBase
         unit.setUnitNumber(award.getUnitNumber());
         pi.add(unit);
         pi.setPersonId(personId);
+        pi.setAward(award);
         pi.setContactRoleCode(ContactRole.PI_CODE);
         award.add(pi);
     }
