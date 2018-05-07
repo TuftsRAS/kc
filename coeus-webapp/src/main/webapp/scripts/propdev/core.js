@@ -8,7 +8,35 @@
 var Kc = Kc || {};
 Kc.PropDev = Kc.PropDev || {};
 (function (namespace, $) {
-	namespace.updateSponsorName = function(sponsorCode, nameSelector) {
+    $(document).on("ready", function() {
+        var navigateActionLinks = jQuery.find("a[class='uif-actionLink']").filter(function (a) {
+            var data = jQuery(a).data('submit_data');
+            return (data != undefined && data.methodToCall != undefined && data.methodToCall == 'navigate');
+        });
+
+        navigateActionLinks.forEach(function(a) {
+            jQuery(a).addClass('navigateCheckDirty');
+        });
+
+        jQuery('.navigateCheckDirty').click(function(e) {
+        	return namespace.navigateCheckDirty(e);
+        });
+    });
+
+    namespace.navigateCheckDirty = function(e) {
+        var link = jQuery(e.target);
+        var dirtyFields = jQuery('.dirty');
+        var data = link.data('submit_data');
+
+        if (data == undefined) {
+            data = {};
+        }
+
+        data['actionParameters[pageIsDirty]'] = (dirtyFields != undefined && dirtyFields.length > 0);
+        link.attr('data-submit_data', JSON.stringify(data));
+	};
+
+    namespace.updateSponsorName = function(sponsorCode, nameSelector) {
 		$.getJSON(window.location.pathname, 
 				{'sponsorCode': sponsorCode, 'methodToCall': 'getSponsor'}, 
 				function(json) {

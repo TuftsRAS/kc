@@ -468,19 +468,29 @@ public abstract class ProposalDevelopmentControllerBase {
          }
          populateAdHocRecipients(form.getProposalDevelopmentDocument());
          String navigateToPageId = form.getActionParamaterValue(UifParameters.NAVIGATE_TO_PAGE_ID);
+
          if (isNavigateToDeliveryInfoPage(navigateToPageId)) {
              if (form.getDevelopmentProposal().getS2sOpportunity() != null) {
                  getGlobalVariableService().getMessageMap().putInfo(ProposalDevelopmentConstants.KradConstants.DELIVERY_INFO_PAGE, KeyConstants.DELIVERY_INFO_NOT_NEEDED);
              }
          }
-         if (form.isCanEditView() || form.getEditModes().get(CAN_SAVE_CERTIFICATION) || form.getEditModes().get(MODIFY_S2S) || form.getEditModes().get(OVERRIDE_PD_COMPLIANCE_ENTRY)) {
+
+         Boolean pageIsDirty = Boolean.parseBoolean(form.getActionParamaterValue(ProposalDevelopmentConstants.KradConstants.PAGE_IS_DIRTY));
+
+         if ((form.isCanEditView()
+                 || form.getEditModes().get(CAN_SAVE_CERTIFICATION)
+                 || form.getEditModes().get(MODIFY_S2S)
+                 || form.getEditModes().get(OVERRIDE_PD_COMPLIANCE_ENTRY))
+                 && (!documentIsInRoute(form) || (documentIsInRoute(form) && pageIsDirty))) {
              return save(form);
-         } else {
-             return getNavigationControllerService().navigate(form);
          }
 
+         return getNavigationControllerService().navigate(form);
      }
 
+     protected boolean documentIsInRoute(ProposalDevelopmentDocumentForm form) {
+         return form.getDocument().getDocumentHeader().getWorkflowDocument().isEnroute();
+     }
 
     protected boolean isNavigateToDeliveryInfoPage(String navigateToPageId) {
         return StringUtils.equals(navigateToPageId, ProposalDevelopmentConstants.KradConstants.DELIVERY_INFO_PAGE);
