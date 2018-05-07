@@ -1,6 +1,17 @@
 
 
 ## CURRENT
+* RESKC-2925: Fix issue that caused Proposal Header Document to not update properly. (#2880)
+
+  * Omar Soto Fortuño on Mon, 7 May 2018 13:27:17 -0400 [View Commit](../../commit/318fd84d441f91ccd42f721f17bd2b6da6d8613f)
+* RESKC-2870: Fix issue cached by Integration Test. If the person is the IP, set Lead Unit to the first person unit. (#2879)
+
+  * Omar Soto Fortuño on Mon, 7 May 2018 13:26:53 -0400 [View Commit](../../commit/d87503634bc5d232f92b126a554a9a601afad2b1)
+* RESKC-2870: Fix leadUnit issue when swapping award persons roles. (#2876)
+
+  * Omar Soto Fortuño on Mon, 7 May 2018 08:12:30 -0400 [View Commit](../../commit/8dd13fc30a1712d800a4d3d59f2933de514e4018)
+
+## coeus-1805.0009
 * Revert "RESKC-2726: Save in route proposal only when the form is dirty. (#2869)" (#2878)
 
   * This reverts commit 110ee98e8703bae8a64df8cab33407f92156ef0e.  * Omar Soto Fortuño on Fri, 4 May 2018 15:49:24 -0400 [View Commit](../../commit/1b96ac40313b807889725bc8456c4cbe7b21fe7b)
