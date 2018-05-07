@@ -1,6 +1,11 @@
 
 
 ## CURRENT
+* RESKC-2726: Save in route proposal only when the form is dirty. (#2881)
+
+  * Omar Soto Fortuño on Mon, 7 May 2018 14:59:49 -0400 [View Commit](../../commit/ca4ba33e127cc1aaed3d7d8decfe7aaa923c93b7)
+
+## coeus-1805.0010
 * RESKC-2925: Fix issue that caused Proposal Header Document to not update properly. (#2880)
 
   * Omar Soto Fortuño on Mon, 7 May 2018 13:27:17 -0400 [View Commit](../../commit/318fd84d441f91ccd42f721f17bd2b6da6d8613f)
