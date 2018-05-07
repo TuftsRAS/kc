@@ -270,6 +270,9 @@ public abstract class ProposalDevelopmentControllerBase {
          if (proposalDevelopmentDocument.isDefaultDocumentDescription()) {
              proposalDevelopmentDocument.setDefaultDocumentDescription();
          }
+
+         proposalDevelopmentDocument.setUpdateTimestamp(getDateTimeService().getCurrentTimestamp());
+         proposalDevelopmentDocument.setUpdateUser(getGlobalVariableService().getUserSession().getPrincipalName());
      }
 
      public ModelAndView save(ProposalDevelopmentDocumentForm form, BindingResult result,
