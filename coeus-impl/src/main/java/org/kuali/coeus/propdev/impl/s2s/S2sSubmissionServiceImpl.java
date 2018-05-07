@@ -162,7 +162,7 @@ public class S2sSubmissionServiceImpl implements S2sSubmissionService {
     @Override
     public void refreshGrantsGov(ProposalDevelopmentDocument pdDoc)
             throws S2sCommunicationException {
-        GetApplicationListResponse applicationListResponse = fetchApplicationListResponse(pdDoc);
+        GetApplicationListResponse applicationListResponse = fetchApplicationListResponse(pdDoc.getDevelopmentProposal().getProposalNumber());
         if (applicationListResponse != null) {
             saveGrantsGovStatus(pdDoc, applicationListResponse);
         }
@@ -256,9 +256,8 @@ public class S2sSubmissionServiceImpl implements S2sSubmissionService {
      */
     @Override
     public GetApplicationListResponse fetchApplicationListResponse(
-            ProposalDevelopmentDocument pdDoc) throws S2sCommunicationException {
-        S2sOpportunityContract s2sOpportunity =
-                s2sOpportunityService.findS2SOpportunityByProposalNumber(pdDoc.getDevelopmentProposal().getProposalNumber());
+            String proposalNumber) throws S2sCommunicationException {
+        S2sOpportunityContract s2sOpportunity = s2sOpportunityService.findS2SOpportunityByProposalNumber(proposalNumber);
 
         return getS2sConnectorService(s2sOpportunity).getApplicationList(s2sOpportunity.getOpportunityId(), s2sOpportunity.getCfdaNumber(), s2sOpportunity.getProposalNumber());
     }

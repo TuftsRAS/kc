@@ -75,7 +75,7 @@ public interface S2sSubmissionService {
             throws IOException;
 
     GetApplicationListResponse fetchApplicationListResponse(
-            ProposalDevelopmentDocument pdDoc) throws S2sCommunicationException;
+            String proposalNumber) throws S2sCommunicationException;
 
     void populateAppSubmission(ProposalDevelopmentDocument pdDoc, S2sAppSubmission appSubmission,
                           GetApplicationListResponse.ApplicationInfo ggApplication);
