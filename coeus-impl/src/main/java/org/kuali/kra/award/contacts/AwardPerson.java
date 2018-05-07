@@ -10,17 +10,17 @@ package org.kuali.kra.award.contacts;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.kuali.coeus.common.framework.person.KcPerson;
-import org.kuali.coeus.common.framework.rolodex.NonOrganizationalRolodex;
 import org.kuali.coeus.common.framework.person.PropAwardPersonRole;
 import org.kuali.coeus.common.framework.person.PropAwardPersonRoleService;
+import org.kuali.coeus.common.framework.rolodex.NonOrganizationalRolodex;
+import org.kuali.coeus.common.framework.rolodex.PersonRolodex;
 import org.kuali.coeus.common.framework.sponsor.Sponsorable;
 import org.kuali.coeus.propdev.impl.person.creditsplit.CreditSplitConstants;
+import org.kuali.coeus.sys.api.model.ScaleTwoDecimal;
+import org.kuali.coeus.sys.framework.service.KcServiceLocator;
 import org.kuali.kra.award.awardhierarchy.sync.AwardSyncableProperty;
 import org.kuali.kra.award.home.ContactRole;
 import org.kuali.kra.bo.AbstractProjectPerson;
-import org.kuali.coeus.common.framework.rolodex.PersonRolodex;
-import org.kuali.coeus.sys.api.model.ScaleTwoDecimal;
-import org.kuali.coeus.sys.framework.service.KcServiceLocator;
 import org.kuali.kra.infrastructure.Constants;
 import org.kuali.rice.coreservice.framework.parameter.ParameterService;
 
@@ -57,8 +57,6 @@ public class AwardPerson extends AwardContact implements PersonRolodex, Comparab
     private List<AwardPersonCreditSplit> creditSplits;
     private Boolean includeInCreditAllocation;
     private transient ParameterService parameterService;
-
-    private transient boolean roleChanged;
     
     private transient PropAwardPersonRoleService propAwardPersonRoleService;
 
@@ -277,31 +275,27 @@ public class AwardPerson extends AwardContact implements PersonRolodex, Comparab
     
     @Override
     public void setContactRoleCode(String roleCode) {
-        if (!StringUtils.equals(roleCode, this.roleCode)) {
-            updateBasedOnRoleChange();
-            //used by AwardContactsAction to work around repopulation of units due to credit split being on page and posted with
-            //role change.
-            roleChanged = true;
-        }
+        Boolean isRoleChanged = !StringUtils.equals(roleCode, this.roleCode);
         super.setContactRoleCode(roleCode);
+
+        if (isRoleChanged) {
+            updateBasedOnRoleChange();
+        }
     }
     
-    public void updateBasedOnRoleChange() {
+    private void updateBasedOnRoleChange() {
         if (PropAwardPersonRole.KEY_PERSON.equals(roleCode)) {
             this.setOptInUnitStatus(true);
         } else {
             if (this.getPerson() != null && this.getPerson().getUnit() != null && this.getUnits().isEmpty()) {
                 this.add(new AwardPersonUnit(this, this.getPerson().getUnit(), true));
-            }                
-        }        
-    }
+            }
+        }
 
-    public boolean isRoleChanged() {
-        return roleChanged;
-    }
-
-    public void setRoleChanged(boolean roleChanged) {
-        this.roleChanged = roleChanged;
+        getUnits().stream().forEach(awardPersonUnit -> {
+            Boolean isLeadUnit = awardPersonUnit.getUnitNumber().equals(getPerson().getUnit().getUnitNumber()) && isPrincipalInvestigator();
+            awardPersonUnit.setLeadUnit(isLeadUnit);
+        });
     }
 
     @Override
