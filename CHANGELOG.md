@@ -1,6 +1,11 @@
 
 
 ## CURRENT
+* RESKC-2867: Make Proposal People Flow generic across KC documents. (#2882)
+
+  * Omar Soto Fortuño on Wed, 9 May 2018 14:13:44 -0400 [View Commit](../../commit/d50703e0ec731212a3ba50ca461cdfdf9f09d192)
+
+## coeus-1805.0011
 * RESKC-2726: Save in route proposal only when the form is dirty. (#2881)
 
   * Omar Soto Fortuño on Mon, 7 May 2018 14:59:49 -0400 [View Commit](../../commit/ca4ba33e127cc1aaed3d7d8decfe7aaa923c93b7)

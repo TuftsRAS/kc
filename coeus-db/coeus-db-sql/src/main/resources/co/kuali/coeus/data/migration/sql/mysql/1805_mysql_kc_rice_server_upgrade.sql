@@ -19,4 +19,5 @@
 
 
 \. ./rice/bootstrap/V1805_001__show_full_name_in_initiator_param.sql
+\. ./rice/bootstrap/V1805_002__change_peopleflow_names.sql
 commit;
