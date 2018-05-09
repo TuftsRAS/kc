@@ -5,7 +5,7 @@
  * You should have received a copy of the Kuali, Inc. Pre-Release License
  * Agreement with this file. If not, please write to license@kuali.co.
  */
-package org.kuali.coeus.propdev.impl.auth;
+package org.kuali.coeus.common.impl.krms;
 
 import java.util.Collections;
 import java.util.List;
@@ -31,14 +31,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-@Service("unitSpecificProposalPeopleFlowTypeService")
-public class UnitSpecificProposalPeopleFlowTypeServiceImpl extends KcPeopleFlowTypeServiceImpl implements KcAttributeCapablePeopleFlowTypeService {
+@Service("unitSpecificPeopleFlowTypeService")
+public class UnitSpecificPeopleFlowTypeServiceImpl extends KcPeopleFlowTypeServiceImpl implements KcAttributeCapablePeopleFlowTypeService {
 	
     public static final String UNIT_NUMBER_LOWER = "unit number";
-    
-	@Autowired
-	@Qualifier("dataObjectService")
-	private DataObjectService dataObjectService;
 
     @Override
     public Map<String, String> resolveRoleQualifiers(PeopleFlowDefinition peopleflow, String roleId, Document document,
@@ -81,13 +77,5 @@ public class UnitSpecificProposalPeopleFlowTypeServiceImpl extends KcPeopleFlowT
 
         return Collections.singletonList(builder.build());
     }
-
-	public DataObjectService getDataObjectService() {
-		return dataObjectService;
-	}
-
-	public void setDataObjectService(DataObjectService dataObjectService) {
-		this.dataObjectService = dataObjectService;
-	}
 	
 }

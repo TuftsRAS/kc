@@ -31,6 +31,7 @@ import org.kuali.kra.infrastructure.KeyConstants;
 import org.kuali.kra.infrastructure.RoleConstants;
 import org.kuali.kra.institutionalproposal.home.InstitutionalProposal;
 import org.kuali.kra.institutionalproposal.service.InstitutionalProposalService;
+import org.kuali.kra.kim.bo.KcKimAttributes;
 import org.kuali.kra.krms.KcKrmsConstants;
 import org.kuali.coeus.common.framework.krms.KrmsRulesContext;
 import org.kuali.coeus.common.impl.krms.KcKrmsFactBuilderServiceHelper;
@@ -73,10 +74,7 @@ import org.kuali.rice.krad.workflow.KualiTransactionalDocumentInformation;
 import org.kuali.rice.krms.api.engine.Facts;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 @NAMESPACE(namespace = Constants.MODULE_NAMESPACE_PROPOSAL_DEVELOPMENT)
 @COMPONENT(component = ParameterConstants.DOCUMENT_COMPONENT)
@@ -724,5 +722,13 @@ public class ProposalDevelopmentDocument extends BudgetParentDocument<Developmen
             routeNodeService = KEWServiceLocator.getRouteNodeService();
         }
         return routeNodeService;
+    }
+
+    @Override
+    public Map<String, String> getKrmsRoleQualifiers() {
+        Map<String, String> qualifiers = new HashMap<>();
+        qualifiers.put(KcKimAttributes.PROPOSAL, getDevelopmentProposal().getProposalNumber());
+
+        return qualifiers;
     }
 }

@@ -50,6 +50,7 @@ import org.kuali.kra.infrastructure.TaskGroupName;
 import org.kuali.kra.institutionalproposal.ProposalStatus;
 import org.kuali.kra.institutionalproposal.home.InstitutionalProposalBoLite;
 import org.kuali.kra.institutionalproposal.service.InstitutionalProposalService;
+import org.kuali.kra.kim.bo.KcKimAttributes;
 import org.kuali.kra.krms.KcKrmsConstants;
 import org.kuali.rice.core.api.CoreApiServiceLocator;
 import org.kuali.rice.core.api.config.property.ConfigurationService;
@@ -740,5 +741,13 @@ public class AwardDocument extends BudgetParentDocument<Award> implements  Copya
 
     public void setProjectRetrievalService(ProjectRetrievalService projectRetrievalService) {
         this.projectRetrievalService = projectRetrievalService;
+    }
+
+    @Override
+    public Map<String, String> getKrmsRoleQualifiers() {
+        Map<String, String> qualifiers = new HashMap<>();
+        qualifiers.put(KcKimAttributes.AWARD, getAward().getAwardId().toString());
+
+        return qualifiers;
     }
 }

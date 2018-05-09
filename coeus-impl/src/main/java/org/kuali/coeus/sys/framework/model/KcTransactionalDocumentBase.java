@@ -462,4 +462,9 @@ public abstract class KcTransactionalDocumentBase extends TransactionalDocumentB
     void setIdentityService(IdentityService identityService) {
         this.identityService = identityService;
     }
+
+    public Map<String, String> getKrmsRoleQualifiers() {
+        Map<String, String> qualifiers = new HashMap<>();
+        return qualifiers;
+    }
 }

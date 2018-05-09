@@ -182,6 +182,16 @@
           p:localServiceName="unitRoleTypeService"
           p:serviceInterface="org.kuali.rice.kim.framework.role.RoleTypeService" />
 
+    <bean id= "advancedPeopleFlowTypeServiceCallback" parent="kcCoreCallbackService"
+          p:callbackService-ref="advancedPeopleFlowTypeService"
+          p:localServiceName="advancedPeopleFlowTypeService"
+          p:serviceInterface="org.kuali.rice.kew.framework.peopleflow.PeopleFlowTypeService" />
+
+    <bean id= "unitSpecificPeopleFlowTypeServiceCallback" parent="kcCoreCallbackService"
+          p:callbackService-ref="unitSpecificPeopleFlowTypeService"
+          p:localServiceName="unitSpecificPeopleFlowTypeService"
+          p:serviceInterface="org.kuali.coeus.common.framework.workflow.KcAttributeCapablePeopleFlowTypeService" />
+
     <util:constant id="kc.integrationServiceNamespace" static-field="org.kuali.kra.infrastructure.Constants.FINANCIAL_INTEGRATION_KC_SERVICE_NAMESPACE"/>
 
     <bean id="institutionalUnitServiceJavaExporter" class="org.kuali.rice.ksb.api.bus.support.ServiceBusExporter">

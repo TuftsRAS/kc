@@ -8,6 +8,7 @@
 package org.kuali.kra.institutionalproposal.document;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -32,6 +33,7 @@ import org.kuali.kra.institutionalproposal.home.InstitutionalProposal;
 import org.kuali.kra.institutionalproposal.service.InstitutionalProposalVersioningService;
 import org.kuali.kra.institutionalproposal.specialreview.InstitutionalProposalSpecialReview;
 import org.kuali.kra.institutionalproposal.specialreview.InstitutionalProposalSpecialReviewExemption;
+import org.kuali.kra.kim.bo.KcKimAttributes;
 import org.kuali.kra.krms.KcKrmsConstants;
 import org.kuali.coeus.common.framework.krms.KrmsRulesContext;
 import org.kuali.coeus.common.impl.krms.KcKrmsFactBuilderServiceHelper;
@@ -273,5 +275,13 @@ public class InstitutionalProposalDocument extends KcTransactionalDocumentBase i
 
     public void setProjectRetrievalService(ProjectRetrievalService projectRetrievalService) {
         this.projectRetrievalService = projectRetrievalService;
+    }
+
+    @Override
+    public Map<String, String> getKrmsRoleQualifiers() {
+        Map<String, String> qualifiers = new HashMap<>();
+        qualifiers.put(KcKimAttributes.PROPOSAL, getInstitutionalProposal().getProposalId().toString());
+
+        return qualifiers;
     }
 }

@@ -8,6 +8,7 @@
 package org.kuali.kra.subaward.document;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,6 +19,7 @@ import org.kuali.coeus.sys.framework.model.KcTransactionalDocumentBase;
 import org.kuali.coeus.sys.framework.service.KcServiceLocator;
 import org.kuali.coeus.sys.framework.workflow.KcWorkflowService;
 import org.kuali.kra.infrastructure.Constants;
+import org.kuali.kra.kim.bo.KcKimAttributes;
 import org.kuali.kra.krms.KcKrmsConstants;
 import org.kuali.coeus.common.framework.krms.KrmsRulesContext;
 import org.kuali.coeus.common.impl.krms.KcKrmsFactBuilderServiceHelper;
@@ -205,5 +207,13 @@ public class SubAwardDocument extends KcTransactionalDocumentBase implements  Co
 
     public void setSubawardFactBuilderService(KcKrmsFactBuilderServiceHelper subawardFactBuilderService) {
         this.subawardFactBuilderService = subawardFactBuilderService;
+    }
+
+    @Override
+    public Map<String, String> getKrmsRoleQualifiers() {
+        Map<String, String> qualifiers = new HashMap<>();
+        qualifiers.put(KcKimAttributes.SUBAWARD, getSubAward().getSubAwardId().toString());
+
+        return qualifiers;
     }
 }
