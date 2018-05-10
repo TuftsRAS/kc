@@ -1,6 +1,10 @@
 
 
 ## CURRENT
+* No Changes
+
+
+## coeus-1805.0012
 * RESKC-2867: Make Proposal People Flow generic across KC documents. (#2882)
 
   * Omar Soto Fortuño on Wed, 9 May 2018 14:13:44 -0400 [View Commit](../../commit/d50703e0ec731212a3ba50ca461cdfdf9f09d192)
