@@ -882,10 +882,7 @@ public class ProposalDevelopmentViewHelperServiceImpl extends KcViewHelperServic
 
     public String certifyModalMessage() {
         ProposalDevelopmentDocumentForm form = (ProposalDevelopmentDocumentForm)ViewLifecycle.getModel();
-        ProposalPersonQuestionnaireHelper proposalPersonQuestionnaireHelper = form.getProposalPersonQuestionnaireHelper();
-        proposalPersonQuestionnaireHelper.updateChildIndicators();
-
-        boolean complete = isQuestionnaireComplete(proposalPersonQuestionnaireHelper);
+        boolean complete = isQuestionnaireComplete(form.getProposalPersonQuestionnaireHelper());
 
         if (complete && getGlobalVariableService().getMessageMap().hasNoErrors()) {
             return INFO_PROPOSAL_CERTIFIED;
