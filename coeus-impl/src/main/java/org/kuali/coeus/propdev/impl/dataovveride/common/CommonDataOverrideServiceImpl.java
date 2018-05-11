@@ -53,7 +53,9 @@ public class CommonDataOverrideServiceImpl implements CommonDataOverrideService 
         final Class<?> type = dataObjectService.wrap(bo).getPropertyType(propertyName);
 
         try {
-            if (java.sql.Date.class.isAssignableFrom(type)) {
+            if (propertyValue == null) {
+                PropertyUtils.setNestedProperty(bo, propertyName, null);
+            } else if (java.sql.Date.class.isAssignableFrom(type)) {
                 PropertyUtils.setNestedProperty(bo, propertyName, getDateTimeService().convertToSqlDate(propertyValue));
             } else if (java.sql.Timestamp.class.isAssignableFrom(type)) {
                 PropertyUtils.setNestedProperty(bo, propertyName, getDateTimeService().convertToSqlTimestamp(propertyValue));

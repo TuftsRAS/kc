@@ -65,6 +65,9 @@ public class ProposalBudgetDataOverrideRule extends KcTransactionalDocumentRuleB
     }
     @Override
     public boolean processBudgetDataOverrideRules(BudgetDataOverrideEvent budgetDataOverrideEvent) {
+        DevelopmentProposal developmentProposal = ((ProposalDevelopmentDocument) budgetDataOverrideEvent.getDocument()).getDevelopmentProposal();
+        Budget finalBudget = developmentProposal.getFinalBudget();
+
         BudgetChangedData budgetOverriddenData = budgetDataOverrideEvent.getBudgetChangedData();
         boolean valid = true;
         DataDictionaryService dataDictionaryService = getDataDictionaryService();
@@ -73,7 +76,8 @@ public class ProposalBudgetDataOverrideRule extends KcTransactionalDocumentRuleB
         Map<String, String> columnToAttributesMap = kraPersistenceStructureService.getDBColumnToObjectAttributeMap(Budget.class);
         String overriddenName = dataDictionaryService.getAttributeErrorLabel(Budget.class, columnToAttributesMap.get(budgetOverriddenData.getColumnName()));
         Boolean isRequiredField = dataDictionaryService.isAttributeRequired(Budget.class, columnToAttributesMap.get(budgetOverriddenData.getColumnName()));
-        
+        boolean isPrimitiveField = getDataObjectService().wrap(finalBudget).getPropertyType(budgetOverriddenData.getAttributeName()).isPrimitive();
+
         if (StringUtils.isEmpty(budgetOverriddenData.getColumnName())) {
             valid = false;
             GlobalVariables.getMessageMap().putError("newBudgetChangedData.columnName", KeyConstants.ERROR_NO_FIELD_TO_EDIT);
@@ -83,7 +87,7 @@ public class ProposalBudgetDataOverrideRule extends KcTransactionalDocumentRuleB
             valid &= validateAttributeFormat(budgetDataOverrideEvent, columnToAttributesMap);
         }
         
-        if (isRequiredField && StringUtils.isEmpty(overriddenValue)){
+        if ((isRequiredField || isPrimitiveField) && StringUtils.isEmpty(overriddenValue)){
             valid = false;
             GlobalVariables.getMessageMap().putError("newBudgetChangedData.changedValue", RiceKeyConstants.ERROR_REQUIRED, overriddenName);
         }

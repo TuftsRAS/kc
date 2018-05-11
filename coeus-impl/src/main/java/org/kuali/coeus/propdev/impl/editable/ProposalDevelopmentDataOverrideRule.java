@@ -66,12 +66,13 @@ public class ProposalDevelopmentDataOverrideRule extends KcTransactionalDocument
 
         String overriddenName = dataDictionaryService.getAttributeErrorLabel(DevelopmentProposal.class, columnToAttributesMap.get(proposalOverriddenData.getColumnName()));
         Boolean isRequiredField = dataDictionaryService.isAttributeRequired(DevelopmentProposal.class, columnToAttributesMap.get(proposalOverriddenData.getColumnName()));
+        boolean isPrimitiveField = getDataObjectService().wrap(developmentProposal).getPropertyType(proposalOverriddenData.getAttributeName()).isPrimitive();
 
         if(proposalOverriddenData != null && StringUtils.isNotEmpty(proposalOverriddenData.getChangedValue())) {
             valid &= validateAttributeFormat(proposalOverriddenData, developmentProposal, dataDictionaryService);
         }
         
-        if (isRequiredField && StringUtils.isEmpty(overriddenValue)){
+        if ((isRequiredField || isPrimitiveField) && StringUtils.isEmpty(overriddenValue)){
             valid = false;
             GlobalVariables.getMessageMap().putError("newProposalChangedData.changedValue", RiceKeyConstants.ERROR_REQUIRED, overriddenName);
         }
