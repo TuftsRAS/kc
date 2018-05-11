@@ -15,6 +15,7 @@ import org.apache.commons.logging.LogFactory;
 import org.kuali.coeus.common.framework.attachment.KcAttachmentService;
 import org.kuali.coeus.propdev.api.s2s.override.S2sOverrideApplicationDataContract;
 import org.kuali.coeus.propdev.impl.s2s.FormUtilityService;
+import org.kuali.coeus.propdev.impl.s2s.S2SXmlConstants;
 import org.kuali.coeus.s2sgen.api.hash.GrantApplicationHashService;
 import org.kuali.coeus.sys.framework.model.KcPersistableBusinessObjectBase;
 import org.kuali.coeus.sys.framework.service.KcServiceLocator;
@@ -200,8 +201,8 @@ public class S2sOverrideApplicationData extends KcPersistableBusinessObjectBase 
     public String getSha1Hash() {
         if (StringUtils.isNotBlank(application)) {
             try (ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(application.getBytes(StandardCharsets.UTF_8.name()))) {
-                final Document appDoc = XmlUtils.createDomBuilder().parse(byteArrayInputStream);
-                final NodeList headers = appDoc.getElementsByTagNameNS(XmlUtils.HEADER_NS, XmlUtils.GRANT_SUBMISSION_HEADER);
+                final Document appDoc = getFormUtilityService().createDomBuilder().parse(byteArrayInputStream);
+                final NodeList headers = appDoc.getElementsByTagNameNS(S2SXmlConstants.HEADER_NS, S2SXmlConstants.GRANT_SUBMISSION_HEADER);
                 for (int i = 0; i < headers.getLength(); i++) {
                     final Node header = headers.item(i);
                     header.getParentNode().removeChild(header);
@@ -218,14 +219,24 @@ public class S2sOverrideApplicationData extends KcPersistableBusinessObjectBase 
 
     public String getSha1HashInXml() {
         if (StringUtils.isNotBlank(application)) {
+            final Node hashNode = getSha1HashInXmlNode();
+            if (hashNode != null) {
+                return hashNode.getTextContent();
+            }
+        }
+        return null;
+    }
+
+    public Node getSha1HashInXmlNode() {
+        if (StringUtils.isNotBlank(application)) {
             try (ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(application.getBytes(StandardCharsets.UTF_8.name()))) {
-                final Document appDoc = XmlUtils.createDomBuilder().parse(byteArrayInputStream);
-                final NodeList headers = appDoc.getElementsByTagNameNS(XmlUtils.HEADER_NS, XmlUtils.GRANT_SUBMISSION_HEADER);
+                final Document appDoc = getFormUtilityService().createDomBuilder().parse(byteArrayInputStream);
+                final NodeList headers = appDoc.getElementsByTagNameNS(S2SXmlConstants.HEADER_NS, S2SXmlConstants.GRANT_SUBMISSION_HEADER);
                 for (int i = 0; i < headers.getLength(); i++) {
                     final Node header = headers.item(i);
-                    final String hashValue = XmlUtils.getHashValueFromParent(header);
-                    if (StringUtils.isNotBlank(hashValue)) {
-                        return hashValue;
+                    final Node hashValueNode = getFormUtilityService().getHashValueFromParent(header);
+                    if (hashValueNode != null) {
+                        return hashValueNode;
                     }
                 }
             } catch (RuntimeException | ParserConfigurationException | IOException | SAXException e) {
@@ -235,6 +246,25 @@ public class S2sOverrideApplicationData extends KcPersistableBusinessObjectBase 
             }
         }
         return null;
+    }
+
+    public boolean updateSha1HashInXml() {
+        final String actualHash = getSha1Hash();
+        if (StringUtils.isNotBlank(actualHash)) {
+            final Node xmlHash = getSha1HashInXmlNode();
+            if (xmlHash != null && !actualHash.equals(xmlHash.getTextContent())) {
+                xmlHash.setTextContent(actualHash);
+                try {
+                    setApplication(getFormUtilityService().docToString(xmlHash.getOwnerDocument()));
+                    return true;
+                } catch (TransformerException e) {
+                    if (LOG.isInfoEnabled()) {
+                        LOG.info(e.getMessage(), e);
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     public DateTimeService getDateTimeService() {

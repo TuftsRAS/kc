@@ -240,6 +240,8 @@ public final class KeyConstants {
     public static final String S2S_SUBMISSIONTYPE_CHANGEDCORRECTED = "s2s.submissiontype.changedCorrected";
     public static final String S2S_SUBMISSIONTYPE_APPLICATION = "s2s.submissiontype.application";
     public static final String S2S_OVERRIDDE_PRESENT="warn.s2s.override.present";
+    public static final String S2S_OVERRIDDE_UPDATE_ATT_HASH="info.s2s.override.att.hash.update";
+    public static final String S2S_OVERRIDDE_UPDATE_APP_HASH="info.s2s.override.app.hash.update";
 
     public static final String SESSION_EXPIRED_IND = "sessionExpired";
     public static final String ERROR_INVALID_CUSTOM_ATT_ID = "error.invalid.customAttributeid";

@@ -33,11 +33,14 @@ import org.kuali.coeus.sys.framework.controller.ControllerFileUtils;
 import org.kuali.kra.infrastructure.Constants;
 import org.kuali.kra.infrastructure.KeyConstants;
 import org.kuali.rice.krad.exception.AuthorizationException;
+import org.kuali.rice.krad.uif.UifConstants;
 import org.kuali.rice.krad.uif.UifParameters;
+import org.kuali.rice.krad.uif.lifecycle.ViewLifecycle;
 import org.kuali.rice.krad.uif.util.ObjectPropertyUtils;
 import org.kuali.rice.krad.util.AuditCluster;
 import org.kuali.rice.krad.util.AuditError;
 import org.kuali.rice.krad.util.KRADUtils;
+import org.kuali.rice.krad.web.service.impl.CollectionControllerServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
@@ -576,6 +579,55 @@ public class ProposalDevelopmentS2SController extends ProposalDevelopmentControl
     public ModelAndView replaceS2sOverrideApplication(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm form) throws IOException {
         setApplicationOverride(form.getDevelopmentProposal().getS2sOverride());
         return super.save(form);
+    }
+
+    @Transactional @RequestMapping(value = "/proposalDevelopment", params="methodToCall=updateHashS2sOverrideApplication")
+    public ModelAndView updateHashS2sOverrideApplication(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm form) {
+        updateHashApp(form);
+        return super.save(form);
+    }
+
+    private void updateHashApp(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm form) {
+        final S2sOverride s2sOverride = form.getDevelopmentProposal().getS2sOverride();
+        if (s2sOverride != null && s2sOverride.getApplicationOverride() != null) {
+            final boolean updated = s2sOverride.getApplicationOverride().updateSha1HashInXml();
+
+            if (updated) {
+                getGlobalVariableService().getMessageMap().putInfoForSectionId("PropDev-OpportunityPage-Override-Override", KeyConstants.S2S_OVERRIDDE_UPDATE_APP_HASH);
+            }
+        }
+    }
+
+    @Transactional @RequestMapping(value = "/proposalDevelopment", params="methodToCall=updateHashFileUploadLine")
+    public ModelAndView updateHashFileUploadLine(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm form)  {
+        final CollectionControllerServiceImpl.CollectionActionParameters parameters = new CollectionControllerServiceImpl.CollectionActionParameters(form, true);
+
+        final Runnable runnable = () -> processCollectionUpdateHashLine(form, parameters.getSelectedCollectionId(),
+                parameters.getSelectedCollectionPath(), parameters.getSelectedLineIndex());
+
+        ViewLifecycle.encapsulateLifecycle(form.getView(), form, form.getViewPostMetadata(), null, form.getRequest(), runnable);
+        return super.save(form);
+    }
+
+    private void processCollectionUpdateHashLine(ProposalDevelopmentDocumentForm form, String collectionId, String collectionPath, int lineIndex) {
+        final Collection<S2sOverrideAttachment> collection = ObjectPropertyUtils.getPropertyValue(form, collectionPath);
+        if (collection == null) {
+            throw new RuntimeException("Unable to get collection property from model for path: " + collectionPath);
+        }
+
+        if (collection instanceof List) {
+            final S2sOverrideAttachment attachment = ((List<S2sOverrideAttachment>) collection).get(lineIndex);
+            if (attachment != null) {
+                final boolean updated = attachment.updateSha1HashInXml();
+                if (updated) {
+                    final String collectionLabel = (String) form.getViewPostMetadata().getComponentPostData(collectionId, UifConstants.PostMetadata.COLL_LABEL);
+                    getGlobalVariableService().getMessageMap().putInfoForSectionId(collectionId, KeyConstants.S2S_OVERRIDDE_UPDATE_ATT_HASH, collectionLabel);
+                    //if We could figure out how to refresh the application hash fields on the UI, if w3ould make sense to call updateHashApp() here.
+                }
+            }
+        } else {
+            throw new RuntimeException("Only List collection implementations are supported for the update hash by index method");
+        }
     }
 
     public S2sSubmissionService getS2sSubmissionService() {

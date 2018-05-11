@@ -16,6 +16,8 @@ import org.kuali.coeus.common.framework.attachment.KcAttachmentDataDao;
 import org.kuali.coeus.common.framework.attachment.KcAttachmentService;
 import org.kuali.coeus.common.framework.print.KcAttachmentDataSource;
 import org.kuali.coeus.propdev.api.s2s.override.S2sOverrideAttachmentContract;
+import org.kuali.coeus.propdev.impl.s2s.FormUtilityService;
+import org.kuali.coeus.propdev.impl.s2s.S2SXmlConstants;
 import org.kuali.coeus.s2sgen.api.hash.GrantApplicationHashService;
 import org.kuali.coeus.sys.framework.service.KcServiceLocator;
 import org.kuali.rice.core.api.CoreConstants;
@@ -31,6 +33,7 @@ import org.xml.sax.SAXException;
 
 import javax.persistence.*;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -77,6 +80,9 @@ public class S2sOverrideAttachment extends KcAttachmentDataSource implements S2s
 
     @Transient
     private transient GrantApplicationHashService grantApplicationHashService;
+
+    @Transient
+    private transient FormUtilityService formUtilityService;
 
     public S2sOverrideApplicationData getApplication() {
         return application;
@@ -180,17 +186,27 @@ public class S2sOverrideAttachment extends KcAttachmentDataSource implements S2s
     }
 
     public String getSha1HashInXml() {
+        final Node sha1HashInXmlNode = getSha1HashInXmlNode();
+        if (sha1HashInXmlNode != null && StringUtils.isNotBlank(sha1HashInXmlNode.getTextContent())) {
+            return sha1HashInXmlNode.getTextContent();
+        }
+
+        return null;
+    }
+
+    public Node getSha1HashInXmlNode() {
         final String applicationXml = getApplication().getApplication();
         if (StringUtils.isNotBlank(applicationXml)) {
             try (ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(applicationXml.getBytes(StandardCharsets.UTF_8.name()))) {
-                final Document appDoc = XmlUtils.createDomBuilder().parse(byteArrayInputStream);
-                final String hashValue = getHashValueFromLocations(appDoc.getElementsByTagNameNS(XmlUtils.ATTACHMENTS_NS, XmlUtils.FILE_LOCATION));
-                if (StringUtils.isNotBlank(hashValue)) {
-                    return hashValue;
+                final Document appDoc = getFormUtilityService().createDomBuilder().parse(byteArrayInputStream);
+                final Node hashValueNode = getHashValueFromLocations(appDoc.getElementsByTagNameNS(S2SXmlConstants.ATTACHMENTS_NS, S2SXmlConstants.FILE_LOCATION));
+                if (hashValueNode != null) {
+                    return hashValueNode;
                 }
-                final String hashValueNoNs = getHashValueFromLocations(appDoc.getElementsByTagName(XmlUtils.FILE_LOCATION));
-                if (StringUtils.isNotBlank(hashValueNoNs)) {
-                    return hashValueNoNs;
+
+                final Node hashValueNodeNoNs = getHashValueFromLocations(appDoc.getElementsByTagName(S2SXmlConstants.FILE_LOCATION));
+                if (hashValueNodeNoNs != null) {
+                    return hashValueNodeNoNs;
                 }
             } catch (RuntimeException|IOException|ParserConfigurationException|SAXException e) {
                 if (LOG.isInfoEnabled()) {
@@ -202,27 +218,52 @@ public class S2sOverrideAttachment extends KcAttachmentDataSource implements S2s
         return null;
     }
 
-    private String getHashValueFromLocations(NodeList fileLocations) {
+    private Node getHashValueFromLocations(NodeList fileLocations) {
         for (int i = 0; i < fileLocations.getLength(); i++) {
             final Node location = fileLocations.item(i);
             final NamedNodeMap locationAttrs = location.getAttributes();
             if (locationAttrs != null) {
-                final Node href = locationAttrs.getNamedItemNS(XmlUtils.ATTACHMENTS_NS, XmlUtils.HREF);
+                final Node href = locationAttrs.getNamedItemNS(S2SXmlConstants.ATTACHMENTS_NS, S2SXmlConstants.HREF);
                 if (href != null) {
                     if (href.getNodeValue().equals(contentId)) {
-                        return XmlUtils.getHashValueFromParent(location.getParentNode());
+                        final Node hashValueNode = getFormUtilityService().getHashValueFromParent(location.getParentNode());
+                        if (hashValueNode != null) {
+                            return hashValueNode;
+                        }
                     }
                 } else {
-                    final Node hrefNoNS = locationAttrs.getNamedItem(XmlUtils.HREF);
+                    final Node hrefNoNS = locationAttrs.getNamedItem(S2SXmlConstants.HREF);
                     if (hrefNoNS != null) {
                         if (hrefNoNS.getNodeValue().equals(contentId)) {
-                            return XmlUtils.getHashValueFromParent(location.getParentNode());
+                            final Node hashValueNode = getFormUtilityService().getHashValueFromParent(location.getParentNode());
+                            if (hashValueNode != null) {
+                                return hashValueNode;
+                            }
                         }
                     }
                 }
             }
         }
         return null;
+    }
+
+    public boolean updateSha1HashInXml() {
+        final String actualHash = getSha1Hash();
+        if (StringUtils.isNotBlank(actualHash)) {
+            final Node xmlHash = getSha1HashInXmlNode();
+            if (xmlHash != null && !actualHash.equals(xmlHash.getTextContent())) {
+                xmlHash.setTextContent(actualHash);
+                try {
+                    application.setApplication(getFormUtilityService().docToString(xmlHash.getOwnerDocument()));
+                    return true;
+                } catch (TransformerException e) {
+                    if (LOG.isInfoEnabled()) {
+                        LOG.info(e.getMessage(), e);
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     @PostRemove
@@ -275,5 +316,17 @@ public class S2sOverrideAttachment extends KcAttachmentDataSource implements S2s
 
     public void setGrantApplicationHashService(GrantApplicationHashService grantApplicationHashService) {
         this.grantApplicationHashService = grantApplicationHashService;
+    }
+
+    public FormUtilityService getFormUtilityService() {
+        if (formUtilityService == null) {
+            formUtilityService = KcServiceLocator.getService(FormUtilityService.class);
+        }
+
+        return formUtilityService;
+    }
+
+    public void setFormUtilityService(FormUtilityService formUtilityService) {
+        this.formUtilityService = formUtilityService;
     }
 }

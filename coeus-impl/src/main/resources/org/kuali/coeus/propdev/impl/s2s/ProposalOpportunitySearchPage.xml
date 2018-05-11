@@ -483,15 +483,23 @@
                       p:order="20"/>
 
                 <bean parent="Uif-ActionField" p:order="30" p:actionLabel="Replace" p:cssClasses="s2sOverrideApplicationCurrent,pull-left"
-                      p:actionScript="jQuery('.s2sOverrideApplicationReplace').show(); jQuery('.s2sOverrideApplicationCurrent').hide();"
+                      p:actionScript="jQuery('.s2sOverrideApplicationReplace').show(); jQuery('.s2sOverrideApplicationCurrent').hide(); jQuery('.s2sOverrideApplicationCurrentHash').hide();"
                       p:render="@{(#editModes[#proposalAuthConsts.MODIFY_S2S_OVERRIDE]) and #ViewHelper.containsOverride(document) and document.developmentProposal.s2sOverride.applicationOverride != null and document.developmentProposal.s2sOverride.applicationOverride.application != null}">
                     <property name="action">
                         <bean parent="Uif-SecondaryActionButton-Mini" />
                     </property>
                 </bean>
+                <bean id="updateAppHash" parent="Uif-ActionField" p:order="40" p:actionLabel="Update Hash" p:cssClasses="s2sOverrideApplicationCurrentHash,pull-left"
+                      p:methodToCall="updateHashS2sOverrideApplication"
+                      p:render="@{#editModes[#proposalAuthConsts.MODIFY_S2S_OVERRIDE] and #ViewHelper.containsOverride(document) and document.developmentProposal.s2sOverride.applicationOverride != null}"
+                      p:hidden="@{#ViewHelper.containsOverride(document) and document.developmentProposal.s2sOverride.applicationOverride != null and document.developmentProposal.s2sOverride.applicationOverride.sha1Hash eq document.developmentProposal.s2sOverride.applicationOverride.sha1HashInXml}">
+                    <property name="action">
+                        <bean parent="Uif-SecondaryActionButton-Mini" />
+                    </property>
+                </bean>
 
-                <bean parent="Uif-ActionField" p:order="40" p:actionLabel="Cancel" p:cssClasses="s2sOverrideApplicationReplace,pull-left"
-                      p:actionScript="jQuery('.s2sOverrideApplicationReplace').hide(); jQuery('.s2sOverrideApplicationCurrent').show();"
+                <bean parent="Uif-ActionField" p:order="50" p:actionLabel="Cancel" p:cssClasses="s2sOverrideApplicationReplace,pull-left"
+                      p:actionScript="jQuery('.s2sOverrideApplicationReplace').hide(); jQuery('.s2sOverrideApplicationCurrent').show(); jQuery('.s2sOverrideApplicationCurrentHash').toggle(jQuery('#appOverrideHash > span').text() !== jQuery('#appOverrideHashXml > span').text());"
                       p:render="@{(#editModes[#proposalAuthConsts.MODIFY_S2S_OVERRIDE]) and #ViewHelper.containsOverride(document) and document.developmentProposal.s2sOverride.applicationOverride != null and document.developmentProposal.s2sOverride.applicationOverride.application != null}"
                       p:hidden="true">
                     <property name="action">
@@ -499,7 +507,7 @@
                     </property>
                 </bean>
 
-                <bean parent="Uif-ActionField" p:order="50" p:actionLabel="Update" p:cssClasses="s2sOverrideApplicationReplace,pull-left"
+                <bean parent="Uif-ActionField" p:order="60" p:actionLabel="Update" p:cssClasses="s2sOverrideApplicationReplace,pull-left"
                       p:methodToCall="replaceS2sOverrideApplication"
                       p:render="@{(#editModes[#proposalAuthConsts.MODIFY_S2S_OVERRIDE]) and #ViewHelper.containsOverride(document) and document.developmentProposal.s2sOverride.applicationOverride != null and document.developmentProposal.s2sOverride.applicationOverride.application != null}"
                       p:hidden="true">
@@ -508,24 +516,16 @@
                     </property>
                 </bean>
 
-                <bean parent="Uif-DataField" p:label="SHA-1 Hash" p:readOnly="true" p:propertyName="document.developmentProposal.s2sOverride.applicationOverride.sha1Hash"
-                      p:render="@{#ViewHelper.containsOverride(document) and document.developmentProposal.s2sOverride.applicationOverride != null and document.developmentProposal.s2sOverride.applicationOverride.application != null}"
-                      p:order="60"/>
-
-                <bean parent="Uif-DataField" p:label="SHA-1 Hash In XML" p:readOnly="true" p:propertyName="document.developmentProposal.s2sOverride.applicationOverride.sha1HashInXml"
+                <bean id="appOverrideHash" parent="Uif-DataField" p:label="SHA-1 Hash" p:readOnly="true" p:propertyName="document.developmentProposal.s2sOverride.applicationOverride.sha1Hash"
                       p:render="@{#ViewHelper.containsOverride(document) and document.developmentProposal.s2sOverride.applicationOverride != null and document.developmentProposal.s2sOverride.applicationOverride.application != null}"
                       p:order="70"/>
 
-                <bean parent="PropDev-OpportunityPage-Override-Override-AttachmentSection" p:order="80" />
-            </list>
-        </property>
-    </bean>
+                <bean id="appOverrideHashXml" parent="Uif-DataField" p:label="SHA-1 Hash In XML" p:readOnly="true" p:propertyName="document.developmentProposal.s2sOverride.applicationOverride.sha1HashInXml"
+                      p:render="@{#ViewHelper.containsOverride(document) and document.developmentProposal.s2sOverride.applicationOverride != null and document.developmentProposal.s2sOverride.applicationOverride.application != null}"
+                      p:order="80"/>
 
-    <bean id="PropDev-OpportunityPage-Override-OverrideApplicationAttachment" parent="PropDev-OpportunityPage-Override-OverrideApplicationAttachment-parentBean" />
-    <bean id="PropDev-OpportunityPage-Override-OverrideApplicationAttachment-parentBean" abstract="true" parent="Uif-InputField" p:propertyName="specialReviewAttachment.multipartFile"
-          p:readOnly="@{#parent.readOnly}" p:label="Human Study Attachment">
-        <property name="control">
-            <bean parent="Uif-FileControl"/>
+                <bean parent="PropDev-OpportunityPage-Override-Override-AttachmentSection" p:order="90" />
+            </list>
         </property>
     </bean>
 
@@ -551,12 +551,25 @@
           p:readOnly="@{(!#editModes[#proposalAuthConsts.MODIFY_S2S_OVERRIDE])}">
         <property name="collection.lineActions">
             <list merge="true">
+                <!-- performClientSideValidation must be true even on delete. When required field contentId is empty, and the delete button is pushed, the contentId will
+                be cleared and JPA will flush causing a violation.  Ideally this would not be an issue on delete... -->
                 <bean parent="Uif-SecondaryActionButton-Mini" p:render="@{(#editModes[#proposalAuthConsts.MODIFY_S2S_OVERRIDE])}"
                       p:methodToCall="deleteFileUploadLine" p:title="Delete"
                       p:onMouseOverScript="deleteLineMouseOver(this, 'uif-collectionDeleteHighlight');"
                       p:onMouseOutScript="deleteLineMouseOut(this, 'uif-collectionDeleteHighlight');"
                       p:onClickScript="writeCurrentPageToSession(this);" p:dirtyOnAction="true"
-                      p:loadingMessageText="Deleting File..." p:iconClass="icon-trash"/>
+                      p:performClientSideValidation="true"
+                      p:loadingMessageText="Deleting File..." p:iconClass="icon-trash" p:order="10"/>
+
+                <!-- KRAD will not refresh the application override hash attributes or section holding them. Using successCallback to click the update button which may be in a hidden state -->
+                <bean parent="Uif-SecondaryActionButton-Mini" p:render="@{(#editModes[#proposalAuthConsts.MODIFY_S2S_OVERRIDE]) and #line.sha1Hash ne #line.sha1HashInXml and #line.sha1HashInXml ne null}"
+                      p:title="Update Hash"
+                      p:methodToCall="updateHashFileUploadLine"
+                      p:onClickScript="writeCurrentPageToSession(this);" p:dirtyOnAction="true"
+                      p:successCallback="jQuery('#updateAppHash > button').click()"
+                      p:performClientSideValidation="true"
+                      p:loadingMessageText="Updating Hash in Application XML..." p:iconClass="icon-loop2" p:order="20">
+                </bean>
             </list>
         </property>
         <property name="collection.items">

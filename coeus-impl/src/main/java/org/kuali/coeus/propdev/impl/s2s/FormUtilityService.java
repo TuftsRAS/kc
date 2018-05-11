@@ -12,6 +12,8 @@ import org.kuali.coeus.sys.api.model.KcFile;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.xpath.XPathExpressionException;
 import java.io.IOException;
@@ -38,4 +40,8 @@ public interface FormUtilityService {
      * @param attachments the attachment map to use for generating attachment data on the xml Document
      */
     void correctAttachmentXml(Document document, Map<String, KcFile> attachments);
+
+    DocumentBuilder createDomBuilder() throws ParserConfigurationException;
+
+    Node getHashValueFromParent(Node parent);
 }
