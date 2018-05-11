@@ -22,8 +22,6 @@ import org.kuali.rice.core.api.datetime.DateTimeService;
 import org.kuali.rice.core.api.util.RiceKeyConstants;
 import org.kuali.rice.kns.datadictionary.validation.charlevel.AnyCharacterValidationPattern;
 import org.kuali.rice.kns.datadictionary.validation.charlevel.NumericValidationPattern;
-import org.kuali.rice.kns.service.DataDictionaryService;
-import org.kuali.rice.kns.service.KNSServiceLocator;
 import org.kuali.rice.krad.datadictionary.validation.ValidationPattern;
 import org.kuali.rice.krad.util.GlobalVariables;
 import org.kuali.rice.krad.util.ObjectUtils;
@@ -43,26 +41,8 @@ public class ProposalBudgetDataOverrideRule extends KcTransactionalDocumentRuleB
         validationClasses.put("NUMBER", NumericValidationPattern.class.getName());
     }
     private KcPersistenceStructureService kcPersistenceStructureService;
-    private DataDictionaryService dataDictionaryService;
     private DateTimeService dateTimeService;
 
-    protected KcPersistenceStructureService getKcPersistenceStructureService () {
-        if (kcPersistenceStructureService == null)
-            kcPersistenceStructureService = KcServiceLocator.getService(KcPersistenceStructureService.class);
-        return kcPersistenceStructureService;
-    }
-    @Override
-    protected DataDictionaryService getDataDictionaryService(){
-        if (dataDictionaryService == null)
-            dataDictionaryService = KNSServiceLocator.getDataDictionaryService();
-        return dataDictionaryService;
-    }
-
-    protected DateTimeService getDateTimeService (){
-        if(dateTimeService == null)
-            dateTimeService = KcServiceLocator.getService(DateTimeService.class);
-        return dateTimeService;
-    }
     @Override
     public boolean processBudgetDataOverrideRules(BudgetDataOverrideEvent budgetDataOverrideEvent) {
         DevelopmentProposal developmentProposal = ((ProposalDevelopmentDocument) budgetDataOverrideEvent.getDocument()).getDevelopmentProposal();
@@ -70,12 +50,12 @@ public class ProposalBudgetDataOverrideRule extends KcTransactionalDocumentRuleB
 
         BudgetChangedData budgetOverriddenData = budgetDataOverrideEvent.getBudgetChangedData();
         boolean valid = true;
-        DataDictionaryService dataDictionaryService = getDataDictionaryService();
+
         String overriddenValue = budgetOverriddenData.getChangedValue();
-        KcPersistenceStructureService kraPersistenceStructureService = getKcPersistenceStructureService();
-        Map<String, String> columnToAttributesMap = kraPersistenceStructureService.getDBColumnToObjectAttributeMap(Budget.class);
-        String overriddenName = dataDictionaryService.getAttributeErrorLabel(Budget.class, columnToAttributesMap.get(budgetOverriddenData.getColumnName()));
-        Boolean isRequiredField = dataDictionaryService.isAttributeRequired(Budget.class, columnToAttributesMap.get(budgetOverriddenData.getColumnName()));
+
+        Map<String, String> columnToAttributesMap = getKcPersistenceStructureService().getDBColumnToObjectAttributeMap(Budget.class);
+        String overriddenName = getDataDictionaryService().getAttributeErrorLabel(Budget.class, columnToAttributesMap.get(budgetOverriddenData.getColumnName()));
+        Boolean isRequiredField = getDataDictionaryService().isAttributeRequired(Budget.class, columnToAttributesMap.get(budgetOverriddenData.getColumnName()));
         boolean isPrimitiveField = getDataObjectService().wrap(finalBudget).getPropertyType(budgetOverriddenData.getAttributeName()).isPrimitive();
 
         if (StringUtils.isEmpty(budgetOverriddenData.getColumnName())) {
@@ -93,8 +73,8 @@ public class ProposalBudgetDataOverrideRule extends KcTransactionalDocumentRuleB
         }
         
         if(StringUtils.isNotEmpty(budgetOverriddenData.getComments())) {
-            int commentsMaxLength = dataDictionaryService.getAttributeMaxLength(BudgetChangedData.class, "comments");
-            String commentsLabel = dataDictionaryService.getAttributeLabel(BudgetChangedData.class, "comments");
+            int commentsMaxLength = getDataDictionaryService().getAttributeMaxLength(BudgetChangedData.class, "comments");
+            String commentsLabel = getDataDictionaryService().getAttributeLabel(BudgetChangedData.class, "comments");
             if (commentsMaxLength < budgetOverriddenData.getComments().length()) {
                 GlobalVariables.getMessageMap().putError(Constants.BUDGETDATA_COMMENTS_KEY, RiceKeyConstants.ERROR_MAX_LENGTH,
                         commentsLabel, commentsMaxLength+"");
@@ -108,11 +88,8 @@ public class ProposalBudgetDataOverrideRule extends KcTransactionalDocumentRuleB
 
         BudgetChangedData budgetOverriddenData = budgetDataOverrideEvent.getBudgetChangedData();
 
-
-        DateTimeService dateTimeService = getDateTimeService();
-
         String overriddenValue = budgetOverriddenData.getChangedValue();
-        String changedValueLabel = dataDictionaryService.getAttributeLabel(BudgetChangedData.class, "changedValue");
+        String changedValueLabel = getDataDictionaryService().getAttributeLabel(BudgetChangedData.class, "changedValue");
 
         String dataType = null;
         Integer maxLength = -1;
@@ -127,7 +104,7 @@ public class ProposalBudgetDataOverrideRule extends KcTransactionalDocumentRuleB
         
         if( DATE.equalsIgnoreCase(dataType) ) {
             try {
-                dateTimeService.convertToDate(overriddenValue);
+                getDateTimeService().convertToDate(overriddenValue);
             }
             catch (ParseException e) {
                 GlobalVariables.getMessageMap().putError(Constants.BUDGETDATA_CHANGED_VAL_KEY, RiceKeyConstants.ERROR_INVALID_FORMAT,
@@ -170,7 +147,7 @@ public class ProposalBudgetDataOverrideRule extends KcTransactionalDocumentRuleB
         Object currentValue = finalBudget != null ? ObjectUtils.getPropertyValue(finalBudget, columnToAttributesMap.get(budgetOverriddenData.getColumnName())) : null;
         if (currentValue instanceof ScaleTwoDecimal) {
             try {
-                Double overriddenValueToInt = Double.parseDouble(overriddenValue); 
+                Double.parseDouble(overriddenValue);
             } catch (Exception e) {
                 GlobalVariables.getMessageMap().putError(Constants.BUDGETDATA_CHANGED_VAL_KEY, RiceKeyConstants.ERROR_NUMBER,
                         changedValueLabel, overriddenValue);
@@ -189,7 +166,7 @@ public class ProposalBudgetDataOverrideRule extends KcTransactionalDocumentRuleB
         String currentValueStr = (currentValue != null) ? currentValue.toString() : "";
         
         if(DATE.equalsIgnoreCase( budgetOverriddenData.getEditableColumn().getDataType()) && currentValue != null) {
-                currentValueStr = dateTimeService.toString((Date) currentValue, "MM/dd/yyyy");
+                currentValueStr = getDateTimeService().toString((Date) currentValue, "MM/dd/yyyy");
         }
         
         if (StringUtils.isNotEmpty(currentValueStr) && currentValueStr.equalsIgnoreCase(overriddenValue)) {
@@ -206,5 +183,19 @@ public class ProposalBudgetDataOverrideRule extends KcTransactionalDocumentRuleB
         }
         
         return true;
+    }
+
+    protected KcPersistenceStructureService getKcPersistenceStructureService () {
+        if (kcPersistenceStructureService == null) {
+            kcPersistenceStructureService = KcServiceLocator.getService(KcPersistenceStructureService.class);
+        }
+        return kcPersistenceStructureService;
+    }
+
+    protected DateTimeService getDateTimeService (){
+        if (dateTimeService == null) {
+            dateTimeService = KcServiceLocator.getService(DateTimeService.class);
+        }
+        return dateTimeService;
     }
 }
