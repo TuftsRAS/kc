@@ -14,7 +14,7 @@ import org.junit.Test;
 import org.kuali.coeus.propdev.impl.s2s.S2sSubmissionService;
 import org.kuali.coeus.sys.framework.service.KcServiceLocator;
 import org.kuali.kra.test.infrastructure.KcIntegrationTestBase;
-import org.kuali.rice.krad.service.BusinessObjectService;
+import org.kuali.rice.krad.data.DataObjectService;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,26 +27,26 @@ import java.util.Map;
  * 
  */
 public class S2SPollingTaskTest extends KcIntegrationTestBase {
-	private BusinessObjectService businessObjectService = null;
+	private DataObjectService dataObjectService = null;
 	private S2sSubmissionService s2sSubmissionService = null;
 
 	@Before
 	public void setUp() throws Exception {
-		businessObjectService = KcServiceLocator
-				.getService(BusinessObjectService.class);
+		dataObjectService = KcServiceLocator
+				.getService(DataObjectService.class);
         s2sSubmissionService = KcServiceLocator.getService(S2sSubmissionService.class);
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		businessObjectService = null;
+		dataObjectService = null;
         s2sSubmissionService = null;
 	}
 
 	@Test
 	public void tests2sPolling() {
 		S2SPollingTask s2sPollingTask = new S2SPollingTask();
-		s2sPollingTask.setBusinessObjectService(businessObjectService);
+		s2sPollingTask.setDataObjectService(dataObjectService);
 		s2sPollingTask.setS2sSubmissionService(s2sSubmissionService);
 		s2sPollingTask.setStopPollInterval("4320");
 		s2sPollingTask.setMailInterval("20");
@@ -66,7 +66,7 @@ public class S2SPollingTaskTest extends KcIntegrationTestBase {
 		mailInfo.setFooter("");
 		mailInfo.setSubject("Grants.Gov Submissions");
 
-		List<MailInfo> mailInfoList = new ArrayList<MailInfo>();
+		List<MailInfo> mailInfoList = new ArrayList<>();
 		mailInfoList.add(mailInfo);
 		s2sPollingTask.setMailInfoList(mailInfoList);
 		s2sPollingTask.execute();
