@@ -7,22 +7,14 @@
  */
 package org.kuali.coeus.propdev.impl.editable;
 
-import org.kuali.coeus.propdev.impl.editable.ProposalDataOverrideEvent;
 import org.kuali.rice.krad.rules.rule.BusinessRule;
 
-/**
- * The Copy Proposal Rule validates copying of a proposal.
- *
- * @author Kuali Research Administration Team (kualidev@oncourse.iu.edu)
- */
 public interface ProposalDataOverrideRule extends BusinessRule {
     
     /**
      * Validates the Overriding of a proposal data.  
-     * 
-     * @param document the proposal development document
-     * @param proposalChangedData the user-specified overriding data
+     *
      * @return true if the update request is valid; otherwise false
      */
-    public boolean processProposalDataOverrideRules(ProposalDataOverrideEvent proposalDataOverrideEvent);
+    boolean processProposalDataOverrideRules(ProposalDataOverrideEvent proposalDataOverrideEvent);
 }
