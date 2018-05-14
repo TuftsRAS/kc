@@ -17,8 +17,9 @@
 -- along with this program.  If not, see <http://www.gnu.org/licenses/>.
 --
 
+set define off
+set sqlblanklines on
 
-\. ./rice/bootstrap/V1805_001__show_full_name_in_initiator_param.sql
-\. ./rice/bootstrap/V1805_002__change_peopleflow_names.sql
-\. ./rice/bootstrap/V1805_004__s2s_overrride.sql
+spool 1805_oracle_kc_upgrade.sql.log
+@./kc/bootstrap/V1805_003__s2s_overrride.sql
 commit;

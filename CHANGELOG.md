@@ -1,6 +1,26 @@
 
 
 ## CURRENT
+* RESKC-2887, RESKC-2884: fixing test errors
+  * Travis Schneeberger on Mon, 14 May 2018 00:01:28 -0600 [View Commit](../../commit/82ae5837d816b3af2ca44efa51c6fb44c9b65eb7)
+* RESKC-2887, RESKC-2884: fixing test errors
+  * Travis Schneeberger on Fri, 11 May 2018 14:29:01 -0400 [View Commit](../../commit/8587e1fb096f5656917a88f176210d5a30791985)
+* RESKC-484: supporting null values in data override.
+  * Travis Schneeberger on Fri, 11 May 2018 13:27:29 -0400 [View Commit](../../commit/b8d4fc3d62a91ed605ad6bc179c259c81539044c)
+* RESKC-2887, RESKC-2884: Bugfixing, Adding button to sync up hashes into the application xml
+  * Travis Schneeberger on Fri, 11 May 2018 07:55:57 -0400 [View Commit](../../commit/015d059d189abff0597dcd36364d4d118bb034be)
+* RESKC-2926: convert task to use DataObjectService, minor cleanup
+
+  * RESKC-2912, RESKC-2911, RESKC-2896, RESKC-2887, RESKC-2885, RESKC-2886, RESKC-2884: Logging request and response for grants.gov/research.gov webservice, fixing the data dictionary for submission data, saving hashcode, contentType from successful submission, creating s2s submission override functionality with enhanced opp-specific validation.  Adding edit capabilities for s2s override with kim.  Adding a warning about s2s submission override, Adding a notification box on submit to s2s with data has been overrriden.
+  * Travis Schneeberger on Mon, 7 May 2018 09:41:10 -0400 [View Commit](../../commit/8a8fa53cce41c196b0adc6fd7f9fc169ba36cfdd)
+* RESKC-2912, RESKC-2911, RESKC-2896, RESKC-2887, RESKC-2885, RESKC-2886, RESKC-2884: Logging request and response for grants.gov/research.gov webservice, fixing the data dictionary for submission data, saving hashcode, contentType from successful submission, creating s2s submission override functionality with enhanced opp-specific validation.  Adding edit capabilities for s2s override with kim.  Adding a warning about s2s submission override, Adding a notification box on submit to s2s with data has been overrriden.
+  * Travis Schneeberger on Thu, 3 May 2018 19:15:14 -0400 [View Commit](../../commit/55157a40ac18872f582eb72914eb69506be2cc46)
+* RESKC-2913: correcting a spelling error of "overridden"
+  * Travis Schneeberger on Thu, 3 May 2018 19:08:40 -0400 [View Commit](../../commit/5953c91d9aaa5a392eefe35669e4c5b8439b316b)
+* RESKC-2914: preventing javascript error related to file upload
+  * Travis Schneeberger on Thu, 3 May 2018 18:59:54 -0400 [View Commit](../../commit/f683c103cae947ff847ad13b1a6149292db74e75)
+
+## coeus-1805.0015
 * No Changes
 
 

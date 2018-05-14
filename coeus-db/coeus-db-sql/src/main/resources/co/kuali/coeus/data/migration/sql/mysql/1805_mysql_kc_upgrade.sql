@@ -18,7 +18,5 @@
 --
 
 
-\. ./rice/bootstrap/V1805_001__show_full_name_in_initiator_param.sql
-\. ./rice/bootstrap/V1805_002__change_peopleflow_names.sql
-\. ./rice/bootstrap/V1805_004__s2s_overrride.sql
+\. ./kc/bootstrap/V1805_003__s2s_overrride.sql
 commit;
