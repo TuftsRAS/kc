@@ -34,6 +34,7 @@ import org.kuali.coeus.s2sgen.impl.generate.S2SFormGenerator;
 import org.kuali.coeus.s2sgen.impl.generate.S2SFormGeneratorRetrievalService;
 import org.kuali.coeus.s2sgen.impl.print.FormPrintServiceImpl;
 import org.kuali.coeus.s2sgen.impl.validate.S2SValidatorService;
+import org.kuali.coeus.s2sgen.impl.validate.ValidationResult;
 import org.kuali.coeus.sys.framework.service.KcServiceLocator;
 import org.kuali.kra.infrastructure.RoleConstants;
 import org.kuali.kra.test.infrastructure.KcIntegrationTestBase;
@@ -111,8 +112,12 @@ public abstract class S2STestBase extends KcIntegrationTestBase {
         generatorObject.setAuditErrors(errors);
         generatorObject.setAttachments(new ArrayList<>());
         XmlObject object=generatorObject.getFormObject(document);
-        getService(S2SValidatorService.class).validate(object, errors, generatorObject.getFormName());
+        ValidationResult result = getService(S2SValidatorService.class).validateForm(object, generatorObject.getFormName());
         for (AuditError auditError : errors) {
+            assertNull(auditError.getMessageKey()+":"+auditError.getErrorKey(),auditError.getErrorKey());
+        }
+
+        for (AuditError auditError : result.getErrors()) {
             assertNull(auditError.getMessageKey()+":"+auditError.getErrorKey(),auditError.getErrorKey());
         }
     }

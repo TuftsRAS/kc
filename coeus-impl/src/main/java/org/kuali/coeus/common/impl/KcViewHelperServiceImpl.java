@@ -27,7 +27,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
-public class KcViewHelperServiceImpl extends ViewHelperServiceImpl {
+public abstract class KcViewHelperServiceImpl extends ViewHelperServiceImpl {
 
     private static final long serialVersionUID = 3335951799627228900L;
     private static final Logger LOG = Logger.getLogger(KcViewHelperServiceImpl.class);
@@ -122,7 +122,5 @@ public class KcViewHelperServiceImpl extends ViewHelperServiceImpl {
         }
     }
 
-    protected Class<?> getParameterClass() {
-        return ProposalDevelopmentDocument.class;
-    }
+    protected abstract Class<?> getParameterClass();
 }

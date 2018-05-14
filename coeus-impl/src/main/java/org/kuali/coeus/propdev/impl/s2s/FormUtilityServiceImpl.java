@@ -20,6 +20,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.w3c.dom.*;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
@@ -34,21 +37,14 @@ import java.io.Serializable;
 import java.io.StringWriter;
 import java.util.*;
 
+import static org.kuali.coeus.propdev.impl.s2s.S2SXmlConstants.*;
+
 @Component("formUtilityService")
 public class FormUtilityServiceImpl implements FormUtilityService {
 
     private static final Log LOG = LogFactory.getLog(FormUtilityServiceImpl.class);
 
     private static final String DUPLICATE_FILE_NAMES = "Attachments contain duplicate file names";
-    private static final String ATTACHMENTS_NS = "http://apply.grants.gov/system/Attachments-V1.0";
-    private static final String ATTACHED_FILE = "AttachedFile";
-    private static final String FILE_NAME = "FileName";
-    private static final String FILE_LOCATION = "FileLocation";
-    private static final String HASH_VALUE = "HashValue";
-    private static final String GLOBAL_NS = "http://apply.grants.gov/system/Global-V1.0";
-    private static final String HREF = "href";
-    private static final String HASH_ALGORITHM = "hashAlgorithm";
-    private static final String MIME_TYPE = "MimeType";
 
     @Autowired
     @Qualifier("businessObjectService")
@@ -307,6 +303,27 @@ public class FormUtilityServiceImpl implements FormUtilityService {
         Transformer transformer = tf.newTransformer();
         transformer.transform(domSource, result);
         return writer.toString();
+    }
+
+    @Override
+    public DocumentBuilder createDomBuilder() throws ParserConfigurationException {
+        DocumentBuilderFactory domParserFactory = DocumentBuilderFactory.newInstance();
+        domParserFactory.setNamespaceAware(true);
+        DocumentBuilder domParser = domParserFactory.newDocumentBuilder();
+        domParserFactory.setIgnoringElementContentWhitespace(true);
+        return domParser;
+    }
+
+    @Override
+    public Node getHashValueFromParent(Node parent) {
+        final NodeList childElements = parent.getChildNodes();
+        for (int j = 0; j < childElements.getLength(); j++) {
+            final Node childElement = childElements.item(j);
+            if (HASH_VALUE.equals(childElement.getLocalName()) && GLOBAL_NS.equals(childElement.getNamespaceURI())) {
+                return childElement;
+            }
+        }
+        return null;
     }
 
     public BusinessObjectService getBusinessObjectService() {

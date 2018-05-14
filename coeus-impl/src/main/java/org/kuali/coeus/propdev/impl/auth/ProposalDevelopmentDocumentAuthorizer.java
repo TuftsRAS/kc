@@ -61,6 +61,8 @@ public class ProposalDevelopmentDocumentAuthorizer extends KcKradTransactionalDo
     private static final String MODIFY_BUDGET = "ModifyBudget";
     private static final String SAVE_CERTIFICATION = "SaveCertification";
     private static final String IS_AUTHORIZED_TO_MODIFY = "IsAuthorizedToModify";
+    private static final String MODIFY_NARRATIVE_CACHE_KEY_PREFIX = "ModifyNarrative";
+    private static final String CACHE_KEY_SEPARATOR = "|";
 
     private KcAuthorizationService kcAuthorizationService;
 
@@ -187,6 +189,10 @@ public class ProposalDevelopmentDocumentAuthorizer extends KcKradTransactionalDo
 
         if (isAuthorizedToReplaceNarrative(doc, user)) {
             editModes.add("replaceNarratives");
+        }
+
+        if (isAuthorizedToModifyS2sOverride(doc, user)) {
+            editModes.add(ProposalDevelopmentConstants.AuthConstants.MODIFY_S2S_OVERRIDE);
         }
                    
         if (isAuthorizedToCertify(doc, user)) {
@@ -651,7 +657,7 @@ public class ProposalDevelopmentDocumentAuthorizer extends KcKradTransactionalDo
     }
     
     String buildPermissionCacheKey(Document document, Person user, String permissionCacheName) {
-    	return permissionCacheName + "|" + document.getDocumentNumber() + "|" + user.getPrincipalId();
+    	return permissionCacheName + CACHE_KEY_SEPARATOR + document.getDocumentNumber() + CACHE_KEY_SEPARATOR + user.getPrincipalId();
     }
     
     protected boolean hasModifyS2sEnroutePermission(Document document, Person user) {
@@ -716,6 +722,14 @@ public class ProposalDevelopmentDocumentAuthorizer extends KcKradTransactionalDo
             hasPermission = getModifyNarrativePermission(pdDocument, user) || isAuthorizedToAlterProposalData(document, user);
         }      
         return hasPermission;
+    }
+
+    protected boolean isAuthorizedToModifyS2sOverride(Document document, Person user) {
+        final ProposalDevelopmentDocument pdDocument = ((ProposalDevelopmentDocument) document);
+        boolean hasNotBeenSubmittedToS2s = pdDocument.getDevelopmentProposal().getS2sOpportunity() != null &&
+                (pdDocument.getDevelopmentProposal().getS2sAppSubmission() == null || pdDocument.getDevelopmentProposal().getS2sAppSubmission().size() == 0);
+
+        return this.hasModifyS2sOverridePermission((ProposalDevelopmentDocument) document, user) && hasNotBeenSubmittedToS2s;
     }
 
     protected boolean isAuthorizedToCertify(Document document, Person user) {
@@ -870,7 +884,7 @@ public class ProposalDevelopmentDocumentAuthorizer extends KcKradTransactionalDo
 
         boolean hasModifyNarrativePermission;
 
-        String modifyNarrativeCacheKey = "ModifyNarrative|" + document.getDocumentNumber() + "|" + user.getPrincipalId();
+        final String modifyNarrativeCacheKey = buildPermissionCacheKey(document, user, MODIFY_NARRATIVE_CACHE_KEY_PREFIX);
         if (documentRequestAuthorizationCache.hasPermissionResult(modifyNarrativeCacheKey)) {
             hasModifyNarrativePermission = documentRequestAuthorizationCache.getPermissionResult(modifyNarrativeCacheKey);
         } else {
@@ -885,6 +899,28 @@ public class ProposalDevelopmentDocumentAuthorizer extends KcKradTransactionalDo
 
 
         return hasModifyNarrativePermission;
+    }
+
+    protected boolean hasModifyS2sOverridePermission(ProposalDevelopmentDocument document, Person user) {
+        DocumentRequestAuthorizationCache documentRequestAuthorizationCache = getDocumentRequestAuthorizationCache(document);
+
+        boolean hasModifyS2sOverridePermission;
+
+        final String modifyS2sOverrideCacheKey = buildPermissionCacheKey(document, user, PermissionConstants.MODIFY_S2S_OVERRIDE);
+        if (documentRequestAuthorizationCache.hasPermissionResult(modifyS2sOverrideCacheKey)) {
+            hasModifyS2sOverridePermission = documentRequestAuthorizationCache.getPermissionResult(modifyS2sOverrideCacheKey);
+        } else {
+            hasModifyS2sOverridePermission = getKcAuthorizationService().hasPermission(user.getPrincipalId(), document, PermissionConstants.MODIFY_S2S_OVERRIDE);
+            documentRequestAuthorizationCache.addPermissionResult(modifyS2sOverrideCacheKey, hasModifyS2sOverridePermission);
+        }
+        if (!hasModifyS2sOverridePermission) {
+            hasModifyS2sOverridePermission = !document.getDevelopmentProposal().getSubmitFlag() && document.getDocumentHeader().getWorkflowDocument().isEnroute()
+                    && getKcAuthorizationService().hasPermission(user.getPrincipalId(), document, PermissionConstants.ALTER_PROPOSAL_DATA);
+            documentRequestAuthorizationCache.addPermissionResult(modifyS2sOverrideCacheKey, hasModifyS2sOverridePermission);
+        }
+
+
+        return hasModifyS2sOverridePermission;
     }
 
     /**
@@ -946,9 +982,9 @@ public class ProposalDevelopmentDocumentAuthorizer extends KcKradTransactionalDo
     }
     
     protected boolean isAuthorizedToModifyS2s(Document document, Person user) {
-    	return canEdit(document, user)
-			|| (this.hasModifyS2sEnroutePermission(document, user) 
-				&& !((ProposalDevelopmentDocument) document).getDevelopmentProposal().getSubmitFlag());
+        final ProposalDevelopmentDocument pdDocument = ((ProposalDevelopmentDocument) document);
+        return canEdit(document, user)
+			|| (this.hasModifyS2sEnroutePermission(document, user) && (pdDocument.getDevelopmentProposal().getS2sAppSubmission() == null || pdDocument.getDevelopmentProposal().getS2sAppSubmission().size() == 0));
     }
 
     protected boolean isAuthorizedToAddNote(Document document, Person user) {

@@ -24,7 +24,6 @@ public interface ProposalCopyService {
      * @param criteria the user-specified criteria that controls various copy operations.
      * @return the new document that is saved in the database;
      *         otherwise null if an error occurred, e.g. the user didn't have permission to copy the document
-     * @throws Exception if anything really bad happens
      */
-    public ProposalDevelopmentDocument copyProposal(ProposalDevelopmentDocument doc, ProposalCopyCriteria criteria);
+    ProposalDevelopmentDocument copyProposal(ProposalDevelopmentDocument doc, ProposalCopyCriteria criteria);
 }

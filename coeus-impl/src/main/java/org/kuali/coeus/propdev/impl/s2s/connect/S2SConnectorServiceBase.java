@@ -18,6 +18,7 @@ import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
 import org.apache.cxf.transport.http.HTTPConduit;
 import org.apache.cxf.transports.http.configuration.HTTPClientPolicy;
 import org.kuali.coeus.propdev.api.s2s.S2SConfigurationService;
+import org.kuali.coeus.sys.framework.util.JaxbUtils;
 import org.kuali.kra.infrastructure.Constants;
 import org.kuali.kra.infrastructure.KeyConstants;
 import org.kuali.coeus.propdev.impl.core.DevelopmentProposal;
@@ -44,6 +45,7 @@ import javax.net.ssl.KeyManager;
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.TrustManagerFactory;
+import javax.xml.bind.JAXBException;
 import javax.xml.ws.WebServiceException;
 import javax.xml.ws.soap.SOAPFaultException;
 import java.security.*;
@@ -71,7 +73,7 @@ public class S2SConnectorServiceBase implements S2SConnectorService {
     protected S2SConfigurationReader s2SConfigurationReader;
 
     /**
-     * This method is to get Opportunity List for the given cfda number,opportunity Id and competition Id from the grants guv. It
+     * This method is to get Opportunity List for the given cfda number,opportunity Id and competition Id from the grants gov. It
      * sets the given parameters on {@link GetOpportunitiesRequest} object and passes it to the web service.
      * 
      * @param cfdaNumber of the opportunity.
@@ -93,7 +95,10 @@ public class S2SConnectorServiceBase implements S2SConnectorService {
         getOpportunityListRequest.setCompetitionID(competitionId);
         getOpportunityListRequest.setFundingOpportunityNumber(opportunityId);
         try {
-            return port.getOpportunities(getOpportunityListRequest);
+            debugLogJaxbObject(GetOpportunitiesRequest.class, getOpportunityListRequest);
+            final GetOpportunitiesResponse response = port.getOpportunities(getOpportunityListRequest);
+            debugLogJaxbObject(GetOpportunitiesResponse.class, response);
+            return response;
         }catch(SOAPFaultException soapFault){
             LOG.error("Error while getting list of opportunities", soapFault);
             if(soapFault.getMessage().contains("Connection refused")){
@@ -123,9 +128,11 @@ public class S2SConnectorServiceBase implements S2SConnectorService {
         GetApplicationStatusDetailRequest applicationStatusDetailRequest = new GetApplicationStatusDetailRequest();
         applicationStatusDetailRequest.setGrantsGovTrackingNumber(ggTrackingId);
         try {
-            return port.getApplicationStatusDetail(applicationStatusDetailRequest);
-        }
-        catch (ErrorMessage|WebServiceException e) {
+            debugLogJaxbObject(GetApplicationStatusDetailRequest.class, applicationStatusDetailRequest);
+            final GetApplicationStatusDetailResponse response = port.getApplicationStatusDetail(applicationStatusDetailRequest);
+            debugLogJaxbObject(GetApplicationStatusDetailResponse.class, response);
+            return response;
+        } catch (ErrorMessage|WebServiceException e) {
             LOG.error("Error while getting proposal submission status details", e);
             throw new S2sCommunicationException(KeyConstants.ERROR_GRANTSGOV_SERVER_STATUS_REFRESH,e.getMessage());
         }
@@ -161,7 +168,10 @@ public class S2SConnectorServiceBase implements S2SConnectorService {
         filterList.add(applicationFilter);
         ApplicantWebServicesPortType port = getApplicantIntegrationSoapPort(proposalNumber);
         try {
-            return port.getApplicationList(applicationListRequest);
+            debugLogJaxbObject(GetApplicationListRequest.class, applicationListRequest);
+            final GetApplicationListResponse response = port.getApplicationList(applicationListRequest);
+            debugLogJaxbObject(GetApplicationListResponse.class, response);
+            return response;
         }
         catch (ErrorMessage|WebServiceException e) {
             LOG.error("Error occured while fetching application list", e);
@@ -196,13 +206,26 @@ public class S2SConnectorServiceBase implements S2SConnectorService {
         request.setGrantApplicationXML(xmlText);
         
         try {
-            return port.submitApplication(request);
+            debugLogJaxbObject(SubmitApplicationRequest.class, request);
+            SubmitApplicationResponse response =  port.submitApplication(request);
+            debugLogJaxbObject(SubmitApplicationResponse.class, response);
+            return response;
         }catch (ErrorMessage e) {
             LOG.error("Error occured while submitting proposal to Grants Gov", e);
             throw new S2sCommunicationException(KeyConstants.ERROR_GRANTSGOV_SERVER_SUBMIT_APPLICATION,e.getMessage());
         }catch(WebServiceException e){
             LOG.error("Error occured while submitting proposal to Grants Gov", e);
             throw new S2sCommunicationException(KeyConstants.ERROR_S2S_UNKNOWN,e.getMessage());
+        }
+    }
+
+    private <T> void debugLogJaxbObject(Class<? extends T> clazz, T o) {
+        if (LOG.isDebugEnabled()) {
+            try {
+                LOG.debug(JaxbUtils.toString(clazz, o));
+            } catch (JAXBException e) {
+                LOG.debug("Unable to marshall object", e);
+            }
         }
     }
 

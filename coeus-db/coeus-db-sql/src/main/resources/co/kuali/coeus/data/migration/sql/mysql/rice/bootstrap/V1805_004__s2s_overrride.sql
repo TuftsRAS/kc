@@ -1,0 +1,26 @@
+--
+-- Copyright © 2005-2018 Kuali, Inc.
+-- All Rights Reserved
+-- You may use and modify this code under the terms of the Kuali, Inc.
+-- Pre-Release License Agreement. You may not distribute it.
+--
+-- You should have received a copy of the Kuali, Inc. Pre-Release License
+-- Agreement with this file. If not, please write to license@kuali.co.
+--
+
+INSERT INTO KRIM_ROLE_T (ROLE_ID,KIM_TYP_ID,NMSPC_CD,ROLE_NM,DESC_TXT,ACTV_IND,LAST_UPDT_DT,OBJ_ID,VER_NBR)
+VALUES ('RESBOOT-1002',(SELECT KIM_TYP_ID FROM KRIM_TYP_T WHERE NMSPC_CD = 'KC-SYS' AND NM = 'Unit'),'KC-PD','S2S Administrator','Proposal S2S Administrator','Y',NOW(),UUID(),1);
+
+
+INSERT INTO KRIM_PERM_T (PERM_ID,PERM_TMPL_ID,NMSPC_CD,NM,DESC_TXT,ACTV_IND,OBJ_ID,VER_NBR)
+VALUES ('RESBOOT-1004',(SELECT PERM_TMPL_ID FROM KRIM_PERM_TMPL_T WHERE NMSPC_CD = 'KC-IDM' AND NM = 'Edit Document Section'),'KC-PD','Modify S2S Override','Create/Modify Proposal S2S Override','Y',UUID(),1);
+
+INSERT INTO KRIM_PERM_ATTR_DATA_T (ATTR_DATA_ID,PERM_ID,KIM_TYP_ID,KIM_ATTR_DEFN_ID,ATTR_VAL,OBJ_ID,VER_NBR)
+VALUES ('RESBOOT-1003','RESBOOT-1004',(SELECT KIM_TYP_ID FROM KRIM_TYP_T WHERE NMSPC_CD = 'KC-SYS' AND NM = 'Document Section'),(SELECT KIM_ATTR_DEFN_ID FROM KRIM_ATTR_DEFN_T WHERE NMSPC_CD = 'KR-WKFLW' AND NM = 'documentTypeName'),'ProposalDevelopmentDocument',UUID(),1);
+
+INSERT INTO KRIM_PERM_ATTR_DATA_T (ATTR_DATA_ID,PERM_ID,KIM_TYP_ID,KIM_ATTR_DEFN_ID,ATTR_VAL,OBJ_ID,VER_NBR)
+VALUES ('RESBOOT-1004','RESBOOT-1004',(SELECT KIM_TYP_ID FROM KRIM_TYP_T WHERE NMSPC_CD = 'KC-SYS' AND NM = 'Document Section'),(SELECT KIM_ATTR_DEFN_ID FROM KRIM_ATTR_DEFN_T WHERE NMSPC_CD = 'KC-SYS' AND NM = 'sectionName'),'s2sOverride',UUID(),1);
+
+
+INSERT INTO KRIM_ROLE_PERM_T (ROLE_PERM_ID,ROLE_ID,PERM_ID,ACTV_IND,OBJ_ID,VER_NBR)
+VALUES ('RESBOOT-1002','RESBOOT-1002','RESBOOT-1004','Y',UUID(),1);

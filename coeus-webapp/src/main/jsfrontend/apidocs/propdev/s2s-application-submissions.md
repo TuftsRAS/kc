@@ -48,9 +48,9 @@
     + agencyTrackingId (optional) - Agency Tracking Id. Maximum length is 50.
     + comments (optional) - Comments. Maximum length is 2000.
     + ggTrackingId (optional) - S2S Tracking Id. Maximum length is 50.
-    + lastModifiedDate (optional) - This attribute should always be overriden on the descriptive elements. Maximum length is 21.
-    + lastNotifiedDate (optional) - This attribute should always be overriden on the descriptive elements. Maximum length is 21.
-    + receivedDate (optional) - This attribute should always be overriden on the descriptive elements. Maximum length is 21.
+    + lastModifiedDate (optional) - This attribute should always be overridden on the descriptive elements. Maximum length is 21.
+    + lastNotifiedDate (optional) - This attribute should always be overridden on the descriptive elements. Maximum length is 21.
+    + receivedDate (optional) - This attribute should always be overridden on the descriptive elements. Maximum length is 21.
     + status (optional) - Status. Maximum length is 50.
 
             
@@ -225,9 +225,9 @@
     + agencyTrackingId (optional) - Agency Tracking Id. Maximum length is 50.
     + comments (optional) - Comments. Maximum length is 2000.
     + ggTrackingId (optional) - S2S Tracking Id. Maximum length is 50.
-    + lastModifiedDate (optional) - This attribute should always be overriden on the descriptive elements. Maximum length is 21.
-    + lastNotifiedDate (optional) - This attribute should always be overriden on the descriptive elements. Maximum length is 21.
-    + receivedDate (optional) - This attribute should always be overriden on the descriptive elements. Maximum length is 21.
+    + lastModifiedDate (optional) - This attribute should always be overridden on the descriptive elements. Maximum length is 21.
+    + lastNotifiedDate (optional) - This attribute should always be overridden on the descriptive elements. Maximum length is 21.
+    + receivedDate (optional) - This attribute should always be overridden on the descriptive elements. Maximum length is 21.
     + status (optional) - Status. Maximum length is 50.
 
       

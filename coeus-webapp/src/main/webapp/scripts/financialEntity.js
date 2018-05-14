@@ -20,7 +20,7 @@
                 }
        
                 $j("#financialEntityHelper\\.activeFinancialEntities\\["+idx+"\\]\\.sponsorCode").focus(function() {
-                    displayAlertMessage('messageBox'+idx, 'The entity address fields will be overriden when a valid sponsor code is entered');
+                    displayAlertMessage('messageBox'+idx, 'The entity address fields will be overridden when a valid sponsor code is entered');
                 });
             } else {
                 $j("#A"+idx+"i").click(); 
@@ -32,13 +32,13 @@
                 }
        
                 $j("#financialEntityHelper\\.inactiveFinancialEntities\\["+idx+"\\]\\.sponsorCode").focus(function() {
-                    displayAlertMessage('messageBox'+idx, 'The entity address fields will be overriden when a valid sponsor code is entered');
+                    displayAlertMessage('messageBox'+idx, 'The entity address fields will be overridden when a valid sponsor code is entered');
                 });
             }
         }
       
         $j("#financialEntityHelper\\.newPersonFinancialEntity\\.sponsorCode").focus(function() {
-            displayAlertMessage('messageBox', 'The entity address fields will be overriden when a valid sponsor code is entered');
+            displayAlertMessage('messageBox', 'The entity address fields will be overridden when a valid sponsor code is entered');
           //return false;
         });
       

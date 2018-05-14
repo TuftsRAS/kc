@@ -618,6 +618,9 @@
                 <value>classpath:org/kuali/coeus/propdev/impl/s2s/S2sProvider.xml</value>
                 <value>classpath:org/kuali/coeus/propdev/impl/s2s/S2sRevisionType.xml</value>
                 <value>classpath:org/kuali/coeus/propdev/impl/s2s/S2sSubmissionType.xml</value>
+                <value>classpath:org/kuali/coeus/propdev/impl/s2s/override/S2sOverride.xml</value>
+                <value>classpath:org/kuali/coeus/propdev/impl/s2s/override/S2sOverrideApplicationData.xml</value>
+                <value>classpath:org/kuali/coeus/propdev/impl/s2s/override/S2sOverrideAttachment.xml</value>
                 <value>classpath:org/kuali/kra/datadictionary/ScheduleActItemType.xml</value>
                 <value>classpath:org/kuali/kra/datadictionary/ScheduleAgenda.xml</value>
                 <value>classpath:org/kuali/kra/datadictionary/ScheduleStatus.xml</value>

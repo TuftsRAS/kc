@@ -64,10 +64,12 @@
     <property name="shortLabel" value="Attachments" />
     <property name="maxLength" value="300" />
     <property name="validationPattern" >
-      <bean parent="NumericValidationPattern" />
+      <bean parent="AnyCharacterValidationPattern" p:allowWhitespace="false"/>
     </property>
     <property name="validCharactersConstraint">
-      <bean parent="NumericPatternConstraint"/>
+      <bean parent="AnyCharacterPatternConstraint">
+        <property name="allowWhitespace" value="false"/>
+      </bean>
     </property>
     <property name="control" >
       <bean parent="TextControlDefinition" p:size="300"/>
@@ -87,10 +89,12 @@
     <property name="shortLabel" value="Content Type" />
     <property name="maxLength" value="30" />
     <property name="validationPattern" >
-      <bean parent="NumericValidationPattern" />
+      <bean parent="AnyCharacterValidationPattern" p:allowWhitespace="true"/>
     </property>
     <property name="validCharactersConstraint">
-      <bean parent="NumericPatternConstraint"/>
+      <bean parent="AnyCharacterPatternConstraint">
+        <property name="allowWhitespace" value="true"/>
+      </bean>
     </property>
     <property name="control" >
       <bean parent="TextControlDefinition" p:size="30"/>
@@ -110,10 +114,12 @@
     <property name="shortLabel" value="Hash Code" />
     <property name="maxLength" value="300" />
     <property name="validationPattern" >
-      <bean parent="NumericValidationPattern" />
+      <bean parent="AnyCharacterValidationPattern" p:allowWhitespace="true"/>
     </property>
     <property name="validCharactersConstraint">
-      <bean parent="NumericPatternConstraint"/>
+      <bean parent="AnyCharacterPatternConstraint">
+        <property name="allowWhitespace" value="true"/>
+      </bean>
     </property>
     <property name="control" >
       <bean parent="HiddenControlDefinition" />

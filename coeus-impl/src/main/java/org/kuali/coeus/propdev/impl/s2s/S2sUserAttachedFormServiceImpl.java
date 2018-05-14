@@ -29,8 +29,6 @@ import org.springframework.stereotype.Component;
 import org.w3c.dom.*;
 import org.xml.sax.SAXException;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.xpath.XPathExpressionException;
@@ -39,6 +37,8 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.stream.Collectors;
+
+import static org.kuali.coeus.propdev.impl.s2s.S2SXmlConstants.*;
 
 @Component("s2sUserAttachedFormService")
 public class S2sUserAttachedFormServiceImpl implements S2sUserAttachedFormService {
@@ -138,21 +138,21 @@ public class S2sUserAttachedFormServiceImpl implements S2sUserAttachedFormServic
         byte[] serializedXML = XfaForm.serializeDoc(grantApplicationElement);
         final Document document;
         try (ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(serializedXML)) {
-            document = createDomBuilder().parse(byteArrayInputStream);
+            document = getFormUtilityService().createDomBuilder().parse(byteArrayInputStream);
         }
         if (document != null) {
             Element form;
-            NodeList elements = document.getElementsByTagNameNS("http://apply.grants.gov/system/MetaGrantApplication", "Forms");
+            NodeList elements = document.getElementsByTagNameNS(META_GRANT_APPLICATION_NS, FORMS);
             Element element = (Element)elements.item(0);
             if(element!=null){
                 NodeList formChildren = element.getChildNodes();
                 int formsCount = formChildren.getLength();
                 if(formsCount>1){
-                     NodeList selectedOptionalFormElements = document.getElementsByTagNameNS("http://apply.grants.gov/system/MetaGrantApplicationWrapper", "SelectedOptionalForms");
+                     NodeList selectedOptionalFormElements = document.getElementsByTagNameNS(META_GRANT_APPLICATION_WRAPPER_NS, SELECTED_OPTIONAL_FORMS);
                     int selectedOptionalFormsCount = selectedOptionalFormElements==null?0:selectedOptionalFormElements.getLength();
                     if (selectedOptionalFormsCount > 0) {
                         Element selectedFormNode = (Element) selectedOptionalFormElements.item(0);
-                        NodeList selectedForms = selectedFormNode.getElementsByTagNameNS("http://apply.grants.gov/system/MetaGrantApplicationWrapper","FormTagName");
+                        NodeList selectedForms = selectedFormNode.getElementsByTagNameNS(META_GRANT_APPLICATION_WRAPPER_NS, FORM_TAG_NAME);
                         int selectedFormsCount = selectedForms == null ? 0 : selectedForms.getLength();
                         if (selectedFormsCount > 0) {
                             List<String> seletctedForms = new ArrayList<>();
@@ -274,7 +274,7 @@ public class S2sUserAttachedFormServiceImpl implements S2sUserAttachedFormServic
 
         //remove the "empty" HumanSubjectStudy popout form from the list of attachments if it isn't a part of the xml submission
         if (attachments.containsKey("HumanSubjectStudy-V1.0.pdf")) {
-            final NodeList files = doc.getElementsByTagNameNS("http://apply.grants.gov/system/Attachments-V1.0", "FileName");
+            final NodeList files = doc.getElementsByTagNameNS(ATTACHMENTS_NS, FILE_NAME);
             boolean found = false;
             for (int i = 0; i < files.getLength(); i++) {
                 final Node attachmentName = files.item(i);
@@ -302,7 +302,7 @@ public class S2sUserAttachedFormServiceImpl implements S2sUserAttachedFormServic
                         final String hsXml = (String) hsAttinfo.get(ProposalSpecialReviewHumanSubjectsAttachmentService.CONTENT);
                         if (StringUtils.isNotBlank(hsXml)) {
                             try (ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(hsXml.getBytes(StandardCharsets.UTF_8.name()))) {
-                                final Document hsDocument = createDomBuilder().parse(byteArrayInputStream);
+                                final Document hsDocument = getFormUtilityService().createDomBuilder().parse(byteArrayInputStream);
                                 final Node hsNode = hsDocument.getElementsByTagNameNS("http://apply.grants.gov/forms/HumanSubjectStudy-V1.0", "HumanSubjectStudy").item(0);
                                 final NodeList hsAttachment = doc.getElementsByTagNameNS("http://apply.grants.gov/forms/PHSHumanSubjectsAndClinicalTrialsInfo-V1.0", "HumanSubjectStudyAttachment");
                                 final Node hsAttachmentNode = hsAttachment.item(0);
@@ -324,14 +324,6 @@ public class S2sUserAttachedFormServiceImpl implements S2sUserAttachedFormServic
         attachments.putAll(allHsAttachments);
     }
 
-    private DocumentBuilder createDomBuilder() throws ParserConfigurationException {
-        DocumentBuilderFactory domParserFactory = DocumentBuilderFactory.newInstance();
-        domParserFactory.setNamespaceAware(true);
-        DocumentBuilder domParser = domParserFactory.newDocumentBuilder();
-        domParserFactory.setIgnoringElementContentWhitespace(true);
-        return domParser;
-    }
-
     private boolean validateUserAttachedFormFile(S2sUserAttachedFormFile userAttachedFormFile, String formName) {
         FormGenerationResult result = formGeneratorService.validateUserAttachedFormFile(userAttachedFormFile, formName);
         if(!result.isValid()) {
@@ -342,9 +334,15 @@ public class S2sUserAttachedFormServiceImpl implements S2sUserAttachedFormServic
     }
 
     protected void setValidationErrorMessage(FormGenerationResult result) {
-        for (AuditError error : result.getErrors()) {
-            globalVariableService.getMessageMap().putError(USER_ATTACHED_FORMS_ERRORS, KeyConstants.S2S_USER_ATTACHED_FORM_NOT_VALID, error.getMessageKey());
-        }
+        result.getErrors()
+                .stream()
+                .filter(error -> error.getLevel() == AuditError.Level.WARNING)
+                .forEach(error -> globalVariableService.getMessageMap().putWarning(USER_ATTACHED_FORMS_ERRORS, KeyConstants.S2S_USER_ATTACHED_FORM_NOT_VALID, error.getMessageKey()));
+
+        result.getErrors()
+                .stream()
+                .filter(error -> error.getLevel() != AuditError.Level.WARNING)
+                .forEach(error -> globalVariableService.getMessageMap().putError(USER_ATTACHED_FORMS_ERRORS, KeyConstants.S2S_USER_ATTACHED_FORM_NOT_VALID, error.getMessageKey()));
     }
 
 

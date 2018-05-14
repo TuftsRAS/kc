@@ -86,9 +86,9 @@
     + mailAccountNumber (optional) - The internal school account number that should be charged the mailing costs. Maximum length is 7.
     + mailDescription (optional) - Any information that will assist in the delivery of the proposal. Maximum length is 80.
     + subcontractFlag (optional) - Subcontract Flag. Maximum length is 3.
-    + costSharingIndicator (optional) - This attribute should always be overriden on the descriptive elements. Maximum length is 1.
-    + idcRateIndicator (optional) - This attribute should always be overriden on the descriptive elements. Maximum length is 1.
-    + specialReviewIndicator (optional) - This attribute should always be overriden on the descriptive elements. Maximum length is 1.
+    + costSharingIndicator (optional) - This attribute should always be overridden on the descriptive elements. Maximum length is 1.
+    + idcRateIndicator (optional) - This attribute should always be overridden on the descriptive elements. Maximum length is 1.
+    + specialReviewIndicator (optional) - This attribute should always be overridden on the descriptive elements. Maximum length is 1.
     + statusCode (optional) - Status Code. Maximum length is 3.
     + scienceCodeIndicator (optional) - 
     + nsfSequenceNumber (optional) - NSF Code Sequence Number. Maximum length is 12.

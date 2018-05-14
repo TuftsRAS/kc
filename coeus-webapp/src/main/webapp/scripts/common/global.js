@@ -152,7 +152,7 @@ Kc.Global = Kc.Global || {};
     }
     namespace.validateAttachmentFile = function(object,maxSize){
         var file =  object.files[0]
-        if (file.size > maxSize) {
+        if (file && file.size > maxSize) {
             alert ("Processing " + file.name + " of type " + file.type + " failed.\nError: File is too large");
             $(object).val("");
         }

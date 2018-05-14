@@ -17,9 +17,11 @@ import org.kuali.coeus.propdev.impl.s2s.S2sAppSubmissionConstants;
 import org.kuali.coeus.propdev.impl.s2s.S2sSubmissionService;
 import org.kuali.coeus.propdev.impl.s2s.connect.S2sCommunicationException;
 import org.kuali.coeus.propdev.impl.core.DevelopmentProposal;
+import org.kuali.rice.core.api.criteria.PredicateFactory;
+import org.kuali.rice.core.api.criteria.QueryByCriteria;
 import org.kuali.rice.core.api.mail.MailMessage;
+import org.kuali.rice.krad.data.DataObjectService;
 import org.kuali.rice.krad.exception.InvalidAddressException;
-import org.kuali.rice.krad.service.BusinessObjectService;
 import org.kuali.rice.krad.service.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -40,12 +42,12 @@ import java.util.*;
 public class S2SPollingTask {
 
     private static final Log LOG = LogFactory.getLog(S2SPollingTask.class);
-    private final List<String> lstStatus = new ArrayList<String>();
-    private final Map<String, String> sortMsgKeyMap = new Hashtable<String, String>();
+    private final List<String> lstStatus = new ArrayList<>();
+    private final Map<String, String> sortMsgKeyMap = new Hashtable<>();
 
     @Autowired
-    @Qualifier("businessObjectService")
-    private BusinessObjectService businessObjectService = null;
+    @Qualifier("dataObjectService")
+    private DataObjectService dataObjectService;
 
     @Autowired
     @Qualifier("s2sSubmissionService")
@@ -57,10 +59,10 @@ public class S2SPollingTask {
 
     private String stopPollInterval;
     private String mailInterval;
-    private Map<String, String> statusMap = new HashMap<String, String>();
-    private List<MailInfo> mailInfoList = new ArrayList<MailInfo>();
+    private Map<String, String> statusMap = new HashMap<>();
+    private List<MailInfo> mailInfoList = new ArrayList<>();
 
-    private static final String KEY_PROPOSAL_NUMBER = "proposalNumber";
+
     private static final String KEY_STATUS = "status";
     private static final String DATE_FORMAT = "dd-MMM-yyyy hh:mm a";
 
@@ -97,20 +99,17 @@ public class S2SPollingTask {
      * 
      * This method determines whether the particular submission record received as parameter must be polled or not based on its last
      * modified date.
-     * 
-     * @param appSubmission
-     * @return boolean
      */
     private boolean getSubmissionDateValidity(S2sAppSubmission appSubmission) {
-        Calendar lastModifiedDate = Calendar.getInstance();
-        long stopPollingIntervalMillis = Integer.parseInt(this.getStopPollInterval()) * 60 * 60 * 1000L;
+        final Calendar lastModifiedDate = Calendar.getInstance();
+
         if (appSubmission.getLastModifiedDate() != null) {
             lastModifiedDate.setTimeInMillis(appSubmission.getLastModifiedDate().getTime());
-        }
-        else {
+        } else {
             lastModifiedDate.setTimeInMillis(appSubmission.getReceivedDate().getTime());
         }
 
+        final long stopPollingIntervalMillis = Integer.parseInt(this.getStopPollInterval()) * 60 * 60 * 1000L;
         return (new Date().getTime() - lastModifiedDate.getTimeInMillis() < stopPollingIntervalMillis);
     }
 
@@ -121,94 +120,70 @@ public class S2SPollingTask {
      * @return map of one submission record for each proposal
      */
     private Map<String, SubmissionData> populatePollingList() {
-        Map<String, String> submissionMap = new HashMap<String, String>();
-        Collection<S2sAppSubmission> submissionList = new ArrayList<S2sAppSubmission>();
-        for (String status : statusMap.values()) {
-            submissionMap.clear();
-            submissionMap.put(KEY_STATUS, status);
-            if (submissionList == null) {
-                submissionList = businessObjectService.findMatching(S2sAppSubmission.class, submissionMap);
-            }
-            else {
-                submissionList.addAll(businessObjectService.findMatching(S2sAppSubmission.class, submissionMap));
-            }
-        }
+        final Collection<S2sAppSubmission> submissionList = dataObjectService
+                .findMatching(S2sAppSubmission.class, QueryByCriteria.Builder.fromPredicates(PredicateFactory.in(KEY_STATUS, statusMap.values().toArray(new String[] {}))))
+                .getResults();
 
-        Map<String, SubmissionData> pollingList = new HashMap<String, SubmissionData>();
-        Iterator<S2sAppSubmission> appSubmissions = submissionList.iterator();
-        while (appSubmissions.hasNext()) {
-            S2sAppSubmission appSubmission = appSubmissions.next();
+        final Map<String, SubmissionData> pollingList = new HashMap<>();
+        for (S2sAppSubmission appSubmission : submissionList) {
             if (pollingList.get(appSubmission.getProposalNumber()) != null) {
-                if (appSubmission.getSubmissionNumber() > pollingList.get(appSubmission.getProposalNumber()).getS2sAppSubmission()
-                        .getSubmissionNumber()) {
+                if (appSubmission.getSubmissionNumber() > pollingList.get(appSubmission.getProposalNumber()).getS2sAppSubmission().getSubmissionNumber()) {
                     // Greater the submission number, more the latest
                     // Check if the record is not more than 6 months old
-                    if (getSubmissionDateValidity(appSubmission)) {
-                        SubmissionData submissionData = new SubmissionData();
-                        submissionData.setS2sAppSubmission(appSubmission);
-                        pollingList.put(appSubmission.getProposalNumber(), submissionData);
-                    }
+                    putIfValid(pollingList, appSubmission);
                 }
-            }
-            else {
-                if (getSubmissionDateValidity(appSubmission)) {
-                    SubmissionData submissionData = new SubmissionData();
-                    submissionData.setS2sAppSubmission(appSubmission);
-                    pollingList.put(appSubmission.getProposalNumber(), submissionData);
-                }
+            } else {
+                putIfValid(pollingList, appSubmission);
             }
         }
         return pollingList;
     }
 
+    private void putIfValid(Map<String, SubmissionData> pollingList, S2sAppSubmission appSubmission) {
+        if (getSubmissionDateValidity(appSubmission)) {
+            final SubmissionData submissionData = new SubmissionData();
+            submissionData.setS2sAppSubmission(appSubmission);
+            pollingList.put(appSubmission.getProposalNumber(), submissionData);
+        }
+    }
+
     /**
      * This method is the starting point of execution for the thread that is scheduled by the scheduler service
-     * 
      */
     public void execute() {
         LOG.info("Executing polling schedule for status -" + statusMap.values() + ":" + stopPollInterval);
-        Map<String, SubmissionData> pollingList = populatePollingList();
-        int appListSize = pollingList.size();
-        Iterator<SubmissionData> submissions = pollingList.values().iterator();
-        HashMap<String, Vector<SubmissionData>> htMails = new LinkedHashMap<String, Vector<SubmissionData>>();
-        Vector<SubmissionData> submList = new Vector<SubmissionData>();
-        Timestamp[] lastNotiDateArr = new Timestamp[appListSize];
-        while (submissions.hasNext()) {
-            SubmissionData localSubInfo = submissions.next();
-            S2sAppSubmission appSubmission = localSubInfo.getS2sAppSubmission();
-            Timestamp oldLastNotiDate = appSubmission.getLastNotifiedDate();
-            Timestamp today = new Timestamp(new Date().getTime());
+        final Map<String, SubmissionData> pollingList = populatePollingList();
+        final int appListSize = pollingList.size();
+        final HashMap<String, List<SubmissionData>> htMails = new LinkedHashMap<>();
+        final List<SubmissionData> submList = new ArrayList<>();
+        final Timestamp[] lastNotiDateArr = new Timestamp[appListSize];
+
+        pollingList.values().forEach(localSubInfo -> {
+            final S2sAppSubmission appSubmission = localSubInfo.getS2sAppSubmission();
+            final ProposalDevelopmentDocument pdDoc = getProposalDevelopmentDocument(appSubmission.getProposalNumber());
+            final Timestamp oldLastNotiDate = appSubmission.getLastNotifiedDate();
+            final Timestamp today = new Timestamp(new Date().getTime());
             boolean updateFlag = false;
             boolean sendEmailFlag = false;
             boolean statusChanged = false;
-            GetApplicationListResponse applicationListResponse = null;
 
             try {
-                ProposalDevelopmentDocument pdDoc = getProposalDevelopmentDocument(appSubmission.getProposalNumber());
-                if (pdDoc != null) {
-                    applicationListResponse = s2sSubmissionService.fetchApplicationListResponse(pdDoc);
-                }
-
-                if (applicationListResponse.getApplicationInfo() == null
-                        || applicationListResponse.getApplicationInfo().size() == 0) {
+                final GetApplicationListResponse applicationListResponse = s2sSubmissionService.fetchApplicationListResponse(appSubmission.getProposalNumber());
+                if (applicationListResponse == null || applicationListResponse.getApplicationInfo() == null || applicationListResponse.getApplicationInfo().isEmpty()) {
                     statusChanged = s2sSubmissionService.checkForSubmissionStatusChange(pdDoc, appSubmission);
-                    if (statusChanged == false
-                            && appSubmission.getComments().equals(S2sAppSubmissionConstants.STATUS_NO_RESPONSE_FROM_GRANTS_GOV)) {
+                    if (!statusChanged && appSubmission.getComments().equals(S2sAppSubmissionConstants.STATUS_NO_RESPONSE_FROM_GRANTS_GOV)) {
                         localSubInfo.setSortId(SORT_ID_F);
                         sendEmailFlag = true;
                     }
-                }
-                else {
-                    ApplicationInfo ggApplication = applicationListResponse.getApplicationInfo().get(0);
+                } else {
+                    final ApplicationInfo ggApplication = applicationListResponse.getApplicationInfo().get(0);
                     if (ggApplication != null) {
                         localSubInfo.setAcType('U');
-                        statusChanged = !appSubmission.getStatus().equalsIgnoreCase(
-                                ggApplication.getGrantsGovApplicationStatus().value());
+                        statusChanged = !appSubmission.getStatus().equalsIgnoreCase(ggApplication.getGrantsGovApplicationStatus().value());
                         s2sSubmissionService.populateAppSubmission(pdDoc, appSubmission, ggApplication);
                     }
                 }
-            }
-            catch (S2sCommunicationException e) {
+            } catch (S2sCommunicationException e) {
                 LOG.error(e.getMessage(), e);
                 appSubmission.setComments(e.getMessage());
                 localSubInfo.setSortId(SORT_ID_F);
@@ -216,104 +191,88 @@ public class S2SPollingTask {
             }
 
             String sortId = SORT_ID_Z;
-            Timestamp lastNotifiedDate = appSubmission.getLastNotifiedDate();
-            Timestamp statusChangedDate = appSubmission.getLastModifiedDate();
-            Calendar lastNotifiedDateCal = Calendar.getInstance();
+            final Timestamp lastNotifiedDate = appSubmission.getLastNotifiedDate();
+            final Timestamp statusChangedDate = appSubmission.getLastModifiedDate();
+            final Calendar lastNotifiedDateCal = Calendar.getInstance();
             if (lastNotifiedDate != null) {
                 lastNotifiedDateCal.setTimeInMillis(lastNotifiedDate.getTime());
             }
-            Calendar statusChangedDateCal = Calendar.getInstance();
+
+            final Calendar statusChangedDateCal = Calendar.getInstance();
             if (statusChangedDate != null) {
                 statusChangedDateCal.setTimeInMillis(statusChangedDate.getTime());
             }
-            Calendar recDateCal = Calendar.getInstance();
+
+            final Calendar recDateCal = Calendar.getInstance();
             recDateCal.setTimeInMillis(appSubmission.getReceivedDate().getTime());
 
             if (statusChanged) {
-                if (appSubmission.getStatus().indexOf(S2sAppSubmissionConstants.STATUS_GRANTS_GOV_SUBMISSION_ERROR) != -1) {
+                if (appSubmission.getStatus().contains(S2sAppSubmissionConstants.STATUS_GRANTS_GOV_SUBMISSION_ERROR)) {
                     updateFlag = true;
                     sendEmailFlag = true;
                     sortId = SORT_ID_A;
-                }
-                else if (!lstStatus.contains(appSubmission.getStatus().trim().toUpperCase())) {
+                } else if (!lstStatus.contains(appSubmission.getStatus().trim().toUpperCase())) {
                     updateFlag = false;
                     sendEmailFlag = true;
                     sortId = SORT_ID_B;
-                }
-                else {
+                } else {
                     updateFlag = true;
                     sendEmailFlag = true;
                     sortId = SORT_ID_E;
                 }
-            }
-            else {
-                long lastModifiedTime = statusChangedDate == null ? appSubmission.getReceivedDate().getTime() : statusChangedDate
-                        .getTime();
-                long lastNotifiedTime = lastNotifiedDate == null ? lastModifiedTime : lastNotifiedDate.getTime();
-                long mailDelta = today.getTime() - lastNotifiedTime;
-                long delta = today.getTime() - lastModifiedTime;
+            } else {
+                final long lastModifiedTime = statusChangedDate == null ? appSubmission.getReceivedDate().getTime() : statusChangedDate.getTime();
+                final long lastNotifiedTime = lastNotifiedDate == null ? lastModifiedTime : lastNotifiedDate.getTime();
+                final long mailDelta = today.getTime() - lastNotifiedTime;
+                final long delta = today.getTime() - lastModifiedTime;
 
-                long stopPollDiff = ((Integer.parseInt(getStopPollInterval()) == 0 ? 4320L : Integer
-                        .parseInt(getStopPollInterval())) - (delta / (60 * 60 * 1000)));
+                final long stopPollDiff = ((Integer.parseInt(getStopPollInterval()) == 0 ? 4320L : Integer.parseInt(getStopPollInterval())) - (delta / (60 * 60 * 1000)));
                 if ((mailDelta / (1000 * 60)) >= (Integer.parseInt(getMailInterval()))) {
                     if (localSubInfo.getSortId() == null) {
                         if (stopPollDiff <= 24) {
                             sortId = SORT_ID_C;
-                        }
-                        else {
+                        } else {
                             sortId = SORT_ID_D;
-                            sortMsgKeyMap.put(SORT_ID_D, "Following submissions status has not been changed in "
-                                    + getMailInterval() + " minutes");
+                            sortMsgKeyMap.put(SORT_ID_D, "Following submissions status has not been changed in " + getMailInterval() + " minutes");
                         }
                     }
                     updateFlag = true;
                     sendEmailFlag = true;
                 }
             }
-            if (sendEmailFlag) {
-                Map<String, String> proposalMap = new HashMap<String, String>();
-                proposalMap.put(KEY_PROPOSAL_NUMBER, appSubmission.getProposalNumber());
-                DevelopmentProposal developmentProposal = (DevelopmentProposal) businessObjectService.findByPrimaryKey(
-                        DevelopmentProposal.class, proposalMap);
 
-                String dunsNum;
-                if (developmentProposal.getApplicantOrganization().getOrganization().getDunsNumber() != null) {
-                    dunsNum = developmentProposal.getApplicantOrganization().getOrganization().getDunsNumber();
+            if (sendEmailFlag) {
+
+                final String dunsNum;
+                if (pdDoc.getDevelopmentProposal().getApplicantOrganization().getOrganization().getDunsNumber() != null) {
+                    dunsNum = pdDoc.getDevelopmentProposal().getApplicantOrganization().getOrganization().getDunsNumber();
+                } else {
+                    dunsNum = pdDoc.getDevelopmentProposal().getApplicantOrganization().getOrganizationId();
                 }
-                else {
-                    dunsNum = developmentProposal.getApplicantOrganization().getOrganizationId();
-                }
-                Vector<SubmissionData> mailGrpForDunNum = new Vector<SubmissionData>();
+
+                final List<SubmissionData> mailGrpForDunNum = new ArrayList<>();
                 mailGrpForDunNum.add(localSubInfo);
                 htMails.put(dunsNum, mailGrpForDunNum);
                 appSubmission.setLastNotifiedDate(today);
             }
+
             if (localSubInfo.getSortId() == null) {
                 localSubInfo.setSortId(sortId);
             }
+
             if (updateFlag) {
-                submList.addElement(localSubInfo);
+                submList.add(localSubInfo);
                 lastNotiDateArr[submList.size() - 1] = oldLastNotiDate;
             }
 
-        }
+        });
+
         try {
             sendMail(htMails);
-        }
-        catch (InvalidAddressException ex) {
-            LOG.error("Mail sending failed");
+        } catch (InvalidAddressException | MessagingException ex) {
             LOG.error(ex.getMessage(), ex);
-            int size = submList.size();
-            for (int i = 0; i < size; i++) {
-                SubmissionData localSubInfo = submList.elementAt(i);
-                localSubInfo.getS2sAppSubmission().setLastNotifiedDate(lastNotiDateArr[i]);
-            }
-        } catch (MessagingException me) {
-            LOG.error("Mail sending failed");
-            LOG.error(me.getMessage(), me);
-            int size = submList.size();
-            for (int i = 0; i < size; i++) {
-                SubmissionData localSubInfo = submList.elementAt(i);
+            for (int i = 0; i < submList.size(); i++) {
+                SubmissionData localSubInfo = submList.get(i);
                 localSubInfo.getS2sAppSubmission().setLastNotifiedDate(lastNotiDateArr[i]);
             }
         }
@@ -321,70 +280,54 @@ public class S2SPollingTask {
     }
 
     private ProposalDevelopmentDocument getProposalDevelopmentDocument(String proposalNumber) {
-        ProposalDevelopmentDocument pdDoc = null;
-        Map<String, String> proposalMap = new HashMap<String, String>();
-        proposalMap.put(KEY_PROPOSAL_NUMBER, proposalNumber);
-        DevelopmentProposal developmentProposal = (DevelopmentProposal) businessObjectService.findByPrimaryKey(
-                DevelopmentProposal.class, proposalMap);
-        if (developmentProposal != null) {
-            pdDoc = developmentProposal.getProposalDocument();
-        }
-        return pdDoc;
+        final DevelopmentProposal developmentProposal = dataObjectService.find(DevelopmentProposal.class, proposalNumber);
+        return developmentProposal.getProposalDocument();
     }
 
     /**
-     * 
      * This method saves submission data and status to database
-     * 
-     * @param submList
      */
-    private void saveSubmissionDetails(Vector<SubmissionData> submList) {
+    private void saveSubmissionDetails(List<SubmissionData> submList) {
         if (submList != null) {
-            for (SubmissionData submissionData : submList) {
+            submList.forEach(submissionData -> {
                 S2sAppSubmission s2sAppSubmission = submissionData.getS2sAppSubmission();
                 s2sAppSubmission.setUpdateUserSet(true);
                 if(!s2sAppSubmission.getStatus().equalsIgnoreCase(S2sAppSubmissionConstants.STATUS_PUREGED))
-                    businessObjectService.save(s2sAppSubmission);
-            }
+                    dataObjectService.save(s2sAppSubmission);
+            });
         }
     }
 
     /**
-     * 
      * This method sends mail for all submission status records that have changed relative to database
-     * 
-     * @param htMails
-     * @throws InvalidAddressException
-     * @throws Exception
      */
-    private void sendMail(HashMap<String, Vector<SubmissionData>> htMails) throws InvalidAddressException , MessagingException {
+    private void sendMail(Map<String, List<SubmissionData>> htMails) throws InvalidAddressException , MessagingException {
         if (htMails.isEmpty()) {
             return;
         }
-        List<MailInfo> mailList = getMailInfoList();
+        final List<MailInfo> mailList = getMailInfoList();
         for (MailInfo mailInfo : mailList) {
-            String dunsNum = mailInfo.getDunsNumber();
-            Vector<SubmissionData> propList = htMails.get(dunsNum);
+            final String dunsNum = mailInfo.getDunsNumber();
+            final List<SubmissionData> propList = htMails.get(dunsNum);
             if (propList == null) {
                 continue;
             }
+
             htMails.remove(dunsNum);
-            MailMessage mailMessage = parseNGetMailAttr(propList, mailInfo);
+            final MailMessage mailMessage = parseNGetMailAttr(propList, mailInfo);
             if (mailMessage != null) {
                 mailService.sendMessage(mailMessage);
             }
         }
 
         if (mailList.size() > 0 && !htMails.isEmpty()) {
-            Iterator<String> it = htMails.keySet().iterator();
-            while (it.hasNext()) {
-                Vector<SubmissionData> nonDunsPropList = htMails.get(it.next());
-                MailInfo mailInfo = mailList.get(0);
-                MailMessage mailMessage = parseNGetMailAttr(nonDunsPropList, mailInfo);
+            for (String s : htMails.keySet()) {
+                final List<SubmissionData> nonDunsPropList = htMails.get(s);
+                final MailInfo mailInfo = mailList.get(0);
+                final MailMessage mailMessage = parseNGetMailAttr(nonDunsPropList, mailInfo);
                 if (mailMessage != null) {
                     mailService.sendMessage(mailMessage);
-                    LOG.debug("Sent mail with default duns to " + mailMessage.getToAddresses() + " Subject as "
-                            + mailMessage.getSubject() + " Message as " + mailMessage.getMessage());
+                    LOG.debug("Sent mail with default duns to " + mailMessage.getToAddresses() + " Subject as " + mailMessage.getSubject() + " Message as " + mailMessage.getMessage());
                 }
             }
         }
@@ -392,42 +335,38 @@ public class S2SPollingTask {
 
     /**
      * 
-     * This method processes data that is to be sent by mail
-     * 
-     * @param propList
-     * @param mailInfo
-     * @return {@link MailMessage}
+     * This method processes data that is to be sent by mail.
      */
-    private MailMessage parseNGetMailAttr(Vector<SubmissionData> propList, MailInfo mailInfo) {
+    private MailMessage parseNGetMailAttr(List<SubmissionData> propList, MailInfo mailInfo) {
         if (propList == null || propList.isEmpty()) {
             return null;
         }
 
-        MailMessage mailMessage = mailInfo.getMailMessage();
-        StringBuffer message = new StringBuffer(mailMessage.getMessage());
+        final MailMessage mailMessage = mailInfo.getMailMessage();
+        final StringBuilder message = new StringBuilder(mailMessage.getMessage());
 
         for (SubmissionData submissionData : propList) {
-
-            S2sAppSubmission appSubmission = submissionData.getS2sAppSubmission();
-            Timestamp lastNotifiedDate = appSubmission.getLastNotifiedDate();
-            Timestamp statusChangedDate = appSubmission.getLastModifiedDate();
-            Calendar lastNotifiedDateCal = Calendar.getInstance();
+            final S2sAppSubmission appSubmission = submissionData.getS2sAppSubmission();
+            final Timestamp lastNotifiedDate = appSubmission.getLastNotifiedDate();
+            final Timestamp statusChangedDate = appSubmission.getLastModifiedDate();
+            final Calendar lastNotifiedDateCal = Calendar.getInstance();
 
             if (lastNotifiedDate != null) {
                 lastNotifiedDateCal.setTimeInMillis(lastNotifiedDate.getTime());
             }
-            Calendar statusChangedDateCal = Calendar.getInstance();
+
+            final Calendar statusChangedDateCal = Calendar.getInstance();
             if (statusChangedDate != null) {
                 statusChangedDateCal.setTimeInMillis(statusChangedDate.getTime());
             }
-            Calendar recDateCal = Calendar.getInstance();
+
+            final Calendar recDateCal = Calendar.getInstance();
             recDateCal.setTimeInMillis(appSubmission.getReceivedDate().getTime());
 
-            long lastModifiedTime = statusChangedDate == null ? appSubmission.getReceivedDate().getTime() : statusChangedDate
-                    .getTime();
-            Timestamp today = new Timestamp(new Date().getTime());
-            long delta = today.getTime() - lastModifiedTime;
-            double deltaHrs = ((double) Math.round((delta / (1000.0d * 60.0d * 60.0d)) * Math.pow(10.0, 2))) / 100;
+            final long lastModifiedTime = statusChangedDate == null ? appSubmission.getReceivedDate().getTime() : statusChangedDate.getTime();
+            final Timestamp today = new Timestamp(new Date().getTime());
+            final long delta = today.getTime() - lastModifiedTime;
+            final double deltaHrs = ((double) Math.round((delta / (1000.0d * 60.0d * 60.0d)) * Math.pow(10.0, 2))) / 100;
 
             int days = 0;
             int hrs = 0;
@@ -436,20 +375,21 @@ public class S2SPollingTask {
                 hrs = (int) (((double) Math.round((deltaHrs % 24) * Math.pow(10.0, 2))) / 100);
 
             }
+
             if (propList.size() > 0) {
-                SubmissionData prevSubmissionData = propList.elementAt(propList.size() - 1);
+                final SubmissionData prevSubmissionData = propList.get(propList.size() - 1);
                 if (!prevSubmissionData.getSortId().equals(submissionData.getSortId())) {
                     message.append("\n\n");
                     message.append(sortMsgKeyMap.get(submissionData.getSortId()));
                     message.append("\n____________________________________________________");
                 }
-            }
-            else {
+            } else {
                 message.append("\n\n");
                 message.append(sortMsgKeyMap.get(submissionData.getSortId()));
                 message.append("\n____________________________________________________");
             }
-            SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
+
+            final SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
             message.append('\n');
             message.append("Proposal Number : " + appSubmission.getProposalNumber() + "\n");
             message.append("Received Date : ");
@@ -458,16 +398,14 @@ public class S2SPollingTask {
             message.append("Grants.Gov Tracking Id : ");
             message.append(appSubmission.getGgTrackingId());
             message.append('\n');
-            String agTrackId = appSubmission.getAgencyTrackingId() == null ? "Not updated yet" : appSubmission
-                    .getAgencyTrackingId();
+            final String agTrackId = appSubmission.getAgencyTrackingId() == null ? "Not updated yet" : appSubmission.getAgencyTrackingId();
             message.append("Agency Tracking Id : ");
             message.append(agTrackId);
             message.append('\n');
             message.append("Current Status : ");
             message.append(appSubmission.getStatus());
             message.append('\n');
-            String stChnageDate = appSubmission.getLastModifiedDate() == null ? "Not updated yet" : dateFormat.format(appSubmission
-                    .getLastModifiedDate());
+            final String stChnageDate = appSubmission.getLastModifiedDate() == null ? "Not updated yet" : dateFormat.format(appSubmission.getLastModifiedDate());
             message.append("Last Status Change : " + stChnageDate + "\t *** " + days + " day(s) and " + hrs + " hour(s) ***\n");
             message.append('\n');
         }
@@ -477,91 +415,46 @@ public class S2SPollingTask {
 
         return mailMessage;
     }
-
-    /**
-     * Getter for property stopPollInterval.
-     * 
-     * @return Value of property stopPollInterval.
-     */
+    
     public String getStopPollInterval() {
         return stopPollInterval;
     }
-
-    /**
-     * Setter for property stopPollInterval.
-     * 
-     * @param stopPollInterval New value of property stopPollInterval.
-     */
+    
     public void setStopPollInterval(String stopPollInterval) {
         this.stopPollInterval = stopPollInterval;
     }
-
-    /**
-     * Gets the statusMap attribute.
-     * 
-     * @return Returns the statusMap.
-     */
+    
     public Map<String, String> getStatusMap() {
         return statusMap;
     }
-
-    /**
-     * Sets the statusMap attribute value.
-     * 
-     * @param statusMap The statusMap to set.
-     */
+    
     public void setStatusMap(Map<String, String> statusMap) {
         this.statusMap = statusMap;
     }
-
-    /**
-     * Gets the mailInfoList attribute.
-     * 
-     * @return Returns the mailInfoList.
-     */
+    
     public List<MailInfo> getMailInfoList() {
         return mailInfoList;
     }
-
-    /**
-     * Sets the mailInfoList attribute value.
-     * 
-     * @param mailInfoList The mailInfoList to set.
-     */
+    
     public void setMailInfoList(List<MailInfo> mailInfoList) {
         this.mailInfoList = mailInfoList;
     }
-
-    /**
-     * Gets the mailInterval attribute.
-     * 
-     * @return Returns the mailInterval.
-     */
+    
     public String getMailInterval() {
         return mailInterval;
     }
-
-    /**
-     * Sets the mailInterval attribute value.
-     * 
-     * @param mailInterval The mailInterval to set.
-     */
+    
     public void setMailInterval(String mailInterval) {
         this.mailInterval = mailInterval;
     }
 
 
-    /**
-     * Sets the businessObjectService attribute value.
-     * 
-     * @param businessObjectService The businessObjectService to set.
-     */
-    public void setBusinessObjectService(BusinessObjectService businessObjectService) {
-        this.businessObjectService = businessObjectService;
+    public DataObjectService getDataObjectService() {
+        return dataObjectService;
     }
 
-    public BusinessObjectService getBusinessObjectService() {
-        return businessObjectService;
+    public void setDataObjectService(DataObjectService dataObjectService) {
+        this.dataObjectService = dataObjectService;
     }
 
     public S2sSubmissionService getS2sSubmissionService() {

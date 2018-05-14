@@ -10,7 +10,6 @@ package org.kuali.coeus.propdev.impl.budget.core;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.kuali.coeus.common.api.sponsor.hierarchy.SponsorHierarchyService;
-import org.kuali.coeus.common.budget.framework.calculator.BudgetCalculationService;
 import org.kuali.coeus.common.budget.framework.core.Budget;
 import org.kuali.coeus.common.budget.framework.core.BudgetAuditRuleEvent;
 import org.kuali.coeus.common.budget.framework.core.BudgetConstants;
@@ -33,7 +32,6 @@ import org.kuali.coeus.sys.impl.validation.DataValidationItem;
 import org.kuali.kra.infrastructure.Constants;
 import org.kuali.rice.core.api.datetime.DateTimeService;
 import org.kuali.rice.coreservice.framework.parameter.ParameterConstants;
-import org.kuali.rice.coreservice.framework.parameter.ParameterService;
 import org.kuali.rice.kim.api.identity.Person;
 import org.kuali.rice.kim.api.identity.PersonService;
 import org.kuali.rice.krad.uif.element.Action;
@@ -60,9 +58,6 @@ public class ProposalBudgetViewHelperServiceImpl extends KcViewHelperServiceImpl
 
     public static final String SINGLE_POINT_ENTRY_FLAG = "SINGLE_POINT_ENTRY_FLAG";
     public static final String ERROR_BUDGET_PERIOD_MINIMUM = "error.budget.period.minimum";
-    @Autowired
-    @Qualifier("parameterService")
-    private ParameterService parameterService;
 
     @Autowired
     @Qualifier("sponsorHierarchyService")
@@ -83,10 +78,6 @@ public class ProposalBudgetViewHelperServiceImpl extends KcViewHelperServiceImpl
     @Autowired
     @Qualifier("proposalHierarchyService")
     private ProposalHierarchyService proposalHierarchyService;
-
-    @Autowired
-    @Qualifier("budgetCalculationService")
-    private BudgetCalculationService budgetCalculationService;
 
     @Autowired
     @Qualifier("proposalBudgetNavigationService")
@@ -223,16 +214,6 @@ public class ProposalBudgetViewHelperServiceImpl extends KcViewHelperServiceImpl
     	return getProposalHierarchyService().needToExtendProjectDate(hierarchyProposal);
     }
 
-    @Override
-    public ParameterService getParameterService() {
-        return parameterService;
-    }
-
-    @Override
-    public void setParameterService(ParameterService parameterService) {
-        this.parameterService = parameterService;
-    }
-
     public SponsorHierarchyService getSponsorHierarchyService() {
         return sponsorHierarchyService;
     }
@@ -336,17 +317,8 @@ public class ProposalBudgetViewHelperServiceImpl extends KcViewHelperServiceImpl
         return getParameterService().getParameterValueAsBoolean(Constants.MODULE_NAMESPACE_PROPOSAL_DEVELOPMENT,Constants.PARAMETER_COMPONENT_DOCUMENT, SINGLE_POINT_ENTRY_FLAG);
     }
 
-
     public boolean isStandaloneBudgetEnabled() {
         return getParameterService().getParameterValueAsBoolean(Constants.MODULE_NAMESPACE_BUDGET, Constants.KC_ALL_PARAMETER_DETAIL_TYPE_CODE, STANDALONE_BUDGET_ENABLED_FLAG, false);
-    }
-
-    public BudgetCalculationService getBudgetCalculationService() {
-        return budgetCalculationService;
-    }
-
-    public void setBudgetCalculationService(BudgetCalculationService budgetCalculationService) {
-        this.budgetCalculationService = budgetCalculationService;
     }
 
     public ProposalBudgetNavigationService getProposalBudgetNavigationService() {
@@ -365,6 +337,7 @@ public class ProposalBudgetViewHelperServiceImpl extends KcViewHelperServiceImpl
         this.personService = personService;
     }
 
+    @Override
     protected Class<?> getParameterClass() {
         return Budget.class;
     }

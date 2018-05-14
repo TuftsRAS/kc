@@ -16,6 +16,7 @@ import org.kuali.coeus.propdev.impl.s2s.nih.NihSubmissionValidationService;
 import org.kuali.coeus.propdev.impl.s2s.nih.NihValidationMapping;
 import org.kuali.coeus.propdev.impl.s2s.nih.NihValidationServiceUtils;
 import org.kuali.coeus.propdev.impl.s2s.nih.ValidationMessageDto;
+import org.kuali.coeus.s2sgen.api.core.S2SException;
 import org.kuali.coeus.s2sgen.api.generate.AttachmentData;
 import org.kuali.coeus.sys.framework.gv.GlobalVariableService;
 import org.kuali.coeus.sys.framework.service.KcServiceLocator;
@@ -100,15 +101,21 @@ public class ProposalDevelopmentGrantsGovAuditRule  implements DocumentAuditRule
         }
 
         if (proposalDevelopmentDocument.getDevelopmentProposal().getS2sOpportunity() != null){
-            FormGenerationResult result =  getS2sValidatorService().generateAndValidateForms(proposalDevelopmentDocument);
-            valid &= result.isValid();
-            if (result.isValid()) {
-                valid &= nihValidation(proposalDevelopmentDocument.getDevelopmentProposal().getApplicantOrganization().getOrganization().getDunsNumber(), result.getApplicationXml(), result.getAttachments());
+            final String provider = proposalDevelopmentDocument.getDevelopmentProposal().getS2sOpportunity().getS2sProvider().getDescription();
+		    try {
+                FormGenerationResult result = getS2sValidatorService().generateAndValidateForms(proposalDevelopmentDocument);
+                valid &= result.isValid();
+                if (result.isValid()) {
+                    valid &= nihValidation(proposalDevelopmentDocument.getDevelopmentProposal().getApplicantOrganization().getOrganization().getDunsNumber(), result.getApplicationXml(), result.getAttachments());
+                }
+                setValidationErrorMessage(result.getErrors(), provider);
+            } catch (S2SException e) {
+                if (LOG.isInfoEnabled()) {
+                    LOG.info("Error validating submission information", e);
+                }
+                getAuditErrors(Constants.S2S_PAGE_NAME, Constants.S2S_OPPORTUNITY_SECTION_NAME, provider, ERROR).add(new org.kuali.rice.krad.util.AuditError(Constants.NO_FIELD, Constants.GRANTS_GOV_GENERIC_ERROR_KEY, Constants.S2S_PAGE_ID+ PAGE_SECTION_DELIMETER + Constants.S2S_OPPORTUNITY_SECTION_ID, new String[] { StringUtils.isNotBlank(e.getErrorMessage()) ? e.getErrorMessage() : e.getMessage() }));
+                valid = false;
             }
-
-            String provider = proposalDevelopmentDocument.getDevelopmentProposal().getS2sOpportunity().getS2sProvider().getDescription();
-            setValidationErrorMessage(result.getErrors(),provider);
-
         }
 
         return valid;
@@ -238,27 +245,27 @@ public class ProposalDevelopmentGrantsGovAuditRule  implements DocumentAuditRule
 
             for (AuditError error : s2sErrors) {
                 if (StringUtils.equals(error.getLink(), ABSTRACTS_ATTACHMENTS)) {
-                    getAuditErrors(ATTACHMENT_PAGE_NAME,ATTACHMENT_PROPOSAL_SECTION_NAME,provider, AUDIT_ERRORS).add(new org.kuali.rice.krad.util.AuditError(NARRATIVES_KEY,
+                    getAuditErrors(ATTACHMENT_PAGE_NAME,ATTACHMENT_PROPOSAL_SECTION_NAME,provider, error.getLevel() == AuditError.Level.WARNING ? AUDIT_WARNINGS : AUDIT_ERRORS).add(new org.kuali.rice.krad.util.AuditError(NARRATIVES_KEY,
                             Constants.GRANTS_GOV_GENERIC_ERROR_KEY, ATTACHMENT_PAGE_ID + PAGE_SECTION_DELIMETER + ATTACHMENT_PROPOSAL_SECTION_ID,
                             new String[]{error.getMessageKey()}));
                 } else if (StringUtils.equals(error.getLink(), QUESTIONS)) {
-                    getAuditErrors(QUESTIONNAIRE_PAGE_NAME,NO_SECTION_ID,provider, AUDIT_ERRORS).add(new org.kuali.rice.krad.util.AuditError(QUESTIONNAIRE_PAGE_ID,
+                    getAuditErrors(QUESTIONNAIRE_PAGE_NAME,NO_SECTION_ID,provider, error.getLevel() == AuditError.Level.WARNING ? AUDIT_WARNINGS : AUDIT_ERRORS).add(new org.kuali.rice.krad.util.AuditError(QUESTIONNAIRE_PAGE_ID,
                             Constants.GRANTS_GOV_GENERIC_ERROR_KEY, QUESTIONNAIRE_PAGE_ID,
                             new String[]{error.getMessageKey()}));
                 } else if (StringUtils.equals(error.getLink(), KEY_PERSONNEL)) {
-                    getAuditErrors(PERSONNEL_PAGE_NAME,NO_SECTION_ID,provider, AUDIT_ERRORS).add(new org.kuali.rice.krad.util.AuditError(PERSONNEL_PAGE_ID,
+                    getAuditErrors(PERSONNEL_PAGE_NAME,NO_SECTION_ID,provider, error.getLevel() == AuditError.Level.WARNING ? AUDIT_WARNINGS : AUDIT_ERRORS).add(new org.kuali.rice.krad.util.AuditError(PERSONNEL_PAGE_ID,
                             Constants.GRANTS_GOV_GENERIC_ERROR_KEY, PERSONNEL_PAGE_ID,
                             new String[]{error.getMessageKey()}));
                 } else if (StringUtils.equals(error.getLink(), PROPOSAL_ORGANIZATION_LOCATION)){
-                    getAuditErrors(ORGANIZATION_PAGE_NAME,APPLICANT_ORGANIZATION_SECTION_NAME, provider, AUDIT_ERRORS).add(new org.kuali.rice.krad.util.AuditError(ORGANIZATION_PAGE_ID,
+                    getAuditErrors(ORGANIZATION_PAGE_NAME,APPLICANT_ORGANIZATION_SECTION_NAME, provider, error.getLevel() == AuditError.Level.WARNING ? AUDIT_WARNINGS : AUDIT_ERRORS).add(new org.kuali.rice.krad.util.AuditError(ORGANIZATION_PAGE_ID,
                             Constants.GRANTS_GOV_GENERIC_ERROR_KEY, ORGANIZATION_PAGE_ID + PAGE_SECTION_DELIMETER + APPLICANT_ORGANIZATION_SECTION_ID,
                             new String[]{error.getMessageKey()}));
                 } else if (StringUtils.equals(error.getLink(), PROPOSAL_SPONSOR_PROGRAM_INFO_LOCATION)) {
-                    getAuditErrors(SPONSOR_PROGRAM_INFO_PAGE_NAME, NO_SECTION_ID, provider, AUDIT_ERRORS).add(new org.kuali.rice.krad.util.AuditError(SPONSOR_PROGRAM_INFO_PAGE_ID,
+                    getAuditErrors(SPONSOR_PROGRAM_INFO_PAGE_NAME, NO_SECTION_ID, provider, error.getLevel() == AuditError.Level.WARNING ? AUDIT_WARNINGS : AUDIT_ERRORS).add(new org.kuali.rice.krad.util.AuditError(SPONSOR_PROGRAM_INFO_PAGE_ID,
                             Constants.GRANTS_GOV_GENERIC_ERROR_KEY, SPONSOR_PROGRAM_INFO_PAGE_ID,
                             new String[]{error.getMessageKey()}));
                 } else {
-                    getAuditErrors(Constants.S2S_PAGE_NAME, Constants.S2S_OPPORTUNITY_SECTION_NAME,provider, AUDIT_ERRORS).add(new org.kuali.rice.krad.util.AuditError(Constants.S2S_PAGE_ID,
+                    getAuditErrors(Constants.S2S_PAGE_NAME, Constants.S2S_OPPORTUNITY_SECTION_NAME,provider, error.getLevel() == AuditError.Level.WARNING ? AUDIT_WARNINGS : AUDIT_ERRORS).add(new org.kuali.rice.krad.util.AuditError(Constants.S2S_PAGE_ID,
                             Constants.GRANTS_GOV_GENERIC_ERROR_KEY, Constants.S2S_PAGE_ID + PAGE_SECTION_DELIMETER + Constants.S2S_OPPORTUNITY_SECTION_ID,
                             new String[]{error.getMessageKey()}));
                 }

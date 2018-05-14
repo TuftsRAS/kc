@@ -46,6 +46,7 @@ import org.kuali.coeus.propdev.impl.s2s.S2sAppSubmission;
 import org.kuali.coeus.propdev.impl.s2s.S2sOppForms;
 import org.kuali.coeus.propdev.impl.s2s.S2sOpportunity;
 import org.kuali.coeus.propdev.impl.s2s.S2sUserAttachedForm;
+import org.kuali.coeus.propdev.impl.s2s.override.S2sOverride;
 import org.kuali.coeus.propdev.impl.s2s.question.ProposalDevelopmentS2sQuestionnaireHelper;
 import org.kuali.coeus.propdev.impl.specialreview.SpecialReviewHelper;
 import org.kuali.coeus.sys.framework.service.KcServiceLocator;
@@ -103,6 +104,7 @@ public class ProposalDevelopmentDocumentForm extends TransactionalDocumentFormBa
     private String hierarchyBudgetTypeCode;
     private String hierarchyProposalNumber;
     private S2sUserAttachedForm s2sUserAttachedForm;
+    private S2sOverride newS2sOverride;
     private List<NarrativeUserRights> narrativeUserRights;
     private String narrativeUserRightsSelectedAttachment;
     private ProposalChangedData newProposalChangedData;
@@ -198,6 +200,8 @@ public class ProposalDevelopmentDocumentForm extends TransactionalDocumentFormBa
         notificationHelper = new NotificationHelper<>();
 
         s2sUserAttachedForm = new S2sUserAttachedForm();
+
+        newS2sOverride = new S2sOverride();
 
         newProposalChangedData = new ProposalChangedData();
 
@@ -531,6 +535,14 @@ public class ProposalDevelopmentDocumentForm extends TransactionalDocumentFormBa
 
     public void setS2sUserAttachedForm(S2sUserAttachedForm s2sUserAttachedForm) {
         this.s2sUserAttachedForm = s2sUserAttachedForm;
+    }
+
+    public S2sOverride getNewS2sOverride() {
+        return newS2sOverride;
+    }
+
+    public void setNewS2sOverride(S2sOverride newS2sOverride) {
+        this.newS2sOverride = newS2sOverride;
     }
 
     public List<NarrativeUserRights> getNarrativeUserRights() {

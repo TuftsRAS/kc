@@ -17,6 +17,7 @@ import org.kuali.coeus.propdev.impl.core.ProposalDevelopmentService;
 import org.kuali.coeus.s2sgen.impl.generate.S2SBaseFormGenerator;
 import org.kuali.coeus.s2sgen.impl.validate.S2SValidatorService;
 import org.kuali.coeus.s2sgen.api.core.AuditError;
+import org.kuali.coeus.s2sgen.impl.validate.ValidationResult;
 import org.kuali.coeus.sys.framework.service.KcServiceLocator;
 import org.kuali.kra.infrastructure.RoleConstants;
 import org.kuali.rice.krad.bo.DocumentHeader;
@@ -43,8 +44,14 @@ public abstract class S2SModularBudgetTestBase extends S2STestBase {
 		generatorObject.setAuditErrors(errors);
 		generatorObject.setAttachments(new ArrayList<>());
 		XmlObject object = generatorObject.getFormObject(document);
-		KcServiceLocator.getService(S2SValidatorService.class).validate(object, errors, generatorObject.getFormName());
+		ValidationResult result = KcServiceLocator.getService(S2SValidatorService.class).validateForm(object, generatorObject.getFormName());
 		for (AuditError auditError : errors) {
+			assertNull(
+					auditError.getMessageKey() + ":" + auditError.getErrorKey(),
+					auditError.getErrorKey());
+		}
+
+		for (AuditError auditError : result.getErrors()) {
 			assertNull(
 					auditError.getMessageKey() + ":" + auditError.getErrorKey(),
 					auditError.getErrorKey());
