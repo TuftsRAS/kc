@@ -327,7 +327,7 @@ public class ProposalDevelopmentSubmitController extends
     				submitApplication(form);
     			}
                 final S2sOverride s2sOverride = form.getDevelopmentProposal().getS2sOverride();
-                if (s2sOverride != null && s2sOverride.isActive() && ((s2sOverride.getApplicationOverride() != null && s2sOverride.getApplicationOverride().getApplication() != null) || (StringUtils.isNotBlank(s2sOverride.getSignedBy()) || s2sOverride.getSubmittedDate() != null))) {
+                if (s2sOverride != null && s2sOverride.isActive() && isOverrideDataPresent(s2sOverride)) {
                     final DialogResponse dialogResponse = form.getDialogResponse(PROP_DEV_SUBMIT_PAGE_S2S_OVERRIDE_EXISTS);
                     if (dialogResponse == null) {
                         return getModelAndViewService().showDialog(PROP_DEV_SUBMIT_PAGE_S2S_OVERRIDE_EXISTS, false, form);
@@ -348,6 +348,11 @@ public class ProposalDevelopmentSubmitController extends
         } else {
         	return getModelAndViewService().showDialog(PROP_DEV_RESUMBIT_OPTIONS_SECTION, true, form);
         }
+    }
+
+    private boolean isOverrideDataPresent(S2sOverride s2sOverride) {
+        return (s2sOverride.getApplicationOverride() != null && s2sOverride.getApplicationOverride().getApplication() != null) ||
+                (StringUtils.isNotBlank(s2sOverride.getSignedBy()) || s2sOverride.getSubmittedDate() != null);
     }
 
     protected void handleSubmissionToS2S(ProposalDevelopmentDocumentForm form) {
