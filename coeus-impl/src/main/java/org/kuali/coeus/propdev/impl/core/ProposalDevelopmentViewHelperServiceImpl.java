@@ -222,10 +222,35 @@ public class ProposalDevelopmentViewHelperServiceImpl extends KcViewHelperServic
     public void performCustomFinalize(LifecycleElement element, Object model, LifecycleElement parent) {
 
         final S2sOverride s2sOverride = ((ProposalDevelopmentDocumentForm) model).getDevelopmentProposal().getS2sOverride();
-        if (s2sOverride != null && s2sOverride.isActive() && s2sOverride.getApplicationOverride() != null && s2sOverride.getApplicationOverride().getApplication() != null) {
-            getGlobalVariableService().getMessageMap().putWarning(KRADConstants.GLOBAL_ERRORS, KeyConstants.S2S_OVERRIDDE_PRESENT);
+        if (s2sOverride != null && s2sOverride.isActive()) {
+            if (s2sOverride.getApplicationOverride() != null && s2sOverride.getApplicationOverride().getApplication() != null) {
+                getGlobalVariableService().getMessageMap().putWarning(KRADConstants.GLOBAL_ERRORS, KeyConstants.S2S_OVERRIDDE_PRESENT, "Application XML");
+            } else if (StringUtils.isNotBlank(s2sOverride.getSignedBy()) && s2sOverride.getSubmittedDate() == null) {
+                getGlobalVariableService().getMessageMap().putWarning(KRADConstants.GLOBAL_ERRORS, KeyConstants.S2S_OVERRIDDE_PRESENT, "Signed By User");
+            } else if (StringUtils.isBlank(s2sOverride.getSignedBy()) && s2sOverride.getSubmittedDate() != null) {
+                getGlobalVariableService().getMessageMap().putWarning(KRADConstants.GLOBAL_ERRORS, KeyConstants.S2S_OVERRIDDE_PRESENT, "Submitted Date");
+            } else if (StringUtils.isNotBlank(s2sOverride.getSignedBy()) && s2sOverride.getSubmittedDate() != null) {
+                getGlobalVariableService().getMessageMap().putWarning(KRADConstants.GLOBAL_ERRORS, KeyConstants.S2S_OVERRIDDE_PRESENT, "Signed By User, Submitted Date");
+            }
         }
         super.performCustomFinalize(element, model, parent);
+    }
+
+
+    public String getS2sOverrideMessage(ProposalDevelopmentDocument document) {
+        final S2sOverride s2sOverride = document.getDevelopmentProposal().getS2sOverride();
+        if (s2sOverride != null && s2sOverride.isActive()) {
+            if (s2sOverride.getApplicationOverride() != null && s2sOverride.getApplicationOverride().getApplication() != null) {
+                return "Proposal S2S Submission data \\[Application XML\\] has been overridden. Do you want to continue?";
+            } else if (StringUtils.isNotBlank(s2sOverride.getSignedBy()) && s2sOverride.getSubmittedDate() == null) {
+                return "Proposal S2S Submission data \\[Signed By User\\] has been overridden. Do you want to continue?";
+            } else if (StringUtils.isBlank(s2sOverride.getSignedBy()) && s2sOverride.getSubmittedDate() != null) {
+                return "Proposal S2S Submission data \\[Submitted Date\\] has been overridden. Do you want to continue?";
+            } else if (StringUtils.isNotBlank(s2sOverride.getSignedBy()) && s2sOverride.getSubmittedDate() != null) {
+                return "Proposal S2S Submission data \\[Signed By User, Submitted Date\\] has been overridden. Do you want to continue?";
+            }
+        }
+        return "Proposal S2S Submission data has been overridden. Do you want to continue?";
     }
 
     @Override

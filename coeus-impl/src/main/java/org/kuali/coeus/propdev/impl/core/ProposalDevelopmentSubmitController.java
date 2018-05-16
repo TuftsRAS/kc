@@ -327,9 +327,9 @@ public class ProposalDevelopmentSubmitController extends
     				submitApplication(form);
     			}
                 final S2sOverride s2sOverride = form.getDevelopmentProposal().getS2sOverride();
-                if (s2sOverride != null && s2sOverride.getApplicationOverride() != null && s2sOverride.getApplicationOverride().getApplication() != null) {
+                if (s2sOverride != null && s2sOverride.isActive() && ((s2sOverride.getApplicationOverride() != null && s2sOverride.getApplicationOverride().getApplication() != null) || (StringUtils.isNotBlank(s2sOverride.getSignedBy()) || s2sOverride.getSubmittedDate() != null))) {
                     final DialogResponse dialogResponse = form.getDialogResponse(PROP_DEV_SUBMIT_PAGE_S2S_OVERRIDE_EXISTS);
-                    if(dialogResponse == null) {
+                    if (dialogResponse == null) {
                         return getModelAndViewService().showDialog(PROP_DEV_SUBMIT_PAGE_S2S_OVERRIDE_EXISTS, false, form);
                     } else if (dialogResponse.getResponseAsBoolean()){
                         handleSubmissionToS2S(form);

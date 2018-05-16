@@ -340,7 +340,7 @@
     <bean id="PropDev-OpportunityPage-Override" parent="PropDev-OpportunityPage-Override-parentBean"/>
     <bean id="PropDev-OpportunityPage-Override-parentBean" abstract="true" parent="Uif-VerticalBoxSection"
           p:headerText="Submission Override"
-          p:render="@{#ViewHelper.containsOpportunity(document)}">
+          p:render="@{#ViewHelper.containsOpportunity(document) and (#editModes[#proposalAuthConsts.MODIFY_S2S_OVERRIDE] or #ViewHelper.containsOverride(document))}">
         <property name="items">
             <list>
                 <bean parent="Uif-SecondaryActionButton" p:actionScript="showDialog('PropDev-OpportunityPage-AddS2sOverride');" p:actionLabel="Create Override" p:order="10" p:iconClass="icon-plus"
@@ -349,11 +349,28 @@
                       p:render="@{(#editModes[#proposalAuthConsts.MODIFY_S2S_OVERRIDE]) and #ViewHelper.containsOverride(document)}"/>
                 <bean parent="Uif-InputField" p:propertyName="document.developmentProposal.s2sOverride.description"
                       p:render="@{#ViewHelper.containsOverride(document)}" p:readOnly="@{(!#editModes[#proposalAuthConsts.MODIFY_S2S_OVERRIDE])}" p:order="30"/>
+                <bean parent="Uif-InputField" p:propertyName="document.developmentProposal.s2sOverride.signedBy"
+                      p:render="@{#ViewHelper.containsOverride(document)}" p:readOnly="@{(!#editModes[#proposalAuthConsts.MODIFY_S2S_OVERRIDE])}" p:order="40">
+                    <property name="quickfinder">
+                        <bean parent="Uif-QuickFinder"
+                              p:dataObjectClassName="org.kuali.coeus.common.framework.person.KcPerson"
+                              p:fieldConversions="userName:document.developmentProposal.s2sOverride.signedBy"
+                              p:lookupParameters="document.developmentProposal.s2sOverride.signedBy:userName">
+                        </bean>
+                    </property>
+                    <property name="propertyNamesForAdditionalDisplay">
+                        <list>
+                            <value>document.developmentProposal.s2sOverride.signedByPerson.fullName</value>
+                        </list>
+                    </property>
+                </bean>
+                <bean parent="Uif-InputField" p:propertyName="document.developmentProposal.s2sOverride.submittedDate"
+                      p:render="@{#ViewHelper.containsOverride(document)}" p:readOnly="@{(!#editModes[#proposalAuthConsts.MODIFY_S2S_OVERRIDE])}" p:order="50"/>
                 <bean parent="Uif-InputField" p:propertyName="document.developmentProposal.s2sOverride.active"
-                      p:render="@{#ViewHelper.containsOverride(document)}" p:readOnly="@{(!#editModes[#proposalAuthConsts.MODIFY_S2S_OVERRIDE])}" p:order="40"/>
+                      p:render="@{#ViewHelper.containsOverride(document)}" p:readOnly="@{(!#editModes[#proposalAuthConsts.MODIFY_S2S_OVERRIDE])}" p:order="60"/>
                 <bean parent="PropDev-OpportunityPage-Override-Override"
-                      p:render="@{#ViewHelper.containsOverride(document)}" p:order="50"/>
-                <bean parent="PropDev-OpportunityPage-Override-Previous" p:order="60" />
+                      p:render="@{#ViewHelper.containsOverride(document)}" p:order="70"/>
+                <bean parent="PropDev-OpportunityPage-Override-Previous" p:order="80" />
             </list>
         </property>
     </bean>
@@ -686,7 +703,24 @@
             <list>
                 <bean parent="Uif-InputField" p:order="10" p:propertyName="description"
                       p:required="true" />
-                <bean parent="Uif-InputField" p:propertyName="active" p:order="20"
+                <bean parent="Uif-InputField" p:propertyName="signedBy" p:order="20"
+                      p:required="false">
+                    <property name="quickfinder">
+                        <bean parent="Uif-QuickFinder"
+                              p:dataObjectClassName="org.kuali.coeus.common.framework.person.KcPerson"
+                              p:fieldConversions="userName:signedBy"
+                              p:lookupParameters="signedBy:userName">
+                        </bean>
+                    </property>
+                    <property name="propertyNamesForAdditionalDisplay">
+                        <list>
+                            <value>signedByPerson.fullName</value>
+                        </list>
+                    </property>
+                </bean>
+                <bean parent="Uif-InputField" p:propertyName="submittedDate" p:order="30"
+                      p:required="false" />
+                <bean parent="Uif-InputField" p:propertyName="active" p:order="40"
                       p:required="false" />
             </list>
         </property>
