@@ -17,6 +17,8 @@
         <ref bean="S2sOverride-id" />
         <ref bean="S2sOverride-description" />
         <ref bean="S2sOverride-active" />
+        <ref bean="S2sOverride-submittedDate" />
+        <ref bean="S2sOverride-signedBy" />
       </list>
     </property>
   </bean>
@@ -43,5 +45,17 @@
     <property name="summary" value="Active"/>
     <property name="description" value="Active"/>
   </bean>
+
+  <bean id="S2sOverride-submittedDate" parent="S2sOverride-submittedDate-parentBean" />
+  <bean id="S2sOverride-submittedDate-parentBean" abstract="true" parent="KraAttributeReferenceDummy-genericDate"
+        p:name="submittedDate" p:shortLabel="Submitted Date" p:summary="Submitted Date" p:label="Submitted Date" p:description="Submitted Date">
+  </bean>
+
+  <bean id="S2sOverride-signedBy" parent="S2sOverride-signedBy-parentBean" />
+  <bean id="S2sOverride-signedBy-parentBean" abstract="true" parent="KcPerson-userName"
+        p:name="signedBy" p:shortLabel="Signed By" p:summary="Signed By" p:label="Signed By" p:description="Signed By">
+  </bean>
+
+
 
 </beans>

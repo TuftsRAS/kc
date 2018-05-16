@@ -53,8 +53,8 @@
         <bouncycastle.version>1.57</bouncycastle.version>
         <cas-client-core.version>3.4.1</cas-client-core.version>
         <cglib.version>3.2.5</cglib.version>
-        <coeus-api-all.version>1805.0002</coeus-api-all.version>
-        <coeus-s2sgen.version>1805.0003</coeus-s2sgen.version>
+        <coeus-api-all.version>1805.0003</coeus-api-all.version>
+        <coeus-s2sgen.version>1805.0004</coeus-s2sgen.version>
         <commons-beanutils.version>1.9.3</commons-beanutils.version>
         <commons-codec.version>1.10</commons-codec.version>
         <commons-collections.version>3.2.2</commons-collections.version>

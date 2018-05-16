@@ -445,12 +445,15 @@ public class ProposalDevelopmentS2SController extends ProposalDevelopmentControl
      * the FormGenerationResult
      */
     private FormGenerationResult generateWithoutOverride(ProposalDevelopmentDocument document) {
-        if (document.getDevelopmentProposal().getS2sOverride() != null && document.getDevelopmentProposal().getS2sOverride().isActive()) {
+        final boolean requiresApplOverrideDisable = document.getDevelopmentProposal().getS2sOverride() != null && document.getDevelopmentProposal().getS2sOverride().getApplicationOverride() != null &&
+                document.getDevelopmentProposal().getS2sOverride().getApplicationOverride().getApplication() != null && document.getDevelopmentProposal().getS2sOverride().isActive();
+        if (requiresApplOverrideDisable) {
+            final String application = document.getDevelopmentProposal().getS2sOverride().getApplicationOverride().getApplication();
             try {
-                document.getDevelopmentProposal().getS2sOverride().setActive(false);
+                document.getDevelopmentProposal().getS2sOverride().getApplicationOverride().setApplication(null);
                 return getFormGeneratorService().generateAndValidateForms(document);
             } finally {
-                document.getDevelopmentProposal().getS2sOverride().setActive(true);
+                document.getDevelopmentProposal().getS2sOverride().getApplicationOverride().setApplication(application);
             }
         } else {
             return getFormGeneratorService().generateAndValidateForms(document);
