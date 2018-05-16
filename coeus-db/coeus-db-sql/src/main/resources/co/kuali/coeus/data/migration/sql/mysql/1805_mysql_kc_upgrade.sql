@@ -19,4 +19,5 @@
 
 
 \. ./kc/bootstrap/V1805_003__s2s_overrride.sql
+\. ./kc/bootstrap/V1805_005__s2s_overrride_aor.sql
 commit;

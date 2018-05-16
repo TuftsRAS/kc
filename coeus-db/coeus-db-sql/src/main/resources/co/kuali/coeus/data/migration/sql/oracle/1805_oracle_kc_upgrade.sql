@@ -22,4 +22,5 @@ set sqlblanklines on
 
 spool 1805_oracle_kc_upgrade.sql.log
 @./kc/bootstrap/V1805_003__s2s_overrride.sql
+@./kc/bootstrap/V1805_005__s2s_overrride_aor.sql
 commit;

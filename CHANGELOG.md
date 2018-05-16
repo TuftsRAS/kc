@@ -1,6 +1,12 @@
 
 
 ## CURRENT
+* RESKC-2887, RESKC-2884: adding the ability to override aor info, code review comments
+  * Travis Schneeberger on Wed, 16 May 2018 11:00:55 -0600 [View Commit](../../commit/f05f88356b99f8305f550ea05172ce5794cb88d9)
+* RESKC-2887, RESKC-2884: adding the ability to override aor info
+  * Travis Schneeberger on Wed, 16 May 2018 10:48:14 -0600 [View Commit](../../commit/fc10150cd234df8fe30c0534a2608159cc42e8cb)
+
+## coeus-1805.0016
 * RESKC-2887, RESKC-2884: fixing test errors
   * Travis Schneeberger on Mon, 14 May 2018 00:01:28 -0600 [View Commit](../../commit/82ae5837d816b3af2ca44efa51c6fb44c9b65eb7)
 * RESKC-2887, RESKC-2884: fixing test errors
