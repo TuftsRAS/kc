@@ -1,6 +1,11 @@
 
 
 ## CURRENT
+* RESKC-2689: Fix approval attachment always going to Internal Attachments without taking in consideration the Narrative Type Group. (#2891)
+
+  * Omar Soto Fortuño on Fri, 18 May 2018 15:43:39 -0600 [View Commit](../../commit/1d19503bf7f353b3837c8cabffa251d50ff13c89)
+
+## coeus-1805.0020
 * RESKC-2835: Fix issue with PD Certification Questionnaire that showed as certified without taking in consideration branching questions answers. (#2885)
 
   * Omar Soto Fortuño on Fri, 18 May 2018 11:10:21 -0600 [View Commit](../../commit/2c2fcefbe66d9cca10e2f15622cf2791a921b6b4)
