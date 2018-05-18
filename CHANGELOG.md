@@ -1,6 +1,11 @@
 
 
 ## CURRENT
+* RESKC-2835: Fix issue with PD Certification Questionnaire that showed as certified without taking in consideration branching questions answers. (#2885)
+
+  * Omar Soto Fortuño on Fri, 18 May 2018 11:10:21 -0600 [View Commit](../../commit/2c2fcefbe66d9cca10e2f15622cf2791a921b6b4)
+
+## coeus-1805.0018
 * No Changes
 
 
