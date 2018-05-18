@@ -543,11 +543,6 @@
         </dependency>
 
         <dependency>
-            <groupId>org.eclipse.birt.runtime</groupId>
-            <artifactId>org.eclipse.birt.runtime</artifactId>
-        </dependency>
-
-        <dependency>
             <groupId>org.eclipse.persistence</groupId>
             <artifactId>org.eclipse.persistence.core</artifactId>
         </dependency>
@@ -810,11 +805,6 @@
                 <dependency>
                     <groupId>co.kuali</groupId>
                     <artifactId>kc-sql</artifactId>
-                </dependency>
-
-                <dependency>
-                    <groupId>com.rsmart</groupId>
-                    <artifactId>tokenauth</artifactId>
                 </dependency>
 
                 <dependency>

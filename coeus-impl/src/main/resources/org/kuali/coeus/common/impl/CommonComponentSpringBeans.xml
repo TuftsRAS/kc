@@ -439,8 +439,6 @@
     <bean parent="simpleCrudMapBasedRestController" p:dataObjectClazz="org.kuali.coeus.common.framework.print.watermark.Watermark" />
     <bean parent="simpleCrudMapBasedRestController" p:dataObjectClazz="org.kuali.coeus.common.framework.ynq.Ynq" />
     <bean parent="simpleCrudMapBasedRestController" p:dataObjectClazz="org.kuali.coeus.common.framework.ynq.YnqExplanationType" />
-    <bean parent="simpleCrudMapBasedRestController" p:dataObjectClazz="org.kuali.coeus.common.impl.rpt.cust.CustReportDetails" p:camelCasePluralName="CustomReportDetails" />
-    <bean parent="simpleCrudMapBasedRestController" p:dataObjectClazz="org.kuali.coeus.common.impl.rpt.cust.CustReportType" p:camelCasePluralName="CustomReportTypes" />
     <bean parent="simpleCrudMapBasedRestController" p:dataObjectClazz="org.kuali.coeus.common.budget.framework.core.Budget" />
     <bean parent="simpleCrudMapBasedRestController" p:dataObjectClazz="org.kuali.coeus.common.budget.framework.core.category.BudgetCategoryType" />
     <bean parent="simpleCrudMapBasedRestController" p:dataObjectClazz="org.kuali.coeus.common.budget.framework.nonpersonnel.BudgetFormulatedCostDetail" />
@@ -486,9 +484,6 @@
     <bean parent="simpleCrudMapBasedRestController" p:dataObjectClazz="org.kuali.coeus.common.framework.compliance.exemption.ExemptionType" />
     <bean parent="simpleCrudMapBasedRestController" p:dataObjectClazz="org.kuali.kra.bo.RiskLevel" />
     <bean parent="simpleCrudMapBasedRestController" p:dataObjectClazz="org.kuali.kra.meeting.ProtocolVoteRecused" p:camelCasePluralName="ProtocolRecusedVotes" />
-
-    <bean parent="simpleCrudMapBasedRestController" p:dataObjectClazz="org.kuali.coeus.common.impl.rpt.cust.CustRptDefaultParms" p:camelCasePluralName="CustomReportDefaultParameters" />
-    <bean parent="simpleCrudMapBasedRestController" p:dataObjectClazz="org.kuali.coeus.common.impl.rpt.cust.CustRptTypeDocument" p:camelCasePluralName="CustomReportTypeDocuments" />
     <bean parent="simpleCrudMapBasedRestController" p:dataObjectClazz="org.kuali.coeus.common.budget.framework.rate.InstituteLaRate" />
     <bean parent="simpleCrudMapBasedRestController" p:dataObjectClazz="org.kuali.coeus.common.framework.version.history.VersionHistorySearchBo" />
     <bean parent="simpleCrudMapBasedRestController" p:dataObjectClazz="org.kuali.coeus.common.framework.org.OrganizationIndirectcost" p:camelCasePluralName="OrganizationIndirectCosts" />

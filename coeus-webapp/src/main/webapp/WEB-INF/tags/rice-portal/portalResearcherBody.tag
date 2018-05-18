@@ -18,9 +18,7 @@
       <channel:researcherCompliance/>
       <channel:researcherIRBProtocols/>
 </td>
-<!-- AAP: report links -->
 <td class="content" valign="top">
-      <channel:researcherReportLinks />
       <channel:researcherIACUCProtocols/>
       <channel:researcherWorkflow />
 </td>

@@ -37,13 +37,6 @@
         <property name="xmlIngesterService" ref="xmlIngesterService" />
     </bean>
 
-    <bean id="tokenGenerator" class="com.rsmart.rfabric.auth.tokenauth.AuthTokenGenerator">
-        <property name="secret" value="${rsmart.report.shared.secret}"/>
-    </bean>
-    <bean id="urlGenerator" class="com.rsmart.rfabric.auth.tokenauth.AuthTokenURLGenerator">
-        <property name="tokenGenerator" ref="tokenGenerator"/>
-    </bean>
-
     <bean class="org.kuali.coeus.sys.framework.controller.interceptor.FilterRegistrator">
         <property name="filter">
             <bean class="co.kuali.coeus.sys.impl.persistence.SchemaSpyFilter">

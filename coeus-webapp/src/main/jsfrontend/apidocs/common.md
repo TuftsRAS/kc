@@ -48,10 +48,6 @@
 <!-- include(common/custom-attribute-document-values.md) -->
 <!-- include(common/custom-attribute-documents.md) -->
 <!-- include(common/custom-attributes.md) -->
-<!-- include(common/custom-report-default-parameters.md) -->
-<!-- include(common/custom-report-details.md) -->
-<!-- include(common/custom-report-type-documents.md) -->
-<!-- include(common/custom-report-types.md) -->
 <!-- include(common/deadline-types.md) -->
 <!-- include(common/degree-types.md) -->
 <!-- include(common/document-accesses.md) -->

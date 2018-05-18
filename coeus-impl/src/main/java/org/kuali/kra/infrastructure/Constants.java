@@ -877,23 +877,6 @@ public interface Constants {
     String KC_CONFIRMATION_QUESTION = "kcConfirmationQuestion";
     String NON_CANCELLING_RECALL_QUESTION = "nonCancellingRecallQuestion";
     String NON_CANCELLING_RECALL_QUESTION_TEXT_KEY = "nonCancelling.recall.question.text";
-    
-    //Birt Constants
-    
-    int TYPE_TEXT = 1;
-    int STRING_TYPE = 4;
-    int DATE_TIME_TYPE = 5;
-    
-    String HTML_REPORT_CONTENT_TYPE = "application/html";
-    String EXCEL_REPORT_CONTENT_TYPE = "application/xls";
-    String REPORT_FORMAT_PDF = "pdf";
-    String REPORT_FORMAT_HTML = "html";
-    String REPORT_FORMAT_EXCEL = "excel";
-    String REPORT_FORMAT_EXCEL_EXTENSION = ".xls";
-    String REPORT_FORMAT_EXCEL_EXT = "xls";
-    String REPORT_FORMAT_HTML_EXTENSION = ".html";
-    String BIRT_DATA_SOURCE = "Data Source";
-
 
     String COI_NOTEPAD_DISCLOSURE_REVIEWER_SECTION_ID = "RDA"; // COI reviewer reviewer disclosure action
 
