@@ -706,7 +706,7 @@ public class IacucProtocolSummaryXmlStream extends ProtocolSummaryXmlStreamBase 
             if (iacucProtocolException.getExceptionCategoryCode() != null) {
                 Map params = new HashMap();
                 params.put("exceptionCategoryCode",iacucProtocolException.getExceptionCategoryCode());
-                exceptionCategoryDescription =getBusinessObjectService().findByPrimaryKey(IacucExceptionCategory.class, params).getExceptionCategoryDesc();
+                exceptionCategoryDescription =((IacucExceptionCategory) getBusinessObjectService().findByPrimaryKey(IacucExceptionCategory.class, params)).getExceptionCategoryDesc();
             }
             exceptionType.setExceptionCategoryDesc(exceptionCategoryDescription);
             exceptionType.setDescription(iacucProtocolException.getExceptionDescription());

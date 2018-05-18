@@ -43,7 +43,7 @@ public class AwardReportTrackingDigestNotificationRenderer extends NotificationR
         // Render digest table using award report tracking renderer for report/award-specific replacement parameters
         String renderedText = replaceSection(text, DIGEST_TABLE_PATTERN, digestTableTemplate ->
             digestReports.stream()
-                    .collect(Collectors.groupingBy(this::isOverdue, () -> new TreeMap<>(Comparator.reverseOrder()), Collectors.toList()))
+                    .collect(Collectors.groupingBy(this::isOverdue, () -> new TreeMap<Boolean, List<ReportTracking>>(Comparator.reverseOrder()), Collectors.toList()))
                     .entrySet().stream()
                     .map(e -> renderDigestTable(e.getKey(), e.getValue(), digestTableTemplate))
                     .collect(Collectors.joining()));
