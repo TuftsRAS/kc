@@ -1310,7 +1310,15 @@ public class ProposalHierarchyServiceImpl implements ProposalHierarchyService {
             narrative.setPhoneNumber(globalVariableService.getUserSession().getPerson().getPhoneNumber());
             narrative.setEmailAddress(globalVariableService.getUserSession().getPerson().getEmailAddress());
             getLegacyNarrativeService().prepareNarrative(pDoc, narrative);
-            pDoc.getDevelopmentProposal().getInstituteAttachments().add(narrative);
+
+            String narrativeTypeGroup = narrative.getNarrativeType().getNarrativeTypeGroup();
+
+            if (Constants.INSTITUTE_NARRATIVE_TYPE_GROUP_CODE.equals(narrativeTypeGroup)) {
+                pDoc.getDevelopmentProposal().getInstituteAttachments().add(narrative);
+            } else if (Constants.PROPOSAL_NARRATIVE_TYPE_GROUP_CODE.equals(narrativeTypeGroup)) {
+                pDoc.getDevelopmentProposal().getNarratives().add(narrative);
+            }
+
             dataObjectService.save(pDoc);
         }
     }
