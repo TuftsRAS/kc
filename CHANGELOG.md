@@ -1,6 +1,10 @@
 
 
 ## CURRENT
+* RESKC-2887: fixing contentId DD validation
+  * Travis Schneeberger on Mon, 21 May 2018 16:48:48 -0400 [View Commit](../../commit/600c1da6fad0bf408b34c392a9e43acb97fee36e)
+
+## coeus-1805.0022
 * RESKC-2643: Fixed issues when Adding and Editing a Summary Personnel Budget Line Item in Proposal Development. (#2892)
 
   * Omar Soto Fortuño on Mon, 21 May 2018 10:14:32 -0400 [View Commit](../../commit/a30041b8246c07e8b741ba09e7204c42fa556712)
