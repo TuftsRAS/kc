@@ -291,6 +291,11 @@ public class ProposalBudgetProjectPersonnelController extends ProposalBudgetCont
 		}
 		boolean rulePassed = isAddBudgetPersonnelRulePassed(budget, currentTabBudgetPeriod, newBudgetLineItem, newBudgetPersonnelDetail, errorPath);
 		if(rulePassed) {
+			if (isSummaryPersonnel(newBudgetPersonnelDetail)) {
+				newBudgetLineItem.setLineItemCost(newBudgetPersonnelDetail.getSalaryRequested());
+				newBudgetLineItem.setStartDate(newBudgetPersonnelDetail.getStartDate());
+				newBudgetLineItem.setEndDate(newBudgetPersonnelDetail.getEndDate());
+			}
 			getBudgetPersonnelBudgetService().addBudgetPersonnelToPeriod(currentTabBudgetPeriod, newBudgetLineItem, newBudgetPersonnelDetail);
 		    getBudgetCalculationService().calculateBudgetPeriod(budget, currentTabBudgetPeriod);
 		    getDataObjectService().save(budget);
@@ -407,6 +412,8 @@ public class ProposalBudgetProjectPersonnelController extends ProposalBudgetCont
 				calculatePersonnelLineItem(form, true);
 				if(isSummaryPersonnel(editBudgetPersonnel)) {
 					editBudgetLineItem.setLineItemCost(editBudgetPersonnel.getSalaryRequested());
+					editBudgetLineItem.setStartDate(editBudgetPersonnel.getStartDate());
+					editBudgetLineItem.setEndDate(editBudgetPersonnel.getEndDate());
 				}else {
 					editBudgetLineItem.getBudgetPersonnelDetailsList().set(editLineIndex, editBudgetPersonnel);
 				}

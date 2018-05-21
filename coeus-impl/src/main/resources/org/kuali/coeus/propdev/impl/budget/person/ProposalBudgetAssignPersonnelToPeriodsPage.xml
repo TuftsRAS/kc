@@ -201,10 +201,13 @@
 							<bean parent="Uif-InputField" p:propertyName="budgetPersonnelDetail.percentCharged"
 								p:readOnly="@{#fp.budgetPersonnelDetail.personSequenceNumber == #{T(org.kuali.coeus.common.budget.framework.core.BudgetConstants.BudgetPerson).SUMMARYPERSON.personId}}"
 								p:order="100" p:label="Charged %" p:readOnlyDisplayReplacement="&amp;nbsp;"/>
+							<bean parent="Uif-InputField" p:propertyName="budgetPersonnelDetail.salaryRequested"
+								  p:readOnly="@{#fp.budgetPersonnelDetail.personSequenceNumber != #{T(org.kuali.coeus.common.budget.framework.core.BudgetConstants.BudgetPerson).SUMMARYPERSON.personId}}"
+								  p:label="Requested Salary" p:order="110" />
 							<bean parent="Uif-InputField" p:propertyName="budgetPersonnelDetail.periodTypeCode"
 								p:readOnly="@{#fp.budgetPersonnelDetail.personSequenceNumber == #{T(org.kuali.coeus.common.budget.framework.core.BudgetConstants.BudgetPerson).SUMMARYPERSON.personId}}"
 								p:readOnlyDisplayReplacement="&amp;nbsp;"
-								p:order="110" p:enableAutoQuickfinder="false"/>
+								p:order="120" p:enableAutoQuickfinder="false"/>
 						</list>
 					</property>
 				</bean>
