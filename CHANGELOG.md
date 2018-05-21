@@ -1,6 +1,11 @@
 
 
 ## CURRENT
+* RESKC-2643: Fixed issues when Adding and Editing a Summary Personnel Budget Line Item in Proposal Development. (#2892)
+
+  * Omar Soto Fortuño on Mon, 21 May 2018 10:14:32 -0400 [View Commit](../../commit/a30041b8246c07e8b741ba09e7204c42fa556712)
+
+## coeus-1805.0021
 * RESKC-2689: Fix approval attachment always going to Internal Attachments without taking in consideration the Narrative Type Group. (#2891)
 
   * Omar Soto Fortuño on Fri, 18 May 2018 15:43:39 -0600 [View Commit](../../commit/1d19503bf7f353b3837c8cabffa251d50ff13c89)
