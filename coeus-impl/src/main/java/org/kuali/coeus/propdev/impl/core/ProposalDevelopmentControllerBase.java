@@ -300,9 +300,10 @@ public abstract class ProposalDevelopmentControllerBase {
             form.getEditableCollectionLines().clear();
          }
          if (StringUtils.equalsIgnoreCase(form.getPageId(), ProposalDevelopmentDataValidationConstants.DETAILS_PAGE_ID)) {
+             handleProposalTypeChange(proposalDevelopmentDocument.getDevelopmentProposal());
              handleSponsorChange(proposalDevelopmentDocument);
              if (proposalDevelopmentDocument.getDevelopmentProposal().getS2sOpportunity() != null) {
-                 handleProposalTypeChange(proposalDevelopmentDocument.getDevelopmentProposal());
+                 handleProposalTypeChangeForOpp(proposalDevelopmentDocument.getDevelopmentProposal());
              }
          }
 
@@ -398,6 +399,14 @@ public abstract class ProposalDevelopmentControllerBase {
     }
 
     private void handleProposalTypeChange(DevelopmentProposal developmentProposal) {
+        final String newType = getProposalTypeService().getNewProposalTypeCode();
+        if (newType.equals(developmentProposal.getProposalTypeCode())) {
+            developmentProposal.setCurrentAwardNumber(null);
+            developmentProposal.setContinuedFrom(null);
+        }
+    }
+
+    private void handleProposalTypeChangeForOpp(DevelopmentProposal developmentProposal) {
         if (developmentProposal.getS2sOpportunity() != null) {
             String defaultS2sSubmissionTypeCode = getProposalTypeService().getDefaultSubmissionTypeCode(developmentProposal.getProposalTypeCode());
             developmentProposal.getS2sOpportunity().setS2sSubmissionTypeCode(defaultS2sSubmissionTypeCode);
