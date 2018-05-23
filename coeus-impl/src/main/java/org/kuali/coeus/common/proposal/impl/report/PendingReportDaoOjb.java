@@ -7,15 +7,19 @@
  */
 package org.kuali.coeus.common.proposal.impl.report;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.ojb.broker.query.Criteria;
+import org.apache.ojb.broker.query.QueryByCriteria;
+import org.apache.ojb.broker.query.QueryFactory;
 import org.kuali.coeus.common.framework.print.PendingReportBean;
+import org.kuali.coeus.common.framework.version.VersionStatus;
 import org.kuali.kra.institutionalproposal.contacts.InstitutionalProposalPerson;
 import org.kuali.kra.institutionalproposal.home.InstitutionalProposal;
 import org.kuali.rice.kew.api.exception.WorkflowException;
 import org.springframework.stereotype.Component;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * OJB implementation of PendingReportDao using OJB Report Query (see http://db.apache.org/ojb/docu/guides/query.html#Report+Queries)
@@ -23,13 +27,10 @@ import java.util.*;
 @Component("pendingReportDao")
 public class PendingReportDaoOjb extends BaseReportDaoOjb implements PendingReportDao {
 
-    private static final Log LOG = LogFactory.getLog(PendingReportDaoOjb.class);
-
     @Override
-    public List<PendingReportBean> queryForPendingSupport(String personId) throws WorkflowException {
+    public List<PendingReportBean> queryForPendingSupport(String personId, Collection<String> excludedProposalTypes) throws WorkflowException {
         List<PendingReportBean> data = new ArrayList<>();
-        for(InstitutionalProposalPerson ipPerson: executePendingSupportQuery(personId)) {
-            lazyLoadProposal(ipPerson);
+        for(InstitutionalProposalPerson ipPerson : executePendingSupportQuery(personId, excludedProposalTypes)) {
             PendingReportBean bean = buildPendingReportBean(ipPerson);
             if(bean != null)  {
                 data.add(bean);
@@ -41,33 +42,20 @@ public class PendingReportDaoOjb extends BaseReportDaoOjb implements PendingRepo
     private PendingReportBean buildPendingReportBean(InstitutionalProposalPerson ipPerson) throws WorkflowException {
         InstitutionalProposal proposal = ipPerson.getInstitutionalProposal();
         PendingReportBean bean = null;
-        if(proposal !=null &&  shouldDataBeIncluded(proposal.getInstitutionalProposalDocument()) && proposal.isActiveVersion()) {
+        if(proposal != null && shouldDataBeIncluded(proposal.getInstitutionalProposalDocument())) {
             bean = new PendingReportBean(ipPerson);
         }
         return bean;
     }
 
-    private Collection<InstitutionalProposalPerson> executePendingSupportQuery(String personId) {
-        return getBusinessObjectService().findMatching(InstitutionalProposalPerson.class, Collections.singletonMap("personId", personId));
+    private Collection<InstitutionalProposalPerson> executePendingSupportQuery(String personId, Collection<String> excludedProposalTypes) {
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("personId", personId);
+        criteria.addEqualTo("institutionalProposal.proposalSequenceStatus", VersionStatus.ACTIVE.toString());
+        criteria.addNotIn("institutionalProposal.proposalTypeCode", excludedProposalTypes);
+
+        QueryByCriteria queryByCriteria = QueryFactory.newQuery(InstitutionalProposalPerson.class, criteria);
+
+        return getPersistenceBrokerTemplate().getCollectionByQuery(queryByCriteria);
     }
-
-    private void lazyLoadProposal(InstitutionalProposalPerson ipPerson) {
-        if(ipPerson.getInstitutionalProposal() == null) {
-            Map<String, Object> searchParams = new HashMap<>();
-            searchParams.put("proposalNumber", ipPerson.getProposalNumber());
-            searchParams.put("sequenceNumber", ipPerson.getSequenceNumber());
-
-            List<InstitutionalProposal> proposals = (List<InstitutionalProposal>) getBusinessObjectService().findMatching(InstitutionalProposal.class, searchParams);
-            InstitutionalProposal proposal = null;
-            if (!proposals.isEmpty()) {
-                proposal = proposals.get(0);
-            } else {
-                if (LOG.isInfoEnabled()) {
-                    LOG.info("institute proposal person found with out valid institutional proposal (id: " + ipPerson.getInstitutionalProposalContactId() + ")");
-                }
-            }
-            ipPerson.setInstitutionalProposal(proposal);
-        }
-    }
-
 }

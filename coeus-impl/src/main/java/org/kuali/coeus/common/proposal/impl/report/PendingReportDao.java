@@ -10,6 +10,7 @@ package org.kuali.coeus.common.proposal.impl.report;
 import org.kuali.coeus.common.framework.print.PendingReportBean;
 import org.kuali.rice.kew.api.exception.WorkflowException;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -21,5 +22,5 @@ public interface PendingReportDao {
      * @param personId - The person for whom pending support obligations are being queried
      * @return
      */
-    List<PendingReportBean> queryForPendingSupport(String personId) throws WorkflowException;
+    List<PendingReportBean> queryForPendingSupport(String personId, Collection<String> excludedProposalTypes) throws WorkflowException;
 }

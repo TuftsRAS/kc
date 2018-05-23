@@ -7,15 +7,12 @@
  */
 package org.kuali.coeus.common.proposal.impl.report;
 
-import org.kuali.coeus.common.framework.print.AbstractPrint;
-import org.kuali.coeus.common.framework.print.PrintConstants;
-import org.kuali.coeus.common.framework.print.PrintingException;
-import org.kuali.coeus.common.framework.print.PrintingService;
+import org.kuali.coeus.common.framework.print.*;
 import org.kuali.coeus.common.proposal.framework.report.CurrentAndPendingReportService;
-import org.kuali.coeus.common.framework.print.CurrentReportBean;
-import org.kuali.coeus.common.framework.print.PendingReportBean;
 import org.kuali.kra.infrastructure.Constants;
-import org.kuali.coeus.common.framework.print.AttachmentDataSource;
+import org.kuali.kra.institutionalproposal.document.InstitutionalProposalDocument;
+import org.kuali.rice.coreservice.framework.parameter.ParameterService;
+import org.kuali.rice.kew.api.exception.WorkflowException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -23,6 +20,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -53,6 +51,10 @@ public class CurrentAndPendingReportServiceImpl implements CurrentAndPendingRepo
     @Autowired
     @Qualifier("pendingProposalPrint")
     private PendingProposalPrint pendingProposalPrint;
+
+    @Autowired
+    @Qualifier("parameterService")
+    private ParameterService parameterService;
 
     // setters for dependency injection
     public void setCurrentReportDao(CurrentReportDao currentReportDao) {
@@ -86,8 +88,10 @@ public class CurrentAndPendingReportServiceImpl implements CurrentAndPendingRepo
     public List<PendingReportBean> loadPendingReportData(String personId) {
         List<PendingReportBean> data;
         try {
-            data = pendingReportDao.queryForPendingSupport(personId);
-        } catch(Exception e) {
+            Collection<String> excludedProposalTypes = getParameterService().getParameterValuesAsString(InstitutionalProposalDocument.class, Constants.EXCLUDED_CP_PROPOSAL_TYPE_CODES_PARAM);
+
+            data = pendingReportDao.queryForPendingSupport(personId, excludedProposalTypes);
+        } catch(WorkflowException e) {
             throw new RuntimeException(e);
         }
         return data;
@@ -117,7 +121,7 @@ public class CurrentAndPendingReportServiceImpl implements CurrentAndPendingRepo
         return source;
     }
 
-
-
-
+    protected ParameterService getParameterService() {
+        return parameterService;
+    }
 }

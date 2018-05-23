@@ -15,15 +15,14 @@ import org.kuali.coeus.common.proposal.framework.report.CurrentAndPendingReportS
 import org.kuali.coeus.propdev.impl.core.ProposalDevelopmentDocument;
 import org.kuali.coeus.sys.framework.service.KcServiceLocator;
 import org.kuali.kra.institutionalproposal.document.InstitutionalProposalDocument;
-import org.kuali.kra.institutionalproposal.home.InstitutionalProposal;
 import org.kuali.kra.institutionalproposal.proposaladmindetails.ProposalAdminDetails;
-import org.kuali.rice.coreservice.framework.parameter.ParameterService;
 import org.kuali.rice.kns.web.struts.form.KualiDocumentFormBase;
 import org.kuali.rice.kns.web.ui.ResultRow;
 import org.kuali.rice.krad.service.BusinessObjectService;
 
 import java.io.Serializable;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  *  Helper to prepare Current and Pending Report
@@ -35,11 +34,9 @@ public class ReportHelperBean implements Serializable {
     private boolean institutionalProposalExists;
     private String proposalNumber;
     private static final String DEV_PROPOSAL_NUMBER_FIELD_NAME = "devProposalNumber";
-    protected static final String PROP_SEQ_STATUS = "ACTIVE";
     protected static final String PROP_NUMBER = "proposalNumber";
-    protected static final int PROP_PENDING_STATUS = 1;
-
-    protected static final String EXCLUDED_CP_PROPOSAL_TYPE_CODES_PARAM = "Excluded_Codes_CP_Report";
+    public static final String PROP_SEQ_STATUS = "ACTIVE";
+    public static final int PROP_PENDING_STATUS = 1;
 
     public ReportHelperBean(KualiDocumentFormBase form) {
         this.form = form;
@@ -113,10 +110,6 @@ public class ReportHelperBean implements Serializable {
         return KcServiceLocator.getService(CurrentAndPendingReportService.class);
     }
 
-    protected ParameterService getParameterService() {
-        return KcServiceLocator.getService(ParameterService.class);
-    }
-
     private String findProposalNumberFromDevelopmentProposal() {
         return ((ProposalDevelopmentDocument) form.getDocument()).getDevelopmentProposal().getProposalNumber();
     }
@@ -128,26 +121,7 @@ public class ReportHelperBean implements Serializable {
     private class PendingReportHelperBean implements Serializable {
 
         public List<ResultRow> preparePendingReport() {
-            List<ResultRow> resultRows = new ArrayList<ResultRow>();
-            Map<String, String> proposalNumberMap = new HashMap<String, String>();
-            List<InstitutionalProposal> institutionalProposalList = null;  
-            
-            for(PendingReportBean bean: loadReportData()) {
-                proposalNumberMap.put(PROP_NUMBER, String.valueOf(bean.getProposalNumber()));
-                institutionalProposalList = (List<InstitutionalProposal>) getBusinessObjectService()
-                                        .findMatching(InstitutionalProposal.class,proposalNumberMap);
-                for(InstitutionalProposal institutionalProposal:institutionalProposalList){
-                    Collection<String> excludedProposalTypes = getParameterService()
-                            .getParameterValuesAsString(InstitutionalProposalDocument.class, EXCLUDED_CP_PROPOSAL_TYPE_CODES_PARAM);
-                    if(institutionalProposal.getProposalSequenceStatus().equals(PROP_SEQ_STATUS)
-                            && institutionalProposal.getStatusCode() == PROP_PENDING_STATUS
-                            && !excludedProposalTypes.contains(institutionalProposal.getProposalTypeCode().toString())) {
-                        resultRows.add(bean.createResultRow());
-                    }
-                }
-            }
-
-            return resultRows;
+            return loadReportData().stream().map(PendingReportBean::createResultRow).collect(Collectors.toList());
         }
 
         private List<PendingReportBean> loadReportData() {
