@@ -883,13 +883,22 @@ public class ProposalDevelopmentSubmitController extends
         		.collect(toCollection(HashSet::new));
     }
     
-    protected HashSet<String> getAllCurrentApprovers(String documentNumber, String loggedInUser) {
+    protected Set<String> getAllCurrentApprovers(String documentNumber, String loggedInUser) {
     	final List<ActionRequestValue> allActionRequestsByDocumentId = getAllActionRequestsByDocumentId(documentNumber);
-    	return allActionRequestsByDocumentId.stream()
-    		.filter(ActionRequestValue::isActive)
-    		.map(ActionRequestValue::getPrincipalId)
-    		.filter(principalId -> principalId != null && !principalId.equals(loggedInUser))
-    		.collect(toCollection(HashSet::new));
+
+        return allActionRequestsByDocumentId.stream()
+                .filter(ActionRequestValue::isActive)
+                .flatMap(actionRequestValue -> {
+                    if (actionRequestValue.getPrincipalId() != null) {
+                        return Stream.of(actionRequestValue.getPrincipalId());
+                    } else if (actionRequestValue.getGroupId() != null) {
+                        return getGroupService().getMemberPrincipalIds(actionRequestValue.getGroupId()).stream();
+                    } else {
+                        return Stream.empty();
+                    }
+                })
+                .filter(principalId -> !principalId.equals(loggedInUser))
+                .collect(Collectors.toSet());
     }
     
     protected Stream<ActionRequestValue> getActionAndChildren(ActionRequestValue actionRequestValue) {

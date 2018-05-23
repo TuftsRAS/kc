@@ -7,9 +7,6 @@
  */
 package org.kuali.coeus.propdev.impl.core;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.kuali.rice.kew.actionrequest.ActionRequestValue;
@@ -17,11 +14,11 @@ import org.kuali.rice.kew.actionrequest.service.ActionRequestService;
 import org.kuali.rice.kew.actiontaken.ActionTakenValue;
 import org.kuali.rice.kew.api.action.ActionRequestStatus;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
+
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 public class ProposalDevelopmentSubmitControllerTest {
 
@@ -216,7 +213,7 @@ public class ProposalDevelopmentSubmitControllerTest {
 
 		when(actionRequestService.findAllActionRequestsByDocumentId(any(String.class)))
         	.thenReturn(actionRequests);
-        HashSet<String> approvers = submitController.getAllCurrentApprovers("1", BRUCE_WAYNE);
+        Set<String> approvers = submitController.getAllCurrentApprovers("1", BRUCE_WAYNE);
         assertEquals(4, approvers.size());
         assertTrue(approvers.contains(ROGER_RABBIT));
         assertTrue(approvers.contains(TONY_STARK));
@@ -241,7 +238,7 @@ public class ProposalDevelopmentSubmitControllerTest {
 
 		when(actionRequestService.findAllActionRequestsByDocumentId(any(String.class)))
         	.thenReturn(actionRequests);
-        HashSet<String> approvers = submitController.getAllCurrentApprovers("1", BRUCE_WAYNE);
+        Set<String> approvers = submitController.getAllCurrentApprovers("1", BRUCE_WAYNE);
         assertEquals(1, approvers.size());
         assertTrue(approvers.contains(PETER_PARKER));
     }
@@ -255,7 +252,7 @@ public class ProposalDevelopmentSubmitControllerTest {
     @Test
     public void testGetRejectedNotificationWhenFirstPolicy() {
         when(actionRequestService.findAllActionRequestsByDocumentId(any(String.class))).thenReturn(getActionRequestValuesFirstApprove());
-        HashSet<String> approvers = submitController.getAllCurrentApprovers("1", PETER_PARKER);
+        Set<String> approvers = submitController.getAllCurrentApprovers("1", PETER_PARKER);
         assertEquals(2, approvers.size());
     }
 
@@ -276,7 +273,7 @@ public class ProposalDevelopmentSubmitControllerTest {
     public void testGetRejectedNotificationWhenAllPolicy() {
         when(actionRequestService.findAllActionRequestsByDocumentId(any(String.class))).thenReturn(getActionRequestValuesAllApprove());
         submitController.setActionRequestService(actionRequestService);
-        HashSet<String> approvers = submitController.getAllCurrentApprovers("1", PETER_PARKER);
+        Set<String> approvers = submitController.getAllCurrentApprovers("1", PETER_PARKER);
         assertEquals(2, approvers.size());
         assertTrue(approvers.contains(CLARK_KENT));
         assertTrue(approvers.contains(BRUCE_WAYNE));
@@ -285,7 +282,7 @@ public class ProposalDevelopmentSubmitControllerTest {
     @Test
     public void testGetRejectedNotificationWhenAllPolicyAndDiffLoggedInUser() {
         when(actionRequestService.findAllActionRequestsByDocumentId(any(String.class))).thenReturn(getActionRequestValuesAllApprove());
-        HashSet<String> approvers = submitController.getAllCurrentApprovers("1", ROGER_RABBIT);
+        Set<String> approvers = submitController.getAllCurrentApprovers("1", ROGER_RABBIT);
         assertEquals(3, approvers.size());
         assertTrue(approvers.contains(CLARK_KENT));
         assertTrue(approvers.contains(PETER_PARKER));
