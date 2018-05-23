@@ -52,7 +52,10 @@ public class PendingReportDaoOjb extends BaseReportDaoOjb implements PendingRepo
         Criteria criteria = new Criteria();
         criteria.addEqualTo("personId", personId);
         criteria.addEqualTo("institutionalProposal.proposalSequenceStatus", VersionStatus.ACTIVE.toString());
-        criteria.addNotIn("institutionalProposal.proposalTypeCode", excludedProposalTypes);
+
+        if (!excludedProposalTypes.isEmpty()) {
+            criteria.addNotIn("institutionalProposal.proposalTypeCode", excludedProposalTypes);
+        }
 
         QueryByCriteria queryByCriteria = QueryFactory.newQuery(InstitutionalProposalPerson.class, criteria);
 
