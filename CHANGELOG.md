@@ -1,6 +1,10 @@
 
 
 ## CURRENT
+* No Changes
+
+
+## coeus-1805.0024
 * RESKC-2927: Fix Current and Pending Report issue that displayed all proposals on PDF without considering parameter that excludes certain types and refactoring. (#2894)
 
   * Omar Soto Fortuño on Wed, 23 May 2018 10:01:29 -0400 [View Commit](../../commit/92e9dfc55ffe7feb36fe15be6959f03d73cc0adc)
