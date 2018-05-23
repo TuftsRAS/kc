@@ -213,8 +213,9 @@
 
 	<bean id="PropDev-DetailsPage-CurrentAwardNumberField" parent="PropDev-DetailsPage-CurrentAwardNumberField-parentBean" />
 	<bean id="PropDev-DetailsPage-CurrentAwardNumberField-parentBean"
-		abstract="true" parent="Uif-InputField" p:propertyName="currentAwardNumber"
-		p:progressiveRender="@{#fp.proposalTypeCode != '1'}">
+		  abstract="true" parent="Uif-InputField" p:propertyName="currentAwardNumber"
+		  p:progressiveRender="@{#fp.proposalTypeCode != '1'}"
+		  p:render="@{#fp.proposalTypeCode != '1'}">
 		<property name="quickfinder">
 			<bean parent="Uif-QuickFinder" p:dataObjectClassName="org.kuali.kra.award.home.Award"
 				p:fieldConversions="awardNumber:currentAwardNumber"
@@ -243,8 +244,9 @@
 
 	<bean id="PropDev-DetailsPage-ContinuedFromField" parent="PropDev-DetailsPage-ContinuedFromField-parentBean" />
 	<bean id="PropDev-DetailsPage-ContinuedFromField-parentBean"
-		abstract="true" parent="Uif-InputField" p:propertyName="continuedFrom"
-		p:progressiveRender="@{#fp.proposalTypeCode != '1'}">
+		  abstract="true" parent="Uif-InputField" p:propertyName="continuedFrom"
+		  p:progressiveRender="@{#fp.proposalTypeCode != '1'}"
+		  p:render="@{#fp.proposalTypeCode != '1'}">
 		<property name="quickfinder">
 			<bean parent="Uif-QuickFinder"
 				p:dataObjectClassName="org.kuali.kra.institutionalproposal.home.InstitutionalProposal"
