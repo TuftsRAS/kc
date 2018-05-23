@@ -1,6 +1,13 @@
 
 
 ## CURRENT
+* RESKC-2927: Fix Current and Pending Report issue that displayed all proposals on PDF without considering parameter that excludes certain types and refactoring. (#2894)
+
+  * Omar Soto Fortuño on Wed, 23 May 2018 10:01:29 -0400 [View Commit](../../commit/92e9dfc55ffe7feb36fe15be6959f03d73cc0adc)
+* RESKC-2786: when proposal type is "New" then current award number and continued from should be null.  When opening a when proposal and type is "New" the current award number and continued from field should not be visible.
+  * Travis Schneeberger on Tue, 22 May 2018 13:01:47 -0400 [View Commit](../../commit/1d51e00f7b82aa06d5af5fed2611f973663871ed)
+
+## coeus-1805.0023
 * RESKC-2887: fixing contentId DD validation
   * Travis Schneeberger on Mon, 21 May 2018 16:48:48 -0400 [View Commit](../../commit/600c1da6fad0bf408b34c392a9e43acb97fee36e)
 
