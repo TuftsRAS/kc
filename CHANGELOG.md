@@ -1,6 +1,11 @@
 
 
 ## CURRENT
+* RESKC-2556: Fix issue that prevented Maintenance Notifications being sent to Group Members in Peopleflows (#2897)
+
+  * Omar Soto Fortuño on Wed, 23 May 2018 16:50:00 -0400 [View Commit](../../commit/6dc777d94728b0c44c812e88fe98f5b51282cfa8)
+
+## coeus-1805.0026
 * RESKC-2945: Handle non-matching quotes in CITI records better (#2898)
 
   * Terry Durkin on Wed, 23 May 2018 15:06:25 -0400 [View Commit](../../commit/e74ac940a377d3e93415c20ad27eee6eef68f7c3)
