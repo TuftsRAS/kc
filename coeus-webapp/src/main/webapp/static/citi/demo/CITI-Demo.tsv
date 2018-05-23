@@ -8,11 +8,11 @@ TREVOR	DUGGINS	duggins	9188330	Human Research	300	Social & Behavioral Research I
 EMORY	EAGLE	eagle	9205231	CITI Conflicts of Interest	12	NIH/PHS Conflict of Interest Course	88	80	1	Stage 1		5/1/15 15:38	5/1/16 15:38		eagle	eagle														multiple courses per person										
 EMORY	EAGLE	eagle	9227246	Human Research	300	Social & Behavioral Research Investigators	90	90	1	Basic Course		5/1/15 16:56	5/1/17 16:56		eagle	eagle														multiple courses per person										
 Jane 	Doe	jdoe	9227247	Aseptic Surgery	4	Aseptic surgery	100	90	1	Lab Animal Research		4/16/14 11:54	4/16/16 11:54		jdoe	jdoe														no person record										
-Jenny	Jones	jenjones	9059996	Human Research	300	Social & Behavioral Research Investigators	90	90	1	Basic Course		4/16/16 20:39	4/16/18 20:39		jenjones	jenjones																								
+Jenny	Jones	jenjones	9059996	Human Research	300	Social & Behavioral "Research" Investigators	90	90	1	Basic Course		4/16/16 20:39	4/16/18 20:39		jenjones	jenjones														multiple courses per person									
 Joseph A	Schultz	1111111111	9059995	Human Research	5	Biomedical Research Investigators	93	90	2	Refresher		4/1/16 15:53	4/1/17 15:53		jschultz	jschultz																								
 Joe	Tester	jtester	9246200	Human Research	5	Biomedical Research Investigators	97	90	1	Basic Course		9/25/13 2:16	9/25/14 2:16		jtester	jtester																								
 Opal	Blood	oblood	9088645	Working with Mice in Research Settings	10	Working with Mice in Research	100	90	1	Lab Animal Research		12/28/15 22:16	12/28/16 22:16		oblood	oblood														multiple courses per person										
-Opal	Blood	oblood	9105170	Aseptic Surgery	4	Aseptic surgery	100	90	1	Lab Animal Research		12/28/15 18:52	12/28/17 18:52		oblood	oblood														multiple courses per person										
+Opal	Blood	oblood	9105170	"Aseptic" Surgery	4	Aseptic surgery	100	90	1	Lab Animal Research		12/28/15 18:52	12/28/17 18:52		oblood	oblood														multiple courses per person
 Opal	Blood	oblood	9263976	Working with Rats in Research Settings	7	Working with Rats in Research Settings	92	90	1	Lab Animal Research		12/28/15 22:31	12/28/16 22:31		oblood	oblood														multiple courses per person										
-Roger	Rabbit	10000000059	9113967	Working with Rats in Research Settings	7	Working with Rats in Research Settings	100	90	1	Lab Animal Research		3/31/15 22:00	3/31/17 22:00		rrabbit	rrabbit														Fail and pass										
+Roger	Rabbit	10000000059	9113967	"Working with Rats in Research Settings"	7	Working with Rats in Research Settings	100	90	1	Lab Animal Research		3/31/15 22:00	3/31/17 22:00		rrabbit	rrabbit														Fail and pass
 Roger	Rabbit	10000000059	9285395	Working with Rats in Research Settings	7	Working with Rats in Research Settings	50	90	1	Lab Animal Research		3/31/15 13:37			rrabbit	rrabbit														fail and pass										

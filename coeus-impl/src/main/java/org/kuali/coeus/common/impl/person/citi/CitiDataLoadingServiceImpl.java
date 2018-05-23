@@ -89,6 +89,7 @@ public class CitiDataLoadingServiceImpl implements CitiDataLoadingService {
                                     .withIgnoreHeaderCase(true)
                                     .withIgnoreSurroundingSpaces(true)
                                     .withTrim(true)
+                                    .withQuote(null)
                                     .parse(reader);
 
                             processRecords(headerMap, parser.iterator());
