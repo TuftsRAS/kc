@@ -1,6 +1,14 @@
 
 
 ## CURRENT
+* RESKC-2927: Creating constants on PendingReportDaoOjb.java.
+  * omarpr on Wed, 23 May 2018 20:11:11 -0400 [View Commit](../../commit/7f6c9158ff19637e84cdbc919ecaae18523f7fea)
+* RESKC-2927: PendingProposalXmlStream.java code reformatting.
+  * omarpr on Wed, 23 May 2018 19:58:44 -0400 [View Commit](../../commit/d4324ae75ea31a224ed458ec1ca8a3531a8ec9db)
+* RESKC-2927: Removing hard coded values (to exclude Proposal Types) on the Pending Report and fixing STE when parameter is empty.
+  * omarpr on Wed, 23 May 2018 19:48:02 -0400 [View Commit](../../commit/00f01c3797fd89e389ae2b6c8d940a2ea889f681)
+
+## coeus-1805.0027
 * RESKC-2556: Fix issue that prevented Maintenance Notifications being sent to Group Members in Peopleflows (#2897)
 
   * Omar Soto Fortuño on Wed, 23 May 2018 16:50:00 -0400 [View Commit](../../commit/6dc777d94728b0c44c812e88fe98f5b51282cfa8)
