@@ -1,6 +1,10 @@
 
 
 ## CURRENT
+* No Changes
+
+
+## coeus-1805.0029
 * RESKC-2927: More cleanup on PendingProposalXmlStream and fixing issue that was causing not active IP to be shown on the printed version of PendingSupport (due to it was using BO to reload data when it wasn't needed anymore). (#2901)
 
   * Omar Soto Fortuño on Thu, 24 May 2018 13:06:22 -0400 [View Commit](../../commit/54256cfba34b572aa345280a0f84570f8e32186d)
