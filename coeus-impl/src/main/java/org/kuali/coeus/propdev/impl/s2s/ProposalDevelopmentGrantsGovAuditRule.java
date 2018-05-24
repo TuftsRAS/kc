@@ -7,6 +7,7 @@
  */
 package org.kuali.coeus.propdev.impl.s2s;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -105,7 +106,8 @@ public class ProposalDevelopmentGrantsGovAuditRule  implements DocumentAuditRule
 		    try {
                 FormGenerationResult result = getS2sValidatorService().generateAndValidateForms(proposalDevelopmentDocument);
                 valid &= result.isValid();
-                if (result.isValid()) {
+                //the NIH Validation Service detects multiple submissions, so calling this after a S2S Submission will cause an error.
+                if (result.isValid() && CollectionUtils.isEmpty(proposalDevelopmentDocument.getDevelopmentProposal().getS2sAppSubmission())) {
                     valid &= nihValidation(proposalDevelopmentDocument.getDevelopmentProposal().getApplicantOrganization().getOrganization().getDunsNumber(), result.getApplicationXml(), result.getAttachments());
                 }
                 setValidationErrorMessage(result.getErrors(), provider);
