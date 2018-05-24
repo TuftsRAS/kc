@@ -1,6 +1,15 @@
 
 
 ## CURRENT
+* RESKC-2927: More cleanup on PendingProposalXmlStream and fixing issue that was causing not active IP to be shown on the printed version of PendingSupport (due to it was using BO to reload data when it wasn't needed anymore). (#2901)
+
+  * Omar Soto Fortuño on Thu, 24 May 2018 13:06:22 -0400 [View Commit](../../commit/54256cfba34b572aa345280a0f84570f8e32186d)
+* RESKC-2941: do not call the NIH validation service after a S2S submission.
+  * Travis Schneeberger on Thu, 24 May 2018 12:31:15 -0400 [View Commit](../../commit/5d8a84ec6144d5e251a44b8b6cbffceadb663554)
+* RESKC-2856: When a User Attached Form is added and removed followed by a save event, the include flag may remain checked even though the form is no longer available.
+  * Travis Schneeberger on Thu, 24 May 2018 11:06:00 -0400 [View Commit](../../commit/6ad37af9d0e2ac67d82982aa12e5f50a0c6ab179)
+
+## coeus-1805.0028
 * RESKC-2927: Creating constants on PendingReportDaoOjb.java.
   * omarpr on Wed, 23 May 2018 20:11:11 -0400 [View Commit](../../commit/7f6c9158ff19637e84cdbc919ecaae18523f7fea)
 * RESKC-2927: PendingProposalXmlStream.java code reformatting.
