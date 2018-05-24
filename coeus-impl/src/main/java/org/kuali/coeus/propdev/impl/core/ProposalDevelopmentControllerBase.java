@@ -36,6 +36,7 @@ import org.kuali.coeus.propdev.impl.person.ProposalPersonCoiIntegrationService;
 import org.kuali.coeus.propdev.impl.person.attachment.ProposalPersonBiography;
 import org.kuali.coeus.propdev.impl.person.attachment.ProposalPersonBiographyService;
 import org.kuali.coeus.propdev.impl.questionnaire.ProposalDevelopmentQuestionnaireHelper;
+import org.kuali.coeus.propdev.impl.s2s.S2sOpportunity;
 import org.kuali.coeus.propdev.impl.specialreview.ProposalSpecialReview;
 import org.kuali.coeus.propdev.impl.specialreview.ProposalSpecialReviewAttachment;
 import org.kuali.coeus.propdev.impl.specialreview.ProposalSpecialReviewExemption;
@@ -283,6 +284,15 @@ public abstract class ProposalDevelopmentControllerBase {
      public ModelAndView save(ProposalDevelopmentDocumentForm form) {
          ProposalDevelopmentDocument proposalDevelopmentDocument = (ProposalDevelopmentDocument) form.getDocument();
 
+         final S2sOpportunity s2sOpportunity = proposalDevelopmentDocument.getDevelopmentProposal().getS2sOpportunity();
+         if (s2sOpportunity != null) {
+             s2sOpportunity.getS2sOppForms().forEach(oppForm -> {
+                 if (!oppForm.getAvailable() && oppForm.getInclude()) {
+                     oppForm.setInclude(false);
+                 }
+             });
+         }
+
          if (StringUtils.equalsIgnoreCase(form.getPageId(), Constants.PROP_DEV_PERMISSIONS_PAGE)) {
              saveDocumentPermissions(form);
          }
@@ -302,7 +312,7 @@ public abstract class ProposalDevelopmentControllerBase {
          if (StringUtils.equalsIgnoreCase(form.getPageId(), ProposalDevelopmentDataValidationConstants.DETAILS_PAGE_ID)) {
              handleProposalTypeChange(proposalDevelopmentDocument.getDevelopmentProposal());
              handleSponsorChange(proposalDevelopmentDocument);
-             if (proposalDevelopmentDocument.getDevelopmentProposal().getS2sOpportunity() != null) {
+             if (s2sOpportunity != null) {
                  handleProposalTypeChangeForOpp(proposalDevelopmentDocument.getDevelopmentProposal());
              }
          }
