@@ -26,6 +26,9 @@ import java.util.List;
  */
 @Component("pendingReportDao")
 public class PendingReportDaoOjb extends BaseReportDaoOjb implements PendingReportDao {
+    private static final String PERSON_ID = "personId";
+    private static final String IP_PROPOSAL_SEQUENCE_STATUS = "institutionalProposal.proposalSequenceStatus";
+    private static final String IP_PROPOSAL_TYPE_CODE = "institutionalProposal.proposalTypeCode";
 
     @Override
     public List<PendingReportBean> queryForPendingSupport(String personId, Collection<String> excludedProposalTypes) throws WorkflowException {
@@ -50,9 +53,12 @@ public class PendingReportDaoOjb extends BaseReportDaoOjb implements PendingRepo
 
     private Collection<InstitutionalProposalPerson> executePendingSupportQuery(String personId, Collection<String> excludedProposalTypes) {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("personId", personId);
-        criteria.addEqualTo("institutionalProposal.proposalSequenceStatus", VersionStatus.ACTIVE.toString());
-        criteria.addNotIn("institutionalProposal.proposalTypeCode", excludedProposalTypes);
+        criteria.addEqualTo(PERSON_ID, personId);
+        criteria.addEqualTo(IP_PROPOSAL_SEQUENCE_STATUS, VersionStatus.ACTIVE.toString());
+
+        if (!excludedProposalTypes.isEmpty()) {
+            criteria.addNotIn(IP_PROPOSAL_TYPE_CODE, excludedProposalTypes);
+        }
 
         QueryByCriteria queryByCriteria = QueryFactory.newQuery(InstitutionalProposalPerson.class, criteria);
 
