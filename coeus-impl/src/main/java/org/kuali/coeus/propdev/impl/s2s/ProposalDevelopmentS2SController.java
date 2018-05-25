@@ -12,7 +12,6 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.kuali.coeus.propdev.api.s2s.S2sFormConfigurationContract;
-import org.kuali.coeus.propdev.api.s2s.S2sFormConfigurationService;
 import org.kuali.coeus.propdev.api.s2s.S2sUserAttachedFormFileContract;
 import org.kuali.coeus.propdev.api.s2s.UserAttachedFormService;
 import org.kuali.coeus.propdev.impl.auth.ProposalDevelopmentDocumentAuthorizer;
@@ -96,10 +95,6 @@ public class ProposalDevelopmentS2SController extends ProposalDevelopmentControl
     @Autowired
     @Qualifier("proposalDevelopmentDocumentViewAuthorizer")
     private ProposalDevelopmentDocumentViewAuthorizer proposalDevelopmentDocumentViewAuthorizer;
-
-    @Autowired
-    @Qualifier("s2sFormConfigurationService")
-    private S2sFormConfigurationService s2sFormConfigurationService;
 
     @Autowired
     @Qualifier("formGeneratorService")
@@ -671,14 +666,6 @@ public class ProposalDevelopmentS2SController extends ProposalDevelopmentControl
 
     public void setProposalDevelopmentDocumentViewAuthorizer(ProposalDevelopmentDocumentViewAuthorizer proposalDevelopmentDocumentViewAuthorizer) {
         this.proposalDevelopmentDocumentViewAuthorizer = proposalDevelopmentDocumentViewAuthorizer;
-    }
-
-    public S2sFormConfigurationService getS2sFormConfigurationService() {
-        return s2sFormConfigurationService;
-    }
-
-    public void setS2sFormConfigurationService(S2sFormConfigurationService s2sFormConfigurationService) {
-        this.s2sFormConfigurationService = s2sFormConfigurationService;
     }
 
     public FormGeneratorService getFormGeneratorService() {

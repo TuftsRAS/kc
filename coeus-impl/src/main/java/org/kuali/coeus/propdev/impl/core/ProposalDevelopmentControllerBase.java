@@ -22,6 +22,8 @@ import org.kuali.coeus.common.notification.impl.bo.NotificationTypeRecipient;
 import org.kuali.coeus.common.notification.impl.service.KcNotificationService;
 import org.kuali.coeus.common.questionnaire.framework.answer.Answer;
 import org.kuali.coeus.common.questionnaire.framework.answer.AnswerHeader;
+import org.kuali.coeus.propdev.api.s2s.S2sFormConfigurationContract;
+import org.kuali.coeus.propdev.api.s2s.S2sFormConfigurationService;
 import org.kuali.coeus.propdev.impl.auth.perm.ProposalDevelopmentPermissionsService;
 import org.kuali.coeus.propdev.impl.coi.CoiConstants;
 import org.kuali.coeus.propdev.impl.datavalidation.ProposalDevelopmentDataValidationConstants;
@@ -219,6 +221,10 @@ public abstract class ProposalDevelopmentControllerBase {
     @Qualifier("keyPersonnelService")
     private KeyPersonnelService keyPersonnelService;
 
+    @Autowired
+    @Qualifier("s2sFormConfigurationService")
+    private S2sFormConfigurationService s2sFormConfigurationService;
+
 
     private ProjectPublisher projectPublisher;
 
@@ -286,11 +292,20 @@ public abstract class ProposalDevelopmentControllerBase {
 
          final S2sOpportunity s2sOpportunity = proposalDevelopmentDocument.getDevelopmentProposal().getS2sOpportunity();
          if (s2sOpportunity != null) {
-             s2sOpportunity.getS2sOppForms().forEach(oppForm -> {
-                 if (!oppForm.getAvailable() && oppForm.getInclude()) {
-                     oppForm.setInclude(false);
-                 }
-             });
+
+             final Set<String> disabledForms = getS2sFormConfigurationService().findAllS2sFormConfigurations().stream()
+                     .filter(cfg -> !cfg.isActive())
+                     .map(S2sFormConfigurationContract::getFormName)
+                     .collect(Collectors.toSet());
+
+             s2sOpportunity.getS2sOppForms().stream()
+                     .filter(oppForm -> oppForm.getAvailable() && (oppForm.getUserAttachedForm() == null || !oppForm.getUserAttachedForm()))
+                     .filter(oppForm -> disabledForms.contains(oppForm.getFormName()))
+                     .forEach(oppForm -> oppForm.setAvailable(false));
+
+             s2sOpportunity.getS2sOppForms().stream()
+                     .filter(oppForm -> !oppForm.getAvailable() && oppForm.getInclude())
+                     .forEach(oppForm -> oppForm.setInclude(false));
          }
 
          if (StringUtils.equalsIgnoreCase(form.getPageId(), Constants.PROP_DEV_PERMISSIONS_PAGE)) {
@@ -1134,5 +1149,27 @@ public abstract class ProposalDevelopmentControllerBase {
         this.proposalTypeService = proposalTypeService;
     }
 
+    public KualiRuleService getKualiRuleService() {
+        return kualiRuleService;
+    }
 
+    public void setKualiRuleService(KualiRuleService kualiRuleService) {
+        this.kualiRuleService = kualiRuleService;
+    }
+
+    public KeyPersonnelService getKeyPersonnelService() {
+        return keyPersonnelService;
+    }
+
+    public void setKeyPersonnelService(KeyPersonnelService keyPersonnelService) {
+        this.keyPersonnelService = keyPersonnelService;
+    }
+
+    public S2sFormConfigurationService getS2sFormConfigurationService() {
+        return s2sFormConfigurationService;
+    }
+
+    public void setS2sFormConfigurationService(S2sFormConfigurationService s2sFormConfigurationService) {
+        this.s2sFormConfigurationService = s2sFormConfigurationService;
+    }
 }

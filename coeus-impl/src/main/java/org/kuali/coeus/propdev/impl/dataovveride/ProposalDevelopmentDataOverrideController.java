@@ -17,7 +17,6 @@ import org.kuali.coeus.propdev.impl.notification.NotificationControllerService;
 import org.kuali.coeus.propdev.impl.notification.ProposalDevelopmentNotificationContext;
 import org.kuali.coeus.propdev.impl.notification.ProposalDevelopmentNotificationRenderer;
 import org.kuali.kra.infrastructure.Constants;
-import org.kuali.rice.krad.service.KualiRuleService;
 import org.kuali.rice.krad.uif.UifConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -31,10 +30,6 @@ import java.util.*;
 
 @Controller
 public class ProposalDevelopmentDataOverrideController extends ProposalDevelopmentControllerBase {
-
-    @Autowired
-    @Qualifier("kualiRuleService")
-    private KualiRuleService kualiRuleService;
 
     @Autowired
     @Qualifier("notificationControllerService")
@@ -113,14 +108,6 @@ public class ProposalDevelopmentDataOverrideController extends ProposalDevelopme
         Map<String, List<ProposalChangedData>> changeHistory = pdDocument.getDevelopmentProposal().getProposalChangeHistory();
         changeHistory.computeIfAbsent(newProposalChangedData.getEditableColumn().getColumnLabel(), k -> new ArrayList<>());
         changeHistory.get(newProposalChangedData.getEditableColumn().getColumnLabel()).add(0, newProposalChangedData);
-    }
-
-    public KualiRuleService getKualiRuleService() {
-        return kualiRuleService;
-    }
-
-    public void setKualiRuleService(KualiRuleService kualiRuleService) {
-        this.kualiRuleService = kualiRuleService;
     }
 
     public NotificationControllerService getNotificationControllerService() {

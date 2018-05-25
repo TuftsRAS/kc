@@ -14,12 +14,9 @@ import org.kuali.coeus.propdev.impl.core.*;
 import org.kuali.coeus.propdev.impl.notification.ProposalDevelopmentNotificationContext;
 import org.kuali.coeus.propdev.impl.notification.ProposalDevelopmentNotificationRenderer;
 import org.kuali.coeus.propdev.impl.person.attachment.AddPersonnelAttachmentEvent;
-import org.kuali.coeus.sys.framework.gv.GlobalVariableService;
 import org.kuali.kra.infrastructure.Constants;
 import org.kuali.coeus.propdev.impl.person.attachment.ProposalPersonBiography;
-import org.kuali.rice.core.api.datetime.DateTimeService;
 import org.kuali.rice.krad.bo.Note;
-import org.kuali.rice.krad.service.KualiRuleService;
 import org.kuali.rice.krad.uif.UifConstants;
 import org.kuali.rice.krad.uif.UifParameters;
 import org.kuali.rice.krad.uif.util.ObjectPropertyUtils;
@@ -54,20 +51,8 @@ public class ProposalDevelopmentAttachmentController extends ProposalDevelopment
     private LegacyNarrativeService legacyNarrativeService;
 
     @Autowired
-    @Qualifier("dateTimeService")
-    private DateTimeService dateTimeService;
-
-    @Autowired
-    @Qualifier("globalVariableService")
-    private GlobalVariableService globalVariableService;
-
-    @Autowired
     @Qualifier("kcFileControllerService")
     private FileControllerService kcFileControllerService;
-
-    @Autowired
-    @Qualifier("kualiRuleService")
-    private KualiRuleService kualiRuleService;
 
     @Autowired
     @Qualifier("multipartFileValidationService")
@@ -298,7 +283,7 @@ public class ProposalDevelopmentAttachmentController extends ProposalDevelopment
         biography.setDevelopmentProposal(document.getDevelopmentProposal());
         biography.setBiographyNumber(document
                 .getDocumentNextValue(Constants.PROP_PERSON_BIO_NUMBER));
-        biography.setUpdateUser(globalVariableService.getUserSession().getPrincipalName());
+        biography.setUpdateUser(getGlobalVariableService().getUserSession().getPrincipalName());
         biography.setUpdateTimestamp(getDateTimeService().getCurrentTimestamp());
         getDataObjectService().wrap(biography).fetchRelationship(ProposalDevelopmentConstants.KradConstants.PROP_PER_DOC_TYPE);
 
@@ -388,7 +373,7 @@ public class ProposalDevelopmentAttachmentController extends ProposalDevelopment
     public ModelAndView saveBiography(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm form) throws Exception{
         ProposalPersonBiography biography = form.getProposalDevelopmentAttachmentHelper().getBiography();
         int selectedLineIndex = Integer.parseInt(form.getProposalDevelopmentAttachmentHelper().getSelectedLineIndex());
-        biography.setUpdateUser(globalVariableService.getUserSession().getPrincipalName());
+        biography.setUpdateUser(getGlobalVariableService().getUserSession().getPrincipalName());
         biography.setUpdateTimestamp(getDateTimeService().getCurrentTimestamp());
         getDataObjectService().wrap(biography).fetchRelationship(ProposalDevelopmentConstants.KradConstants.PROP_PER_DOC_TYPE);
 
@@ -553,39 +538,11 @@ public class ProposalDevelopmentAttachmentController extends ProposalDevelopment
         this.legacyNarrativeService = legacyNarrativeService;
     }
 
-    @Override
-    public DateTimeService getDateTimeService() {
-        return dateTimeService;
-    }
-
-    @Override
-    public void setDateTimeService(DateTimeService dateTimeService) {
-        this.dateTimeService = dateTimeService;
-    }
-
-    @Override
-    public GlobalVariableService getGlobalVariableService() {
-        return globalVariableService;
-    }
-
-    @Override
-    public void setGlobalVariableService(GlobalVariableService globalVariableService) {
-        this.globalVariableService = globalVariableService;
-    }
-
     public FileControllerService getKcFileControllerService() {
         return kcFileControllerService;
     }
 
     public void setKcFileControllerService(FileControllerService kcFileControllerService) {
         this.kcFileControllerService = kcFileControllerService;
-    }
-
-    public KualiRuleService getKualiRuleService() {
-        return kualiRuleService;
-    }
-
-    public void setKualiRuleService(KualiRuleService kualiRuleService) {
-        this.kualiRuleService = kualiRuleService;
     }
 }

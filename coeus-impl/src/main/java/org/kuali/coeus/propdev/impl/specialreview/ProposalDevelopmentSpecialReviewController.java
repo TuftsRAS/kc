@@ -19,8 +19,6 @@ import org.kuali.coeus.sys.framework.controller.ControllerFileUtils;
 import org.kuali.kra.iacuc.IacucProtocolFinderDao;
 import org.kuali.kra.protocol.ProtocolBase;
 import org.kuali.kra.protocol.ProtocolFinderDao;
-import org.kuali.rice.krad.data.DataObjectService;
-import org.kuali.rice.krad.service.KualiRuleService;
 import org.kuali.rice.krad.uif.UifConstants;
 import org.kuali.rice.krad.uif.UifParameters;
 import org.kuali.rice.krad.util.ErrorMessage;
@@ -54,14 +52,6 @@ public class ProposalDevelopmentSpecialReviewController extends ProposalDevelopm
     @Autowired
     @Qualifier("iacucProtocolFinderDao")
     private IacucProtocolFinderDao iacucProtocolFinderDao;
-
-    @Autowired
-    @Qualifier("dataObjectService")
-    private DataObjectService dataObjectService;
-
-    @Autowired
-    @Qualifier("kualiRuleService")
-    private KualiRuleService kualiRuleService;
 
     @ResponseBody
     @Transactional @RequestMapping(value = "/proposalDevelopment", params="methodToCall=clearAddCompliance")
@@ -124,7 +114,7 @@ public class ProposalDevelopmentSpecialReviewController extends ProposalDevelopm
                 specialReview.setApplicationDate(null);
                 specialReview.setComments(null);
                 specialReview.setExemptionTypeCodes(new ArrayList<String>());
-                dataObjectService.wrap(specialReview).materializeReferencedObjects();
+                getDataObjectService().wrap(specialReview).materializeReferencedObjects();
             }
         }
     }
@@ -296,23 +286,5 @@ public class ProposalDevelopmentSpecialReviewController extends ProposalDevelopm
 
     public void setIacucProtocolFinderDao(IacucProtocolFinderDao iacucProtocolFinderDao) {
         this.iacucProtocolFinderDao = iacucProtocolFinderDao;
-    }
-
-    @Override
-    public DataObjectService getDataObjectService() {
-        return dataObjectService;
-    }
-
-    @Override
-    public void setDataObjectService(DataObjectService dataObjectService) {
-        this.dataObjectService = dataObjectService;
-    }
-
-    public KualiRuleService getKualiRuleService() {
-        return kualiRuleService;
-    }
-
-    public void setKualiRuleService(KualiRuleService kualiRuleService) {
-        this.kualiRuleService = kualiRuleService;
     }
 }

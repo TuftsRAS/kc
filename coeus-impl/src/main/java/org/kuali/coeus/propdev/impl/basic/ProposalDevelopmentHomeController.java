@@ -17,7 +17,6 @@ import org.kuali.coeus.propdev.impl.docperm.ProposalUserRoles;
 import org.kuali.coeus.propdev.impl.notification.ProposalDevelopmentNotificationContext;
 import org.kuali.coeus.propdev.impl.notification.ProposalDevelopmentNotificationRenderer;
 import org.kuali.coeus.propdev.impl.person.AddEmployeePiHelper;
-import org.kuali.coeus.propdev.impl.person.KeyPersonnelService;
 import org.kuali.coeus.propdev.impl.person.ProposalPerson;
 import org.kuali.coeus.propdev.impl.s2s.S2sOpportunity;
 import org.kuali.coeus.propdev.impl.s2s.S2sSubmissionService;
@@ -32,7 +31,6 @@ import org.kuali.rice.krad.exception.DocumentAuthorizationException;
 import org.kuali.rice.krad.rules.rule.event.SaveDocumentEvent;
 import org.kuali.rice.krad.service.DataDictionaryService;
 import org.kuali.rice.krad.service.DocumentDictionaryService;
-import org.kuali.rice.krad.service.KualiRuleService;
 import org.kuali.rice.krad.service.PessimisticLockService;
 import org.kuali.rice.krad.uif.UifConstants;
 import org.kuali.rice.krad.uif.UifParameters;
@@ -95,16 +93,8 @@ public class ProposalDevelopmentHomeController extends ProposalDevelopmentContro
     private S2sSubmissionService s2sSubmissionService;
 
     @Autowired
-    @Qualifier("kualiRuleService")
-    private KualiRuleService kualiRuleService;
-
-    @Autowired
     @Qualifier("proposalDevelopmentNotificationRenderer")
     private ProposalDevelopmentNotificationRenderer renderer;
-
-    @Autowired
-    @Qualifier("keyPersonnelService")
-    private KeyPersonnelService keyPersonnelService;
 
     @Autowired
     @Qualifier("pessimisticLockService")
@@ -549,21 +539,5 @@ public class ProposalDevelopmentHomeController extends ProposalDevelopmentContro
 
     public void setOpportunitySchemaParserService(OpportunitySchemaParserService opportunitySchemaParserService) {
         this.opportunitySchemaParserService = opportunitySchemaParserService;
-    }
-
-    public KualiRuleService getKualiRuleService() {
-        return kualiRuleService;
-    }
-
-    public void setKualiRuleService(KualiRuleService kualiRuleService) {
-        this.kualiRuleService = kualiRuleService;
-    }
-
-    protected KeyPersonnelService getKeyPersonnelService() {
-        return keyPersonnelService;
-    }
-
-    public void setKeyPersonnelService(KeyPersonnelService keyPersonnelService) {
-        this.keyPersonnelService = keyPersonnelService;
     }
 }

@@ -25,7 +25,6 @@ import org.kuali.coeus.common.framework.person.PersonTypeConstants;
 import org.kuali.coeus.propdev.impl.person.question.ProposalPersonQuestionnaireHelper;
 import org.kuali.kra.infrastructure.Constants;
 import org.kuali.kra.infrastructure.KeyConstants;
-import org.kuali.rice.krad.service.KualiRuleService;
 import org.kuali.rice.krad.uif.UifConstants;
 import org.kuali.rice.krad.uif.UifParameters;
 import org.kuali.rice.krad.uif.util.ObjectPropertyUtils;
@@ -67,14 +66,6 @@ public class ProposalDevelopmentPersonnelController extends ProposalDevelopmentC
     @Autowired
     @Qualifier("questionnaireAnswerService")
     private QuestionnaireAnswerService questionnaireAnswerService;
-
-    @Autowired
-    @Qualifier("keyPersonnelService")
-	private KeyPersonnelService keyPersonnelService;
-
-    @Autowired
-    @Qualifier("kualiRuleService")
-    private KualiRuleService kualiRuleService;
 
 	@Autowired
     @Qualifier("sponsorHierarchyService")
@@ -399,7 +390,7 @@ public class ProposalDevelopmentPersonnelController extends ProposalDevelopmentC
                 getBusinessObjectService().save(newAnswerHeaders);
                 proposalPersonQuestionnaireHelper.setAnswerHeaders(newAnswerHeaders);
 
-                keyPersonnelService.saveCertDetails(proposalPerson, getGlobalVariableService().getUserSession().getPrincipalId(), getDateTimeService().getCurrentTimestamp());
+                getKeyPersonnelService().saveCertDetails(proposalPerson, getGlobalVariableService().getUserSession().getPrincipalId(), getDateTimeService().getCurrentTimestamp());
             }
         }
 
@@ -497,14 +488,6 @@ public class ProposalDevelopmentPersonnelController extends ProposalDevelopmentC
         return false;
     }
 
-    protected KeyPersonnelService getKeyPersonnelService() {
-        return keyPersonnelService;
-    }
-
-    public void setKeyPersonnelService(KeyPersonnelService keyPersonnelService) {
-        this.keyPersonnelService = keyPersonnelService;
-    }
-
     public WizardControllerService getWizardControllerService() {
         return wizardControllerService;
     }
@@ -563,20 +546,10 @@ public class ProposalDevelopmentPersonnelController extends ProposalDevelopmentC
 			return retval;
 		}
 	}
-
-    public KualiRuleService getKualiRuleService() {
-        return kualiRuleService;
-    }
-
-    public void setKualiRuleService(KualiRuleService kualiRuleService) {
-        this.kualiRuleService = kualiRuleService;
-    }
     
 	public SponsorHierarchyService getSponsorHierarchyService() {
 		return sponsorHierarchyService;
 	}
-
-
 
 	public void setSponsorHierarchyService(
 			SponsorHierarchyService sponsorHierarchyService) {
