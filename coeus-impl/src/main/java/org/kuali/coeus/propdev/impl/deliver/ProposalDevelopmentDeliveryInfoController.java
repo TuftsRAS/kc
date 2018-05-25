@@ -14,6 +14,9 @@ import org.kuali.coeus.propdev.impl.core.ProposalDevelopmentControllerBase;
 import org.kuali.coeus.propdev.impl.core.ProposalDevelopmentDocumentForm;
 import org.kuali.coeus.propdev.impl.core.DevelopmentProposal;
 import org.kuali.rice.krad.web.form.DocumentFormBase;
+import org.kuali.rice.krad.web.service.RefreshControllerService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
@@ -24,9 +27,13 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class ProposalDevelopmentDeliveryInfoController extends ProposalDevelopmentControllerBase{
 
+    @Autowired
+    @Qualifier("refreshControllerService")
+    private RefreshControllerService refreshControllerService;
+
     @Transactional @RequestMapping(value = "/proposalDevelopment", params = "methodToCall=clearMailingNameAddress")
     public ModelAndView clearMailingNameAddress(@ModelAttribute("KualiForm") DocumentFormBase form, BindingResult result,
-           HttpServletRequest request, HttpServletResponse response) throws Exception {
+           HttpServletRequest request, HttpServletResponse response) {
        ProposalDevelopmentDocumentForm pdForm = (ProposalDevelopmentDocumentForm) form;
        DevelopmentProposal developmentProposal = pdForm.getProposalDevelopmentDocument().getDevelopmentProposal();
        if (developmentProposal.getRolodex() != null) {
@@ -34,5 +41,13 @@ public class ProposalDevelopmentDeliveryInfoController extends ProposalDevelopme
            developmentProposal.setRolodex(null);
        }
        return getRefreshControllerService().refresh(form);
+    }
+
+    public RefreshControllerService getRefreshControllerService() {
+        return refreshControllerService;
+    }
+
+    public void setRefreshControllerService(RefreshControllerService refreshControllerService) {
+        this.refreshControllerService = refreshControllerService;
     }
 }

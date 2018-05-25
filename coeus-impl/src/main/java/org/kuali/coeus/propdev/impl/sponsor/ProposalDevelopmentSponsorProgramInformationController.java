@@ -14,9 +14,6 @@ import org.kuali.coeus.propdev.impl.core.ProposalDevelopmentControllerBase;
 import org.kuali.coeus.propdev.impl.core.ProposalDevelopmentDocumentForm;
 import org.kuali.kra.institutionalproposal.home.InstitutionalProposal;
 import org.kuali.kra.institutionalproposal.proposaladmindetails.ProposalAdminDetails;
-import org.kuali.rice.krad.service.KualiRuleService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
@@ -31,10 +28,6 @@ import java.util.List;
 
 @Controller
 public class ProposalDevelopmentSponsorProgramInformationController extends ProposalDevelopmentControllerBase {
-
-    @Autowired
-    @Qualifier("kualiRuleService")
-    private KualiRuleService kualiRuleService;
 
     @Override
     @Transactional @RequestMapping(value = "/proposalDevelopment", params = {"methodToCall=navigate", "actionParameters[navigateToPageId]=PropDev-SponsorProgramInfoPage"})
@@ -51,10 +44,6 @@ public class ProposalDevelopmentSponsorProgramInformationController extends Prop
         getKualiRuleService().applyRules(new AddProposalSponsorAndProgramInformationEvent("", form.getProposalDevelopmentDocument()));
 
         return super.navigate(form, result, request, response);
-    }
-
-    public KualiRuleService getKualiRuleService() {
-        return kualiRuleService;
     }
 
     protected String getInstitutionalProposalId(String instProposalNumber) {

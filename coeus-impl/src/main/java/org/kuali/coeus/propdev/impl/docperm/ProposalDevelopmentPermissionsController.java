@@ -10,10 +10,9 @@ package org.kuali.coeus.propdev.impl.docperm;
 import org.kuali.coeus.common.framework.person.PersonTypeConstants;
 import org.kuali.coeus.common.view.wizard.framework.WizardControllerService;
 import org.kuali.coeus.common.view.wizard.framework.WizardResultsDto;
-import org.kuali.coeus.propdev.impl.auth.perm.ProposalDevelopmentPermissionsService;
 import org.kuali.coeus.propdev.impl.core.*;
-import org.kuali.rice.kim.api.identity.PersonService;
 import org.kuali.rice.krad.uif.UifParameters;
+import org.kuali.rice.krad.web.service.RefreshControllerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -35,16 +34,8 @@ import java.util.List;
 public class ProposalDevelopmentPermissionsController extends ProposalDevelopmentControllerBase {
 
     @Autowired
-    @Qualifier("proposalDevelopmentPermissionsService")
-    private ProposalDevelopmentPermissionsService proposalDevelopmentPermissionsService;
-
-    @Autowired
-    @Qualifier("personService")
-    private PersonService personService;
-
-    @Autowired
-    @Qualifier("proposalRoleService")
-    private ProposalRoleService proposalRoleService;
+    @Qualifier("refreshControllerService")
+    private RefreshControllerService refreshControllerService;
 
     @Autowired
     @Qualifier("wizardControllerService")
@@ -52,7 +43,7 @@ public class ProposalDevelopmentPermissionsController extends ProposalDevelopmen
 
     
     @Transactional @RequestMapping(value = "/proposalDevelopment", params="methodToCall=savePermission")
-    public ModelAndView savePermission(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm form) throws Exception {
+    public ModelAndView savePermission(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm form) {
 
         final String selectedCollectionPath = form.getActionParamaterValue(UifParameters.SELECTED_COLLECTION_PATH);
         String selectedLine = form.getActionParamaterValue(UifParameters.SELECTED_LINE_INDEX);
@@ -73,7 +64,7 @@ public class ProposalDevelopmentPermissionsController extends ProposalDevelopmen
     }
 
     @Transactional @RequestMapping(value = "/proposalDevelopment", params="methodToCall=performPermissionSearch")
-    public ModelAndView performPermissionSearch(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm form) throws Exception {
+    public ModelAndView performPermissionSearch(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm form) {
         form.getAddKeyPersonHelper().getResults().clear();
         List<Object> results = new ArrayList<Object>();
 
@@ -98,7 +89,7 @@ public class ProposalDevelopmentPermissionsController extends ProposalDevelopmen
     }
 
     @Transactional @RequestMapping(value = "/proposalDevelopment", params="methodToCall=addPermission")
-    public ModelAndView addPermission(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm form) throws Exception {
+    public ModelAndView addPermission(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm form) {
         ProposalDevelopmentDocument document = form.getProposalDevelopmentDocument();
 
         ProposalUserRoles newProposalUserRoles = new ProposalUserRoles();
@@ -140,37 +131,19 @@ public class ProposalDevelopmentPermissionsController extends ProposalDevelopmen
         return getModelAndViewService().showDialog("PropDev-PermissionsPage-Wizard",true,form);
     }
 
-    @Override
-    protected ProposalDevelopmentPermissionsService getProposalDevelopmentPermissionsService() {
-        return proposalDevelopmentPermissionsService;
-    }
-
-    @Override
-    public void setProposalDevelopmentPermissionsService(ProposalDevelopmentPermissionsService proposalDevelopmentPermissionsService) {
-        this.proposalDevelopmentPermissionsService = proposalDevelopmentPermissionsService;
-    }
-
-    public PersonService getPersonService() {
-        return personService;
-    }
-
-    public void setPersonService(PersonService personService) {
-        this.personService = personService;
-    }
-
-    public ProposalRoleService getProposalRoleService() {
-        return proposalRoleService;
-    }
-
-    public void setProposalRoleService(ProposalRoleService proposalRoleService) {
-        this.proposalRoleService = proposalRoleService;
-    }
-
     public WizardControllerService getWizardControllerService() {
         return wizardControllerService;
     }
 
     public void setWizardControllerService(WizardControllerService wizardControllerService) {
         this.wizardControllerService = wizardControllerService;
+    }
+
+    public RefreshControllerService getRefreshControllerService() {
+        return refreshControllerService;
+    }
+
+    public void setRefreshControllerService(RefreshControllerService refreshControllerService) {
+        this.refreshControllerService = refreshControllerService;
     }
 }

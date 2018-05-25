@@ -12,7 +12,6 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.kuali.coeus.propdev.api.s2s.S2sFormConfigurationContract;
-import org.kuali.coeus.propdev.api.s2s.S2sFormConfigurationService;
 import org.kuali.coeus.propdev.api.s2s.S2sUserAttachedFormFileContract;
 import org.kuali.coeus.propdev.api.s2s.UserAttachedFormService;
 import org.kuali.coeus.propdev.impl.auth.ProposalDevelopmentDocumentAuthorizer;
@@ -40,6 +39,7 @@ import org.kuali.rice.krad.uif.util.ObjectPropertyUtils;
 import org.kuali.rice.krad.util.AuditCluster;
 import org.kuali.rice.krad.util.AuditError;
 import org.kuali.rice.krad.util.KRADUtils;
+import org.kuali.rice.krad.web.service.RefreshControllerService;
 import org.kuali.rice.krad.web.service.impl.CollectionControllerServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -78,6 +78,10 @@ public class ProposalDevelopmentS2SController extends ProposalDevelopmentControl
     private static final String OVERRRIDDEN_GRANT_APPLICATION_XML = "Overridden Grant Application.xml";
 
     @Autowired
+    @Qualifier("refreshControllerService")
+    private RefreshControllerService refreshControllerService;
+
+    @Autowired
     @Qualifier("s2sSubmissionService")
     private S2sSubmissionService s2sSubmissionService;
 
@@ -96,10 +100,6 @@ public class ProposalDevelopmentS2SController extends ProposalDevelopmentControl
     @Autowired
     @Qualifier("proposalDevelopmentDocumentViewAuthorizer")
     private ProposalDevelopmentDocumentViewAuthorizer proposalDevelopmentDocumentViewAuthorizer;
-
-    @Autowired
-    @Qualifier("s2sFormConfigurationService")
-    private S2sFormConfigurationService s2sFormConfigurationService;
 
     @Autowired
     @Qualifier("formGeneratorService")
@@ -673,20 +673,20 @@ public class ProposalDevelopmentS2SController extends ProposalDevelopmentControl
         this.proposalDevelopmentDocumentViewAuthorizer = proposalDevelopmentDocumentViewAuthorizer;
     }
 
-    public S2sFormConfigurationService getS2sFormConfigurationService() {
-        return s2sFormConfigurationService;
-    }
-
-    public void setS2sFormConfigurationService(S2sFormConfigurationService s2sFormConfigurationService) {
-        this.s2sFormConfigurationService = s2sFormConfigurationService;
-    }
-
     public FormGeneratorService getFormGeneratorService() {
         return formGeneratorService;
     }
 
     public void setFormGeneratorService(FormGeneratorService formGeneratorService) {
         this.formGeneratorService = formGeneratorService;
+    }
+
+    public RefreshControllerService getRefreshControllerService() {
+        return refreshControllerService;
+    }
+
+    public void setRefreshControllerService(RefreshControllerService refreshControllerService) {
+        this.refreshControllerService = refreshControllerService;
     }
 }
 

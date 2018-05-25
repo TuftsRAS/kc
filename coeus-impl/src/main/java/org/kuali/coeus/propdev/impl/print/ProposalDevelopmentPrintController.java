@@ -16,9 +16,9 @@ import org.kuali.coeus.propdev.impl.auth.ProposalDevelopmentDocumentViewAuthoriz
 import org.kuali.coeus.propdev.impl.core.ProposalDevelopmentControllerBase;
 import org.kuali.coeus.propdev.impl.core.ProposalDevelopmentDocumentForm;
 import org.kuali.coeus.sys.framework.controller.ControllerFileUtils;
-import org.kuali.coeus.sys.framework.gv.GlobalVariableService;
 import org.kuali.rice.krad.exception.AuthorizationException;
 import org.kuali.rice.krad.web.controller.MethodAccessible;
+import org.kuali.rice.krad.web.service.RefreshControllerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -47,8 +47,8 @@ public class ProposalDevelopmentPrintController extends ProposalDevelopmentContr
     private ProposalDevelopmentDocumentViewAuthorizer proposalDevelopmentDocumentViewAuthorizer;
 
     @Autowired
-    @Qualifier("globalVariableService")
-    private GlobalVariableService globalVariableService;
+    @Qualifier("refreshControllerService")
+    private RefreshControllerService refreshControllerService;
     
     @Transactional @RequestMapping(value = "/proposalDevelopment", params="methodToCall=preparePrintDialog")
     public ModelAndView preparePrintDialog(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm form) {
@@ -62,11 +62,11 @@ public class ProposalDevelopmentPrintController extends ProposalDevelopmentContr
 
         proposalDevelopmentDocumentViewAuthorizer.initializeDocumentAuthorizerIfNecessary(form.getProposalDevelopmentDocument());
 
-        if (!((ProposalDevelopmentDocumentAuthorizer) proposalDevelopmentDocumentViewAuthorizer.getDocumentAuthorizer()).isAuthorizedToPrint(form.getProposalDevelopmentDocument(), globalVariableService.getUserSession().getPerson())) {
-            throw new AuthorizationException(globalVariableService.getUserSession().getPrincipalName(), "printSponsorForms", "Proposal");
+        if (!((ProposalDevelopmentDocumentAuthorizer) proposalDevelopmentDocumentViewAuthorizer.getDocumentAuthorizer()).isAuthorizedToPrint(form.getProposalDevelopmentDocument(), getGlobalVariableService().getUserSession().getPerson())) {
+            throw new AuthorizationException(getGlobalVariableService().getUserSession().getPrincipalName(), "printSponsorForms", "Proposal");
         }
 
-        Map<String,Object> reportParameters = new HashMap<String,Object>();
+        Map<String,Object> reportParameters = new HashMap<>();
         reportParameters.put(ProposalDevelopmentPrintingService.SELECTED_TEMPLATES,
                 getProposalDevelopmentPrintingService().getSponsorFormTemplates(form.getSponsorFormTemplates()));
 
@@ -80,11 +80,11 @@ public class ProposalDevelopmentPrintController extends ProposalDevelopmentContr
 
     @MethodAccessible
     @Transactional @RequestMapping(value = "/proposalDevelopment", params="methodToCall=generateReport")
-    public ModelAndView generateReport(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm form) throws Exception {
+    public ModelAndView generateReport(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm form) {
         proposalDevelopmentDocumentViewAuthorizer.initializeDocumentAuthorizerIfNecessary(form.getProposalDevelopmentDocument());
 
-        if (!((ProposalDevelopmentDocumentAuthorizer) proposalDevelopmentDocumentViewAuthorizer.getDocumentAuthorizer()).isAuthorizedToPrint(form.getProposalDevelopmentDocument(), globalVariableService.getUserSession().getPerson())) {
-            throw new AuthorizationException(globalVariableService.getUserSession().getPrincipalName(), "printReport", "Proposal");
+        if (!((ProposalDevelopmentDocumentAuthorizer) proposalDevelopmentDocumentViewAuthorizer.getDocumentAuthorizer()).isAuthorizedToPrint(form.getProposalDevelopmentDocument(), getGlobalVariableService().getUserSession().getPerson())) {
+            throw new AuthorizationException(getGlobalVariableService().getUserSession().getPrincipalName(), "printReport", "Proposal");
         }
 
         form.getReportHelper().getCurrentReportBeans().clear();
@@ -104,16 +104,16 @@ public class ProposalDevelopmentPrintController extends ProposalDevelopmentContr
     public ModelAndView printReport(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm form, HttpServletResponse response) throws Exception {
         proposalDevelopmentDocumentViewAuthorizer.initializeDocumentAuthorizerIfNecessary(form.getProposalDevelopmentDocument());
 
-        if (!((ProposalDevelopmentDocumentAuthorizer) proposalDevelopmentDocumentViewAuthorizer.getDocumentAuthorizer()).isAuthorizedToPrint(form.getProposalDevelopmentDocument(), globalVariableService.getUserSession().getPerson())) {
-            throw new AuthorizationException(globalVariableService.getUserSession().getPrincipalName(), "printReport", "Proposal");
+        if (!((ProposalDevelopmentDocumentAuthorizer) proposalDevelopmentDocumentViewAuthorizer.getDocumentAuthorizer()).isAuthorizedToPrint(form.getProposalDevelopmentDocument(), getGlobalVariableService().getUserSession().getPerson())) {
+            throw new AuthorizationException(getGlobalVariableService().getUserSession().getPrincipalName(), "printReport", "Proposal");
         }
 
         form.getReportHelper().setTargetPerson(getKcPersonService().getKcPersonByPersonId(form.getReportHelper().getPersonId()));
 
-        Map<String, Object> reportParameters = new HashMap<String, Object>();
+        Map<String, Object> reportParameters = new HashMap<>();
         reportParameters.put(PrintConstants.PERSON_ID_KEY, form.getReportHelper().getPersonId());
         reportParameters.put(PrintConstants.REPORT_PERSON_NAME_KEY, form.getReportHelper().getTargetPerson().getFullName());
-        AttachmentDataSource dataStream = null;
+        final AttachmentDataSource dataStream;
         if (StringUtils.equals(form.getReportHelper().getReportType(), "current")) {
             dataStream = form.getReportHelper().getCurrentAndPendingReportService().printCurrentReport(reportParameters);
         } else {
@@ -148,14 +148,12 @@ public class ProposalDevelopmentPrintController extends ProposalDevelopmentContr
         this.proposalDevelopmentDocumentViewAuthorizer = proposalDevelopmentDocumentViewAuthorizer;
     }
 
-    @Override
-    public GlobalVariableService getGlobalVariableService() {
-        return globalVariableService;
+    public RefreshControllerService getRefreshControllerService() {
+        return refreshControllerService;
     }
 
-    @Override
-    public void setGlobalVariableService(GlobalVariableService globalVariableService) {
-        this.globalVariableService = globalVariableService;
+    public void setRefreshControllerService(RefreshControllerService refreshControllerService) {
+        this.refreshControllerService = refreshControllerService;
     }
 }
 

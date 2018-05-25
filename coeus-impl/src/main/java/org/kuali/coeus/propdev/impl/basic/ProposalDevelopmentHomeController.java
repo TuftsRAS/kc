@@ -17,11 +17,9 @@ import org.kuali.coeus.propdev.impl.docperm.ProposalUserRoles;
 import org.kuali.coeus.propdev.impl.notification.ProposalDevelopmentNotificationContext;
 import org.kuali.coeus.propdev.impl.notification.ProposalDevelopmentNotificationRenderer;
 import org.kuali.coeus.propdev.impl.person.AddEmployeePiHelper;
-import org.kuali.coeus.propdev.impl.person.KeyPersonnelService;
 import org.kuali.coeus.propdev.impl.person.ProposalPerson;
 import org.kuali.coeus.propdev.impl.s2s.S2sOpportunity;
 import org.kuali.coeus.propdev.impl.s2s.S2sSubmissionService;
-import org.kuali.coeus.propdev.impl.s2s.connect.OpportunitySchemaParserService;
 import org.kuali.coeus.propdev.impl.state.ProposalState;
 import org.kuali.kra.authorization.KraAuthorizationConstants;
 import org.kuali.kra.infrastructure.Constants;
@@ -32,14 +30,13 @@ import org.kuali.rice.krad.exception.DocumentAuthorizationException;
 import org.kuali.rice.krad.rules.rule.event.SaveDocumentEvent;
 import org.kuali.rice.krad.service.DataDictionaryService;
 import org.kuali.rice.krad.service.DocumentDictionaryService;
-import org.kuali.rice.krad.service.KualiRuleService;
-import org.kuali.rice.krad.service.PessimisticLockService;
 import org.kuali.rice.krad.uif.UifConstants;
 import org.kuali.rice.krad.uif.UifParameters;
 import org.kuali.rice.krad.util.KRADConstants;
 import org.kuali.rice.krad.util.ObjectUtils;
 import org.kuali.rice.krad.web.controller.MethodAccessible;
 import org.kuali.rice.krad.web.form.DocumentFormBase;
+import org.kuali.rice.krad.web.service.RefreshControllerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -57,10 +54,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 
 @Controller
 public class ProposalDevelopmentHomeController extends ProposalDevelopmentControllerBase {
@@ -87,34 +81,18 @@ public class ProposalDevelopmentHomeController extends ProposalDevelopmentContro
     private EntityManager entityManager;
 
     @Autowired
-    @Qualifier("opportunitySchemaParserService")
-    private OpportunitySchemaParserService opportunitySchemaParserService;
-
-    @Autowired
     @Qualifier("s2sSubmissionService")
     private S2sSubmissionService s2sSubmissionService;
 
     @Autowired
-    @Qualifier("kualiRuleService")
-    private KualiRuleService kualiRuleService;
-
-    @Autowired
-    @Qualifier("proposalDevelopmentNotificationRenderer")
-    private ProposalDevelopmentNotificationRenderer renderer;
-
-    @Autowired
-    @Qualifier("keyPersonnelService")
-    private KeyPersonnelService keyPersonnelService;
-
-    @Autowired
-    @Qualifier("pessimisticLockService")
-    private PessimisticLockService pessimisticLockService;
+    @Qualifier("refreshControllerService")
+    private RefreshControllerService refreshControllerService;
 
 
    @MethodAccessible
    @Transactional @RequestMapping(value = "/proposalDevelopment", params="methodToCall=createProposal")
    public ModelAndView createProposal(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm form, BindingResult result,
-           HttpServletRequest request, HttpServletResponse response) throws Exception {
+           HttpServletRequest request, HttpServletResponse response) {
        ProposalDevelopmentDocument proposalDevelopmentDocument = form.getProposalDevelopmentDocument();
 
         // Check for valid info entered before creating a new document
@@ -172,9 +150,7 @@ public class ProposalDevelopmentHomeController extends ProposalDevelopmentContro
         return getModelAndViewService().getModelAndView(proposalDevelopmentDocumentForm);
     }
 
-    public ProposalDevelopmentNotificationRenderer getRenderer() {
-        return renderer;
-    }
+
 
     private void addCreateDetails(ProposalDevelopmentDocument proposalDevelopmentDocument) {
         proposalDevelopmentDocument.getDevelopmentProposal().setCreateTimestamp(new Timestamp(System.currentTimeMillis()));
@@ -215,7 +191,7 @@ public class ProposalDevelopmentHomeController extends ProposalDevelopmentContro
         ProposalDevelopmentDocument document = null;
         boolean isDeleted = false;
 
-        if (!ObjectUtils.isNull(form.getDocId())) {
+        if (Objects.nonNull(form.getDocId())) {
             document = (ProposalDevelopmentDocument) getDocumentService().getByDocumentHeaderId(form.getDocId());
             isDeleted = document.isProposalDeleted();
         }
@@ -230,13 +206,13 @@ public class ProposalDevelopmentHomeController extends ProposalDevelopmentContro
             form.setDocument(document);
 
             if (form.getViewId() != null && StringUtils.equalsIgnoreCase(form.getViewId(), Constants.CERTIFICATION_VIEW)) {
-                List<PessimisticLock> locks = pessimisticLockService.getPessimisticLocksForDocument(document.getDocumentNumber());
+                List<PessimisticLock> locks = getPessimisticLockService().getPessimisticLocksForDocument(document.getDocumentNumber());
                 boolean lockAlreadyExists = locks.stream().anyMatch(
                         lock -> StringUtils.countMatches(lock.getLockDescriptor(), KraAuthorizationConstants.LOCK_DESCRIPTOR_PERSONNEL) > 0 &&
                         lock.isOwnedByUser(getLoggedInUser())
                 );
                 if (!lockAlreadyExists) {
-                    pessimisticLockService.generateNewLock(document.getDocumentNumber(),
+                    getPessimisticLockService().generateNewLock(document.getDocumentNumber(),
                             document.getDocumentNumber() + "-" + KraAuthorizationConstants.LOCK_DESCRIPTOR_PERSONNEL);
                     document.refreshPessimisticLocks();
                 }
@@ -336,53 +312,53 @@ public class ProposalDevelopmentHomeController extends ProposalDevelopmentContro
 
    @Transactional @RequestMapping(value = "/proposalDevelopment", params="methodToCall=saveDetails")
    public ModelAndView saveDetails(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm form, BindingResult result,
-           HttpServletRequest request, HttpServletResponse response) throws Exception {
+           HttpServletRequest request, HttpServletResponse response)  {
        return super.save(form, result, request, response);
    }
 
    @Transactional @RequestMapping(value = "/proposalDevelopment", params="methodToCall=saveOpportunity")
    public ModelAndView saveOpportunity(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm form, BindingResult result,
-           HttpServletRequest request, HttpServletResponse response) throws Exception {
+           HttpServletRequest request, HttpServletResponse response)  {
        return super.save(form, result, request, response);
    }
 
 
    @Transactional @RequestMapping(value = "/proposalDevelopment", params="methodToCall=saveCompliance")
    public ModelAndView saveComplaince(@ModelAttribute("KualiForm") DocumentFormBase form, BindingResult result,
-           HttpServletRequest request, HttpServletResponse response) throws Exception {
+           HttpServletRequest request, HttpServletResponse response)  {
        ProposalDevelopmentDocumentForm pdForm = (ProposalDevelopmentDocumentForm) form;
         return super.save(pdForm, result, request, response, SaveDocumentSpecialReviewEvent.class);
    }
 
    @Transactional @RequestMapping(value = "/proposalDevelopment", params="methodToCall=saveProposalAttachments")
    public ModelAndView saveProposalAttachments(@ModelAttribute("KualiForm") DocumentFormBase form, BindingResult result,
-           HttpServletRequest request, HttpServletResponse response) throws Exception {
+           HttpServletRequest request, HttpServletResponse response)  {
        ProposalDevelopmentDocumentForm pdForm = (ProposalDevelopmentDocumentForm) form;
        return super.save(pdForm, result, request, response);
    }
 
    @Transactional @RequestMapping(value = "/proposalDevelopment", params="methodToCall=saveInternalAttachments")
    public ModelAndView saveInternalAttachments(@ModelAttribute("KualiForm") DocumentFormBase form, BindingResult result,
-           HttpServletRequest request, HttpServletResponse response) throws Exception {
+           HttpServletRequest request, HttpServletResponse response)  {
        ProposalDevelopmentDocumentForm pdForm = (ProposalDevelopmentDocumentForm) form;
        return super.save(pdForm, result, request, response);
    }
 
    @Transactional @RequestMapping(value = "/proposalDevelopment", params="methodToCall=savePersonnelAttachments")
    public ModelAndView savePersonnelAttachments(@ModelAttribute("KualiForm") DocumentFormBase form, BindingResult result,
-           HttpServletRequest request, HttpServletResponse response) throws Exception {
+           HttpServletRequest request, HttpServletResponse response)  {
        ProposalDevelopmentDocumentForm pdForm = (ProposalDevelopmentDocumentForm) form;
        return super.save(pdForm, result, request, response);
    }
    @Transactional @RequestMapping(value = "/proposalDevelopment", params="methodToCall=saveAbstracts")
    public ModelAndView saveAbstracts(@ModelAttribute("KualiForm") DocumentFormBase form, BindingResult result,
-           HttpServletRequest request, HttpServletResponse response) throws Exception {
+           HttpServletRequest request, HttpServletResponse response)  {
        ProposalDevelopmentDocumentForm pdForm = (ProposalDevelopmentDocumentForm) form;
        return super.save(pdForm, result, request, response);
    }
    @Transactional @RequestMapping(value = "/proposalDevelopment", params="methodToCall=saveNotes")
    public ModelAndView saveNotes(@ModelAttribute("KualiForm") DocumentFormBase form, BindingResult result,
-           HttpServletRequest request, HttpServletResponse response) throws Exception {
+           HttpServletRequest request, HttpServletResponse response)  {
        ProposalDevelopmentDocumentForm pdForm = (ProposalDevelopmentDocumentForm) form;
        return super.save(pdForm, result, request, response);
    }
@@ -395,7 +371,7 @@ public class ProposalDevelopmentHomeController extends ProposalDevelopmentContro
                                   ) throws Exception {
         ProposalDevelopmentDocument document;
        boolean isDeleted = false;
-       if(!ObjectUtils.isNull(form.getDocId())) {
+       if(Objects.nonNull(form.getDocId())) {
            document = (ProposalDevelopmentDocument) getDocumentService().getByDocumentHeaderId(form.getDocId());
            isDeleted = document.isProposalDeleted();
        }
@@ -471,7 +447,7 @@ public class ProposalDevelopmentHomeController extends ProposalDevelopmentContro
 
             S2sOpportunity opportunity = new S2sOpportunity();
             Calendar openingDate = Calendar.getInstance();
-            if (ObjectUtils.isNotNull(form.getRequest().getParameter(ProposalDevelopmentConstants.S2sConstants.OPENING_DATE))) {
+            if (Objects.nonNull(form.getRequest().getParameter(ProposalDevelopmentConstants.S2sConstants.OPENING_DATE))) {
                 SimpleDateFormat sdf = new SimpleDateFormat(Constants.MM_DD_YYYY_HH_MM_A_DATE_FORMAT);
                 openingDate.setTime(sdf.parse(form.getRequest().getParameter(ProposalDevelopmentConstants.S2sConstants.OPENING_DATE)));
 
@@ -496,7 +472,7 @@ public class ProposalDevelopmentHomeController extends ProposalDevelopmentContro
     }
 
     @Transactional @RequestMapping(value = "/proposalDevelopment", params="methodToCall=editCollectionLine")
-    public ModelAndView editCollectionLine(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm form) throws Exception {
+    public ModelAndView editCollectionLine(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm form) {
         final String selectedCollectionPath = form.getActionParamaterValue(UifParameters.SELECTED_COLLECTION_PATH);
         String selectedLine = form.getActionParamaterValue(UifParameters.SELECTED_LINE_INDEX);
 
@@ -543,27 +519,15 @@ public class ProposalDevelopmentHomeController extends ProposalDevelopmentContro
         this.s2sSubmissionService = s2sSubmissionService;
     }
 
-    public OpportunitySchemaParserService getOpportunitySchemaParserService() {
-        return opportunitySchemaParserService;
+    public void setRenderer(ProposalDevelopmentNotificationRenderer renderer) {
+        this.renderer = renderer;
     }
 
-    public void setOpportunitySchemaParserService(OpportunitySchemaParserService opportunitySchemaParserService) {
-        this.opportunitySchemaParserService = opportunitySchemaParserService;
+    public RefreshControllerService getRefreshControllerService() {
+        return refreshControllerService;
     }
 
-    public KualiRuleService getKualiRuleService() {
-        return kualiRuleService;
-    }
-
-    public void setKualiRuleService(KualiRuleService kualiRuleService) {
-        this.kualiRuleService = kualiRuleService;
-    }
-
-    protected KeyPersonnelService getKeyPersonnelService() {
-        return keyPersonnelService;
-    }
-
-    public void setKeyPersonnelService(KeyPersonnelService keyPersonnelService) {
-        this.keyPersonnelService = keyPersonnelService;
+    public void setRefreshControllerService(RefreshControllerService refreshControllerService) {
+        this.refreshControllerService = refreshControllerService;
     }
 }

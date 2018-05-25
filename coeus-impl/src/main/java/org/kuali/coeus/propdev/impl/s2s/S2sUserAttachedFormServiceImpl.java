@@ -10,7 +10,6 @@ package org.kuali.coeus.propdev.impl.s2s;
 
 import com.lowagie.text.pdf.*;
 import org.apache.commons.lang3.StringUtils;
-import org.kuali.coeus.propdev.api.s2s.S2sFormConfigurationContract;
 import org.kuali.coeus.propdev.api.s2s.S2sFormConfigurationService;
 import org.kuali.coeus.propdev.impl.core.ProposalDevelopmentDocument;
 import org.kuali.coeus.propdev.impl.specialreview.ProposalSpecialReviewHumanSubjectsAttachmentService;
@@ -18,8 +17,6 @@ import org.kuali.coeus.s2sgen.api.core.AuditError;
 import org.kuali.coeus.s2sgen.api.core.S2SException;
 import org.kuali.coeus.s2sgen.api.generate.FormGenerationResult;
 import org.kuali.coeus.s2sgen.api.generate.FormGeneratorService;
-import org.kuali.coeus.s2sgen.api.generate.FormMappingInfo;
-import org.kuali.coeus.s2sgen.api.generate.FormMappingService;
 import org.kuali.coeus.sys.api.model.KcFile;
 import org.kuali.coeus.sys.framework.gv.GlobalVariableService;
 import org.kuali.kra.infrastructure.KeyConstants;
@@ -49,10 +46,6 @@ public class S2sUserAttachedFormServiceImpl implements S2sUserAttachedFormServic
     @Autowired
     @Qualifier("formGeneratorService")
     private FormGeneratorService formGeneratorService;
-
-    @Autowired
-    @Qualifier("formMappingService")
-    private FormMappingService formMappingService;
 
     @Autowired
     @Qualifier("globalVariableService")
@@ -212,16 +205,7 @@ public class S2sUserAttachedFormServiceImpl implements S2sUserAttachedFormServic
         String formXML;
         namespaceUri = form.getNamespaceURI();
         formname = form.getLocalName();
-        FormMappingInfo bindingInfoBean = formMappingService.getFormInfo(namespaceUri);
-        if (bindingInfoBean != null) {
-            S2sFormConfigurationContract formConfig = s2sFormConfigurationService.findS2sFormConfigurationByFormName(bindingInfoBean.getFormName());
-            if (formConfig == null || formConfig.isActive()) {
-                S2SException s2SException = new S2SException(KeyConstants.S2S_USER_ATTACHED_FORM_NOT_ALLOWED,
-                        "The form is not configured for user attachment", formname);
-                s2SException.setTabErrorKey(USER_ATTACHED_FORMS_ERRORS);
-                throw s2SException;
-            }
-        }
+
         Document doc = formUtilityService.node2Dom(form);
 
         doHumanStudiesWorkaround(doc, attachments);
@@ -409,14 +393,6 @@ public class S2sUserAttachedFormServiceImpl implements S2sUserAttachedFormServic
     	    s2sOppForms.setUserAttachedForm(isAvailable);
     	    s2sOppForms.setInclude(isAvailable);
     	});
-    }
-
-    public FormMappingService getFormMappingService() {
-        return formMappingService;
-    }
-
-    public void setFormMappingService(FormMappingService formMappingService) {
-        this.formMappingService = formMappingService;
     }
 
     public GlobalVariableService getGlobalVariableService() {

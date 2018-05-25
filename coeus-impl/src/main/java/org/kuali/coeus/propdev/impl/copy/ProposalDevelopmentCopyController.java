@@ -41,9 +41,9 @@ public class ProposalDevelopmentCopyController extends ProposalDevelopmentContro
         ProposalCopyCriteria proposalCopyCriteria = form.getProposalCopyCriteria();
         if (StringUtils.isNotBlank(proposalCopyCriteria.getLeadUnitNumber())) {
             ProposalDevelopmentDocument proposalDevelopmentDocument = form.getProposalDevelopmentDocument();
-            ProposalCopyService proposalCopyService = getProposalCopyService();
+
             getPessimisticLockService().releaseAllLocksForUser(proposalDevelopmentDocument.getPessimisticLocks(), getGlobalVariableService().getUserSession().getPerson());
-            ProposalDevelopmentDocument newDoc = proposalCopyService.copyProposal(proposalDevelopmentDocument, proposalCopyCriteria);
+            ProposalDevelopmentDocument newDoc = getProposalCopyService().copyProposal(proposalDevelopmentDocument, proposalCopyCriteria);
             if (newDoc != null) {
                 return returnToDocument(form, newDoc.getDocumentNumber());
             }

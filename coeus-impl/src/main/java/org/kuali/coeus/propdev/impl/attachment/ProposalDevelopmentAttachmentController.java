@@ -14,12 +14,9 @@ import org.kuali.coeus.propdev.impl.core.*;
 import org.kuali.coeus.propdev.impl.notification.ProposalDevelopmentNotificationContext;
 import org.kuali.coeus.propdev.impl.notification.ProposalDevelopmentNotificationRenderer;
 import org.kuali.coeus.propdev.impl.person.attachment.AddPersonnelAttachmentEvent;
-import org.kuali.coeus.sys.framework.gv.GlobalVariableService;
 import org.kuali.kra.infrastructure.Constants;
 import org.kuali.coeus.propdev.impl.person.attachment.ProposalPersonBiography;
-import org.kuali.rice.core.api.datetime.DateTimeService;
 import org.kuali.rice.krad.bo.Note;
-import org.kuali.rice.krad.service.KualiRuleService;
 import org.kuali.rice.krad.uif.UifConstants;
 import org.kuali.rice.krad.uif.UifParameters;
 import org.kuali.rice.krad.uif.util.ObjectPropertyUtils;
@@ -27,6 +24,7 @@ import org.kuali.rice.krad.util.GrowlMessage;
 import org.kuali.rice.krad.util.MessageMap;
 import org.kuali.rice.krad.web.form.UifFormBase;
 import org.kuali.rice.krad.web.service.FileControllerService;
+import org.kuali.rice.krad.web.service.RefreshControllerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -50,32 +48,28 @@ public class ProposalDevelopmentAttachmentController extends ProposalDevelopment
     private static final String ATTACHMENT_FILE = "multipartFile";
 
     @Autowired
+    @Qualifier("refreshControllerService")
+    private RefreshControllerService refreshControllerService;
+
+    @Autowired
     @Qualifier("legacyNarrativeService")
     private LegacyNarrativeService legacyNarrativeService;
-
-    @Autowired
-    @Qualifier("dateTimeService")
-    private DateTimeService dateTimeService;
-
-    @Autowired
-    @Qualifier("globalVariableService")
-    private GlobalVariableService globalVariableService;
 
     @Autowired
     @Qualifier("kcFileControllerService")
     private FileControllerService kcFileControllerService;
 
     @Autowired
-    @Qualifier("kualiRuleService")
-    private KualiRuleService kualiRuleService;
-
-    @Autowired
     @Qualifier("multipartFileValidationService")
     private MultipartFileValidationService multipartFileValidationService;
 
+    @Autowired
+    @Qualifier("fileControllerService")
+    private FileControllerService fileControllerService;
+
     @Transactional @RequestMapping(value = "/proposalDevelopment", params="methodToCall=addFileUploadLine")
     public ModelAndView addFileUploadLine(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm form,
-                                          MultipartHttpServletRequest request) throws Exception {
+                                          MultipartHttpServletRequest request) {
         final String selectedCollectionPath = request.getParameter(ProposalDevelopmentConstants.KradConstants.BINDING_PATH);
 
         addEditableCollectionLine(form, selectedCollectionPath);
@@ -115,22 +109,22 @@ public class ProposalDevelopmentAttachmentController extends ProposalDevelopment
     }
 
     @Transactional @RequestMapping(value = "/proposalDevelopment", params="methodToCall=deleteFileUploadLine")
-    public ModelAndView deleteFileUploadLine(@ModelAttribute("KualiForm") final UifFormBase uifForm) throws Exception {
+    public ModelAndView deleteFileUploadLine(@ModelAttribute("KualiForm") final UifFormBase uifForm) {
         return getFileControllerService().deleteFileUploadLine(uifForm);
     }
 
     @Transactional @RequestMapping(value = "/proposalDevelopment", params="methodToCall=getFileFromLine")
-    public void getFileFromLine(@ModelAttribute("KualiForm") final UifFormBase uifForm, HttpServletResponse response) throws Exception {
+    public void getFileFromLine(@ModelAttribute("KualiForm") final UifFormBase uifForm, HttpServletResponse response) {
         getKcFileControllerService().getFileFromLine(uifForm,response);
     }
 
     @Transactional @RequestMapping(value = "/proposalDevelopment", params="methodToCall=markAllProposalAttachments")
-    public ModelAndView markAllProposalAttachments(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm form) throws Exception{
+    public ModelAndView markAllProposalAttachments(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm form) {
     	return markAllAttachmentStatus(form, form.getProposalDevelopmentAttachmentHelper().getProposalAttachmentModuleStatusCode());
     }
 
     @Transactional @RequestMapping(value = "/proposalDevelopment", params="methodToCall=markAllInternalAttachments")
-    public ModelAndView markAllInternalAttachments(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm form) throws Exception{
+    public ModelAndView markAllInternalAttachments(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm form) {
     	return markAllAttachmentStatus(form, form.getProposalDevelopmentAttachmentHelper().getInternalAttachmentModuleStatusCode());
      }
     
@@ -240,7 +234,7 @@ public class ProposalDevelopmentAttachmentController extends ProposalDevelopment
 
     @Transactional @RequestMapping(value = "/proposalDevelopment", params="methodToCall=checkForExistingNarratives")
     public ModelAndView checkForExistingNarratives(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm form,
-                                                   @RequestParam String currentValue,@RequestParam(required = false) String previousValue,@RequestParam String propertyPath) throws Exception {
+                                                   @RequestParam String currentValue,@RequestParam(required = false) String previousValue,@RequestParam String propertyPath) {
         if (form.getDevelopmentProposal().isChild()) {
             NarrativeType narrativeType = getDataObjectService().find(NarrativeType.class, currentValue);
             DevelopmentProposal parentProposal = getDataObjectService().find(DevelopmentProposal.class,form.getDevelopmentProposal().getHierarchyParentProposalNumber());
@@ -255,7 +249,7 @@ public class ProposalDevelopmentAttachmentController extends ProposalDevelopment
     }
 
     @Transactional @RequestMapping(value = "/proposalDevelopment", params="methodToCall=revertToPreviousNarrativeType")
-    public ModelAndView revertToPreviousNarrativeType(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm form) throws Exception {
+    public ModelAndView revertToPreviousNarrativeType(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm form) {
         String propertyPath = form.getProposalDevelopmentAttachmentHelper().getNarrativeTypePropertyPath();
         String previousNarrativeTypeValue = form.getProposalDevelopmentAttachmentHelper().getPreviousNarrativeTypeValue();
         ObjectPropertyUtils.setPropertyValue(form, propertyPath, previousNarrativeTypeValue);
@@ -298,7 +292,7 @@ public class ProposalDevelopmentAttachmentController extends ProposalDevelopment
         biography.setDevelopmentProposal(document.getDevelopmentProposal());
         biography.setBiographyNumber(document
                 .getDocumentNextValue(Constants.PROP_PERSON_BIO_NUMBER));
-        biography.setUpdateUser(globalVariableService.getUserSession().getPrincipalName());
+        biography.setUpdateUser(getGlobalVariableService().getUserSession().getPrincipalName());
         biography.setUpdateTimestamp(getDateTimeService().getCurrentTimestamp());
         getDataObjectService().wrap(biography).fetchRelationship(ProposalDevelopmentConstants.KradConstants.PROP_PER_DOC_TYPE);
 
@@ -388,7 +382,7 @@ public class ProposalDevelopmentAttachmentController extends ProposalDevelopment
     public ModelAndView saveBiography(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm form) throws Exception{
         ProposalPersonBiography biography = form.getProposalDevelopmentAttachmentHelper().getBiography();
         int selectedLineIndex = Integer.parseInt(form.getProposalDevelopmentAttachmentHelper().getSelectedLineIndex());
-        biography.setUpdateUser(globalVariableService.getUserSession().getPrincipalName());
+        biography.setUpdateUser(getGlobalVariableService().getUserSession().getPrincipalName());
         biography.setUpdateTimestamp(getDateTimeService().getCurrentTimestamp());
         getDataObjectService().wrap(biography).fetchRelationship(ProposalDevelopmentConstants.KradConstants.PROP_PER_DOC_TYPE);
 
@@ -427,7 +421,7 @@ public class ProposalDevelopmentAttachmentController extends ProposalDevelopment
     }
 
     @Transactional @RequestMapping(value = "/proposalDevelopment", params="methodToCall=saveAbstract")
-    public ModelAndView saveAbstract(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm form) throws Exception{
+    public ModelAndView saveAbstract(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm form) {
         ProposalAbstract proposalAbstract = form.getProposalDevelopmentAttachmentHelper().getProposalAbstract();
         int selectedLineIndex = Integer.parseInt(form.getProposalDevelopmentAttachmentHelper().getSelectedLineIndex());
 
@@ -438,7 +432,7 @@ public class ProposalDevelopmentAttachmentController extends ProposalDevelopment
     }
 
     @Transactional @RequestMapping(value = "/proposalDevelopment", params="methodToCall=saveNote")
-    public ModelAndView saveNote(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm form) throws Exception{
+    public ModelAndView saveNote(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm form) {
         Note note = form.getProposalDevelopmentAttachmentHelper().getNote();
         int selectedLineIndex = Integer.parseInt(form.getProposalDevelopmentAttachmentHelper().getSelectedLineIndex());
 
@@ -480,7 +474,7 @@ public class ProposalDevelopmentAttachmentController extends ProposalDevelopment
     }
 
     @Transactional @RequestMapping(value = "/proposalDevelopment", params={"methodToCall=addProposalAttachmentRights"})
-    public ModelAndView addProposalAttachmentRights(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm form) throws Exception {
+    public ModelAndView addProposalAttachmentRights(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm form) {
         int selectedLine = Integer.parseInt(form.getNarrativeUserRightsSelectedAttachment());
 
         boolean rulePassed = getKualiRuleService().applyRules(new NewNarrativeUserRightsEvent(form.getProposalDevelopmentDocument(), form.getNarrativeUserRights(), selectedLine));
@@ -513,7 +507,7 @@ public class ProposalDevelopmentAttachmentController extends ProposalDevelopment
     }
 
     @Transactional @RequestMapping(value = "/proposalDevelopment", params={"methodToCall=addInstituteAttachmentRights"})
-    public ModelAndView addInstituteAttachmentRights(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm form) throws Exception {
+    public ModelAndView addInstituteAttachmentRights(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm form) {
         int selectedLine = Integer.parseInt(form.getNarrativeUserRightsSelectedAttachment());
 
         boolean rulePassed = getKualiRuleService().applyRules(new NewNarrativeUserRightsEvent(form.getProposalDevelopmentDocument(), form.getNarrativeUserRights(), selectedLine));
@@ -553,26 +547,6 @@ public class ProposalDevelopmentAttachmentController extends ProposalDevelopment
         this.legacyNarrativeService = legacyNarrativeService;
     }
 
-    @Override
-    public DateTimeService getDateTimeService() {
-        return dateTimeService;
-    }
-
-    @Override
-    public void setDateTimeService(DateTimeService dateTimeService) {
-        this.dateTimeService = dateTimeService;
-    }
-
-    @Override
-    public GlobalVariableService getGlobalVariableService() {
-        return globalVariableService;
-    }
-
-    @Override
-    public void setGlobalVariableService(GlobalVariableService globalVariableService) {
-        this.globalVariableService = globalVariableService;
-    }
-
     public FileControllerService getKcFileControllerService() {
         return kcFileControllerService;
     }
@@ -581,11 +555,27 @@ public class ProposalDevelopmentAttachmentController extends ProposalDevelopment
         this.kcFileControllerService = kcFileControllerService;
     }
 
-    public KualiRuleService getKualiRuleService() {
-        return kualiRuleService;
+    public RefreshControllerService getRefreshControllerService() {
+        return refreshControllerService;
     }
 
-    public void setKualiRuleService(KualiRuleService kualiRuleService) {
-        this.kualiRuleService = kualiRuleService;
+    public void setRefreshControllerService(RefreshControllerService refreshControllerService) {
+        this.refreshControllerService = refreshControllerService;
+    }
+
+    public MultipartFileValidationService getMultipartFileValidationService() {
+        return multipartFileValidationService;
+    }
+
+    public void setMultipartFileValidationService(MultipartFileValidationService multipartFileValidationService) {
+        this.multipartFileValidationService = multipartFileValidationService;
+    }
+
+    public FileControllerService getFileControllerService() {
+        return fileControllerService;
+    }
+
+    public void setFileControllerService(FileControllerService fileControllerService) {
+        this.fileControllerService = fileControllerService;
     }
 }

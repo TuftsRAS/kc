@@ -22,6 +22,8 @@ import org.kuali.coeus.common.notification.impl.bo.NotificationTypeRecipient;
 import org.kuali.coeus.common.notification.impl.service.KcNotificationService;
 import org.kuali.coeus.common.questionnaire.framework.answer.Answer;
 import org.kuali.coeus.common.questionnaire.framework.answer.AnswerHeader;
+import org.kuali.coeus.propdev.api.s2s.S2sFormConfigurationContract;
+import org.kuali.coeus.propdev.api.s2s.S2sFormConfigurationService;
 import org.kuali.coeus.propdev.impl.auth.perm.ProposalDevelopmentPermissionsService;
 import org.kuali.coeus.propdev.impl.coi.CoiConstants;
 import org.kuali.coeus.propdev.impl.datavalidation.ProposalDevelopmentDataValidationConstants;
@@ -42,7 +44,6 @@ import org.kuali.coeus.propdev.impl.specialreview.ProposalSpecialReviewAttachmen
 import org.kuali.coeus.propdev.impl.specialreview.ProposalSpecialReviewExemption;
 import org.kuali.coeus.propdev.impl.sponsor.AddProposalSponsorAndProgramInformationEvent;
 import org.kuali.coeus.sys.framework.controller.KcCommonControllerService;
-import org.kuali.coeus.sys.framework.controller.UifExportControllerService;
 import org.kuali.coeus.sys.framework.gv.GlobalVariableService;
 import org.kuali.coeus.sys.framework.service.KcServiceLocator;
 import org.kuali.coeus.sys.framework.validation.AuditHelper;
@@ -99,21 +100,10 @@ public abstract class ProposalDevelopmentControllerBase {
     @Autowired
     @Qualifier("proposalDevelopmentNotificationRenderer")
     protected ProposalDevelopmentNotificationRenderer renderer;
-    @Autowired
-    @Qualifier("uifExportControllerService")
-    private UifExportControllerService uifExportControllerService;
 
     @Autowired
     @Qualifier("kcCommonControllerService")
     private KcCommonControllerService kcCommonControllerService;
-
-    @Autowired
-    @Qualifier("collectionControllerService")
-    private CollectionControllerService collectionControllerService;
-
-    @Autowired
-    @Qualifier("fileControllerService")
-    private FileControllerService fileControllerService;
 
     @Autowired
     @Qualifier("modelAndViewService")
@@ -122,14 +112,6 @@ public abstract class ProposalDevelopmentControllerBase {
     @Autowired
     @Qualifier("navigationControllerService")
     private NavigationControllerService navigationControllerService;
-
-    @Autowired
-    @Qualifier("queryControllerService")
-    private QueryControllerService queryControllerService;
-
-    @Autowired
-    @Qualifier("refreshControllerService")
-    private RefreshControllerService refreshControllerService;
 
     @Autowired
     @Qualifier("transactionalDocumentControllerService")
@@ -154,7 +136,7 @@ public abstract class ProposalDevelopmentControllerBase {
     @Autowired
     @Qualifier("legacyDataAdapter")
     private LegacyDataAdapter legacyDataAdapter;
-    
+
     @Autowired
     @Qualifier("proposalRoleTemplateService")
     private ProposalRoleTemplateService proposalRoleTemplateService;
@@ -218,6 +200,10 @@ public abstract class ProposalDevelopmentControllerBase {
     @Autowired
     @Qualifier("keyPersonnelService")
     private KeyPersonnelService keyPersonnelService;
+
+    @Autowired
+    @Qualifier("s2sFormConfigurationService")
+    private S2sFormConfigurationService s2sFormConfigurationService;
 
 
     private ProjectPublisher projectPublisher;
@@ -286,11 +272,20 @@ public abstract class ProposalDevelopmentControllerBase {
 
          final S2sOpportunity s2sOpportunity = proposalDevelopmentDocument.getDevelopmentProposal().getS2sOpportunity();
          if (s2sOpportunity != null) {
-             s2sOpportunity.getS2sOppForms().forEach(oppForm -> {
-                 if (!oppForm.getAvailable() && oppForm.getInclude()) {
-                     oppForm.setInclude(false);
-                 }
-             });
+
+             final Set<String> disabledForms = getS2sFormConfigurationService().findAllS2sFormConfigurations().stream()
+                     .filter(cfg -> !cfg.isActive())
+                     .map(S2sFormConfigurationContract::getFormName)
+                     .collect(Collectors.toSet());
+
+             s2sOpportunity.getS2sOppForms().stream()
+                     .filter(oppForm -> oppForm.getAvailable() && (oppForm.getUserAttachedForm() == null || !oppForm.getUserAttachedForm()))
+                     .filter(oppForm -> disabledForms.contains(oppForm.getFormName()))
+                     .forEach(oppForm -> oppForm.setAvailable(false));
+
+             s2sOpportunity.getS2sOppForms().stream()
+                     .filter(oppForm -> !oppForm.getAvailable() && oppForm.getInclude())
+                     .forEach(oppForm -> oppForm.setInclude(false));
          }
 
          if (StringUtils.equalsIgnoreCase(form.getPageId(), Constants.PROP_DEV_PERMISSIONS_PAGE)) {
@@ -849,7 +844,7 @@ public abstract class ProposalDevelopmentControllerBase {
 
         @Override
         protected Object convertElement(Object element) {
-            if (element != null && element instanceof String) {
+            if (element instanceof String) {
                 return new PropScienceKeyword(null, getScienceKeyword(element));
             }
 
@@ -887,7 +882,7 @@ public abstract class ProposalDevelopmentControllerBase {
 
  		@Override
         protected Object convertElement(Object element) {
- 			if (element != null && element instanceof String) {
+ 			if (element instanceof String) {
  				return new ProposalSpecialReviewExemption(null, getExemptionType(element));
  			}
 
@@ -974,36 +969,12 @@ public abstract class ProposalDevelopmentControllerBase {
         return getDataObjectService().findUnique(ScienceKeyword.class, QueryByCriteria.Builder.forAttribute("code", element).build());
     }
 
-    public UifExportControllerService getUifExportControllerService() {
-        return uifExportControllerService;
-    }
-
-    public void setUifExportControllerService(UifExportControllerService uifExportControllerService) {
-        this.uifExportControllerService = uifExportControllerService;
-    }
-
     public KcCommonControllerService getKcCommonControllerService() {
         return kcCommonControllerService;
     }
 
     public void setKcCommonControllerService(KcCommonControllerService kcCommonControllerService) {
         this.kcCommonControllerService = kcCommonControllerService;
-    }
-
-    public CollectionControllerService getCollectionControllerService() {
-        return collectionControllerService;
-    }
-
-    public void setCollectionControllerService(CollectionControllerService collectionControllerService) {
-        this.collectionControllerService = collectionControllerService;
-    }
-
-    public FileControllerService getFileControllerService() {
-        return fileControllerService;
-    }
-
-    public void setFileControllerService(FileControllerService fileControllerService) {
-        this.fileControllerService = fileControllerService;
     }
 
     public ModelAndViewService getModelAndViewService() {
@@ -1020,22 +991,6 @@ public abstract class ProposalDevelopmentControllerBase {
 
     public void setNavigationControllerService(NavigationControllerService navigationControllerService) {
         this.navigationControllerService = navigationControllerService;
-    }
-
-    public QueryControllerService getQueryControllerService() {
-        return queryControllerService;
-    }
-
-    public void setQueryControllerService(QueryControllerService queryControllerService) {
-        this.queryControllerService = queryControllerService;
-    }
-
-    public RefreshControllerService getRefreshControllerService() {
-        return refreshControllerService;
-    }
-
-    public void setRefreshControllerService(RefreshControllerService refreshControllerService) {
-        this.refreshControllerService = refreshControllerService;
     }
 
 	public GlobalVariableService getGlobalVariableService() {
@@ -1134,5 +1089,27 @@ public abstract class ProposalDevelopmentControllerBase {
         this.proposalTypeService = proposalTypeService;
     }
 
+    public KualiRuleService getKualiRuleService() {
+        return kualiRuleService;
+    }
 
+    public void setKualiRuleService(KualiRuleService kualiRuleService) {
+        this.kualiRuleService = kualiRuleService;
+    }
+
+    public KeyPersonnelService getKeyPersonnelService() {
+        return keyPersonnelService;
+    }
+
+    public void setKeyPersonnelService(KeyPersonnelService keyPersonnelService) {
+        this.keyPersonnelService = keyPersonnelService;
+    }
+
+    public S2sFormConfigurationService getS2sFormConfigurationService() {
+        return s2sFormConfigurationService;
+    }
+
+    public void setS2sFormConfigurationService(S2sFormConfigurationService s2sFormConfigurationService) {
+        this.s2sFormConfigurationService = s2sFormConfigurationService;
+    }
 }
