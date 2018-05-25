@@ -44,7 +44,6 @@ import org.kuali.coeus.propdev.impl.specialreview.ProposalSpecialReviewAttachmen
 import org.kuali.coeus.propdev.impl.specialreview.ProposalSpecialReviewExemption;
 import org.kuali.coeus.propdev.impl.sponsor.AddProposalSponsorAndProgramInformationEvent;
 import org.kuali.coeus.sys.framework.controller.KcCommonControllerService;
-import org.kuali.coeus.sys.framework.controller.UifExportControllerService;
 import org.kuali.coeus.sys.framework.gv.GlobalVariableService;
 import org.kuali.coeus.sys.framework.service.KcServiceLocator;
 import org.kuali.coeus.sys.framework.validation.AuditHelper;
@@ -101,21 +100,10 @@ public abstract class ProposalDevelopmentControllerBase {
     @Autowired
     @Qualifier("proposalDevelopmentNotificationRenderer")
     protected ProposalDevelopmentNotificationRenderer renderer;
-    @Autowired
-    @Qualifier("uifExportControllerService")
-    private UifExportControllerService uifExportControllerService;
 
     @Autowired
     @Qualifier("kcCommonControllerService")
     private KcCommonControllerService kcCommonControllerService;
-
-    @Autowired
-    @Qualifier("collectionControllerService")
-    private CollectionControllerService collectionControllerService;
-
-    @Autowired
-    @Qualifier("fileControllerService")
-    private FileControllerService fileControllerService;
 
     @Autowired
     @Qualifier("modelAndViewService")
@@ -124,14 +112,6 @@ public abstract class ProposalDevelopmentControllerBase {
     @Autowired
     @Qualifier("navigationControllerService")
     private NavigationControllerService navigationControllerService;
-
-    @Autowired
-    @Qualifier("queryControllerService")
-    private QueryControllerService queryControllerService;
-
-    @Autowired
-    @Qualifier("refreshControllerService")
-    private RefreshControllerService refreshControllerService;
 
     @Autowired
     @Qualifier("transactionalDocumentControllerService")
@@ -156,7 +136,7 @@ public abstract class ProposalDevelopmentControllerBase {
     @Autowired
     @Qualifier("legacyDataAdapter")
     private LegacyDataAdapter legacyDataAdapter;
-    
+
     @Autowired
     @Qualifier("proposalRoleTemplateService")
     private ProposalRoleTemplateService proposalRoleTemplateService;
@@ -864,7 +844,7 @@ public abstract class ProposalDevelopmentControllerBase {
 
         @Override
         protected Object convertElement(Object element) {
-            if (element != null && element instanceof String) {
+            if (element instanceof String) {
                 return new PropScienceKeyword(null, getScienceKeyword(element));
             }
 
@@ -902,7 +882,7 @@ public abstract class ProposalDevelopmentControllerBase {
 
  		@Override
         protected Object convertElement(Object element) {
- 			if (element != null && element instanceof String) {
+ 			if (element instanceof String) {
  				return new ProposalSpecialReviewExemption(null, getExemptionType(element));
  			}
 
@@ -989,36 +969,12 @@ public abstract class ProposalDevelopmentControllerBase {
         return getDataObjectService().findUnique(ScienceKeyword.class, QueryByCriteria.Builder.forAttribute("code", element).build());
     }
 
-    public UifExportControllerService getUifExportControllerService() {
-        return uifExportControllerService;
-    }
-
-    public void setUifExportControllerService(UifExportControllerService uifExportControllerService) {
-        this.uifExportControllerService = uifExportControllerService;
-    }
-
     public KcCommonControllerService getKcCommonControllerService() {
         return kcCommonControllerService;
     }
 
     public void setKcCommonControllerService(KcCommonControllerService kcCommonControllerService) {
         this.kcCommonControllerService = kcCommonControllerService;
-    }
-
-    public CollectionControllerService getCollectionControllerService() {
-        return collectionControllerService;
-    }
-
-    public void setCollectionControllerService(CollectionControllerService collectionControllerService) {
-        this.collectionControllerService = collectionControllerService;
-    }
-
-    public FileControllerService getFileControllerService() {
-        return fileControllerService;
-    }
-
-    public void setFileControllerService(FileControllerService fileControllerService) {
-        this.fileControllerService = fileControllerService;
     }
 
     public ModelAndViewService getModelAndViewService() {
@@ -1035,22 +991,6 @@ public abstract class ProposalDevelopmentControllerBase {
 
     public void setNavigationControllerService(NavigationControllerService navigationControllerService) {
         this.navigationControllerService = navigationControllerService;
-    }
-
-    public QueryControllerService getQueryControllerService() {
-        return queryControllerService;
-    }
-
-    public void setQueryControllerService(QueryControllerService queryControllerService) {
-        this.queryControllerService = queryControllerService;
-    }
-
-    public RefreshControllerService getRefreshControllerService() {
-        return refreshControllerService;
-    }
-
-    public void setRefreshControllerService(RefreshControllerService refreshControllerService) {
-        this.refreshControllerService = refreshControllerService;
     }
 
 	public GlobalVariableService getGlobalVariableService() {

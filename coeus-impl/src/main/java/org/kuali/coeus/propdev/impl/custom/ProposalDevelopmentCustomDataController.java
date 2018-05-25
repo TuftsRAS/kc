@@ -25,7 +25,7 @@ public class ProposalDevelopmentCustomDataController extends ProposalDevelopment
 
     @Transactional @RequestMapping(value = "/proposalDevelopment", params={"methodToCall=navigate", "actionParameters[navigateToPageId]=PropDev-SupplementalPage"})
     public ModelAndView customDataNavigate(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm form, BindingResult result,
-                                             HttpServletRequest request, HttpServletResponse response) throws Exception {
+                                             HttpServletRequest request, HttpServletResponse response) {
         ((ProposalDevelopmentViewHelperServiceImpl)form.getViewHelperService()).populateCustomData(form);
         return super.navigate(form,result,request,response);
     }

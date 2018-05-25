@@ -31,6 +31,8 @@ import org.kuali.rice.krad.uif.util.ObjectPropertyUtils;
 import org.kuali.rice.krad.util.KRADConstants;
 import org.kuali.rice.krad.web.controller.MethodAccessible;
 import org.kuali.rice.krad.web.form.DocumentFormBase;
+import org.kuali.rice.krad.web.service.CollectionControllerService;
+import org.kuali.rice.krad.web.service.RefreshControllerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -60,6 +62,10 @@ public class ProposalDevelopmentPersonnelController extends ProposalDevelopmentC
     private static final String WARN_PROPOSAL_CERTIFIED = "warn.proposal.not.certified";
 
     @Autowired
+    @Qualifier("refreshControllerService")
+    private RefreshControllerService refreshControllerService;
+
+    @Autowired
     @Qualifier("wizardControllerService")
     private WizardControllerService wizardControllerService;
 
@@ -70,6 +76,10 @@ public class ProposalDevelopmentPersonnelController extends ProposalDevelopmentC
 	@Autowired
     @Qualifier("sponsorHierarchyService")
     private SponsorHierarchyService sponsorHierarchyService;
+
+    @Autowired
+    @Qualifier("collectionControllerService")
+    private CollectionControllerService collectionControllerService;
 
 	@Transactional @RequestMapping(value = "/proposalDevelopment", params={"methodToCall=navigate", "actionParameters[navigateToPageId]=PropDev-PersonnelPage"})
     public ModelAndView navigateToPersonnel(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm form, BindingResult result, HttpServletRequest request, HttpServletResponse response)  {
@@ -556,4 +566,27 @@ public class ProposalDevelopmentPersonnelController extends ProposalDevelopmentC
 		this.sponsorHierarchyService = sponsorHierarchyService;
 	}
 
+    public RefreshControllerService getRefreshControllerService() {
+        return refreshControllerService;
+    }
+
+    public void setRefreshControllerService(RefreshControllerService refreshControllerService) {
+        this.refreshControllerService = refreshControllerService;
+    }
+
+    public QuestionnaireAnswerService getQuestionnaireAnswerService() {
+        return questionnaireAnswerService;
+    }
+
+    public void setQuestionnaireAnswerService(QuestionnaireAnswerService questionnaireAnswerService) {
+        this.questionnaireAnswerService = questionnaireAnswerService;
+    }
+
+    public CollectionControllerService getCollectionControllerService() {
+        return collectionControllerService;
+    }
+
+    public void setCollectionControllerService(CollectionControllerService collectionControllerService) {
+        this.collectionControllerService = collectionControllerService;
+    }
 }

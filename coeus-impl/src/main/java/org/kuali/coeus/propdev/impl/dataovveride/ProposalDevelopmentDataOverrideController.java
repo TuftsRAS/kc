@@ -18,6 +18,7 @@ import org.kuali.coeus.propdev.impl.notification.ProposalDevelopmentNotification
 import org.kuali.coeus.propdev.impl.notification.ProposalDevelopmentNotificationRenderer;
 import org.kuali.kra.infrastructure.Constants;
 import org.kuali.rice.krad.uif.UifConstants;
+import org.kuali.rice.krad.web.service.RefreshControllerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -32,6 +33,10 @@ import java.util.*;
 public class ProposalDevelopmentDataOverrideController extends ProposalDevelopmentControllerBase {
 
     @Autowired
+    @Qualifier("refreshControllerService")
+    private RefreshControllerService refreshControllerService;
+
+    @Autowired
     @Qualifier("notificationControllerService")
     private NotificationControllerService notificationControllerService;
 
@@ -40,8 +45,7 @@ public class ProposalDevelopmentDataOverrideController extends ProposalDevelopme
     private CommonDataOverrideService commonDataOverrideService;
 
     @Transactional @RequestMapping(value = "/proposalDevelopment", params="methodToCall=prepareDataOverride")
-    public ModelAndView prepareDataOverride(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm form)
-            throws Exception {
+    public ModelAndView prepareDataOverride(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm form) {
 
         String columnName = form.getNewProposalChangedData().getColumnName();
         if (StringUtils.isNotEmpty(columnName)){
@@ -61,8 +65,7 @@ public class ProposalDevelopmentDataOverrideController extends ProposalDevelopme
     }
 
     @Transactional @RequestMapping(value = "/proposalDevelopment", params="methodToCall=createOverride")
-    public ModelAndView createOverride(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm form)
-            throws Exception {
+    public ModelAndView createOverride(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm form) {
         ProposalDevelopmentDocument pdDocument = form.getProposalDevelopmentDocument();
         ProposalChangedData newProposalChangedData = form.getNewProposalChangedData();
 
@@ -124,5 +127,13 @@ public class ProposalDevelopmentDataOverrideController extends ProposalDevelopme
 
     public void setCommonDataOverrideService(CommonDataOverrideService commonDataOverrideService) {
         this.commonDataOverrideService = commonDataOverrideService;
+    }
+
+    public RefreshControllerService getRefreshControllerService() {
+        return refreshControllerService;
+    }
+
+    public void setRefreshControllerService(RefreshControllerService refreshControllerService) {
+        this.refreshControllerService = refreshControllerService;
     }
 }

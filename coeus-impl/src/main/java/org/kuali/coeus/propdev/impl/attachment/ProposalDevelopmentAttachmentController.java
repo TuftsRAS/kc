@@ -24,6 +24,7 @@ import org.kuali.rice.krad.util.GrowlMessage;
 import org.kuali.rice.krad.util.MessageMap;
 import org.kuali.rice.krad.web.form.UifFormBase;
 import org.kuali.rice.krad.web.service.FileControllerService;
+import org.kuali.rice.krad.web.service.RefreshControllerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -47,6 +48,10 @@ public class ProposalDevelopmentAttachmentController extends ProposalDevelopment
     private static final String ATTACHMENT_FILE = "multipartFile";
 
     @Autowired
+    @Qualifier("refreshControllerService")
+    private RefreshControllerService refreshControllerService;
+
+    @Autowired
     @Qualifier("legacyNarrativeService")
     private LegacyNarrativeService legacyNarrativeService;
 
@@ -58,9 +63,13 @@ public class ProposalDevelopmentAttachmentController extends ProposalDevelopment
     @Qualifier("multipartFileValidationService")
     private MultipartFileValidationService multipartFileValidationService;
 
+    @Autowired
+    @Qualifier("fileControllerService")
+    private FileControllerService fileControllerService;
+
     @Transactional @RequestMapping(value = "/proposalDevelopment", params="methodToCall=addFileUploadLine")
     public ModelAndView addFileUploadLine(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm form,
-                                          MultipartHttpServletRequest request) throws Exception {
+                                          MultipartHttpServletRequest request) {
         final String selectedCollectionPath = request.getParameter(ProposalDevelopmentConstants.KradConstants.BINDING_PATH);
 
         addEditableCollectionLine(form, selectedCollectionPath);
@@ -100,22 +109,22 @@ public class ProposalDevelopmentAttachmentController extends ProposalDevelopment
     }
 
     @Transactional @RequestMapping(value = "/proposalDevelopment", params="methodToCall=deleteFileUploadLine")
-    public ModelAndView deleteFileUploadLine(@ModelAttribute("KualiForm") final UifFormBase uifForm) throws Exception {
+    public ModelAndView deleteFileUploadLine(@ModelAttribute("KualiForm") final UifFormBase uifForm) {
         return getFileControllerService().deleteFileUploadLine(uifForm);
     }
 
     @Transactional @RequestMapping(value = "/proposalDevelopment", params="methodToCall=getFileFromLine")
-    public void getFileFromLine(@ModelAttribute("KualiForm") final UifFormBase uifForm, HttpServletResponse response) throws Exception {
+    public void getFileFromLine(@ModelAttribute("KualiForm") final UifFormBase uifForm, HttpServletResponse response) {
         getKcFileControllerService().getFileFromLine(uifForm,response);
     }
 
     @Transactional @RequestMapping(value = "/proposalDevelopment", params="methodToCall=markAllProposalAttachments")
-    public ModelAndView markAllProposalAttachments(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm form) throws Exception{
+    public ModelAndView markAllProposalAttachments(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm form) {
     	return markAllAttachmentStatus(form, form.getProposalDevelopmentAttachmentHelper().getProposalAttachmentModuleStatusCode());
     }
 
     @Transactional @RequestMapping(value = "/proposalDevelopment", params="methodToCall=markAllInternalAttachments")
-    public ModelAndView markAllInternalAttachments(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm form) throws Exception{
+    public ModelAndView markAllInternalAttachments(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm form) {
     	return markAllAttachmentStatus(form, form.getProposalDevelopmentAttachmentHelper().getInternalAttachmentModuleStatusCode());
      }
     
@@ -225,7 +234,7 @@ public class ProposalDevelopmentAttachmentController extends ProposalDevelopment
 
     @Transactional @RequestMapping(value = "/proposalDevelopment", params="methodToCall=checkForExistingNarratives")
     public ModelAndView checkForExistingNarratives(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm form,
-                                                   @RequestParam String currentValue,@RequestParam(required = false) String previousValue,@RequestParam String propertyPath) throws Exception {
+                                                   @RequestParam String currentValue,@RequestParam(required = false) String previousValue,@RequestParam String propertyPath) {
         if (form.getDevelopmentProposal().isChild()) {
             NarrativeType narrativeType = getDataObjectService().find(NarrativeType.class, currentValue);
             DevelopmentProposal parentProposal = getDataObjectService().find(DevelopmentProposal.class,form.getDevelopmentProposal().getHierarchyParentProposalNumber());
@@ -240,7 +249,7 @@ public class ProposalDevelopmentAttachmentController extends ProposalDevelopment
     }
 
     @Transactional @RequestMapping(value = "/proposalDevelopment", params="methodToCall=revertToPreviousNarrativeType")
-    public ModelAndView revertToPreviousNarrativeType(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm form) throws Exception {
+    public ModelAndView revertToPreviousNarrativeType(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm form) {
         String propertyPath = form.getProposalDevelopmentAttachmentHelper().getNarrativeTypePropertyPath();
         String previousNarrativeTypeValue = form.getProposalDevelopmentAttachmentHelper().getPreviousNarrativeTypeValue();
         ObjectPropertyUtils.setPropertyValue(form, propertyPath, previousNarrativeTypeValue);
@@ -412,7 +421,7 @@ public class ProposalDevelopmentAttachmentController extends ProposalDevelopment
     }
 
     @Transactional @RequestMapping(value = "/proposalDevelopment", params="methodToCall=saveAbstract")
-    public ModelAndView saveAbstract(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm form) throws Exception{
+    public ModelAndView saveAbstract(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm form) {
         ProposalAbstract proposalAbstract = form.getProposalDevelopmentAttachmentHelper().getProposalAbstract();
         int selectedLineIndex = Integer.parseInt(form.getProposalDevelopmentAttachmentHelper().getSelectedLineIndex());
 
@@ -423,7 +432,7 @@ public class ProposalDevelopmentAttachmentController extends ProposalDevelopment
     }
 
     @Transactional @RequestMapping(value = "/proposalDevelopment", params="methodToCall=saveNote")
-    public ModelAndView saveNote(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm form) throws Exception{
+    public ModelAndView saveNote(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm form) {
         Note note = form.getProposalDevelopmentAttachmentHelper().getNote();
         int selectedLineIndex = Integer.parseInt(form.getProposalDevelopmentAttachmentHelper().getSelectedLineIndex());
 
@@ -465,7 +474,7 @@ public class ProposalDevelopmentAttachmentController extends ProposalDevelopment
     }
 
     @Transactional @RequestMapping(value = "/proposalDevelopment", params={"methodToCall=addProposalAttachmentRights"})
-    public ModelAndView addProposalAttachmentRights(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm form) throws Exception {
+    public ModelAndView addProposalAttachmentRights(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm form) {
         int selectedLine = Integer.parseInt(form.getNarrativeUserRightsSelectedAttachment());
 
         boolean rulePassed = getKualiRuleService().applyRules(new NewNarrativeUserRightsEvent(form.getProposalDevelopmentDocument(), form.getNarrativeUserRights(), selectedLine));
@@ -498,7 +507,7 @@ public class ProposalDevelopmentAttachmentController extends ProposalDevelopment
     }
 
     @Transactional @RequestMapping(value = "/proposalDevelopment", params={"methodToCall=addInstituteAttachmentRights"})
-    public ModelAndView addInstituteAttachmentRights(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm form) throws Exception {
+    public ModelAndView addInstituteAttachmentRights(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm form) {
         int selectedLine = Integer.parseInt(form.getNarrativeUserRightsSelectedAttachment());
 
         boolean rulePassed = getKualiRuleService().applyRules(new NewNarrativeUserRightsEvent(form.getProposalDevelopmentDocument(), form.getNarrativeUserRights(), selectedLine));
@@ -544,5 +553,29 @@ public class ProposalDevelopmentAttachmentController extends ProposalDevelopment
 
     public void setKcFileControllerService(FileControllerService kcFileControllerService) {
         this.kcFileControllerService = kcFileControllerService;
+    }
+
+    public RefreshControllerService getRefreshControllerService() {
+        return refreshControllerService;
+    }
+
+    public void setRefreshControllerService(RefreshControllerService refreshControllerService) {
+        this.refreshControllerService = refreshControllerService;
+    }
+
+    public MultipartFileValidationService getMultipartFileValidationService() {
+        return multipartFileValidationService;
+    }
+
+    public void setMultipartFileValidationService(MultipartFileValidationService multipartFileValidationService) {
+        this.multipartFileValidationService = multipartFileValidationService;
+    }
+
+    public FileControllerService getFileControllerService() {
+        return fileControllerService;
+    }
+
+    public void setFileControllerService(FileControllerService fileControllerService) {
+        this.fileControllerService = fileControllerService;
     }
 }

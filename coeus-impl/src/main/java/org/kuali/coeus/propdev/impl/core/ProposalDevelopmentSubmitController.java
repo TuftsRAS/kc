@@ -57,6 +57,7 @@ import org.kuali.rice.krad.uif.util.ObjectPropertyUtils;
 import org.kuali.rice.krad.util.KRADConstants;
 import org.kuali.rice.krad.web.form.DialogResponse;
 import org.kuali.rice.krad.web.form.DocumentFormBase;
+import org.kuali.rice.krad.web.service.CollectionControllerService;
 import org.kuali.rice.krad.workflow.service.WorkflowDocumentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -103,6 +104,10 @@ public class ProposalDevelopmentSubmitController extends
     private static final String AUTO_SUBMIT_TO_SPONSOR_ON_FINAL_APPROVAL = "autoSubmitToSponsorOnFinalApproval";
 	private static final String SUBMIT_TO_SPONSOR = "submitToSponsor";
     private static final String PROPOSAL_APPROVAL_ATTACHMENT = "Proposal approval attachment.";
+
+    @Autowired
+    @Qualifier("collectionControllerService")
+    private CollectionControllerService collectionControllerService;
 
     @Autowired
     @Qualifier("kualiConfigurationService")
@@ -1054,5 +1059,13 @@ public class ProposalDevelopmentSubmitController extends
 
     public void setNotificationControllerService(NotificationControllerService notificationControllerService) {
         this.notificationControllerService = notificationControllerService;
+    }
+
+    public CollectionControllerService getCollectionControllerService() {
+        return collectionControllerService;
+    }
+
+    public void setCollectionControllerService(CollectionControllerService collectionControllerService) {
+        this.collectionControllerService = collectionControllerService;
     }
 }

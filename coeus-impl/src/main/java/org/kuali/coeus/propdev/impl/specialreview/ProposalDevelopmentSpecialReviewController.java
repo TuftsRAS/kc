@@ -23,6 +23,8 @@ import org.kuali.rice.krad.uif.UifConstants;
 import org.kuali.rice.krad.uif.UifParameters;
 import org.kuali.rice.krad.util.ErrorMessage;
 import org.kuali.rice.krad.web.bind.UifBeanPropertyBindingResult;
+import org.kuali.rice.krad.web.service.CollectionControllerService;
+import org.kuali.rice.krad.web.service.RefreshControllerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -41,6 +43,15 @@ import java.util.*;
 public class ProposalDevelopmentSpecialReviewController extends ProposalDevelopmentControllerBase {
 
     private static String NEW_SPECIAL_REVIEW_PATH = "newCollectionLines['document.developmentProposal.propSpecialReviews']";
+
+    @Autowired
+    @Qualifier("refreshControllerService")
+    private RefreshControllerService refreshControllerService;
+
+    @Autowired
+    @Qualifier("collectionControllerService")
+    private CollectionControllerService collectionControllerService;
+
     @Autowired
     @Qualifier("proposalDevelopmentSpecialReviewService")
     private ProposalDevelopmentSpecialReviewService proposalDevelopmentSpecialReviewService;
@@ -56,7 +67,7 @@ public class ProposalDevelopmentSpecialReviewController extends ProposalDevelopm
     @ResponseBody
     @Transactional @RequestMapping(value = "/proposalDevelopment", params="methodToCall=clearAddCompliance")
     public void clearAddCompliance(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm pdForm, BindingResult result,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+            HttpServletRequest request, HttpServletResponse response) {
         ProposalSpecialReview proposalSpecialReview = ((ProposalSpecialReview)pdForm.getNewCollectionLines().get("document.developmentProposal.propSpecialReviews"));
         proposalSpecialReview.setSpecialReviewTypeCode(null);
         proposalSpecialReview.setSpecialReviewType(null);
@@ -67,7 +78,7 @@ public class ProposalDevelopmentSpecialReviewController extends ProposalDevelopm
     
     @Transactional @RequestMapping(value = "/proposalDevelopment", params="methodToCall=refreshAddCompliance")
     public ModelAndView refreshAddCompliance(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm pdForm, BindingResult result,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+            HttpServletRequest request, HttpServletResponse response) {
         ProposalSpecialReview proposalSpecialReview = ((ProposalSpecialReview)pdForm.getNewCollectionLines().get("document.developmentProposal.propSpecialReviews"));
         String protocolNumber = request.getParameter("newCollectionLines['document.developmentProposal.propSpecialReviews'].protocolNumber");
 
@@ -81,7 +92,7 @@ public class ProposalDevelopmentSpecialReviewController extends ProposalDevelopm
 
     @Transactional @RequestMapping(value = "/proposalDevelopment", params="methodToCall=refreshComplianceEntry")
     public ModelAndView refreshComplianceEntry(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm pdForm, BindingResult result,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+            HttpServletRequest request, HttpServletResponse response) {
         String updateComponentId = request.getParameter("updateComponentId");
         String suffix = updateComponentId.substring(updateComponentId.indexOf(UifConstants.IdSuffixes.LINE));
         int index = Integer.valueOf(suffix.replace(UifConstants.IdSuffixes.LINE, ""));
@@ -113,7 +124,7 @@ public class ProposalDevelopmentSpecialReviewController extends ProposalDevelopm
                 specialReview.setApprovalDate(null);
                 specialReview.setApplicationDate(null);
                 specialReview.setComments(null);
-                specialReview.setExemptionTypeCodes(new ArrayList<String>());
+                specialReview.setExemptionTypeCodes(new ArrayList<>());
                 getDataObjectService().wrap(specialReview).materializeReferencedObjects();
             }
         }
@@ -155,7 +166,7 @@ public class ProposalDevelopmentSpecialReviewController extends ProposalDevelopm
     }
 
     @Transactional @RequestMapping(value = "/proposalDevelopment", params="methodToCall=addComplianceEntry")
-    public ModelAndView addComplianceEntry(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm pdForm) throws Exception {
+    public ModelAndView addComplianceEntry(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm pdForm) {
         ProposalSpecialReview proposalSpecialReview = ((ProposalSpecialReview)pdForm.getNewCollectionLines().get("document.developmentProposal.propSpecialReviews"));
         ProposalDevelopmentDocument proposalDevelopmentDocument = (ProposalDevelopmentDocument) pdForm.getDocument();
 
@@ -202,7 +213,7 @@ public class ProposalDevelopmentSpecialReviewController extends ProposalDevelopm
         else {
             boolean success = getProposalDevelopmentSpecialReviewService().createProtocol(proposalSpecialReview, document);
             if (success) {
-                super.save((ProposalDevelopmentDocumentForm) pdForm);
+                super.save(pdForm);
             } else {
                displayErrors(pdForm);
             }
@@ -247,7 +258,7 @@ public class ProposalDevelopmentSpecialReviewController extends ProposalDevelopm
     }
 
     @Transactional @RequestMapping(value = "/proposalDevelopment", params="methodToCall=replaceSpecialReviewAttachment")
-    public ModelAndView replaceSpecialReviewAttachment(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm pdForm) throws Exception{
+    public ModelAndView replaceSpecialReviewAttachment(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm pdForm) {
         String selectedLine = pdForm.getActionParamaterValue(UifParameters.SELECTED_LINE_INDEX);
         if (StringUtils.isEmpty(selectedLine)) {
             throw new RuntimeException("Selected line index was not set properly, cannot replace special review attachment");
@@ -286,5 +297,21 @@ public class ProposalDevelopmentSpecialReviewController extends ProposalDevelopm
 
     public void setIacucProtocolFinderDao(IacucProtocolFinderDao iacucProtocolFinderDao) {
         this.iacucProtocolFinderDao = iacucProtocolFinderDao;
+    }
+
+    public RefreshControllerService getRefreshControllerService() {
+        return refreshControllerService;
+    }
+
+    public void setRefreshControllerService(RefreshControllerService refreshControllerService) {
+        this.refreshControllerService = refreshControllerService;
+    }
+
+    public CollectionControllerService getCollectionControllerService() {
+        return collectionControllerService;
+    }
+
+    public void setCollectionControllerService(CollectionControllerService collectionControllerService) {
+        this.collectionControllerService = collectionControllerService;
     }
 }

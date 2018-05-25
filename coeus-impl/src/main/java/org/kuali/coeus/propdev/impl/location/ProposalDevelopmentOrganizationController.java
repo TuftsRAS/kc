@@ -10,6 +10,9 @@ package org.kuali.coeus.propdev.impl.location;
 import org.kuali.coeus.propdev.impl.core.ProposalDevelopmentControllerBase;
 import org.kuali.coeus.propdev.impl.core.ProposalDevelopmentDocument;
 import org.kuali.coeus.propdev.impl.core.ProposalDevelopmentDocumentForm;
+import org.kuali.rice.krad.web.service.RefreshControllerService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -22,8 +25,12 @@ public class ProposalDevelopmentOrganizationController extends ProposalDevelopme
     private static final String ALLOW_APPLICANT_ORGANIZATION_CHANGE_PARAM = "Allow_Applicant_Organization_Change";
     private static final String ORGANIZATION_PROPERTY = "organization";
 
+    @Autowired
+    @Qualifier("refreshControllerService")
+    private RefreshControllerService refreshControllerService;
+
     @Transactional @RequestMapping(value = "/proposalDevelopment", params={"methodToCall=refresh", "refreshCaller=Organization-LookupView"} )
-    public ModelAndView refreshOrganization(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm form) throws Exception {
+    public ModelAndView refreshOrganization(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm form) {
         initializeProposalSite(form.getDevelopmentProposal().getPerformingOrganization());
         if (getParameterService().getParameterValueAsBoolean(ProposalDevelopmentDocument.class, ALLOW_APPLICANT_ORGANIZATION_CHANGE_PARAM, false)) {
             initializeProposalSite(form.getDevelopmentProposal().getApplicantOrganization());
@@ -36,4 +43,11 @@ public class ProposalDevelopmentOrganizationController extends ProposalDevelopme
         site.initializeDefaultCongressionalDistrict();
     }
 
+    public RefreshControllerService getRefreshControllerService() {
+        return refreshControllerService;
+    }
+
+    public void setRefreshControllerService(RefreshControllerService refreshControllerService) {
+        this.refreshControllerService = refreshControllerService;
+    }
 }

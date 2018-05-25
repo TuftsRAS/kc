@@ -39,6 +39,7 @@ import org.kuali.rice.krad.uif.util.ObjectPropertyUtils;
 import org.kuali.rice.krad.util.AuditCluster;
 import org.kuali.rice.krad.util.AuditError;
 import org.kuali.rice.krad.util.KRADUtils;
+import org.kuali.rice.krad.web.service.RefreshControllerService;
 import org.kuali.rice.krad.web.service.impl.CollectionControllerServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -75,6 +76,10 @@ public class ProposalDevelopmentS2SController extends ProposalDevelopmentControl
     private static final String GRANTS_GOV_FORM_VALIDATION_ERRORS = "grantsGovFormValidationErrors";
     private static final String CURRENT_GRANT_APPLICATION_XML = "Current Grant Application.xml";
     private static final String OVERRRIDDEN_GRANT_APPLICATION_XML = "Overridden Grant Application.xml";
+
+    @Autowired
+    @Qualifier("refreshControllerService")
+    private RefreshControllerService refreshControllerService;
 
     @Autowired
     @Qualifier("s2sSubmissionService")
@@ -674,6 +679,14 @@ public class ProposalDevelopmentS2SController extends ProposalDevelopmentControl
 
     public void setFormGeneratorService(FormGeneratorService formGeneratorService) {
         this.formGeneratorService = formGeneratorService;
+    }
+
+    public RefreshControllerService getRefreshControllerService() {
+        return refreshControllerService;
+    }
+
+    public void setRefreshControllerService(RefreshControllerService refreshControllerService) {
+        this.refreshControllerService = refreshControllerService;
     }
 }
 
