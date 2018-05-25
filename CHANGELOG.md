@@ -1,6 +1,10 @@
 
 
 ## CURRENT
+* RESKC-2924: uses a UAF if it exists regardless of generator support. Updates S2SForm tab on save based on current configuration in the s2s form configuration table.
+  * Travis Schneeberger on Fri, 25 May 2018 11:32:40 -0400 [View Commit](../../commit/8a48e680f7446a46aae88b64a25ca77fc97f6b3d)
+
+## coeus-1805.0030
 * No Changes
 
 
