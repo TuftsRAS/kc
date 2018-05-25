@@ -11,6 +11,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.kuali.coeus.propdev.impl.core.DevelopmentProposal;
 import org.kuali.coeus.propdev.impl.core.ProposalDevelopmentDocument;
 import org.kuali.coeus.propdev.impl.s2s.connect.S2sCommunicationException;
 import org.kuali.coeus.propdev.impl.s2s.nih.NihSubmissionValidationService;
@@ -50,33 +51,16 @@ public class ProposalDevelopmentGrantsGovAuditRule  implements DocumentAuditRule
     private static final String ERROR_CODE = "E";
     private static final String SCHEMA_ERROR_RULE_NUMBER = "000.6";
     private static final String INFO_NIH_VALIDATION_SERVICE_IGNORED = "info.nih.validation.service.ignored";
+    private static final String UAF = "document.developmentProposal.S2sUserAttachedForms[%d].formName";
     public static final String RULE_NUMBER = "ruleNumber";
     public static final String ACTIVE = "active";
 
     private ParameterService parameterService;
     private GlobalVariableService globalVariableService;
     private BusinessObjectService businessObjectService;
-
-    protected ParameterService getParameterService() {
-        if (this.parameterService == null) {
-            this.parameterService = KcServiceLocator.getService(ParameterService.class);
-        }
-        return this.parameterService;
-    }
-
-    protected GlobalVariableService getGlobalVariableService() {
-        if (this.globalVariableService == null) {
-            this.globalVariableService = KcServiceLocator.getService(GlobalVariableService.class);
-        }
-        return this.globalVariableService;
-    }
-
-    protected BusinessObjectService getBusinessObjectService() {
-        if (this.businessObjectService == null) {
-            this.businessObjectService = KcServiceLocator.getService(BusinessObjectService.class);
-        }
-        return this.businessObjectService;
-    }
+    private NihSubmissionValidationService nihSubmissionValidationService;
+    private SponsorHierarchyService sponsorHierarchyService;
+    private FormGeneratorService formGeneratorService;
 
     @Override
     public boolean processRunAuditBusinessRules(Document document) {
@@ -101,7 +85,7 @@ public class ProposalDevelopmentGrantsGovAuditRule  implements DocumentAuditRule
         	valid= false;
         }
 
-        if (proposalDevelopmentDocument.getDevelopmentProposal().getS2sOpportunity() != null){
+        if (proposalDevelopmentDocument.getDevelopmentProposal().getS2sOpportunity() != null) {
             final String provider = proposalDevelopmentDocument.getDevelopmentProposal().getS2sOpportunity().getS2sProvider().getDescription();
 		    try {
                 FormGenerationResult result = getS2sValidatorService().generateAndValidateForms(proposalDevelopmentDocument);
@@ -118,9 +102,28 @@ public class ProposalDevelopmentGrantsGovAuditRule  implements DocumentAuditRule
                 getAuditErrors(Constants.S2S_PAGE_NAME, Constants.S2S_OPPORTUNITY_SECTION_NAME, provider, ERROR).add(new org.kuali.rice.krad.util.AuditError(Constants.NO_FIELD, Constants.GRANTS_GOV_GENERIC_ERROR_KEY, Constants.S2S_PAGE_ID+ PAGE_SECTION_DELIMETER + Constants.S2S_OPPORTUNITY_SECTION_ID, new String[] { StringUtils.isNotBlank(e.getErrorMessage()) ? e.getErrorMessage() : e.getMessage() }));
                 valid = false;
             }
+
+            valid &= allUatIncludedValidation(proposalDevelopmentDocument.getDevelopmentProposal());
         }
 
         return valid;
+    }
+
+    private boolean allUatIncludedValidation(DevelopmentProposal developmentProposal) {
+        final Set<String> includedUafs = developmentProposal.getS2sOppForms()
+                .stream()
+                .filter(form -> form.getInclude() != null && form.getInclude())
+                .filter(form -> form.getUserAttachedForm() != null && form.getUserAttachedForm())
+                .map(S2sOppForms::getOppNameSpace).collect(Collectors.toSet());
+
+        for (int i = 0; i < developmentProposal.getS2sUserAttachedForms().size(); i++) {
+            final S2sUserAttachedForm form = developmentProposal.getS2sUserAttachedForms().get(i);
+            if (!includedUafs.contains(form.getNamespace())) {
+                getAuditErrors(Constants.S2S_PAGE_NAME, Constants.S2S_OPPORTUNITY_SECTION_NAME, developmentProposal.getS2sOpportunity().getS2sProvider().getDescription(), AUDIT_WARNINGS).add(new org.kuali.rice.krad.util.AuditError(String.format(UAF, i), KeyConstants.WARNING_UNUSED_UAF, Constants.S2S_PAGE_ID + PAGE_SECTION_DELIMETER + Constants.S2S_OPPORTUNITY_UAF_SECTION_ID, new String[] {form.getFormName()}));
+            }
+        }
+
+        return true;
     }
 
     private boolean nihValidation(String dunsNumber, String applicationXml, List<AttachmentData> attachments) {
@@ -229,11 +232,9 @@ public class ProposalDevelopmentGrantsGovAuditRule  implements DocumentAuditRule
         final String s2sClusterKey = clusterKey + ".s2s";
         AuditCluster value = getGlobalVariableService().getAuditErrorMap().computeIfAbsent(s2sClusterKey, k ->
                 new AuditCluster(clusterKey, new ArrayList<org.kuali.rice.krad.util.AuditError>(), provider + " " + level));
-        if (value != null) {
-            getGlobalVariableService().getAuditErrorMap().put(s2sClusterKey, value);
-            return getGlobalVariableService().getAuditErrorMap().get(clusterKey+".s2s").getAuditErrorList();
-        }
-        return new ArrayList<>();
+
+        getGlobalVariableService().getAuditErrorMap().put(s2sClusterKey, value);
+        return getGlobalVariableService().getAuditErrorMap().get(clusterKey+".s2s").getAuditErrorList();
     }
 
     protected String getAuditLink(NihValidationMapping match) {
@@ -276,13 +277,46 @@ public class ProposalDevelopmentGrantsGovAuditRule  implements DocumentAuditRule
     }
 
     private SponsorHierarchyService getSponsorHierarchyService() {
-        return KcServiceLocator.getService(SponsorHierarchyService.class);
+        if (sponsorHierarchyService == null) {
+            sponsorHierarchyService = KcServiceLocator.getService(SponsorHierarchyService.class);
+        }
+
+        return sponsorHierarchyService;
     }
     private FormGeneratorService getS2sValidatorService() {
-        return KcServiceLocator.getService(FormGeneratorService.class);
+        if (formGeneratorService == null) {
+            formGeneratorService = KcServiceLocator.getService(FormGeneratorService.class);
+        }
+
+        return formGeneratorService;
     }
 
     private NihSubmissionValidationService getNihSubmissionValidationService() {
-        return KcServiceLocator.getService(NihSubmissionValidationService.class);
+        if (nihSubmissionValidationService == null) {
+            nihSubmissionValidationService = KcServiceLocator.getService(NihSubmissionValidationService.class);
+        }
+
+        return nihSubmissionValidationService;
+    }
+
+    protected ParameterService getParameterService() {
+        if (this.parameterService == null) {
+            this.parameterService = KcServiceLocator.getService(ParameterService.class);
+        }
+        return this.parameterService;
+    }
+
+    protected GlobalVariableService getGlobalVariableService() {
+        if (this.globalVariableService == null) {
+            this.globalVariableService = KcServiceLocator.getService(GlobalVariableService.class);
+        }
+        return this.globalVariableService;
+    }
+
+    protected BusinessObjectService getBusinessObjectService() {
+        if (this.businessObjectService == null) {
+            this.businessObjectService = KcServiceLocator.getService(BusinessObjectService.class);
+        }
+        return this.businessObjectService;
     }
 }
