@@ -1,6 +1,10 @@
 
 
 ## CURRENT
+* RESKC-2923: add validation for unused UAF
+  * Travis Schneeberger on Fri, 25 May 2018 17:37:48 -0400 [View Commit](../../commit/9d7fcc8907c56dd5be9e83b6706ae2f68339fe37)
+
+## coeus-1805.0031
 * RESKC-2924: uses a UAF if it exists regardless of generator support. Updates S2SForm tab on save based on current configuration in the s2s form configuration table.
   * Travis Schneeberger on Fri, 25 May 2018 11:32:40 -0400 [View Commit](../../commit/8a48e680f7446a46aae88b64a25ca77fc97f6b3d)
 
