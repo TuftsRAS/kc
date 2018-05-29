@@ -1,6 +1,11 @@
 
 
 ## CURRENT
+* RESKC-2566: Fix Award Budget null-pointer STE when clicking the calculate button on a Summary Personnel Line Item. (#2905)
+
+  * Omar Soto Fortuño on Tue, 29 May 2018 16:13:56 -0400 [View Commit](../../commit/9d2b042696c3b01025ee9d0a4e97ff9ffcda69c5)
+
+## coeus-1805.0032
 * RESKC-2923: add validation for unused UAF
   * Travis Schneeberger on Fri, 25 May 2018 17:37:48 -0400 [View Commit](../../commit/9d7fcc8907c56dd5be9e83b6706ae2f68339fe37)
 
