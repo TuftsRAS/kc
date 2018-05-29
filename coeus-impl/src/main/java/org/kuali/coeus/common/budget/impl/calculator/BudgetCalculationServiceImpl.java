@@ -589,6 +589,13 @@ public class BudgetCalculationServiceImpl implements BudgetCalculationService {
                                 objectCodePersonnelFringeTotals.put(matchingLineItem.getCostElement(), periodFringeTotals);
                             }
 
+                            // Sometimes, the Calculated Amounts are not filled. This will calculate them if it's needed.
+                            boolean isLineItemCalculationNeeded = matchingLineItem.getBudgetLineItemCalculatedAmounts().stream()
+                                    .anyMatch(budgetLineItemCalculatedAmount -> budgetLineItemCalculatedAmount.getCalculatedCost() == null);
+                            if (isLineItemCalculationNeeded) {
+                                new LineItemCalculator(budget, matchingLineItem).calculate();
+                            }
+
                             for(BudgetLineItemCalculatedAmount lineItemCalculatedAmount : matchingLineItem.getBudgetLineItemCalculatedAmounts()) {
                                 lineItemCalculatedAmount.refreshReferenceObject("rateClass");
                                 //Check for Employee Benefits RateClassType
