@@ -8,6 +8,7 @@
 
 package org.kuali.coeus.common.api.document;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -91,21 +92,25 @@ public class DocumentController {
     @RequestMapping(method= RequestMethod.GET, value="/enroute-documents", consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
-    public List<DocumentDetailsDto> documentsRoutingToUser(@RequestParam(value = "user") String user) {
-        return getDocumentsRoutingForUser(user);
+    public List<DocumentDetailsDto> documentsRoutingToUser(@RequestParam(value = "user") String user,
+                                                           @RequestParam(value = "limit", required = false) Integer limit,
+                                                           @RequestParam(value = "skip", required = false) Integer skip) {
+        return getDocumentsRoutingForUser(user, limit, skip);
     }
 
     @RequestMapping(method= RequestMethod.GET, value="/saved-documents", consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
-    public List<DocumentDetailsDto> documentsSavedForUser(@RequestParam(value = "user") String user) {
-        return documentSavedForUser(user);
+    public List<DocumentDetailsDto> documentsSavedForUser(@RequestParam(value = "user") String user,
+                                                          @RequestParam(value = "limit", required = false) Integer limit,
+                                                          @RequestParam(value = "skip", required = false) Integer skip) {
+        return documentSavedForUser(user, limit, skip);
     }
 
-    private List<DocumentDetailsDto> getDocumentsRoutingForUser(String routingToUser) {
+    private List<DocumentDetailsDto> getDocumentsRoutingForUser(String routingToUser, Integer limit, Integer skip) {
         checkAndRetrievePerson(routingToUser);
         ArrayList<DocumentDetailsDto> documentList = new ArrayList<>();
-        List<DocumentSearchResult> enrouteDocuments = krewDocHeaderDao.getEnrouteProposalDocs(routingToUser);
+        List<DocumentSearchResult> enrouteDocuments = krewDocHeaderDao.getEnrouteProposalDocs(routingToUser, limit, skip);
         for (DocumentSearchResult enrouteDocument : enrouteDocuments) {
             RoutingReportCriteria.Builder reportCriteriaBuilder = RoutingReportCriteria.Builder.createByDocumentId(enrouteDocument.getDocument().getDocumentId());
             reportCriteriaBuilder.setTargetPrincipalIds(Collections.singletonList(routingToUser));
@@ -126,13 +131,14 @@ public class DocumentController {
         return documentList;
     }
 
-    protected List<DocumentDetailsDto> documentSavedForUser(String savedForUser) {
+    protected List<DocumentDetailsDto> documentSavedForUser(String savedForUser, Integer limit, Integer skip) {
         Person person = checkAndRetrievePerson(savedForUser);
 
-        return krewDocHeaderDao.getSavedDocuments(savedForUser).stream()
+        final List<DocumentSearchResult> savedDocuments = krewDocHeaderDao.getSavedDocuments(savedForUser, limit, skip);
+        return CollectionUtils.isNotEmpty(savedDocuments) ? savedDocuments.stream()
                 .filter(savedDoc -> canOpenDocument(person, savedDoc))
                 .map(documentSearchResult -> getDocumentDetailsDto(documentSearchResult, null))
-                .collect(Collectors.toList());
+                .collect(Collectors.toList()) :  new ArrayList<>();
     }
 
     protected boolean canOpenDocument(Person person, DocumentSearchResult savedDoc) {
@@ -199,7 +205,6 @@ public class DocumentController {
         DocumentDetailsDto documentDetailsDto = new DocumentDetailsDto();
         documentDetailsDto.setDocumentTitle(doc.getDocument().getTitle());
         documentDetailsDto.setDocumentNumber(doc.getDocument().getDocumentId());
-        DateTimeFormatter patternFormat = DateTimeFormat.forPattern(MMMM_D_YYYY);
         long formattedDate = doc.getDocument().getDateCreated().getMillis();
         documentDetailsDto.setDocumentCreateDate(formattedDate);
         documentDetailsDto.setDocHandlerUrl(doc.getDocument().getDocumentHandlerUrl());

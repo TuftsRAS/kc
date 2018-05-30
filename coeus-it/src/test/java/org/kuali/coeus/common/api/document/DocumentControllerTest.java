@@ -12,6 +12,7 @@ import org.junit.Assert;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.kuali.coeus.common.api.document.dto.DocumentDetailsDto;
 import org.kuali.coeus.common.framework.custom.attr.CustomAttributeDocValue;
 import org.kuali.coeus.common.framework.org.Organization;
 import org.kuali.coeus.common.framework.unit.Unit;
@@ -72,6 +73,55 @@ public class DocumentControllerTest extends ProposalDevelopmentRuleTestBase {
         getBusinessObjectService().save(questionnaire);
         saveDoc();
     }
+
+
+    @Test
+    public void testDocumentController() throws Exception {
+
+        ProposalDevelopmentDocument proposalDocument = saveDoc();
+        ProposalCopyCriteria criteria = new ProposalCopyCriteria();
+        criteria.setLeadUnitNumber(ORIGINAL_LEAD_UNIT);
+        ProposalDevelopmentDocument copiedDocument = getProposalCopyService().copyProposal(proposalDocument, criteria);
+        proposalDocument = (ProposalDevelopmentDocument) getDocumentService().routeDocument(copiedDocument, "", new ArrayList<>());
+        Integer steps = getDocumentController().getSteps(proposalDocument.getDocumentNumber(), "10000000001");
+        Assert.assertTrue(steps == 2);
+
+        List<DocumentDetailsDto> documentDetails = getDocumentController().documentSavedForUser("10000000001", null, null);
+        int numberOfDocsPriorToTest = documentDetails.size();
+
+        ProposalDevelopmentDocument proposalDocument1 = saveDoc();
+
+        ProposalDevelopmentDocument proposalDocument2 = saveDoc();
+
+        ProposalDevelopmentDocument proposalDocument3 = saveDoc();
+
+        ProposalDevelopmentDocument proposalDocument4 = saveDoc();
+
+        ProposalDevelopmentDocument proposalDocument5 = saveDoc();
+
+        // there's 8 documents in total
+        documentDetails = getDocumentController().documentSavedForUser("10000000001", null, null);
+        Assert.assertTrue(documentDetails.size() == 8);
+        documentDetails = getDocumentController().documentSavedForUser("10000000001", 6, 0);
+        Assert.assertTrue(documentDetails.size() == 6);
+        documentDetails = getDocumentController().documentSavedForUser("10000000001", 0, 5);
+        Assert.assertTrue(documentDetails.size() == 0);
+        documentDetails = getDocumentController().documentSavedForUser("10000000001", 8, 0);
+        Assert.assertTrue(documentDetails.size() == 8);
+        documentDetails = getDocumentController().documentSavedForUser("10000000001", 8, 1);
+        Assert.assertTrue(documentDetails.size() == 7);
+        documentDetails = getDocumentController().documentSavedForUser("10000000001", 5, 1);
+        Assert.assertTrue(documentDetails.size() == 5);
+        documentDetails = getDocumentController().documentSavedForUser("10000000001", 6, 2);
+        Assert.assertTrue(documentDetails.size() == 6);
+        documentDetails = getDocumentController().documentSavedForUser("10000000001", 8, 8);
+        Assert.assertTrue(documentDetails.size() == 0);
+        documentDetails = getDocumentController().documentSavedForUser("10000000001", 8, null);
+        Assert.assertTrue(documentDetails.size() == 8);
+        documentDetails = getDocumentController().documentSavedForUser("10000000001", null, 2);
+        Assert.assertTrue(documentDetails.size() == 6);
+    }
+
 
     private ProposalDevelopmentDocument createProposal() throws Exception {
         ProposalDevelopmentDocument document = getNewProposalDevelopmentDocument();
@@ -172,17 +222,6 @@ public class DocumentControllerTest extends ProposalDevelopmentRuleTestBase {
         ProposalDevelopmentDocument proposalDocument = createProposal();
         proposalDocument = (ProposalDevelopmentDocument) getDocumentService().saveDocument(proposalDocument);
         return proposalDocument;
-    }
-
-    @Test
-    public void testStepsCalculation() throws Exception {
-        ProposalDevelopmentDocument proposalDocument = saveDoc();
-        ProposalCopyCriteria criteria = new ProposalCopyCriteria();
-        criteria.setLeadUnitNumber(ORIGINAL_LEAD_UNIT);
-        ProposalDevelopmentDocument copiedDocument = getProposalCopyService().copyProposal(proposalDocument, criteria);
-        proposalDocument = (ProposalDevelopmentDocument) getDocumentService().routeDocument(copiedDocument, "", new ArrayList<>());
-        Integer steps = getDocumentController().getSteps(proposalDocument.getDocumentNumber(), "10000000001");
-        Assert.assertTrue(steps == 2);
     }
 
     public WorkflowDocumentActionsService getWorkflowDocumentActionsService() {

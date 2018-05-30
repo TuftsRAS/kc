@@ -13,7 +13,6 @@ import org.kuali.rice.kew.api.document.DocumentStatus;
 import org.kuali.rice.kew.api.document.search.DocumentSearchCriteria;
 import org.kuali.rice.kew.api.document.search.DocumentSearchResult;
 import org.kuali.rice.kew.docsearch.service.DocumentSearchService;
-import org.kuali.rice.kew.service.KEWServiceLocator;
 import org.kuali.rice.krad.dao.impl.LookupDaoOjb;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -21,6 +20,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 
 @Repository("kewDocHeaderDao")
@@ -34,22 +34,30 @@ public class KewDocHeaderDaoImpl extends LookupDaoOjb implements KewDocHeaderDao
     private DocumentSearchService documentSearchService;
 
     @Override
-    public List<DocumentSearchResult> getEnrouteProposalDocs(String user) {
+    public List<DocumentSearchResult> getEnrouteProposalDocs(String user, Integer limit, Integer skip) {
         DocumentSearchCriteria.Builder builder = DocumentSearchCriteria.Builder.create();
         builder.setDocumentStatuses(Arrays.asList(DocumentStatus.ENROUTE));
+        if (!Objects.isNull(limit)) {
+            builder.setMaxResults(limit);
+        }
+        if (!Objects.isNull(skip)) {
+            builder.setStartAtIndex(skip);
+        }
         builder.setDocumentTypeName(PROPOSAL_DEVELOPMENT_DOCUMENT);
         return documentSearchService.lookupDocuments(user, builder.build()).getSearchResults();
     }
 
-    public List<DocumentSearchResult> getSavedDocuments(String user) {
+    public List<DocumentSearchResult> getSavedDocuments(String user, Integer limit, Integer skip) {
         DocumentSearchCriteria.Builder builder = DocumentSearchCriteria.Builder.create();
         builder.setDocumentStatuses(Arrays.asList(DocumentStatus.SAVED));
+        if (!Objects.isNull(limit)) {
+            builder.setMaxResults(limit);
+        }
+        if (!Objects.isNull(skip)) {
+            builder.setStartAtIndex(skip);
+        }
         return documentSearchService.lookupDocuments(user, builder.build()).getSearchResults();
     }
 
-    public DocumentSearchService getDocSearchService() {
-        DocumentSearchService docService = KEWServiceLocator.getDocumentSearchService();
-        return docService;
-    }
 
 }
