@@ -1,6 +1,11 @@
 
 
 ## CURRENT
+* RESKC-2942: Adding pagination to the endpoints (#2906)
+
+  * Gayathri Athreya on Tue, 29 May 2018 17:45:33 -0700 [View Commit](../../commit/570409fef5cac4eb5088fa415e1ae58cbd0124ac)
+
+## coeus-1805.0033
 * RESKC-2566: Fix Award Budget null-pointer STE when clicking the calculate button on a Summary Personnel Line Item. (#2905)
 
   * Omar Soto Fortuño on Tue, 29 May 2018 16:13:56 -0400 [View Commit](../../commit/9d2b042696c3b01025ee9d0a4e97ff9ffcda69c5)
