@@ -50,8 +50,9 @@ import java.sql.Timestamp;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static org.kuali.coeus.sys.framework.util.CollectionUtils.entriesToMapWithReplacing;
+import static org.kuali.coeus.sys.framework.util.CollectionUtils.entriesToMap;
 import static org.kuali.coeus.sys.framework.util.CollectionUtils.entry;
+import static org.kuali.coeus.sys.framework.util.CollectionUtils.distinctByKey;
 import static org.kuali.rice.core.api.criteria.PredicateFactory.*;
 
 
@@ -325,18 +326,22 @@ public class S2sSubmissionServiceImpl implements S2sSubmissionService {
         //then this indicates a bug.
         final FormGenerationResult result = formGeneratorService.generateAndValidateForms(pdDoc);
         if (result.isValid()) {
-            final List<AttachmentData> resultAttachments = result.getAttachments();
-            logDuplicateContentIds(proposalNumber, resultAttachments);
+            final String xmlForSubmission = result.getApplicationXml();
+            final List<AttachmentData> attachmentsForSubmission = result.getAttachments()
+                    .stream()
+                    .filter(distinctByKey(AttachmentData::getContentId))
+                    .collect(Collectors.toList());
+            logDuplicateContentIds(proposalNumber, result.getAttachments(), attachmentsForSubmission);
 
-            final Map<String, DataHandler> attachments = resultAttachments
+            final Map<String, DataHandler> attachments = attachmentsForSubmission
                     .stream()
                     .map(attachment -> entry(attachment.getContentId(), new DataHandler(new ByteArrayDataSource(attachment.getContent(), attachment.getContentType()))))
-                    .collect(entriesToMapWithReplacing());
+                    .collect(entriesToMap());
 
             final S2SConnectorService connectorService = getS2sConnectorService(proposal.getS2sOpportunity());
-            final SubmitApplicationResponse response = connectorService.submitApplication(result.getApplicationXml(), attachments, proposalNumber);
+            final SubmitApplicationResponse response = connectorService.submitApplication(xmlForSubmission, attachments, proposalNumber);
 
-            saveSubmissionDetails(pdDoc, response, result);
+            saveSubmissionDetails(pdDoc, response, xmlForSubmission, attachmentsForSubmission);
             return true;
         }
 
@@ -344,12 +349,10 @@ public class S2sSubmissionServiceImpl implements S2sSubmissionService {
         return false;
     }
 
-    private void logDuplicateContentIds(String proposalNumber, List<AttachmentData> attachments) {
+    private void logDuplicateContentIds(String proposalNumber, List<AttachmentData> resultAttachments, List<AttachmentData> attachmentsForSubmission) {
         if (LOG.isWarnEnabled()) {
-            final List<String> contentIds = attachments.stream().map(AttachmentData::getContentId).collect(Collectors.toList());
-            final Set<String> uniqueContentIds = new HashSet<>(contentIds);
-            if (contentIds.size() != uniqueContentIds.size()) {
-                LOG.warn("Proposal " + proposalNumber + " has duplicate contentIds " + contentIds);
+            if (resultAttachments.size() != attachmentsForSubmission.size()) {
+                LOG.warn("Proposal " + proposalNumber + " has duplicate contentIds " + resultAttachments.stream().map(AttachmentData::getContentId).collect(Collectors.toList()));
             }
         }
     }
@@ -525,7 +528,7 @@ public class S2sSubmissionServiceImpl implements S2sSubmissionService {
      * @param pdDoc {@link ProposalDevelopmentDocument} that was submitted
      * @param response {@link SubmitApplicationResponse} submission response from grants gov
      */
-    protected void saveSubmissionDetails(ProposalDevelopmentDocument pdDoc, SubmitApplicationResponse response, FormGenerationResult result) {
+    protected void saveSubmissionDetails(ProposalDevelopmentDocument pdDoc, SubmitApplicationResponse response, String xmlForSubmission, List<AttachmentData> attachmentsForSubmission) {
         if (response != null) {
             String proposalNumber = pdDoc.getDevelopmentProposal().getProposalNumber();
 
@@ -533,7 +536,9 @@ public class S2sSubmissionServiceImpl implements S2sSubmissionService {
             appSubmission.setStatus(S2sAppSubmissionConstants.GRANTS_GOV_SUBMISSION_MESSAGE);
             appSubmission.setComments(S2sAppSubmissionConstants.GRANTS_GOV_COMMENTS_MESSAGE);
 
-            final List<S2sAppAttachments> s2sAppAttachmentList = result.getAttachments()
+
+
+            final List<S2sAppAttachments> s2sAppAttachmentList = attachmentsForSubmission
                     .stream()
                     .map(attachment -> {
                         final S2sAppAttachments appAttachments = new S2sAppAttachments();
@@ -546,7 +551,7 @@ public class S2sSubmissionServiceImpl implements S2sSubmissionService {
 
 
             S2sApplication application = new S2sApplication();
-            application.setApplication(result.getApplicationXml());
+            application.setApplication(xmlForSubmission);
             application.setProposalNumber(proposalNumber);
             application.setS2sAppAttachmentList(s2sAppAttachmentList);
             List<S2sApplication> s2sApplicationList = new ArrayList<>();
