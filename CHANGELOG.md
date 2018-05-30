@@ -1,6 +1,10 @@
 
 
 ## CURRENT
+* RESKC-2948: handling duplicate content id by only sending one of the duplicates.  Slight filtering changes to make sure only the transmitted changes are displayed on the submission details screen.
+  * Travis Schneeberger on Wed, 30 May 2018 18:37:11 -0400 [View Commit](../../commit/7d760016c58d9103d25293bc38f76ce273b1bd91)
+
+## coeus-1805.0036
 * RESKC-2948: handling duplicate content id by only sending one of the duplicates.  Also, logging a message when this occurs.
   * Travis Schneeberger on Wed, 30 May 2018 14:48:34 -0400 [View Commit](../../commit/88005060ce21cbb91c1eb399de45a176457ea4c9)
 
