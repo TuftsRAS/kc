@@ -25,6 +25,7 @@ import org.kuali.coeus.propdev.impl.s2s.connect.OpportunitySchemaParserService;
 import org.kuali.coeus.propdev.impl.s2s.connect.S2SConnectorService;
 import org.kuali.coeus.propdev.impl.s2s.connect.S2sCommunicationException;
 import org.kuali.coeus.s2sgen.api.core.ConfigurationConstants;
+import org.kuali.coeus.s2sgen.api.generate.AttachmentData;
 import org.kuali.coeus.s2sgen.api.generate.FormGenerationResult;
 import org.kuali.coeus.s2sgen.api.generate.FormGeneratorService;
 import org.kuali.coeus.sys.framework.service.KcServiceLocator;
@@ -49,7 +50,7 @@ import java.sql.Timestamp;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static org.kuali.coeus.sys.framework.util.CollectionUtils.entriesToMap;
+import static org.kuali.coeus.sys.framework.util.CollectionUtils.entriesToMapWithReplacing;
 import static org.kuali.coeus.sys.framework.util.CollectionUtils.entry;
 import static org.kuali.rice.core.api.criteria.PredicateFactory.*;
 
@@ -324,10 +325,13 @@ public class S2sSubmissionServiceImpl implements S2sSubmissionService {
         //then this indicates a bug.
         final FormGenerationResult result = formGeneratorService.generateAndValidateForms(pdDoc);
         if (result.isValid()) {
-            final Map<String, DataHandler> attachments = result.getAttachments()
+            final List<AttachmentData> resultAttachments = result.getAttachments();
+            logDuplicateContentIds(proposalNumber, resultAttachments);
+
+            final Map<String, DataHandler> attachments = resultAttachments
                     .stream()
                     .map(attachment -> entry(attachment.getContentId(), new DataHandler(new ByteArrayDataSource(attachment.getContent(), attachment.getContentType()))))
-                    .collect(entriesToMap());
+                    .collect(entriesToMapWithReplacing());
 
             final S2SConnectorService connectorService = getS2sConnectorService(proposal.getS2sOpportunity());
             final SubmitApplicationResponse response = connectorService.submitApplication(result.getApplicationXml(), attachments, proposalNumber);
@@ -338,6 +342,16 @@ public class S2sSubmissionServiceImpl implements S2sSubmissionService {
 
         LOG.error("Submission errors exist that were not prevented by ProposalDevelopmentGrantsGovAuditRule.  Proposal Number: " + proposalNumber + " Errors: " + result.getErrors());
         return false;
+    }
+
+    private void logDuplicateContentIds(String proposalNumber, List<AttachmentData> attachments) {
+        if (LOG.isWarnEnabled()) {
+            final List<String> contentIds = attachments.stream().map(AttachmentData::getContentId).collect(Collectors.toList());
+            final Set<String> uniqueContentIds = new HashSet<>(contentIds);
+            if (contentIds.size() != uniqueContentIds.size()) {
+                LOG.warn("Proposal " + proposalNumber + " has duplicate contentIds " + contentIds);
+            }
+        }
     }
 
     /**

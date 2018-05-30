@@ -140,6 +140,18 @@ public final class CollectionUtils {
     public static <K, U> Collector<Map.Entry<K, U>, ?, Map<K, U>> entriesToMap() {
         return Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue);
     }
+
+    /**
+     * Convenience method to a return a Collector that converts an Map.Entry to a Map.  If a duplicate key is detected, the value is replaced rather
+     * throwing an exception as is the default behavior.
+     *
+     * @param <K> the key type
+     * @param <U> the value type
+     * @return A Collector from Map.Entry to Map
+     */
+    public static <K, U> Collector<Map.Entry<K, U>, ?, Map<K, U>> entriesToMapWithReplacing() {
+        return Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (v1, v2) -> v2, HashMap::new);
+    }
     
     /**
      * Convenience method to a return a Collector that converts an Map.Entry to a Map.
