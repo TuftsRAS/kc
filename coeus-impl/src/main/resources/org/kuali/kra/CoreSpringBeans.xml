@@ -247,10 +247,6 @@
                 <value>classpath:org/kuali/coeus/common/impl/custom/attr/CustomAttribute.xml</value>
                 <value>classpath:org/kuali/coeus/common/impl/custom/attr/CustomAttributeDataType.xml</value>
                 <value>classpath:org/kuali/coeus/common/impl/custom/attr/CustomAttributeDocument.xml</value>
-                <value>classpath:org/kuali/coeus/common/impl/rpt/cust/CustReportDetails.xml</value>
-                <value>classpath:org/kuali/coeus/common/impl/rpt/cust/CustReportType.xml</value>
-                <value>classpath:org/kuali/coeus/common/impl/rpt/cust/CustRptDefaultParms.xml</value>
-                <value>classpath:org/kuali/coeus/common/impl/rpt/cust/CustRptTypeDocument.xml</value>
                 <value>classpath:org/kuali/kra/datadictionary/DateRangeFilter.xml</value>
                 <value>classpath:org/kuali/coeus/common/impl/type/DeadlineType.xml</value>
                 <value>classpath:org/kuali/coeus/common/impl/person/attr/DegreeType.xml</value>
@@ -763,10 +759,6 @@
                 <value>classpath:org/kuali/coeus/common/impl/custom/attr/CustomAttributeDataTypeMaintenanceDocument.xml</value>
                 <value>classpath:org/kuali/coeus/common/impl/custom/attr/CustomAttributeDocumentMaintenanceDocument.xml</value>
                 <value>classpath:org/kuali/coeus/common/impl/custom/attr/CustomAttributeMaintenanceDocument.xml</value>
-                <value>classpath:org/kuali/coeus/common/impl/rpt/cust/CustReportDetailsMaintenanceDocument.xml</value>
-                <value>classpath:org/kuali/coeus/common/impl/rpt/cust/CustReportTypeMaintenanceDocument.xml</value>
-                <value>classpath:org/kuali/coeus/common/impl/rpt/cust/CustRptDefaultParmsMaintenanceDocument.xml</value>
-                <value>classpath:org/kuali/coeus/common/impl/rpt/cust/CustRptTypeDocumentMaintenanceDocument.xml</value>
                 <value>classpath:org/kuali/coeus/common/impl/type/DeadlineTypeMaintenanceDocument.xml</value>
                 <value>classpath:org/kuali/coeus/common/impl/person/attr/DegreeTypeMaintenanceDocument.xml</value>
                 <value>classpath:org/kuali/kra/datadictionary/docs/DistributionMaintenanceDocument.xml</value>

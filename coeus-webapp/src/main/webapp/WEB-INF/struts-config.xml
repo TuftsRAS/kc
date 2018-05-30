@@ -25,7 +25,6 @@
     	<!-- End required KNS forms -->
 <!-- Rice content End -->
 
-		<form-bean name="ReportGenerationForm" type="org.kuali.coeus.common.impl.rpt.ReportGenerationForm" />
 		<form-bean name="BudgetForm" type="org.kuali.coeus.common.budget.framework.core.BudgetForm" />
 		<form-bean name="AwardBudgetForm" type="org.kuali.kra.award.budget.AwardBudgetForm" />
 		<form-bean name="AwardForm" type="org.kuali.kra.award.AwardForm" />
@@ -69,8 +68,6 @@
         <form-bean name="IacucProtocolCorrespondenceTemplateForm" type="org.kuali.kra.iacuc.correspondence.IacucProtocolCorrespondenceTemplateForm" />
 		<form-bean name="IacucResearchAreasForm" type="org.kuali.kra.iacuc.IacucResearchAreasForm" />
 		<form-bean name="IsrSsrReportGenerationForm" type="org.kuali.kra.subaward.reporting.web.struts.form.IsrSsrReportGenerationForm" />
-      <!-- AAP: report form -->
-      <form-bean name="ReportForm" type="co.kuali.coeus.reporting.web.struts.form.ReportFormwardForm" />
     </form-beans>
 
 <!-- Rice content Start -->
@@ -132,13 +129,6 @@
         <action path="/kraHoldingPage" name="KualiForm" type="org.kuali.coeus.sys.framework.controller.KcHoldingPageAction" >
             <forward name="basic" path="/kraHoldingPage.jsp" />
         </action>
-               
-<!-- BIRT REPORTING -->
-           
-        <action path="/reporting" name="ReportGenerationForm" type="org.kuali.coeus.common.impl.rpt.ReportGenerationAction" scope="request">
-            <forward name="basic" path="/WEB-INF/jsp/reporting/reportGeneration.jsp" />
-        </action>
-        
         
         <action path="/isrSsrReporting" name="IsrSsrReportGenerationForm" type="org.kuali.kra.subaward.reporting.web.struts.action.IsrSsrReportGenerationAction" scope="request">
             <forward name="basic" path="/WEB-INF/jsp/subawardReporting/isrSsrReporting.jsp" />
@@ -692,9 +682,6 @@
             <forward name="home" path="/WEB-INF/jsp/personmasschange/PersonMassChangeHome.jsp" />
             <forward name="view" path="/WEB-INF/jsp/personmasschange/PersonMassChangeView.jsp" />
         </action>
-     
-      <!-- AAP: adding report controller -->
-      <action path="/displayExternalReport" name="ReportForm" type="co.kuali.coeus.reporting.web.struts.action.ReportForwardAction"/>
 
         <action path="/activeMqMessageMaintenance" name="KualiMaintenanceForm" attribute="KualiForm" scope="request" parameter="methodToCall" validate="false" input="/kr/WEB-INF/jsp/KualiMaintenanceDocument.jsp" type="org.kuali.coeus.sys.impl.mq.ActiveMqMessageMaintenanceDocumentAction">
             <forward name="basic" path="/kr/WEB-INF/jsp/KualiMaintenanceDocument.jsp" />

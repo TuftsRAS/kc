@@ -121,21 +121,8 @@ Portions of Kuali are copyrighted by other parties as described in the [link='@{
 					p:render="@{#ConfigProperties['protocols.standalone.enabled']}" 
 					p:order="50"/>
 
-				<bean parent="Kc-Header-ReportsMenu" p:toggleText="REPORTS"
-                      p:order="60" p:render="@{(#getParamAsBoolean('KC-GEN','All','JASPER_REPORTS_ENABLED') == null ? false : #getParamAsBoolean('KC-GEN','All','JASPER_REPORTS_ENABLED'))
-                       	and #userSession != null 
-                      	and #getService('unitAuthorizationService').hasPermission(#userSession.getPrincipalId(), 
-                      		T(org.kuali.kra.infrastructure.RoleConstants).DEPARTMENT_ROLE_TYPE, 
-                      		T(org.kuali.kra.infrastructure.PermissionConstants).RUN_GLOBAL_REPORTS)}">
-                    <property name="wrapperCssClasses">
-                        <list merge="true">
-                            <value>kc-reportsDropdown</value>
-                            <value>kc-listIconDropdown</value>
-                        </list>
-                    </property>
-                </bean>
                 <bean parent="Kc-Header-IframeMenuAction" p:actionUrl.viewId="Kc-Header-IframeView"
-                      p:actionLabel="REPORTS" p:order="70"
+                      p:actionLabel="REPORTS" p:order="60"
                       p:render="@{(#getParamAsBoolean('KC-GEN','All','KUALI_REPORTS_ENABLED') == null ? false : #getParamAsBoolean('KC-GEN','All','KUALI_REPORTS_ENABLED'))
                        	and #userSession != null
                       	and #getService('unitAuthorizationService').hasPermission(#userSession.getPrincipalId(),
@@ -149,7 +136,7 @@ Portions of Kuali are copyrighted by other parties as described in the [link='@{
                 </bean>
                 <bean parent="Uif-Link" p:href="@{#ConfigProperties['application.url']}/portal.do"
                     p:wrapperCssClasses="pull-right" 
-                    p:linkText="SYSTEM ADMIN PORTAL" p:order="80"/>
+                    p:linkText="SYSTEM ADMIN PORTAL" p:order="70"/>
             </list>        
         </property>
     </bean>
@@ -724,17 +711,6 @@ value="@{#ConfigProperties['application.url']}/kr/lookup.do?methodToCall=search&
                       p:actionUrl.viewId="S2sOpportunity-LookupView"
                       p:actionUrl.methodToCall="search"
                       p:actionUrl.controllerMapping="/lookup" p:order="20"   />
-
-                <bean parent="Kc-Header-IframeMenuAction" p:actionUrl.viewId="Kc-Header-IframeView"
-                      p:actionLabel="Reporting" p:order="30" >
-                    <property name="actionUrl.requestParameters">
-                        <map>
-                            <entry key="href"
-
-                                   value="@{#ConfigProperties['application.url']}/reporting.do?methodToCall=getReportParametersFromDesign&amp;returnLocation=@{#ConfigProperties['application.url']}%2Fkc-krad%2FlandingPage%3FviewId%3DKc-LandingPage-RedirectView"/>
-                        </map>
-                    </property>
-                </bean>
             </list>
         </property>
     </bean>
@@ -1478,29 +1454,6 @@ value="@{#ConfigProperties['application.url']}/kr/lookup.do?methodToCall=search&
         </property>
     </bean>
 
-    <bean id="Kc-Header-Actionlist" parent="Kc-Header-Actionlist-parentBean"/>
-    <bean id="Kc-Header-Actionlist-parentBean" abstract="true"
-          parent="Uif-DropdownToggleMenu">
-        <property name="menuItems">
-            <list>
-                <bean parent="Uif-MenuAction" p:actionLabel="Approve: Doc #5547"/>
-                <bean parent="Uif-MenuAction" p:actionLabel="Approve: Doc #5547"/>
-                <bean parent="Uif-MenuAction" p:actionLabel="Approve: Doc #5547"/>
-                <bean parent="Uif-MenuAction" p:actionLabel="Approve: Doc #5547"/>
-                <bean parent="Uif-MenuAction" p:actionLabel="Approve: Doc #5547"/>
-                <bean parent="Uif-MenuAction" p:actionLabel="Approve: Doc #5547"/>
-                <bean parent="Uif-MenuAction" p:actionLabel="Approve: Doc #5547"/>
-                <bean parent="Uif-MenuAction" p:actionLabel="Approve: Doc #5547"/>
-                <bean parent="Uif-MenuAction" p:actionLabel="Approve: Doc #5547"/>
-                <bean parent="Uif-MenuAction" p:actionLabel="Approve: Doc #5547"/>
-                <bean parent="Uif-MenuAction" p:actionLabel="Approve: Doc #5547"/>
-                <bean parent="Uif-MenuAction" p:actionLabel="Approve: Doc #5547"/>
-                <bean parent="Uif-MenuDivider"/>
-                <bean parent="Uif-MenuAction" p:actionLabel="Full Action List"/>
-            </list>
-        </property>
-    </bean>
-
     <bean id="Kc-Header-User" parent="Kc-Header-User-parentBean"/>
     <bean id="Kc-Header-User-parentBean" abstract="true"
           parent="Uif-DropdownToggleMenu">
@@ -1518,105 +1471,4 @@ value="@{#ConfigProperties['application.url']}/kr/lookup.do?methodToCall=search&
             </list>
         </property>
     </bean>
-
-    <bean id="Kc-Header-ReportsMenu" parent="Kc-Header-ReportsMenu-parentBean"/>
-    <bean id="Kc-Header-ReportsMenu-parentBean" abstract="true"
-          parent="Kc-Header-DefaultMenu" p:toggleText="Reports">
-        <property name="menuGroup">
-            <bean parent="Uif-AppMenuGroup">
-                <property name="layoutManager.defaultItemSizes.smSize" value="12"/>
-                <property name="layoutManager.defaultItemSizes.mdSize" value="12"/>
-                <property name="items">
-                    <list>
-                        <bean parent="Kc-Header-Reports-Group" p:order="10"/>
-                    </list>
-                </property>
-            </bean>
-        </property>
-    </bean>
-
-    <bean id="Kc-Header-Reports-Group" parent="Kc-Header-Reports-Group-parentBean"/>
-    <bean id="Kc-Header-Reports-Group-parentBean" abstract="true"
-          parent="Uif-SimpleGroup">
-        <property name="items">
-            <list>
-                <bean parent="Kc-Header-Reports-AwardReports" p:order="10"/>
-                <bean parent="Kc-Header-Reports-ProposalReports" p:order="20"/>
-                <bean parent="Kc-Header-Reports-AdHoc" p:order="30"/>
-            </list>
-        </property>
-    </bean>
-
-	<bean id="Kc-Header-Reports-AwardReports" parent="Kc-Header-Reports-AwardReports-parentBean" />
-	<bean id="Kc-Header-Reports-AwardReports-parentBean" abstract="true"
-		parent="Uif-MenuList" p:headerText="Award Reports">
-		<property name="items">
-			<list>
-				<bean parent="Uif-Link"
-					p:href="@{#ConfigProperties['application.url']}/displayExternalReport.do?reportId=ACTIVE_AWARDS_REPORT___010"
-					p:target="reportWindow" p:linkText="Active Awards" p:order="10" />
-				<bean parent="Uif-Link"
-					p:href="@{#ConfigProperties['application.url']}/displayExternalReport.do?reportId=AWARDS_BY_PI_REPORT___010"
-					p:target="reportWindow" p:linkText="Awards by PI" p:order="20" />
-				<bean parent="Uif-Link"
-					p:href="@{#ConfigProperties['application.url']}/displayExternalReport.do?reportId=AWARDS_BY_SPONSOR_REPORT___010"
-					p:target="reportWindow" p:linkText="Awards by Sponsor" p:order="30" />
-				<bean parent="Uif-Link"
-					p:href="@{#ConfigProperties['application.url']}/displayExternalReport.do?reportId=AWARDS_BY_SPONSOR_TYPE_REPORT___010"
-					p:target="reportWindow" p:linkText="Awards by Sponsor Type"
-					p:order="40" />
-				<bean parent="Uif-Link"
-					p:href="@{#ConfigProperties['application.url']}/displayExternalReport.do?reportId=AWARDS_BY_AWARD_TYPE_REPORT___010"
-					p:target="reportWindow" p:linkText="Awards by Award Type" p:order="50" />
-				<bean parent="Uif-Link"
-					p:href="@{#ConfigProperties['application.url']}/displayExternalReport.do?reportId=AWARDS_BY_AWARD_NOTICE_DATE_RANGE___010"
-					p:target="reportWindow" p:linkText="Awards by Notice Date" p:order="60" />
-				<bean parent="Uif-Link"
-					p:href="@{#ConfigProperties['application.url']}/displayExternalReport.do?reportId=AWARDS_BY_LEAD_UNIT_REPORT___010"
-					p:target="reportWindow" p:linkText="Awards by Lead Unit" p:order="70" />
-					
-
-			</list>
-		</property>
-	</bean>
-	<bean id="Kc-Header-Reports-ProposalReports" parent="Kc-Header-Reports-ProposalReports-parentBean" />
-	<bean id="Kc-Header-Reports-ProposalReports-parentBean" abstract="true"
-		parent="Uif-MenuList" p:headerText="Proposal Reports">
-		<property name="items">
-			<list>
-				<bean parent="Uif-Link"
-					p:href="@{#ConfigProperties['application.url']}/displayExternalReport.do?reportId=INSTITUTIONAL_PROPOSALS_BY_SPONSOR_REPORT___010"
-					p:target="reportWindow" p:linkText="Institutional Proposals by Sponsor"
-					p:order="10" />
-				<bean parent="Uif-Link"
-					p:href="@{#ConfigProperties['application.url']}/displayExternalReport.do?reportId=INSTITUTIONAL_PROPOSALS_BY_SPONSOR_TYPE_REPORT___010"
-					p:target="reportWindow" p:linkText="Institutional Proposals by Sponsor Type"
-					p:order="20" />					
-				<bean parent="Uif-Link"
-					p:href="@{#ConfigProperties['application.url']}/displayExternalReport.do?reportId=INSTITUTIONAL_PROPOSALS_BY_PROPOSAL_TYPE_REPORT___010"
-					p:target="reportWindow" p:linkText="Institutional Proposals by Proposal Type"
-					p:order="30" />	
-				<bean parent="Uif-Link"
-					p:href="@{#ConfigProperties['application.url']}/displayExternalReport.do?reportId=INSTITUTIONAL_PROPOSALS_BY_PI_REPORT___010"
-					p:target="reportWindow" p:linkText="Investigator Proposal History"
-					p:order="40" />
-				<bean parent="Uif-Link"
-					p:href="@{#ConfigProperties['application.url']}/displayExternalReport.do?reportId=INSTITUTIONAL_PROPOSALS_BY_LEAD_UNIT_REPORT___010"
-					p:target="reportWindow" p:linkText="Institutional Proposals By Lead Unit"
-					p:order="50" />
-			</list>
-		</property>
-	</bean>
-	
-	<bean id="Kc-Header-Reports-AdHoc" parent="Kc-Header-Reports-AdHoc-parentBean" />
-	<bean id="Kc-Header-Reports-AdHoc-parentBean" abstract="true"
-		parent="Uif-MenuList" p:headerText="Ad Hoc Reports">
-		<property name="items">
-			<list>
-				<bean parent="Uif-Link"
-					p:href="@{#ConfigProperties['application.url']}/displayExternalReport.do"
-					p:target="reportWindow" p:linkText="Ad Hoc Report List" p:order="10" />
-			</list>
-		</property>
-	</bean>
 </beans>
