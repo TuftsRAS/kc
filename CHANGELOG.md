@@ -1,6 +1,10 @@
 
 
 ## CURRENT
+* RESKC-2940: remove legacy reporting: birt and internal jasperreports
+  * Travis Schneeberger on Fri, 18 May 2018 15:37:59 -0600 [View Commit](../../commit/d27bd044b0fc876b03e2e8a2bdb68b00c2de76f1)
+
+## coeus-1805.0034
 * RESKC-2942: Adding pagination to the endpoints (#2906)
 
   * Gayathri Athreya on Tue, 29 May 2018 17:45:33 -0700 [View Commit](../../commit/570409fef5cac4eb5088fa415e1ae58cbd0124ac)
