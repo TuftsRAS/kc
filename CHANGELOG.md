@@ -1,6 +1,10 @@
 
 
 ## CURRENT
+* RESKC-2948: handling duplicate content id by only sending one of the duplicates.  Also, logging a message when this occurs.
+  * Travis Schneeberger on Wed, 30 May 2018 14:48:34 -0400 [View Commit](../../commit/88005060ce21cbb91c1eb399de45a176457ea4c9)
+
+## coeus-1805.0035
 * RESKC-2940: remove legacy reporting: birt and internal jasperreports
   * Travis Schneeberger on Fri, 18 May 2018 15:37:59 -0600 [View Commit](../../commit/d27bd044b0fc876b03e2e8a2bdb68b00c2de76f1)
 
