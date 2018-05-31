@@ -90,18 +90,18 @@ public class DocumentControllerTest extends ProposalDevelopmentRuleTestBase {
         int numberOfDocsPriorToTest = documentDetails.size();
 
         ProposalDevelopmentDocument proposalDocument1 = saveDoc();
-
         ProposalDevelopmentDocument proposalDocument2 = saveDoc();
-
         ProposalDevelopmentDocument proposalDocument3 = saveDoc();
-
         ProposalDevelopmentDocument proposalDocument4 = saveDoc();
-
         ProposalDevelopmentDocument proposalDocument5 = saveDoc();
+        ProposalDevelopmentDocument proposalDocument6 = saveDoc();
+        ProposalDevelopmentDocument proposalDocument7 = saveDoc();
+        ProposalDevelopmentDocument proposalDocument8 = saveDoc();
+        ProposalDevelopmentDocument proposalDocument9 = saveDoc();
+        ProposalDevelopmentDocument proposalDocument10 = saveDoc();
 
-        // there's 8 documents in total
         documentDetails = getDocumentController().documentSavedForUser("10000000001", null, null);
-        Assert.assertTrue(documentDetails.size() == 8);
+        Assert.assertTrue(documentDetails.size() - numberOfDocsPriorToTest == 10);
         documentDetails = getDocumentController().documentSavedForUser("10000000001", 6, 0);
         Assert.assertTrue(documentDetails.size() == 6);
         documentDetails = getDocumentController().documentSavedForUser("10000000001", 0, 5);
@@ -109,17 +109,18 @@ public class DocumentControllerTest extends ProposalDevelopmentRuleTestBase {
         documentDetails = getDocumentController().documentSavedForUser("10000000001", 8, 0);
         Assert.assertTrue(documentDetails.size() == 8);
         documentDetails = getDocumentController().documentSavedForUser("10000000001", 8, 1);
-        Assert.assertTrue(documentDetails.size() == 7);
+        Assert.assertTrue(documentDetails.size() == 8);
         documentDetails = getDocumentController().documentSavedForUser("10000000001", 5, 1);
         Assert.assertTrue(documentDetails.size() == 5);
         documentDetails = getDocumentController().documentSavedForUser("10000000001", 6, 2);
         Assert.assertTrue(documentDetails.size() == 6);
-        documentDetails = getDocumentController().documentSavedForUser("10000000001", 8, 8);
-        Assert.assertTrue(documentDetails.size() == 0);
+        documentDetails = getDocumentController().documentSavedForUser("10000000001", 8, 10);
+        Assert.assertTrue(documentDetails.size() - numberOfDocsPriorToTest == 0);
         documentDetails = getDocumentController().documentSavedForUser("10000000001", 8, null);
         Assert.assertTrue(documentDetails.size() == 8);
         documentDetails = getDocumentController().documentSavedForUser("10000000001", null, 2);
-        Assert.assertTrue(documentDetails.size() == 6);
+        Assert.assertTrue(documentDetails.size() - numberOfDocsPriorToTest == 8);
+
     }
 
 
