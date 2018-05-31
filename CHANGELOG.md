@@ -1,6 +1,11 @@
 
 
 ## CURRENT
+* RESKC-488: Changes on Award Comments to add clarity and fix issue when adding a new comment and not showing the view history unless user moves to another tab. (#2907)
+
+  * Omar Soto Fortuño on Thu, 31 May 2018 09:06:46 -0400 [View Commit](../../commit/d316ff99200b81cfb6b58ac5d8e3e9fa589eabf4)
+
+## coeus-1805.0038
 * RESKC-2942: Fix Oracle tests (#2911)
 
   * Gayathri Athreya on Wed, 30 May 2018 19:19:20 -0700 [View Commit](../../commit/7d90a34e6191df9ead2ae569276dc880b16e833b)
