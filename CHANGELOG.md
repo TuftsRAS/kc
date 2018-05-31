@@ -1,6 +1,12 @@
 
 
 ## CURRENT
+* RESKC-2940: fix Grants.gov search portal link, add test to verify all portal links return a 200 OK
+  * Travis Schneeberger on Thu, 31 May 2018 13:05:46 -0400 [View Commit](../../commit/c5635e40d2d3cb0655a2bec7842e2f77eb0fd47d)
+* RESKC-2940: remove portal menu item related to birt reporting
+  * Travis Schneeberger on Wed, 30 May 2018 20:11:15 -0400 [View Commit](../../commit/3d59ecbe8da1f22bde46d968d439421df5f67abb)
+
+## coeus-1805.0039
 * RESKC-488: Changes on Award Comments to add clarity and fix issue when adding a new comment and not showing the view history unless user moves to another tab. (#2907)
 
   * Omar Soto Fortuño on Thu, 31 May 2018 09:06:46 -0400 [View Commit](../../commit/d316ff99200b81cfb6b58ac5d8e3e9fa589eabf4)

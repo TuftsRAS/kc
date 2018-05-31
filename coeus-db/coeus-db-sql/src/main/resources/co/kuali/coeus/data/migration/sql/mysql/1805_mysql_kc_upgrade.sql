@@ -20,4 +20,6 @@
 
 \. ./kc/bootstrap/V1805_003__s2s_overrride.sql
 \. ./kc/bootstrap/V1805_005__s2s_overrride_aor.sql
+\. ./kc/bootstrap/V1805_009__drop_birt_support.sql
+\. ./kc/bootstrap/V1805_010__fix_grants.gov_portal_search.sql
 commit;
