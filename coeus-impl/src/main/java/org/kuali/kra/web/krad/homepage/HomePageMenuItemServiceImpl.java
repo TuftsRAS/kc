@@ -9,9 +9,7 @@ package org.kuali.kra.web.krad.homepage;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.kuali.rice.core.api.config.property.ConfigurationService;
@@ -23,8 +21,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import static java.util.Collections.singletonMap;
+
 @Service("homePageMenuItemService")
 public class HomePageMenuItemServiceImpl implements HomePageMenuItemService {
+
+	protected static final String APP_URL_TOKEN = "<<APPLICATION_URL>>";
+
 	@Autowired
 	@Qualifier("dataObjectService")
 	private DataObjectService dataObjectService;
@@ -33,20 +36,28 @@ public class HomePageMenuItemServiceImpl implements HomePageMenuItemService {
 	@Qualifier("kualiConfigurationService")
 	private ConfigurationService configurationService;
 
-	protected static final String APP_URL_TOKEN = "<<APPLICATION_URL>>";
-
 	@Override
 	public List<HomePageItemSuggestion> getActiveMenuItems() {
 
-		String appUrl = configurationService.getPropertyValueAsString(KRADConstants.APPLICATION_URL_KEY);
+		final QueryResults<HomePageMenuItem> menuItems = this.getDataObjectService().findMatching(HomePageMenuItem.class,
+				QueryByCriteria.Builder.andAttributes(singletonMap("active", "Y")).build());
 
-		Map<String, Object> criteria = new HashMap<String, Object>();
-		criteria.put("active", "Y");
+		return toSuggestions(menuItems.getResults());
+	}
 
-		QueryResults<HomePageMenuItem> menuItems = this.getDataObjectService().findMatching(HomePageMenuItem.class,
-				QueryByCriteria.Builder.andAttributes(criteria).build());
+	@Override
+	public List<HomePageItemSuggestion> getAllMenuItems() {
+		
+		final QueryResults<HomePageMenuItem> menuItems = this.getDataObjectService().findAll(HomePageMenuItem.class);
 
-		return menuItems.getResults().stream().map(menuItem -> new HomePageItemSuggestion(menuItem, appUrl))
+		return toSuggestions(menuItems.getResults());
+	}
+
+	protected List<HomePageItemSuggestion> toSuggestions(List<HomePageMenuItem> menuItems) {
+		final String appUrl = configurationService.getPropertyValueAsString(KRADConstants.APPLICATION_URL_KEY);
+
+		return menuItems.stream()
+				.map(menuItem -> new HomePageItemSuggestion(menuItem, appUrl))
 				.collect(Collectors.toList());
 	}
 
@@ -90,6 +101,35 @@ public class HomePageMenuItemServiceImpl implements HomePageMenuItemService {
 
 		public void setHref(String href) {
 			this.href = href;
+		}
+
+		@Override
+		public boolean equals(Object o) {
+			if (this == o) return true;
+			if (o == null || getClass() != o.getClass()) return false;
+
+			HomePageItemSuggestion that = (HomePageItemSuggestion) o;
+
+			if (label != null ? !label.equals(that.label) : that.label != null) return false;
+			if (value != null ? !value.equals(that.value) : that.value != null) return false;
+			return href != null ? href.equals(that.href) : that.href == null;
+		}
+
+		@Override
+		public int hashCode() {
+			int result = label != null ? label.hashCode() : 0;
+			result = 31 * result + (value != null ? value.hashCode() : 0);
+			result = 31 * result + (href != null ? href.hashCode() : 0);
+			return result;
+		}
+
+		@Override
+		public String toString() {
+			return "HomePageItemSuggestion{" +
+					"label='" + label + '\'' +
+					", value='" + value + '\'' +
+					", href='" + href + '\'' +
+					'}';
 		}
 	}
 

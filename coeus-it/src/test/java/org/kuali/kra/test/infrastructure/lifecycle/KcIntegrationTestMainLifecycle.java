@@ -34,7 +34,6 @@ public class KcIntegrationTestMainLifecycle extends KcIntegrationTestBaseLifecyc
     private static final String RELATIVE_KC_WEB_ROOT = "coeus-webapp/src/main/webapp";
     private static final String RELATIVE_HELP_WEB_ROOT = "coeus-webapp/target/generated-web-sources/help-web-sources";
     private static final String RELATIVE_RICE_WEB_ROOT = "coeus-webapp/target/generated-web-sources/rice-web-sources";
-
     private static final Collection<String> EXTRA_WEB_RESOURCES = new ArrayList<String>(){{
         add(RELATIVE_HELP_WEB_ROOT);
         add(RELATIVE_RICE_WEB_ROOT);
@@ -47,20 +46,17 @@ public class KcIntegrationTestMainLifecycle extends KcIntegrationTestBaseLifecyc
     private TransactionStatus perTestTransactionStatus;
 
     @Override
-    protected void doPerClassStart() throws Throwable {
+    protected void doPerClassStart() {
     }
 
     @Override
-    protected void doPerClassStop() throws Throwable {
+    protected void doPerClassStop() {
     }
 
     @Override
     protected void doPerSuiteStart() throws Throwable {
         if (LOG.isInfoEnabled()) {
             LOG.info("Loading Configuration");
-        }
-        if (System.getProperty("module.name") == null) {
-            System.setProperty("module.name", "");
         }
         if (System.getProperty("basedir") == null) {
             System.setProperty("basedir", System.getProperty("user.dir") + "/");
@@ -92,7 +88,7 @@ public class KcIntegrationTestMainLifecycle extends KcIntegrationTestBaseLifecyc
     }
 
     @Override
-    protected void doPerTestStart(boolean transactional) throws Throwable {
+    protected void doPerTestStart(boolean transactional) {
         if (transactional) {
             DefaultTransactionDefinition defaultTransactionDefinition = new DefaultTransactionDefinition();
             defaultTransactionDefinition.setTimeout(3600);
@@ -106,7 +102,7 @@ public class KcIntegrationTestMainLifecycle extends KcIntegrationTestBaseLifecyc
         clearCache();
     }
 
-    private void clearCache() throws Throwable {
+    private void clearCache() {
         KcServiceLocator.getServicesOfType(ProtocolAmendRenewServiceImplBase.class).forEach(s -> {
             try {
                 final Field cache = ProtocolAmendRenewServiceImplBase.class.getDeclaredField("amendmentAndRenewalsCache");
@@ -119,7 +115,7 @@ public class KcIntegrationTestMainLifecycle extends KcIntegrationTestBaseLifecyc
     }
 
     @Override
-    protected void doPerTestStop() throws Throwable {
+    protected void doPerTestStop() {
         if (perTestTransactionStatus != null) {
             getTransactionManager().rollback(perTestTransactionStatus);
         }
