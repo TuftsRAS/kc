@@ -66,7 +66,7 @@ public class ApplicationServer implements Lifecycle {
         context.setResources(resources);
 
         StandardJarScanner jarScanner = new StandardJarScanner();
-        jarScanner.setScanManifest(false);
+        jarScanner.setScanManifest(true);
         context.setJarScanner(jarScanner);
         context.setAddWebinfClassesResources(true);
 

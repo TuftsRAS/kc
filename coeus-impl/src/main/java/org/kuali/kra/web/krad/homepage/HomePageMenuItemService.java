@@ -14,5 +14,5 @@ import org.kuali.kra.web.krad.homepage.HomePageMenuItemServiceImpl.HomePageItemS
 public interface HomePageMenuItemService {
 
 	List<HomePageItemSuggestion> getActiveMenuItems();
-
+	List<HomePageItemSuggestion> getAllMenuItems();
 }
