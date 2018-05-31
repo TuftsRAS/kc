@@ -1,6 +1,11 @@
 
 
 ## CURRENT
+* RESKC-2942: Fix Oracle tests (#2911)
+
+  * Gayathri Athreya on Wed, 30 May 2018 19:19:20 -0700 [View Commit](../../commit/7d90a34e6191df9ead2ae569276dc880b16e833b)
+
+## coeus-1805.0037
 * RESKC-2948: handling duplicate content id by only sending one of the duplicates.  Slight filtering changes to make sure only the transmitted changes are displayed on the submission details screen.
   * Travis Schneeberger on Wed, 30 May 2018 18:37:11 -0400 [View Commit](../../commit/7d760016c58d9103d25293bc38f76ce273b1bd91)
 
