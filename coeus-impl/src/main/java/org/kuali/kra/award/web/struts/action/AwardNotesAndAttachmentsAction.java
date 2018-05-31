@@ -61,6 +61,16 @@ public class AwardNotesAndAttachmentsAction extends AwardAction {
         awardNotepadBean = new AwardNotepadBean();
         awardCommentServiceImpl = new AwardCommentServiceImpl();
     }
+
+    @Override
+    public ActionForward save(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        ActionForward forward = super.save(mapping, form, request, response);
+
+        AwardForm awardForm = (AwardForm) form;
+        awardForm.getAwardCommentBean().setAwardCommentHistoryFlags();
+
+        return forward;
+    }
     
     /**
      * 

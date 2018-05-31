@@ -7,8 +7,14 @@
 --%>
 <%-- member of AwardNotesAndAttachments.jsp --%>
 <%@ include file="/WEB-INF/jsp/kraTldHeader.jsp"%>
+<c:set var="tabItemCount" value="0" />
+<c:forEach var="awardComment" items="${KualiForm.document.awardList[0].awardComments}">
+	<c:if test="${!empty awardComment.comments}">
+		<c:set var="tabItemCount" value="${tabItemCount+1}" />
+	</c:if>
+</c:forEach>
 
-<kul:tabTop tabTitle="Comments" defaultOpen="false" tabErrorKey="document.awardList[0].awardComment[*">
+<kul:tabTop tabTitle="Comments (${tabItemCount})" defaultOpen="false" tabErrorKey="document.awardList[0].awardComment[*">
 	<div class="tab-container" align="center">
     	<h3>
     		<span class="subhead-left">Comments</span>
