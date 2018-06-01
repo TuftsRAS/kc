@@ -444,7 +444,7 @@ public class ProposalDevelopmentDocumentAuthorizer extends KcKradTransactionalDo
     	return getKcAuthorizationService().hasPermission(user.getPrincipalId(), document, PermissionConstants.VIEW_CERTIFICATION);
     }
 
-    protected boolean isProposalStateEditableForCertification(DevelopmentProposal proposal) {
+    public boolean isProposalStateEditableForCertification(DevelopmentProposal proposal) {
     	return getProposalStatesEditableForCertification().contains(proposal.getProposalStateTypeCode());
     }
     

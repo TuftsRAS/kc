@@ -13,6 +13,7 @@ import org.kuali.coeus.common.notification.impl.bo.KcNotification;
 import org.kuali.coeus.common.questionnaire.framework.answer.QuestionnaireAnswerService;
 import org.kuali.coeus.common.view.wizard.framework.WizardControllerService;
 import org.kuali.coeus.common.view.wizard.framework.WizardResultsDto;
+import org.kuali.coeus.propdev.impl.auth.ProposalDevelopmentDocumentAuthorizer;
 import org.kuali.coeus.propdev.impl.coi.CoiConstants;
 import org.kuali.coeus.propdev.impl.core.*;
 import org.kuali.coeus.common.questionnaire.framework.answer.Answer;
@@ -96,7 +97,10 @@ public class ProposalDevelopmentPersonnelController extends ProposalDevelopmentC
     @Transactional @RequestMapping(value = "/proposalDevelopment", params={"methodToCall=checkForNewerVersionOfCertification"})
     public ModelAndView checkForNewerVersionOfCertification(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm form) {
         Boolean certificationUpdateFeatureFlag = getParameterService().getParameterValueAsBoolean(Constants.MODULE_NAMESPACE_PROPOSAL_DEVELOPMENT, Constants.PARAMETER_COMPONENT_DOCUMENT, CERTIFICATION_UPDATE_FEATURE_FLAG);
-        if (certificationUpdateFeatureFlag && isNewerVersionPublished(form)) {
+        ProposalDevelopmentDocumentAuthorizer proposalDevelopmentDocumentAuthorizer = new ProposalDevelopmentDocumentAuthorizer();
+
+        if (certificationUpdateFeatureFlag && isNewerVersionPublished(form)
+                && proposalDevelopmentDocumentAuthorizer.isProposalStateEditableForCertification(form.getDevelopmentProposal())) {
             return getModelAndViewService().showDialog(ProposalDevelopmentConstants.KradConstants.PROP_DEV_PERSONNEL_PAGE_UPDATE_CERTIFICATION_DIALOG,false,form);
         }
        return null;
