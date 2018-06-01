@@ -1,6 +1,11 @@
 
 
 ## CURRENT
+* RESKC-923: Make Proposal Development Certification update always consider the current proposal state. (#2913)
+
+  * Omar Soto Fortuño on Fri, 1 Jun 2018 14:36:19 -0400 [View Commit](../../commit/cb872ae74b855a497bdae37b90f066bce83ceaa4)
+
+## coeus-1806.0001
 * RESKC-893: Fix ProposalDevelopment Other Organization data display. (#2912)
 
   * Omar Soto Fortuño on Fri, 1 Jun 2018 12:05:50 -0400 [View Commit](../../commit/c9a845cb17c4426613e54f200f0216fcd9fe16de)
