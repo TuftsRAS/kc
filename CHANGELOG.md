@@ -1,6 +1,11 @@
 
 
 ## CURRENT
+* RESKC-893: Fix ProposalDevelopment Other Organization data display. (#2912)
+
+  * Omar Soto Fortuño on Fri, 1 Jun 2018 12:05:50 -0400 [View Commit](../../commit/c9a845cb17c4426613e54f200f0216fcd9fe16de)
+
+## coeus-1805.0040
 * RESKC-2940: fix Grants.gov search portal link, add test to verify all portal links return a 200 OK
   * Travis Schneeberger on Thu, 31 May 2018 13:05:46 -0400 [View Commit](../../commit/c5635e40d2d3cb0655a2bec7842e2f77eb0fd47d)
 * RESKC-2940: remove portal menu item related to birt reporting
