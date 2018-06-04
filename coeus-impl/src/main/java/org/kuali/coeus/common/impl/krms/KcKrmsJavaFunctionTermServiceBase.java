@@ -11,6 +11,7 @@ import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.kuali.coeus.common.framework.sponsor.Sponsor;
 import org.kuali.coeus.common.framework.sponsor.Sponsorable;
 import org.kuali.coeus.common.framework.version.VersionStatus;
 import org.kuali.coeus.common.framework.version.history.VersionHistory;
@@ -191,6 +192,15 @@ public abstract class KcKrmsJavaFunctionTermServiceBase {
         return TRUE;
     }
 
+    @SuppressWarnings("deprecation")
+	public Boolean doesPrimeSponsorTypeMatch(Sponsorable documentBo, String primeSponsorType) {
+    	if(StringUtils.isEmpty(documentBo.getPrimeSponsorCode())) {
+    		return false;
+    	}
+    	Sponsor primeSponsor = getBusinessObjectService().findBySinglePrimaryKey(Sponsor.class, documentBo.getPrimeSponsorCode());
+        return Objects.equals(primeSponsor.getSponsorTypeCode(), primeSponsorType);
+    }
+    
     public BusinessObjectService getBusinessObjectService() {
         return businessObjectService;
     }

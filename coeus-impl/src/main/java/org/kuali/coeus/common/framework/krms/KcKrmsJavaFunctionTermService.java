@@ -17,5 +17,7 @@ public interface KcKrmsJavaFunctionTermService {
     Boolean hasPropertyChangedThisVersion(SequenceOwner<?> currentVersion, String property);
 
     Boolean doSponsorAndPrimeSponsorMatch(Sponsorable grantsBo);
+    
+    Boolean doesPrimeSponsorTypeMatch(Sponsorable documentBo, String primeSponsorType);
 
 }
