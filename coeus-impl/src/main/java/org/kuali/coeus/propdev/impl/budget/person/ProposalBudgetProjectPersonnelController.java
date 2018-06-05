@@ -309,8 +309,7 @@ public class ProposalBudgetProjectPersonnelController extends ProposalBudgetCont
 				errorPath));
 	}
 
-	@Transactional @RequestMapping(params="methodToCall=refreshPageWithBudgetExpenseRules")
-	public ModelAndView refreshPageWithBudgetExpenseRules(@ModelAttribute("KualiForm") ProposalBudgetForm form) throws Exception {
+	public ModelAndView refreshPageWithBudgetExpenseRules(ProposalBudgetForm form) throws Exception {
 	    String errorPath = BudgetConstants.BudgetAuditRules.PERSONNEL_COSTS.getPageId();
 		getKcBusinessRulesEngine().applyRules(new BudgetExpensesRuleEvent(form.getBudget(), errorPath));
         form.setAjaxReturnType("update-page");
@@ -425,7 +424,7 @@ public class ProposalBudgetProjectPersonnelController extends ProposalBudgetCont
 			    getBudgetCalculationService().calculateBudgetPeriod(budget, budgetPeriod);
 			}
 	    }
-		return getModelAndViewService().getModelAndView(form);
+		return refreshPageWithBudgetExpenseRules(form);
 	}
 
 	protected boolean isSummaryPersonnel(BudgetPersonnelDetails budgetPersonnelDetails) {
@@ -527,7 +526,7 @@ public class ProposalBudgetProjectPersonnelController extends ProposalBudgetCont
 		    	budgetPeriod.getBudgetLineItems().remove(budgetLineItem);
 		    }
 		    getBudgetCalculationService().calculateBudgetPeriod(budget, budgetPeriod);
-		    refreshPageWithBudgetExpenseRules(form);
+		    return refreshPageWithBudgetExpenseRules(form);
 	    }
 		return getModelAndViewService().getModelAndView(form);
 	}
