@@ -1,6 +1,15 @@
 
 
 ## CURRENT
+* RESKC-2862: Remove refresh when adding or editing Personnel Line Item and closing or cancelling dialog. (#2919)
+
+  * Omar Soto Fortuño on Tue, 5 Jun 2018 11:43:13 -0400 [View Commit](../../commit/f96634367a429b9ec2a6d2134da74e7aa2bf5ae6)
+* RESKC-2940: fix path for oracle db script
+  * Travis Schneeberger on Tue, 5 Jun 2018 11:14:13 -0400 [View Commit](../../commit/191e6f99d90f2be7c8ace7ac316e7cedc00785ea)
+* RESKC-2957: add basic slack log4j appender
+  * Travis Schneeberger on Tue, 5 Jun 2018 10:59:58 -0400 [View Commit](../../commit/e5c05a0aefd3439740a6f63d7c7b50ba928daec5)
+
+## coeus-1806.0004
 * RESKC-2935: Add RRBudget S2S error for EquipmentItem error. (#2915)
 
   * Omar Soto Fortuño on Tue, 5 Jun 2018 10:29:41 -0400 [View Commit](../../commit/73a2ae87cb76e48f366f3cd78a5f79fa6e949db3)
