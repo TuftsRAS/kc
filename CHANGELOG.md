@@ -1,6 +1,17 @@
 
 
 ## CURRENT
+* RESKC-2935: Add RRBudget S2S error for EquipmentItem error. (#2915)
+
+  * Omar Soto Fortuño on Tue, 5 Jun 2018 10:29:41 -0400 [View Commit](../../commit/73a2ae87cb76e48f366f3cd78a5f79fa6e949db3)
+* KRMS Function: Check for Prime Sponsor Type
+  * Rename sql files.
+  * rmancher on Tue, 5 Jun 2018 10:24:00 -0400 [View Commit](../../commit/02dbd940801cdb30090ef265fec7e808b9bee668)
+* KRMS Function: Check for Prime Sponsor Type
+  * Add prime sponsor type rule to Award, PD and IP
+  * rmancher on Mon, 4 Jun 2018 11:21:16 -0400 [View Commit](../../commit/42bafbfb1bfbc7415a2e6d23f9164a1be65ad65e)
+
+## coeus-1806.0003
 * No Changes
 
 
