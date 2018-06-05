@@ -7,7 +7,17 @@
  */
 package org.kuali.coeus.common.impl.krms;
 
+import static org.junit.Assert.assertEquals;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.jmock.Expectations;
+import org.jmock.Mockery;
+import org.jmock.integration.junit4.JUnit4Mockery;
+import org.jmock.lib.concurrent.Synchroniser;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -19,15 +29,24 @@ import org.kuali.coeus.propdev.impl.core.DevelopmentProposal;
 import org.kuali.coeus.sys.api.model.ScaleTwoDecimal;
 import org.kuali.kra.award.home.Award;
 import org.kuali.kra.institutionalproposal.home.InstitutionalProposal;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.kuali.rice.krad.service.BusinessObjectService;
 
 public class KcKrmsJavaFunctionTermServiceBaseTest {
 
     public static final String NIH_SPONSOR_CODE = "000340";
     public static final String TEST_SPONSOR_CODE = "000100";
+    public static final String STATE_SPONSOR_CODE = "001001";
+    public static final String FEDERAL_SPONSOR_TYPE_CODE = "0";
+    public static final String STATE_SPONSOR_TYPE_CODE = "1";
+	private Mockery context;
+	private BusinessObjectService businessObjectService;
 
+	@Before()
+	public void setUpMockery() {
+		context = new JUnit4Mockery() {{setThreadingPolicy(new Synchroniser());}};
+		businessObjectService = context.mock(BusinessObjectService.class);
+	}
+	
     class MockIP extends InstitutionalProposal {
         @Override
         protected void calculateFiscalMonthAndYearFields() {
@@ -147,6 +166,7 @@ public class KcKrmsJavaFunctionTermServiceBaseTest {
                 return versionHistories;
             }
         }
+
 
         MockAward award = new MockAward();
         award.setSequenceNumber(3);
@@ -295,4 +315,88 @@ public class KcKrmsJavaFunctionTermServiceBaseTest {
         result = termService.doSponsorAndPrimeSponsorMatch(ip);
         Assert.assertFalse(result);
     }
+
+    @Test
+    public void testDoesPrimeSponsorTypeMatch() {
+
+        class MockKrmsBase extends KcKrmsJavaFunctionTermServiceBase {
+            @Override
+            protected List<VersionHistory> getVersionHistories(SequenceOwner<?> currentVersion, String versionNumber) {
+                List<VersionHistory> versionHistories = new ArrayList<>();
+                VersionHistory versionHistory1 = new VersionHistory();
+                versionHistory1.setSequenceOwnerSequenceNumber(1);
+                versionHistory1.setStatus(VersionStatus.ARCHIVED );
+                MockAward award1 = new MockAward();
+                award1.setSponsorCode("000340");
+                award1.setPreAwardAuthorizedAmount(ScaleTwoDecimal.ONE_HUNDRED);
+                versionHistory1.setSequenceOwner(award1);
+                VersionHistory versionHistory2 = new VersionHistory();
+                versionHistory2.setSequenceOwnerSequenceNumber(2);
+                MockAward award2 = new MockAward();
+                award2.setSponsorCode("000001");
+                versionHistory2.setSequenceOwner(award2);
+                versionHistory2.setStatus(VersionStatus.CANCELED);
+
+                versionHistories.add(versionHistory1);
+                versionHistories.add(versionHistory2);
+                return versionHistories;
+            }
+        }
+
+        MockKrmsBase termService = new MockKrmsBase();
+        termService.setBusinessObjectService(businessObjectService);
+        setSponsorExpectation();
+        
+        Award award = new Award();
+        award.setPrimeSponsorCode(NIH_SPONSOR_CODE);
+		assertEquals(true, termService.doesPrimeSponsorTypeMatch(award, FEDERAL_SPONSOR_TYPE_CODE));
+
+
+        award.setPrimeSponsorCode(STATE_SPONSOR_CODE);
+		assertEquals(false, termService.doesPrimeSponsorTypeMatch(award, FEDERAL_SPONSOR_TYPE_CODE));
+
+        award.setPrimeSponsorCode(null);
+		assertEquals(false, termService.doesPrimeSponsorTypeMatch(award, FEDERAL_SPONSOR_TYPE_CODE));
+        
+        DevelopmentProposal developmentProposal = new DevelopmentProposal();
+        developmentProposal.setPrimeSponsorCode(NIH_SPONSOR_CODE);
+		assertEquals(true, termService.doesPrimeSponsorTypeMatch(developmentProposal, FEDERAL_SPONSOR_TYPE_CODE));
+		
+		developmentProposal.setPrimeSponsorCode(STATE_SPONSOR_CODE);
+		assertEquals(false, termService.doesPrimeSponsorTypeMatch(developmentProposal, FEDERAL_SPONSOR_TYPE_CODE));
+
+		developmentProposal.setPrimeSponsorCode(null);
+		assertEquals(false, termService.doesPrimeSponsorTypeMatch(developmentProposal, FEDERAL_SPONSOR_TYPE_CODE));
+
+        MockIP ip = new MockIP();
+        ip.setPrimeSponsorCode(NIH_SPONSOR_CODE);
+
+        ip.setPrimeSponsorCode(NIH_SPONSOR_CODE);
+		assertEquals(true, termService.doesPrimeSponsorTypeMatch(ip, FEDERAL_SPONSOR_TYPE_CODE));
+		
+		ip.setPrimeSponsorCode(STATE_SPONSOR_CODE);
+		assertEquals(false, termService.doesPrimeSponsorTypeMatch(ip, FEDERAL_SPONSOR_TYPE_CODE));
+
+		ip.setPrimeSponsorCode(null);
+		assertEquals(false, termService.doesPrimeSponsorTypeMatch(ip, FEDERAL_SPONSOR_TYPE_CODE));
+    }
+        
+    protected void setSponsorExpectation() {
+		context.checking(new Expectations() {{
+			{
+				exactly(3).of(businessObjectService).findBySinglePrimaryKey(Sponsor.class, NIH_SPONSOR_CODE);
+				will(returnValue(getSponsor(NIH_SPONSOR_CODE, FEDERAL_SPONSOR_TYPE_CODE)));
+				exactly(3).of(businessObjectService).findBySinglePrimaryKey(Sponsor.class, STATE_SPONSOR_CODE);
+				will(returnValue(getSponsor(STATE_SPONSOR_CODE, STATE_SPONSOR_TYPE_CODE)));
+			}
+		}});
+    }
+    
+    protected Sponsor getSponsor(String sponsorCode, String sponsorTypeCode) {
+    	Sponsor sponsor = new Sponsor();
+    	sponsor.setSponsorCode(sponsorCode);
+    	sponsor.setSponsorTypeCode(sponsorTypeCode);
+    	return sponsor;
+    }
+
 }
