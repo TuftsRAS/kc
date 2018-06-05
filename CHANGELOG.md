@@ -1,6 +1,11 @@
 
 
 ## CURRENT
+* KRMS Function: Check for Prime Sponsor Type
+  * Add rules for Award and IP
+  * rmancher on Tue, 5 Jun 2018 14:05:12 -0400 [View Commit](../../commit/af80f40666de2b8402795502e45c04ceb7d2d083)
+
+## coeus-1806.0006
 * RESKC-2862: Added missing refreshPageWithBudgetExpenseRules to addPersonnelToPeriod method. (#2920)
 
   * Omar Soto Fortuño on Tue, 5 Jun 2018 13:44:52 -0400 [View Commit](../../commit/e2985c847cc19cc4121f7ea9e5cc0a2de2bf54b1)

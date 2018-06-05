@@ -19,4 +19,5 @@
 
 
 \. ./rice/bootstrap/V1806_001__RESOPS-2413.sql
+\. ./rice/bootstrap/V1806_003__RESOPS-2413.sql
 commit;
