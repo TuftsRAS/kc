@@ -278,7 +278,7 @@ public class ProposalBudgetProjectPersonnelController extends ProposalBudgetCont
 		if(success) {
 			form.getAddProjectPersonnelHelper().reset();
 		}
-		return getModelAndViewService().getModelAndView(form);
+		return refreshPageWithBudgetExpenseRules(form);
 	}
 	
 	protected boolean addNewPersonnelLineItemToPeriod(ProposalBudgetForm form, Budget budget, BudgetPeriod currentTabBudgetPeriod, BudgetLineItem newBudgetLineItem, 
