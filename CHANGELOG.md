@@ -1,6 +1,10 @@
 
 
 ## CURRENT
+* No Changes
+
+
+## coeus-1806.0007
 * KRMS Function: Check for Prime Sponsor Type
   * Add rules for Award and IP
   * rmancher on Tue, 5 Jun 2018 14:05:12 -0400 [View Commit](../../commit/af80f40666de2b8402795502e45c04ceb7d2d083)
