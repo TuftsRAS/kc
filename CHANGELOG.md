@@ -1,6 +1,11 @@
 
 
 ## CURRENT
+* KRMS Function: Check for Prime Sponsor Type
+  * Update namespace for term spec.
+  * rmancher on Tue, 5 Jun 2018 16:52:37 -0400 [View Commit](../../commit/b82dc0ca46f067344b30c3e0b9fdc2caef31834d)
+
+## coeus-1806.0008
 * No Changes
 
 
