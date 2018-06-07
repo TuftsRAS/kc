@@ -1,6 +1,11 @@
 
 
 ## CURRENT
+* RESKC-2933: Make Budget get the Budget Category from the Object Code rather than from the Personnel Line Item. (#2923)
+
+  * Omar Soto Fortuño on Thu, 7 Jun 2018 09:24:51 -0400 [View Commit](../../commit/ced4b9e3b1fddf672332e1df9db9c22ffd83f371)
+
+## coeus-1806.0009
 * KRMS Function: Check for Prime Sponsor Type
   * Update namespace for term spec.
   * rmancher on Tue, 5 Jun 2018 16:52:37 -0400 [View Commit](../../commit/b82dc0ca46f067344b30c3e0b9fdc2caef31834d)
