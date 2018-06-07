@@ -1508,7 +1508,7 @@ public class Budget extends AbstractBudget implements BudgetContract {
 		List<BudgetPersonnelDetails> budgetPersonnelDetailsList = new ArrayList<>();
 		for(BudgetPeriod budgetPeriod : getBudgetPeriods()) {
 			for(BudgetLineItem budgetLineItem : budgetPeriod.getBudgetLineItems()) {
-				if(budgetLineItem.getBudgetCategory().getBudgetCategoryTypeCode().equalsIgnoreCase(personnelBudgetCategoryTypeCode)) {
+				if(budgetLineItem.getCostElementBO() != null && budgetLineItem.getCostElementBO().getBudgetCategory().getBudgetCategoryTypeCode().equalsIgnoreCase(personnelBudgetCategoryTypeCode)) {
 					if(budgetLineItem.getBudgetPersonnelDetailsList().size() > 0) {
 						budgetPersonnelDetailsList.addAll(budgetLineItem.getBudgetPersonnelDetailsList());
 					}else {

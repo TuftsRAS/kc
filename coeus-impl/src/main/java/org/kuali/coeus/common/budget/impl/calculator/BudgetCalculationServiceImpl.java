@@ -1120,7 +1120,7 @@ public class BudgetCalculationServiceImpl implements BudgetCalculationService {
         QueryList<BudgetPersonnelDetails> personnelQueryList = new QueryList<>();
     	if(personnelLineItemsForCostElement != null) {
             for(BudgetLineItem budgetLineItem : personnelLineItemsForCostElement) {
-				if(budgetLineItem.getBudgetCategory().getBudgetCategoryTypeCode().equalsIgnoreCase(personnelBudgetCategoryType)) {
+                if(budgetLineItem.getCostElementBO() != null && budgetLineItem.getCostElementBO().getBudgetCategory().getBudgetCategoryTypeCode().equalsIgnoreCase(personnelBudgetCategoryType)) {
 					if(budgetLineItem.getBudgetPersonnelDetailsList().size() > 0) {
 						personnelQueryList.addAll(budgetLineItem.getBudgetPersonnelDetailsList());
 					}else {
