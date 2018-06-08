@@ -9,10 +9,9 @@
 package org.kuali.coeus.common.api.document;
 
 import org.junit.Assert;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.kuali.coeus.common.api.document.dto.DocumentDetailsDto;
+import org.kuali.coeus.common.api.document.service.WorkflowDetailsService;
 import org.kuali.coeus.common.framework.custom.attr.CustomAttributeDocValue;
 import org.kuali.coeus.common.framework.org.Organization;
 import org.kuali.coeus.common.framework.unit.Unit;
@@ -29,9 +28,7 @@ import org.kuali.coeus.propdev.impl.s2s.S2sSubmissionService;
 import org.kuali.coeus.sys.framework.service.KcServiceLocator;
 import org.kuali.kra.infrastructure.Constants;
 import org.kuali.kra.proposaldevelopment.rules.ProposalDevelopmentRuleTestBase;
-import org.kuali.rice.kew.api.KewApiConstants;
-import org.kuali.rice.kew.api.action.ActionRequest;
-import org.kuali.rice.kew.api.action.RoutingReportCriteria;
+import org.kuali.rice.core.api.criteria.QueryByCriteria;
 import org.kuali.rice.kew.api.action.WorkflowDocumentActionsService;
 import org.kuali.rice.kew.api.document.DocumentDetail;
 import org.kuali.rice.krad.data.DataObjectService;
@@ -40,11 +37,7 @@ import org.kuali.rice.krad.service.DocumentService;
 import org.kuali.rice.krad.service.KRADServiceLocatorWeb;
 
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.*;
 
 public class DocumentControllerTest extends ProposalDevelopmentRuleTestBase {
 
@@ -83,46 +76,25 @@ public class DocumentControllerTest extends ProposalDevelopmentRuleTestBase {
         criteria.setLeadUnitNumber(ORIGINAL_LEAD_UNIT);
         ProposalDevelopmentDocument copiedDocument = getProposalCopyService().copyProposal(proposalDocument, criteria);
         proposalDocument = (ProposalDevelopmentDocument) getDocumentService().routeDocument(copiedDocument, "", new ArrayList<>());
-        Integer steps = getDocumentController().getSteps(proposalDocument.getDocumentNumber(), "10000000001");
-        Assert.assertTrue(steps == 2);
 
-        List<DocumentDetailsDto> documentDetails = getDocumentController().documentSavedForUser("10000000001", null, null);
-        int numberOfDocsPriorToTest = documentDetails.size();
-
-        ProposalDevelopmentDocument proposalDocument1 = saveDoc();
-        ProposalDevelopmentDocument proposalDocument2 = saveDoc();
-        ProposalDevelopmentDocument proposalDocument3 = saveDoc();
-        ProposalDevelopmentDocument proposalDocument4 = saveDoc();
-        ProposalDevelopmentDocument proposalDocument5 = saveDoc();
-        ProposalDevelopmentDocument proposalDocument6 = saveDoc();
-        ProposalDevelopmentDocument proposalDocument7 = saveDoc();
-        ProposalDevelopmentDocument proposalDocument8 = saveDoc();
-        ProposalDevelopmentDocument proposalDocument9 = saveDoc();
-        ProposalDevelopmentDocument proposalDocument10 = saveDoc();
-
-        documentDetails = getDocumentController().documentSavedForUser("10000000001", null, null);
-        Assert.assertTrue(documentDetails.size() - numberOfDocsPriorToTest == 10);
-        documentDetails = getDocumentController().documentSavedForUser("10000000001", 6, 0);
-        Assert.assertTrue(documentDetails.size() == 6);
-        documentDetails = getDocumentController().documentSavedForUser("10000000001", 0, 5);
-        Assert.assertTrue(documentDetails.size() == 0);
-        documentDetails = getDocumentController().documentSavedForUser("10000000001", 8, 0);
-        Assert.assertTrue(documentDetails.size() == 8);
-        documentDetails = getDocumentController().documentSavedForUser("10000000001", 8, 1);
-        Assert.assertTrue(documentDetails.size() == 8);
-        documentDetails = getDocumentController().documentSavedForUser("10000000001", 5, 1);
-        Assert.assertTrue(documentDetails.size() == 5);
-        documentDetails = getDocumentController().documentSavedForUser("10000000001", 6, 2);
-        Assert.assertTrue(documentDetails.size() == 6);
-        documentDetails = getDocumentController().documentSavedForUser("10000000001", 8, 10);
-        Assert.assertTrue(documentDetails.size() - numberOfDocsPriorToTest == 0);
-        documentDetails = getDocumentController().documentSavedForUser("10000000001", 8, null);
-        Assert.assertTrue(documentDetails.size() == 8);
-        documentDetails = getDocumentController().documentSavedForUser("10000000001", null, 2);
-        Assert.assertTrue(documentDetails.size() - numberOfDocsPriorToTest == 8);
+        DocumentDetail detail = getWorkflowDetailsService().getDocumentDetail(proposalDocument.getDocumentNumber());
+        getWorkflowDetailsService().calculateAndPersistDetailsForUsersInRouteLog(proposalDocument.getDocumentNumber(), detail);
+        List<DocumentWorkflowUserDetails> matches = getMatches(proposalDocument.getDocumentNumber());
+        Assert.assertTrue(matches.size() == 4);
+        Assert.assertTrue(matches.stream().filter(match -> match.getPrincipalId().equalsIgnoreCase("10000000049")).findFirst().get().getSteps() == 0);
+        Assert.assertTrue(matches.stream().filter(match -> match.getPrincipalId().equalsIgnoreCase("10000000059")).findFirst().get().getSteps() == 0);
+        Assert.assertTrue(matches.stream().filter(match -> match.getPrincipalId().equalsIgnoreCase("10000000001")).findFirst().get().getSteps() == 2);
+        Assert.assertTrue(matches.stream().filter(match -> match.getPrincipalId().equalsIgnoreCase("10000000045")).findFirst().get().getSteps() == 1);
 
     }
 
+    private List<DocumentWorkflowUserDetails> getMatches(String documentNumber) {
+        final List<DocumentWorkflowUserDetails> matches = getDataObjectService().findMatching(DocumentWorkflowUserDetails.class,
+                QueryByCriteria.Builder
+                        .andAttributes(Collections.singletonMap("documentNumber", documentNumber))
+                        .build()).getResults();
+        return matches;
+    }
 
     private ProposalDevelopmentDocument createProposal() throws Exception {
         ProposalDevelopmentDocument document = getNewProposalDevelopmentDocument();
@@ -235,8 +207,8 @@ public class DocumentControllerTest extends ProposalDevelopmentRuleTestBase {
         return unit.getOrganization();
     }
 
-    protected DocumentController getDocumentController() {
-        return KcServiceLocator.getService(DocumentController.class);
+    protected WorkflowDetailsService getWorkflowDetailsService() {
+        return KcServiceLocator.getService(WorkflowDetailsService.class);
     }
 
     protected DocumentService getDocumentService() {

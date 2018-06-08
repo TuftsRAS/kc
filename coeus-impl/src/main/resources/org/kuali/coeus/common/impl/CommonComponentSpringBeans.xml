@@ -296,6 +296,23 @@
         <property name="parameterComponent" value="All" />
     </bean>
 
+    <bean id="workflowSimulationBatchJobDetail" class="org.quartz.impl.JobDetailImpl" >
+        <property name="jobClass" value="org.kuali.coeus.common.impl.document.WorkflowSimulatorJob" />
+        <property name="name" value="workflowSimulationBatchJobDetail" />
+        <property name="durability" value="true" />
+    </bean>
+
+    <bean id="workflowSimulationTrigger" class="org.kuali.coeus.sys.framework.scheduling.KcCronTriggerBean">
+        <property name="jobDetail" ref="workflowSimulationBatchJobDetail" />
+        <property name="parameterService" ref="parameterService" />
+        <property name="dateTimeService" ref="dateTimeService" />
+        <property name="cronExpressionParameterName" value="WORKFLOW_SIMULATION_BATCH_JOB_CRON_EXPRESSION" />
+        <property name="triggerEnabledParameterName" value="WORKFLOW_SIMULATION_JOB_ON" />
+        <property name="startTimeParameterName" value="WORKFLOW_SIMULATION_BATCH_JOB_CRON_START_TIME" />
+        <property name="parameterNamespace" value="KC-COMMON" />
+        <property name="parameterComponent" value="Document" />
+    </bean>
+
     <bean id="schedulerFactory" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
         <property name="schedulerName" value="CommonScheduler"/>
         <property name="exposeSchedulerInRepository" value="true" />
@@ -304,6 +321,7 @@
                 <ref bean="citiCronTrigger" />
                 <ref bean="fileAttachmentConversionCronTrigger" />
                 <ref bean="unitRoleSyncCronTrigger"/>
+                <ref bean="workflowSimulationTrigger" />
             </list>
         </property>
         <!--
@@ -335,6 +353,11 @@
                 <entry key="unitRoleSyncService">
                     <ref bean="unitRoleSyncService"/>
                 </entry>
+                <entry key="workflowDetailsService">
+                    <ref bean="workflowDetailsService"/>
+                </entry>
+                <entry key="user" value="${batchJobUserName}" />
+
             </map>
         </property>
 

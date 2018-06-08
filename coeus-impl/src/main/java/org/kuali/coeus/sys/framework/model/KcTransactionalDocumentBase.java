@@ -40,7 +40,6 @@ import org.kuali.rice.krad.util.GlobalVariables;
 import org.kuali.rice.krad.util.LegacyDataFramework;
 
 import javax.persistence.*;
-
 import java.sql.Timestamp;
 import java.util.*;
 import java.util.concurrent.Callable;

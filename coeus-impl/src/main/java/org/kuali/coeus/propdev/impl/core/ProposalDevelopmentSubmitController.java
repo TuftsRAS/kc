@@ -81,8 +81,7 @@ import static java.util.stream.Collectors.toList;
 import static org.kuali.coeus.propdev.impl.datavalidation.ProposalDevelopmentDataValidationConstants.QUESTIONNAIRE_PAGE_ID;
 
 @Controller
-public class ProposalDevelopmentSubmitController extends
-		ProposalDevelopmentControllerBase {
+public class ProposalDevelopmentSubmitController extends ProposalDevelopmentControllerBase {
 
     public static final String RETURN_ACTION_TYPE_CODE = "500";
     public static final String RETURN_NOTIFICATION = "Return Notification";
@@ -689,14 +688,14 @@ public class ProposalDevelopmentSubmitController extends
                 form.getWorkflowDocument().setDoNotReceiveFutureRequests();
             }
         }
-        
+
 		if (getValidationState(form).equals(AuditHelper.ValidationState.ERROR)) {
 			getGlobalVariableService().getMessageMap().putError(DATAVALIDATION, KeyConstants.ERROR_WORKFLOW_SUBMISSION);
 			return getModelAndViewService().getModelAndView(form);
 		}
 
 		form.setAuditActivated(false);
-        
+
         final boolean approvalComments = getParameterService().getParameterValueAsBoolean(Constants.MODULE_NAMESPACE_PROPOSAL_DEVELOPMENT, Constants.KC_ALL_PARAMETER_DETAIL_TYPE_CODE, ENABLE_PD_WORKFLOW_APPROVAL_COMMENTS);
 		if (approvalComments) {
 			if (APPROVE_CHECK.equals(form.getMethodToCall()) || APPROVE.equals(form.getMethodToCall())) {
@@ -757,7 +756,8 @@ public class ProposalDevelopmentSubmitController extends
 
         String currentRouteNodeNames = getKradWorkflowDocumentService().getCurrentRouteNodeNames(workflowDoc);
 
-        return (hasAskedToNotReceiveFutureRequests(workflowDoc, principalId) && canGenerateMultipleApprovalRequests(reportCriteriaBuilder.build(), principalId, currentRouteNodeNames ));
+        return (hasAskedToNotReceiveFutureRequests(workflowDoc, principalId) &&
+                canGenerateMultipleApprovalRequests(reportCriteriaBuilder.build(), principalId, currentRouteNodeNames ));
     }
 
     private boolean hasAskedToNotReceiveFutureRequests(WorkflowDocument workflowDoc, String principalId) {
@@ -789,8 +789,8 @@ public class ProposalDevelopmentSubmitController extends
     protected boolean canGenerateMultipleApprovalRequests(RoutingReportCriteria reportCriteria, String loggedInPrincipalId, String currentRouteNodeNames ) {
         int approvalRequestsCount = 0;
 
-        DocumentDetail results1 = getWorkflowDocumentActionsService().executeSimulation(reportCriteria);
-        for(ActionRequest actionRequest : results1.getActionRequests() ){
+        DocumentDetail documentDetail = getWorkflowDocumentActionsService().executeSimulation(reportCriteria);
+        for(ActionRequest actionRequest : documentDetail.getActionRequests() ){
             if(actionRequest.isPending() && actionRequest.getActionRequested().getCode().equalsIgnoreCase(KewApiConstants.ACTION_REQUEST_APPROVE_REQ) &&
                     recipientMatchesUser(actionRequest, loggedInPrincipalId) && !StringUtils.contains( currentRouteNodeNames,actionRequest.getNodeName()) ) {
                 approvalRequestsCount+=1;

@@ -13,19 +13,24 @@ import org.apache.commons.logging.LogFactory;
 import org.kuali.coeus.coi.framework.Project;
 import org.kuali.coeus.coi.framework.ProjectPublisher;
 import org.kuali.coeus.coi.framework.ProjectRetrievalService;
+import org.kuali.coeus.common.api.document.service.WorkflowDetailsService;
+import org.kuali.coeus.common.budget.framework.core.Budget;
+import org.kuali.coeus.common.budget.framework.core.BudgetParentDocument;
 import org.kuali.coeus.common.framework.auth.perm.DocumentLevelPermissionable;
+import org.kuali.coeus.common.framework.auth.perm.Permissionable;
 import org.kuali.coeus.common.framework.custom.DocumentCustomData;
 import org.kuali.coeus.common.framework.custom.attr.CustomAttributeDocValue;
+import org.kuali.coeus.common.framework.krms.KrmsRulesContext;
+import org.kuali.coeus.common.impl.krms.KcKrmsFactBuilderServiceHelper;
 import org.kuali.coeus.common.permissions.impl.PermissionableKeys;
 import org.kuali.coeus.propdev.api.core.ProposalDevelopmentDocumentContract;
+import org.kuali.coeus.propdev.impl.hierarchy.ProposalHierarchyException;
+import org.kuali.coeus.propdev.impl.hierarchy.ProposalHierarchyService;
 import org.kuali.coeus.propdev.impl.state.ProposalStateService;
-import org.kuali.coeus.common.framework.auth.perm.Permissionable;
 import org.kuali.coeus.sys.framework.service.KcServiceLocator;
 import org.kuali.coeus.sys.framework.workflow.KcDocumentRejectionService;
 import org.kuali.kra.authorization.KraAuthorizationConstants;
 import org.kuali.kra.bo.RolePersons;
-import org.kuali.coeus.common.budget.framework.core.Budget;
-import org.kuali.coeus.common.budget.framework.core.BudgetParentDocument;
 import org.kuali.kra.infrastructure.Constants;
 import org.kuali.kra.infrastructure.KeyConstants;
 import org.kuali.kra.infrastructure.RoleConstants;
@@ -33,16 +38,13 @@ import org.kuali.kra.institutionalproposal.home.InstitutionalProposal;
 import org.kuali.kra.institutionalproposal.service.InstitutionalProposalService;
 import org.kuali.kra.kim.bo.KcKimAttributes;
 import org.kuali.kra.krms.KcKrmsConstants;
-import org.kuali.coeus.common.framework.krms.KrmsRulesContext;
-import org.kuali.coeus.common.impl.krms.KcKrmsFactBuilderServiceHelper;
-import org.kuali.coeus.propdev.impl.hierarchy.ProposalHierarchyException;
-import org.kuali.coeus.propdev.impl.hierarchy.ProposalHierarchyService;
 import org.kuali.rice.core.api.CoreApiServiceLocator;
 import org.kuali.rice.core.api.config.property.ConfigurationService;
 import org.kuali.rice.core.api.datetime.DateTimeService;
 import org.kuali.rice.coreservice.framework.parameter.ParameterConstants;
 import org.kuali.rice.coreservice.framework.parameter.ParameterConstants.COMPONENT;
 import org.kuali.rice.coreservice.framework.parameter.ParameterConstants.NAMESPACE;
+import org.kuali.rice.coreservice.framework.parameter.ParameterService;
 import org.kuali.rice.kew.api.KewApiConstants;
 import org.kuali.rice.kew.api.KewApiServiceLocator;
 import org.kuali.rice.kew.api.WorkflowDocument;
@@ -58,6 +60,7 @@ import org.kuali.rice.kew.service.KEWServiceLocator;
 import org.kuali.rice.kim.api.identity.Person;
 import org.kuali.rice.kim.api.services.KimApiServiceLocator;
 import org.kuali.rice.kns.web.ui.ExtraButton;
+import org.kuali.rice.krad.UserSession;
 import org.kuali.rice.krad.bo.Note;
 import org.kuali.rice.krad.data.DataObjectService;
 import org.kuali.rice.krad.data.PersistenceOption;
@@ -67,6 +70,7 @@ import org.kuali.rice.krad.document.Copyable;
 import org.kuali.rice.krad.document.SessionDocument;
 import org.kuali.rice.krad.service.DataDictionaryService;
 import org.kuali.rice.krad.service.DocumentHeaderService;
+import org.kuali.rice.krad.util.GlobalVariables;
 import org.kuali.rice.krad.util.NoteType;
 import org.kuali.rice.krad.workflow.DocumentInitiator;
 import org.kuali.rice.krad.workflow.KualiDocumentXmlMaterializer;
@@ -75,6 +79,8 @@ import org.kuali.rice.krms.api.engine.Facts;
 
 import javax.persistence.*;
 import java.util.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @NAMESPACE(namespace = Constants.MODULE_NAMESPACE_PROPOSAL_DEVELOPMENT)
 @COMPONENT(component = ParameterConstants.DOCUMENT_COMPONENT)
@@ -83,6 +89,9 @@ import java.util.*;
 public class ProposalDevelopmentDocument extends BudgetParentDocument<DevelopmentProposal> implements Copyable, SessionDocument, DocumentLevelPermissionable, KrmsRulesContext, ProposalDevelopmentDocumentContract {
 
     public static final String PEOPLE_FLOWS = "PeopleFlows";
+    private static final String BATCH_JOB_USER_NAME = "batchJobUserName";
+    private static final String KC_COMMON = "KC-COMMON";
+    private static final String SAVE_WORKFLOW_SIMULATION_RESULT_ON_WORKFLOW_ACTION = "SAVE_WORKFLOW_SIMULATION_RESULT_ON_WORKFLOW_ACTION";
     private static Log LOG = LogFactory.getLog(ProposalDevelopmentDocument.class);
 
     public static final String DOCUMENT_TYPE_CODE = "PRDV";
@@ -100,19 +109,19 @@ public class ProposalDevelopmentDocument extends BudgetParentDocument<Developmen
 
     @Transient
     private transient ProposalHierarchyService  proposalHierarchyService;
-    
-	@Transient
+
+    @Transient
     private transient ProposalStateService proposalStateService;
-	
-	@Transient
+
+    @Transient
     private transient KcDocumentRejectionService kcDocumentRejectionService;
 
     @Transient
     private transient WorkflowDocumentService workflowDocumentService;
 
     @Transient
-	InstitutionalProposalService institutionalProposalService;
-	
+    InstitutionalProposalService institutionalProposalService;
+
     @Transient
     private transient WorkflowDocumentActionsService  workflowDocumentActionsService;
 
@@ -121,14 +130,14 @@ public class ProposalDevelopmentDocument extends BudgetParentDocument<Developmen
 
     @Transient
     private transient DataDictionaryService dataDictionaryService  ;
-    
+
     @Transient
-    private transient  DataObjectService dataObjectService; 
-    
+    private transient  DataObjectService dataObjectService;
+
     @Transient
     private transient  KcKrmsFactBuilderServiceHelper proposalDevelopmentFactBuilderService;
-    
-    
+
+
     @Column(name = "PROPOSAL_DELETED")
     @Convert(converter = BooleanYNConverter.class)
     private Boolean proposalDeleted = Boolean.FALSE;
@@ -148,7 +157,7 @@ public class ProposalDevelopmentDocument extends BudgetParentDocument<Developmen
 
     @Transient
     private transient Boolean allowsNoteAttachments;
-    
+
     @Transient
     private transient Boolean certifyViewOnly = false;
 
@@ -158,7 +167,16 @@ public class ProposalDevelopmentDocument extends BudgetParentDocument<Developmen
     @Transient
     private transient ProjectPublisher projectPublisher;
 
-	public ProposalDevelopmentDocument() {
+    @Transient
+    private transient WorkflowDetailsService workflowDetailsService;
+
+    @Transient
+    private transient ConfigurationService configurationService;
+
+    @Transient
+    private transient ParameterService parameterService;
+
+    public ProposalDevelopmentDocument() {
         super();
         DevelopmentProposal newProposal = new DevelopmentProposal();
         newProposal.setProposalDocument(this);
@@ -189,25 +207,25 @@ public class ProposalDevelopmentDocument extends BudgetParentDocument<Developmen
     }
 
     protected ProposalHierarchyService getProposalHierarchyService() {
-		if (proposalHierarchyService == null){
-			proposalHierarchyService = KcServiceLocator.getService(ProposalHierarchyService.class);
-		}
-    	return proposalHierarchyService;
-	}
+        if (proposalHierarchyService == null){
+            proposalHierarchyService = KcServiceLocator.getService(ProposalHierarchyService.class);
+        }
+        return proposalHierarchyService;
+    }
 
-	protected ProposalStateService getProposalStateService() {
-		if (proposalStateService == null){
-			proposalStateService = KcServiceLocator.getService(ProposalStateService.class);
-		}
-		return proposalStateService;
-	}
+    protected ProposalStateService getProposalStateService() {
+        if (proposalStateService == null){
+            proposalStateService = KcServiceLocator.getService(ProposalStateService.class);
+        }
+        return proposalStateService;
+    }
 
-	protected KcDocumentRejectionService getKcDocumentRejectionService() {
-		if (kcDocumentRejectionService == null){
-			kcDocumentRejectionService = KcServiceLocator.getService(KcDocumentRejectionService.class);
-		}
-		return kcDocumentRejectionService;
-	}
+    protected KcDocumentRejectionService getKcDocumentRejectionService() {
+        if (kcDocumentRejectionService == null){
+            kcDocumentRejectionService = KcServiceLocator.getService(KcDocumentRejectionService.class);
+        }
+        return kcDocumentRejectionService;
+    }
 
     protected WorkflowDocumentService getWorkflowDocumentService() {
         if (workflowDocumentService == null){
@@ -215,41 +233,48 @@ public class ProposalDevelopmentDocument extends BudgetParentDocument<Developmen
         }
         return workflowDocumentService;
     }
-	
-	protected InstitutionalProposalService getInstitutionalProposalService () {
-		if ( institutionalProposalService == null){
-			institutionalProposalService = KcServiceLocator.getService(InstitutionalProposalService.class);
-		}
-		return institutionalProposalService;
-	}
-	
-	protected WorkflowDocumentActionsService getWorkflowDocumentActionsService() {
-		if (workflowDocumentActionsService == null){
-			workflowDocumentActionsService = KewApiServiceLocator.getWorkflowDocumentActionsService();
-		}
-		return workflowDocumentActionsService;
-	}
 
-	protected DataDictionaryService getDataDictionaryService() {
-		if (dataDictionaryService == null){
-			dataDictionaryService = KcServiceLocator.getService(DataDictionaryService.class);
-		}
-		return dataDictionaryService;
-	}
+    protected InstitutionalProposalService getInstitutionalProposalService () {
+        if ( institutionalProposalService == null){
+            institutionalProposalService = KcServiceLocator.getService(InstitutionalProposalService.class);
+        }
+        return institutionalProposalService;
+    }
 
-	protected DataObjectService getDataObjectService() {
-		if (dataObjectService == null){
-			dataObjectService = KcServiceLocator.getService(DataObjectService.class);
-		}
-		return dataObjectService;
-	}
+    protected WorkflowDocumentActionsService getWorkflowDocumentActionsService() {
+        if (workflowDocumentActionsService == null){
+            workflowDocumentActionsService = KewApiServiceLocator.getWorkflowDocumentActionsService();
+        }
+        return workflowDocumentActionsService;
+    }
 
-	protected KcKrmsFactBuilderServiceHelper getProposalDevelopmentFactBuilderService() {
-		if (proposalDevelopmentFactBuilderService == null){
-			proposalDevelopmentFactBuilderService = KcServiceLocator.getService("proposalDevelopmentFactBuilderService");
-		}
-		return proposalDevelopmentFactBuilderService;
-	}
+    protected DataDictionaryService getDataDictionaryService() {
+        if (dataDictionaryService == null){
+            dataDictionaryService = KcServiceLocator.getService(DataDictionaryService.class);
+        }
+        return dataDictionaryService;
+    }
+
+    protected DataObjectService getDataObjectService() {
+        if (dataObjectService == null){
+            dataObjectService = KcServiceLocator.getService(DataObjectService.class);
+        }
+        return dataObjectService;
+    }
+
+    protected KcKrmsFactBuilderServiceHelper getProposalDevelopmentFactBuilderService() {
+        if (proposalDevelopmentFactBuilderService == null){
+            proposalDevelopmentFactBuilderService = KcServiceLocator.getService("proposalDevelopmentFactBuilderService");
+        }
+        return proposalDevelopmentFactBuilderService;
+    }
+
+    protected WorkflowDetailsService getWorkflowDetailsService() {
+        if (workflowDetailsService == null){
+            workflowDetailsService = KcServiceLocator.getService(WorkflowDetailsService.class);
+        }
+        return workflowDetailsService;
+    }
 
     @Override
     public void doRouteStatusChange(DocumentRouteStatusChange dto) {
@@ -264,7 +289,7 @@ public class ProposalDevelopmentDocument extends BudgetParentDocument<Developmen
             if (!isProposalDeleted()) {
                 DevelopmentProposal bp = this.getDevelopmentProposal();
                 LOG.info(String.format("Route status change for document %s - proposal number %s is moving from %s to %s", bp.getProposalDocument().getDocumentHeader().getDocumentNumber(), bp.getProposalNumber(), oldStatus, newStatus));
-               if (!bp.isInHierarchy()) {
+                if (!bp.isInHierarchy()) {
                     try {
                         getProposalHierarchyService().calculateAndSetProposalAppDocStatus(this, dto);
                     } catch (ProposalHierarchyException pe) {
@@ -283,6 +308,32 @@ public class ProposalDevelopmentDocument extends BudgetParentDocument<Developmen
             }
             return null;
         });
+    }
+
+    @Override
+    public void afterWorkflowEngineProcess(boolean success) {
+        Boolean simulationEnabled = getParameterService().getParameterValueAsBoolean(KC_COMMON,
+                                                                                    ParameterConstants.DOCUMENT_COMPONENT,
+                                                                                    SAVE_WORKFLOW_SIMULATION_RESULT_ON_WORKFLOW_ACTION);
+        if (simulationEnabled) {
+            try {
+                if (success) {
+                    if (Objects.nonNull(getDocumentHeader().getWorkflowDocument()) &&
+                            !(getDocumentHeader().getWorkflowDocument().isInitiated() || getDocumentHeader().getWorkflowDocument().isSaved())) {
+                        ExecutorService executorService = Executors.newCachedThreadPool();
+                        executorService.execute(() -> {
+                            String user = getConfigurationService().getPropertyValueAsString(BATCH_JOB_USER_NAME);
+                            UserSession session = new UserSession(user);
+                            GlobalVariables.setUserSession(session);
+                            getWorkflowDetailsService().generateDetailsFromSimulation(getDocumentNumber());
+                        });
+                    }
+                }
+            } catch (Exception exception) {
+                LOG.warn("Could not simulate workflow for document: " + exception);
+            }
+        }
+        super.afterWorkflowEngineProcess(success);
     }
 
     @Override
@@ -336,12 +387,13 @@ public class ProposalDevelopmentDocument extends BudgetParentDocument<Developmen
             }
             return null;
         });
+
     }
 
     private boolean hasProposalBeenRejected(WorkflowDocument document) {
         return getKcDocumentRejectionService().isDocumentOnInitialNode(document) &&
-            getWorkflowDocumentService().getAllActionsTaken(getDocumentNumber())
-                .stream().anyMatch(actionTaken -> actionTaken.getActionTaken() == ActionType.COMPLETE);
+                getWorkflowDocumentService().getAllActionsTaken(getDocumentNumber())
+                        .stream().anyMatch(actionTaken -> actionTaken.getActionTaken() == ActionType.COMPLETE);
     }
 
 
@@ -592,7 +644,7 @@ public class ProposalDevelopmentDocument extends BudgetParentDocument<Developmen
 
     @Override
     public void addFacts(Facts.Builder factsBuilder) {
-    	getProposalDevelopmentFactBuilderService().addFacts(factsBuilder, this);
+        getProposalDevelopmentFactBuilderService().addFacts(factsBuilder, this);
     }
 
     @Override
@@ -671,12 +723,12 @@ public class ProposalDevelopmentDocument extends BudgetParentDocument<Developmen
     }
 
     public Boolean getCertifyViewOnly() {
-		return certifyViewOnly;
-	}
+        return certifyViewOnly;
+    }
 
-	public void setCertifyViewOnly(Boolean certifyViewOnly) {
-		this.certifyViewOnly = certifyViewOnly;
-	}
+    public void setCertifyViewOnly(Boolean certifyViewOnly) {
+        this.certifyViewOnly = certifyViewOnly;
+    }
 
     @Override
     public String getCustomLockDescriptor(Person user) {
@@ -722,6 +774,28 @@ public class ProposalDevelopmentDocument extends BudgetParentDocument<Developmen
             routeNodeService = KEWServiceLocator.getRouteNodeService();
         }
         return routeNodeService;
+    }
+
+    public ConfigurationService getConfigurationService() {
+        if (configurationService == null) {
+            configurationService = KcServiceLocator.getService(ConfigurationService.class);
+        }
+        return configurationService;
+    }
+
+    public void setConfigurationService(ConfigurationService configurationService) {
+        this.configurationService = configurationService;
+    }
+
+    public ParameterService getParameterService() {
+        if (parameterService == null) {
+            parameterService = KcServiceLocator.getService(ParameterService.class);
+        }
+        return parameterService;
+    }
+
+    public void setParameterService(ParameterService parameterService) {
+        this.parameterService = parameterService;
     }
 
     @Override

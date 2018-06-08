@@ -26,7 +26,6 @@ import java.util.Objects;
 @Repository("kewDocHeaderDao")
 public class KewDocHeaderDaoImpl extends LookupDaoOjb implements KewDocHeaderDao {
 
-
     private static final String PROPOSAL_DEVELOPMENT_DOCUMENT = "ProposalDevelopmentDocument";
 
     @Autowired

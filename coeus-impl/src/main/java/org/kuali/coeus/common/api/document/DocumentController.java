@@ -9,29 +9,21 @@
 package org.kuali.coeus.common.api.document;
 
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 import org.kuali.coeus.common.api.document.dto.DocumentDetailsDto;
-import org.kuali.coeus.common.api.document.service.DocumentActionListService;
 import org.kuali.coeus.common.api.document.service.KewDocHeaderDao;
+import org.kuali.coeus.propdev.impl.core.ProposalDevelopmentDocument;
 import org.kuali.coeus.sys.framework.gv.GlobalVariableService;
 import org.kuali.coeus.sys.framework.rest.UnauthorizedAccessException;
 import org.kuali.coeus.sys.framework.rest.UnprocessableEntityException;
-import org.kuali.rice.kew.actionrequest.ActionRequestValue;
-import org.kuali.rice.kew.api.KewApiConstants;
-import org.kuali.rice.kew.api.action.ActionRequest;
-import org.kuali.rice.kew.api.action.RoutingReportCriteria;
-import org.kuali.rice.kew.api.action.WorkflowDocumentActionsService;
-import org.kuali.rice.kew.api.document.DocumentDetail;
+import org.kuali.rice.core.api.criteria.QueryByCriteria;
+import org.kuali.rice.kew.api.WorkflowDocument;
 import org.kuali.rice.kew.api.document.search.DocumentSearchResult;
-import org.kuali.rice.kew.routeheader.DocumentRouteHeaderValue;
-import org.kuali.rice.kew.routeheader.service.RouteHeaderService;
-import org.kuali.rice.kim.api.group.GroupService;
+import org.kuali.rice.kew.api.exception.WorkflowException;
 import org.kuali.rice.kim.api.identity.Person;
 import org.kuali.rice.kim.api.identity.PersonService;
+import org.kuali.rice.krad.data.DataObjectService;
 import org.kuali.rice.krad.document.Document;
 import org.kuali.rice.krad.service.DocumentDictionaryService;
 import org.kuali.rice.krad.service.DocumentService;
@@ -44,13 +36,12 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @RequestMapping(value="/api/v1")
 @Controller("documentController")
 public class DocumentController {
 
-    private static final String MMMM_D_YYYY = "MMMM d , yyyy";
+    private static final String PRINCIPAL_ID = "principalId";
     @Autowired
     @Qualifier("documentService")
     private DocumentService documentService;
@@ -61,27 +52,15 @@ public class DocumentController {
 
     @Autowired
     @Qualifier("kewDocHeaderDao")
-    private KewDocHeaderDao krewDocHeaderDao;
+    private KewDocHeaderDao kewDocHeaderDao;
+
+    @Autowired
+    @Qualifier("dataObjectService")
+    private DataObjectService dataObjectService;
 
     @Autowired
     @Qualifier("personService")
     private PersonService personService;
-
-    @Autowired
-    @Qualifier("documentActionListService")
-    private DocumentActionListService documentActionListService;
-
-    @Autowired
-    @Qualifier("workflowDocumentActionsService")
-    private WorkflowDocumentActionsService workflowDocumentActionsService;
-
-    @Autowired
-    @Qualifier("groupService")
-    private GroupService groupService;
-
-    @Autowired
-    @Qualifier("documentRouteHeaderService")
-    private RouteHeaderService documentRouteHeaderService;
 
     @Autowired
     @Qualifier("globalVariableService")
@@ -109,24 +88,21 @@ public class DocumentController {
 
     private List<DocumentDetailsDto> getDocumentsRoutingForUser(String routingToUser, Integer limit, Integer skip) {
         checkAndRetrievePerson(routingToUser);
-        ArrayList<DocumentDetailsDto> documentList = new ArrayList<>();
-        List<DocumentSearchResult> enrouteDocuments = krewDocHeaderDao.getEnrouteProposalDocs(routingToUser, limit, skip);
-        for (DocumentSearchResult enrouteDocument : enrouteDocuments) {
-            RoutingReportCriteria.Builder reportCriteriaBuilder = RoutingReportCriteria.Builder.createByDocumentId(enrouteDocument.getDocument().getDocumentId());
-            reportCriteriaBuilder.setTargetPrincipalIds(Collections.singletonList(routingToUser));
-            DocumentDetail documentDetail = workflowDocumentActionsService.executeSimulation(reportCriteriaBuilder.build());
-            ActionRequest actionRequestUserIsIn = isUserInRouteLog(routingToUser, documentDetail);
-            if (actionRequestUserIsIn != null) {
-                DocumentDetailsDto documentDetailDto = getDocumentDetailsDto(enrouteDocument, null);
-                Integer steps = null;
-                try {
-                    steps = getSteps(enrouteDocument.getDocument().getDocumentId(), routingToUser);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                documentDetailDto.setStepsAway(steps);
-                documentList.add(documentDetailDto);
-            }
+        List<DocumentDetailsDto> documentList;
+        Map<String, Object> fieldValues = new HashMap<String, Object>();
+        fieldValues.put(PRINCIPAL_ID, routingToUser);
+        List<DocumentWorkflowUserDetails> documentDetails = dataObjectService.findMatching(DocumentWorkflowUserDetails.class,
+                QueryByCriteria.Builder.andAttributes(fieldValues).build()).getResults();
+        try {
+            List<Document> documents =  getAllDocuments(documentDetails.stream().map(DocumentWorkflowUserDetails::getDocumentNumber).collect(Collectors.toList()));
+            documentList = documents.stream().map(document -> getDocumentDetailsDto(document,
+                                                                                    documentDetails.stream().
+                                                                                            filter(detail -> detail.getDocumentNumber().equals(document.getDocumentNumber())).
+                                                                                            findFirst().get().getSteps())).
+                                                                                            collect(Collectors.toList());
+        } catch (WorkflowException workflowException) {
+            LOG.error("An error occurred" + workflowException);
+            throw new UnprocessableEntityException("An error occurred " + workflowException.getMessage());
         }
         return documentList;
     }
@@ -134,7 +110,7 @@ public class DocumentController {
     protected List<DocumentDetailsDto> documentSavedForUser(String savedForUser, Integer limit, Integer skip) {
         Person person = checkAndRetrievePerson(savedForUser);
 
-        final List<DocumentSearchResult> savedDocuments = krewDocHeaderDao.getSavedDocuments(savedForUser, limit, skip);
+        final List<DocumentSearchResult> savedDocuments = kewDocHeaderDao.getSavedDocuments(savedForUser, limit, skip);
         return CollectionUtils.isNotEmpty(savedDocuments) ? savedDocuments.stream()
                 .filter(savedDoc -> canOpenDocument(person, savedDoc))
                 .map(documentSearchResult -> getDocumentDetailsDto(documentSearchResult, null))
@@ -162,43 +138,22 @@ public class DocumentController {
         }
         return person;
     }
-
-    private ActionRequest isUserInRouteLog(String routedToUser, DocumentDetail documentDetail) {
-        ActionRequest actionRequestUserIsIn = null;
-        for(ActionRequest actionRequest : documentDetail.getActionRequests() ) {
-            if (actionRequest.isPending() && actionRequest.getActionRequested().getCode().equalsIgnoreCase(KewApiConstants.ACTION_REQUEST_APPROVE_REQ) &&
-                    recipientMatchesUser(actionRequest, routedToUser)) {
-                actionRequestUserIsIn = actionRequest;
-            }
-        }
-        return actionRequestUserIsIn;
+    private List<Document> getAllDocuments(List<String> documentNumbers) throws WorkflowException {
+        return documentService.getDocumentsByListOfDocumentHeaderIds(ProposalDevelopmentDocument.class, documentNumbers);
     }
 
-    public Integer getSteps(String documentId, String userId) throws Exception {
-        DocumentRouteHeaderValue routeHeader = documentRouteHeaderService.getRouteHeader(documentId);
-        documentActionListService.fixActionRequestsPositions(routeHeader);
-        List<ActionRequestValue> allRequests = Stream.concat(documentActionListService.populateRouteLogFormActionRequests(routeHeader).stream(),
-                documentActionListService.populateRouteLogFutureRequests(routeHeader).stream()).filter(actionRequestValue ->
-                !actionRequestValue.getStatus().equalsIgnoreCase("D")).collect(Collectors.toList());
-
-        int activePosition = 0;
-        for (int position = 0; position < allRequests.size(); position++) {
-            final ActionRequestValue actionRequestValue = allRequests.get(position);
-            if (actionRequestValue.getStatus().equalsIgnoreCase("A")) {
-                activePosition = position;
-            }
-            if (actionRequestValue.getPrincipalId() != null && actionRequestValue.getPrincipalId().equalsIgnoreCase(userId)) {
-                return position - activePosition;
-            }
-            if (actionRequestValue.getPrincipalId() == null) {
-                List<ActionRequestValue> childRequests = actionRequestValue.getChildrenRequests();
-                boolean found = childRequests.stream().anyMatch(childRequest -> userId.equalsIgnoreCase(childRequest.getPrincipalId()));
-                if (found) {
-                    return position - activePosition;
-                }
-            }
+    private DocumentDetailsDto getDocumentDetailsDto(Document doc, Integer stepsAway) {
+        DocumentDetailsDto documentDetailsDto = new DocumentDetailsDto();
+        documentDetailsDto.setDocumentTitle(doc.getDocumentTitle());
+        documentDetailsDto.setDocumentNumber(doc.getDocumentNumber());
+        final WorkflowDocument workflowDocument = doc.getDocumentHeader().getWorkflowDocument();
+        if (!Objects.isNull(workflowDocument)) {
+            documentDetailsDto.setDocumentCreateDate(workflowDocument.getDateCreated().getMillis());
+            documentDetailsDto.setDocHandlerUrl(workflowDocument.getDocumentHandlerUrl());
+            documentDetailsDto.setDocumentType(workflowDocument.getDocumentTypeName());
         }
-        return null;
+        documentDetailsDto.setStepsAway(stepsAway);
+        return documentDetailsDto;
     }
 
     private DocumentDetailsDto getDocumentDetailsDto(DocumentSearchResult doc, Integer stepsAway) {
@@ -213,22 +168,4 @@ public class DocumentController {
         return documentDetailsDto;
     }
 
-    protected boolean recipientMatchesUser(ActionRequest actionRequest, String loggedInPrincipalId) {
-        if (actionRequest != null && loggedInPrincipalId != null ) {
-            List<ActionRequest> actionRequests =  Collections.singletonList(actionRequest);
-            if(actionRequest.isRoleRequest()) {
-                actionRequests = actionRequest.getChildRequests();
-            }
-            for( ActionRequest cActionRequest : actionRequests ) {
-                String recipientUser = cActionRequest.getPrincipalId();
-                if( ( recipientUser != null && recipientUser.equals(loggedInPrincipalId) )
-                        || (StringUtils.isNotBlank(cActionRequest.getGroupId())
-                        && groupService.isMemberOfGroup(loggedInPrincipalId, cActionRequest.getGroupId() ))) {
-                    return true;
-                }
-            }
-        }
-
-        return false;
-    }
 }

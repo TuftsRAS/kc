@@ -59,7 +59,7 @@ public class KcCronTriggerBean extends CronTriggerFactoryBean {
      * @return the Cron Expression
      */
     protected String getSystemCronExpression() {
-        if (StringUtils.isNotBlank(cronExpressionParameterName) 
+        if (StringUtils.isNotBlank(cronExpressionParameterName)
                 && getParameterService().parameterExists(parameterNamespace, parameterComponent, cronExpressionParameterName)) {
             final String param = getParameterService().getParameterValueAsString(parameterNamespace, parameterComponent, cronExpressionParameterName);
             if (param != null) {
