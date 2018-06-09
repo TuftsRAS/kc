@@ -309,7 +309,7 @@
         <property name="cronExpressionParameterName" value="WORKFLOW_SIMULATION_BATCH_JOB_CRON_EXPRESSION" />
         <property name="triggerEnabledParameterName" value="WORKFLOW_SIMULATION_JOB_ON" />
         <property name="startTimeParameterName" value="WORKFLOW_SIMULATION_BATCH_JOB_CRON_START_TIME" />
-        <property name="parameterNamespace" value="KC-COMMON" />
+        <property name="parameterNamespace" value="KC-GEN" />
         <property name="parameterComponent" value="Document" />
     </bean>
 

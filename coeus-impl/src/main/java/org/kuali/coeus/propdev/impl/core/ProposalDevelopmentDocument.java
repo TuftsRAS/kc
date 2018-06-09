@@ -90,7 +90,7 @@ public class ProposalDevelopmentDocument extends BudgetParentDocument<Developmen
 
     public static final String PEOPLE_FLOWS = "PeopleFlows";
     private static final String BATCH_JOB_USER_NAME = "batchJobUserName";
-    private static final String KC_COMMON = "KC-COMMON";
+    private static final String KC_GEN = "KC-GEN";
     private static final String SAVE_WORKFLOW_SIMULATION_RESULT_ON_WORKFLOW_ACTION = "SAVE_WORKFLOW_SIMULATION_RESULT_ON_WORKFLOW_ACTION";
     private static Log LOG = LogFactory.getLog(ProposalDevelopmentDocument.class);
 
@@ -312,7 +312,7 @@ public class ProposalDevelopmentDocument extends BudgetParentDocument<Developmen
 
     @Override
     public void afterWorkflowEngineProcess(boolean success) {
-        Boolean simulationEnabled = getParameterService().getParameterValueAsBoolean(KC_COMMON,
+        Boolean simulationEnabled = getParameterService().getParameterValueAsBoolean(KC_GEN,
                                                                                     ParameterConstants.DOCUMENT_COMPONENT,
                                                                                     SAVE_WORKFLOW_SIMULATION_RESULT_ON_WORKFLOW_ACTION);
         if (simulationEnabled) {
