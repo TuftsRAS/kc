@@ -1,6 +1,22 @@
 
 
 ## CURRENT
+* Trying to fix integration tests (#2928)
+
+  * Gayathri Athreya on Fri, 8 Jun 2018 21:56:30 -0700 [View Commit](../../commit/b9d1282fae662f942cdb5f257a946c2645486b19)
+* RESKC-1956: Test fix. (#2927)
+
+  * Gayathri Athreya on Fri, 8 Jun 2018 17:14:43 -0700 [View Commit](../../commit/a657e7beaf4bda361777879cbe91a711ea95a823)
+* Cron job for workflow documents. (#2926)
+
+* RESKC-2956: Cron job for workflow documents.
+  * 
+* RESKC-2956: PR review changes
+  * 
+* More PR review changes
+  * Gayathri Athreya on Fri, 8 Jun 2018 15:55:31 -0700 [View Commit](../../commit/a6ff9a5298815fc6236e5a3862f6b6ba6d1e84fc)
+
+## coeus-1806.0010
 * RESKC-2933: Make Budget get the Budget Category from the Object Code rather than from the Personnel Line Item. (#2923)
 
   * Omar Soto Fortuño on Thu, 7 Jun 2018 09:24:51 -0400 [View Commit](../../commit/ced4b9e3b1fddf672332e1df9db9c22ffd83f371)

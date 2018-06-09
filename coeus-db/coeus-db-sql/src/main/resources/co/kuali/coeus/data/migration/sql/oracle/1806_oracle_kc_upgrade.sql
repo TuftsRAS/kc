@@ -22,4 +22,5 @@ set sqlblanklines on
 
 spool 1806_oracle_kc_upgrade.sql.log
 @./kc/bootstrap/V1806_002__add_rrbudget14_s2s_error.sql
+@./kc/bootstrap/V1806_006__RESKC-2956.sql
 commit;
