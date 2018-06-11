@@ -1,6 +1,11 @@
 
 
 ## CURRENT
+* RESKC-2549: Update rice version to fix issue with DataTables when display records are lower than the beginning index. (#2929)
+
+  * Omar Soto Fortuño on Mon, 11 Jun 2018 11:33:36 -0400 [View Commit](../../commit/608a27ed3fd12214ddfdf01a7e4ae94d6e3ae734)
+
+## coeus-1806.0011
 * Trying to fix integration tests (#2928)
 
   * Gayathri Athreya on Fri, 8 Jun 2018 21:56:30 -0700 [View Commit](../../commit/b9d1282fae662f942cdb5f257a946c2645486b19)
