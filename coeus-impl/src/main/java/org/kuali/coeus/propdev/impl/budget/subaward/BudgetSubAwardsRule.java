@@ -14,29 +14,28 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.encryption.InvalidPasswordException;
-import org.kuali.coeus.common.framework.attachment.KcAttachmentService;
 import org.kuali.coeus.common.framework.ruleengine.KcBusinessRule;
 import org.kuali.coeus.common.framework.ruleengine.KcEventMethod;
 import org.kuali.coeus.common.framework.ruleengine.KcEventResult;
+import org.kuali.coeus.propdev.impl.s2s.FormUtilityService;
+import org.kuali.coeus.sys.api.model.KcFile;
 import org.kuali.coeus.sys.framework.gv.GlobalVariableService;
 import org.kuali.kra.infrastructure.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 @KcBusinessRule("budgetSubAwardsRule")
 public class BudgetSubAwardsRule  {
 
     private static final Log LOG = LogFactory.getLog(BudgetSubAwardsRule.class);
     public static final String SUBAWARD_ORG_NAME_FIELD_NAME = "organizationId";
-    
+
     @Autowired
-    @Qualifier("kcAttachmentService")
-    private KcAttachmentService kcAttachmentService;
+    @Qualifier("formUtilityService")
+    private FormUtilityService formUtilityService;
 
     @Autowired
     @Qualifier("globalVariableService")
@@ -92,9 +91,11 @@ public class BudgetSubAwardsRule  {
       if (pdd.isEncrypted()) return true;
 
       PdfReader reader = new PdfReader(data);
-      Map<Object, Object> attachments = getKcAttachmentService().extractAttachments(reader);
-      for (Map.Entry<Object, Object> pair : attachments.entrySet()) {
-        if (isEncryptedFile((byte[]) pair.getValue())) return true;
+      List<KcFile> attachments = getFormUtilityService().extractAttachments(reader);
+      for (KcFile file: attachments) {
+        if (isEncryptedFile(file.getData())) {
+            return true;
+        }
       }
       return false;
     } catch(InvalidPasswordException ipe) {
@@ -102,15 +103,15 @@ public class BudgetSubAwardsRule  {
     }
   }
 
-    protected KcAttachmentService getKcAttachmentService() {
-        return kcAttachmentService;
+    public FormUtilityService getFormUtilityService() {
+        return formUtilityService;
     }
 
-	public void setKcAttachmentService(KcAttachmentService kcAttachmentService) {
-		this.kcAttachmentService = kcAttachmentService;
-	}
+    public void setFormUtilityService(FormUtilityService formUtilityService) {
+        this.formUtilityService = formUtilityService;
+    }
 
-	public GlobalVariableService getGlobalVariableService() {
+    public GlobalVariableService getGlobalVariableService() {
 		return globalVariableService;
 	}
 

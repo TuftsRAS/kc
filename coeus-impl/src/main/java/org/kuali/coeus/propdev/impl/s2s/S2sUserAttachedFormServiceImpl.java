@@ -17,8 +17,10 @@ import org.kuali.coeus.s2sgen.api.core.AuditError;
 import org.kuali.coeus.s2sgen.api.core.S2SException;
 import org.kuali.coeus.s2sgen.api.generate.FormGenerationResult;
 import org.kuali.coeus.s2sgen.api.generate.FormGeneratorService;
+import org.kuali.coeus.s2sgen.api.generate.FormMappingService;
 import org.kuali.coeus.sys.api.model.KcFile;
 import org.kuali.coeus.sys.framework.gv.GlobalVariableService;
+import org.kuali.coeus.sys.framework.util.CollectionUtils;
 import org.kuali.kra.infrastructure.KeyConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -60,6 +62,10 @@ public class S2sUserAttachedFormServiceImpl implements S2sUserAttachedFormServic
     private FormUtilityService formUtilityService;
 
     @Autowired
+    @Qualifier("formMappingService")
+    private FormMappingService formMappingService;
+
+    @Autowired
     @Qualifier("proposalSpecialReviewHumanSubjectsAttachmentService")
     private ProposalSpecialReviewHumanSubjectsAttachmentService proposalSpecialReviewHumanSubjectsAttachmentService;
 
@@ -82,12 +88,24 @@ public class S2sUserAttachedFormServiceImpl implements S2sUserAttachedFormServic
                     s2sException.setTabErrorKey(USER_ATTACHED_FORMS_ERRORS);
                     throw s2sException;
                 }
-                Map<String, KcFile> attachments = formUtilityService.extractAttachments(reader);
+                final List<KcFile> attachments = formUtilityService.extractAttachments(reader);
+                final Collection<String> duplicates = CollectionUtils.findDuplicates(attachments, KcFile::getName);
+
+                if (!duplicates.isEmpty()) {
+                    S2SException s2sException = new S2SException();
+                    s2sException.setErrorKey(KeyConstants.S2S_FORM_DUP_ATT);
+                    s2sException.setParams(new String[] { StringUtils.isNotBlank(s2sUserAttachedForm.getFormName()) ? s2sUserAttachedForm.getFormName() : "User Attached Form", duplicates.stream().collect(Collectors.joining(", "))});
+                    s2sException.setTabErrorKey(USER_ATTACHED_FORMS_ERRORS);
+                    throw s2sException;
+                }
+
                 formBeans = extractAndPopulateXml(developmentProposal,reader,s2sUserAttachedForm,attachments);
             }
             setFormsAvailability(developmentProposal,formBeans);
-        }finally{
-            if(reader!=null) reader.close();
+        } finally {
+            if (reader!=null) {
+                reader.close();
+            }
         }
         return formBeans;
     }
@@ -98,7 +116,7 @@ public class S2sUserAttachedFormServiceImpl implements S2sUserAttachedFormServic
         throw s2sException;
     }
 
-    protected List<S2sUserAttachedForm> extractAndPopulateXml(ProposalDevelopmentDocument developmentProposal, PdfReader reader, S2sUserAttachedForm userAttachedForm, Map<String, KcFile> attachments) throws TransformerException, IOException, SAXException, ParserConfigurationException, XPathExpressionException {
+    protected List<S2sUserAttachedForm> extractAndPopulateXml(ProposalDevelopmentDocument developmentProposal, PdfReader reader, S2sUserAttachedForm userAttachedForm, List<KcFile> attachments) throws TransformerException, IOException, SAXException, ParserConfigurationException, XPathExpressionException {
         List<S2sUserAttachedForm> formBeans = new ArrayList<>();
         XfaForm xfaForm = reader.getAcroFields().getXfa();
         Document domDocument = xfaForm.getDomDocument();
@@ -177,7 +195,7 @@ public class S2sUserAttachedFormServiceImpl implements S2sUserAttachedFormServic
     }
 
     protected void addForm(ProposalDevelopmentDocument developmentProposal, List<S2sUserAttachedForm> formBeans, Element form,
-                           S2sUserAttachedForm userAttachedFormBean, Map<String, KcFile> attachments) throws TransformerException, XPathExpressionException {
+                           S2sUserAttachedForm userAttachedFormBean, List<KcFile> attachments) throws TransformerException, XPathExpressionException {
         S2sUserAttachedForm userAttachedForm = processForm(developmentProposal, form,userAttachedFormBean,attachments);
         if(userAttachedForm!=null){
             formBeans.add(userAttachedForm);
@@ -198,7 +216,7 @@ public class S2sUserAttachedFormServiceImpl implements S2sUserAttachedFormServic
         }
     }
 
-    private S2sUserAttachedForm processForm(ProposalDevelopmentDocument developmentProposal, Element form, S2sUserAttachedForm userAttachedForm, Map<String, KcFile> attachments) throws TransformerException, XPathExpressionException {
+    private S2sUserAttachedForm processForm(ProposalDevelopmentDocument developmentProposal, Element form, S2sUserAttachedForm userAttachedForm, List<KcFile> attachments) throws TransformerException, XPathExpressionException {
         
         String formname;
         String namespaceUri;
@@ -253,11 +271,11 @@ public class S2sUserAttachedFormServiceImpl implements S2sUserAttachedFormServic
      * @param doc         the form as an Xml Document.  This document could get modified by this method.
      * @param attachments form attachments.  This map could get modified by this method.
      */
-    private void doHumanStudiesWorkaround(Document doc, Map<String, KcFile> attachments) {
-        final Map<String, KcFile> allHsAttachments = new HashMap<>();
+    private void doHumanStudiesWorkaround(Document doc, List<KcFile> attachments) {
+        final List<KcFile> allHsAttachments = new ArrayList<>();
 
         //remove the "empty" HumanSubjectStudy popout form from the list of attachments if it isn't a part of the xml submission
-        if (attachments.containsKey("HumanSubjectStudy-V1.0.pdf")) {
+        if (attachments.stream().anyMatch(a -> "HumanSubjectStudy-V1.0.pdf".equals(a.getName()))) {
             final NodeList files = doc.getElementsByTagNameNS(ATTACHMENTS_NS, FILE_NAME);
             boolean found = false;
             for (int i = 0; i < files.getLength(); i++) {
@@ -268,18 +286,20 @@ public class S2sUserAttachedFormServiceImpl implements S2sUserAttachedFormServic
             }
 
             if (!found) {
-                attachments.remove("HumanSubjectStudy-V1.0.pdf");
+                attachments.removeAll(attachments.stream()
+                        .filter(a -> "HumanSubjectStudy-V1.0.pdf".equals(a.getName()))
+                        .collect(Collectors.toList()));
             }
         }
 
         final NodeList hsAtt = doc.getElementsByTagNameNS("http://apply.grants.gov/forms/PHSHumanSubjectsAndClinicalTrialsInfo-V1.0", "ATT");
         for (int i = 0; i < hsAtt.getLength(); i++) {
             final Node attachmentName = hsAtt.item(i);
-            final KcFile hsAttPdf = attachments.get(attachmentName.getTextContent());
+            final List<KcFile> hsAttPdfs = attachments.stream().filter(a -> attachmentName.getTextContent().equals(a.getName())).collect(Collectors.toList());
 
             //remove the attachment from the attachment list because it is extracted and not included as a normal attachment
-            attachments.remove(attachmentName.getTextContent());
-            if (hsAttPdf != null) {
+            attachments.removeAll(hsAttPdfs);
+            hsAttPdfs.forEach(hsAttPdf -> {
                 try {
                     final Map<String, Object> hsAttinfo = proposalSpecialReviewHumanSubjectsAttachmentService.getSpecialReviewAttachmentXmlFileData(hsAttPdf.getData());
                     if (hsAttinfo != null) {
@@ -293,19 +313,22 @@ public class S2sUserAttachedFormServiceImpl implements S2sUserAttachedFormServic
                                 hsAttachmentNode.appendChild(doc.importNode(hsNode, true));
                             }
                         }
-                        final Map<String, KcFile> hsctAttachments = (Map<String, KcFile>) hsAttinfo.get(ProposalSpecialReviewHumanSubjectsAttachmentService.FILES);
+                        final List<KcFile> hsctAttachments = (List<KcFile>) hsAttinfo.get(ProposalSpecialReviewHumanSubjectsAttachmentService.FILES);
                         if (hsctAttachments != null) {
-                            allHsAttachments.putAll(hsctAttachments);
+                            allHsAttachments.addAll(hsctAttachments);
                         }
                     } else {
                         globalVariableService.getMessageMap().putError(USER_ATTACHED_FORMS_ERRORS, KeyConstants.S2S_USER_ATTACHED_FORM_NOT_VALID, "The human studies attachment " + attachmentName.getTextContent() + " is invalid");
                     }
+                } catch (S2SException e) {
+                    //throw here so that it isn't caught by an overly broach catch statement
+                    throw e;
                 } catch (RuntimeException | ParserConfigurationException | IOException | SAXException e) {
                     globalVariableService.getMessageMap().putError(USER_ATTACHED_FORMS_ERRORS, KeyConstants.S2S_USER_ATTACHED_FORM_NOT_VALID, "The human studies attachment " + attachmentName.getTextContent() + " is invalid");
                 }
-            }
+            });
         }
-        attachments.putAll(allHsAttachments);
+        attachments.addAll(allHsAttachments);
     }
 
     private boolean validateUserAttachedFormFile(S2sUserAttachedFormFile userAttachedFormFile, String formName) {
@@ -344,8 +367,8 @@ public class S2sUserAttachedFormServiceImpl implements S2sUserAttachedFormServic
         return newUserAttachedForm;
     }
 
-    private void updateAttachmentNodes(S2sUserAttachedForm userAttachedFormBean, Map<String, KcFile> attachments) {
-        final List<S2sUserAttachedFormAtt> attachmentList = attachments.values()
+    private void updateAttachmentNodes(S2sUserAttachedForm userAttachedFormBean, List<KcFile> attachments) {
+        final List<S2sUserAttachedFormAtt> attachmentList = attachments
                 .stream()
                 .map(attachment -> {
                     S2sUserAttachedFormAtt userAttachedFormAttachment = new S2sUserAttachedFormAtt();
@@ -380,18 +403,26 @@ public class S2sUserAttachedFormServiceImpl implements S2sUserAttachedFormServic
         if(opportunity!=null){
             List<S2sOppForms> oppForms = opportunity.getS2sOppForms(); 
             if(oppForms!=null){
-            	savedFormBeans.forEach(s2sUserAttachedForm -> setS2sOppFormsAvailability(oppForms, s2sUserAttachedForm.getNamespace(), true));
+            	savedFormBeans.forEach(s2sUserAttachedForm -> setS2sOppFormsAvailability(oppForms, s2sUserAttachedForm.getNamespace(),  true));
             }
         }
     }
     
-    protected void setS2sOppFormsAvailability(List<S2sOppForms> oppForms, String namespace, boolean isAvailable) {
+    protected void setS2sOppFormsAvailability(List<S2sOppForms> oppForms, String namespace, boolean uaf) {
     	oppForms.stream()
     	.filter(s2sOppForms -> s2sOppForms.getS2sOppFormsId().getOppNameSpace().equals(namespace))
     	.forEach(s2sOppForms -> {
-    	    s2sOppForms.setAvailable(isAvailable);
-    	    s2sOppForms.setUserAttachedForm(isAvailable);
-    	    s2sOppForms.setInclude(isAvailable);
+    	    if (uaf) {
+                s2sOppForms.setAvailable(true);
+                s2sOppForms.setUserAttachedForm(true);
+                s2sOppForms.setInclude(true);
+            } else {
+    	        //checking only generator support not UAT generators
+    	        final boolean available = getFormMappingService().getFormInfo(namespace) != null;
+                s2sOppForms.setAvailable(available);
+                s2sOppForms.setUserAttachedForm(false);
+                s2sOppForms.setInclude(s2sOppForms.getMandatory() && available);
+            }
     	});
     }
 
@@ -417,6 +448,14 @@ public class S2sUserAttachedFormServiceImpl implements S2sUserAttachedFormServic
 
     public void setFormUtilityService(FormUtilityService formUtilityService) {
         this.formUtilityService = formUtilityService;
+    }
+
+    public FormMappingService getFormMappingService() {
+        return formMappingService;
+    }
+
+    public void setFormMappingService(FormMappingService formMappingService) {
+        this.formMappingService = formMappingService;
     }
 
     public S2sFormConfigurationService getS2sFormConfigurationService() {

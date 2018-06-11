@@ -7,25 +7,14 @@
  */
 package org.kuali.coeus.common.framework.attachment;
 
-import com.lowagie.text.pdf.PdfReader;
 import org.apache.struts.upload.FormFile;
 import org.kuali.coeus.sys.framework.validation.ErrorReporter;
 import org.kuali.rice.krad.file.FileMeta;
-
-import java.io.IOException;
-import java.util.Map;
 
 /**
  * KC Attachment Service.
  */
 public interface KcAttachmentService {
-
-    /**
-     * extracts attachments from PDF File
-     * @param reader
-     * @return Map<Object, Object>
-     */
-    Map<Object, Object> extractAttachments(PdfReader reader) throws IOException;
 
     /**
      * Based on the mime type provided determine and return a path to the icon for the file.

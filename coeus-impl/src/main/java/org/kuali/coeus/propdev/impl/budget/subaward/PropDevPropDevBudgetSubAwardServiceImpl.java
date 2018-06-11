@@ -14,10 +14,11 @@ import java.util.Objects;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.kuali.coeus.common.framework.attachment.KcAttachmentService;
 import org.kuali.coeus.propdev.impl.budget.ProposalDevelopmentBudgetExt;
+import org.kuali.coeus.propdev.impl.s2s.FormUtilityService;
 import org.kuali.coeus.s2sgen.api.core.InfastructureConstants;
 import org.kuali.coeus.s2sgen.api.hash.GrantApplicationHashService;
+import org.kuali.coeus.sys.api.model.KcFile;
 import org.kuali.coeus.sys.api.model.ScaleTwoDecimal;
 import org.kuali.coeus.common.api.sponsor.hierarchy.SponsorHierarchyService;
 import org.kuali.coeus.common.budget.framework.core.Budget;
@@ -25,6 +26,7 @@ import org.kuali.coeus.common.budget.framework.core.BudgetService;
 import org.kuali.coeus.common.budget.framework.nonpersonnel.BudgetLineItem;
 import org.kuali.coeus.common.budget.framework.period.BudgetPeriod;
 import org.kuali.coeus.sys.framework.gv.GlobalVariableService;
+import org.kuali.coeus.sys.framework.util.CollectionUtils;
 import org.kuali.kra.infrastructure.Constants;
 import org.kuali.coeus.s2sgen.api.generate.FormMappingInfo;
 import org.kuali.coeus.s2sgen.api.generate.FormMappingService;
@@ -34,7 +36,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.w3c.dom.*;
+import org.xml.sax.SAXException;
 
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
@@ -87,8 +92,8 @@ public class PropDevPropDevBudgetSubAwardServiceImpl implements PropDevBudgetSub
     private SponsorHierarchyService sponsorHierarchyService;
 
     @Autowired
-    @Qualifier("kcAttachmentService")
-    private KcAttachmentService kcAttachmentService;
+    @Qualifier("formUtilityService")
+    private FormUtilityService formUtilityService;
 
     @Override
     public void populateBudgetSubAwardFiles(Budget budget, BudgetSubAwards subAward, String newFileName, byte[] newFileData) {
@@ -108,10 +113,18 @@ public class PropDevPropDevBudgetSubAwardServiceImpl implements PropDevBudgetSub
             byte[] xmlContents=getXMLFromPDF(reader);
             subawardBudgetExtracted = (xmlContents!=null && xmlContents.length>0);
             if(subawardBudgetExtracted){
-                Map fileMap = getKcAttachmentService().extractAttachments(reader);
-                updateXML(xmlContents, fileMap, subAward);
+                final List<KcFile> attachments = getFormUtilityService().extractAttachments(reader);
+                final Collection<String> duplicates = CollectionUtils.findDuplicates(attachments, KcFile::getName);
+                if (!duplicates.isEmpty()) {
+                    if (LOG.isDebugEnabled()) {
+                        LOG.debug("Duplicate attachments detected " + duplicates);
+                    }
+                    subawardBudgetExtracted = false;
+                } else {
+                    updateXML(xmlContents, attachments, subAward);
+                }
             }
-        }catch (Exception e) {
+        } catch (RuntimeException|IOException|XPathExpressionException|ParserConfigurationException|TransformerException|SAXException e) {
             LOG.error("Not able to extract xml from pdf",e);
             subawardBudgetExtracted = false;
         }
@@ -473,7 +486,7 @@ public class PropDevPropDevBudgetSubAwardServiceImpl implements PropDevBudgetSub
      * updates the XMl with hashcode for the files
      */
 
-  protected BudgetSubAwards updateXML(byte xmlContents[], Map fileMap, BudgetSubAwards budgetSubAwardBean) throws Exception {
+  protected BudgetSubAwards updateXML(byte xmlContents[], List<KcFile> files, BudgetSubAwards budgetSubAwardBean) throws IOException, XPathExpressionException, SAXException, ParserConfigurationException, TransformerException {
 
         javax.xml.parsers.DocumentBuilderFactory domParserFactory = javax.xml.parsers.DocumentBuilderFactory.newInstance();
         javax.xml.parsers.DocumentBuilder domParser = domParserFactory.newDocumentBuilder();
@@ -527,21 +540,20 @@ public class PropDevPropDevBudgetSubAwardServiceImpl implements PropDevBudgetSub
 
         org.w3c.dom.Node fileNode, hashNode, mimeTypeNode;
         org.w3c.dom.NamedNodeMap fileNodeMap, hashNodeMap;
-        String fileName;
-        byte fileBytes[];
-        String contentId;
+
         List<BudgetSubAwardAttachment> attachmentList = new ArrayList<>();
 
         for(int index = 0; index < lstFileName.getLength(); index++) {
             fileNode = lstFileName.item(index);
                 
-            Node fileNameNode = fileNode.getFirstChild(); 
-            fileName = fileNameNode.getNodeValue();
-
-            fileBytes = (byte[])fileMap.get(fileName);
-
-            if(fileBytes == null) {
+            Node fileNameNode = fileNode.getFirstChild();
+            String fileName = fileNameNode.getNodeValue();
+            final Optional<KcFile> file = files.stream().filter(f -> f.getName().equals(fileName)).findAny();
+            final byte[] fileBytes;
+            if(!file.isPresent() || file.get().getData() == null) {
                 throw new RuntimeException("FileName mismatch in XML and PDF extracted file");
+            } else {
+                fileBytes = file.get().getData();
             }
             String hashVal = grantApplicationHashService.computeAttachmentHash(fileBytes);
 
@@ -559,7 +571,7 @@ public class PropDevPropDevBudgetSubAwardServiceImpl implements PropDevBudgetSub
             fileNodeMap = fileNode.getAttributes();
             fileNode = fileNodeMap.getNamedItem("att:href");
 
-            contentId = fileNode.getNodeValue();
+            String contentId = fileNode.getNodeValue();
             String encodedContentId = cleanContentId(contentId);
             fileNode.setNodeValue(encodedContentId);
 
@@ -638,7 +650,7 @@ public class PropDevPropDevBudgetSubAwardServiceImpl implements PropDevBudgetSub
         return newElement;
     }
 
-    private void changeDataTypeForNumberOfOtherPersons(Document document) throws Exception{
+    private void changeDataTypeForNumberOfOtherPersons(Document document) throws XPathExpressionException {
         NodeList otherPesronsCountNodes =  (NodeList) XPathFactory.newInstance().newXPath().evaluate("//*[local-name(.)='OtherPersonnelTotalNumber']", document, XPathConstants.NODESET);
         for (int i = 0; i < otherPesronsCountNodes.getLength(); i++) {
             Node countNode = otherPesronsCountNodes.item(i);
@@ -731,11 +743,11 @@ public class PropDevPropDevBudgetSubAwardServiceImpl implements PropDevBudgetSub
 		this.sponsorHierarchyService = sponsorHierarchyService;
 	}
 
-    protected KcAttachmentService getKcAttachmentService() {
-        return kcAttachmentService;
+    public FormUtilityService getFormUtilityService() {
+        return formUtilityService;
     }
 
-    public void setKcAttachmentService(KcAttachmentService kcAttachmentService) {
-        this.kcAttachmentService = kcAttachmentService;
+    public void setFormUtilityService(FormUtilityService formUtilityService) {
+        this.formUtilityService = formUtilityService;
     }
 }

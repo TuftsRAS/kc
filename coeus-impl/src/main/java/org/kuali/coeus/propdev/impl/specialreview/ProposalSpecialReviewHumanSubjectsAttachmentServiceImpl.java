@@ -14,6 +14,7 @@ import org.apache.commons.logging.LogFactory;
 import org.kuali.coeus.propdev.impl.s2s.FormUtilityService;
 import org.kuali.coeus.s2sgen.api.core.S2SException;
 import org.kuali.coeus.sys.api.model.KcFile;
+import org.kuali.coeus.sys.framework.util.CollectionUtils;
 import org.kuali.kra.infrastructure.KeyConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -29,8 +30,11 @@ import javax.xml.transform.TransformerException;
 import javax.xml.xpath.XPathExpressionException;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Component("proposalSpecialReviewHumanSubjectsAttachmentService")
 public class ProposalSpecialReviewHumanSubjectsAttachmentServiceImpl implements ProposalSpecialReviewHumanSubjectsAttachmentService {
@@ -50,7 +54,7 @@ public class ProposalSpecialReviewHumanSubjectsAttachmentServiceImpl implements 
     @Override
     public Map<String, Object> getSpecialReviewAttachmentXmlFileData(byte pdfFileContents[]) {
         String xml;
-        Map<String, KcFile> attachments;
+        List<KcFile> attachments;
         Map<String, Object> fileData = new HashMap<>();
         PdfReader reader = null;
         try {
@@ -60,6 +64,15 @@ public class ProposalSpecialReviewHumanSubjectsAttachmentServiceImpl implements 
                 reader = new PdfReader(pdfFileContents);
 
                 attachments = formUtilityService.extractAttachments(reader);
+                final Collection<String> duplicates = CollectionUtils.findDuplicates(attachments, KcFile::getName);
+
+                if (!duplicates.isEmpty()) {
+                    S2SException s2sException = new S2SException();
+                    s2sException.setErrorKey(KeyConstants.S2S_FORM_DUP_ATT);
+                    s2sException.setParams(new String[] {"PHS_HumanSubjectsAndClinicalTrialsInfo_V1.0", duplicates.stream().collect(Collectors.joining(", "))});
+                    throw s2sException;
+                }
+
                 fileData.put(FILES, attachments);
                 XfaForm xfaForm = reader.getAcroFields().getXfa();
                 Node domDocument = xfaForm.getDomDocument();
@@ -113,7 +126,7 @@ public class ProposalSpecialReviewHumanSubjectsAttachmentServiceImpl implements 
     }
 
 
-    private String processForm(Element form, Map<String, KcFile> attachments) throws TransformerException, XPathExpressionException {
+    private String processForm(Element form, List<KcFile> attachments) throws TransformerException, XPathExpressionException {
 
         String formXML;
         Document doc = formUtilityService.node2Dom(form);

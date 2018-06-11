@@ -14,6 +14,7 @@ import org.apache.commons.logging.LogFactory;
 import org.kuali.coeus.s2sgen.api.core.InfastructureConstants;
 import org.kuali.coeus.s2sgen.api.hash.GrantApplicationHashService;
 import org.kuali.coeus.sys.api.model.KcFile;
+import org.kuali.coeus.sys.framework.util.CollectionUtils;
 import org.kuali.rice.krad.service.BusinessObjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -36,6 +37,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.io.StringWriter;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static org.kuali.coeus.propdev.impl.s2s.S2SXmlConstants.*;
 
@@ -43,8 +45,6 @@ import static org.kuali.coeus.propdev.impl.s2s.S2SXmlConstants.*;
 public class FormUtilityServiceImpl implements FormUtilityService {
 
     private static final Log LOG = LogFactory.getLog(FormUtilityServiceImpl.class);
-
-    private static final String DUPLICATE_FILE_NAMES = "Attachments contain duplicate file names";
 
     @Autowired
     @Qualifier("businessObjectService")
@@ -56,52 +56,37 @@ public class FormUtilityServiceImpl implements FormUtilityService {
 
     @Override
     @SuppressWarnings("unchecked")
-    public Map<String, KcFile> extractAttachments(PdfReader reader) throws IOException {
-        Map<String, KcFile> fileMap = new HashMap<>();
+    public List<KcFile> extractAttachments(PdfReader reader) {
+        final List<KcFile> files = new ArrayList<>();
 
-        PdfDictionary catalog = reader.getCatalog();
-        PdfDictionary names = (PdfDictionary) PdfReader.getPdfObject(catalog.get(PdfName.NAMES));
+        final PdfDictionary catalog = reader.getCatalog();
+        final PdfDictionary names = (PdfDictionary) PdfReader.getPdfObject(catalog.get(PdfName.NAMES));
         if (names != null) {
-            PdfDictionary embFiles = (PdfDictionary) PdfReader.getPdfObject(names.get(PdfName.EMBEDDEDFILES));
+            final PdfDictionary embFiles = (PdfDictionary) PdfReader.getPdfObject(names.get(PdfName.EMBEDDEDFILES));
             if (embFiles != null) {
-                HashMap<String, PdfObject> embMap = PdfNameTree.readTree(embFiles);
-
-                for (PdfObject o : embMap.values()) {
-                    PdfDictionary filespec = (PdfDictionary) PdfReader.getPdfObject(o);
-                    final KcFile fileInfo = unpackFile(filespec);
-                    if (fileInfo != null) {
-                        if (!fileMap.containsKey(fileInfo.getName())) {
-                            fileMap.put(fileInfo.getName(), fileInfo);
-                        }
-                    }
-                }
+                final Map<String, PdfObject> embMap = PdfNameTree.readTree(embFiles);
+                files.addAll(embMap.values().stream()
+                        .map(o -> (PdfDictionary) PdfReader.getPdfObject(o))
+                        .map(this::unpackFile)
+                        .filter(Objects::nonNull)
+                        .collect(Collectors.toList()));
             }
         }
 
         for (int k = 1; k <= reader.getNumberOfPages(); ++k) {
-            PdfArray annots = (PdfArray) PdfReader.getPdfObject(reader.getPageN(k).get(PdfName.ANNOTS));
-            if (annots == null) {
-                continue;
-            }
-            for (Iterator i = annots.listIterator(); i.hasNext(); ) {
-                PdfDictionary annot = (PdfDictionary) PdfReader.getPdfObject((PdfObject) i.next());
-                PdfName subType = (PdfName) PdfReader.getPdfObject(annot.get(PdfName.SUBTYPE));
-                if (!PdfName.FILEATTACHMENT.equals(subType)) {
-                    continue;
-                }
-                PdfDictionary filespec = (PdfDictionary) PdfReader.getPdfObject(annot.get(PdfName.FS));
-                final KcFile fileInfo = unpackFile(filespec);
-                if (fileInfo != null) {
-                    if (!fileMap.containsKey(fileInfo.getName())) {
-                        fileMap.put(fileInfo.getName(), fileInfo);
-                    } else {
-                        throw new RuntimeException(DUPLICATE_FILE_NAMES);
-                    }
-                }
+            final PdfArray annots = (PdfArray) PdfReader.getPdfObject(reader.getPageN(k).get(PdfName.ANNOTS));
+            if (annots != null) {
+                files.addAll(CollectionUtils.asStream((Iterator<PdfObject>) annots.listIterator())
+                        .map(i -> (PdfDictionary) PdfReader.getPdfObject(i))
+                        .filter(annot -> PdfName.FILEATTACHMENT.equals(PdfReader.getPdfObject(annot.get(PdfName.SUBTYPE))))
+                        .map(annot -> (PdfDictionary) PdfReader.getPdfObject(annot.get(PdfName.FS)))
+                        .map(this::unpackFile)
+                        .filter(Objects::nonNull)
+                        .collect(Collectors.toList()));
             }
         }
 
-        return fileMap;
+        return files;
     }
 
     /**
@@ -109,7 +94,7 @@ public class FormUtilityServiceImpl implements FormUtilityService {
      *
      * @param filespec The dictionary containing the file specifications
      */
-    private KcFile unpackFile(PdfDictionary filespec) throws IOException {
+    private KcFile unpackFile(PdfDictionary filespec) {
 
         if (filespec == null)
             return null;
@@ -135,8 +120,12 @@ public class FormUtilityServiceImpl implements FormUtilityService {
         if (prs == null)
             return null;
 
-        byte attachmentByte[] = PdfReader.getStreamBytes(prs);
-        return new S2sFile(fLast.getName(), st != null ? st.toUnicodeString() : InfastructureConstants.CONTENT_TYPE_OCTET_STREAM, attachmentByte);
+        try {
+            return new S2sFile(fLast.getName(), st != null ? st.toUnicodeString() : InfastructureConstants.CONTENT_TYPE_OCTET_STREAM, PdfReader.getStreamBytes(prs));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     @Override
@@ -202,7 +191,7 @@ public class FormUtilityServiceImpl implements FormUtilityService {
     }
 
     @Override
-    public void correctAttachmentXml(Document document, Map<String, KcFile> atts) {
+    public void correctAttachmentXml(Document document, List<KcFile> atts) {
         final NodeList attachments = document.getElementsByTagNameNS(ATTACHMENTS_NS, ATTACHED_FILE);
         if (attachments != null) {
            for (int i = 0; i < attachments.getLength(); i++) {
@@ -223,7 +212,7 @@ public class FormUtilityServiceImpl implements FormUtilityService {
         }
     }
 
-    protected void correctAttachmentXml(Document document, Node attachment, Map<String, KcFile> atts) {
+    protected void correctAttachmentXml(Document document, Node attachment, List<KcFile> atts) {
         if (attachment != null) {
             final NodeList attachmentElements = attachment.getChildNodes();
             if (attachmentElements != null) {
@@ -264,8 +253,12 @@ public class FormUtilityServiceImpl implements FormUtilityService {
                 }
 
                 final String mime = mimeType.getTextContent();
-                if (StringUtils.isBlank(mime) && fileName != null && StringUtils.isNotBlank(fileName.getTextContent()) && atts.containsKey(fileName.getTextContent())) {
-                    mimeType.setTextContent(atts.get(fileName.getTextContent()).getType());
+                if (StringUtils.isBlank(mime) && fileName != null && StringUtils.isNotBlank(fileName.getTextContent())) {
+                    final Node name = fileName;
+                    final Optional<KcFile> file = atts.stream().filter(a -> a.getName().equals(name.getTextContent())).findFirst();
+                    if (file.isPresent()) {
+                        mimeType.setTextContent(file.get().getType());
+                    }
                 }
 
                 if (hashValue == null) {
@@ -281,8 +274,12 @@ public class FormUtilityServiceImpl implements FormUtilityService {
                 }
 
                 final String hash = hashValue.getTextContent();
-                if (StringUtils.isBlank(hash) && fileName != null && StringUtils.isNotBlank(fileName.getTextContent()) && atts.containsKey(fileName.getTextContent())) {
-                    hashValue.setTextContent(getGrantApplicationHashService().computeAttachmentHash(atts.get(fileName.getTextContent()).getData()));
+                if (StringUtils.isBlank(hash) && fileName != null && StringUtils.isNotBlank(fileName.getTextContent())) {
+                    final Node name = fileName;
+                    final Optional<KcFile> file = atts.stream().filter(a -> a.getName().equals(name.getTextContent())).findFirst();
+                    if (file.isPresent()) {
+                        hashValue.setTextContent(getGrantApplicationHashService().computeAttachmentHash(file.get().getData()));
+                    }
                 }
             }
         }

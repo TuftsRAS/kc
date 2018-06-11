@@ -342,7 +342,7 @@ public class ProposalDevelopmentS2SController extends ProposalDevelopmentControl
                     getGlobalVariableService().getMessageMap().putError(ex.getTabErrorKey(), ex.getErrorKey(),ex.getParams());
                 }
             }else{
-                getGlobalVariableService().getMessageMap().putError(Constants.NO_FIELD, ex.getErrorKey(),ex.getMessageWithParams());
+                getGlobalVariableService().getMessageMap().putError(Constants.NO_FIELD, ex.getErrorKey(),ex.getParams());
             }
         }
 
@@ -387,7 +387,7 @@ public class ProposalDevelopmentS2SController extends ProposalDevelopmentControl
         S2sUserAttachedForm deleteForm = form.getDevelopmentProposal().getS2sUserAttachedForms().remove(Integer.parseInt(selectedLine));
         getDataObjectService().delete(deleteForm);
         getS2sUserAttachedFormService().resetFormAvailability(form.getProposalDevelopmentDocument(), deleteForm.getNamespace());
-        return getModelAndViewService().getModelAndView(form);
+        return super.save(form);
     }
 
 

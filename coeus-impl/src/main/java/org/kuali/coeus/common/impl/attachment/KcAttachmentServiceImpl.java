@@ -7,7 +7,6 @@
  */
 package org.kuali.coeus.common.impl.attachment;
 
-import com.lowagie.text.pdf.*;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.struts.upload.FormFile;
 import org.kuali.coeus.common.framework.attachment.KcAttachmentService;
@@ -18,10 +17,7 @@ import org.kuali.rice.krad.file.FileMeta;
 import org.kuali.rice.krad.util.ObjectUtils;
 import org.springframework.stereotype.Component;
 
-import java.io.File;
-import java.io.IOException;
 import java.text.DecimalFormat;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -35,7 +31,6 @@ import javax.annotation.Resource;
 public class KcAttachmentServiceImpl implements KcAttachmentService {
     
 	private static final String DEFAULT_ICON = "default";
-    private static final String DUPLICATE_FILE_NAMES =  "Duplicate PDF Attachment File Names";
 
 	@Resource(name="KcFileMimeTypeIcons")
     private Map<String, String> KcFileMimeTypeIcons;
@@ -139,88 +134,5 @@ public class KcAttachmentServiceImpl implements KcAttachmentService {
     @Override
     public boolean doesNewFileExist(FormFile file){
         return file != null && StringUtils.isNotBlank(file.getFileName());
-    }
-
-    @Override
-    public Map<Object, Object> extractAttachments(PdfReader reader) throws IOException {
-        Map<Object, Object> fileMap = new HashMap<>();
-        PdfDictionary catalog = reader.getCatalog();
-        PdfDictionary names = (PdfDictionary) PdfReader.getPdfObject(catalog.get(PdfName.NAMES));
-        if (names != null) {
-            PdfDictionary embFiles = (PdfDictionary) PdfReader.getPdfObject(names.get(new PdfName("EmbeddedFiles")));
-            if (embFiles != null) {
-                HashMap embMap = PdfNameTree.readTree(embFiles);
-                for (Object o : embMap.values()) {
-                    PdfDictionary filespec = (PdfDictionary) PdfReader.getPdfObject((PdfObject) o);
-                    Object fileInfo[] = unpackFile(filespec);
-                    if (fileMap.containsKey(fileInfo[0])) {
-                        throw new RuntimeException(DUPLICATE_FILE_NAMES);
-                    }
-                    fileMap.put(fileInfo[0], fileInfo[1]);
-                }
-            }
-        }
-        for (int k = 1; k <= reader.getNumberOfPages(); ++k) {
-            PdfArray annots = (PdfArray) PdfReader.getPdfObject(reader.getPageN(k).get(PdfName.ANNOTS));
-            if (annots == null) {
-                continue;
-            }
-            for (Object o : annots.getArrayList()) {
-                PdfDictionary annot = (PdfDictionary) PdfReader.getPdfObject((PdfObject) o);
-                PdfName subType = (PdfName) PdfReader.getPdfObject(annot.get(PdfName.SUBTYPE));
-                if (!PdfName.FILEATTACHMENT.equals(subType)) {
-                    continue;
-                }
-                PdfDictionary filespec = (PdfDictionary)
-                        PdfReader.getPdfObject(annot.get(PdfName.FS));
-                Object fileInfo[] = unpackFile(filespec);
-                if (fileMap.containsKey(fileInfo[0])) {
-                    throw new RuntimeException(DUPLICATE_FILE_NAMES);
-                }
-
-                fileMap.put(fileInfo[0], fileInfo[1]);
-            }
-        }
-
-        return fileMap;
-    }
-
-    /**
-     * Unpacks a file attachment.
-     * @param filespec The dictionary containing the file specifications
-     * @throws IOException
-     */
-    private static Object[] unpackFile(PdfDictionary filespec)throws IOException  {
-        Object arr[] = new Object[2]; //use to store name and file bytes
-        if (filespec == null) {
-            return null;
-        }
-
-        PdfName type = (PdfName) PdfReader.getPdfObject(filespec.get(PdfName.TYPE));
-        if (!PdfName.F.equals(type) && !PdfName.FILESPEC.equals(type)) {
-            return null;
-        }
-
-        PdfDictionary ef = (PdfDictionary) PdfReader.getPdfObject(filespec.get(PdfName.EF));
-        if (ef == null) {
-            return null;
-        }
-
-        PdfString fn = (PdfString) PdfReader.getPdfObject(filespec.get(PdfName.F));
-        if (fn == null) {
-            return null;
-        }
-
-        File fLast = new File(fn.toUnicodeString());
-        PRStream prs = (PRStream) PdfReader.getPdfObject(ef.get(PdfName.F));
-        if (prs == null) {
-            return null;
-        }
-
-        byte attachmentByte[] = PdfReader.getStreamBytes(prs);
-        arr[0] = fLast.getName();
-        arr[1] = attachmentByte;
-
-        return arr;
     }
 }

@@ -12,9 +12,9 @@ package org.kuali.coeus.propdev.impl.budget.subaward;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.kuali.coeus.common.framework.attachment.KcAttachmentService;
 import org.kuali.coeus.common.framework.ruleengine.KcEventResult;
-import org.kuali.coeus.common.impl.attachment.KcAttachmentServiceImpl;
+import org.kuali.coeus.propdev.impl.s2s.FormUtilityService;
+import org.kuali.coeus.propdev.impl.s2s.FormUtilityServiceImpl;
 import org.kuali.kra.infrastructure.Constants;
 import org.kuali.rice.core.api.util.ClassLoaderUtils;
 import org.springframework.core.io.DefaultResourceLoader;
@@ -104,8 +104,8 @@ public class BudgetSubAwardsRuleTest {
 
     BudgetSubAwardsRule rule = new BudgetSubAwardsRule();
 
-    KcAttachmentService kcAttachmentService = new KcAttachmentServiceImpl();
-    rule.setKcAttachmentService(kcAttachmentService);
+    FormUtilityService formUtilityService = new FormUtilityServiceImpl();
+    rule.setFormUtilityService(formUtilityService);
 
     BudgetSubAwards subAwards = new BudgetSubAwards();
     subAwards.setNewSubAwardFile(invalidFile);
@@ -147,8 +147,8 @@ public class BudgetSubAwardsRuleTest {
 
     BudgetSubAwardsRule rule = new BudgetSubAwardsRule();
 
-    KcAttachmentService kcAttachmentService = new KcAttachmentServiceImpl();
-    rule.setKcAttachmentService(kcAttachmentService);
+    FormUtilityService formUtilityService = new FormUtilityServiceImpl();
+    rule.setFormUtilityService(formUtilityService);
 
     BudgetSubAwards subAwards = new BudgetSubAwards();
     subAwards.setNewSubAwardFile(invalidFile);
