@@ -59,7 +59,7 @@ public class BudgetSubAwardsRuleTest {
   }
 
   @Test
-  public void emptyAttachment() throws IOException {
+  public void emptyAttachment() {
     MultipartFile emptyFile = new MockMultipartFile("empty.pdf", "empty.pdf", "application/pdf", new byte[0]);
 
     BudgetSubAwardsRule rule = new BudgetSubAwardsRule();

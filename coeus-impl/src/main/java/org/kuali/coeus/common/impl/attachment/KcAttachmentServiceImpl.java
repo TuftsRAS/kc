@@ -24,9 +24,6 @@ import java.util.regex.Pattern;
 
 import javax.annotation.Resource;
 
-/**
- * KC Attachment Service Implementation.
- */
 @Component("kcAttachmentService")
 public class KcAttachmentServiceImpl implements KcAttachmentService {
     
@@ -88,8 +85,8 @@ public class KcAttachmentServiceImpl implements KcAttachmentService {
     public boolean getSpecialCharacter(String text) {
         if (ObjectUtils.isNotNull(text)) {
             Pattern pattern = Pattern.compile(REGEX_TITLE_SPECIAL_CHARACTER_PATTERN);
-            Matcher matcher = pattern.matcher(text);            
-            if (matcher.find()) {                
+            Matcher matcher = pattern.matcher(text);
+            if (matcher.find()) {
                 return true;
             }
         }        

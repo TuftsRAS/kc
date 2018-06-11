@@ -44,6 +44,17 @@ public class S2sUserAttachedFormServiceImpl implements S2sUserAttachedFormServic
 
     private static final String XFA_NS = "http://www.xfa.org/schema/xfa-data/1.0/";
     private static final String USER_ATTACHED_FORMS_ERRORS = "userAttachedFormsErrors";
+    private static final String UPLOADED_FILE_IS_EMPTY = "Uploaded file is empty";
+    private static final String NOT_FILLABLE_FORM = "Uploaded file is not Grants.Gov fillable form";
+    private static final String DATASETS = "datasets";
+    private static final String DATA = "data";
+    private static final String NOT_CONTAIN_ANY_DATA = "The pdf form does not contain any data.";
+    private static final String HUMAN_SUBJECT_STUDY_V1_0_PDF = "HumanSubjectStudy-V1.0.pdf";
+    private static final String PHSHUMAN_SUBJECTS_AND_CLINICAL_TRIALS_INFO_V1_0 = "http://apply.grants.gov/forms/PHSHumanSubjectsAndClinicalTrialsInfo-V1.0";
+    private static final String ATT = "ATT";
+    private static final String HUMAN_SUBJECT_STUDY_V1_0 = "http://apply.grants.gov/forms/HumanSubjectStudy-V1.0";
+    private static final String HUMAN_SUBJECT_STUDY = "HumanSubjectStudy";
+    private static final String HUMAN_SUBJECT_STUDY_ATTACHMENT = "HumanSubjectStudyAttachment";
 
     @Autowired
     @Qualifier("formGeneratorService")
@@ -77,14 +88,14 @@ public class S2sUserAttachedFormServiceImpl implements S2sUserAttachedFormServic
         try{
             byte pdfFileContents[] = s2sUserAttachedForm.getNewFormFileBytes();
             if(pdfFileContents==null || pdfFileContents.length==0){
-                S2SException s2sException = new S2SException(KeyConstants.S2S_USER_ATTACHED_FORM_EMPTY,"Uploaded file is empty");
+                S2SException s2sException = new S2SException(KeyConstants.S2S_USER_ATTACHED_FORM_EMPTY, UPLOADED_FILE_IS_EMPTY);
               s2sException.setTabErrorKey(USER_ATTACHED_FORMS_ERRORS);
               throw s2sException;
             }else{
                 try{
                     reader = new PdfReader(pdfFileContents);
                 }catch(IOException ioex){
-                    S2SException s2sException = new S2SException(KeyConstants.S2S_USER_ATTACHED_FORM_NOT_PDF,"Uploaded file is not Grants.Gov fillable form",ioex.getMessage());
+                    S2SException s2sException = new S2SException(KeyConstants.S2S_USER_ATTACHED_FORM_NOT_PDF, NOT_FILLABLE_FORM,ioex.getMessage());
                     s2sException.setTabErrorKey(USER_ATTACHED_FORMS_ERRORS);
                     throw s2sException;
                 }
@@ -111,7 +122,7 @@ public class S2sUserAttachedFormServiceImpl implements S2sUserAttachedFormServic
     }
 
     private void throwInvalidError() {
-        S2SException s2sException = new S2SException(KeyConstants.S2S_USER_ATTACHED_FORM_WRONG_FILE_TYPE,"Uploaded file is not Grants.Gov fillable form");
+        S2SException s2sException = new S2SException(KeyConstants.S2S_USER_ATTACHED_FORM_WRONG_FILE_TYPE, NOT_FILLABLE_FORM);
         s2sException.setTabErrorKey(USER_ATTACHED_FORMS_ERRORS);
         throw s2sException;
     }
@@ -129,11 +140,11 @@ public class S2sUserAttachedFormServiceImpl implements S2sUserAttachedFormServic
             throwInvalidError();
         }
 
-        final Element datasetsElement = (Element) documentElement.getElementsByTagNameNS(XFA_NS, "datasets").item(0);
+        final Element datasetsElement = (Element) documentElement.getElementsByTagNameNS(XFA_NS, DATASETS).item(0);
         if(datasetsElement == null){
             throwInvalidError();
         }
-        final Element dataElement = (Element) datasetsElement.getElementsByTagNameNS(XFA_NS, "data").item(0);
+        final Element dataElement = (Element) datasetsElement.getElementsByTagNameNS(XFA_NS, DATA).item(0);
         if(dataElement == null){
             throwInvalidError();
         }
@@ -141,7 +152,7 @@ public class S2sUserAttachedFormServiceImpl implements S2sUserAttachedFormServic
         final Node grantApplicationElement = dataElement.getChildNodes().item(0);
 
         if (grantApplicationElement == null) {
-            S2SException s2sException = new S2SException(KeyConstants.S2S_USER_ATTACHED_FORM_NOT_FILLED,"The pdf form does not contain any data.");
+            S2SException s2sException = new S2SException(KeyConstants.S2S_USER_ATTACHED_FORM_NOT_FILLED, NOT_CONTAIN_ANY_DATA);
             s2sException.setTabErrorKey(USER_ATTACHED_FORMS_ERRORS);
             throw s2sException;
         }
@@ -275,24 +286,24 @@ public class S2sUserAttachedFormServiceImpl implements S2sUserAttachedFormServic
         final List<KcFile> allHsAttachments = new ArrayList<>();
 
         //remove the "empty" HumanSubjectStudy popout form from the list of attachments if it isn't a part of the xml submission
-        if (attachments.stream().anyMatch(a -> "HumanSubjectStudy-V1.0.pdf".equals(a.getName()))) {
+        if (attachments.stream().anyMatch(a -> HUMAN_SUBJECT_STUDY_V1_0_PDF.equals(a.getName()))) {
             final NodeList files = doc.getElementsByTagNameNS(ATTACHMENTS_NS, FILE_NAME);
             boolean found = false;
             for (int i = 0; i < files.getLength(); i++) {
                 final Node attachmentName = files.item(i);
-                if ("HumanSubjectStudy-V1.0.pdf".equals(attachmentName.getTextContent())) {
+                if (HUMAN_SUBJECT_STUDY_V1_0_PDF.equals(attachmentName.getTextContent())) {
                     found = true;
                 }
             }
 
             if (!found) {
                 attachments.removeAll(attachments.stream()
-                        .filter(a -> "HumanSubjectStudy-V1.0.pdf".equals(a.getName()))
+                        .filter(a -> HUMAN_SUBJECT_STUDY_V1_0_PDF.equals(a.getName()))
                         .collect(Collectors.toList()));
             }
         }
 
-        final NodeList hsAtt = doc.getElementsByTagNameNS("http://apply.grants.gov/forms/PHSHumanSubjectsAndClinicalTrialsInfo-V1.0", "ATT");
+        final NodeList hsAtt = doc.getElementsByTagNameNS(PHSHUMAN_SUBJECTS_AND_CLINICAL_TRIALS_INFO_V1_0, ATT);
         for (int i = 0; i < hsAtt.getLength(); i++) {
             final Node attachmentName = hsAtt.item(i);
             final List<KcFile> hsAttPdfs = attachments.stream().filter(a -> attachmentName.getTextContent().equals(a.getName())).collect(Collectors.toList());
@@ -307,8 +318,8 @@ public class S2sUserAttachedFormServiceImpl implements S2sUserAttachedFormServic
                         if (StringUtils.isNotBlank(hsXml)) {
                             try (ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(hsXml.getBytes(StandardCharsets.UTF_8.name()))) {
                                 final Document hsDocument = getFormUtilityService().createDomBuilder().parse(byteArrayInputStream);
-                                final Node hsNode = hsDocument.getElementsByTagNameNS("http://apply.grants.gov/forms/HumanSubjectStudy-V1.0", "HumanSubjectStudy").item(0);
-                                final NodeList hsAttachment = doc.getElementsByTagNameNS("http://apply.grants.gov/forms/PHSHumanSubjectsAndClinicalTrialsInfo-V1.0", "HumanSubjectStudyAttachment");
+                                final Node hsNode = hsDocument.getElementsByTagNameNS(HUMAN_SUBJECT_STUDY_V1_0, HUMAN_SUBJECT_STUDY).item(0);
+                                final NodeList hsAttachment = doc.getElementsByTagNameNS(PHSHUMAN_SUBJECTS_AND_CLINICAL_TRIALS_INFO_V1_0, HUMAN_SUBJECT_STUDY_ATTACHMENT);
                                 final Node hsAttachmentNode = hsAttachment.item(0);
                                 hsAttachmentNode.appendChild(doc.importNode(hsNode, true));
                             }

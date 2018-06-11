@@ -241,7 +241,7 @@ public class PropDevPropDevBudgetSubAwardServiceImpl implements PropDevBudgetSub
                 currentSubawardLineItems.add(costShareLineItem);
             }
 
-            Collections.sort(currentSubawardLineItems, (arg0, arg1) -> arg0.getLineItemNumber().compareTo(arg1.getLineItemNumber()));
+            currentSubawardLineItems.sort(Comparator.comparing(BudgetLineItem::getLineItemNumber));
 
             addSubawardLineItemsToBudgetPeriod(budgetPeriod, currentSubawardLineItems);
 
@@ -486,7 +486,7 @@ public class PropDevPropDevBudgetSubAwardServiceImpl implements PropDevBudgetSub
      * updates the XMl with hashcode for the files
      */
 
-  protected BudgetSubAwards updateXML(byte xmlContents[], List<KcFile> files, BudgetSubAwards budgetSubAwardBean) throws IOException, XPathExpressionException, SAXException, ParserConfigurationException, TransformerException {
+  protected void updateXML(byte xmlContents[], List<KcFile> files, BudgetSubAwards budgetSubAwardBean) throws IOException, XPathExpressionException, SAXException, ParserConfigurationException, TransformerException {
 
         javax.xml.parsers.DocumentBuilderFactory domParserFactory = javax.xml.parsers.DocumentBuilderFactory.newInstance();
         javax.xml.parsers.DocumentBuilder domParser = domParserFactory.newDocumentBuilder();
@@ -593,18 +593,13 @@ public class PropDevPropDevBudgetSubAwardServiceImpl implements PropDevBudgetSub
         javax.xml.transform.Transformer transformer = javax.xml.transform.TransformerFactory.newInstance().newTransformer();
         transformer.setOutputProperty(javax.xml.transform.OutputKeys.INDENT, "yes");
         
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        
-        javax.xml.transform.stream.StreamResult result = new javax.xml.transform.stream.StreamResult(bos);
-        javax.xml.transform.dom.DOMSource source = new javax.xml.transform.dom.DOMSource(document);
-        
-        transformer.transform(source, result);            
-        
-        budgetSubAwardBean.setSubAwardXmlFileData(new String(bos.toByteArray()));
-        
-        bos.close();
-        
-        return budgetSubAwardBean;
+        try (ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
+            javax.xml.transform.stream.StreamResult result = new javax.xml.transform.stream.StreamResult(bos);
+            javax.xml.transform.dom.DOMSource source = new javax.xml.transform.dom.DOMSource(document);
+            transformer.transform(source, result);
+
+            budgetSubAwardBean.setSubAwardXmlFileData(new String(bos.toByteArray()));
+        }
     }
 
 
@@ -656,7 +651,7 @@ public class PropDevPropDevBudgetSubAwardServiceImpl implements PropDevBudgetSub
             Node countNode = otherPesronsCountNodes.item(i);
             String value = getValue(countNode);
 
-            if(value!=null && value.length()>0 && value.indexOf('.')!=-1){
+            if(value.length()>0 && value.indexOf('.')!=-1){
                 int intVal = Double.valueOf(value).intValue();
                 setValue(countNode,""+intVal);
             }
