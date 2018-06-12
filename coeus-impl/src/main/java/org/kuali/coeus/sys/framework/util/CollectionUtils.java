@@ -16,6 +16,8 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 /**
  * Yet another collection utility.  Contains methods that are not found in the apache util classes or the
@@ -201,5 +203,61 @@ public final class CollectionUtils {
 
         final Map<Object,Boolean> seen = new ConcurrentHashMap<>();
         return t -> seen.putIfAbsent(keyExtractor.apply(t), Boolean.TRUE) == null;
+    }
+
+    /**
+     * Creates a stream from an iterator.
+     * @param sourceIterator the iterator. cannot be null.
+     * @param <T> the type
+     * @return a stream
+     */
+    public static <T> Stream<T> asStream(Iterator<T> sourceIterator) {
+        if (sourceIterator == null) {
+            throw new IllegalArgumentException("sourceIterator is null");
+        }
+
+        final Iterable<T> iterable = () -> sourceIterator;
+        return StreamSupport.stream(iterable.spliterator(), false);
+    }
+
+    /**
+     * Finds duplicates based on the identity of the result of the identity mapper.
+     *
+     * @param source the source collection.  Cannot be null.
+     * @param identityMapper the mapper to retrieve object to use for checking for duplication. Cannot be null.
+     * @param <T> the type of input collection
+     * @param <R> the type of return collection containing duplicates
+     * @return the duplicates
+     */
+    public static <T, R> Collection<R> findDuplicates(Collection<T> source, Function<? super T, ? extends R> identityMapper) {
+        if (source == null) {
+            throw new IllegalArgumentException("source is null");
+        }
+
+        if (identityMapper == null) {
+            throw new IllegalArgumentException("identityMapper is null");
+        }
+
+        return source.stream()
+                .map(identityMapper)
+                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
+                .entrySet().stream()
+                .filter(e -> e.getValue() > 1)
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * Finds duplicates based on the identity of the objects in the collection.
+     * @param source the source collection.  Cannot be null.
+     * @param <R> the type of input collection and return collection containing duplicates
+     * @return the duplicates
+     */
+    public static <R> Collection<R> findDuplicates(Collection<R> source) {
+        if (source == null) {
+            throw new IllegalArgumentException("source is null");
+        }
+
+        return findDuplicates(source, Function.identity());
     }
 }

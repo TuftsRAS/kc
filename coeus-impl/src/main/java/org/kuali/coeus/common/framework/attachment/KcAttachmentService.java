@@ -7,43 +7,25 @@
  */
 package org.kuali.coeus.common.framework.attachment;
 
-import com.lowagie.text.pdf.PdfReader;
 import org.apache.struts.upload.FormFile;
 import org.kuali.coeus.sys.framework.validation.ErrorReporter;
 import org.kuali.rice.krad.file.FileMeta;
 
-import java.io.IOException;
-import java.util.Map;
-
-/**
- * KC Attachment Service.
- */
 public interface KcAttachmentService {
 
     /**
-     * extracts attachments from PDF File
-     * @param reader
-     * @return Map<Object, Object>
-     */
-    Map<Object, Object> extractAttachments(PdfReader reader) throws IOException;
-
-    /**
      * Based on the mime type provided determine and return a path to the icon for the file.
-     * @param type
-     * @return
      */
     String getFileTypeIcon(String type);
    
     
     /**
      * This method returns the invalid characters in the file name.
-     * @return
      */
     String getInvalidCharacters(String text);
     
     /**
      * This method check the Special characters in the string.
-     * @return
      */
     boolean getSpecialCharacter(String text);
    
@@ -51,26 +33,18 @@ public interface KcAttachmentService {
     /**
      * This method checks for special characters in strings and replaces
      * them with underscores.
-     * @param text
-     * @return
      */
     String checkAndReplaceSpecialCharacters(String text);
 
     /**
      * This method formatted the attachment file size string
-     * @param size
-     * @return
      */
-    public String formatFileSizeString(Long size);
+    String formatFileSizeString(Long size);
 
     /**
      * This method checks to see if the attachment is of type PDF
-     * @param fileInQuestion
-     * @param errorReporterService
-     * @param errorPrefix
-     * @return boolean
      */
-    public boolean validPDFFile(FileMeta fileInQuestion, ErrorReporter errorReporterService, String errorPrefix);
+    boolean validPDFFile(FileMeta fileInQuestion, ErrorReporter errorReporterService, String errorPrefix);
 
     boolean doesNewFileExist(FormFile file);
 }

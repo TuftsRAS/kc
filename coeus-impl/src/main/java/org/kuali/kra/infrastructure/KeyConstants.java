@@ -1133,6 +1133,7 @@ public final class KeyConstants {
     public static final String S2S_USER_ATTACHED_FORM_EMPTY = "error.s2s.userattachedform.file.empty";
     public static final String S2S_USER_ATTACHED_FORM_WRONG_FILE_TYPE = "error.s2s.userattachedform.wrong.filetype";
     public static final String S2S_USER_ATTACHED_FORM_NOT_VALID = "error.s2s.userattachedform.invalid";
+    public static final String S2S_FORM_DUP_ATT = "error.s2s.form.dup.att";
     public static final String S2S_USER_ATTACHED_FORM_NOT_PDF = "error.s2s.userattachedform.not.pdf";
     public static final String S2S_USER_ATTACHED_FORM_NOT_FILLED = "error.s2s.userattachedform.not.filled";
     public static final String S2S_USER_ATTACHED_FORM_NOT_ALLOWED = "error.s2s.userattachedform.not.allowed";

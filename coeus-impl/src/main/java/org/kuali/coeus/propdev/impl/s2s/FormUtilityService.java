@@ -16,11 +16,10 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.xpath.XPathExpressionException;
-import java.io.IOException;
-import java.util.Map;
+import java.util.List;
 
 public interface FormUtilityService {
-    Map<String, KcFile> extractAttachments(PdfReader reader) throws IOException;
+    List<KcFile> extractAttachments(PdfReader reader);
 
     Document node2Dom(Node n) throws TransformerException;
 
@@ -39,7 +38,7 @@ public interface FormUtilityService {
      * @param document the Document representing the grants.gov form which could be altered by this method
      * @param attachments the attachment map to use for generating attachment data on the xml Document
      */
-    void correctAttachmentXml(Document document, Map<String, KcFile> attachments);
+    void correctAttachmentXml(Document document, List<KcFile> attachments);
 
     DocumentBuilder createDomBuilder() throws ParserConfigurationException;
 
