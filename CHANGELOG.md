@@ -1,6 +1,11 @@
 
 
 ## CURRENT
+* Lock timeout issue fix (#2931)
+
+  * Gayathri Athreya on Mon, 11 Jun 2018 17:13:29 -0700 [View Commit](../../commit/b0801314c81e034dcff9f584b429dc9d8bf98f1b)
+
+## coeus-1806.0012
 * RESKC-2549: Update rice version to fix issue with DataTables when display records are lower than the beginning index. (#2929)
 
   * Omar Soto Fortuño on Mon, 11 Jun 2018 11:33:36 -0400 [View Commit](../../commit/608a27ed3fd12214ddfdf01a7e4ae94d6e3ae734)
