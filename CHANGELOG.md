@@ -1,6 +1,10 @@
 
 
 ## CURRENT
+* RESKC-2955: handle duplicate attachments for Human Studies Clinical Trials, User Attached Forms, and SubAwards
+  * Travis Schneeberger on Mon, 11 Jun 2018 16:46:52 -0400 [View Commit](../../commit/0fad545ac7a97ad06496e07011954922746737bf)
+
+## coeus-1806.0013
 * Lock timeout issue fix (#2931)
 
   * Gayathri Athreya on Mon, 11 Jun 2018 17:13:29 -0700 [View Commit](../../commit/b0801314c81e034dcff9f584b429dc9d8bf98f1b)
