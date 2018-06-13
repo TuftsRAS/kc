@@ -1,6 +1,10 @@
 
 
 ## CURRENT
+* RESKC-2906: removing the popout human studies clinical trial from the extracted attachments user using PHS Human Studies Clinical Trial 1.0 as a user attached form.
+  * Travis Schneeberger on Wed, 13 Jun 2018 10:36:18 -0400 [View Commit](../../commit/ac1870fb78ced0e5129c759ff1f6822dae24cf4a)
+
+## coeus-1806.0015
 * RESKC-2961: Update CfdaService to pull Assistance Listings from the new sam.gov website. Updated cron expression to match changed file update schedule.  Added integration test with locally hosted sample csv files
   * jenkins on Tue, 12 Jun 2018 20:59:56 -0400 [View Commit](../../commit/b3bff4cc541b447cfb234ecbc5550f6582548f5c)
 
