@@ -7,15 +7,8 @@
  */
 package org.kuali.kra.external.Cfda;
 
-import org.kuali.kra.award.home.CFDA;
-
 import java.io.IOException;
-import java.util.SortedMap;
-
 
 public interface CfdaService {
-
-    public CfdaUpdateResults updateCfda() throws IOException;
-    
-    public SortedMap<String, CFDA> retrieveGovCodes() throws IOException;
+    CfdaUpdateResults updateCfda() throws IOException;
 }

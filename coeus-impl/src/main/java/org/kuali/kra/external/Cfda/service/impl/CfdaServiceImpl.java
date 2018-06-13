@@ -12,233 +12,121 @@ import org.apache.commons.csv.CSVRecord;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.commons.net.ftp.FTPClient;
-import org.apache.commons.net.ftp.FTPReply;
 import org.kuali.kra.award.home.CFDA;
 import org.kuali.kra.external.Cfda.CfdaService;
 import org.kuali.kra.external.Cfda.CfdaUpdateResults;
 import org.kuali.kra.infrastructure.Constants;
-import org.kuali.rice.core.api.datetime.DateTimeService;
 import org.kuali.rice.core.framework.persistence.jdbc.sql.SQLUtils;
 import org.kuali.rice.coreservice.framework.parameter.ParameterService;
 import org.kuali.rice.krad.service.BusinessObjectService;
+import org.springframework.core.io.DefaultResourceLoader;
+import org.springframework.core.io.Resource;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+
+import static org.kuali.coeus.sys.framework.util.CollectionUtils.entriesToMap;
+import static org.kuali.coeus.sys.framework.util.CollectionUtils.entry;
 
 
 /**
- * This class is an implementation of the CfdaService. 
- * Updates the CFDA table with values from cfda.gov
+ * This class is an implementation of the CfdaService.
+ * Updates the CFDA table with values from sam.gov
  */
 public class CfdaServiceImpl implements CfdaService {
-  
+
+    private static final Pattern CFDA_NUMBER_PATTERN = Pattern.compile("^[0-9]{2}\\.[0-9]{3}$");
+    private static final Log LOG = LogFactory.getLog(CfdaServiceImpl.class);
+
     private ParameterService parameterService;
     private BusinessObjectService businessObjectService;
-    private DateTimeService dateTimeService;
-    private static final String FTP_PREFIX = "ftp://";
-    private String cfdaFileName;
-    private String govURL;
-    
-    private static final Log LOG = LogFactory.getLog(CfdaServiceImpl.class);
-    protected static Comparator cfdaComparator;
 
-    static {
-        cfdaComparator = new Comparator() {
-            @Override
-            public int compare(Object o1, Object o2) {
-                String lhs = (String) o1;
-                String rhs = (String) o2;
-                return lhs.compareTo(rhs);
-            }
-        };
-    }
-    
-   
     /**
-     * This method retrieves cfda codes from the government site
-     * @return
-     * @throws IOException
+     * This method retrieves cfda codes from the government site.
      */
-    @Override
-    public SortedMap<String, CFDA> retrieveGovCodes() throws IOException {
-             
-        SortedMap<String, CFDA> govMap = new TreeMap<String, CFDA>();
-        createGovURL();
-        LOG.info("Getting government file: " + cfdaFileName + " from URL " + govURL + " for update");
+    protected Map<String, CFDA> retrieveGovCodes() throws IOException {
+        final String govURL = getCfdaUrl();
 
-        InputStream inputStream = null;
-        FTPClient ftp = connect(getGovURL());
-        try {
-            inputStream = ftp.retrieveFileStream(cfdaFileName);
-            if (inputStream != null) {
-                LOG.info("reading input stream");
-                InputStreamReader screenReader = new InputStreamReader(inputStream);
+        LOG.info("Getting government file from URL " + govURL + " for update");
 
-                List<CSVRecord> records = CSVFormat.DEFAULT.withSkipHeaderRecord(true).parse(screenReader).getRecords();
-                for (CSVRecord record : records) {
-                    String title = record.get(0);
-                    String number = record.get(1);
-                    CFDA cfda = new CFDA();
-                    cfda.setCfdaNumber(number);
-                    cfda.setCfdaProgramTitleName(title);
-                    cfda.setCfdaMaintenanceTypeId(Constants.CFDA_MAINT_TYP_ID_AUTOMATIC);
-                    govMap.put(number, cfda);
-                }
-            } else { 
-                // If file name is incorrect
-                throw new IOException("Input stream is null. The file " + cfdaFileName + " could not be retrieved from " + govURL);
+        final Resource csvFile = new DefaultResourceLoader(this.getClass().getClassLoader()).getResource(govURL);
+        if (csvFile != null && csvFile.exists() && csvFile.isReadable()) {
+            LOG.info("reading input file");
+            try (InputStreamReader screenReader = new InputStreamReader(csvFile.getInputStream())) {
+                final List<CSVRecord> records = CSVFormat.DEFAULT.withSkipHeaderRecord(true).parse(screenReader).getRecords();
+                return records
+                        .stream()
+                        .filter(record -> {
+                            final String number = record.get(1);
+                            final Matcher regExResult = CFDA_NUMBER_PATTERN.matcher(number);
+                            return regExResult.matches();
+                        }).map(record -> {
+                            final CFDA cfda = new CFDA();
+                            cfda.setCfdaNumber(record.get(1));
+                            cfda.setCfdaProgramTitleName(trimProgramTitleName(record.get(0)));
+                            cfda.setCfdaMaintenanceTypeId(Constants.CFDA_MAINT_TYP_ID_AUTOMATIC);
+                            return cfda;
+                        }).map(cfda -> entry(cfda.getCfdaNumber(), cfda))
+                        .collect(entriesToMap(TreeMap::new));
             }
-        } finally {
-            disconnect(ftp);
-        }
-        return govMap;
-    }
-    
-    /**
-     * This method connects to the FTP server.
-     * @param url
-     * @return ftp
-     */
-    public FTPClient connect(String url) {
-        FTPClient ftp = new FTPClient();
-        try {
-            ftp.connect(getGovURL());
-            // Entering passive mode to prevent firewall issues. The client will establish a  data transfer
-            // connection.
-            ftp.enterLocalPassiveMode();
-            int reply = ftp.getReplyCode();
-            if (!FTPReply.isPositiveCompletion(reply)) {
-                LOG.error("FTP connection to server not established.");
-                throw new IOException("FTP connection to server not established.");
-            }
-
-            boolean loggedIn = ftp.login(Constants.CFDA_GOV_LOGIN_USERNAME, "");
-            LOG.info("Logged in as " + Constants.CFDA_GOV_LOGIN_USERNAME);
-            if (!loggedIn) {
-                LOG.error("Could not login as anonymous.");
-                throw new IOException("Could not login as anonymous.");
-            }
-
-        } catch(IOException io) {
-            LOG.error(io.getMessage());
-        }
-        return ftp;
-    }
-    
-    /**
-     * This method disconnects from server.
-     * @param ftp
-     * @throws IOException
-     */
-    public void disconnect(FTPClient ftp) throws IOException {
-        ftp.logout();
-        if (ftp.isConnected()) {
-            ftp.disconnect();
+        } else {
+            throw new IOException("The file could not be retrieved from " + govURL);
         }
     }
-    
+
     /**
-     * This method gets the url from the parameter and creates the fileName and 
-     * the actual URL used to FTP.
+     * This method gets the url from the parameter service used to retrieve CFDA file.
      */
-    protected void createGovURL() {
-        // Example url ftp://ftp.cfda.gov/programs09187.csv
-        String url = getParameterService().getParameterValueAsString(Constants.MODULE_NAMESPACE_AWARD, 
+    protected String getCfdaUrl() {
+        return getParameterService().getParameterValueAsString(Constants.MODULE_NAMESPACE_AWARD,
                 Constants.PARAMETER_COMPONENT_DOCUMENT, Constants.CFDA_GOV_URL_PARAMETER);
-        String fileName = StringUtils.substringAfterLast(url, "/");
-        url = StringUtils.substringBeforeLast(url, "/");
-       
-        if (StringUtils.contains(url, FTP_PREFIX)) {
-            url = StringUtils.remove(url, FTP_PREFIX);
-        }
-        
-        Calendar calendar = dateTimeService.getCurrentCalendar();
-        // need to pull off the '20' in 2009
-        String year = "" + calendar.get(Calendar.YEAR);
-        year = year.substring(2, 4);
-        fileName = fileName + year;
+    }
 
-        // the last 3 numbers in the file name are the day of the year, but the files are from "yesterday"
-        fileName = fileName + String.format("%03d", calendar.get(Calendar.DAY_OF_YEAR) - 1);
-        fileName = fileName + ".csv";
-        
-        setGovURL(url);
-        setCfdaFileName(fileName);
-    }
-    
-    protected String getGovURL() {
-        return govURL;
-    }
-    
-    protected String getCfdaFileName() {
-        return cfdaFileName;
-    }
-    
-    protected void setGovURL(String url) {
-        govURL = url;
-    }
-    
-    protected void setCfdaFileName(String fileName) {
-        cfdaFileName = fileName;
-    }
     /**
-     * This method updates the CFDA table with the values received from the 
+     * This method updates the CFDA table with the values received from the
      * gov site.
-     * @see org.kuali.kra.external.Cfda.CfdaService#updateCfda()
      */
     @Override
     public CfdaUpdateResults updateCfda() {
-        CfdaUpdateResults updateResults = new CfdaUpdateResults();
-        StringBuilder message = new StringBuilder();
-        Map<String, CFDA> govCfdaMap;
-        
+
+        final Map<String, CFDA> govCfdaMap;
         try {
             govCfdaMap = retrieveGovCodes();
         } catch (IOException ioe) {
-            message.append("Problem encountered while retrieving cfda numbers, " 
-                            + "the database was not updated." + ioe.getMessage());
-            updateResults.setMessage(message.toString());
+            final CfdaUpdateResults updateResults = new CfdaUpdateResults();
+            updateResults.setMessage("Problem encountered while retrieving cfda numbers, the database was not updated. " + ioe.getMessage());
+            LOG.error(ioe.getMessage(), ioe);
             return updateResults;
         }
-        
-        SortedMap<String, CFDA> kcMap = getCfdaValuesInDatabase();
+
+        final CfdaUpdateResults updateResults = new CfdaUpdateResults();
+        final Map<String, CFDA> kcMap = getCfdaValuesInDatabase();
         updateResults.setNumberOfRecordsInKcDatabase(kcMap.size());
         updateResults.setNumberOfRecordsRetrievedFromWebSite(govCfdaMap.size());
-        
-        for (String key : kcMap.keySet()) {
-            CFDA kcCfda = kcMap.get(key);
-            CFDA govCfda = govCfdaMap.get(key);
 
-
+        kcMap.forEach((cfdaNumber, kcCfda) -> {
             if (kcCfda.getCfdaMaintenanceTypeId().equalsIgnoreCase(Constants.CFDA_MAINT_TYP_ID_MANUAL)) {
                 // Leave it alone. It's maintained manually.
-                updateResults.setNumberOfRecordsNotUpdatedBecauseManual(1 + updateResults.getNumberOfRecordsNotUpdatedBecauseManual());
-            }
-            else if (kcCfda.getCfdaMaintenanceTypeId().equalsIgnoreCase(Constants.CFDA_MAINT_TYP_ID_AUTOMATIC)) {
+                updateResults.setNumberOfRecordsNotUpdatedBecauseManual(updateResults.getNumberOfRecordsNotUpdatedBecauseManual() + 1);
+            } else if (kcCfda.getCfdaMaintenanceTypeId().equalsIgnoreCase(Constants.CFDA_MAINT_TYP_ID_AUTOMATIC)) {
 
+                final CFDA govCfda = govCfdaMap.get(cfdaNumber);
                 if (govCfda == null) {
                     if (kcCfda.getActive()) {
                         kcCfda.setActive(false);
                         businessObjectService.save(kcCfda);
                         updateResults.setNumberOfRecordsDeactivatedBecauseNoLongerOnWebSite(updateResults.getNumberOfRecordsDeactivatedBecauseNoLongerOnWebSite() + 1);
-                    }
-                    else {
-                        // Leave it alone for historical purposes
+                    } else {
                         updateResults.setNumberOfRecordsNotUpdatedForHistoricalPurposes(updateResults.getNumberOfRecordsNotUpdatedForHistoricalPurposes() + 1);
                     }
-                }
-                else {
+                } else {
                     if (kcCfda.getActive()) {
-                       /*if (!kcCfda.getCfdaProgramTitleName().equalsIgnoreCase(govCfda.getCfdaProgramTitleName())) {
-                            message.append("The program title for CFDA " + kcCfda.getCfdaNumber() + " changed from " 
-                                            + kcCfda.getCfdaProgramTitleName() + " to " + govCfda.getCfdaProgramTitleName() + ".<BR>");
-                        }*/
                         updateResults.setNumberOfRecordsUpdatedBecauseAutomatic(updateResults.getNumberOfRecordsUpdatedBecauseAutomatic() + 1);
-                    }
-                    else {
+                    } else {
                         kcCfda.setActive(true);
                         updateResults.setNumberOfRecordsReActivated(updateResults.getNumberOfRecordsReActivated() + 1);
                     }
@@ -247,90 +135,56 @@ public class CfdaServiceImpl implements CfdaService {
                     businessObjectService.save(kcCfda);
                 }
             }
+            govCfdaMap.remove(cfdaNumber);
+        });
 
-            // Remove it from the govMap so the remaining codes are new 
-            govCfdaMap.remove(key);
-        }
-        // New CFDA number from govt, added to the db
-        updateResults.setMessage(message.toString());
         addNew(govCfdaMap);
-        updateResults.setNumberOfRecordsNewlyAddedFromWebSite(govCfdaMap.size() + 1);
+        updateResults.setNumberOfRecordsNewlyAddedFromWebSite(govCfdaMap.size());
+
         return updateResults;
     }
- 
+
     /**
      * This method gets the current CFDA values in the table.
-     * @return
      */
-    protected SortedMap<String, CFDA> getCfdaValuesInDatabase() {
-        Collection<CFDA> cfdaValues = getBusinessObjectService().findAll(CFDA.class);
-        
-        SortedMap<String, CFDA> mapDatabaseCfda = new TreeMap<String, CFDA>(cfdaComparator);
-        for (CFDA o : cfdaValues) {
-            mapDatabaseCfda.put(o.getCfdaNumber(), o);
-        }
-        return mapDatabaseCfda;    
-    }
-    
-    /**
-     * This method adds new cfda numbers to the cfda table
-     * @param newCfdas
-     */
-    protected void addNew(Map<String, CFDA> newCfdas) {
-        for (String cfdaKey : newCfdas.keySet()) {
-            CFDA cfda = newCfdas.get(cfdaKey);
-            
-            String cfdaProgramTitleName = trimProgramTitleName(cfda.getCfdaProgramTitleName());
-            // all new cfda numbers are set to automatic and active
-            cfda.setCfdaProgramTitleName(SQLUtils.cleanString(cfdaProgramTitleName));
-            cfda.setActive(true);
-            cfda.setCfdaMaintenanceTypeId(Constants.CFDA_MAINT_TYP_ID_AUTOMATIC);
-            getBusinessObjectService().save(cfda);
-        }
-    }
-    
-    /**
-     * This method trims the program title name so it cannot be longer 
-     * than the specified length.
-     * @param programTitleName
-     * @return
-     */
-    protected String trimProgramTitleName(String programTitleName) {
-        if (programTitleName != null && programTitleName.length() > Constants.MAX_ALLOWABLE_CFDA_PGM_TITLE_NAME) {
-            programTitleName = programTitleName.substring(0, Constants.MAX_ALLOWABLE_CFDA_PGM_TITLE_NAME);
-        }
-        return programTitleName;
+    protected Map<String, CFDA> getCfdaValuesInDatabase() {
+        final Collection<CFDA> cfdaValues = getBusinessObjectService().findAll(CFDA.class);
+        return cfdaValues.stream()
+                .map(o -> entry(o.getCfdaNumber(), o))
+                .collect(entriesToMap(TreeMap::new));
     }
 
-   
+    /**
+     * This method adds new cfda numbers to the cfda table.
+     */
+    protected void addNew(Map<String, CFDA> newCfdas) {
+        final List<CFDA> cfdas = newCfdas.values()
+                .stream()
+                .peek(cfda -> {
+                    final String cfdaProgramTitleName = trimProgramTitleName(cfda.getCfdaProgramTitleName());
+                    cfda.setCfdaProgramTitleName(SQLUtils.cleanString(cfdaProgramTitleName));
+                    cfda.setActive(true);
+                    cfda.setCfdaMaintenanceTypeId(Constants.CFDA_MAINT_TYP_ID_AUTOMATIC);
+                }).collect(Collectors.toList());
+        getBusinessObjectService().save(cfdas);
+    }
+
+    protected String trimProgramTitleName(String programTitleName) {
+        return StringUtils.substring(programTitleName, 0, Constants.MAX_ALLOWABLE_CFDA_PGM_TITLE_NAME);
+    }
+
     public BusinessObjectService getBusinessObjectService() {
         return businessObjectService;
     }
-    /**
-     * Sets the businessObjectService. Injected by spring.
-     * @return
-     */
+
     public void setBusinessObjectService(BusinessObjectService businessObjectService) {
         this.businessObjectService = businessObjectService;
     }
-    /**
-     * Sets the dateTimeService. Injected by spring.
-     * @return
-     */
-    public void setDateTimeService(DateTimeService dateTimeService) {
-        this.dateTimeService = dateTimeService;
-    }
-    /*
-     * Sets the parameterService attribute value. Injected by Spring.
-     * @param parameterService The parameterService to set.
-     */
+
     public void setParameterService(ParameterService parameterService) {
         this.parameterService = parameterService;
     }
-    /**
-     * Sets the parameterService. Injected by spring.
-     * @return
-     */
+
     public ParameterService getParameterService() {
         return parameterService;
     }
