@@ -10,6 +10,8 @@ package org.kuali.coeus.propdev.impl.s2s;
 
 import com.lowagie.text.pdf.*;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.kuali.coeus.propdev.api.s2s.S2sFormConfigurationService;
 import org.kuali.coeus.propdev.impl.core.ProposalDevelopmentDocument;
 import org.kuali.coeus.propdev.impl.specialreview.ProposalSpecialReviewHumanSubjectsAttachmentService;
@@ -18,6 +20,7 @@ import org.kuali.coeus.s2sgen.api.core.S2SException;
 import org.kuali.coeus.s2sgen.api.generate.FormGenerationResult;
 import org.kuali.coeus.s2sgen.api.generate.FormGeneratorService;
 import org.kuali.coeus.s2sgen.api.generate.FormMappingService;
+import org.kuali.coeus.s2sgen.api.hash.GrantApplicationHashService;
 import org.kuali.coeus.sys.api.model.KcFile;
 import org.kuali.coeus.sys.framework.gv.GlobalVariableService;
 import org.kuali.coeus.sys.framework.util.CollectionUtils;
@@ -42,6 +45,7 @@ import static org.kuali.coeus.propdev.impl.s2s.S2SXmlConstants.*;
 @Component("s2sUserAttachedFormService")
 public class S2sUserAttachedFormServiceImpl implements S2sUserAttachedFormService {
 
+    private static final Log LOG = LogFactory.getLog(S2sUserAttachedFormServiceImpl.class);
     private static final String XFA_NS = "http://www.xfa.org/schema/xfa-data/1.0/";
     private static final String USER_ATTACHED_FORMS_ERRORS = "userAttachedFormsErrors";
     private static final String UPLOADED_FILE_IS_EMPTY = "Uploaded file is empty";
@@ -49,7 +53,8 @@ public class S2sUserAttachedFormServiceImpl implements S2sUserAttachedFormServic
     private static final String DATASETS = "datasets";
     private static final String DATA = "data";
     private static final String NOT_CONTAIN_ANY_DATA = "The pdf form does not contain any data.";
-    private static final String HUMAN_SUBJECT_STUDY_V1_0_PDF = "HumanSubjectStudy-V1.0.pdf";
+    private static final String HUMAN_SUBJECT_STUDY_V1_0_PDF_POPOUT_NAME = "HumanSubjectStudy-V1.0.pdf";
+    private static final String HUMAN_SUBJECT_STUDY_V1_0_PDF_POPOUT_HASH = "rC1ImTK7IEQ3Usp3FmNf1HKuMDE=";
     private static final String PHSHUMAN_SUBJECTS_AND_CLINICAL_TRIALS_INFO_V1_0 = "http://apply.grants.gov/forms/PHSHumanSubjectsAndClinicalTrialsInfo-V1.0";
     private static final String ATT = "ATT";
     private static final String HUMAN_SUBJECT_STUDY_V1_0 = "http://apply.grants.gov/forms/HumanSubjectStudy-V1.0";
@@ -80,6 +85,10 @@ public class S2sUserAttachedFormServiceImpl implements S2sUserAttachedFormServic
     @Qualifier("proposalSpecialReviewHumanSubjectsAttachmentService")
     private ProposalSpecialReviewHumanSubjectsAttachmentService proposalSpecialReviewHumanSubjectsAttachmentService;
 
+    @Autowired
+    @Qualifier("grantApplicationHashService")
+    private GrantApplicationHashService grantApplicationHashService;
+
     @Override
     public List<S2sUserAttachedForm> extractNSaveUserAttachedForms(ProposalDevelopmentDocument developmentProposal,
                                                                    S2sUserAttachedForm s2sUserAttachedForm) throws TransformerException, IOException, SAXException, ParserConfigurationException, XPathExpressionException {
@@ -99,7 +108,7 @@ public class S2sUserAttachedFormServiceImpl implements S2sUserAttachedFormServic
                     s2sException.setTabErrorKey(USER_ATTACHED_FORMS_ERRORS);
                     throw s2sException;
                 }
-                final List<KcFile> attachments = formUtilityService.extractAttachments(reader);
+                final List<KcFile> attachments = doHumanStudiesAttachmentsWorkaround(formUtilityService.extractAttachments(reader));
                 final Collection<String> duplicates = CollectionUtils.findDuplicates(attachments, KcFile::getName);
 
                 if (!duplicates.isEmpty()) {
@@ -237,7 +246,7 @@ public class S2sUserAttachedFormServiceImpl implements S2sUserAttachedFormServic
 
         Document doc = formUtilityService.node2Dom(form);
 
-        doHumanStudiesWorkaround(doc, attachments);
+        doHumanStudiesXmlWorkaround(doc, attachments);
 
         formUtilityService.correctAttachmentXml(doc, attachments);
         String xpathEmptyNodes = "//*[not(node()) and local-name(.) != 'FileLocation' and local-name(.) != 'HashValue' and local-name(.) != 'FileName']";// and not(FileLocation[@href])]";// and string-length(normalize-space(@*)) = 0 ]";
@@ -275,6 +284,20 @@ public class S2sUserAttachedFormServiceImpl implements S2sUserAttachedFormServic
         
     }
 
+    private List<KcFile> doHumanStudiesAttachmentsWorkaround(List<KcFile> attachments) {
+        //remove the "empty" HumanSubjectStudy popout form from the list of attachments
+        final List<KcFile> filteredAttachments =  attachments.stream()
+                .filter(attachment -> !(HUMAN_SUBJECT_STUDY_V1_0_PDF_POPOUT_NAME.equals(attachment.getName()) && HUMAN_SUBJECT_STUDY_V1_0_PDF_POPOUT_HASH.equals(getGrantApplicationHashService().computeAttachmentHash(attachment.getData()))))
+                .collect(Collectors.toList());
+
+        if (LOG.isDebugEnabled()) {
+            if (filteredAttachments.size() != attachments.size()) {
+                LOG.debug(HUMAN_SUBJECT_STUDY_V1_0_PDF_POPOUT_NAME + " popup attachment with SHA-1 hash " + HUMAN_SUBJECT_STUDY_V1_0_PDF_POPOUT_HASH + " detected on User Attached Form and removed.");
+            }
+        }
+        return filteredAttachments;
+    }
+
     /**
      * Human Studies attachments are not properly deserialized by itext or pdfbox.  This method searches for human studies attachments deserializes
      * them into xml and manually appends the xml to the form.
@@ -282,26 +305,8 @@ public class S2sUserAttachedFormServiceImpl implements S2sUserAttachedFormServic
      * @param doc         the form as an Xml Document.  This document could get modified by this method.
      * @param attachments form attachments.  This map could get modified by this method.
      */
-    private void doHumanStudiesWorkaround(Document doc, List<KcFile> attachments) {
+    private void doHumanStudiesXmlWorkaround(Document doc, List<KcFile> attachments) {
         final List<KcFile> allHsAttachments = new ArrayList<>();
-
-        //remove the "empty" HumanSubjectStudy popout form from the list of attachments if it isn't a part of the xml submission
-        if (attachments.stream().anyMatch(a -> HUMAN_SUBJECT_STUDY_V1_0_PDF.equals(a.getName()))) {
-            final NodeList files = doc.getElementsByTagNameNS(ATTACHMENTS_NS, FILE_NAME);
-            boolean found = false;
-            for (int i = 0; i < files.getLength(); i++) {
-                final Node attachmentName = files.item(i);
-                if (HUMAN_SUBJECT_STUDY_V1_0_PDF.equals(attachmentName.getTextContent())) {
-                    found = true;
-                }
-            }
-
-            if (!found) {
-                attachments.removeAll(attachments.stream()
-                        .filter(a -> HUMAN_SUBJECT_STUDY_V1_0_PDF.equals(a.getName()))
-                        .collect(Collectors.toList()));
-            }
-        }
 
         final NodeList hsAtt = doc.getElementsByTagNameNS(PHSHUMAN_SUBJECTS_AND_CLINICAL_TRIALS_INFO_V1_0, ATT);
         for (int i = 0; i < hsAtt.getLength(); i++) {
@@ -483,5 +488,14 @@ public class S2sUserAttachedFormServiceImpl implements S2sUserAttachedFormServic
 
     public void setProposalSpecialReviewHumanSubjectsAttachmentService(ProposalSpecialReviewHumanSubjectsAttachmentService proposalSpecialReviewHumanSubjectsAttachmentService) {
         this.proposalSpecialReviewHumanSubjectsAttachmentService = proposalSpecialReviewHumanSubjectsAttachmentService;
+    }
+
+
+    public GrantApplicationHashService getGrantApplicationHashService() {
+        return grantApplicationHashService;
+    }
+
+    public void setGrantApplicationHashService(GrantApplicationHashService grantApplicationHashService) {
+        this.grantApplicationHashService = grantApplicationHashService;
     }
 }
