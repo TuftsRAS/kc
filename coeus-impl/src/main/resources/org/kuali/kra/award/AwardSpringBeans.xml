@@ -816,7 +816,6 @@
     <bean id="cfdaService" class="org.kuali.kra.external.Cfda.service.impl.CfdaServiceImpl">
         <property name="parameterService" ref="parameterService"/>
         <property name="businessObjectService" ref="businessObjectService" />
-        <property name="dateTimeService" ref="dateTimeService" />
     </bean>
     
      <!-- Exposing the CFDA number service as a Java service and SOAP service -->
