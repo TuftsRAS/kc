@@ -23,4 +23,5 @@
 \. ./rice/bootstrap/V1806_004__RESOPS-2413.sql
 \. ./rice/bootstrap/V1806_005__RESKC-2956.sql
 \. ./rice/bootstrap/V1806_007__RESKC-2956.sql
+\. ./rice/bootstrap/V1806_008__cfdaParameterUpdates.sql
 commit;

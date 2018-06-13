@@ -1,6 +1,10 @@
 
 
 ## CURRENT
+* RESKC-2961: Update CfdaService to pull Assistance Listings from the new sam.gov website. Updated cron expression to match changed file update schedule.  Added integration test with locally hosted sample csv files
+  * jenkins on Tue, 12 Jun 2018 20:59:56 -0400 [View Commit](../../commit/b3bff4cc541b447cfb234ecbc5550f6582548f5c)
+
+## coeus-1806.0014
 * RESKC-2955: handle duplicate attachments for Human Studies Clinical Trials, User Attached Forms, and SubAwards
   * Travis Schneeberger on Mon, 11 Jun 2018 16:46:52 -0400 [View Commit](../../commit/0fad545ac7a97ad06496e07011954922746737bf)
 
