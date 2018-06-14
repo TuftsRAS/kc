@@ -1,6 +1,11 @@
 
 
 ## CURRENT
+* RESKC-2562: Update Workflow Emails for some KC Documents using XML Ingestion mechanism. (#2934)
+
+  * Omar Soto Fortuño on Thu, 14 Jun 2018 16:19:19 -0400 [View Commit](../../commit/757d9a4ad87d37bf6ac95b1f3c19239300d46d7b)
+
+## coeus-1806.0018
 * Fix sequencing (#2937)
 
   * Gayathri Athreya on Thu, 14 Jun 2018 10:17:19 -0700 [View Commit](../../commit/07fb025aabdff1cd19d2e088647e660a5144c0d2)
