@@ -1,6 +1,19 @@
 
 
 ## CURRENT
+* Fix sequencing (#2937)
+
+  * Gayathri Athreya on Thu, 14 Jun 2018 10:17:19 -0700 [View Commit](../../commit/07fb025aabdff1cd19d2e088647e660a5144c0d2)
+* RESKC-2971: Separate out rate override flag and save fringe on naviga… (#2935)
+
+* RESKC-2971: Separate out rate override flag and save fringe on navigation.
+  * 
+* PR fixes
+  * 
+* Fix indentation on files
+  * Gayathri Athreya on Thu, 14 Jun 2018 09:23:03 -0700 [View Commit](../../commit/a2f839501cb2822a3753bde48eaaf57654829326)
+
+## coeus-1806.0017
 * RESKC-2980: fix spelling errors for occurred, occurring, occurrence.
   * Travis Schneeberger on Thu, 14 Jun 2018 09:07:36 -0400 [View Commit](../../commit/f16cbe568a18a1a2b47b63af2fb936f638eec33d)
 

@@ -20,4 +20,5 @@
 
 \. ./kc/bootstrap/V1806_002__add_rrbudget14_s2s_error.sql
 \. ./kc/bootstrap/V1806_006__RESKC-2956.sql
+\. ./kc/bootstrap/V1806_009__RESKC-2971.sql
 commit;
