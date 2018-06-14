@@ -14,24 +14,26 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.kuali.coeus.sys.framework.validation.AuditHelper;
-import org.kuali.coeus.sys.framework.validation.AuditHelper.ValidationState;
-import org.kuali.coeus.sys.framework.controller.StrutsConfirmation;
-import org.kuali.coeus.sys.framework.service.KcServiceLocator;
-import org.kuali.kra.award.AwardForm;
-import org.kuali.kra.award.budget.AwardBudgetExt;
-import org.kuali.kra.award.budget.AwardBudgetService;
-import org.kuali.kra.award.budget.document.AwardBudgetDocument;
-import org.kuali.kra.award.document.AwardDocument;
-import org.kuali.kra.award.home.Award;
+import org.kuali.coeus.common.budget.framework.copy.CopyPeriodsQuestion;
 import org.kuali.coeus.common.budget.framework.core.Budget;
 import org.kuali.coeus.common.budget.framework.core.BudgetService;
 import org.kuali.coeus.common.budget.framework.rate.BudgetRate;
 import org.kuali.coeus.common.budget.framework.rate.BudgetRatesService;
 import org.kuali.coeus.common.budget.framework.rate.RateClass;
+import org.kuali.coeus.sys.framework.controller.StrutsConfirmation;
+import org.kuali.coeus.sys.framework.service.KcServiceLocator;
+import org.kuali.coeus.sys.framework.validation.AuditHelper;
+import org.kuali.coeus.sys.framework.validation.AuditHelper.ValidationState;
+import org.kuali.kra.award.AwardForm;
+import org.kuali.kra.award.budget.AwardBudgetExt;
+import org.kuali.kra.award.budget.AwardBudgetService;
+import org.kuali.kra.award.budget.document.AwardBudgetDocument;
+import org.kuali.kra.award.document.AwardDocument;
+import org.kuali.kra.award.document.authorization.AwardDocumentAuthorizer;
+import org.kuali.kra.award.home.Award;
 import org.kuali.kra.infrastructure.Constants;
 import org.kuali.kra.infrastructure.KeyConstants;
-import org.kuali.coeus.common.budget.framework.copy.CopyPeriodsQuestion;
+import org.kuali.rice.kew.api.KewApiConstants;
 import org.kuali.rice.kew.api.exception.WorkflowException;
 import org.kuali.rice.kns.web.struts.action.AuditModeAction;
 import org.kuali.rice.krad.service.DocumentService;
@@ -39,7 +41,6 @@ import org.kuali.rice.krad.util.KRADConstants;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -62,6 +63,7 @@ public class AwardBudgetsAction extends AwardAction implements AuditModeAction {
 	private static final String AMPERSTAND = "&";
     public static final String SYNC_QUESTION_ASKED = "syncQuestionAsked";
 
+    private DocumentService documentService;
 
     /**
      * Main execute method that is run. Populates A map of rate types in the {@link HttpServletRequest} instance to be used
@@ -162,7 +164,7 @@ public class AwardBudgetsAction extends AwardAction implements AuditModeAction {
         BudgetService budgetService = KcServiceLocator.getService(BudgetService.class);
         BudgetRatesService budgetRatesService = KcServiceLocator.getService(BudgetRatesService.class);
         AwardBudgetService awardBudgetService = KcServiceLocator.getService(AwardBudgetService.class);
-        if ("TRUE".equals(awardForm.getEditingMode().get("modifyAwardBudget"))) {
+        if ("TRUE".equals(awardForm.getEditingMode().get(AwardDocumentAuthorizer.MODIFY_AWARD_BUDGET))) {
             save(mapping, form, request, response);
         }
         
@@ -181,9 +183,8 @@ public class AwardBudgetsAction extends AwardAction implements AuditModeAction {
             return mapping.findForward(Constants.MAPPING_BASIC);
         }
 
-        if (awardBudgetService.checkRateChange(allBudgetRates, newestAward)) {
-        	return confirm(syncBudgetRateConfirmationQuestion(mapping, form, request, response,
-                    KeyConstants.QUESTION_SYNCH_AWARD_RATE), CONFIRM_SYNCH_BUDGET_RATE, NO_SYNCH_BUDGET_RATE);
+        if (awardBudgetDocumentIsNotFinal(budgetToOpen) && awardBudgetService.checkRateChange(allBudgetRates, newestAward)) {
+            return confirm(syncBudgetRateConfirmationQuestion(mapping, form, request, response, KeyConstants.QUESTION_SYNCH_AWARD_RATE), CONFIRM_SYNCH_BUDGET_RATE, NO_SYNCH_BUDGET_RATE);
         }
 
         if (budgetRatesService.checkActivityTypeChange(allBudgetRates, newestAward.getActivityTypeCode())) {
@@ -194,8 +195,7 @@ public class AwardBudgetsAction extends AwardAction implements AuditModeAction {
             return confirm(syncBudgetRateConfirmationQuestion(mapping, form, request, response,
                     KeyConstants.QUESTION_NO_RATES_ATTEMPT_SYNCH), CONFIRM_SYNCH_BUDGET_RATE, NO_SYNCH_BUDGET_RATE);
         } else {
-            DocumentService documentService = KcServiceLocator.getService(DocumentService.class);
-            AwardBudgetDocument budgetDocument = (AwardBudgetDocument) documentService.getByDocumentHeaderId(budgetToOpen.getDocumentNumber());
+            AwardBudgetDocument budgetDocument = (AwardBudgetDocument) getDocumentService().getByDocumentHeaderId(budgetToOpen.getDocumentNumber());
             String routeHeaderId = budgetDocument.getDocumentHeader().getWorkflowDocument().getDocumentId();
             Budget budget = budgetDocument.getBudget();
             if (budget.getActivityTypeCode().equals(DEFAULT_BUDGET_ACTIVITY_TYPE_CODE)) {
@@ -214,6 +214,13 @@ public class AwardBudgetsAction extends AwardAction implements AuditModeAction {
         }
     }
 
+    private boolean awardBudgetDocumentIsNotFinal(Budget budget) throws WorkflowException {
+        AwardBudgetDocument budgetDocument = (AwardBudgetDocument) getDocumentService().getByDocumentHeaderId(budget.getDocumentNumber());
+        String documentStatusCode = budgetDocument.getDocumentHeader().getWorkflowDocument().getStatus().getCode();
+
+        return !documentStatusCode.equals(KewApiConstants.ROUTE_HEADER_FINAL_CD);
+    }
+
     public ActionForward confirmSynchBudgetRate(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
         return synchBudgetRate(mapping, form, request, response, true);
     }
@@ -226,8 +233,7 @@ public class AwardBudgetsAction extends AwardAction implements AuditModeAction {
         AwardForm awardForm = (AwardForm) form;
         AwardDocument awardDoc = awardForm.getAwardDocument();
         Budget budgetToOpen = awardDoc.getBudgetDocumentVersion(getSelectedLine(request));
-        DocumentService documentService = KcServiceLocator.getService(DocumentService.class);
-        AwardBudgetDocument awardBudgetDocument = (AwardBudgetDocument) documentService.getByDocumentHeaderId(budgetToOpen.getDocumentNumber());
+        AwardBudgetDocument awardBudgetDocument = (AwardBudgetDocument) getDocumentService().getByDocumentHeaderId(budgetToOpen.getDocumentNumber());
         String routeHeaderId = awardBudgetDocument.getDocumentHeader().getWorkflowDocument().getDocumentId();
         String forward = buildForwardUrl(routeHeaderId);
         if (confirm) {
@@ -303,8 +309,7 @@ public class AwardBudgetsAction extends AwardAction implements AuditModeAction {
         AwardForm awardForm = (AwardForm) form;
         AwardDocument awardDoc = awardForm.getAwardDocument();
         Budget budgetToCopy = getSelectedVersion(awardForm, request);
-        DocumentService documentService = KcServiceLocator.getService(DocumentService.class);
-		AwardBudgetDocument budgetDocToCopy = (AwardBudgetDocument) documentService.getByDocumentHeaderId(budgetToCopy.getDocumentNumber());
+		AwardBudgetDocument budgetDocToCopy = (AwardBudgetDocument) getDocumentService().getByDocumentHeaderId(budgetToCopy.getDocumentNumber());
 		
 		AwardBudgetDocument newBudget = getAwardBudgetService().copyBudgetVersion(budgetDocToCopy, copyPeriodOneOnly);
 		awardDoc.getAward().getBudgets().add(newBudget.getAwardBudget());
@@ -347,4 +352,11 @@ public class AwardBudgetsAction extends AwardAction implements AuditModeAction {
         return null;
     }
 
+    @Override
+    public DocumentService getDocumentService() {
+        if (documentService == null) {
+            documentService = KcServiceLocator.getService(DocumentService.class);
+        }
+        return documentService;
+    }
 }
