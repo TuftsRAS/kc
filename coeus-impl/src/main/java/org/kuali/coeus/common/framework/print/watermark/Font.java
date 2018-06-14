@@ -79,7 +79,7 @@ public class Font {
                 color = (Color) f.get(null);
             } catch (Exception exception) {              
                 color = WatermarkConstants.DEFAULT_WATERMARK_COLOR;
-                LOG.error("Exception occured in WatermarkFont.. NumberFormatException: "+exception);   
+                LOG.error("Exception occurred in WatermarkFont.. NumberFormatException: "+exception);
             }
         }
         
@@ -106,7 +106,7 @@ public class Font {
         try {
             return BaseFont.createFont(BaseFont.TIMES_BOLD, BaseFont.WINANSI, BaseFont.EMBEDDED);
         }catch (Exception exception) {
-            LOG.error("Exception occured in Watermark getBaseFont. BaseFontException: "+exception); 
+            LOG.error("Exception occurred in Watermark getBaseFont. BaseFontException: "+exception);
             return null;
         }
     }

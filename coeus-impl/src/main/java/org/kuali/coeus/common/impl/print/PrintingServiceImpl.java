@@ -311,7 +311,7 @@ public class PrintingServiceImpl implements PrintingService {
                 return mergedPdfReport.toByteArray();
             }
             catch (Exception e) {
-                LOG.error("Exception occured because the generated PDF document has no pages", e);
+                LOG.error("Exception occurred because the generated PDF document has no pages", e);
             }
         }
         return null;

@@ -54,7 +54,7 @@ public class CfdaBatchJob extends QuartzJobBean {
         try {
             updateResults = cfdaService.updateCfda();
         } catch (IOException e) {
-            updateResults.setMessage("Error occured while updating " + e.getMessage());
+            updateResults.setMessage("Error occurred while updating " + e.getMessage());
         }
         builder.append("Message: " + updateResults.getMessage() + BREAK);
         builder.append("NumberOfRecordsDeactivatedBecauseNoLongerOnWebSite: " + updateResults.getNumberOfRecordsDeactivatedBecauseNoLongerOnWebSite() + BREAK);

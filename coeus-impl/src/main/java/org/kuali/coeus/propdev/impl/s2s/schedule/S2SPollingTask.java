@@ -91,7 +91,7 @@ public class S2SPollingTask {
         sortMsgKeyMap.put("C", "Following proposals will be dropped from the notification emails in next 24 hours");
         sortMsgKeyMap.put("D", "Following submissions status has not changed");
         sortMsgKeyMap.put("E", "Following submissions status has changed");
-        sortMsgKeyMap.put("F", "Error occured while retrieving submissions");
+        sortMsgKeyMap.put("F", "Error occurred while retrieving submissions");
         sortMsgKeyMap.put("Z", "");
     }
 

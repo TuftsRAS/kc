@@ -56,7 +56,7 @@ public class WatermarkServiceImpl implements WatermarkService {
             }
         }
         catch (Exception exception) {
-            LOG.error("Exception occured in WatermarkServiceImpl. Water mark Exception: " + exception);
+            LOG.error("Exception occurred in WatermarkServiceImpl. Water mark Exception: " + exception);
         }
 
         return pdfFileData;
@@ -95,10 +95,10 @@ public class WatermarkServiceImpl implements WatermarkService {
             decorateWatermark(pdfStamp, watermarkBean);
         }
         catch (IOException decorateWatermark) {
-            LOG.error("Exception occured in WatermarkServiceImpl. Water mark Exception: " + decorateWatermark.getMessage());
+            LOG.error("Exception occurred in WatermarkServiceImpl. Water mark Exception: " + decorateWatermark.getMessage());
         }
         catch (DocumentException documentException) {
-            LOG.error("Exception occured in WatermarkServiceImpl. Water mark Exception: " + documentException.getMessage());
+            LOG.error("Exception occurred in WatermarkServiceImpl. Water mark Exception: " + documentException.getMessage());
         }
         return copyByteArrayOutputStream;
     }
@@ -135,10 +135,10 @@ public class WatermarkServiceImpl implements WatermarkService {
             watermarkPdfStamper.close();
         }
         catch (IOException decorateWatermark) {
-            LOG.error("Exception occured in WatermarkServiceImpl. decorateWatermark Exception: " + decorateWatermark.getMessage());
+            LOG.error("Exception occurred in WatermarkServiceImpl. decorateWatermark Exception: " + decorateWatermark.getMessage());
         }
         catch (DocumentException documentException) {
-            LOG.error("Exception occured in WatermarkServiceImpl. decorateWatermark Exception: " + documentException.getMessage());
+            LOG.error("Exception occurred in WatermarkServiceImpl. decorateWatermark Exception: " + documentException.getMessage());
         }
 
     }
@@ -221,7 +221,7 @@ public class WatermarkServiceImpl implements WatermarkService {
             }
         }
         catch (Exception exception) {
-            LOG.error("Exception occured in WatermarkServiceImpl. Water mark Exception: " + exception.getMessage());
+            LOG.error("Exception occurred in WatermarkServiceImpl. Water mark Exception: " + exception.getMessage());
         }
 
 

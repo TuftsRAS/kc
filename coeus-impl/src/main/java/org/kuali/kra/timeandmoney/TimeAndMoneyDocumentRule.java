@@ -83,7 +83,7 @@ public class TimeAndMoneyDocumentRule extends KcTransactionalDocumentRuleBase im
     
     /**
      * 
-     * This method determines if a change has occured that might change report tracking records.
+     * This method determines if a change has occurred that might change report tracking records.
      * @param timeAndMoneyDocument
      * @return
      */

@@ -227,7 +227,7 @@ public class ProposalCopyServiceImpl implements ProposalCopyService {
                 initializeAuthorization(newDoc);
 
             } catch (Exception e) {
-                    throw new RuntimeException("An error occured while trying to copy the proposal development document.", e);
+                    throw new RuntimeException("An error occurred while trying to copy the proposal development document.", e);
             }
 
         }

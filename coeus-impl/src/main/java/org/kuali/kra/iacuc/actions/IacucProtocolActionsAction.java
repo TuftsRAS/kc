@@ -883,7 +883,7 @@ public class IacucProtocolActionsAction extends IacucProtocolAction {
                 }
             }
         }catch (Exception e) {
-            LOG.error("Exception Occured in ProtocolNoteAndAttachmentAction. : ",e);    
+            LOG.error("Exception Occurred in ProtocolNoteAndAttachmentAction. : ",e);
         }        
         return attachmentFile;
     }

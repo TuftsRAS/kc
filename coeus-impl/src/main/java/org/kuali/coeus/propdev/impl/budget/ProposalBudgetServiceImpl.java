@@ -510,9 +510,9 @@ public class ProposalBudgetServiceImpl extends AbstractBudgetService<Development
 
     public boolean isUniqueSourceAccountFiscalYear(ProposalDevelopmentBudgetExt budget, boolean valid, BudgetCostShare budgetCostShare, boolean costShareTypeEnabled) {
         int thisFiscalYear = budgetCostShare.getProjectPeriod() == null ? Integer.MIN_VALUE : budgetCostShare.getProjectPeriod();
-        long numberOfOccurences = budget.getBudgetCostShares().stream().filter(costShare -> findMatchingCostShare(costShare, budgetCostShare,
+        long numberOfOccurrences = budget.getBudgetCostShares().stream().filter(costShare -> findMatchingCostShare(costShare, budgetCostShare,
                 thisFiscalYear, costShareTypeEnabled)).count();
-        if (numberOfOccurences > 1) {
+        if (numberOfOccurrences > 1) {
             addValidationMessage(Constants.VALIDATION_MESSAGE_ERROR, FISCAL_YEAR, KeyConstants.ERROR_COST_SHARE_DUPLICATE);
             valid &= Boolean.FALSE;
         }

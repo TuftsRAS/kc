@@ -174,7 +174,7 @@ public class S2SConnectorServiceBase implements S2SConnectorService {
             return response;
         }
         catch (ErrorMessage|WebServiceException e) {
-            LOG.error("Error occured while fetching application list", e);
+            LOG.error("Error occurred while fetching application list", e);
             throw new S2sCommunicationException(KeyConstants.ERROR_GRANTSGOV_SERVER_APPLICATION_LIST_REFRESH,e.getMessage());
         }
     }
@@ -211,10 +211,10 @@ public class S2SConnectorServiceBase implements S2SConnectorService {
             debugLogJaxbObject(SubmitApplicationResponse.class, response);
             return response;
         }catch (ErrorMessage e) {
-            LOG.error("Error occured while submitting proposal to Grants Gov", e);
+            LOG.error("Error occurred while submitting proposal to Grants Gov", e);
             throw new S2sCommunicationException(KeyConstants.ERROR_GRANTSGOV_SERVER_SUBMIT_APPLICATION,e.getMessage());
         }catch(WebServiceException e){
-            LOG.error("Error occured while submitting proposal to Grants Gov", e);
+            LOG.error("Error occurred while submitting proposal to Grants Gov", e);
             throw new S2sCommunicationException(KeyConstants.ERROR_S2S_UNKNOWN,e.getMessage());
         }
     }
