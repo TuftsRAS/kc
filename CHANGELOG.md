@@ -1,6 +1,10 @@
 
 
 ## CURRENT
+* RESKC-2980: fix spelling errors for occurred, occurring, occurrence.
+  * Travis Schneeberger on Thu, 14 Jun 2018 09:07:36 -0400 [View Commit](../../commit/f16cbe568a18a1a2b47b63af2fb936f638eec33d)
+
+## coeus-1806.0016
 * RESKC-2906: removing the popout human studies clinical trial from the extracted attachments user using PHS Human Studies Clinical Trial 1.0 as a user attached form.
   * Travis Schneeberger on Wed, 13 Jun 2018 10:36:18 -0400 [View Commit](../../commit/ac1870fb78ced0e5129c759ff1f6822dae24cf4a)
 
