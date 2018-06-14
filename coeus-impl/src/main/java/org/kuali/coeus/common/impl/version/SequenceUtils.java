@@ -32,7 +32,7 @@ import java.util.*;
  * introduces so many exception and meta-data types
  */
 public class SequenceUtils {
-    private static final String SEQUENCING_ERR_MSG = "An error occured sequencing";
+    private static final String SEQUENCING_ERR_MSG = "An error occurred sequencing";
 
     private static final Log LOG = LogFactory.getLog(SequenceUtils.class);
 

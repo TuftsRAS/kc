@@ -60,7 +60,7 @@ public abstract class ProtocolPrintWatermarkBase implements Watermarkable {
                 waterMarkBean = getProtocolWatermarkBeanObject(protocolStatusCode);
             }
             catch (Exception e) {
-                LOG.error("Exception Occured in (ProtocolPrintWatermarkBase) :", e);
+                LOG.error("Exception Occurred in (ProtocolPrintWatermarkBase) :", e);
             }
             return waterMarkBean;
         }
@@ -81,7 +81,7 @@ public abstract class ProtocolPrintWatermarkBase implements Watermarkable {
                 waterMarkBean = getProtocolWatermarkBeanObject(watermarkStatusCode);
             }
             catch (Exception e) {
-                LOG.error("Exception Occured in (ProtocolPrintWatermarkBase) :", e);
+                LOG.error("Exception Occurred in (ProtocolPrintWatermarkBase) :", e);
             }
             return waterMarkBean;
         }
@@ -147,7 +147,7 @@ public abstract class ProtocolPrintWatermarkBase implements Watermarkable {
 
             }
             catch (Exception e) {
-                LOG.error("Exception Occured in (ProtocolPrintWatermarkBase) :", e);
+                LOG.error("Exception Occurred in (ProtocolPrintWatermarkBase) :", e);
             }
             return watermarkBean;
         }
@@ -174,7 +174,7 @@ public abstract class ProtocolPrintWatermarkBase implements Watermarkable {
             }
             catch (NumberFormatException numberFormatException) {
                 watermarkFont.setSize(WatermarkConstants.DEFAULT_WATERMARK_FONT_SIZE);
-                LOG.error("Exception Occuring in ProtocolPrintWatermarkBase:(getFont:numberFormatException)");
+                LOG.error("Exception Occurring in ProtocolPrintWatermarkBase:(getFont:numberFormatException)");
             }
         }
         else {
@@ -199,7 +199,7 @@ public abstract class ProtocolPrintWatermarkBase implements Watermarkable {
             }
             catch (NumberFormatException numberFormatException) {
                 watermarkFont.setSize(WatermarkConstants.DEFAULT_WATERMARK_FONT_SIZE);
-                LOG.error("Exception Occuring in ProtocolPrintWatermarkBase:(getFont:numberFormatException)");
+                LOG.error("Exception Occurring in ProtocolPrintWatermarkBase:(getFont:numberFormatException)");
             }
         }
         else {

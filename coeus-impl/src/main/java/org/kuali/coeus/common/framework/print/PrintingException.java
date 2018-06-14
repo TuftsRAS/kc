@@ -19,7 +19,7 @@ public class PrintingException extends RuntimeException {
 	
 	/**
 	 * Constructor for passing exception along with message
-	 * @param message relating to circumstances due to which exception occured
+	 * @param message relating to circumstances due to which exception occurred
 	 * @param t {@link Throwable} exception object with trace
 	 */
 	public PrintingException(String message, Throwable t) {

@@ -730,7 +730,7 @@ public class AwardSyncServiceImpl implements AwardSyncService {
             }
         } catch (Exception e) {
             awardSyncStatus.setSyncComplete(false);
-            logFailure(awardSyncStatus, SYNC_FAILURE_MESSAGE, "Failure occured while approving document.");
+            logFailure(awardSyncStatus, SYNC_FAILURE_MESSAGE, "Failure occurred while approving document.");
             throw new RuntimeException(e);
         }
     }

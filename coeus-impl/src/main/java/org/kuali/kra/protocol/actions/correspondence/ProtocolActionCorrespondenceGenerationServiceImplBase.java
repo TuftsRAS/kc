@@ -132,7 +132,7 @@ public abstract class ProtocolActionCorrespondenceGenerationServiceImplBase impl
             pdfBytes = getPersonSignatureServiceHook().applySignature(pdfBytes);
             printablePdf.setData(pdfBytes);
         } catch (Exception e) {
-            LOG.error("Exception Occured in ProtocolActionCorrespondenceGenerationServiceImplBase. Person Signature Exception: ",e);    
+            LOG.error("Exception Occurred in ProtocolActionCorrespondenceGenerationServiceImplBase. Person Signature Exception: ",e);
         }  
     }
     

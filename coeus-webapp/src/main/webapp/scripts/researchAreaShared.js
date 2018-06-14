@@ -773,7 +773,7 @@ function getEditRow(name, id) {
 			'<a href="#"><img src="static/images/tinybutton-edit1.gif" width="40" height="15" border="0" title="update"></a>')
 			.attr("id", "editRA" + idx)
 			.click(function() {
-				// TODO all the "$j(this).attr("id").substring(6)" occurences below should be replaced by idx instead; 
+				// TODO all the "$j(this).attr("id").substring(6)" occurrences below should be replaced by idx instead;
 				// that is what binding in Javascript closures is all about: using the vars of the environment in the inner function.
 					var header = $j("#raHeader" + $j(this).attr("id").substring(6));
 					var desc = editResearchArea($j(this).attr("id").substring(6));

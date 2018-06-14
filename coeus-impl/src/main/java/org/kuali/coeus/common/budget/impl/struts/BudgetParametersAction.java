@@ -162,7 +162,7 @@ public class BudgetParametersAction extends BudgetAction {
         Budget budget = budgetForm.getBudget();
 
         // The following 3 lines are needed so the rate type is correctly propagated to the Personnel tab if
-        // the rate type was changed after a validation error occured. We might want to consider getting rid of
+        // the rate type was changed after a validation error occurred. We might want to consider getting rid of
         // ohRateClassCodePrevValue urRateClassCodePrevValue altogether in favor of using the BusinessObjectService
         // as below.
         Budget originalBudget = (Budget) KcServiceLocator.getService(BusinessObjectService.class).retrieve(budget);
