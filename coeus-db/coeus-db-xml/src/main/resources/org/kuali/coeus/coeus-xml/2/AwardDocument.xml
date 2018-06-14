@@ -31,6 +31,7 @@
 			<defaultExceptionWorkgroupName>KC-WKFLW:KcAdmin</defaultExceptionWorkgroupName>
 			<docHandler>${kuali.docHandler.url.prefix}/awardHome.do?methodToCall=docHandler</docHandler>
 			<helpDefinitionURL>default.htm?turl=Documents/award.htm</helpDefinitionURL>
+			<emailStylesheet>kc.award.email.style</emailStylesheet>
 			<active>true</active>
 			<attributes>
 				<attribute>

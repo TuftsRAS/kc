@@ -17,6 +17,7 @@
 			<parent>KC</parent>
 			<docHandler>${kuali.docHandler.url.prefix}/negotiationNegotiation.do?methodToCall=docHandler</docHandler>
             <helpDefinitionURL>default.htm?turl=Documents/negotiation.htm</helpDefinitionURL>
+			<emailStylesheet>kc.negotiation.email.style</emailStylesheet>
 		</documentType>
 	</documentTypes>	
 </data>

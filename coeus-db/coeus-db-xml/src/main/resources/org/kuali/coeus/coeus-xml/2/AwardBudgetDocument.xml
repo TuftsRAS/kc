@@ -22,6 +22,7 @@
 			<defaultExceptionWorkgroupName>KC-WKFLW:KcAdmin</defaultExceptionWorkgroupName>
 			<docHandler>${kuali.docHandler.url.prefix}/awardBudgetVersions.do?methodToCall=docHandler</docHandler>
 		    <helpDefinitionURL>default.htm?turl=Documents/awardbudget.htm</helpDefinitionURL>
+			<emailStylesheet>kc.awardbudget.email.style</emailStylesheet>
 			<active>true</active>
 			<attributes>
 				<attribute>
