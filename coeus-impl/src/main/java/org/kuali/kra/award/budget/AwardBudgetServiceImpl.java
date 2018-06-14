@@ -1246,7 +1246,8 @@ public class AwardBudgetServiceImpl extends AbstractBudgetService<Award> impleme
         awardBudgetPeriod.setTotalFringeAmount(null);
         awardBudgetPeriod.getAwardBudgetPeriodFringeAmounts().clear();
         awardBudgetPeriod.getAwardBudgetPeriodFnAAmounts().clear();
-        awardBudgetPeriod.setRateOverrideFlag(false);
+        awardBudgetPeriod.setfAndAOverridden(false);
+        awardBudgetPeriod.setFringeOverridden(false);
     }
 
     @Override

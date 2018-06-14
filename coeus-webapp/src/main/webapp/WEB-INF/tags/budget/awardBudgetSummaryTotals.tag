@@ -251,9 +251,11 @@
                   <c:set var="fringeCalcAmountList" value="${KualiForm.document.budget.budgetPeriods[period.budgetPeriod-1].awardBudgetPeriodFringeAmounts}" />
 	              <c:if test="${status.index ge periodStartIndex and status.index le periodEndIndex }" >
 		          	<td class="tab-subhead" >
-		          		<input type="hidden" id="document.budget.budgetPeriods[${period.budgetPeriod-1}].rateOverrideFlag" name="document.budget.budgetPeriods[${period.budgetPeriod-1}].rateOverrideFlag"}/>
-		          	  <div align="right">
-		          	  		<c:if test="${KualiForm.document.budget.budgetPeriods[period.budgetPeriod-1].rateOverrideFlag}">
+                        <input type="hidden" id="document.budget.budgetPeriods[${period.budgetPeriod-1}].fringeOverridden" name="document.budget.budgetPeriods[${period.budgetPeriod-1}].fringeOverridden"}/>
+                        <input type="hidden" id="document.budget.budgetPeriods[${period.budgetPeriod-1}].fAndAOverridden" name="document.budget.budgetPeriods[${period.budgetPeriod-1}].fAndAOverridden"}/>
+
+                        <div align="right">
+		          	  		<c:if test="${KualiForm.document.budget.budgetPeriods[period.budgetPeriod-1].fringeOverridden}">
 		          	  			<span class="fineprint">(Overridden amount)</span>
 		          	  		</c:if>
 							<kul:htmlControlAttribute styleClass="align-right" property="document.budget.budgetPeriods[${period.budgetPeriod-1}].totalFringeAmount" 
@@ -307,7 +309,7 @@
 						 	<td>
 						 	<div align="right">
 								 <c:if test="${status.index ge periodStartIndex and status.index le periodEndIndex and fn:length(fringeCalcAmountList) gt 0}" >
-								 	<c:if test="${KualiForm.document.budget.budgetPeriods[period.budgetPeriod-1].rateOverrideFlag}">
+								 	<c:if test="${KualiForm.document.budget.budgetPeriods[period.budgetPeriod-1].fringeOverridden}">
 		          	  					<span class="fineprint">(Overridden amount)</span>
 		          	  				</c:if>
 									<kul:htmlControlAttribute  styleClass="align-right" property="document.budget.budgetPeriods[${period.budgetPeriod-1}].awardBudgetPeriodFringeAmounts[${objStatus.index}].calculatedCost" 
@@ -709,11 +711,11 @@
                     <c:if test="${status.index ge periodStartIndex and status.index le periodEndIndex }" >
                         <td class="infoline">
                             <div align="right">
-                                <c:if test="${KualiForm.document.budget.budgetPeriods[period.budgetPeriod-1].rateOverrideFlag}">
+                                <c:if test="${KualiForm.document.budget.budgetPeriods[period.budgetPeriod-1].fAndAOverridden}">
                                     <span class="fineprint">(Overridden amount)</span>
                                 </c:if>
                                 <kul:htmlControlAttribute styleClass="align-right" property="document.budget.budgetPeriods[${period.budgetPeriod-1}].totalIndirectCost"
-                                    attributeEntry="${budgetPeriodAttributes.totalIndirectCost}" onchange="setRateOverrideFlag(${period.budgetPeriod});"/>
+                                    attributeEntry="${budgetPeriodAttributes.totalIndirectCost}" onchange="setFandAOverrideFlag(${period.budgetPeriod});"/>
                             </div>
                         </td>
                     </c:if>

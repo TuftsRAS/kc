@@ -637,7 +637,7 @@ public class BudgetCalculationServiceImpl implements BudgetCalculationService {
         return budgetService.isRateOverridden(budgetPeriod);
     }
 
-    private void populateBudgetPeriodSummaryCalcAmounts(Budget budget) {
+    public void populateBudgetPeriodSummaryCalcAmounts(Budget budget) {
         List<BudgetPeriod> budgetPeriods = budget.getBudgetPeriods();
         for (BudgetPeriod budgetPeriod : budgetPeriods) {
             if(!isRateOveridden(budget,budgetPeriod)){

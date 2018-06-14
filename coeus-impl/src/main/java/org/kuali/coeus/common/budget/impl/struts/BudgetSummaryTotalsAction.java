@@ -33,6 +33,9 @@ public class BudgetSummaryTotalsAction extends BudgetAction {
     private static final String END_INDEX = "endIndex";
     private static final String PERIOD_END_INDEX = "periodEndIndex";
     private static final String PERIOD_START_INDEX = "periodStartIndex";
+    private static final String DOCUMENT_BUDGET_PERIODS = "document.budget.budgetPeriods[";
+    private static final String FRINGE_OVERRIDDEN = "].fringeOverridden";
+    private static final String F_AND_AOVERRIDDEN = "].fAndAOverridden";
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
@@ -58,9 +61,14 @@ public class BudgetSummaryTotalsAction extends BudgetAction {
             List<BudgetPeriod> budgetPeriods = budget.getBudgetPeriods();
             for (int i = 0; i < budgetPeriods.size(); i++) {
                 AwardBudgetPeriodExt awardBudgetPeriod = (AwardBudgetPeriodExt)budgetPeriods.get(i);
-                String val = request.getParameter("document.budget.budgetPeriods["+i+"].rateOverrideFlag");
-                if(StringUtils.isNotBlank(val)){
-                    awardBudgetPeriod.setRateOverrideFlag(Boolean.valueOf(val));
+                String fringeOverride = request.getParameter(DOCUMENT_BUDGET_PERIODS +i+ FRINGE_OVERRIDDEN);
+                String fAndAOVerride = request.getParameter(DOCUMENT_BUDGET_PERIODS +i+ F_AND_AOVERRIDDEN);
+
+                if(StringUtils.isNotBlank(fringeOverride)) {
+                    awardBudgetPeriod.setFringeOverridden(Boolean.valueOf(fringeOverride));
+                }
+                if(StringUtils.isNotBlank(fAndAOVerride)) {
+                    awardBudgetPeriod.setfAndAOverridden(Boolean.valueOf(fAndAOVerride));
                 }
             }
         }

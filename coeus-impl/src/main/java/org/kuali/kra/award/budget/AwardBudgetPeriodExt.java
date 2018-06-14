@@ -31,6 +31,9 @@ public class AwardBudgetPeriodExt extends BudgetPeriod {
     private List<AwardBudgetPeriodSummaryCalculatedAmount> awardBudgetPeriodFnAAmounts;
     private Map<String, ScaleTwoDecimal> fringeForCostElements;
     private boolean rateOverrideFlag;
+    private boolean fringeOverridden;
+    private boolean fAndAOverridden;
+
     public AwardBudgetPeriodExt(){
         super();
         awardBudgetPeriodFringeAmounts = new ArrayList<>();
@@ -106,12 +109,28 @@ public class AwardBudgetPeriodExt extends BudgetPeriod {
     }
 
     public boolean getRateOverrideFlag() {
-        return rateOverrideFlag;
+        return fringeOverridden || fAndAOverridden;
     }
     public boolean isRateOverrideFlag() {
-        return rateOverrideFlag;
+        return fringeOverridden || fAndAOverridden;
     }
-    
+
+    public boolean isFringeOverridden() {
+        return fringeOverridden;
+    }
+
+    public boolean setFringeOverridden(boolean fringeOverridden) {
+        return this.fringeOverridden = fringeOverridden;
+    }
+
+    public boolean isfAndAOverridden() {
+        return fAndAOverridden;
+    }
+
+    public void setfAndAOverridden(boolean fAndAOverridden) {
+        this.fAndAOverridden = fAndAOverridden;
+    }
+
     @Override
     public List<BudgetLineItem> getBudgetLineItems() {
         List<BudgetLineItem> budgetLineItems = super.getBudgetLineItems();

@@ -237,7 +237,7 @@ public class BudgetAction extends BudgetActionBase {
         return forward;
     }
 
-    private BudgetCalculationService getBudgetCalculationService() {
+    public BudgetCalculationService getBudgetCalculationService() {
 		return KcServiceLocator.getService(AwardBudgetCalculationService.class);
 	}
 

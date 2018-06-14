@@ -107,5 +107,7 @@ public interface BudgetCalculationService {
     void resetBudgetLineItemCalculatedAmounts(Budget budget);
     
     void calculateAndUpdateFormulatedCost(BudgetLineItem budgetLineItem);
-    
+
+    void populateBudgetPeriodSummaryCalcAmounts(Budget budget);
+
 }

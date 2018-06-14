@@ -14,20 +14,21 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.kuali.coeus.common.budget.framework.core.AwardBudgetSaveEvent;
-import org.kuali.coeus.common.budget.framework.personnel.*;
-import org.kuali.coeus.common.framework.person.KcPerson;
-import org.kuali.coeus.common.framework.rolodex.Rolodex;
-import org.kuali.coeus.common.framework.rolodex.NonOrganizationalRolodex;
-import org.kuali.coeus.sys.framework.controller.StrutsConfirmation;
-import org.kuali.coeus.sys.framework.service.KcServiceLocator;
-import org.kuali.coeus.sys.api.model.ScaleTwoDecimal;
 import org.kuali.coeus.common.budget.framework.core.Budget;
 import org.kuali.coeus.common.budget.framework.core.BudgetConstants;
+import org.kuali.coeus.common.budget.framework.core.BudgetForm;
 import org.kuali.coeus.common.budget.framework.core.category.BudgetCategory;
 import org.kuali.coeus.common.budget.framework.nonpersonnel.BudgetLineItem;
 import org.kuali.coeus.common.budget.framework.nonpersonnel.BudgetLineItemCalculatedAmount;
 import org.kuali.coeus.common.budget.framework.period.BudgetPeriod;
-import org.kuali.coeus.common.budget.framework.core.BudgetForm;
+import org.kuali.coeus.common.budget.framework.personnel.*;
+import org.kuali.coeus.common.framework.person.KcPerson;
+import org.kuali.coeus.common.framework.rolodex.NonOrganizationalRolodex;
+import org.kuali.coeus.common.framework.rolodex.Rolodex;
+import org.kuali.coeus.sys.api.model.ScaleTwoDecimal;
+import org.kuali.coeus.sys.framework.controller.StrutsConfirmation;
+import org.kuali.coeus.sys.framework.service.KcServiceLocator;
+import org.kuali.kra.award.budget.AwardBudgetPeriodExt;
 import org.kuali.kra.award.budget.document.AwardBudgetDocument;
 import org.kuali.kra.infrastructure.Constants;
 import org.kuali.kra.infrastructure.KeyConstants;
@@ -305,12 +306,18 @@ public class BudgetPersonnelAction extends BudgetExpensesAction {
         int selectedBudgetPeriodIndex = budgetForm.getViewBudgetPeriod()-1;
         int selectedBudgetLineItemIndex = getSelectedLine(request);   
         int selectedPersonnelIndex = getSelectedPersonnel(request);
-        boolean errorFound = false;
         BudgetLineItem selectedBudgetLineItem = budget.getBudgetPeriod(selectedBudgetPeriodIndex).getBudgetLineItem(selectedBudgetLineItemIndex);
+        calculateSalaryForLineItem(budget, selectedBudgetPeriodIndex, selectedBudgetLineItemIndex, selectedPersonnelIndex, selectedBudgetLineItem);
+        return mapping.findForward(Constants.MAPPING_BASIC);
+    }
+
+    public void calculateSalaryForLineItem(Budget budget, int selectedBudgetPeriodIndex, int selectedBudgetLineItemIndex,
+                                           int selectedPersonnelIndex, BudgetLineItem selectedBudgetLineItem) {
+        boolean errorFound;
         BudgetPersonnelDetails budgetPersonnelDetails = selectedBudgetLineItem.getBudgetPersonnelDetailsList().get(selectedPersonnelIndex);
-        
+
         errorFound = personnelDetailsCheck(budget, selectedBudgetPeriodIndex, selectedBudgetLineItemIndex, selectedPersonnelIndex);
-        
+
         if(!errorFound){
             updatePersonnelBudgetRate(selectedBudgetLineItem);
             getBudgetPersonnelBudgetService().calculateBudgetPersonnelBudget(budget, selectedBudgetLineItem, budgetPersonnelDetails, selectedPersonnelIndex);
@@ -319,9 +326,8 @@ public class BudgetPersonnelAction extends BudgetExpensesAction {
             getCalculationService().populateCalculatedAmount(budget, selectedBudgetLineItem);
         }
         budget.getBudgetTotals();
-        return mapping.findForward(Constants.MAPPING_BASIC);
     }
-    
+
     private boolean personnelDetailsCheck(Budget budget, int selectedBudgetPeriodIndex, int selectedBudgetLineItemIndex, int selectedPersonnelIndex) {
         BudgetLineItem selectedBudgetLineItem = budget.getBudgetPeriod(selectedBudgetPeriodIndex).getBudgetLineItem(selectedBudgetLineItemIndex);
         BudgetPersonnelDetails budgetPersonnelDetails = selectedBudgetLineItem.getBudgetPersonnelDetailsList().get(selectedPersonnelIndex);
@@ -467,6 +473,7 @@ public class BudgetPersonnelAction extends BudgetExpensesAction {
         }
 
         getBudgetPersonService().populateBudgetPersonDefaultDataIfEmpty(budget);
+        calculateSalary(budget);
 
         if (getKcBusinessRulesEngine().applyRules(new BudgetSavePersonnelEvent(budget, budget.getBudgetPeriod(budgetForm.getViewBudgetPeriod()-1))) &&
                 getKcBusinessRulesEngine().applyRules(new AwardBudgetSaveEvent(budget))) {
@@ -478,8 +485,23 @@ public class BudgetPersonnelAction extends BudgetExpensesAction {
         }
         
         return forward;
-    }    
-        
+    }
+
+    public void calculateSalary(Budget budget) {
+        for (int periodIndex = 0; periodIndex < budget.getBudgetPeriods().size(); periodIndex++) {
+            BudgetPeriod currentPeriod = budget.getBudgetPeriod(periodIndex);
+            AwardBudgetPeriodExt awardBudgetPeriod = (AwardBudgetPeriodExt) currentPeriod;
+            if (!awardBudgetPeriod.isFringeOverridden()) {
+                for (int lineItemIndex = 0; lineItemIndex < currentPeriod.getBudgetLineItems().size(); lineItemIndex++) {
+                    BudgetLineItem currentLineItem = currentPeriod.getBudgetLineItems().get(lineItemIndex);
+                    for (int personIndex = 0; personIndex < currentLineItem.getBudgetPersonnelDetailsList().size(); personIndex++) {
+                        calculateSalaryForLineItem(budget, periodIndex, lineItemIndex, personIndex, currentLineItem);
+                    }
+                }
+            }
+        }
+    }
+
     /**
      * 
      * This method is used to delete the proposal attachment
