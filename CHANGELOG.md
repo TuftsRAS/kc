@@ -1,6 +1,11 @@
 
 
 ## CURRENT
+* RESKC-2936: Fix Award Budget issue asking for Rates Sync when the Budget is finalized. (#2938)
+
+  * Omar Soto Fortuño on Thu, 14 Jun 2018 17:34:59 -0400 [View Commit](../../commit/4ef880ac4c3f6b56fa192d982660a641fd0c2108)
+
+## coeus-1806.0019
 * RESKC-2562: Update Workflow Emails for some KC Documents using XML Ingestion mechanism. (#2934)
 
   * Omar Soto Fortuño on Thu, 14 Jun 2018 16:19:19 -0400 [View Commit](../../commit/757d9a4ad87d37bf6ac95b1f3c19239300d46d7b)
