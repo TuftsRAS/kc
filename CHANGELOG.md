@@ -1,6 +1,11 @@
 
 
 ## CURRENT
+* RESKC-2495: Fix issue that allowed editing an Institutional Proposal on multiple tabs. (#2940)
+
+  * Omar Soto Fortuño on Fri, 15 Jun 2018 10:59:24 -0400 [View Commit](../../commit/572f802bbd6657729958da919edb1ba874749c59)
+
+## coeus-1806.0020
 * RESKC-2936: Fix Award Budget issue asking for Rates Sync when the Budget is finalized. (#2938)
 
   * Omar Soto Fortuño on Thu, 14 Jun 2018 17:34:59 -0400 [View Commit](../../commit/4ef880ac4c3f6b56fa192d982660a641fd0c2108)
