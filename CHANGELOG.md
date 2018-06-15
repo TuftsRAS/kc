@@ -1,6 +1,14 @@
 
 
 ## CURRENT
+* RESKC-2953: Added pagination and modified get saved docs. (#2939)
+
+* RESKC-2953: Added pagination and modified get saved docs.
+  * 
+* PR review chages
+  * Gayathri Athreya on Fri, 15 Jun 2018 10:15:01 -0700 [View Commit](../../commit/79d38be0713d124b71d6df522d39e06ab9b5e954)
+
+## coeus-1806.0021
 * RESKC-2495: Fix issue that allowed editing an Institutional Proposal on multiple tabs. (#2940)
 
   * Omar Soto Fortuño on Fri, 15 Jun 2018 10:59:24 -0400 [View Commit](../../commit/572f802bbd6657729958da919edb1ba874749c59)
