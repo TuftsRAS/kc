@@ -223,28 +223,20 @@ public class InstitutionalProposalHomeAction extends InstitutionalProposalAction
         InstitutionalProposal pendingProposal = findPendingVersion(institutionalProposal.getProposalNumber());
         ActionForward forward;
         if (pendingProposal != null) {
-            Object question = request.getParameter(KRADConstants.QUESTION_CLICKED_BUTTON);
-            forward = question == null ? showPromptForEditingPendingVersion(mapping, institutionalProposalForm, request, response) :
-                    processPromptForEditingPendingVersionResponse(mapping, request, response, institutionalProposalForm, pendingProposal);
-
+            if (getVersionHistoryService().isAnotherUserEditingDocument(pendingProposal.getInstitutionalProposalDocument().getDocumentNumber())) {
+                forward = displayAnotherUserEditingError(mapping);
+            } else {
+                Object question = request.getParameter(KRADConstants.QUESTION_CLICKED_BUTTON);
+                forward = question == null ? showPromptForEditingPendingVersion(mapping, institutionalProposalForm, request, response) :
+                        processPromptForEditingPendingVersionResponse(mapping, request, response, institutionalProposalForm, pendingProposal);
+            }
         }
         else if (getVersionHistoryService().isAnotherUserEditingDocument(institutionalProposalDocument.getDocumentNumber())) {
-            getGlobalVariableService().getMessageMap().putError(Constants.DOCUMENT_NUMBER_FIELD, KeyConstants.MESSAGE_DOCUMENT_VERSION_ANOTHER_USER_EDITING,
-                    Constants.INSTITUTIONAL_PROPOSAL,
-                    globalVariableService.getUserSession().getPerson().getFirstName(),
-                    globalVariableService.getUserSession().getPerson().getLastName(),
-                    globalVariableService.getUserSession().getPrincipalName());
-            forward = mapping.findForward(Constants.MAPPING_BASIC);
+            forward = displayAnotherUserEditingError(mapping);
         }
         else {
-            if (getVersionHistoryService().isVersionLockOn()) {
-                getPessimisticLockService().generateNewLock(
-                        institutionalProposalDocument.getDocumentNumber(),
-                        getVersionHistoryService().getVersionLockDescriptor(institutionalProposalDocument.getDocumentTypeCode(),
-                                institutionalProposalDocument.getDocumentNumber()),
-                        GlobalVariables.getUserSession().getPerson());
-            }
             forward = createAndSaveNewVersion(response, institutionalProposalForm, institutionalProposalDocument, institutionalProposal);
+            generateNewLock(institutionalProposalForm.getInstitutionalProposalDocument());
         }
         return forward;
     }
@@ -383,6 +375,7 @@ public class InstitutionalProposalHomeAction extends InstitutionalProposalAction
             forward = mapping.findForward(Constants.MAPPING_BASIC);
         }
         else {
+            generateNewLock(institutionalProposal.getInstitutionalProposalDocument());
             initializeFormWithInstutitionalProposal(institutionalProposalForm, institutionalProposal);
             response.sendRedirect(buildForwardUrl(institutionalProposalForm.getInstitutionalProposalDocument().getDocumentNumber()));
             forward = null;
@@ -427,6 +420,26 @@ public class InstitutionalProposalHomeAction extends InstitutionalProposalAction
         }
 
         return mapping.findForward(RiceConstants.MAPPING_BASIC);
+    }
+
+    private void generateNewLock(InstitutionalProposalDocument institutionalProposalDocument) {
+        if (getVersionHistoryService().isVersionLockOn()) {
+            getPessimisticLockService().generateNewLock(
+                    institutionalProposalDocument.getDocumentNumber(),
+                    getVersionHistoryService().getVersionLockDescriptor(institutionalProposalDocument.getDocumentTypeCode(),
+                            institutionalProposalDocument.getDocumentNumber()),
+                    GlobalVariables.getUserSession().getPerson());
+        }
+    }
+
+    private ActionForward displayAnotherUserEditingError(ActionMapping mapping) {
+        getGlobalVariableService().getMessageMap().putError(Constants.DOCUMENT_NUMBER_FIELD, KeyConstants.MESSAGE_DOCUMENT_VERSION_ANOTHER_USER_EDITING,
+                Constants.INSTITUTIONAL_PROPOSAL,
+                globalVariableService.getUserSession().getPerson().getFirstName(),
+                globalVariableService.getUserSession().getPerson().getLastName(),
+                globalVariableService.getUserSession().getPrincipalName());
+
+        return mapping.findForward(Constants.MAPPING_BASIC);
     }
     
     protected VersioningService getVersioningService() {
