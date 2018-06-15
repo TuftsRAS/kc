@@ -17,15 +17,12 @@ import org.kuali.coeus.propdev.impl.core.ProposalDevelopmentDocument;
 import org.kuali.coeus.sys.framework.gv.GlobalVariableService;
 import org.kuali.coeus.sys.framework.rest.UnauthorizedAccessException;
 import org.kuali.coeus.sys.framework.rest.UnprocessableEntityException;
-import org.kuali.rice.core.api.criteria.QueryByCriteria;
 import org.kuali.rice.kew.api.WorkflowDocument;
 import org.kuali.rice.kew.api.document.search.DocumentSearchResult;
 import org.kuali.rice.kew.api.exception.WorkflowException;
 import org.kuali.rice.kim.api.identity.Person;
 import org.kuali.rice.kim.api.identity.PersonService;
-import org.kuali.rice.krad.data.DataObjectService;
 import org.kuali.rice.krad.document.Document;
-import org.kuali.rice.krad.service.DocumentDictionaryService;
 import org.kuali.rice.krad.service.DocumentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -34,29 +31,22 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @RequestMapping(value="/api/v1")
 @Controller("documentController")
 public class DocumentController {
 
-    private static final String PRINCIPAL_ID = "principalId";
     @Autowired
     @Qualifier("documentService")
     private DocumentService documentService;
 
     @Autowired
-    @Qualifier("documentDictionaryService")
-    private DocumentDictionaryService documentDictionaryService;
-
-    @Autowired
     @Qualifier("kewDocHeaderDao")
     private KewDocHeaderDao kewDocHeaderDao;
-
-    @Autowired
-    @Qualifier("dataObjectService")
-    private DataObjectService dataObjectService;
 
     @Autowired
     @Qualifier("personService")
@@ -89,10 +79,8 @@ public class DocumentController {
     private List<DocumentDetailsDto> getDocumentsRoutingForUser(String routingToUser, Integer limit, Integer skip) {
         checkAndRetrievePerson(routingToUser);
         List<DocumentDetailsDto> documentList;
-        Map<String, Object> fieldValues = new HashMap<String, Object>();
-        fieldValues.put(PRINCIPAL_ID, routingToUser);
-        List<DocumentWorkflowUserDetails> documentDetails = dataObjectService.findMatching(DocumentWorkflowUserDetails.class,
-                QueryByCriteria.Builder.andAttributes(fieldValues).build()).getResults();
+        List<DocumentWorkflowUserDetails> documentDetails = kewDocHeaderDao.getWorkflowDetailsForEnrouteDocuments(routingToUser, limit, skip);
+
         try {
             List<Document> documents =  getAllDocuments(documentDetails.stream().map(DocumentWorkflowUserDetails::getDocumentNumber).collect(Collectors.toList()));
             documentList = documents.stream().map(document -> getDocumentDetailsDto(document,
@@ -108,23 +96,12 @@ public class DocumentController {
     }
 
     protected List<DocumentDetailsDto> documentSavedForUser(String savedForUser, Integer limit, Integer skip) {
-        Person person = checkAndRetrievePerson(savedForUser);
-
+        checkAndRetrievePerson(savedForUser);
         final List<DocumentSearchResult> savedDocuments = kewDocHeaderDao.getSavedDocuments(savedForUser, limit, skip);
-        return CollectionUtils.isNotEmpty(savedDocuments) ? savedDocuments.stream()
-                .filter(savedDoc -> canOpenDocument(person, savedDoc))
-                .map(documentSearchResult -> getDocumentDetailsDto(documentSearchResult, null))
-                .collect(Collectors.toList()) :  new ArrayList<>();
-    }
 
-    protected boolean canOpenDocument(Person person, DocumentSearchResult savedDoc) {
-        try {
-            Document document = documentService.getByDocumentHeaderId(savedDoc.getDocument().getDocumentId());
-            return documentDictionaryService.getDocumentAuthorizer(document).canOpen(document, person);
-        } catch (Exception e) {
-            LOG.warn("User not authorized to open document");
-        }
-        return false;
+        return CollectionUtils.isNotEmpty(savedDocuments) ? savedDocuments.stream()
+                .map(documentSearchResult -> getDocumentDetailsDto(documentSearchResult))
+                .collect(Collectors.toList()) :  new ArrayList<>();
     }
 
     protected Person checkAndRetrievePerson(String user) {
@@ -138,6 +115,7 @@ public class DocumentController {
         }
         return person;
     }
+
     private List<Document> getAllDocuments(List<String> documentNumbers) throws WorkflowException {
         return documentService.getDocumentsByListOfDocumentHeaderIds(ProposalDevelopmentDocument.class, documentNumbers);
     }
@@ -156,7 +134,7 @@ public class DocumentController {
         return documentDetailsDto;
     }
 
-    private DocumentDetailsDto getDocumentDetailsDto(DocumentSearchResult doc, Integer stepsAway) {
+    private DocumentDetailsDto getDocumentDetailsDto(DocumentSearchResult doc) {
         DocumentDetailsDto documentDetailsDto = new DocumentDetailsDto();
         documentDetailsDto.setDocumentTitle(doc.getDocument().getTitle());
         documentDetailsDto.setDocumentNumber(doc.getDocument().getDocumentId());
@@ -164,7 +142,6 @@ public class DocumentController {
         documentDetailsDto.setDocumentCreateDate(formattedDate);
         documentDetailsDto.setDocHandlerUrl(doc.getDocument().getDocumentHandlerUrl());
         documentDetailsDto.setDocumentType(doc.getDocument().getDocumentTypeName());
-        documentDetailsDto.setStepsAway(stepsAway);
         return documentDetailsDto;
     }
 

@@ -18,6 +18,7 @@
  */
 package org.kuali.coeus.common.api.document.service;
 
+import org.kuali.coeus.common.api.document.DocumentWorkflowUserDetails;
 import org.kuali.rice.kew.api.document.search.DocumentSearchResult;
 
 import java.util.List;
@@ -26,5 +27,6 @@ public interface KewDocHeaderDao {
 
     List<DocumentSearchResult> getEnrouteProposalDocs(String user, Integer limit, Integer skip);
     List<DocumentSearchResult> getSavedDocuments(String user, Integer limit, Integer skip);
+    List<DocumentWorkflowUserDetails> getWorkflowDetailsForEnrouteDocuments(String user, Integer limit, Integer skip);
 
 }
