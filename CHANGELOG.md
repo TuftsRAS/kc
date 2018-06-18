@@ -1,6 +1,11 @@
 
 
 ## CURRENT
+* RESKC-2495: Remove the need of enabling the parameter Enable_Lock_On_Document_Version for IP Pessimistic Lock.
+
+  * Omar Soto Fortuño on Mon, 18 Jun 2018 09:58:08 -0400 [View Commit](../../commit/af0466a93b69ce87a0e292805199c98b7d2ed0ee)
+
+## coeus-1806.0022
 * RESKC-2953: Added pagination and modified get saved docs. (#2939)
 
 * RESKC-2953: Added pagination and modified get saved docs.
