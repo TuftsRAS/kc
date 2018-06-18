@@ -223,7 +223,7 @@ public class InstitutionalProposalHomeAction extends InstitutionalProposalAction
         InstitutionalProposal pendingProposal = findPendingVersion(institutionalProposal.getProposalNumber());
         ActionForward forward;
         if (pendingProposal != null) {
-            if (getVersionHistoryService().isAnotherUserEditingDocument(pendingProposal.getInstitutionalProposalDocument().getDocumentNumber())) {
+            if (isPessimisticLockInPlace(pendingProposal.getInstitutionalProposalDocument().getDocumentNumber())) {
                 forward = displayAnotherUserEditingError(mapping);
             } else {
                 Object question = request.getParameter(KRADConstants.QUESTION_CLICKED_BUTTON);
@@ -231,7 +231,7 @@ public class InstitutionalProposalHomeAction extends InstitutionalProposalAction
                         processPromptForEditingPendingVersionResponse(mapping, request, response, institutionalProposalForm, pendingProposal);
             }
         }
-        else if (getVersionHistoryService().isAnotherUserEditingDocument(institutionalProposalDocument.getDocumentNumber())) {
+        else if (isPessimisticLockInPlace(institutionalProposalDocument.getDocumentNumber())) {
             forward = displayAnotherUserEditingError(mapping);
         }
         else {
@@ -422,14 +422,16 @@ public class InstitutionalProposalHomeAction extends InstitutionalProposalAction
         return mapping.findForward(RiceConstants.MAPPING_BASIC);
     }
 
+    private boolean isPessimisticLockInPlace(String documentNumber) {
+        return getPessimisticLockService().getPessimisticLocksForDocument(documentNumber).stream().findAny().isPresent();
+    }
+
     private void generateNewLock(InstitutionalProposalDocument institutionalProposalDocument) {
-        if (getVersionHistoryService().isVersionLockOn()) {
-            getPessimisticLockService().generateNewLock(
-                    institutionalProposalDocument.getDocumentNumber(),
-                    getVersionHistoryService().getVersionLockDescriptor(institutionalProposalDocument.getDocumentTypeCode(),
-                            institutionalProposalDocument.getDocumentNumber()),
-                    GlobalVariables.getUserSession().getPerson());
-        }
+        getPessimisticLockService().generateNewLock(
+                institutionalProposalDocument.getDocumentNumber(),
+                getVersionHistoryService().getVersionLockDescriptor(institutionalProposalDocument.getDocumentTypeCode(),
+                        institutionalProposalDocument.getDocumentNumber()),
+                GlobalVariables.getUserSession().getPerson());
     }
 
     private ActionForward displayAnotherUserEditingError(ActionMapping mapping) {
