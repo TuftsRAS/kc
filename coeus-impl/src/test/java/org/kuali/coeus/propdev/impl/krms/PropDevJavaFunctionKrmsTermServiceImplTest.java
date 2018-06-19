@@ -23,6 +23,7 @@ import org.kuali.coeus.common.budget.framework.personnel.AppointmentType;
 import org.kuali.coeus.common.budget.framework.personnel.BudgetPerson;
 import org.kuali.coeus.common.budget.framework.personnel.BudgetPersonnelDetails;
 import org.kuali.coeus.common.framework.compliance.core.SpecialReviewType;
+import org.kuali.coeus.common.framework.org.Organization;
 import org.kuali.coeus.common.framework.person.KcPerson;
 import org.kuali.coeus.common.framework.person.KcPersonService;
 import org.kuali.coeus.common.framework.person.attr.PersonAppointment;
@@ -38,6 +39,7 @@ import org.kuali.coeus.propdev.impl.attachment.Narrative;
 import org.kuali.coeus.propdev.impl.attachment.NarrativeType;
 import org.kuali.coeus.propdev.impl.budget.ProposalDevelopmentBudgetExt;
 import org.kuali.coeus.propdev.impl.core.*;
+import org.kuali.coeus.propdev.impl.location.ProposalSite;
 import org.kuali.coeus.propdev.impl.person.ProposalPerson;
 import org.kuali.coeus.propdev.impl.person.ProposalPersonUnit;
 import org.kuali.coeus.propdev.impl.person.attachment.PropPerDocType;
@@ -1134,6 +1136,31 @@ public class PropDevJavaFunctionKrmsTermServiceImplTest {
 		Assert.assertEquals(TRUE, propDevJavaFunctionKrmsTermService.s2sHumanSubjectExists(developmentProposal));
 	}
 
+	@Test
+	public void test_performanceSiteExistsRule() {
+		final DevelopmentProposal developmentProposal = createDevelopmentProposal();
+		assertFalse(propDevJavaFunctionKrmsTermService.performanceSiteLocationExists(developmentProposal));
+		developmentProposal.addPerformanceSite(new ProposalSite());
+		assertTrue(propDevJavaFunctionKrmsTermService.performanceSiteLocationExists(developmentProposal));
+	}
+	
+	@Test
+	public void test_otherOrganizationExistsRule() {
+		final DevelopmentProposal developmentProposal = createDevelopmentProposal();
+		assertFalse(propDevJavaFunctionKrmsTermService.otherOrganizationExists(developmentProposal));
+		developmentProposal.addOtherOrganization(createOtherOrganization());
+		assertTrue(propDevJavaFunctionKrmsTermService.otherOrganizationExists(developmentProposal));
+	}
+	
+	public ProposalSite createOtherOrganization() {
+		String defaultCongressionalDistrict = "TEST";
+		Organization organization = new Organization();
+		organization.setCongressionalDistrict(defaultCongressionalDistrict);
+		ProposalSite proposalSite = new ProposalSite();
+		proposalSite.setOrganization(organization);
+		return proposalSite;
+	}
+	
 	public DevelopmentProposal createDevelopmentProposal() {
 		final ProposalDevelopmentDocument proposalDevelopmentDocument = new ProposalDevelopmentDocument();
 		proposalDevelopmentDocument.getDocumentHeader().setDocumentNumber("123");
