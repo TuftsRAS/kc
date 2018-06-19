@@ -1,6 +1,11 @@
 
 
 ## CURRENT
+* RESKC-2968: Fix Pending Report status issue and parameterized them. (#2944)
+
+  * Omar Soto Fortuño on Tue, 19 Jun 2018 10:44:19 -0400 [View Commit](../../commit/495cf5bea806f09717ec5999597b82aa1d595192)
+
+## coeus-1806.0024
 * RESKC-2562: Fix Action Emails HTML issue and minor change in ProposalDevelopment email subject. (#2943)
 
   * Omar Soto Fortuño on Tue, 19 Jun 2018 09:06:56 -0400 [View Commit](../../commit/7a320bddbc683aac671cd6edacf7ba7ce3306503)
