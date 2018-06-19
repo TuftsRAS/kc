@@ -1,6 +1,10 @@
 
 
 ## CURRENT
+* UMD: Add Organizations and Performance Sites as KRMS Functions for PropDev
+  * rmancher on Tue, 19 Jun 2018 12:05:59 -0400 [View Commit](../../commit/fc93ac9bfb9ebd2820a16b46d3a824d93d01fd6b)
+
+## coeus-1806.0026
 * No Changes
 
 
