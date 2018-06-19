@@ -1,6 +1,11 @@
 
 
 ## CURRENT
+* RESKC-2562: Fix Action Emails HTML issue and minor change in ProposalDevelopment email subject. (#2943)
+
+  * Omar Soto Fortuño on Tue, 19 Jun 2018 09:06:56 -0400 [View Commit](../../commit/7a320bddbc683aac671cd6edacf7ba7ce3306503)
+
+## coeus-1806.0023
 * RESKC-2495: Remove the need of enabling the parameter Enable_Lock_On_Document_Version for IP Pessimistic Lock.
 
   * Omar Soto Fortuño on Mon, 18 Jun 2018 09:58:08 -0400 [View Commit](../../commit/af0466a93b69ce87a0e292805199c98b7d2ed0ee)
