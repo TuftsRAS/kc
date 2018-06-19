@@ -89,8 +89,9 @@ public class CurrentAndPendingReportServiceImpl implements CurrentAndPendingRepo
         List<PendingReportBean> data;
         try {
             Collection<String> excludedProposalTypes = getParameterService().getParameterValuesAsString(InstitutionalProposalDocument.class, Constants.EXCLUDED_CP_PROPOSAL_TYPE_CODES_PARAM);
+            Collection<String> excludedProposalStatuses = getParameterService().getParameterValuesAsString(InstitutionalProposalDocument.class, Constants.EXCLUDED_CP_PROPOSAL_STATUS_CODES_PARAM);
 
-            data = pendingReportDao.queryForPendingSupport(personId, excludedProposalTypes);
+            data = pendingReportDao.queryForPendingSupport(personId, excludedProposalTypes, excludedProposalStatuses);
         } catch(WorkflowException e) {
             throw new RuntimeException(e);
         }

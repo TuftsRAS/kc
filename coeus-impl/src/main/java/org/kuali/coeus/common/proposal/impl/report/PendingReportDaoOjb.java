@@ -29,11 +29,12 @@ public class PendingReportDaoOjb extends BaseReportDaoOjb implements PendingRepo
     private static final String PERSON_ID = "personId";
     private static final String IP_PROPOSAL_SEQUENCE_STATUS = "institutionalProposal.proposalSequenceStatus";
     private static final String IP_PROPOSAL_TYPE_CODE = "institutionalProposal.proposalTypeCode";
+    private static final String IP_PROPOSAL_STATUS_CODE = "institutionalProposal.statusCode";
 
     @Override
-    public List<PendingReportBean> queryForPendingSupport(String personId, Collection<String> excludedProposalTypes) throws WorkflowException {
+    public List<PendingReportBean> queryForPendingSupport(String personId, Collection<String> excludedProposalTypes, Collection<String> excludedProposalStatuses) throws WorkflowException {
         List<PendingReportBean> data = new ArrayList<>();
-        for(InstitutionalProposalPerson ipPerson : executePendingSupportQuery(personId, excludedProposalTypes)) {
+        for(InstitutionalProposalPerson ipPerson : executePendingSupportQuery(personId, excludedProposalTypes, excludedProposalStatuses)) {
             PendingReportBean bean = buildPendingReportBean(ipPerson);
             if(bean != null)  {
                 data.add(bean);
@@ -51,13 +52,17 @@ public class PendingReportDaoOjb extends BaseReportDaoOjb implements PendingRepo
         return bean;
     }
 
-    private Collection<InstitutionalProposalPerson> executePendingSupportQuery(String personId, Collection<String> excludedProposalTypes) {
+    private Collection<InstitutionalProposalPerson> executePendingSupportQuery(String personId, Collection<String> excludedProposalTypes, Collection<String> excludedProposalStatuses) {
         Criteria criteria = new Criteria();
         criteria.addEqualTo(PERSON_ID, personId);
         criteria.addEqualTo(IP_PROPOSAL_SEQUENCE_STATUS, VersionStatus.ACTIVE.toString());
 
         if (!excludedProposalTypes.isEmpty()) {
             criteria.addNotIn(IP_PROPOSAL_TYPE_CODE, excludedProposalTypes);
+        }
+
+        if (!excludedProposalStatuses.isEmpty()) {
+            criteria.addNotIn(IP_PROPOSAL_STATUS_CODE, excludedProposalStatuses);
         }
 
         QueryByCriteria queryByCriteria = QueryFactory.newQuery(InstitutionalProposalPerson.class, criteria);

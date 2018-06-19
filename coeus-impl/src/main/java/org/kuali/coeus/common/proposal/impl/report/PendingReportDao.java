@@ -22,5 +22,5 @@ public interface PendingReportDao {
      * @param personId - The person for whom pending support obligations are being queried
      * @return
      */
-    List<PendingReportBean> queryForPendingSupport(String personId, Collection<String> excludedProposalTypes) throws WorkflowException;
+    List<PendingReportBean> queryForPendingSupport(String personId, Collection<String> excludedProposalTypes, Collection<String> excludedProposalStatuses) throws WorkflowException;
 }

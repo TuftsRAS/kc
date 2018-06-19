@@ -986,5 +986,6 @@ public interface Constants {
 
     // Current and Pending Report
     String EXCLUDED_CP_PROPOSAL_TYPE_CODES_PARAM = "Excluded_Codes_CP_Report";
+    String EXCLUDED_CP_PROPOSAL_STATUS_CODES_PARAM = "Excluded_IPStatuses_CP_Pending";
 }
 
