@@ -1,6 +1,10 @@
 
 
 ## CURRENT
+* No Changes
+
+
+## coeus-1806.0025
 * RESKC-2968: Fix Pending Report status issue and parameterized them. (#2944)
 
   * Omar Soto Fortuño on Tue, 19 Jun 2018 10:44:19 -0400 [View Commit](../../commit/495cf5bea806f09717ec5999597b82aa1d595192)
