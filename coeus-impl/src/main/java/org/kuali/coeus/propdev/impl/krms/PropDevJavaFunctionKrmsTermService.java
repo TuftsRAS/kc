@@ -137,4 +137,9 @@ public interface PropDevJavaFunctionKrmsTermService extends KcKrmsJavaFunctionTe
     String humanSubjectsSpecialReviewContainsPropertyValue(DevelopmentProposal developmentProposal, String propertyName, String propertyValue);
 
     String s2sHumanSubjectExists(DevelopmentProposal developmentProposal);
+    
+    Boolean performanceSiteLocationExists(DevelopmentProposal developmentProposal);
+    
+    Boolean otherOrganizationExists(DevelopmentProposal developmentProposal);
+    
 }

@@ -1176,6 +1176,16 @@ public class PropDevJavaFunctionKrmsTermServiceImpl extends KcKrmsJavaFunctionTe
         }) ? TRUE : FALSE;
     }
 
+    @Override
+    public Boolean performanceSiteLocationExists(DevelopmentProposal developmentProposal) {
+        return !developmentProposal.getPerformanceSites().isEmpty();
+    }
+    
+    @Override
+    public Boolean otherOrganizationExists(DevelopmentProposal developmentProposal) {
+        return !developmentProposal.getOtherOrganizations().isEmpty();
+    }
+    
     public DateTimeService getDateTimeService() {
         return dateTimeService;
     }
