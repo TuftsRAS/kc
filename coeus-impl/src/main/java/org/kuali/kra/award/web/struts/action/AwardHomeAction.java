@@ -57,6 +57,8 @@ public class AwardHomeAction extends AwardAction {
     private ParameterService parameterService;
     private GlobalVariableService globalVariableService;
 
+    private static final String AWARD_LIST = "awardList";
+
     public AwardHomeAction(){
         approvedSubawardActionHelper = new ApprovedSubawardActionHelper();
     }
@@ -370,6 +372,7 @@ public class AwardHomeAction extends AwardAction {
                         getVersionHistoryService().getVersionLockDescriptor(award.getAwardDocument().getDocumentTypeCode(), award.getAwardDocument().getDocumentNumber()),
                         getGlobalVariableService().getUserSession().getPerson());
             }
+            awardForm.getAwardDocument().refreshReferenceObject(AWARD_LIST);
             AwardDocument newAwardDocument = getAwardVersionService().createAndSaveNewAwardVersion(awardForm.getAwardDocument());
             reinitializeAwardForm(awardForm, newAwardDocument);
             forward = new ActionForward(buildForwardUrl(newAwardDocument.getDocumentNumber()), true);
