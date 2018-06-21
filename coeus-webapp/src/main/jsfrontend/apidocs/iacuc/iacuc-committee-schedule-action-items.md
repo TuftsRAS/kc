@@ -142,6 +142,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Iacuc Committee Schedule Action Items [PATCH /iacuc/api/v1/iacuc-committee-schedule-action-items/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"commScheduleActItemsId": "(val)","scheduleIdFk": "(val)","actionItemNumber": "(val)","scheduleActItemTypeCode": "(val)","itemDescription": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"commScheduleActItemsId": "(val)","scheduleIdFk": "(val)","actionItemNumber": "(val)","scheduleActItemTypeCode": "(val)","itemDescription": "(val)","_primaryKey": "(val)"}
 ### Insert Iacuc Committee Schedule Action Items [POST /iacuc/api/v1/iacuc-committee-schedule-action-items/]
 
 + Request

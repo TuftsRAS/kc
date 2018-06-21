@@ -144,6 +144,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes People Flow Members [PATCH /research-sys/api/v1/people-flow-members/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","memberId": "(val)","memberTypeCode": "(val)","actionRequestPolicyCode": "(val)","responsibilityId": "(val)","priority": "(val)","forceAction": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","memberId": "(val)","memberTypeCode": "(val)","actionRequestPolicyCode": "(val)","responsibilityId": "(val)","priority": "(val)","forceAction": "(val)","_primaryKey": "(val)"}
 ### Insert People Flow Members [POST /research-sys/api/v1/people-flow-members/]
 
 + Request

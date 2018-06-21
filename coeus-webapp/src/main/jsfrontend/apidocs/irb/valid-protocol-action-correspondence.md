@@ -141,6 +141,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Valid Protocol Action Correspondence [PATCH /irb/api/v1/valid-protocol-action-correspondence/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"validProtoActionCorespId": "(val)","protocolActionTypeCode": "(val)","protoCorrespTypeCode": "(val)","finalFlag": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"validProtoActionCorespId": "(val)","protocolActionTypeCode": "(val)","protoCorrespTypeCode": "(val)","finalFlag": "(val)","_primaryKey": "(val)"}
 ### Insert Valid Protocol Action Correspondence [POST /irb/api/v1/valid-protocol-action-correspondence/]
 
 + Request

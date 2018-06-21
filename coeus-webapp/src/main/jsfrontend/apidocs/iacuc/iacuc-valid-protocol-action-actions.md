@@ -144,6 +144,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Iacuc Valid Protocol Action Actions [PATCH /iacuc/api/v1/iacuc-valid-protocol-action-actions/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"validProtocolActionActionId": "(val)","protocolActionTypeCode": "(val)","motionTypeCode": "(val)","actionNumber": "(val)","followupActionCode": "(val)","userPromptFlag": "(val)","userPrompt": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"validProtocolActionActionId": "(val)","protocolActionTypeCode": "(val)","motionTypeCode": "(val)","actionNumber": "(val)","followupActionCode": "(val)","userPromptFlag": "(val)","userPrompt": "(val)","_primaryKey": "(val)"}
 ### Insert Iacuc Valid Protocol Action Actions [POST /iacuc/api/v1/iacuc-valid-protocol-action-actions/]
 
 + Request

@@ -143,6 +143,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Role Document Delegations [PATCH /research-sys/api/v1/role-document-delegations/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"delegationId": "(val)","roleId": "(val)","kimTypeId": "(val)","delegationTypeCode": "(val)","documentNumber": "(val)","active": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"delegationId": "(val)","roleId": "(val)","kimTypeId": "(val)","delegationTypeCode": "(val)","documentNumber": "(val)","active": "(val)","_primaryKey": "(val)"}
 ### Insert Role Document Delegations [POST /research-sys/api/v1/role-document-delegations/]
 
 + Request

@@ -141,6 +141,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Committee Batch Correspondence Details [PATCH /irb/api/v1/committee-batch-correspondence-details/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"committeeBatchCorrespondenceDetailId": "(val)","committeeBatchCorrespondenceId": "(val)","protocolActionId": "(val)","protocolCorrespondenceId": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"committeeBatchCorrespondenceDetailId": "(val)","committeeBatchCorrespondenceId": "(val)","protocolActionId": "(val)","protocolCorrespondenceId": "(val)","_primaryKey": "(val)"}
 ### Insert Committee Batch Correspondence Details [POST /irb/api/v1/committee-batch-correspondence-details/]
 
 + Request

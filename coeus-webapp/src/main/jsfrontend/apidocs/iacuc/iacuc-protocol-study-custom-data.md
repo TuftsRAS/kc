@@ -141,6 +141,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Iacuc Protocol Study Custom Data [PATCH /iacuc/api/v1/iacuc-protocol-study-custom-data/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"iacucProtocolStudyCustomDataId": "(val)","iacucProtocolStudyGroupId": "(val)","procedureCustomAttributeId": "(val)","value": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"iacucProtocolStudyCustomDataId": "(val)","iacucProtocolStudyGroupId": "(val)","procedureCustomAttributeId": "(val)","value": "(val)","_primaryKey": "(val)"}
 ### Insert Iacuc Protocol Study Custom Data [POST /iacuc/api/v1/iacuc-protocol-study-custom-data/]
 
 + Request

@@ -141,6 +141,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Budget Category Maps [PATCH /research-common/api/v1/budget-category-maps/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"mappingName": "(val)","targetCategoryCode": "(val)","categoryType": "(val)","description": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"mappingName": "(val)","targetCategoryCode": "(val)","categoryType": "(val)","description": "(val)","_primaryKey": "(val)"}
 ### Insert Budget Category Maps [POST /research-common/api/v1/budget-category-maps/]
 
 + Request

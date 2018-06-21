@@ -142,6 +142,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Narrative Types [PATCH /propdev/api/v1/narrative-types/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"code": "(val)","description": "(val)","systemGenerated": "(val)","allowMultiple": "(val)","narrativeTypeGroup": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"code": "(val)","description": "(val)","systemGenerated": "(val)","allowMultiple": "(val)","narrativeTypeGroup": "(val)","_primaryKey": "(val)"}
 ### Insert Narrative Types [POST /propdev/api/v1/narrative-types/]
 
 + Request

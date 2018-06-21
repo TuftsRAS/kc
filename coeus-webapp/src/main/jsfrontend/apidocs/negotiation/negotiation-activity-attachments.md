@@ -142,6 +142,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Negotiation Activity Attachments [PATCH /negotiation/api/v1/negotiation-activity-attachments/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"attachmentId": "(val)","activityId": "(val)","fileId": "(val)","description": "(val)","restricted": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"attachmentId": "(val)","activityId": "(val)","fileId": "(val)","description": "(val)","restricted": "(val)","_primaryKey": "(val)"}
 ### Insert Negotiation Activity Attachments [POST /negotiation/api/v1/negotiation-activity-attachments/]
 
 + Request

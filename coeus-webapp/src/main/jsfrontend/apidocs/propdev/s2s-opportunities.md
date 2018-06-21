@@ -154,6 +154,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes S2s Opportunities [PATCH /propdev/api/v1/s2s-opportunities/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"cfdaNumber": "(val)","closingDate": "(val)","competetionId": "(val)","instructionUrl": "(val)","openingDate": "(val)","opportunity": "(val)","opportunityId": "(val)","opportunityTitle": "(val)","revisionCode": "(val)","revisionOtherDescription": "(val)","s2sSubmissionTypeCode": "(val)","schemaUrl": "(val)","offeringAgency": "(val)","agencyContactInfo": "(val)","cfdaDescription": "(val)","multiProject": "(val)","providerCode": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"cfdaNumber": "(val)","closingDate": "(val)","competetionId": "(val)","instructionUrl": "(val)","openingDate": "(val)","opportunity": "(val)","opportunityId": "(val)","opportunityTitle": "(val)","revisionCode": "(val)","revisionOtherDescription": "(val)","s2sSubmissionTypeCode": "(val)","schemaUrl": "(val)","offeringAgency": "(val)","agencyContactInfo": "(val)","cfdaDescription": "(val)","multiProject": "(val)","providerCode": "(val)","_primaryKey": "(val)"}
 ### Insert S2s Opportunities [POST /propdev/api/v1/s2s-opportunities/]
 
 + Request

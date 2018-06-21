@@ -143,6 +143,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Pessimistic Locks [PATCH /research-sys/api/v1/pessimistic-locks/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","ownedByPrincipalIdentifier": "(val)","lockDescriptor": "(val)","generatedTimestamp": "(val)","documentNumber": "(val)","sessionId": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","ownedByPrincipalIdentifier": "(val)","lockDescriptor": "(val)","generatedTimestamp": "(val)","documentNumber": "(val)","sessionId": "(val)","_primaryKey": "(val)"}
 ### Insert Pessimistic Locks [POST /research-sys/api/v1/pessimistic-locks/]
 
 + Request

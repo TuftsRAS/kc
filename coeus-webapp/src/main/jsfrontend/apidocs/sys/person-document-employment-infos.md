@@ -149,6 +149,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Person Document Employment Infos [PATCH /research-sys/api/v1/person-document-employment-infos/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"entityEmploymentId": "(val)","entityAffiliationId": "(val)","employmentStatusCode": "(val)","employmentTypeCode": "(val)","primaryDepartmentCode": "(val)","baseSalaryAmount": "(val)","employeeId": "(val)","employmentRecordId": "(val)","primary": "(val)","edit": "(val)","documentNumber": "(val)","active": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"entityEmploymentId": "(val)","entityAffiliationId": "(val)","employmentStatusCode": "(val)","employmentTypeCode": "(val)","primaryDepartmentCode": "(val)","baseSalaryAmount": "(val)","employeeId": "(val)","employmentRecordId": "(val)","primary": "(val)","edit": "(val)","documentNumber": "(val)","active": "(val)","_primaryKey": "(val)"}
 ### Insert Person Document Employment Infos [POST /research-sys/api/v1/person-document-employment-infos/]
 
 + Request

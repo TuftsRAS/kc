@@ -38,4 +38,15 @@
             </set>
         </property>
     </bean>
+
+    <bean id="simpleReadUpdateOnlyMapBasedRestController" parent="simpleCrudMapBasedRestController" abstract="true">
+        <property name="supportedMethods">
+            <set value-type="org.springframework.web.bind.annotation.RequestMethod">
+                <value>GET</value>
+                <value>PUT</value>
+                <value>PATCH</value>
+            </set>
+        </property>
+    </bean>
+
 </beans>

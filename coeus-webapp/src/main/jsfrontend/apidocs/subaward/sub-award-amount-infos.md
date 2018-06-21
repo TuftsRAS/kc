@@ -16,7 +16,7 @@
 
     + Body
     
-            {"subAwardAmountInfoId": "(val)","subAwardId": "(val)","sequenceNumber": "(val)","subAwardCode": "(val)","obligatedAmount": "(val)","obligatedChange": "(val)","anticipatedAmount": "(val)","anticipatedChange": "(val)","effectiveDate": "(val)","comments": "(val)","fileName": "(val)","mimeType": "(val)","modificationEffectiveDate": "(val)","modificationID": "(val)","periodofPerformanceStartDate": "(val)","periodofPerformanceEndDate": "(val)","fileDataId": "(val)","_primaryKey": "(val)"}
+            {"subAwardAmountInfoId": "(val)","subAwardId": "(val)","sequenceNumber": "(val)","subAwardCode": "(val)","rate": "(val)","obligatedAmount": "(val)","obligatedChange": "(val)","obligatedChangeDirect": "(val)","obligatedChangeIndirect": "(val)","anticipatedAmount": "(val)","anticipatedChange": "(val)","anticipatedChangeDirect": "(val)","anticipatedChangeIndirect": "(val)","effectiveDate": "(val)","comments": "(val)","fileName": "(val)","mimeType": "(val)","modificationEffectiveDate": "(val)","modificationID": "(val)","modificationTypeCode": "(val)","periodofPerformanceStartDate": "(val)","periodofPerformanceEndDate": "(val)","fileDataId": "(val)","_primaryKey": "(val)"}
 
 ### Get All Sub Award Amount Infos [GET /subaward/api/v1/sub-award-amount-infos/]
 	 
@@ -35,8 +35,8 @@
     + Body
     
             [
-              {"subAwardAmountInfoId": "(val)","subAwardId": "(val)","sequenceNumber": "(val)","subAwardCode": "(val)","obligatedAmount": "(val)","obligatedChange": "(val)","anticipatedAmount": "(val)","anticipatedChange": "(val)","effectiveDate": "(val)","comments": "(val)","fileName": "(val)","mimeType": "(val)","modificationEffectiveDate": "(val)","modificationID": "(val)","periodofPerformanceStartDate": "(val)","periodofPerformanceEndDate": "(val)","fileDataId": "(val)","_primaryKey": "(val)"},
-              {"subAwardAmountInfoId": "(val)","subAwardId": "(val)","sequenceNumber": "(val)","subAwardCode": "(val)","obligatedAmount": "(val)","obligatedChange": "(val)","anticipatedAmount": "(val)","anticipatedChange": "(val)","effectiveDate": "(val)","comments": "(val)","fileName": "(val)","mimeType": "(val)","modificationEffectiveDate": "(val)","modificationID": "(val)","periodofPerformanceStartDate": "(val)","periodofPerformanceEndDate": "(val)","fileDataId": "(val)","_primaryKey": "(val)"}
+              {"subAwardAmountInfoId": "(val)","subAwardId": "(val)","sequenceNumber": "(val)","subAwardCode": "(val)","rate": "(val)","obligatedAmount": "(val)","obligatedChange": "(val)","obligatedChangeDirect": "(val)","obligatedChangeIndirect": "(val)","anticipatedAmount": "(val)","anticipatedChange": "(val)","anticipatedChangeDirect": "(val)","anticipatedChangeIndirect": "(val)","effectiveDate": "(val)","comments": "(val)","fileName": "(val)","mimeType": "(val)","modificationEffectiveDate": "(val)","modificationID": "(val)","modificationTypeCode": "(val)","periodofPerformanceStartDate": "(val)","periodofPerformanceEndDate": "(val)","fileDataId": "(val)","_primaryKey": "(val)"},
+              {"subAwardAmountInfoId": "(val)","subAwardId": "(val)","sequenceNumber": "(val)","subAwardCode": "(val)","rate": "(val)","obligatedAmount": "(val)","obligatedChange": "(val)","obligatedChangeDirect": "(val)","obligatedChangeIndirect": "(val)","anticipatedAmount": "(val)","anticipatedChange": "(val)","anticipatedChangeDirect": "(val)","anticipatedChangeIndirect": "(val)","effectiveDate": "(val)","comments": "(val)","fileName": "(val)","mimeType": "(val)","modificationEffectiveDate": "(val)","modificationID": "(val)","modificationTypeCode": "(val)","periodofPerformanceStartDate": "(val)","periodofPerformanceEndDate": "(val)","fileDataId": "(val)","_primaryKey": "(val)"}
             ]
 
 ### Get All Sub Award Amount Infos with Filtering [GET /subaward/api/v1/sub-award-amount-infos/]
@@ -47,16 +47,22 @@
     + subAwardId (optional) - Subaward Id. Maximum length is 22.
     + sequenceNumber (optional) - 
     + subAwardCode (optional) - 
+    + rate (optional) - Rate. Maximum length is 5.
     + obligatedAmount (optional) - Obligated Amount. Maximum length is 22.
     + obligatedChange (optional) - Obligated Change. Maximum length is 12.
+    + obligatedChangeDirect (optional) - Obligated Change Direct. Maximum length is 12.
+    + obligatedChangeIndirect (optional) - Obligated Change F&A. Maximum length is 12.
     + anticipatedAmount (optional) - Anticipated Amount. Maximum length is 22.
     + anticipatedChange (optional) - Anticipated Change. Maximum length is 12.
+    + anticipatedChangeDirect (optional) - Anticipated Change Direct. Maximum length is 12.
+    + anticipatedChangeIndirect (optional) - Anticipated Change F&A. Maximum length is 12.
     + effectiveDate (optional) - Effective Date. Maximum length is 22.
-    + comments (optional) - Comments. Maximum length is 4000.
+    + comments (optional) - Comments. Maximum length is 300.
     + fileName (optional) - File Name. Maximum length is 150.
     + mimeType (optional) - Mime Type. Maximum length is 4000.
     + modificationEffectiveDate (optional) - Modification Effective Date. Maximum length is 10.
     + modificationID (optional) - Modification ID. Maximum length is 50.
+    + modificationTypeCode (optional) - Modification Type. Maximum length is 30.
     + periodofPerformanceStartDate (optional) - Period of Performance Start Date. Maximum length is 10.
     + periodofPerformanceEndDate (optional) - Period of Performance End Date. Maximum length is 10.
     + fileDataId (optional) - 
@@ -77,8 +83,8 @@
     + Body
     
             [
-              {"subAwardAmountInfoId": "(val)","subAwardId": "(val)","sequenceNumber": "(val)","subAwardCode": "(val)","obligatedAmount": "(val)","obligatedChange": "(val)","anticipatedAmount": "(val)","anticipatedChange": "(val)","effectiveDate": "(val)","comments": "(val)","fileName": "(val)","mimeType": "(val)","modificationEffectiveDate": "(val)","modificationID": "(val)","periodofPerformanceStartDate": "(val)","periodofPerformanceEndDate": "(val)","fileDataId": "(val)","_primaryKey": "(val)"},
-              {"subAwardAmountInfoId": "(val)","subAwardId": "(val)","sequenceNumber": "(val)","subAwardCode": "(val)","obligatedAmount": "(val)","obligatedChange": "(val)","anticipatedAmount": "(val)","anticipatedChange": "(val)","effectiveDate": "(val)","comments": "(val)","fileName": "(val)","mimeType": "(val)","modificationEffectiveDate": "(val)","modificationID": "(val)","periodofPerformanceStartDate": "(val)","periodofPerformanceEndDate": "(val)","fileDataId": "(val)","_primaryKey": "(val)"}
+              {"subAwardAmountInfoId": "(val)","subAwardId": "(val)","sequenceNumber": "(val)","subAwardCode": "(val)","rate": "(val)","obligatedAmount": "(val)","obligatedChange": "(val)","obligatedChangeDirect": "(val)","obligatedChangeIndirect": "(val)","anticipatedAmount": "(val)","anticipatedChange": "(val)","anticipatedChangeDirect": "(val)","anticipatedChangeIndirect": "(val)","effectiveDate": "(val)","comments": "(val)","fileName": "(val)","mimeType": "(val)","modificationEffectiveDate": "(val)","modificationID": "(val)","modificationTypeCode": "(val)","periodofPerformanceStartDate": "(val)","periodofPerformanceEndDate": "(val)","fileDataId": "(val)","_primaryKey": "(val)"},
+              {"subAwardAmountInfoId": "(val)","subAwardId": "(val)","sequenceNumber": "(val)","subAwardCode": "(val)","rate": "(val)","obligatedAmount": "(val)","obligatedChange": "(val)","obligatedChangeDirect": "(val)","obligatedChangeIndirect": "(val)","anticipatedAmount": "(val)","anticipatedChange": "(val)","anticipatedChangeDirect": "(val)","anticipatedChangeIndirect": "(val)","effectiveDate": "(val)","comments": "(val)","fileName": "(val)","mimeType": "(val)","modificationEffectiveDate": "(val)","modificationID": "(val)","modificationTypeCode": "(val)","periodofPerformanceStartDate": "(val)","periodofPerformanceEndDate": "(val)","fileDataId": "(val)","_primaryKey": "(val)"}
             ]
 			
 ### Get Schema for Sub Award Amount Infos [GET /subaward/api/v1/sub-award-amount-infos/]
@@ -101,7 +107,7 @@
 
     + Body
     
-            {"columns":["subAwardAmountInfoId","subAwardId","sequenceNumber","subAwardCode","obligatedAmount","obligatedChange","anticipatedAmount","anticipatedChange","effectiveDate","comments","fileName","mimeType","modificationEffectiveDate","modificationID","periodofPerformanceStartDate","periodofPerformanceEndDate","fileDataId"],"primaryKey":"subAwardAmountInfoId"}
+            {"columns":["subAwardAmountInfoId","subAwardId","sequenceNumber","subAwardCode","rate","obligatedAmount","obligatedChange","obligatedChangeDirect","obligatedChangeIndirect","anticipatedAmount","anticipatedChange","anticipatedChangeDirect","anticipatedChangeIndirect","effectiveDate","comments","fileName","mimeType","modificationEffectiveDate","modificationID","modificationTypeCode","periodofPerformanceStartDate","periodofPerformanceEndDate","fileDataId"],"primaryKey":"subAwardAmountInfoId"}
 		
 ### Get Blueprint API specification for Sub Award Amount Infos [GET /subaward/api/v1/sub-award-amount-infos/]
 	 
@@ -133,7 +139,7 @@
 
     + Body
     
-            {"subAwardAmountInfoId": "(val)","subAwardId": "(val)","sequenceNumber": "(val)","subAwardCode": "(val)","obligatedAmount": "(val)","obligatedChange": "(val)","anticipatedAmount": "(val)","anticipatedChange": "(val)","effectiveDate": "(val)","comments": "(val)","fileName": "(val)","mimeType": "(val)","modificationEffectiveDate": "(val)","modificationID": "(val)","periodofPerformanceStartDate": "(val)","periodofPerformanceEndDate": "(val)","fileDataId": "(val)","_primaryKey": "(val)"}
+            {"subAwardAmountInfoId": "(val)","subAwardId": "(val)","sequenceNumber": "(val)","subAwardCode": "(val)","rate": "(val)","obligatedAmount": "(val)","obligatedChange": "(val)","obligatedChangeDirect": "(val)","obligatedChangeIndirect": "(val)","anticipatedAmount": "(val)","anticipatedChange": "(val)","anticipatedChangeDirect": "(val)","anticipatedChangeIndirect": "(val)","effectiveDate": "(val)","comments": "(val)","fileName": "(val)","mimeType": "(val)","modificationEffectiveDate": "(val)","modificationID": "(val)","modificationTypeCode": "(val)","periodofPerformanceStartDate": "(val)","periodofPerformanceEndDate": "(val)","fileDataId": "(val)","_primaryKey": "(val)"}
 			
 + Response 204
 
@@ -149,11 +155,29 @@
     + Body
     
             [
-              {"subAwardAmountInfoId": "(val)","subAwardId": "(val)","sequenceNumber": "(val)","subAwardCode": "(val)","obligatedAmount": "(val)","obligatedChange": "(val)","anticipatedAmount": "(val)","anticipatedChange": "(val)","effectiveDate": "(val)","comments": "(val)","fileName": "(val)","mimeType": "(val)","modificationEffectiveDate": "(val)","modificationID": "(val)","periodofPerformanceStartDate": "(val)","periodofPerformanceEndDate": "(val)","fileDataId": "(val)","_primaryKey": "(val)"},
-              {"subAwardAmountInfoId": "(val)","subAwardId": "(val)","sequenceNumber": "(val)","subAwardCode": "(val)","obligatedAmount": "(val)","obligatedChange": "(val)","anticipatedAmount": "(val)","anticipatedChange": "(val)","effectiveDate": "(val)","comments": "(val)","fileName": "(val)","mimeType": "(val)","modificationEffectiveDate": "(val)","modificationID": "(val)","periodofPerformanceStartDate": "(val)","periodofPerformanceEndDate": "(val)","fileDataId": "(val)","_primaryKey": "(val)"}
+              {"subAwardAmountInfoId": "(val)","subAwardId": "(val)","sequenceNumber": "(val)","subAwardCode": "(val)","rate": "(val)","obligatedAmount": "(val)","obligatedChange": "(val)","obligatedChangeDirect": "(val)","obligatedChangeIndirect": "(val)","anticipatedAmount": "(val)","anticipatedChange": "(val)","anticipatedChangeDirect": "(val)","anticipatedChangeIndirect": "(val)","effectiveDate": "(val)","comments": "(val)","fileName": "(val)","mimeType": "(val)","modificationEffectiveDate": "(val)","modificationID": "(val)","modificationTypeCode": "(val)","periodofPerformanceStartDate": "(val)","periodofPerformanceEndDate": "(val)","fileDataId": "(val)","_primaryKey": "(val)"},
+              {"subAwardAmountInfoId": "(val)","subAwardId": "(val)","sequenceNumber": "(val)","subAwardCode": "(val)","rate": "(val)","obligatedAmount": "(val)","obligatedChange": "(val)","obligatedChangeDirect": "(val)","obligatedChangeIndirect": "(val)","anticipatedAmount": "(val)","anticipatedChange": "(val)","anticipatedChangeDirect": "(val)","anticipatedChangeIndirect": "(val)","effectiveDate": "(val)","comments": "(val)","fileName": "(val)","mimeType": "(val)","modificationEffectiveDate": "(val)","modificationID": "(val)","modificationTypeCode": "(val)","periodofPerformanceStartDate": "(val)","periodofPerformanceEndDate": "(val)","fileDataId": "(val)","_primaryKey": "(val)"}
             ]
 			
 + Response 204
+### Update Specific Attributes Sub Award Amount Infos [PATCH /subaward/api/v1/sub-award-amount-infos/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"subAwardAmountInfoId": "(val)","subAwardId": "(val)","sequenceNumber": "(val)","subAwardCode": "(val)","rate": "(val)","obligatedAmount": "(val)","obligatedChange": "(val)","obligatedChangeDirect": "(val)","obligatedChangeIndirect": "(val)","anticipatedAmount": "(val)","anticipatedChange": "(val)","anticipatedChangeDirect": "(val)","anticipatedChangeIndirect": "(val)","effectiveDate": "(val)","comments": "(val)","fileName": "(val)","mimeType": "(val)","modificationEffectiveDate": "(val)","modificationID": "(val)","modificationTypeCode": "(val)","periodofPerformanceStartDate": "(val)","periodofPerformanceEndDate": "(val)","fileDataId": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"subAwardAmountInfoId": "(val)","subAwardId": "(val)","sequenceNumber": "(val)","subAwardCode": "(val)","rate": "(val)","obligatedAmount": "(val)","obligatedChange": "(val)","obligatedChangeDirect": "(val)","obligatedChangeIndirect": "(val)","anticipatedAmount": "(val)","anticipatedChange": "(val)","anticipatedChangeDirect": "(val)","anticipatedChangeIndirect": "(val)","effectiveDate": "(val)","comments": "(val)","fileName": "(val)","mimeType": "(val)","modificationEffectiveDate": "(val)","modificationID": "(val)","modificationTypeCode": "(val)","periodofPerformanceStartDate": "(val)","periodofPerformanceEndDate": "(val)","fileDataId": "(val)","_primaryKey": "(val)"}
 ### Insert Sub Award Amount Infos [POST /subaward/api/v1/sub-award-amount-infos/]
 
 + Request
@@ -165,13 +189,13 @@
 
     + Body
     
-            {"subAwardAmountInfoId": "(val)","subAwardId": "(val)","sequenceNumber": "(val)","subAwardCode": "(val)","obligatedAmount": "(val)","obligatedChange": "(val)","anticipatedAmount": "(val)","anticipatedChange": "(val)","effectiveDate": "(val)","comments": "(val)","fileName": "(val)","mimeType": "(val)","modificationEffectiveDate": "(val)","modificationID": "(val)","periodofPerformanceStartDate": "(val)","periodofPerformanceEndDate": "(val)","fileDataId": "(val)","_primaryKey": "(val)"}
+            {"subAwardAmountInfoId": "(val)","subAwardId": "(val)","sequenceNumber": "(val)","subAwardCode": "(val)","rate": "(val)","obligatedAmount": "(val)","obligatedChange": "(val)","obligatedChangeDirect": "(val)","obligatedChangeIndirect": "(val)","anticipatedAmount": "(val)","anticipatedChange": "(val)","anticipatedChangeDirect": "(val)","anticipatedChangeIndirect": "(val)","effectiveDate": "(val)","comments": "(val)","fileName": "(val)","mimeType": "(val)","modificationEffectiveDate": "(val)","modificationID": "(val)","modificationTypeCode": "(val)","periodofPerformanceStartDate": "(val)","periodofPerformanceEndDate": "(val)","fileDataId": "(val)","_primaryKey": "(val)"}
 			
 + Response 201
     
     + Body
             
-            {"subAwardAmountInfoId": "(val)","subAwardId": "(val)","sequenceNumber": "(val)","subAwardCode": "(val)","obligatedAmount": "(val)","obligatedChange": "(val)","anticipatedAmount": "(val)","anticipatedChange": "(val)","effectiveDate": "(val)","comments": "(val)","fileName": "(val)","mimeType": "(val)","modificationEffectiveDate": "(val)","modificationID": "(val)","periodofPerformanceStartDate": "(val)","periodofPerformanceEndDate": "(val)","fileDataId": "(val)","_primaryKey": "(val)"}
+            {"subAwardAmountInfoId": "(val)","subAwardId": "(val)","sequenceNumber": "(val)","subAwardCode": "(val)","rate": "(val)","obligatedAmount": "(val)","obligatedChange": "(val)","obligatedChangeDirect": "(val)","obligatedChangeIndirect": "(val)","anticipatedAmount": "(val)","anticipatedChange": "(val)","anticipatedChangeDirect": "(val)","anticipatedChangeIndirect": "(val)","effectiveDate": "(val)","comments": "(val)","fileName": "(val)","mimeType": "(val)","modificationEffectiveDate": "(val)","modificationID": "(val)","modificationTypeCode": "(val)","periodofPerformanceStartDate": "(val)","periodofPerformanceEndDate": "(val)","fileDataId": "(val)","_primaryKey": "(val)"}
             
 ### Insert Multiple Sub Award Amount Infos [POST /subaward/api/v1/sub-award-amount-infos/]
 
@@ -185,8 +209,8 @@
     + Body
     
             [
-              {"subAwardAmountInfoId": "(val)","subAwardId": "(val)","sequenceNumber": "(val)","subAwardCode": "(val)","obligatedAmount": "(val)","obligatedChange": "(val)","anticipatedAmount": "(val)","anticipatedChange": "(val)","effectiveDate": "(val)","comments": "(val)","fileName": "(val)","mimeType": "(val)","modificationEffectiveDate": "(val)","modificationID": "(val)","periodofPerformanceStartDate": "(val)","periodofPerformanceEndDate": "(val)","fileDataId": "(val)","_primaryKey": "(val)"},
-              {"subAwardAmountInfoId": "(val)","subAwardId": "(val)","sequenceNumber": "(val)","subAwardCode": "(val)","obligatedAmount": "(val)","obligatedChange": "(val)","anticipatedAmount": "(val)","anticipatedChange": "(val)","effectiveDate": "(val)","comments": "(val)","fileName": "(val)","mimeType": "(val)","modificationEffectiveDate": "(val)","modificationID": "(val)","periodofPerformanceStartDate": "(val)","periodofPerformanceEndDate": "(val)","fileDataId": "(val)","_primaryKey": "(val)"}
+              {"subAwardAmountInfoId": "(val)","subAwardId": "(val)","sequenceNumber": "(val)","subAwardCode": "(val)","rate": "(val)","obligatedAmount": "(val)","obligatedChange": "(val)","obligatedChangeDirect": "(val)","obligatedChangeIndirect": "(val)","anticipatedAmount": "(val)","anticipatedChange": "(val)","anticipatedChangeDirect": "(val)","anticipatedChangeIndirect": "(val)","effectiveDate": "(val)","comments": "(val)","fileName": "(val)","mimeType": "(val)","modificationEffectiveDate": "(val)","modificationID": "(val)","modificationTypeCode": "(val)","periodofPerformanceStartDate": "(val)","periodofPerformanceEndDate": "(val)","fileDataId": "(val)","_primaryKey": "(val)"},
+              {"subAwardAmountInfoId": "(val)","subAwardId": "(val)","sequenceNumber": "(val)","subAwardCode": "(val)","rate": "(val)","obligatedAmount": "(val)","obligatedChange": "(val)","obligatedChangeDirect": "(val)","obligatedChangeIndirect": "(val)","anticipatedAmount": "(val)","anticipatedChange": "(val)","anticipatedChangeDirect": "(val)","anticipatedChangeIndirect": "(val)","effectiveDate": "(val)","comments": "(val)","fileName": "(val)","mimeType": "(val)","modificationEffectiveDate": "(val)","modificationID": "(val)","modificationTypeCode": "(val)","periodofPerformanceStartDate": "(val)","periodofPerformanceEndDate": "(val)","fileDataId": "(val)","_primaryKey": "(val)"}
             ]
 			
 + Response 201
@@ -194,8 +218,8 @@
     + Body
             
             [
-              {"subAwardAmountInfoId": "(val)","subAwardId": "(val)","sequenceNumber": "(val)","subAwardCode": "(val)","obligatedAmount": "(val)","obligatedChange": "(val)","anticipatedAmount": "(val)","anticipatedChange": "(val)","effectiveDate": "(val)","comments": "(val)","fileName": "(val)","mimeType": "(val)","modificationEffectiveDate": "(val)","modificationID": "(val)","periodofPerformanceStartDate": "(val)","periodofPerformanceEndDate": "(val)","fileDataId": "(val)","_primaryKey": "(val)"},
-              {"subAwardAmountInfoId": "(val)","subAwardId": "(val)","sequenceNumber": "(val)","subAwardCode": "(val)","obligatedAmount": "(val)","obligatedChange": "(val)","anticipatedAmount": "(val)","anticipatedChange": "(val)","effectiveDate": "(val)","comments": "(val)","fileName": "(val)","mimeType": "(val)","modificationEffectiveDate": "(val)","modificationID": "(val)","periodofPerformanceStartDate": "(val)","periodofPerformanceEndDate": "(val)","fileDataId": "(val)","_primaryKey": "(val)"}
+              {"subAwardAmountInfoId": "(val)","subAwardId": "(val)","sequenceNumber": "(val)","subAwardCode": "(val)","rate": "(val)","obligatedAmount": "(val)","obligatedChange": "(val)","obligatedChangeDirect": "(val)","obligatedChangeIndirect": "(val)","anticipatedAmount": "(val)","anticipatedChange": "(val)","anticipatedChangeDirect": "(val)","anticipatedChangeIndirect": "(val)","effectiveDate": "(val)","comments": "(val)","fileName": "(val)","mimeType": "(val)","modificationEffectiveDate": "(val)","modificationID": "(val)","modificationTypeCode": "(val)","periodofPerformanceStartDate": "(val)","periodofPerformanceEndDate": "(val)","fileDataId": "(val)","_primaryKey": "(val)"},
+              {"subAwardAmountInfoId": "(val)","subAwardId": "(val)","sequenceNumber": "(val)","subAwardCode": "(val)","rate": "(val)","obligatedAmount": "(val)","obligatedChange": "(val)","obligatedChangeDirect": "(val)","obligatedChangeIndirect": "(val)","anticipatedAmount": "(val)","anticipatedChange": "(val)","anticipatedChangeDirect": "(val)","anticipatedChangeIndirect": "(val)","effectiveDate": "(val)","comments": "(val)","fileName": "(val)","mimeType": "(val)","modificationEffectiveDate": "(val)","modificationID": "(val)","modificationTypeCode": "(val)","periodofPerformanceStartDate": "(val)","periodofPerformanceEndDate": "(val)","fileDataId": "(val)","_primaryKey": "(val)"}
             ]
 ### Delete Sub Award Amount Infos by Key [DELETE /subaward/api/v1/sub-award-amount-infos/(key)]
 	 
@@ -232,16 +256,22 @@
     + subAwardId (optional) - Subaward Id. Maximum length is 22.
     + sequenceNumber (optional) - 
     + subAwardCode (optional) - 
+    + rate (optional) - Rate. Maximum length is 5.
     + obligatedAmount (optional) - Obligated Amount. Maximum length is 22.
     + obligatedChange (optional) - Obligated Change. Maximum length is 12.
+    + obligatedChangeDirect (optional) - Obligated Change Direct. Maximum length is 12.
+    + obligatedChangeIndirect (optional) - Obligated Change F&A. Maximum length is 12.
     + anticipatedAmount (optional) - Anticipated Amount. Maximum length is 22.
     + anticipatedChange (optional) - Anticipated Change. Maximum length is 12.
+    + anticipatedChangeDirect (optional) - Anticipated Change Direct. Maximum length is 12.
+    + anticipatedChangeIndirect (optional) - Anticipated Change F&A. Maximum length is 12.
     + effectiveDate (optional) - Effective Date. Maximum length is 22.
-    + comments (optional) - Comments. Maximum length is 4000.
+    + comments (optional) - Comments. Maximum length is 300.
     + fileName (optional) - File Name. Maximum length is 150.
     + mimeType (optional) - Mime Type. Maximum length is 4000.
     + modificationEffectiveDate (optional) - Modification Effective Date. Maximum length is 10.
     + modificationID (optional) - Modification ID. Maximum length is 50.
+    + modificationTypeCode (optional) - Modification Type. Maximum length is 30.
     + periodofPerformanceStartDate (optional) - Period of Performance Start Date. Maximum length is 10.
     + periodofPerformanceEndDate (optional) - Period of Performance End Date. Maximum length is 10.
     + fileDataId (optional) - 

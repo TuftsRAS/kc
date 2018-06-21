@@ -139,6 +139,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Award Statuses [PATCH /award/api/v1/award-statuses/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"statusCode": "(val)","description": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"statusCode": "(val)","description": "(val)","_primaryKey": "(val)"}
 ### Insert Award Statuses [POST /award/api/v1/award-statuses/]
 
 + Request

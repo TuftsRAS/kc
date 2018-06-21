@@ -140,6 +140,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Custom Attribute Document Values [PATCH /research-common/api/v1/custom-attribute-document-values/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","documentNumber": "(val)","value": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","documentNumber": "(val)","value": "(val)","_primaryKey": "(val)"}
 ### Insert Custom Attribute Document Values [POST /research-common/api/v1/custom-attribute-document-values/]
 
 + Request

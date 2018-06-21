@@ -139,6 +139,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Job Codes [PATCH /research-common/api/v1/job-codes/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"jobCode": "(val)","jobTitle": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"jobCode": "(val)","jobTitle": "(val)","_primaryKey": "(val)"}
 ### Insert Job Codes [POST /research-common/api/v1/job-codes/]
 
 + Request

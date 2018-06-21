@@ -144,6 +144,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Committee Schedule Minute Docs [PATCH /irb/api/v1/committee-schedule-minute-docs/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"commScheduleMinuteDocId": "(val)","scheduleIdFk": "(val)","minuteNumber": "(val)","minuteName": "(val)","pdfStore": "(val)","createTimestamp": "(val)","createUser": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"commScheduleMinuteDocId": "(val)","scheduleIdFk": "(val)","minuteNumber": "(val)","minuteName": "(val)","pdfStore": "(val)","createTimestamp": "(val)","createUser": "(val)","_primaryKey": "(val)"}
 ### Insert Committee Schedule Minute Docs [POST /irb/api/v1/committee-schedule-minute-docs/]
 
 + Request

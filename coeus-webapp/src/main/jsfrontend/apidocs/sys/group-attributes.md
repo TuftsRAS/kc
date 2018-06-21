@@ -142,6 +142,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Group Attributes [PATCH /research-sys/api/v1/group-attributes/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","assignedToId": "(val)","attributeValue": "(val)","kimTypeId": "(val)","kimAttributeId": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","assignedToId": "(val)","attributeValue": "(val)","kimTypeId": "(val)","kimAttributeId": "(val)","_primaryKey": "(val)"}
 ### Insert Group Attributes [POST /research-sys/api/v1/group-attributes/]
 
 + Request

@@ -146,6 +146,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Protocol Risk Levels [PATCH /irb/api/v1/protocol-risk-levels/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"protocolRiskLevelId": "(val)","protocolId": "(val)","protocolNumber": "(val)","sequenceNumber": "(val)","riskLevelCode": "(val)","comments": "(val)","dateAssigned": "(val)","dateInactivated": "(val)","status": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"protocolRiskLevelId": "(val)","protocolId": "(val)","protocolNumber": "(val)","sequenceNumber": "(val)","riskLevelCode": "(val)","comments": "(val)","dateAssigned": "(val)","dateInactivated": "(val)","status": "(val)","_primaryKey": "(val)"}
 ### Insert Protocol Risk Levels [POST /irb/api/v1/protocol-risk-levels/]
 
 + Request

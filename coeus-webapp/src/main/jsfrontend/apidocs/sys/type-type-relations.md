@@ -143,6 +143,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Type Type Relations [PATCH /research-sys/api/v1/type-type-relations/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"fromTypeId": "(val)","toTypeId": "(val)","relationshipType": "(val)","sequenceNumber": "(val)","id": "(val)","active": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"fromTypeId": "(val)","toTypeId": "(val)","relationshipType": "(val)","sequenceNumber": "(val)","id": "(val)","active": "(val)","_primaryKey": "(val)"}
 ### Insert Type Type Relations [POST /research-sys/api/v1/type-type-relations/]
 
 + Request

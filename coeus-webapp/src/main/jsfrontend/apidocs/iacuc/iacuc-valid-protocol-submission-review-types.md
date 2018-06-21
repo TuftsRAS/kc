@@ -140,6 +140,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Iacuc Valid Protocol Submission Review Types [PATCH /iacuc/api/v1/iacuc-valid-protocol-submission-review-types/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"validProtoSubRevTypeId": "(val)","submissionTypeCode": "(val)","protocolReviewTypeCode": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"validProtoSubRevTypeId": "(val)","submissionTypeCode": "(val)","protocolReviewTypeCode": "(val)","_primaryKey": "(val)"}
 ### Insert Iacuc Valid Protocol Submission Review Types [POST /iacuc/api/v1/iacuc-valid-protocol-submission-review-types/]
 
 + Request

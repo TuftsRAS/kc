@@ -140,6 +140,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Citizenship Types [PATCH /research-common/api/v1/citizenship-types/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"code": "(val)","description": "(val)","active": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"code": "(val)","description": "(val)","active": "(val)","_primaryKey": "(val)"}
 ### Insert Citizenship Types [POST /research-common/api/v1/citizenship-types/]
 
 + Request

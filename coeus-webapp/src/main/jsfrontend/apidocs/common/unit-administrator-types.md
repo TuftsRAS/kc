@@ -141,6 +141,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Unit Administrator Types [PATCH /research-common/api/v1/unit-administrator-types/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"code": "(val)","description": "(val)","multiplesFlag": "(val)","defaultGroupFlag": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"code": "(val)","description": "(val)","multiplesFlag": "(val)","defaultGroupFlag": "(val)","_primaryKey": "(val)"}
 ### Insert Unit Administrator Types [POST /research-common/api/v1/unit-administrator-types/]
 
 + Request

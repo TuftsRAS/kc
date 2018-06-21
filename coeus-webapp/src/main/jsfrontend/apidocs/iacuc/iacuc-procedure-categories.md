@@ -140,6 +140,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Iacuc Procedure Categories [PATCH /iacuc/api/v1/iacuc-procedure-categories/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"procedureCategoryCode": "(val)","procedureCategory": "(val)","active": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"procedureCategoryCode": "(val)","procedureCategory": "(val)","active": "(val)","_primaryKey": "(val)"}
 ### Insert Iacuc Procedure Categories [POST /iacuc/api/v1/iacuc-procedure-categories/]
 
 + Request

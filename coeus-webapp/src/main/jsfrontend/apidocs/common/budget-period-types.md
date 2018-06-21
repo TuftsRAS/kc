@@ -139,6 +139,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Budget Period Types [PATCH /research-common/api/v1/budget-period-types/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"budgetPeriodTypeCode": "(val)","description": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"budgetPeriodTypeCode": "(val)","description": "(val)","_primaryKey": "(val)"}
 ### Insert Budget Period Types [POST /research-common/api/v1/budget-period-types/]
 
 + Request

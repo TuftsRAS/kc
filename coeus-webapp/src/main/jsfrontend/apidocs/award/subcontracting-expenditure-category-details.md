@@ -149,6 +149,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Subcontracting Expenditure Category Details [PATCH /award/api/v1/subcontracting-expenditure-category-details/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","awardNumber": "(val)","amount": "(val)","fiscalPeriod": "(val)","largeBusiness": "(val)","smallBusiness": "(val)","womanOwned": "(val)","eightADisadvantage": "(val)","hubZone": "(val)","veteranOwned": "(val)","serviceDisabledVeteranOwned": "(val)","historicalBlackCollege": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","awardNumber": "(val)","amount": "(val)","fiscalPeriod": "(val)","largeBusiness": "(val)","smallBusiness": "(val)","womanOwned": "(val)","eightADisadvantage": "(val)","hubZone": "(val)","veteranOwned": "(val)","serviceDisabledVeteranOwned": "(val)","historicalBlackCollege": "(val)","_primaryKey": "(val)"}
 ### Insert Subcontracting Expenditure Category Details [POST /award/api/v1/subcontracting-expenditure-category-details/]
 
 + Request

@@ -140,6 +140,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Iacuc Protocol Attachment Type Groups [PATCH /iacuc/api/v1/iacuc-protocol-attachment-type-groups/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","typeCode": "(val)","groupCode": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","typeCode": "(val)","groupCode": "(val)","_primaryKey": "(val)"}
 ### Insert Iacuc Protocol Attachment Type Groups [POST /iacuc/api/v1/iacuc-protocol-attachment-type-groups/]
 
 + Request

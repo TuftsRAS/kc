@@ -146,6 +146,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Iacuc Committee Schedule Attachments [PATCH /iacuc/api/v1/iacuc-committee-schedule-attachments/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"scheduleId": "(val)","attachmentId": "(val)","attachmentsTypeCode": "(val)","description": "(val)","fileName": "(val)","document": "(val)","mimeType": "(val)","newUpdateTimestamp": "(val)","newUpdateUser": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"scheduleId": "(val)","attachmentId": "(val)","attachmentsTypeCode": "(val)","description": "(val)","fileName": "(val)","document": "(val)","mimeType": "(val)","newUpdateTimestamp": "(val)","newUpdateUser": "(val)","_primaryKey": "(val)"}
 ### Insert Iacuc Committee Schedule Attachments [POST /iacuc/api/v1/iacuc-committee-schedule-attachments/]
 
 + Request

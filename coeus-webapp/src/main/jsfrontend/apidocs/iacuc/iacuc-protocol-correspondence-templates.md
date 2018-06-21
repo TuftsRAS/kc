@@ -142,6 +142,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Iacuc Protocol Correspondence Templates [PATCH /iacuc/api/v1/iacuc-protocol-correspondence-templates/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"protoCorrespTemplId": "(val)","protoCorrespTypeCode": "(val)","committeeId": "(val)","fileName": "(val)","correspondenceTemplate": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"protoCorrespTemplId": "(val)","protoCorrespTypeCode": "(val)","committeeId": "(val)","fileName": "(val)","correspondenceTemplate": "(val)","_primaryKey": "(val)"}
 ### Insert Iacuc Protocol Correspondence Templates [POST /iacuc/api/v1/iacuc-protocol-correspondence-templates/]
 
 + Request

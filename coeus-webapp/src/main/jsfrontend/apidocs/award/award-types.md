@@ -139,6 +139,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Award Types [PATCH /award/api/v1/award-types/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"code": "(val)","description": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"code": "(val)","description": "(val)","_primaryKey": "(val)"}
 ### Insert Award Types [POST /award/api/v1/award-types/]
 
 + Request

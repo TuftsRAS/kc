@@ -139,6 +139,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Closeout Report Types [PATCH /award/api/v1/closeout-report-types/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"closeoutReportCode": "(val)","description": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"closeoutReportCode": "(val)","description": "(val)","_primaryKey": "(val)"}
 ### Insert Closeout Report Types [POST /award/api/v1/closeout-report-types/]
 
 + Request

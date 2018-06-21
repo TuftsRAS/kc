@@ -144,6 +144,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Award Person Mass Changes [PATCH /award/api/v1/award-person-mass-changes/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"awardPersonMassChangeId": "(val)","personMassChangeId": "(val)","investigator": "(val)","keyStudyPerson": "(val)","unitContact": "(val)","sponsorContact": "(val)","approvedForeignTravel": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"awardPersonMassChangeId": "(val)","personMassChangeId": "(val)","investigator": "(val)","keyStudyPerson": "(val)","unitContact": "(val)","sponsorContact": "(val)","approvedForeignTravel": "(val)","_primaryKey": "(val)"}
 ### Insert Award Person Mass Changes [POST /award/api/v1/award-person-mass-changes/]
 
 + Request

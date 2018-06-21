@@ -143,6 +143,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Postal Codes [PATCH /research-sys/api/v1/postal-codes/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"code": "(val)","countryCode": "(val)","cityName": "(val)","stateCode": "(val)","countyCode": "(val)","active": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"code": "(val)","countryCode": "(val)","cityName": "(val)","stateCode": "(val)","countyCode": "(val)","active": "(val)","_primaryKey": "(val)"}
 ### Insert Postal Codes [POST /research-sys/api/v1/postal-codes/]
 
 + Request

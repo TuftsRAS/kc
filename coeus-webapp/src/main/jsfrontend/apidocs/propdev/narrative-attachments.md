@@ -142,6 +142,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Narrative Attachments [PATCH /propdev/api/v1/narrative-attachments/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"uploadTimestamp": "(val)","name": "(val)","type": "(val)","fileDataId": "(val)","uploadUser": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"uploadTimestamp": "(val)","name": "(val)","type": "(val)","fileDataId": "(val)","uploadUser": "(val)","_primaryKey": "(val)"}
 ### Insert Narrative Attachments [POST /propdev/api/v1/narrative-attachments/]
 
 + Request

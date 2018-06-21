@@ -140,6 +140,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Categories [PATCH /research-sys/api/v1/categories/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","name": "(val)","namespace": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","name": "(val)","namespace": "(val)","_primaryKey": "(val)"}
 ### Insert Categories [POST /research-sys/api/v1/categories/]
 
 + Request

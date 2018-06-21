@@ -140,6 +140,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes S2s Submission Types [PATCH /propdev/api/v1/s2s-submission-types/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"code": "(val)","description": "(val)","sortId": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"code": "(val)","description": "(val)","sortId": "(val)","_primaryKey": "(val)"}
 ### Insert S2s Submission Types [POST /propdev/api/v1/s2s-submission-types/]
 
 + Request

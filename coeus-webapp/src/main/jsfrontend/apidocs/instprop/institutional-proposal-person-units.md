@@ -141,6 +141,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Institutional Proposal Person Units [PATCH /instprop/api/v1/institutional-proposal-person-units/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"institutionalProposalPersonUnitId": "(val)","institutionalProposalContactId": "(val)","unitNumber": "(val)","leadUnit": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"institutionalProposalPersonUnitId": "(val)","institutionalProposalContactId": "(val)","unitNumber": "(val)","leadUnit": "(val)","_primaryKey": "(val)"}
 ### Insert Institutional Proposal Person Units [POST /instprop/api/v1/institutional-proposal-person-units/]
 
 + Request

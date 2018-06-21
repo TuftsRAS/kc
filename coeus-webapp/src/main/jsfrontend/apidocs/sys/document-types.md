@@ -161,6 +161,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Document Types [PATCH /research-sys/api/v1/document-types/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"documentTypeId": "(val)","docTypeParentId": "(val)","name": "(val)","version": "(val)","active": "(val)","currentInd": "(val)","description": "(val)","label": "(val)","previousVersionId": "(val)","documentId": "(val)","unresolvedHelpDefinitionUrl": "(val)","unresolvedDocSearchHelpUrl": "(val)","unresolvedDocHandlerUrl": "(val)","postProcessorName": "(val)","workgroupId": "(val)","blanketApproveWorkgroupId": "(val)","blanketApprovePolicy": "(val)","reportingWorkgroupId": "(val)","actualApplicationId": "(val)","authorizer": "(val)","routingVersion": "(val)","actualNotificationFromAddress": "(val)","documentTypeSecurityXml": "(val)","customEmailStylesheet": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"documentTypeId": "(val)","docTypeParentId": "(val)","name": "(val)","version": "(val)","active": "(val)","currentInd": "(val)","description": "(val)","label": "(val)","previousVersionId": "(val)","documentId": "(val)","unresolvedHelpDefinitionUrl": "(val)","unresolvedDocSearchHelpUrl": "(val)","unresolvedDocHandlerUrl": "(val)","postProcessorName": "(val)","workgroupId": "(val)","blanketApproveWorkgroupId": "(val)","blanketApprovePolicy": "(val)","reportingWorkgroupId": "(val)","actualApplicationId": "(val)","authorizer": "(val)","routingVersion": "(val)","actualNotificationFromAddress": "(val)","documentTypeSecurityXml": "(val)","customEmailStylesheet": "(val)","_primaryKey": "(val)"}
 ### Insert Document Types [POST /research-sys/api/v1/document-types/]
 
 + Request

@@ -139,6 +139,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Indirectcost Rate Types [PATCH /instprop/api/v1/indirectcost-rate-types/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"indirectcostRateTypeCode": "(val)","description": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"indirectcostRateTypeCode": "(val)","description": "(val)","_primaryKey": "(val)"}
 ### Insert Indirectcost Rate Types [POST /instprop/api/v1/indirectcost-rate-types/]
 
 + Request

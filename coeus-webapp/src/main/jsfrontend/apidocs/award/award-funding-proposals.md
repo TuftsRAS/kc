@@ -141,6 +141,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Award Funding Proposals [PATCH /award/api/v1/award-funding-proposals/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"awardFundingProposalId": "(val)","awardId": "(val)","proposalId": "(val)","active": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"awardFundingProposalId": "(val)","awardId": "(val)","proposalId": "(val)","active": "(val)","_primaryKey": "(val)"}
 ### Insert Award Funding Proposals [POST /award/api/v1/award-funding-proposals/]
 
 + Request

@@ -145,6 +145,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Role Document Delegation Member Qualifiers [PATCH /research-sys/api/v1/role-document-delegation-member-qualifiers/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"delegationMemberId": "(val)","kimTypId": "(val)","kimAttrDefnId": "(val)","edit": "(val)","documentNumber": "(val)","attrVal": "(val)","active": "(val)","attrDataId": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"delegationMemberId": "(val)","kimTypId": "(val)","kimAttrDefnId": "(val)","edit": "(val)","documentNumber": "(val)","attrVal": "(val)","active": "(val)","attrDataId": "(val)","_primaryKey": "(val)"}
 ### Insert Role Document Delegation Member Qualifiers [POST /research-sys/api/v1/role-document-delegation-member-qualifiers/]
 
 + Request

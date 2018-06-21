@@ -139,6 +139,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Iacuc Protocol Statuses [PATCH /iacuc/api/v1/iacuc-protocol-statuses/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"protocolStatusCode": "(val)","description": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"protocolStatusCode": "(val)","description": "(val)","_primaryKey": "(val)"}
 ### Insert Iacuc Protocol Statuses [POST /iacuc/api/v1/iacuc-protocol-statuses/]
 
 + Request

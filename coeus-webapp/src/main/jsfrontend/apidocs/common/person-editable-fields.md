@@ -141,6 +141,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Person Editable Fields [PATCH /research-common/api/v1/person-editable-fields/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"personEditableFieldId": "(val)","moduleCode": "(val)","fieldName": "(val)","active": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"personEditableFieldId": "(val)","moduleCode": "(val)","fieldName": "(val)","active": "(val)","_primaryKey": "(val)"}
 ### Insert Person Editable Fields [POST /research-common/api/v1/person-editable-fields/]
 
 + Request

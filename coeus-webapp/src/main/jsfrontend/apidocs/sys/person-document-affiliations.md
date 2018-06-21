@@ -144,6 +144,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Person Document Affiliations [PATCH /research-sys/api/v1/person-document-affiliations/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"entityAffiliationId": "(val)","affiliationTypeCode": "(val)","campusCode": "(val)","dflt": "(val)","edit": "(val)","documentNumber": "(val)","active": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"entityAffiliationId": "(val)","affiliationTypeCode": "(val)","campusCode": "(val)","dflt": "(val)","edit": "(val)","documentNumber": "(val)","active": "(val)","_primaryKey": "(val)"}
 ### Insert Person Document Affiliations [POST /research-sys/api/v1/person-document-affiliations/]
 
 + Request

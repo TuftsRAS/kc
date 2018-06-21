@@ -143,6 +143,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Person Biosketches [PATCH /research-common/api/v1/person-biosketches/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"personBiosketchId": "(val)","personId": "(val)","description": "(val)","fileName": "(val)","contentType": "(val)","attachmentContent": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"personBiosketchId": "(val)","personId": "(val)","description": "(val)","fileName": "(val)","contentType": "(val)","attachmentContent": "(val)","_primaryKey": "(val)"}
 ### Insert Person Biosketches [POST /research-common/api/v1/person-biosketches/]
 
 + Request

@@ -16,7 +16,7 @@
 
     + Body
     
-            {"costElement": "(val)","budgetCategoryCode": "(val)","description": "(val)","onOffCampusFlag": "(val)","active": "(val)","financialObjectCode": "(val)","_primaryKey": "(val)"}
+            {"costElement": "(val)","budgetCategoryCode": "(val)","description": "(val)","onOffCampusFlag": "(val)","active": "(val)","financialObjectCode": "(val)","unitNumber": "(val)","_primaryKey": "(val)"}
 
 ### Get All Cost Elements [GET /research-common/api/v1/cost-elements/]
 	 
@@ -35,8 +35,8 @@
     + Body
     
             [
-              {"costElement": "(val)","budgetCategoryCode": "(val)","description": "(val)","onOffCampusFlag": "(val)","active": "(val)","financialObjectCode": "(val)","_primaryKey": "(val)"},
-              {"costElement": "(val)","budgetCategoryCode": "(val)","description": "(val)","onOffCampusFlag": "(val)","active": "(val)","financialObjectCode": "(val)","_primaryKey": "(val)"}
+              {"costElement": "(val)","budgetCategoryCode": "(val)","description": "(val)","onOffCampusFlag": "(val)","active": "(val)","financialObjectCode": "(val)","unitNumber": "(val)","_primaryKey": "(val)"},
+              {"costElement": "(val)","budgetCategoryCode": "(val)","description": "(val)","onOffCampusFlag": "(val)","active": "(val)","financialObjectCode": "(val)","unitNumber": "(val)","_primaryKey": "(val)"}
             ]
 
 ### Get All Cost Elements with Filtering [GET /research-common/api/v1/cost-elements/]
@@ -49,6 +49,7 @@
     + onOffCampusFlag (optional) - On CampusContract. Maximum length is 1.
     + active (optional) - Active. Maximum length is 1.
     + financialObjectCode (optional) - Financial Object Code. Maximum length is 8.
+    + unitNumber (optional) - Unit Number. Maximum length is 8.
 
             
 + Request
@@ -66,8 +67,8 @@
     + Body
     
             [
-              {"costElement": "(val)","budgetCategoryCode": "(val)","description": "(val)","onOffCampusFlag": "(val)","active": "(val)","financialObjectCode": "(val)","_primaryKey": "(val)"},
-              {"costElement": "(val)","budgetCategoryCode": "(val)","description": "(val)","onOffCampusFlag": "(val)","active": "(val)","financialObjectCode": "(val)","_primaryKey": "(val)"}
+              {"costElement": "(val)","budgetCategoryCode": "(val)","description": "(val)","onOffCampusFlag": "(val)","active": "(val)","financialObjectCode": "(val)","unitNumber": "(val)","_primaryKey": "(val)"},
+              {"costElement": "(val)","budgetCategoryCode": "(val)","description": "(val)","onOffCampusFlag": "(val)","active": "(val)","financialObjectCode": "(val)","unitNumber": "(val)","_primaryKey": "(val)"}
             ]
 			
 ### Get Schema for Cost Elements [GET /research-common/api/v1/cost-elements/]
@@ -90,7 +91,7 @@
 
     + Body
     
-            {"columns":["costElement","budgetCategoryCode","description","onOffCampusFlag","active","financialObjectCode"],"primaryKey":"costElement"}
+            {"columns":["costElement","budgetCategoryCode","description","onOffCampusFlag","active","financialObjectCode","unitNumber"],"primaryKey":"costElement"}
 		
 ### Get Blueprint API specification for Cost Elements [GET /research-common/api/v1/cost-elements/]
 	 
@@ -122,7 +123,7 @@
 
     + Body
     
-            {"costElement": "(val)","budgetCategoryCode": "(val)","description": "(val)","onOffCampusFlag": "(val)","active": "(val)","financialObjectCode": "(val)","_primaryKey": "(val)"}
+            {"costElement": "(val)","budgetCategoryCode": "(val)","description": "(val)","onOffCampusFlag": "(val)","active": "(val)","financialObjectCode": "(val)","unitNumber": "(val)","_primaryKey": "(val)"}
 			
 + Response 204
 
@@ -138,11 +139,29 @@
     + Body
     
             [
-              {"costElement": "(val)","budgetCategoryCode": "(val)","description": "(val)","onOffCampusFlag": "(val)","active": "(val)","financialObjectCode": "(val)","_primaryKey": "(val)"},
-              {"costElement": "(val)","budgetCategoryCode": "(val)","description": "(val)","onOffCampusFlag": "(val)","active": "(val)","financialObjectCode": "(val)","_primaryKey": "(val)"}
+              {"costElement": "(val)","budgetCategoryCode": "(val)","description": "(val)","onOffCampusFlag": "(val)","active": "(val)","financialObjectCode": "(val)","unitNumber": "(val)","_primaryKey": "(val)"},
+              {"costElement": "(val)","budgetCategoryCode": "(val)","description": "(val)","onOffCampusFlag": "(val)","active": "(val)","financialObjectCode": "(val)","unitNumber": "(val)","_primaryKey": "(val)"}
             ]
 			
 + Response 204
+### Update Specific Attributes Cost Elements [PATCH /research-common/api/v1/cost-elements/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"costElement": "(val)","budgetCategoryCode": "(val)","description": "(val)","onOffCampusFlag": "(val)","active": "(val)","financialObjectCode": "(val)","unitNumber": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"costElement": "(val)","budgetCategoryCode": "(val)","description": "(val)","onOffCampusFlag": "(val)","active": "(val)","financialObjectCode": "(val)","unitNumber": "(val)","_primaryKey": "(val)"}
 ### Insert Cost Elements [POST /research-common/api/v1/cost-elements/]
 
 + Request
@@ -154,13 +173,13 @@
 
     + Body
     
-            {"costElement": "(val)","budgetCategoryCode": "(val)","description": "(val)","onOffCampusFlag": "(val)","active": "(val)","financialObjectCode": "(val)","_primaryKey": "(val)"}
+            {"costElement": "(val)","budgetCategoryCode": "(val)","description": "(val)","onOffCampusFlag": "(val)","active": "(val)","financialObjectCode": "(val)","unitNumber": "(val)","_primaryKey": "(val)"}
 			
 + Response 201
     
     + Body
             
-            {"costElement": "(val)","budgetCategoryCode": "(val)","description": "(val)","onOffCampusFlag": "(val)","active": "(val)","financialObjectCode": "(val)","_primaryKey": "(val)"}
+            {"costElement": "(val)","budgetCategoryCode": "(val)","description": "(val)","onOffCampusFlag": "(val)","active": "(val)","financialObjectCode": "(val)","unitNumber": "(val)","_primaryKey": "(val)"}
             
 ### Insert Multiple Cost Elements [POST /research-common/api/v1/cost-elements/]
 
@@ -174,8 +193,8 @@
     + Body
     
             [
-              {"costElement": "(val)","budgetCategoryCode": "(val)","description": "(val)","onOffCampusFlag": "(val)","active": "(val)","financialObjectCode": "(val)","_primaryKey": "(val)"},
-              {"costElement": "(val)","budgetCategoryCode": "(val)","description": "(val)","onOffCampusFlag": "(val)","active": "(val)","financialObjectCode": "(val)","_primaryKey": "(val)"}
+              {"costElement": "(val)","budgetCategoryCode": "(val)","description": "(val)","onOffCampusFlag": "(val)","active": "(val)","financialObjectCode": "(val)","unitNumber": "(val)","_primaryKey": "(val)"},
+              {"costElement": "(val)","budgetCategoryCode": "(val)","description": "(val)","onOffCampusFlag": "(val)","active": "(val)","financialObjectCode": "(val)","unitNumber": "(val)","_primaryKey": "(val)"}
             ]
 			
 + Response 201
@@ -183,8 +202,8 @@
     + Body
             
             [
-              {"costElement": "(val)","budgetCategoryCode": "(val)","description": "(val)","onOffCampusFlag": "(val)","active": "(val)","financialObjectCode": "(val)","_primaryKey": "(val)"},
-              {"costElement": "(val)","budgetCategoryCode": "(val)","description": "(val)","onOffCampusFlag": "(val)","active": "(val)","financialObjectCode": "(val)","_primaryKey": "(val)"}
+              {"costElement": "(val)","budgetCategoryCode": "(val)","description": "(val)","onOffCampusFlag": "(val)","active": "(val)","financialObjectCode": "(val)","unitNumber": "(val)","_primaryKey": "(val)"},
+              {"costElement": "(val)","budgetCategoryCode": "(val)","description": "(val)","onOffCampusFlag": "(val)","active": "(val)","financialObjectCode": "(val)","unitNumber": "(val)","_primaryKey": "(val)"}
             ]
 ### Delete Cost Elements by Key [DELETE /research-common/api/v1/cost-elements/(key)]
 	 
@@ -223,6 +242,7 @@
     + onOffCampusFlag (optional) - On CampusContract. Maximum length is 1.
     + active (optional) - Active. Maximum length is 1.
     + financialObjectCode (optional) - Financial Object Code. Maximum length is 8.
+    + unitNumber (optional) - Unit Number. Maximum length is 8.
 
       
 + Request

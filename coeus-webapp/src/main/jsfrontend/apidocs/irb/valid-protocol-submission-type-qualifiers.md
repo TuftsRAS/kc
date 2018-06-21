@@ -140,6 +140,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Valid Protocol Submission Type Qualifiers [PATCH /irb/api/v1/valid-protocol-submission-type-qualifiers/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"validProtoSubTypeQualId": "(val)","submissionTypeCode": "(val)","submissionTypeQualCode": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"validProtoSubTypeQualId": "(val)","submissionTypeCode": "(val)","submissionTypeQualCode": "(val)","_primaryKey": "(val)"}
 ### Insert Valid Protocol Submission Type Qualifiers [POST /irb/api/v1/valid-protocol-submission-type-qualifiers/]
 
 + Request

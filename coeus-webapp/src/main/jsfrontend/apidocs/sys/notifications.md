@@ -147,6 +147,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Notifications [PATCH /research-sys/api/v1/notifications/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","deliveryType": "(val)","creationDateTimeValue": "(val)","sendDateTimeValue": "(val)","autoRemoveDateTimeValue": "(val)","title": "(val)","content": "(val)","processingFlag": "(val)","lockedDateValue": "(val)","docTypeName": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","deliveryType": "(val)","creationDateTimeValue": "(val)","sendDateTimeValue": "(val)","autoRemoveDateTimeValue": "(val)","title": "(val)","content": "(val)","processingFlag": "(val)","lockedDateValue": "(val)","docTypeName": "(val)","_primaryKey": "(val)"}
 ### Insert Notifications [POST /research-sys/api/v1/notifications/]
 
 + Request

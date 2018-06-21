@@ -146,6 +146,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Committee Schedule Attendances [PATCH /irb/api/v1/committee-schedule-attendances/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"commScheduleAttendanceId": "(val)","scheduleIdFk": "(val)","personId": "(val)","personName": "(val)","guestFlag": "(val)","alternateFlag": "(val)","alternateFor": "(val)","nonEmployeeFlag": "(val)","comments": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"commScheduleAttendanceId": "(val)","scheduleIdFk": "(val)","personId": "(val)","personName": "(val)","guestFlag": "(val)","alternateFlag": "(val)","alternateFor": "(val)","nonEmployeeFlag": "(val)","comments": "(val)","_primaryKey": "(val)"}
 ### Insert Committee Schedule Attendances [POST /irb/api/v1/committee-schedule-attendances/]
 
 + Request

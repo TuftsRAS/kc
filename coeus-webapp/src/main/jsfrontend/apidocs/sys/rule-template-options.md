@@ -140,6 +140,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Rule Template Options [PATCH /research-sys/api/v1/rule-template-options/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","code": "(val)","value": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","code": "(val)","value": "(val)","_primaryKey": "(val)"}
 ### Insert Rule Template Options [POST /research-sys/api/v1/rule-template-options/]
 
 + Request

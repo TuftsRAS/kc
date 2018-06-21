@@ -144,6 +144,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Protocol Expedited Review Checklist Items [PATCH /irb/api/v1/protocol-expedited-review-checklist-items/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"protocolExpeditedCheckListId": "(val)","protocolId": "(val)","submissionIdFk": "(val)","protocolNumber": "(val)","sequenceNumber": "(val)","submissionNumber": "(val)","expeditedReviewCheckListCode": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"protocolExpeditedCheckListId": "(val)","protocolId": "(val)","submissionIdFk": "(val)","protocolNumber": "(val)","sequenceNumber": "(val)","submissionNumber": "(val)","expeditedReviewCheckListCode": "(val)","_primaryKey": "(val)"}
 ### Insert Protocol Expedited Review Checklist Items [POST /irb/api/v1/protocol-expedited-review-checklist-items/]
 
 + Request

@@ -141,6 +141,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Entity Citizenship Statuses [PATCH /research-sys/api/v1/entity-citizenship-statuses/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"name": "(val)","active": "(val)","code": "(val)","sortCode": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"name": "(val)","active": "(val)","code": "(val)","sortCode": "(val)","_primaryKey": "(val)"}
 ### Insert Entity Citizenship Statuses [POST /research-sys/api/v1/entity-citizenship-statuses/]
 
 + Request

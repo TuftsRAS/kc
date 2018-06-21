@@ -140,6 +140,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Iacuc Protocol Reference Types [PATCH /iacuc/api/v1/iacuc-protocol-reference-types/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"protocolReferenceTypeCode": "(val)","description": "(val)","active": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"protocolReferenceTypeCode": "(val)","description": "(val)","active": "(val)","_primaryKey": "(val)"}
 ### Insert Iacuc Protocol Reference Types [POST /iacuc/api/v1/iacuc-protocol-reference-types/]
 
 + Request

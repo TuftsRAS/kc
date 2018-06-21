@@ -16,7 +16,7 @@
 
     + Body
     
-            {"proposalCostShareId": "(val)","proposalNumber": "(val)","sequenceNumber": "(val)","projectPeriod": "(val)","costSharePercentage": "(val)","costShareTypeCode": "(val)","sourceAccount": "(val)","amount": "(val)","institutionalProposal.proposalId": "(val)","_primaryKey": "(val)"}
+            {"proposalCostShareId": "(val)","proposalNumber": "(val)","sequenceNumber": "(val)","projectPeriod": "(val)","costSharePercentage": "(val)","costShareTypeCode": "(val)","sourceAccount": "(val)","amount": "(val)","unitNumber": "(val)","institutionalProposal.proposalId": "(val)","_primaryKey": "(val)"}
 
 ### Get All Institutional Proposal Cost Shares [GET /instprop/api/v1/institutional-proposal-cost-shares/]
 	 
@@ -35,8 +35,8 @@
     + Body
     
             [
-              {"proposalCostShareId": "(val)","proposalNumber": "(val)","sequenceNumber": "(val)","projectPeriod": "(val)","costSharePercentage": "(val)","costShareTypeCode": "(val)","sourceAccount": "(val)","amount": "(val)","institutionalProposal.proposalId": "(val)","_primaryKey": "(val)"},
-              {"proposalCostShareId": "(val)","proposalNumber": "(val)","sequenceNumber": "(val)","projectPeriod": "(val)","costSharePercentage": "(val)","costShareTypeCode": "(val)","sourceAccount": "(val)","amount": "(val)","institutionalProposal.proposalId": "(val)","_primaryKey": "(val)"}
+              {"proposalCostShareId": "(val)","proposalNumber": "(val)","sequenceNumber": "(val)","projectPeriod": "(val)","costSharePercentage": "(val)","costShareTypeCode": "(val)","sourceAccount": "(val)","amount": "(val)","unitNumber": "(val)","institutionalProposal.proposalId": "(val)","_primaryKey": "(val)"},
+              {"proposalCostShareId": "(val)","proposalNumber": "(val)","sequenceNumber": "(val)","projectPeriod": "(val)","costSharePercentage": "(val)","costShareTypeCode": "(val)","sourceAccount": "(val)","amount": "(val)","unitNumber": "(val)","institutionalProposal.proposalId": "(val)","_primaryKey": "(val)"}
             ]
 
 ### Get All Institutional Proposal Cost Shares with Filtering [GET /instprop/api/v1/institutional-proposal-cost-shares/]
@@ -51,6 +51,7 @@
     + costShareTypeCode (optional) - Cost Share Type Code. Maximum length is 3.
     + sourceAccount (optional) - Source Account. Maximum length is 32.
     + amount (optional) - Amount. Maximum length is 12.
+    + unitNumber (optional) - Unit Number. Maximum length is 8.
     + institutionalProposal.proposalId (optional) - 
 
             
@@ -69,8 +70,8 @@
     + Body
     
             [
-              {"proposalCostShareId": "(val)","proposalNumber": "(val)","sequenceNumber": "(val)","projectPeriod": "(val)","costSharePercentage": "(val)","costShareTypeCode": "(val)","sourceAccount": "(val)","amount": "(val)","institutionalProposal.proposalId": "(val)","_primaryKey": "(val)"},
-              {"proposalCostShareId": "(val)","proposalNumber": "(val)","sequenceNumber": "(val)","projectPeriod": "(val)","costSharePercentage": "(val)","costShareTypeCode": "(val)","sourceAccount": "(val)","amount": "(val)","institutionalProposal.proposalId": "(val)","_primaryKey": "(val)"}
+              {"proposalCostShareId": "(val)","proposalNumber": "(val)","sequenceNumber": "(val)","projectPeriod": "(val)","costSharePercentage": "(val)","costShareTypeCode": "(val)","sourceAccount": "(val)","amount": "(val)","unitNumber": "(val)","institutionalProposal.proposalId": "(val)","_primaryKey": "(val)"},
+              {"proposalCostShareId": "(val)","proposalNumber": "(val)","sequenceNumber": "(val)","projectPeriod": "(val)","costSharePercentage": "(val)","costShareTypeCode": "(val)","sourceAccount": "(val)","amount": "(val)","unitNumber": "(val)","institutionalProposal.proposalId": "(val)","_primaryKey": "(val)"}
             ]
 			
 ### Get Schema for Institutional Proposal Cost Shares [GET /instprop/api/v1/institutional-proposal-cost-shares/]
@@ -93,7 +94,7 @@
 
     + Body
     
-            {"columns":["proposalCostShareId","proposalNumber","sequenceNumber","projectPeriod","costSharePercentage","costShareTypeCode","sourceAccount","amount","institutionalProposal.proposalId"],"primaryKey":"proposalCostShareId"}
+            {"columns":["proposalCostShareId","proposalNumber","sequenceNumber","projectPeriod","costSharePercentage","costShareTypeCode","sourceAccount","amount","unitNumber","institutionalProposal.proposalId"],"primaryKey":"proposalCostShareId"}
 		
 ### Get Blueprint API specification for Institutional Proposal Cost Shares [GET /instprop/api/v1/institutional-proposal-cost-shares/]
 	 

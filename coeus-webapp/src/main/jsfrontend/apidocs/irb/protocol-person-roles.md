@@ -144,6 +144,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Protocol Person Roles [PATCH /irb/api/v1/protocol-person-roles/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"protocolPersonRoleId": "(val)","description": "(val)","unitDetailsRequired": "(val)","affiliationDetailsRequired": "(val)","trainingDetailsRequired": "(val)","commentsDetailsRequired": "(val)","active": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"protocolPersonRoleId": "(val)","description": "(val)","unitDetailsRequired": "(val)","affiliationDetailsRequired": "(val)","trainingDetailsRequired": "(val)","commentsDetailsRequired": "(val)","active": "(val)","_primaryKey": "(val)"}
 ### Insert Protocol Person Roles [POST /irb/api/v1/protocol-person-roles/]
 
 + Request

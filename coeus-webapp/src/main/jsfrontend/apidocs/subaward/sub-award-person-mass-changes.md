@@ -141,6 +141,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Sub Award Person Mass Changes [PATCH /subaward/api/v1/sub-award-person-mass-changes/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"subawardPersonMassChangeId": "(val)","personMassChangeId": "(val)","requisitioner": "(val)","contact": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"subawardPersonMassChangeId": "(val)","personMassChangeId": "(val)","requisitioner": "(val)","contact": "(val)","_primaryKey": "(val)"}
 ### Insert Sub Award Person Mass Changes [POST /subaward/api/v1/sub-award-person-mass-changes/]
 
 + Request

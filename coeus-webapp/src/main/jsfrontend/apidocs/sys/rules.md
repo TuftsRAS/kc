@@ -143,6 +143,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Rules [PATCH /research-sys/api/v1/rules/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","namespace": "(val)","description": "(val)","name": "(val)","typeId": "(val)","active": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","namespace": "(val)","description": "(val)","name": "(val)","typeId": "(val)","active": "(val)","_primaryKey": "(val)"}
 ### Insert Rules [POST /research-sys/api/v1/rules/]
 
 + Request

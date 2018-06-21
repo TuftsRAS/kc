@@ -141,6 +141,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Budget Sub Award Attachments [PATCH /propdev/api/v1/budget-sub-award-attachments/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"data": "(val)","name": "(val)","type": "(val)","id": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"data": "(val)","name": "(val)","type": "(val)","id": "(val)","_primaryKey": "(val)"}
 ### Insert Budget Sub Award Attachments [POST /propdev/api/v1/budget-sub-award-attachments/]
 
 + Request

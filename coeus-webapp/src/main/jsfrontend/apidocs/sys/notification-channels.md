@@ -141,6 +141,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Notification Channels [PATCH /research-sys/api/v1/notification-channels/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","name": "(val)","description": "(val)","subscribable": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","name": "(val)","description": "(val)","subscribable": "(val)","_primaryKey": "(val)"}
 ### Insert Notification Channels [POST /research-sys/api/v1/notification-channels/]
 
 + Request

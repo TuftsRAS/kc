@@ -139,6 +139,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Rule Attributes [PATCH /research-sys/api/v1/rule-attributes/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","value": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","value": "(val)","_primaryKey": "(val)"}
 ### Insert Rule Attributes [POST /research-sys/api/v1/rule-attributes/]
 
 + Request

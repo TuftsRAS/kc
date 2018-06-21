@@ -139,6 +139,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Risk Levels [PATCH /research-common/api/v1/risk-levels/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"riskLevelCode": "(val)","description": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"riskLevelCode": "(val)","description": "(val)","_primaryKey": "(val)"}
 ### Insert Risk Levels [POST /research-common/api/v1/risk-levels/]
 
 + Request

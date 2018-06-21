@@ -151,6 +151,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Questions [PATCH /research-common/api/v1/questions/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","documentNumber": "(val)","questionSeqId": "(val)","sequenceNumber": "(val)","sequenceStatus": "(val)","question": "(val)","status": "(val)","categoryTypeCode": "(val)","questionTypeId": "(val)","lookupClass": "(val)","lookupReturn": "(val)","displayedAnswers": "(val)","maxAnswers": "(val)","answerMaxLength": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","documentNumber": "(val)","questionSeqId": "(val)","sequenceNumber": "(val)","sequenceStatus": "(val)","question": "(val)","status": "(val)","categoryTypeCode": "(val)","questionTypeId": "(val)","lookupClass": "(val)","lookupReturn": "(val)","displayedAnswers": "(val)","maxAnswers": "(val)","answerMaxLength": "(val)","_primaryKey": "(val)"}
 ### Insert Questions [POST /research-common/api/v1/questions/]
 
 + Request

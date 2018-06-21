@@ -145,6 +145,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Kew Rule Attributes [PATCH /research-sys/api/v1/kew-rule-attributes/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","name": "(val)","label": "(val)","type": "(val)","resourceDescriptor": "(val)","description": "(val)","xmlConfigData": "(val)","applicationId": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","name": "(val)","label": "(val)","type": "(val)","resourceDescriptor": "(val)","description": "(val)","xmlConfigData": "(val)","applicationId": "(val)","_primaryKey": "(val)"}
 ### Insert Kew Rule Attributes [POST /research-sys/api/v1/kew-rule-attributes/]
 
 + Request

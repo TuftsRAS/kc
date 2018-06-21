@@ -146,6 +146,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Budget Rates [PATCH /research-common/api/v1/budget-rates/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"activityTypeCode": "(val)","applicableRate": "(val)","instituteRate": "(val)","rateTypeCode": "(val)","budgetId": "(val)","onOffCampusFlag": "(val)","rateClassCode": "(val)","fiscalYear": "(val)","startDate": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"activityTypeCode": "(val)","applicableRate": "(val)","instituteRate": "(val)","rateTypeCode": "(val)","budgetId": "(val)","onOffCampusFlag": "(val)","rateClassCode": "(val)","fiscalYear": "(val)","startDate": "(val)","_primaryKey": "(val)"}
 ### Insert Budget Rates [POST /research-common/api/v1/budget-rates/]
 
 + Request

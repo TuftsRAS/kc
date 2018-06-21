@@ -144,6 +144,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Protocol Amend Renewals [PATCH /irb/api/v1/protocol-amend-renewals/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","protoAmendRenNumber": "(val)","dateCreated": "(val)","summary": "(val)","protocolId": "(val)","protocolNumber": "(val)","sequenceNumber": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","protoAmendRenNumber": "(val)","dateCreated": "(val)","summary": "(val)","protocolId": "(val)","protocolNumber": "(val)","sequenceNumber": "(val)","_primaryKey": "(val)"}
 ### Insert Protocol Amend Renewals [POST /irb/api/v1/protocol-amend-renewals/]
 
 + Request

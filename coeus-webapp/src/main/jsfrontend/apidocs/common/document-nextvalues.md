@@ -140,6 +140,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Document Nextvalues [PATCH /research-common/api/v1/document-nextvalues/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"propertyName": "(val)","documentKey": "(val)","nextValue": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"propertyName": "(val)","documentKey": "(val)","nextValue": "(val)","_primaryKey": "(val)"}
 ### Insert Document Nextvalues [POST /research-common/api/v1/document-nextvalues/]
 
 + Request

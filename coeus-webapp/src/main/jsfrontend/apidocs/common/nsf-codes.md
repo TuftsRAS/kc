@@ -16,7 +16,7 @@
 
     + Body
     
-            {"nsfSequenceNumber": "(val)","nsfCode": "(val)","description": "(val)","_primaryKey": "(val)"}
+            {"nsfSequenceNumber": "(val)","nsfCode": "(val)","year": "(val)","description": "(val)","_primaryKey": "(val)"}
 
 ### Get All Nsf Codes [GET /research-common/api/v1/nsf-codes/]
 	 
@@ -35,8 +35,8 @@
     + Body
     
             [
-              {"nsfSequenceNumber": "(val)","nsfCode": "(val)","description": "(val)","_primaryKey": "(val)"},
-              {"nsfSequenceNumber": "(val)","nsfCode": "(val)","description": "(val)","_primaryKey": "(val)"}
+              {"nsfSequenceNumber": "(val)","nsfCode": "(val)","year": "(val)","description": "(val)","_primaryKey": "(val)"},
+              {"nsfSequenceNumber": "(val)","nsfCode": "(val)","year": "(val)","description": "(val)","_primaryKey": "(val)"}
             ]
 
 ### Get All Nsf Codes with Filtering [GET /research-common/api/v1/nsf-codes/]
@@ -45,6 +45,7 @@
 
     + nsfSequenceNumber (optional) - The assigned sequence number. Maximum length is 12.
     + nsfCode (optional) - NSF Science Code. Maximum length is 15.
+    + year (optional) - Year. Maximum length is 4.
     + description (optional) - Description. Maximum length is 200.
 
             
@@ -63,8 +64,8 @@
     + Body
     
             [
-              {"nsfSequenceNumber": "(val)","nsfCode": "(val)","description": "(val)","_primaryKey": "(val)"},
-              {"nsfSequenceNumber": "(val)","nsfCode": "(val)","description": "(val)","_primaryKey": "(val)"}
+              {"nsfSequenceNumber": "(val)","nsfCode": "(val)","year": "(val)","description": "(val)","_primaryKey": "(val)"},
+              {"nsfSequenceNumber": "(val)","nsfCode": "(val)","year": "(val)","description": "(val)","_primaryKey": "(val)"}
             ]
 			
 ### Get Schema for Nsf Codes [GET /research-common/api/v1/nsf-codes/]
@@ -87,7 +88,7 @@
 
     + Body
     
-            {"columns":["nsfSequenceNumber","nsfCode","description"],"primaryKey":"nsfSequenceNumber"}
+            {"columns":["nsfSequenceNumber","nsfCode","year","description"],"primaryKey":"nsfSequenceNumber"}
 		
 ### Get Blueprint API specification for Nsf Codes [GET /research-common/api/v1/nsf-codes/]
 	 
@@ -119,7 +120,7 @@
 
     + Body
     
-            {"nsfSequenceNumber": "(val)","nsfCode": "(val)","description": "(val)","_primaryKey": "(val)"}
+            {"nsfSequenceNumber": "(val)","nsfCode": "(val)","year": "(val)","description": "(val)","_primaryKey": "(val)"}
 			
 + Response 204
 
@@ -135,11 +136,29 @@
     + Body
     
             [
-              {"nsfSequenceNumber": "(val)","nsfCode": "(val)","description": "(val)","_primaryKey": "(val)"},
-              {"nsfSequenceNumber": "(val)","nsfCode": "(val)","description": "(val)","_primaryKey": "(val)"}
+              {"nsfSequenceNumber": "(val)","nsfCode": "(val)","year": "(val)","description": "(val)","_primaryKey": "(val)"},
+              {"nsfSequenceNumber": "(val)","nsfCode": "(val)","year": "(val)","description": "(val)","_primaryKey": "(val)"}
             ]
 			
 + Response 204
+### Update Specific Attributes Nsf Codes [PATCH /research-common/api/v1/nsf-codes/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"nsfSequenceNumber": "(val)","nsfCode": "(val)","year": "(val)","description": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"nsfSequenceNumber": "(val)","nsfCode": "(val)","year": "(val)","description": "(val)","_primaryKey": "(val)"}
 ### Insert Nsf Codes [POST /research-common/api/v1/nsf-codes/]
 
 + Request
@@ -151,13 +170,13 @@
 
     + Body
     
-            {"nsfSequenceNumber": "(val)","nsfCode": "(val)","description": "(val)","_primaryKey": "(val)"}
+            {"nsfSequenceNumber": "(val)","nsfCode": "(val)","year": "(val)","description": "(val)","_primaryKey": "(val)"}
 			
 + Response 201
     
     + Body
             
-            {"nsfSequenceNumber": "(val)","nsfCode": "(val)","description": "(val)","_primaryKey": "(val)"}
+            {"nsfSequenceNumber": "(val)","nsfCode": "(val)","year": "(val)","description": "(val)","_primaryKey": "(val)"}
             
 ### Insert Multiple Nsf Codes [POST /research-common/api/v1/nsf-codes/]
 
@@ -171,8 +190,8 @@
     + Body
     
             [
-              {"nsfSequenceNumber": "(val)","nsfCode": "(val)","description": "(val)","_primaryKey": "(val)"},
-              {"nsfSequenceNumber": "(val)","nsfCode": "(val)","description": "(val)","_primaryKey": "(val)"}
+              {"nsfSequenceNumber": "(val)","nsfCode": "(val)","year": "(val)","description": "(val)","_primaryKey": "(val)"},
+              {"nsfSequenceNumber": "(val)","nsfCode": "(val)","year": "(val)","description": "(val)","_primaryKey": "(val)"}
             ]
 			
 + Response 201
@@ -180,8 +199,8 @@
     + Body
             
             [
-              {"nsfSequenceNumber": "(val)","nsfCode": "(val)","description": "(val)","_primaryKey": "(val)"},
-              {"nsfSequenceNumber": "(val)","nsfCode": "(val)","description": "(val)","_primaryKey": "(val)"}
+              {"nsfSequenceNumber": "(val)","nsfCode": "(val)","year": "(val)","description": "(val)","_primaryKey": "(val)"},
+              {"nsfSequenceNumber": "(val)","nsfCode": "(val)","year": "(val)","description": "(val)","_primaryKey": "(val)"}
             ]
 ### Delete Nsf Codes by Key [DELETE /research-common/api/v1/nsf-codes/(key)]
 	 
@@ -216,6 +235,7 @@
     + _allowMulti (boolean, required) - flag to allow multiple resources to be deleted in one operation
     + nsfSequenceNumber (optional) - The assigned sequence number. Maximum length is 12.
     + nsfCode (optional) - NSF Science Code. Maximum length is 15.
+    + year (optional) - Year. Maximum length is 4.
     + description (optional) - Description. Maximum length is 200.
 
       

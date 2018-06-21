@@ -147,6 +147,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Protocol References [PATCH /irb/api/v1/protocol-references/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"protocolReferenceId": "(val)","protocolId": "(val)","protocolNumber": "(val)","sequenceNumber": "(val)","protocolReferenceNumber": "(val)","protocolReferenceTypeCode": "(val)","referenceKey": "(val)","applicationDate": "(val)","approvalDate": "(val)","comments": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"protocolReferenceId": "(val)","protocolId": "(val)","protocolNumber": "(val)","sequenceNumber": "(val)","protocolReferenceNumber": "(val)","protocolReferenceTypeCode": "(val)","referenceKey": "(val)","applicationDate": "(val)","approvalDate": "(val)","comments": "(val)","_primaryKey": "(val)"}
 ### Insert Protocol References [POST /irb/api/v1/protocol-references/]
 
 + Request

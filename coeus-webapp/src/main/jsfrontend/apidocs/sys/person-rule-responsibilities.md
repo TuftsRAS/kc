@@ -145,6 +145,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Person Rule Responsibilities [PATCH /research-sys/api/v1/person-rule-responsibilities/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","responsibilityId": "(val)","ruleBaseValuesId": "(val)","priority": "(val)","actionRequestedCd": "(val)","ruleResponsibilityName": "(val)","ruleResponsibilityType": "(val)","approvePolicy": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","responsibilityId": "(val)","ruleBaseValuesId": "(val)","priority": "(val)","actionRequestedCd": "(val)","ruleResponsibilityName": "(val)","ruleResponsibilityType": "(val)","approvePolicy": "(val)","_primaryKey": "(val)"}
 ### Insert Person Rule Responsibilities [POST /research-sys/api/v1/person-rule-responsibilities/]
 
 + Request

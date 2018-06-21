@@ -147,6 +147,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Award Subcontracting Budgeted Goals [PATCH /award/api/v1/award-subcontracting-budgeted-goals/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"awardNumber": "(val)","largeBusinessGoalAmount": "(val)","smallBusinessGoalAmount": "(val)","womanOwnedGoalAmount": "(val)","eightADisadvantageGoalAmount": "(val)","hubZoneGoalAmount": "(val)","veteranOwnedGoalAmount": "(val)","serviceDisabledVeteranOwnedGoalAmount": "(val)","historicalBlackCollegeGoalAmount": "(val)","comments": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"awardNumber": "(val)","largeBusinessGoalAmount": "(val)","smallBusinessGoalAmount": "(val)","womanOwnedGoalAmount": "(val)","eightADisadvantageGoalAmount": "(val)","hubZoneGoalAmount": "(val)","veteranOwnedGoalAmount": "(val)","serviceDisabledVeteranOwnedGoalAmount": "(val)","historicalBlackCollegeGoalAmount": "(val)","comments": "(val)","_primaryKey": "(val)"}
 ### Insert Award Subcontracting Budgeted Goals [POST /award/api/v1/award-subcontracting-budgeted-goals/]
 
 + Request

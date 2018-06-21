@@ -139,6 +139,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Protocol Online Review Determination Recommendations [PATCH /irb/api/v1/protocol-online-review-determination-recommendations/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"protocolOnlineReviewDeterminationRecommendationCode": "(val)","description": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"protocolOnlineReviewDeterminationRecommendationCode": "(val)","description": "(val)","_primaryKey": "(val)"}
 ### Insert Protocol Online Review Determination Recommendations [POST /irb/api/v1/protocol-online-review-determination-recommendations/]
 
 + Request

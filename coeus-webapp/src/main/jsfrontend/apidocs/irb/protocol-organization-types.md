@@ -139,6 +139,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Protocol Organization Types [PATCH /irb/api/v1/protocol-organization-types/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"protocolOrganizationTypeCode": "(val)","description": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"protocolOrganizationTypeCode": "(val)","description": "(val)","_primaryKey": "(val)"}
 ### Insert Protocol Organization Types [POST /irb/api/v1/protocol-organization-types/]
 
 + Request

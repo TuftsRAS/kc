@@ -16,7 +16,7 @@
 
     + Body
     
-            {"awardCostShareId": "(val)","awardNumber": "(val)","sequenceNumber": "(val)","projectPeriod": "(val)","costSharePercentage": "(val)","costShareTypeCode": "(val)","source": "(val)","destination": "(val)","commitmentAmount": "(val)","costShareMet": "(val)","verificationDate": "(val)","_primaryKey": "(val)"}
+            {"awardCostShareId": "(val)","awardNumber": "(val)","sequenceNumber": "(val)","projectPeriod": "(val)","costSharePercentage": "(val)","costShareTypeCode": "(val)","source": "(val)","destination": "(val)","commitmentAmount": "(val)","costShareMet": "(val)","verificationDate": "(val)","unitNumber": "(val)","_primaryKey": "(val)"}
 
 ### Get All Award Cost Shares [GET /award/api/v1/award-cost-shares/]
 	 
@@ -35,8 +35,8 @@
     + Body
     
             [
-              {"awardCostShareId": "(val)","awardNumber": "(val)","sequenceNumber": "(val)","projectPeriod": "(val)","costSharePercentage": "(val)","costShareTypeCode": "(val)","source": "(val)","destination": "(val)","commitmentAmount": "(val)","costShareMet": "(val)","verificationDate": "(val)","_primaryKey": "(val)"},
-              {"awardCostShareId": "(val)","awardNumber": "(val)","sequenceNumber": "(val)","projectPeriod": "(val)","costSharePercentage": "(val)","costShareTypeCode": "(val)","source": "(val)","destination": "(val)","commitmentAmount": "(val)","costShareMet": "(val)","verificationDate": "(val)","_primaryKey": "(val)"}
+              {"awardCostShareId": "(val)","awardNumber": "(val)","sequenceNumber": "(val)","projectPeriod": "(val)","costSharePercentage": "(val)","costShareTypeCode": "(val)","source": "(val)","destination": "(val)","commitmentAmount": "(val)","costShareMet": "(val)","verificationDate": "(val)","unitNumber": "(val)","_primaryKey": "(val)"},
+              {"awardCostShareId": "(val)","awardNumber": "(val)","sequenceNumber": "(val)","projectPeriod": "(val)","costSharePercentage": "(val)","costShareTypeCode": "(val)","source": "(val)","destination": "(val)","commitmentAmount": "(val)","costShareMet": "(val)","verificationDate": "(val)","unitNumber": "(val)","_primaryKey": "(val)"}
             ]
 
 ### Get All Award Cost Shares with Filtering [GET /award/api/v1/award-cost-shares/]
@@ -54,6 +54,7 @@
     + commitmentAmount (optional) - Commitment Amount. Maximum length is 12.
     + costShareMet (optional) - Cost Share Met. Maximum length is 12.
     + verificationDate (optional) - Verification Date. Maximum length is 21.
+    + unitNumber (optional) - Unit Number. Maximum length is 8.
 
             
 + Request
@@ -71,8 +72,8 @@
     + Body
     
             [
-              {"awardCostShareId": "(val)","awardNumber": "(val)","sequenceNumber": "(val)","projectPeriod": "(val)","costSharePercentage": "(val)","costShareTypeCode": "(val)","source": "(val)","destination": "(val)","commitmentAmount": "(val)","costShareMet": "(val)","verificationDate": "(val)","_primaryKey": "(val)"},
-              {"awardCostShareId": "(val)","awardNumber": "(val)","sequenceNumber": "(val)","projectPeriod": "(val)","costSharePercentage": "(val)","costShareTypeCode": "(val)","source": "(val)","destination": "(val)","commitmentAmount": "(val)","costShareMet": "(val)","verificationDate": "(val)","_primaryKey": "(val)"}
+              {"awardCostShareId": "(val)","awardNumber": "(val)","sequenceNumber": "(val)","projectPeriod": "(val)","costSharePercentage": "(val)","costShareTypeCode": "(val)","source": "(val)","destination": "(val)","commitmentAmount": "(val)","costShareMet": "(val)","verificationDate": "(val)","unitNumber": "(val)","_primaryKey": "(val)"},
+              {"awardCostShareId": "(val)","awardNumber": "(val)","sequenceNumber": "(val)","projectPeriod": "(val)","costSharePercentage": "(val)","costShareTypeCode": "(val)","source": "(val)","destination": "(val)","commitmentAmount": "(val)","costShareMet": "(val)","verificationDate": "(val)","unitNumber": "(val)","_primaryKey": "(val)"}
             ]
 			
 ### Get Schema for Award Cost Shares [GET /award/api/v1/award-cost-shares/]
@@ -95,7 +96,7 @@
 
     + Body
     
-            {"columns":["awardCostShareId","awardNumber","sequenceNumber","projectPeriod","costSharePercentage","costShareTypeCode","source","destination","commitmentAmount","costShareMet","verificationDate"],"primaryKey":"awardCostShareId"}
+            {"columns":["awardCostShareId","awardNumber","sequenceNumber","projectPeriod","costSharePercentage","costShareTypeCode","source","destination","commitmentAmount","costShareMet","verificationDate","unitNumber"],"primaryKey":"awardCostShareId"}
 		
 ### Get Blueprint API specification for Award Cost Shares [GET /award/api/v1/award-cost-shares/]
 	 

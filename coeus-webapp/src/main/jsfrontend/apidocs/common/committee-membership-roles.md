@@ -142,6 +142,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Committee Membership Roles [PATCH /research-common/api/v1/committee-membership-roles/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"committeeMembershipRoleId": "(val)","committeeMembershipIdFk": "(val)","membershipRoleCode": "(val)","startDate": "(val)","endDate": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"committeeMembershipRoleId": "(val)","committeeMembershipIdFk": "(val)","membershipRoleCode": "(val)","startDate": "(val)","endDate": "(val)","_primaryKey": "(val)"}
 ### Insert Committee Membership Roles [POST /research-common/api/v1/committee-membership-roles/]
 
 + Request

@@ -139,6 +139,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Custom Attribute Data Types [PATCH /research-common/api/v1/custom-attribute-data-types/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"code": "(val)","description": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"code": "(val)","description": "(val)","_primaryKey": "(val)"}
 ### Insert Custom Attribute Data Types [POST /research-common/api/v1/custom-attribute-data-types/]
 
 + Request

@@ -149,6 +149,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Negotiations [PATCH /negotiation/api/v1/negotiations/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"negotiationId": "(val)","documentNumber": "(val)","negotiationStatusId": "(val)","negotiationAgreementTypeId": "(val)","negotiationAssociationTypeId": "(val)","negotiatorPersonId": "(val)","negotiatorName": "(val)","negotiationStartDate": "(val)","negotiationEndDate": "(val)","anticipatedAwardDate": "(val)","documentFolder": "(val)","associatedDocumentId": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"negotiationId": "(val)","documentNumber": "(val)","negotiationStatusId": "(val)","negotiationAgreementTypeId": "(val)","negotiationAssociationTypeId": "(val)","negotiatorPersonId": "(val)","negotiatorName": "(val)","negotiationStartDate": "(val)","negotiationEndDate": "(val)","anticipatedAwardDate": "(val)","documentFolder": "(val)","associatedDocumentId": "(val)","_primaryKey": "(val)"}
 ### Insert Negotiations [POST /negotiation/api/v1/negotiations/]
 
 + Request

@@ -44,7 +44,7 @@
 + Parameters
 
     + id (optional) - Id.
-    + contentId (optional) - Attachments. Maximum length is 300.
+    + contentId (optional) - Attachments. Maximum length is 255.
     + proposalNumber (optional) - Proposal Number. Maximum length is 8.
     + contentType (optional) - Content Type. Maximum length is 30.
     + hashCode (optional) - Hash Code. Maximum length is 300.
@@ -142,6 +142,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes S2s Application Attachments [PATCH /propdev/api/v1/s2s-application-attachments/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","contentId": "(val)","proposalNumber": "(val)","contentType": "(val)","hashCode": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","contentId": "(val)","proposalNumber": "(val)","contentType": "(val)","hashCode": "(val)","_primaryKey": "(val)"}
 ### Insert S2s Application Attachments [POST /propdev/api/v1/s2s-application-attachments/]
 
 + Request
@@ -217,7 +235,7 @@
 
     + _allowMulti (boolean, required) - flag to allow multiple resources to be deleted in one operation
     + id (optional) - Id.
-    + contentId (optional) - Attachments. Maximum length is 300.
+    + contentId (optional) - Attachments. Maximum length is 255.
     + proposalNumber (optional) - Proposal Number. Maximum length is 8.
     + contentType (optional) - Content Type. Maximum length is 30.
     + hashCode (optional) - Hash Code. Maximum length is 300.

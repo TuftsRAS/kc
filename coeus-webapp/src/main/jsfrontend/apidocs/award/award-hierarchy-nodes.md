@@ -143,6 +143,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Award Hierarchy Nodes [PATCH /award/api/v1/award-hierarchy-nodes/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"awardHierarchyId": "(val)","rootAwardNumber": "(val)","awardNumber": "(val)","parentAwardNumber": "(val)","originatingAwardNumber": "(val)","active": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"awardHierarchyId": "(val)","rootAwardNumber": "(val)","awardNumber": "(val)","parentAwardNumber": "(val)","originatingAwardNumber": "(val)","active": "(val)","_primaryKey": "(val)"}
 ### Insert Award Hierarchy Nodes [POST /award/api/v1/award-hierarchy-nodes/]
 
 + Request

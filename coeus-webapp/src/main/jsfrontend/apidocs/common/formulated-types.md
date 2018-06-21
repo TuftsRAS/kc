@@ -139,6 +139,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Formulated Types [PATCH /research-common/api/v1/formulated-types/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"formulatedTypeCode": "(val)","description": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"formulatedTypeCode": "(val)","description": "(val)","_primaryKey": "(val)"}
 ### Insert Formulated Types [POST /research-common/api/v1/formulated-types/]
 
 + Request

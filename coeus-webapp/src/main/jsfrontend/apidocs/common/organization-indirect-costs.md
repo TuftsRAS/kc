@@ -16,7 +16,7 @@
 
     + Body
     
-            {"idcNumber": "(val)","organizationId": "(val)","applicableIndirectcostRate": "(val)","endDate": "(val)","idcComment": "(val)","idcRateTypeCode": "(val)","requestedDate": "(val)","startDate": "(val)","_primaryKey": "(val)"}
+            {"idcNumber": "(val)","organizationId": "(val)","applicableIndirectcostRate": "(val)","endDate": "(val)","idcComment": "(val)","idcRateTypeCode": "(val)","requestedDate": "(val)","startDate": "(val)","federalApprovingAgency": "(val)","federalApprovingAgencyName": "(val)","restrictedRatePolicy": "(val)","_primaryKey": "(val)"}
 
 ### Get All Organization Indirect Costs [GET /research-common/api/v1/organization-indirect-costs/]
 	 
@@ -35,8 +35,8 @@
     + Body
     
             [
-              {"idcNumber": "(val)","organizationId": "(val)","applicableIndirectcostRate": "(val)","endDate": "(val)","idcComment": "(val)","idcRateTypeCode": "(val)","requestedDate": "(val)","startDate": "(val)","_primaryKey": "(val)"},
-              {"idcNumber": "(val)","organizationId": "(val)","applicableIndirectcostRate": "(val)","endDate": "(val)","idcComment": "(val)","idcRateTypeCode": "(val)","requestedDate": "(val)","startDate": "(val)","_primaryKey": "(val)"}
+              {"idcNumber": "(val)","organizationId": "(val)","applicableIndirectcostRate": "(val)","endDate": "(val)","idcComment": "(val)","idcRateTypeCode": "(val)","requestedDate": "(val)","startDate": "(val)","federalApprovingAgency": "(val)","federalApprovingAgencyName": "(val)","restrictedRatePolicy": "(val)","_primaryKey": "(val)"},
+              {"idcNumber": "(val)","organizationId": "(val)","applicableIndirectcostRate": "(val)","endDate": "(val)","idcComment": "(val)","idcRateTypeCode": "(val)","requestedDate": "(val)","startDate": "(val)","federalApprovingAgency": "(val)","federalApprovingAgencyName": "(val)","restrictedRatePolicy": "(val)","_primaryKey": "(val)"}
             ]
 
 ### Get All Organization Indirect Costs with Filtering [GET /research-common/api/v1/organization-indirect-costs/]
@@ -51,6 +51,9 @@
     + idcRateTypeCode (optional) - Idc Rate Type Code. Maximum length is 3.
     + requestedDate (optional) - Requested Date. Maximum length is 10.
     + startDate (optional) - Start Date. Maximum length is 10.
+    + federalApprovingAgency (optional) - Federal Approving Agency. Maximum length is 3.
+    + federalApprovingAgencyName (optional) - Federal Approving Agency Name. Maximum length is 255.
+    + restrictedRatePolicy (optional) - Restricted Rate Policy. Maximum length is 3.
 
             
 + Request
@@ -68,8 +71,8 @@
     + Body
     
             [
-              {"idcNumber": "(val)","organizationId": "(val)","applicableIndirectcostRate": "(val)","endDate": "(val)","idcComment": "(val)","idcRateTypeCode": "(val)","requestedDate": "(val)","startDate": "(val)","_primaryKey": "(val)"},
-              {"idcNumber": "(val)","organizationId": "(val)","applicableIndirectcostRate": "(val)","endDate": "(val)","idcComment": "(val)","idcRateTypeCode": "(val)","requestedDate": "(val)","startDate": "(val)","_primaryKey": "(val)"}
+              {"idcNumber": "(val)","organizationId": "(val)","applicableIndirectcostRate": "(val)","endDate": "(val)","idcComment": "(val)","idcRateTypeCode": "(val)","requestedDate": "(val)","startDate": "(val)","federalApprovingAgency": "(val)","federalApprovingAgencyName": "(val)","restrictedRatePolicy": "(val)","_primaryKey": "(val)"},
+              {"idcNumber": "(val)","organizationId": "(val)","applicableIndirectcostRate": "(val)","endDate": "(val)","idcComment": "(val)","idcRateTypeCode": "(val)","requestedDate": "(val)","startDate": "(val)","federalApprovingAgency": "(val)","federalApprovingAgencyName": "(val)","restrictedRatePolicy": "(val)","_primaryKey": "(val)"}
             ]
 			
 ### Get Schema for Organization Indirect Costs [GET /research-common/api/v1/organization-indirect-costs/]
@@ -92,7 +95,7 @@
 
     + Body
     
-            {"columns":["idcNumber","organizationId","applicableIndirectcostRate","endDate","idcComment","idcRateTypeCode","requestedDate","startDate"],"primaryKey":"idcNumber:organizationId"}
+            {"columns":["idcNumber","organizationId","applicableIndirectcostRate","endDate","idcComment","idcRateTypeCode","requestedDate","startDate","federalApprovingAgency","federalApprovingAgencyName","restrictedRatePolicy"],"primaryKey":"idcNumber:organizationId"}
 		
 ### Get Blueprint API specification for Organization Indirect Costs [GET /research-common/api/v1/organization-indirect-costs/]
 	 
@@ -124,7 +127,7 @@
 
     + Body
     
-            {"idcNumber": "(val)","organizationId": "(val)","applicableIndirectcostRate": "(val)","endDate": "(val)","idcComment": "(val)","idcRateTypeCode": "(val)","requestedDate": "(val)","startDate": "(val)","_primaryKey": "(val)"}
+            {"idcNumber": "(val)","organizationId": "(val)","applicableIndirectcostRate": "(val)","endDate": "(val)","idcComment": "(val)","idcRateTypeCode": "(val)","requestedDate": "(val)","startDate": "(val)","federalApprovingAgency": "(val)","federalApprovingAgencyName": "(val)","restrictedRatePolicy": "(val)","_primaryKey": "(val)"}
 			
 + Response 204
 
@@ -140,11 +143,29 @@
     + Body
     
             [
-              {"idcNumber": "(val)","organizationId": "(val)","applicableIndirectcostRate": "(val)","endDate": "(val)","idcComment": "(val)","idcRateTypeCode": "(val)","requestedDate": "(val)","startDate": "(val)","_primaryKey": "(val)"},
-              {"idcNumber": "(val)","organizationId": "(val)","applicableIndirectcostRate": "(val)","endDate": "(val)","idcComment": "(val)","idcRateTypeCode": "(val)","requestedDate": "(val)","startDate": "(val)","_primaryKey": "(val)"}
+              {"idcNumber": "(val)","organizationId": "(val)","applicableIndirectcostRate": "(val)","endDate": "(val)","idcComment": "(val)","idcRateTypeCode": "(val)","requestedDate": "(val)","startDate": "(val)","federalApprovingAgency": "(val)","federalApprovingAgencyName": "(val)","restrictedRatePolicy": "(val)","_primaryKey": "(val)"},
+              {"idcNumber": "(val)","organizationId": "(val)","applicableIndirectcostRate": "(val)","endDate": "(val)","idcComment": "(val)","idcRateTypeCode": "(val)","requestedDate": "(val)","startDate": "(val)","federalApprovingAgency": "(val)","federalApprovingAgencyName": "(val)","restrictedRatePolicy": "(val)","_primaryKey": "(val)"}
             ]
 			
 + Response 204
+### Update Specific Attributes Organization Indirect Costs [PATCH /research-common/api/v1/organization-indirect-costs/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"idcNumber": "(val)","organizationId": "(val)","applicableIndirectcostRate": "(val)","endDate": "(val)","idcComment": "(val)","idcRateTypeCode": "(val)","requestedDate": "(val)","startDate": "(val)","federalApprovingAgency": "(val)","federalApprovingAgencyName": "(val)","restrictedRatePolicy": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"idcNumber": "(val)","organizationId": "(val)","applicableIndirectcostRate": "(val)","endDate": "(val)","idcComment": "(val)","idcRateTypeCode": "(val)","requestedDate": "(val)","startDate": "(val)","federalApprovingAgency": "(val)","federalApprovingAgencyName": "(val)","restrictedRatePolicy": "(val)","_primaryKey": "(val)"}
 ### Insert Organization Indirect Costs [POST /research-common/api/v1/organization-indirect-costs/]
 
 + Request
@@ -156,13 +177,13 @@
 
     + Body
     
-            {"idcNumber": "(val)","organizationId": "(val)","applicableIndirectcostRate": "(val)","endDate": "(val)","idcComment": "(val)","idcRateTypeCode": "(val)","requestedDate": "(val)","startDate": "(val)","_primaryKey": "(val)"}
+            {"idcNumber": "(val)","organizationId": "(val)","applicableIndirectcostRate": "(val)","endDate": "(val)","idcComment": "(val)","idcRateTypeCode": "(val)","requestedDate": "(val)","startDate": "(val)","federalApprovingAgency": "(val)","federalApprovingAgencyName": "(val)","restrictedRatePolicy": "(val)","_primaryKey": "(val)"}
 			
 + Response 201
     
     + Body
             
-            {"idcNumber": "(val)","organizationId": "(val)","applicableIndirectcostRate": "(val)","endDate": "(val)","idcComment": "(val)","idcRateTypeCode": "(val)","requestedDate": "(val)","startDate": "(val)","_primaryKey": "(val)"}
+            {"idcNumber": "(val)","organizationId": "(val)","applicableIndirectcostRate": "(val)","endDate": "(val)","idcComment": "(val)","idcRateTypeCode": "(val)","requestedDate": "(val)","startDate": "(val)","federalApprovingAgency": "(val)","federalApprovingAgencyName": "(val)","restrictedRatePolicy": "(val)","_primaryKey": "(val)"}
             
 ### Insert Multiple Organization Indirect Costs [POST /research-common/api/v1/organization-indirect-costs/]
 
@@ -176,8 +197,8 @@
     + Body
     
             [
-              {"idcNumber": "(val)","organizationId": "(val)","applicableIndirectcostRate": "(val)","endDate": "(val)","idcComment": "(val)","idcRateTypeCode": "(val)","requestedDate": "(val)","startDate": "(val)","_primaryKey": "(val)"},
-              {"idcNumber": "(val)","organizationId": "(val)","applicableIndirectcostRate": "(val)","endDate": "(val)","idcComment": "(val)","idcRateTypeCode": "(val)","requestedDate": "(val)","startDate": "(val)","_primaryKey": "(val)"}
+              {"idcNumber": "(val)","organizationId": "(val)","applicableIndirectcostRate": "(val)","endDate": "(val)","idcComment": "(val)","idcRateTypeCode": "(val)","requestedDate": "(val)","startDate": "(val)","federalApprovingAgency": "(val)","federalApprovingAgencyName": "(val)","restrictedRatePolicy": "(val)","_primaryKey": "(val)"},
+              {"idcNumber": "(val)","organizationId": "(val)","applicableIndirectcostRate": "(val)","endDate": "(val)","idcComment": "(val)","idcRateTypeCode": "(val)","requestedDate": "(val)","startDate": "(val)","federalApprovingAgency": "(val)","federalApprovingAgencyName": "(val)","restrictedRatePolicy": "(val)","_primaryKey": "(val)"}
             ]
 			
 + Response 201
@@ -185,8 +206,8 @@
     + Body
             
             [
-              {"idcNumber": "(val)","organizationId": "(val)","applicableIndirectcostRate": "(val)","endDate": "(val)","idcComment": "(val)","idcRateTypeCode": "(val)","requestedDate": "(val)","startDate": "(val)","_primaryKey": "(val)"},
-              {"idcNumber": "(val)","organizationId": "(val)","applicableIndirectcostRate": "(val)","endDate": "(val)","idcComment": "(val)","idcRateTypeCode": "(val)","requestedDate": "(val)","startDate": "(val)","_primaryKey": "(val)"}
+              {"idcNumber": "(val)","organizationId": "(val)","applicableIndirectcostRate": "(val)","endDate": "(val)","idcComment": "(val)","idcRateTypeCode": "(val)","requestedDate": "(val)","startDate": "(val)","federalApprovingAgency": "(val)","federalApprovingAgencyName": "(val)","restrictedRatePolicy": "(val)","_primaryKey": "(val)"},
+              {"idcNumber": "(val)","organizationId": "(val)","applicableIndirectcostRate": "(val)","endDate": "(val)","idcComment": "(val)","idcRateTypeCode": "(val)","requestedDate": "(val)","startDate": "(val)","federalApprovingAgency": "(val)","federalApprovingAgencyName": "(val)","restrictedRatePolicy": "(val)","_primaryKey": "(val)"}
             ]
 ### Delete Organization Indirect Costs by Key [DELETE /research-common/api/v1/organization-indirect-costs/(key)]
 	 
@@ -227,6 +248,9 @@
     + idcRateTypeCode (optional) - Idc Rate Type Code. Maximum length is 3.
     + requestedDate (optional) - Requested Date. Maximum length is 10.
     + startDate (optional) - Start Date. Maximum length is 10.
+    + federalApprovingAgency (optional) - Federal Approving Agency. Maximum length is 3.
+    + federalApprovingAgencyName (optional) - Federal Approving Agency Name. Maximum length is 255.
+    + restrictedRatePolicy (optional) - Restricted Rate Policy. Maximum length is 3.
 
       
 + Request

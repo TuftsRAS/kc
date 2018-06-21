@@ -139,6 +139,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Protocol Online Review Statuses [PATCH /irb/api/v1/protocol-online-review-statuses/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"statusCode": "(val)","description": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"statusCode": "(val)","description": "(val)","_primaryKey": "(val)"}
 ### Insert Protocol Online Review Statuses [POST /irb/api/v1/protocol-online-review-statuses/]
 
 + Request

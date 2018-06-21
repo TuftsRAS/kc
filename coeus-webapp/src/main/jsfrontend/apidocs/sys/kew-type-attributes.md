@@ -140,6 +140,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Kew Type Attributes [PATCH /research-sys/api/v1/kew-type-attributes/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","sequenceNumber": "(val)","active": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","sequenceNumber": "(val)","active": "(val)","_primaryKey": "(val)"}
 ### Insert Kew Type Attributes [POST /research-sys/api/v1/kew-type-attributes/]
 
 + Request

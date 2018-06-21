@@ -143,6 +143,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Sub Award Contacts [PATCH /subaward/api/v1/sub-award-contacts/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"subAwardContactId": "(val)","subAwardId": "(val)","sequenceNumber": "(val)","subAwardCode": "(val)","contactTypeCode": "(val)","rolodexId": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"subAwardContactId": "(val)","subAwardId": "(val)","sequenceNumber": "(val)","subAwardCode": "(val)","contactTypeCode": "(val)","rolodexId": "(val)","_primaryKey": "(val)"}
 ### Insert Sub Award Contacts [POST /subaward/api/v1/sub-award-contacts/]
 
 + Request

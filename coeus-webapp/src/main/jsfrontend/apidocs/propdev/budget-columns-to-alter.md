@@ -144,6 +144,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Budget Columns To Alter [PATCH /propdev/api/v1/budget-columns-to-alter/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"columnName": "(val)","columnLabel": "(val)","dataLength": "(val)","dataType": "(val)","hasLookup": "(val)","lookupClass": "(val)","lookupReturn": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"columnName": "(val)","columnLabel": "(val)","dataLength": "(val)","dataType": "(val)","hasLookup": "(val)","lookupClass": "(val)","lookupReturn": "(val)","_primaryKey": "(val)"}
 ### Insert Budget Columns To Alter [POST /propdev/api/v1/budget-columns-to-alter/]
 
 + Request

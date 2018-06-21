@@ -140,6 +140,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Distributions [PATCH /award/api/v1/distributions/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"ospDistributionCode": "(val)","description": "(val)","active": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"ospDistributionCode": "(val)","description": "(val)","active": "(val)","_primaryKey": "(val)"}
 ### Insert Distributions [POST /award/api/v1/distributions/]
 
 + Request

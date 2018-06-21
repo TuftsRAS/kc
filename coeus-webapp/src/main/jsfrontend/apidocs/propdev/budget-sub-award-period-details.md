@@ -144,6 +144,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Budget Sub Award Period Details [PATCH /propdev/api/v1/budget-sub-award-period-details/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","budgetPeriod": "(val)","directCost": "(val)","indirectCost": "(val)","costShare": "(val)","totalCost": "(val)","subAwardNumber": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","budgetPeriod": "(val)","directCost": "(val)","indirectCost": "(val)","costShare": "(val)","totalCost": "(val)","subAwardNumber": "(val)","_primaryKey": "(val)"}
 ### Insert Budget Sub Award Period Details [POST /propdev/api/v1/budget-sub-award-period-details/]
 
 + Request

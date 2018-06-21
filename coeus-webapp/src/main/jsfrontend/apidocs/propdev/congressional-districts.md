@@ -139,6 +139,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Congressional Districts [PATCH /propdev/api/v1/congressional-districts/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","congressionalDistrict": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","congressionalDistrict": "(val)","_primaryKey": "(val)"}
 ### Insert Congressional Districts [POST /propdev/api/v1/congressional-districts/]
 
 + Request

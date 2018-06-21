@@ -145,6 +145,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Budget Project Incomes [PATCH /research-common/api/v1/budget-project-incomes/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"documentComponentId": "(val)","budgetId": "(val)","budgetPeriodId": "(val)","budgetPeriodNumber": "(val)","description": "(val)","projectIncome": "(val)","hierarchyProposalNumber": "(val)","hiddenInHierarchy": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"documentComponentId": "(val)","budgetId": "(val)","budgetPeriodId": "(val)","budgetPeriodNumber": "(val)","description": "(val)","projectIncome": "(val)","hierarchyProposalNumber": "(val)","hiddenInHierarchy": "(val)","_primaryKey": "(val)"}
 ### Insert Budget Project Incomes [POST /research-common/api/v1/budget-project-incomes/]
 
 + Request

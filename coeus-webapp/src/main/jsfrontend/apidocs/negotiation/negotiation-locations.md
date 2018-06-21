@@ -141,6 +141,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Negotiation Locations [PATCH /negotiation/api/v1/negotiation-locations/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","code": "(val)","description": "(val)","active": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","code": "(val)","description": "(val)","active": "(val)","_primaryKey": "(val)"}
 ### Insert Negotiation Locations [POST /negotiation/api/v1/negotiation-locations/]
 
 + Request

@@ -139,6 +139,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Committee Membership Types [PATCH /research-common/api/v1/committee-membership-types/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"membershipTypeCode": "(val)","description": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"membershipTypeCode": "(val)","description": "(val)","_primaryKey": "(val)"}
 ### Insert Committee Membership Types [POST /research-common/api/v1/committee-membership-types/]
 
 + Request

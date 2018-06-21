@@ -140,6 +140,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Protocol Correspondence Types [PATCH /irb/api/v1/protocol-correspondence-types/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"protoCorrespTypeCode": "(val)","description": "(val)","moduleId": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"protoCorrespTypeCode": "(val)","description": "(val)","moduleId": "(val)","_primaryKey": "(val)"}
 ### Insert Protocol Correspondence Types [POST /irb/api/v1/protocol-correspondence-types/]
 
 + Request

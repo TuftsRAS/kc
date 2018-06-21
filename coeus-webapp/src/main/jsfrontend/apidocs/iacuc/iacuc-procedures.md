@@ -140,6 +140,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Iacuc Procedures [PATCH /iacuc/api/v1/iacuc-procedures/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"procedureCode": "(val)","procedureDescription": "(val)","procedureCategoryCode": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"procedureCode": "(val)","procedureDescription": "(val)","procedureCategoryCode": "(val)","_primaryKey": "(val)"}
 ### Insert Iacuc Procedures [POST /iacuc/api/v1/iacuc-procedures/]
 
 + Request

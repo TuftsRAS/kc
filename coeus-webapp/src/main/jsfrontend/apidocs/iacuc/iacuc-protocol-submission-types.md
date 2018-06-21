@@ -139,6 +139,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Iacuc Protocol Submission Types [PATCH /iacuc/api/v1/iacuc-protocol-submission-types/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"submissionTypeCode": "(val)","description": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"submissionTypeCode": "(val)","description": "(val)","_primaryKey": "(val)"}
 ### Insert Iacuc Protocol Submission Types [POST /iacuc/api/v1/iacuc-protocol-submission-types/]
 
 + Request

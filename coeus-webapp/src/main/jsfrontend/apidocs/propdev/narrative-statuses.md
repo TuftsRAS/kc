@@ -139,6 +139,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Narrative Statuses [PATCH /propdev/api/v1/narrative-statuses/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"code": "(val)","description": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"code": "(val)","description": "(val)","_primaryKey": "(val)"}
 ### Insert Narrative Statuses [POST /propdev/api/v1/narrative-statuses/]
 
 + Request

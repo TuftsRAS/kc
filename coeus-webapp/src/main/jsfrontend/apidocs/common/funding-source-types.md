@@ -140,6 +140,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Funding Source Types [PATCH /research-common/api/v1/funding-source-types/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"fundingSourceTypeCode": "(val)","description": "(val)","fundingSourceTypeFlag": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"fundingSourceTypeCode": "(val)","description": "(val)","fundingSourceTypeFlag": "(val)","_primaryKey": "(val)"}
 ### Insert Funding Source Types [POST /research-common/api/v1/funding-source-types/]
 
 + Request

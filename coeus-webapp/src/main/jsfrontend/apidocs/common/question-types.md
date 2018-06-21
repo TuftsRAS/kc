@@ -139,6 +139,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Question Types [PATCH /research-common/api/v1/question-types/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","name": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","name": "(val)","_primaryKey": "(val)"}
 ### Insert Question Types [POST /research-common/api/v1/question-types/]
 
 + Request

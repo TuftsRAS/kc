@@ -140,6 +140,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Note Types [PATCH /research-sys/api/v1/note-types/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"noteTypeCode": "(val)","noteTypeDescription": "(val)","noteTypeActiveIndicator": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"noteTypeCode": "(val)","noteTypeDescription": "(val)","noteTypeActiveIndicator": "(val)","_primaryKey": "(val)"}
 ### Insert Note Types [POST /research-sys/api/v1/note-types/]
 
 + Request

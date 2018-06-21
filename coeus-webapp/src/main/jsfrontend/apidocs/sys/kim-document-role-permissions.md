@@ -142,6 +142,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Kim Document Role Permissions [PATCH /research-sys/api/v1/kim-document-role-permissions/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"rolePermissionId": "(val)","roleId": "(val)","permissionId": "(val)","documentNumber": "(val)","active": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"rolePermissionId": "(val)","roleId": "(val)","permissionId": "(val)","documentNumber": "(val)","active": "(val)","_primaryKey": "(val)"}
 ### Insert Kim Document Role Permissions [POST /research-sys/api/v1/kim-document-role-permissions/]
 
 + Request

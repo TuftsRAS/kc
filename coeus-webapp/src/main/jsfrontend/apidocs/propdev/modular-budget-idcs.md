@@ -16,7 +16,7 @@
 
     + Body
     
-            {"budgetPeriodId": "(val)","budgetPeriod": "(val)","rateNumber": "(val)","budgetId": "(val)","description": "(val)","idcRate": "(val)","idcBase": "(val)","fundsRequested": "(val)","_primaryKey": "(val)"}
+            {"budgetPeriodId": "(val)","budgetPeriod": "(val)","rateNumber": "(val)","budgetId": "(val)","description": "(val)","idcRate": "(val)","idcBase": "(val)","idcBaseUnrounded": "(val)","fundsRequested": "(val)","startDate": "(val)","endDate": "(val)","hierarchyProposalNumber": "(val)","_primaryKey": "(val)"}
 
 ### Get All Modular Budget Idcs [GET /propdev/api/v1/modular-budget-idcs/]
 	 
@@ -35,8 +35,8 @@
     + Body
     
             [
-              {"budgetPeriodId": "(val)","budgetPeriod": "(val)","rateNumber": "(val)","budgetId": "(val)","description": "(val)","idcRate": "(val)","idcBase": "(val)","fundsRequested": "(val)","_primaryKey": "(val)"},
-              {"budgetPeriodId": "(val)","budgetPeriod": "(val)","rateNumber": "(val)","budgetId": "(val)","description": "(val)","idcRate": "(val)","idcBase": "(val)","fundsRequested": "(val)","_primaryKey": "(val)"}
+              {"budgetPeriodId": "(val)","budgetPeriod": "(val)","rateNumber": "(val)","budgetId": "(val)","description": "(val)","idcRate": "(val)","idcBase": "(val)","idcBaseUnrounded": "(val)","fundsRequested": "(val)","startDate": "(val)","endDate": "(val)","hierarchyProposalNumber": "(val)","_primaryKey": "(val)"},
+              {"budgetPeriodId": "(val)","budgetPeriod": "(val)","rateNumber": "(val)","budgetId": "(val)","description": "(val)","idcRate": "(val)","idcBase": "(val)","idcBaseUnrounded": "(val)","fundsRequested": "(val)","startDate": "(val)","endDate": "(val)","hierarchyProposalNumber": "(val)","_primaryKey": "(val)"}
             ]
 
 ### Get All Modular Budget Idcs with Filtering [GET /propdev/api/v1/modular-budget-idcs/]
@@ -50,7 +50,11 @@
     + description (optional) - Description. Maximum length is 64.
     + idcRate (optional) - IDC Rate. Maximum length is 7.
     + idcBase (optional) - IDC Base. Maximum length is 15.
+    + idcBaseUnrounded (optional) - Idc Base Unrounded.
     + fundsRequested (optional) - Funds Requested. Maximum length is 15.
+    + startDate (optional) - Start Date.
+    + endDate (optional) - End Date.
+    + hierarchyProposalNumber (optional) - Hierarchy Proposal Number.
 
             
 + Request
@@ -68,8 +72,8 @@
     + Body
     
             [
-              {"budgetPeriodId": "(val)","budgetPeriod": "(val)","rateNumber": "(val)","budgetId": "(val)","description": "(val)","idcRate": "(val)","idcBase": "(val)","fundsRequested": "(val)","_primaryKey": "(val)"},
-              {"budgetPeriodId": "(val)","budgetPeriod": "(val)","rateNumber": "(val)","budgetId": "(val)","description": "(val)","idcRate": "(val)","idcBase": "(val)","fundsRequested": "(val)","_primaryKey": "(val)"}
+              {"budgetPeriodId": "(val)","budgetPeriod": "(val)","rateNumber": "(val)","budgetId": "(val)","description": "(val)","idcRate": "(val)","idcBase": "(val)","idcBaseUnrounded": "(val)","fundsRequested": "(val)","startDate": "(val)","endDate": "(val)","hierarchyProposalNumber": "(val)","_primaryKey": "(val)"},
+              {"budgetPeriodId": "(val)","budgetPeriod": "(val)","rateNumber": "(val)","budgetId": "(val)","description": "(val)","idcRate": "(val)","idcBase": "(val)","idcBaseUnrounded": "(val)","fundsRequested": "(val)","startDate": "(val)","endDate": "(val)","hierarchyProposalNumber": "(val)","_primaryKey": "(val)"}
             ]
 			
 ### Get Schema for Modular Budget Idcs [GET /propdev/api/v1/modular-budget-idcs/]
@@ -92,7 +96,7 @@
 
     + Body
     
-            {"columns":["budgetPeriodId","budgetPeriod","rateNumber","budgetId","description","idcRate","idcBase","fundsRequested"],"primaryKey":"budgetModular:budgetPeriodId:rateNumber"}
+            {"columns":["budgetPeriodId","budgetPeriod","rateNumber","budgetId","description","idcRate","idcBase","idcBaseUnrounded","fundsRequested","startDate","endDate","hierarchyProposalNumber"],"primaryKey":"budgetModular:budgetPeriodId:rateNumber"}
 		
 ### Get Blueprint API specification for Modular Budget Idcs [GET /propdev/api/v1/modular-budget-idcs/]
 	 
@@ -124,7 +128,7 @@
 
     + Body
     
-            {"budgetPeriodId": "(val)","budgetPeriod": "(val)","rateNumber": "(val)","budgetId": "(val)","description": "(val)","idcRate": "(val)","idcBase": "(val)","fundsRequested": "(val)","_primaryKey": "(val)"}
+            {"budgetPeriodId": "(val)","budgetPeriod": "(val)","rateNumber": "(val)","budgetId": "(val)","description": "(val)","idcRate": "(val)","idcBase": "(val)","idcBaseUnrounded": "(val)","fundsRequested": "(val)","startDate": "(val)","endDate": "(val)","hierarchyProposalNumber": "(val)","_primaryKey": "(val)"}
 			
 + Response 204
 
@@ -140,11 +144,29 @@
     + Body
     
             [
-              {"budgetPeriodId": "(val)","budgetPeriod": "(val)","rateNumber": "(val)","budgetId": "(val)","description": "(val)","idcRate": "(val)","idcBase": "(val)","fundsRequested": "(val)","_primaryKey": "(val)"},
-              {"budgetPeriodId": "(val)","budgetPeriod": "(val)","rateNumber": "(val)","budgetId": "(val)","description": "(val)","idcRate": "(val)","idcBase": "(val)","fundsRequested": "(val)","_primaryKey": "(val)"}
+              {"budgetPeriodId": "(val)","budgetPeriod": "(val)","rateNumber": "(val)","budgetId": "(val)","description": "(val)","idcRate": "(val)","idcBase": "(val)","idcBaseUnrounded": "(val)","fundsRequested": "(val)","startDate": "(val)","endDate": "(val)","hierarchyProposalNumber": "(val)","_primaryKey": "(val)"},
+              {"budgetPeriodId": "(val)","budgetPeriod": "(val)","rateNumber": "(val)","budgetId": "(val)","description": "(val)","idcRate": "(val)","idcBase": "(val)","idcBaseUnrounded": "(val)","fundsRequested": "(val)","startDate": "(val)","endDate": "(val)","hierarchyProposalNumber": "(val)","_primaryKey": "(val)"}
             ]
 			
 + Response 204
+### Update Specific Attributes Modular Budget Idcs [PATCH /propdev/api/v1/modular-budget-idcs/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"budgetPeriodId": "(val)","budgetPeriod": "(val)","rateNumber": "(val)","budgetId": "(val)","description": "(val)","idcRate": "(val)","idcBase": "(val)","idcBaseUnrounded": "(val)","fundsRequested": "(val)","startDate": "(val)","endDate": "(val)","hierarchyProposalNumber": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"budgetPeriodId": "(val)","budgetPeriod": "(val)","rateNumber": "(val)","budgetId": "(val)","description": "(val)","idcRate": "(val)","idcBase": "(val)","idcBaseUnrounded": "(val)","fundsRequested": "(val)","startDate": "(val)","endDate": "(val)","hierarchyProposalNumber": "(val)","_primaryKey": "(val)"}
 ### Insert Modular Budget Idcs [POST /propdev/api/v1/modular-budget-idcs/]
 
 + Request
@@ -156,13 +178,13 @@
 
     + Body
     
-            {"budgetPeriodId": "(val)","budgetPeriod": "(val)","rateNumber": "(val)","budgetId": "(val)","description": "(val)","idcRate": "(val)","idcBase": "(val)","fundsRequested": "(val)","_primaryKey": "(val)"}
+            {"budgetPeriodId": "(val)","budgetPeriod": "(val)","rateNumber": "(val)","budgetId": "(val)","description": "(val)","idcRate": "(val)","idcBase": "(val)","idcBaseUnrounded": "(val)","fundsRequested": "(val)","startDate": "(val)","endDate": "(val)","hierarchyProposalNumber": "(val)","_primaryKey": "(val)"}
 			
 + Response 201
     
     + Body
             
-            {"budgetPeriodId": "(val)","budgetPeriod": "(val)","rateNumber": "(val)","budgetId": "(val)","description": "(val)","idcRate": "(val)","idcBase": "(val)","fundsRequested": "(val)","_primaryKey": "(val)"}
+            {"budgetPeriodId": "(val)","budgetPeriod": "(val)","rateNumber": "(val)","budgetId": "(val)","description": "(val)","idcRate": "(val)","idcBase": "(val)","idcBaseUnrounded": "(val)","fundsRequested": "(val)","startDate": "(val)","endDate": "(val)","hierarchyProposalNumber": "(val)","_primaryKey": "(val)"}
             
 ### Insert Multiple Modular Budget Idcs [POST /propdev/api/v1/modular-budget-idcs/]
 
@@ -176,8 +198,8 @@
     + Body
     
             [
-              {"budgetPeriodId": "(val)","budgetPeriod": "(val)","rateNumber": "(val)","budgetId": "(val)","description": "(val)","idcRate": "(val)","idcBase": "(val)","fundsRequested": "(val)","_primaryKey": "(val)"},
-              {"budgetPeriodId": "(val)","budgetPeriod": "(val)","rateNumber": "(val)","budgetId": "(val)","description": "(val)","idcRate": "(val)","idcBase": "(val)","fundsRequested": "(val)","_primaryKey": "(val)"}
+              {"budgetPeriodId": "(val)","budgetPeriod": "(val)","rateNumber": "(val)","budgetId": "(val)","description": "(val)","idcRate": "(val)","idcBase": "(val)","idcBaseUnrounded": "(val)","fundsRequested": "(val)","startDate": "(val)","endDate": "(val)","hierarchyProposalNumber": "(val)","_primaryKey": "(val)"},
+              {"budgetPeriodId": "(val)","budgetPeriod": "(val)","rateNumber": "(val)","budgetId": "(val)","description": "(val)","idcRate": "(val)","idcBase": "(val)","idcBaseUnrounded": "(val)","fundsRequested": "(val)","startDate": "(val)","endDate": "(val)","hierarchyProposalNumber": "(val)","_primaryKey": "(val)"}
             ]
 			
 + Response 201
@@ -185,8 +207,8 @@
     + Body
             
             [
-              {"budgetPeriodId": "(val)","budgetPeriod": "(val)","rateNumber": "(val)","budgetId": "(val)","description": "(val)","idcRate": "(val)","idcBase": "(val)","fundsRequested": "(val)","_primaryKey": "(val)"},
-              {"budgetPeriodId": "(val)","budgetPeriod": "(val)","rateNumber": "(val)","budgetId": "(val)","description": "(val)","idcRate": "(val)","idcBase": "(val)","fundsRequested": "(val)","_primaryKey": "(val)"}
+              {"budgetPeriodId": "(val)","budgetPeriod": "(val)","rateNumber": "(val)","budgetId": "(val)","description": "(val)","idcRate": "(val)","idcBase": "(val)","idcBaseUnrounded": "(val)","fundsRequested": "(val)","startDate": "(val)","endDate": "(val)","hierarchyProposalNumber": "(val)","_primaryKey": "(val)"},
+              {"budgetPeriodId": "(val)","budgetPeriod": "(val)","rateNumber": "(val)","budgetId": "(val)","description": "(val)","idcRate": "(val)","idcBase": "(val)","idcBaseUnrounded": "(val)","fundsRequested": "(val)","startDate": "(val)","endDate": "(val)","hierarchyProposalNumber": "(val)","_primaryKey": "(val)"}
             ]
 ### Delete Modular Budget Idcs by Key [DELETE /propdev/api/v1/modular-budget-idcs/(key)]
 	 
@@ -226,7 +248,11 @@
     + description (optional) - Description. Maximum length is 64.
     + idcRate (optional) - IDC Rate. Maximum length is 7.
     + idcBase (optional) - IDC Base. Maximum length is 15.
+    + idcBaseUnrounded (optional) - Idc Base Unrounded.
     + fundsRequested (optional) - Funds Requested. Maximum length is 15.
+    + startDate (optional) - Start Date.
+    + endDate (optional) - End Date.
+    + hierarchyProposalNumber (optional) - Hierarchy Proposal Number.
 
       
 + Request

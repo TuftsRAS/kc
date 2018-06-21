@@ -141,6 +141,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Document Attachments [PATCH /research-sys/api/v1/document-attachments/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"documentNumber": "(val)","fileName": "(val)","attachmentContent": "(val)","contentType": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"documentNumber": "(val)","fileName": "(val)","attachmentContent": "(val)","contentType": "(val)","_primaryKey": "(val)"}
 ### Insert Document Attachments [POST /research-sys/api/v1/document-attachments/]
 
 + Request

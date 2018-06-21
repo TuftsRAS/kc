@@ -140,6 +140,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Organization Audit Accepted Types [PATCH /research-common/api/v1/organization-audit-accepted-types/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"code": "(val)","active": "(val)","description": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"code": "(val)","active": "(val)","description": "(val)","_primaryKey": "(val)"}
 ### Insert Organization Audit Accepted Types [POST /research-common/api/v1/organization-audit-accepted-types/]
 
 + Request

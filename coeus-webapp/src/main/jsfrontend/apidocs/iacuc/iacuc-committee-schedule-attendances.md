@@ -146,6 +146,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Iacuc Committee Schedule Attendances [PATCH /iacuc/api/v1/iacuc-committee-schedule-attendances/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"commScheduleAttendanceId": "(val)","scheduleIdFk": "(val)","personId": "(val)","personName": "(val)","guestFlag": "(val)","alternateFlag": "(val)","alternateFor": "(val)","nonEmployeeFlag": "(val)","comments": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"commScheduleAttendanceId": "(val)","scheduleIdFk": "(val)","personId": "(val)","personName": "(val)","guestFlag": "(val)","alternateFlag": "(val)","alternateFor": "(val)","nonEmployeeFlag": "(val)","comments": "(val)","_primaryKey": "(val)"}
 ### Insert Iacuc Committee Schedule Attendances [POST /iacuc/api/v1/iacuc-committee-schedule-attendances/]
 
 + Request

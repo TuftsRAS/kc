@@ -16,7 +16,7 @@
 
     + Body
     
-            {"subAwardId": "(val)","sequenceNumber": "(val)","subAwardCode": "(val)","organizationId": "(val)","startDate": "(val)","endDate": "(val)","subAwardTypeCode": "(val)","purchaseOrderNum": "(val)","title": "(val)","statusCode": "(val)","accountNumber": "(val)","vendorNumber": "(val)","requisitionerId": "(val)","requisitionerUnit": "(val)","archiveLocation": "(val)","closeoutDate": "(val)","comments": "(val)","siteInvestigator": "(val)","costType": "(val)","executionDate": "(val)","requisitionId": "(val)","fedAwardProjDesc": "(val)","fAndARate": "(val)","deMinimus": "(val)","subAwardSequenceStatus": "(val)","subAwardDocument.documentNumber": "(val)","_primaryKey": "(val)"}
+            {"subAwardId": "(val)","sequenceNumber": "(val)","subAwardCode": "(val)","organizationId": "(val)","startDate": "(val)","endDate": "(val)","subAwardTypeCode": "(val)","purchaseOrderNum": "(val)","title": "(val)","statusCode": "(val)","accountNumber": "(val)","vendorNumber": "(val)","requisitionerId": "(val)","requisitionerUnit": "(val)","archiveLocation": "(val)","closeoutDate": "(val)","comments": "(val)","siteInvestigator": "(val)","costType": "(val)","executionDate": "(val)","requisitionId": "(val)","fedAwardProjDesc": "(val)","fAndARate": "(val)","deMinimus": "(val)","ffataRequired": "(val)","fsrsSubawardNumber": "(val)","subAwardSequenceStatus": "(val)","subAwardDocument.documentNumber": "(val)","_primaryKey": "(val)"}
 
 ### Get All Sub Awards [GET /subaward/api/v1/sub-awards/]
 	 
@@ -35,8 +35,8 @@
     + Body
     
             [
-              {"subAwardId": "(val)","sequenceNumber": "(val)","subAwardCode": "(val)","organizationId": "(val)","startDate": "(val)","endDate": "(val)","subAwardTypeCode": "(val)","purchaseOrderNum": "(val)","title": "(val)","statusCode": "(val)","accountNumber": "(val)","vendorNumber": "(val)","requisitionerId": "(val)","requisitionerUnit": "(val)","archiveLocation": "(val)","closeoutDate": "(val)","comments": "(val)","siteInvestigator": "(val)","costType": "(val)","executionDate": "(val)","requisitionId": "(val)","fedAwardProjDesc": "(val)","fAndARate": "(val)","deMinimus": "(val)","subAwardSequenceStatus": "(val)","subAwardDocument.documentNumber": "(val)","_primaryKey": "(val)"},
-              {"subAwardId": "(val)","sequenceNumber": "(val)","subAwardCode": "(val)","organizationId": "(val)","startDate": "(val)","endDate": "(val)","subAwardTypeCode": "(val)","purchaseOrderNum": "(val)","title": "(val)","statusCode": "(val)","accountNumber": "(val)","vendorNumber": "(val)","requisitionerId": "(val)","requisitionerUnit": "(val)","archiveLocation": "(val)","closeoutDate": "(val)","comments": "(val)","siteInvestigator": "(val)","costType": "(val)","executionDate": "(val)","requisitionId": "(val)","fedAwardProjDesc": "(val)","fAndARate": "(val)","deMinimus": "(val)","subAwardSequenceStatus": "(val)","subAwardDocument.documentNumber": "(val)","_primaryKey": "(val)"}
+              {"subAwardId": "(val)","sequenceNumber": "(val)","subAwardCode": "(val)","organizationId": "(val)","startDate": "(val)","endDate": "(val)","subAwardTypeCode": "(val)","purchaseOrderNum": "(val)","title": "(val)","statusCode": "(val)","accountNumber": "(val)","vendorNumber": "(val)","requisitionerId": "(val)","requisitionerUnit": "(val)","archiveLocation": "(val)","closeoutDate": "(val)","comments": "(val)","siteInvestigator": "(val)","costType": "(val)","executionDate": "(val)","requisitionId": "(val)","fedAwardProjDesc": "(val)","fAndARate": "(val)","deMinimus": "(val)","ffataRequired": "(val)","fsrsSubawardNumber": "(val)","subAwardSequenceStatus": "(val)","subAwardDocument.documentNumber": "(val)","_primaryKey": "(val)"},
+              {"subAwardId": "(val)","sequenceNumber": "(val)","subAwardCode": "(val)","organizationId": "(val)","startDate": "(val)","endDate": "(val)","subAwardTypeCode": "(val)","purchaseOrderNum": "(val)","title": "(val)","statusCode": "(val)","accountNumber": "(val)","vendorNumber": "(val)","requisitionerId": "(val)","requisitionerUnit": "(val)","archiveLocation": "(val)","closeoutDate": "(val)","comments": "(val)","siteInvestigator": "(val)","costType": "(val)","executionDate": "(val)","requisitionId": "(val)","fedAwardProjDesc": "(val)","fAndARate": "(val)","deMinimus": "(val)","ffataRequired": "(val)","fsrsSubawardNumber": "(val)","subAwardSequenceStatus": "(val)","subAwardDocument.documentNumber": "(val)","_primaryKey": "(val)"}
             ]
 
 ### Get All Sub Awards with Filtering [GET /subaward/api/v1/sub-awards/]
@@ -55,7 +55,7 @@
     + statusCode (optional) - Status Code. Maximum length is 22.
     + accountNumber (optional) - Account ID. Maximum length is 16.
     + vendorNumber (optional) - Vendor ID. Maximum length is 10.
-    + requisitionerId (optional) - Requisitioner User Name. Maximum length is 40.
+    + requisitionerId (optional) - KcPerson Id. Maximum length is 40.
     + requisitionerUnit (optional) - Requisitioner Unit. Maximum length is 80.
     + archiveLocation (optional) - Archive Location. Maximum length is 50.
     + closeoutDate (optional) - Closeout Date. Maximum length is 10.
@@ -67,7 +67,9 @@
     + fedAwardProjDesc (optional) - Federal Award Project Description. Maximum length is 200.
     + fAndARate (optional) - F & A Rate. Maximum length is 5.
     + deMinimus (optional) - de Minimus. Maximum length is 1.
-    + subAwardSequenceStatus (optional) - 
+    + ffataRequired (optional) - FFATA Required. Maximum length is 1.
+    + fsrsSubawardNumber (optional) - FSRS Subaward Number. Maximum length is 25.
+    + subAwardSequenceStatus (optional) - Document Status. Maximum length is 20.
     + subAwardDocument.documentNumber (optional) - 
 
             
@@ -86,8 +88,8 @@
     + Body
     
             [
-              {"subAwardId": "(val)","sequenceNumber": "(val)","subAwardCode": "(val)","organizationId": "(val)","startDate": "(val)","endDate": "(val)","subAwardTypeCode": "(val)","purchaseOrderNum": "(val)","title": "(val)","statusCode": "(val)","accountNumber": "(val)","vendorNumber": "(val)","requisitionerId": "(val)","requisitionerUnit": "(val)","archiveLocation": "(val)","closeoutDate": "(val)","comments": "(val)","siteInvestigator": "(val)","costType": "(val)","executionDate": "(val)","requisitionId": "(val)","fedAwardProjDesc": "(val)","fAndARate": "(val)","deMinimus": "(val)","subAwardSequenceStatus": "(val)","subAwardDocument.documentNumber": "(val)","_primaryKey": "(val)"},
-              {"subAwardId": "(val)","sequenceNumber": "(val)","subAwardCode": "(val)","organizationId": "(val)","startDate": "(val)","endDate": "(val)","subAwardTypeCode": "(val)","purchaseOrderNum": "(val)","title": "(val)","statusCode": "(val)","accountNumber": "(val)","vendorNumber": "(val)","requisitionerId": "(val)","requisitionerUnit": "(val)","archiveLocation": "(val)","closeoutDate": "(val)","comments": "(val)","siteInvestigator": "(val)","costType": "(val)","executionDate": "(val)","requisitionId": "(val)","fedAwardProjDesc": "(val)","fAndARate": "(val)","deMinimus": "(val)","subAwardSequenceStatus": "(val)","subAwardDocument.documentNumber": "(val)","_primaryKey": "(val)"}
+              {"subAwardId": "(val)","sequenceNumber": "(val)","subAwardCode": "(val)","organizationId": "(val)","startDate": "(val)","endDate": "(val)","subAwardTypeCode": "(val)","purchaseOrderNum": "(val)","title": "(val)","statusCode": "(val)","accountNumber": "(val)","vendorNumber": "(val)","requisitionerId": "(val)","requisitionerUnit": "(val)","archiveLocation": "(val)","closeoutDate": "(val)","comments": "(val)","siteInvestigator": "(val)","costType": "(val)","executionDate": "(val)","requisitionId": "(val)","fedAwardProjDesc": "(val)","fAndARate": "(val)","deMinimus": "(val)","ffataRequired": "(val)","fsrsSubawardNumber": "(val)","subAwardSequenceStatus": "(val)","subAwardDocument.documentNumber": "(val)","_primaryKey": "(val)"},
+              {"subAwardId": "(val)","sequenceNumber": "(val)","subAwardCode": "(val)","organizationId": "(val)","startDate": "(val)","endDate": "(val)","subAwardTypeCode": "(val)","purchaseOrderNum": "(val)","title": "(val)","statusCode": "(val)","accountNumber": "(val)","vendorNumber": "(val)","requisitionerId": "(val)","requisitionerUnit": "(val)","archiveLocation": "(val)","closeoutDate": "(val)","comments": "(val)","siteInvestigator": "(val)","costType": "(val)","executionDate": "(val)","requisitionId": "(val)","fedAwardProjDesc": "(val)","fAndARate": "(val)","deMinimus": "(val)","ffataRequired": "(val)","fsrsSubawardNumber": "(val)","subAwardSequenceStatus": "(val)","subAwardDocument.documentNumber": "(val)","_primaryKey": "(val)"}
             ]
 			
 ### Get Schema for Sub Awards [GET /subaward/api/v1/sub-awards/]
@@ -110,7 +112,7 @@
 
     + Body
     
-            {"columns":["subAwardId","sequenceNumber","subAwardCode","organizationId","startDate","endDate","subAwardTypeCode","purchaseOrderNum","title","statusCode","accountNumber","vendorNumber","requisitionerId","requisitionerUnit","archiveLocation","closeoutDate","comments","siteInvestigator","costType","executionDate","requisitionId","fedAwardProjDesc","fAndARate","deMinimus","subAwardSequenceStatus","subAwardDocument.documentNumber"],"primaryKey":"subAwardId"}
+            {"columns":["subAwardId","sequenceNumber","subAwardCode","organizationId","startDate","endDate","subAwardTypeCode","purchaseOrderNum","title","statusCode","accountNumber","vendorNumber","requisitionerId","requisitionerUnit","archiveLocation","closeoutDate","comments","siteInvestigator","costType","executionDate","requisitionId","fedAwardProjDesc","fAndARate","deMinimus","ffataRequired","fsrsSubawardNumber","subAwardSequenceStatus","subAwardDocument.documentNumber"],"primaryKey":"subAwardId"}
 		
 ### Get Blueprint API specification for Sub Awards [GET /subaward/api/v1/sub-awards/]
 	 

@@ -151,6 +151,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Budget Persons [PATCH /research-common/api/v1/budget-persons/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"personSequenceNumber": "(val)","budgetId": "(val)","effectiveDate": "(val)","jobCode": "(val)","nonEmployeeFlag": "(val)","personId": "(val)","rolodexId": "(val)","tbnId": "(val)","appointmentTypeCode": "(val)","calculationBase": "(val)","personName": "(val)","salaryAnniversaryDate": "(val)","hierarchyProposalNumber": "(val)","hiddenInHierarchy": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"personSequenceNumber": "(val)","budgetId": "(val)","effectiveDate": "(val)","jobCode": "(val)","nonEmployeeFlag": "(val)","personId": "(val)","rolodexId": "(val)","tbnId": "(val)","appointmentTypeCode": "(val)","calculationBase": "(val)","personName": "(val)","salaryAnniversaryDate": "(val)","hierarchyProposalNumber": "(val)","hiddenInHierarchy": "(val)","_primaryKey": "(val)"}
 ### Insert Budget Persons [POST /research-common/api/v1/budget-persons/]
 
 + Request

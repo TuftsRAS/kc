@@ -150,6 +150,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Entity Names [PATCH /research-sys/api/v1/entity-names/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","lastName": "(val)","defaultValue": "(val)","nameTitle": "(val)","active": "(val)","nameSuffix": "(val)","entityId": "(val)","noteMessage": "(val)","firstName": "(val)","nameCode": "(val)","namePrefix": "(val)","nameChangedDate": "(val)","middleName": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","lastName": "(val)","defaultValue": "(val)","nameTitle": "(val)","active": "(val)","nameSuffix": "(val)","entityId": "(val)","noteMessage": "(val)","firstName": "(val)","nameCode": "(val)","namePrefix": "(val)","nameChangedDate": "(val)","middleName": "(val)","_primaryKey": "(val)"}
 ### Insert Entity Names [POST /research-sys/api/v1/entity-names/]
 
 + Request

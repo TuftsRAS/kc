@@ -139,6 +139,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Proposal Person Units [PATCH /propdev/api/v1/proposal-person-units/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"unitNumber": "(val)","leadUnit": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"unitNumber": "(val)","leadUnit": "(val)","_primaryKey": "(val)"}
 ### Insert Proposal Person Units [POST /propdev/api/v1/proposal-person-units/]
 
 + Request

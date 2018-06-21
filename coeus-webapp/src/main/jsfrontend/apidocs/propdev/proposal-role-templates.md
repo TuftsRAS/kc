@@ -142,6 +142,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Proposal Role Templates [PATCH /propdev/api/v1/proposal-role-templates/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","personId": "(val)","roleName": "(val)","unitNumber": "(val)","active": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","personId": "(val)","roleName": "(val)","unitNumber": "(val)","active": "(val)","_primaryKey": "(val)"}
 ### Insert Proposal Role Templates [POST /propdev/api/v1/proposal-role-templates/]
 
 + Request

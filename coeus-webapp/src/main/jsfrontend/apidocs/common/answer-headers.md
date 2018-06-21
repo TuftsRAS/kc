@@ -144,6 +144,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Answer Headers [PATCH /research-common/api/v1/answer-headers/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","moduleItemCode": "(val)","moduleItemKey": "(val)","moduleSubItemCode": "(val)","moduleSubItemKey": "(val)","questionnaireId": "(val)","completed": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","moduleItemCode": "(val)","moduleItemKey": "(val)","moduleSubItemCode": "(val)","moduleSubItemKey": "(val)","questionnaireId": "(val)","completed": "(val)","_primaryKey": "(val)"}
 ### Insert Answer Headers [POST /research-common/api/v1/answer-headers/]
 
 + Request

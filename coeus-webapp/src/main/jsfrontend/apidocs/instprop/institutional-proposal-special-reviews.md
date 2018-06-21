@@ -115,3 +115,53 @@
             Content-Type: text/markdown;charset=UTF-8
             Content-Disposition:attachment; filename="Institutional Proposal Special Reviews.md"
             transfer-encoding:chunked
+### Update Institutional Proposal Special Reviews [PUT /instprop/api/v1/institutional-proposal-special-reviews/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"proposalSpecialReviewId": "(val)","specialReviewNumber": "(val)","specialReviewTypeCode": "(val)","approvalTypeCode": "(val)","protocolNumber": "(val)","applicationDate": "(val)","approvalDate": "(val)","expirationDate": "(val)","comments": "(val)","sequenceOwner.proposalId": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+
+### Update Multiple Institutional Proposal Special Reviews [PUT /instprop/api/v1/institutional-proposal-special-reviews/]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            [
+              {"proposalSpecialReviewId": "(val)","specialReviewNumber": "(val)","specialReviewTypeCode": "(val)","approvalTypeCode": "(val)","protocolNumber": "(val)","applicationDate": "(val)","approvalDate": "(val)","expirationDate": "(val)","comments": "(val)","sequenceOwner.proposalId": "(val)","_primaryKey": "(val)"},
+              {"proposalSpecialReviewId": "(val)","specialReviewNumber": "(val)","specialReviewTypeCode": "(val)","approvalTypeCode": "(val)","protocolNumber": "(val)","applicationDate": "(val)","approvalDate": "(val)","expirationDate": "(val)","comments": "(val)","sequenceOwner.proposalId": "(val)","_primaryKey": "(val)"}
+            ]
+			
++ Response 204
+### Update Specific Attributes Institutional Proposal Special Reviews [PATCH /instprop/api/v1/institutional-proposal-special-reviews/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"proposalSpecialReviewId": "(val)","specialReviewNumber": "(val)","specialReviewTypeCode": "(val)","approvalTypeCode": "(val)","protocolNumber": "(val)","applicationDate": "(val)","approvalDate": "(val)","expirationDate": "(val)","comments": "(val)","sequenceOwner.proposalId": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"proposalSpecialReviewId": "(val)","specialReviewNumber": "(val)","specialReviewTypeCode": "(val)","approvalTypeCode": "(val)","protocolNumber": "(val)","applicationDate": "(val)","approvalDate": "(val)","expirationDate": "(val)","comments": "(val)","sequenceOwner.proposalId": "(val)","_primaryKey": "(val)"}

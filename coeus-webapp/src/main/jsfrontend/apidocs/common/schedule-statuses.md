@@ -139,6 +139,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Schedule Statuses [PATCH /research-common/api/v1/schedule-statuses/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"scheduleStatusCode": "(val)","description": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"scheduleStatusCode": "(val)","description": "(val)","_primaryKey": "(val)"}
 ### Insert Schedule Statuses [POST /research-common/api/v1/schedule-statuses/]
 
 + Request

@@ -140,6 +140,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Protocol Review Types [PATCH /irb/api/v1/protocol-review-types/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"reviewTypeCode": "(val)","description": "(val)","globalFlag": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"reviewTypeCode": "(val)","description": "(val)","globalFlag": "(val)","_primaryKey": "(val)"}
 ### Insert Protocol Review Types [POST /irb/api/v1/protocol-review-types/]
 
 + Request

@@ -144,6 +144,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Budget Formulated Cost Details [PATCH /research-common/api/v1/budget-formulated-cost-details/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"budgetFormulatedCostDetailId": "(val)","formulatedNumber": "(val)","formulatedTypeCode": "(val)","unitCost": "(val)","count": "(val)","frequency": "(val)","calculatedExpenses": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"budgetFormulatedCostDetailId": "(val)","formulatedNumber": "(val)","formulatedTypeCode": "(val)","unitCost": "(val)","count": "(val)","frequency": "(val)","calculatedExpenses": "(val)","_primaryKey": "(val)"}
 ### Insert Budget Formulated Cost Details [POST /research-common/api/v1/budget-formulated-cost-details/]
 
 + Request

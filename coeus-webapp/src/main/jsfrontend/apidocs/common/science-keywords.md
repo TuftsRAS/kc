@@ -139,6 +139,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Science Keywords [PATCH /research-common/api/v1/science-keywords/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"code": "(val)","description": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"code": "(val)","description": "(val)","_primaryKey": "(val)"}
 ### Insert Science Keywords [POST /research-common/api/v1/science-keywords/]
 
 + Request

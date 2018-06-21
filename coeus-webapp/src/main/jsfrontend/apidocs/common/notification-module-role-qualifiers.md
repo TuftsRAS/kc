@@ -140,6 +140,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Notification Module Role Qualifiers [PATCH /research-common/api/v1/notification-module-role-qualifiers/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"notificationModuleRoleQualifierId": "(val)","notificationModuleRoleId": "(val)","qualifier": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"notificationModuleRoleQualifierId": "(val)","notificationModuleRoleId": "(val)","qualifier": "(val)","_primaryKey": "(val)"}
 ### Insert Notification Module Role Qualifiers [POST /research-common/api/v1/notification-module-role-qualifiers/]
 
 + Request

@@ -62,7 +62,7 @@
     + programAnnouncementNumber (optional) - A unique identifier associated with each sponsor's funding opportunity announcement. AKA "Funding Opportunity Announcement number" or "FOA number". Maximum length is 50.
     + primeSponsorCode (optional) - The sponsor that provides the original source of project funding. Maximum length is 6.
     + sponsorProposalNumber (optional) - The unique identifier assigned by the sponsor when the proposal was submitted. Maximum length is 70.
-    + nsfSequenceNumber (optional) - A number used to indicate the type of research activity as defined by the National Science Foundation. NSF Code Sequence Numbers are not specific for NSF proposals and/or awards. 
+    + nsfSequenceNumber (optional) - A number used to indicate the type of research activity as defined by the National Science Foundation. NSF codes are not specific for NSF proposals and/or awards. Maximum length is 12.
     + subcontracts (optional) - The proposal will include a sub award with another institution. Maximum length is 1.
     + agencyDivisionCode (optional) - A code that is unique to each NSF division.  Currently specific to the NSF only. Maximum length is 50.
     + agencyProgramCode (optional) - A code that is unique to each NSF program.  Currently specific to the NSF only. Maximum length is 50.
@@ -85,7 +85,7 @@
     + opportunityIdForGG (optional) - Grants.gov Opportunity. Maximum length is 50.
     + agencyRoutingIdentifier (optional) - The Agency Routing Identifier. Maximum length is 50.
     + prevGrantsGovTrackingID (optional) - Prev Grants.Gov Tracking ID. Maximum length is 50.
-    + createTimestamp (optional) - Create Timestamp.
+    + createTimestamp (optional) - Proposal Create Date. Maximum length is 21.
     + createUser (optional) - Create User.
 
             

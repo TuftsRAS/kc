@@ -147,6 +147,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Questionnaire Questions [PATCH /research-common/api/v1/questionnaire-questions/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","questionnaireId": "(val)","questionId": "(val)","questionNumber": "(val)","parentQuestionNumber": "(val)","conditionFlag": "(val)","condition": "(val)","conditionValue": "(val)","questionSeqNumber": "(val)","ruleId": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","questionnaireId": "(val)","questionId": "(val)","questionNumber": "(val)","parentQuestionNumber": "(val)","conditionFlag": "(val)","condition": "(val)","conditionValue": "(val)","questionSeqNumber": "(val)","ruleId": "(val)","_primaryKey": "(val)"}
 ### Insert Questionnaire Questions [POST /research-common/api/v1/questionnaire-questions/]
 
 + Request

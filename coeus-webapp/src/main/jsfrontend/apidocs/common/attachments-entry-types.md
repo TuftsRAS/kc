@@ -140,6 +140,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Attachments Entry Types [PATCH /research-common/api/v1/attachments-entry-types/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"attachmentsTypeCode": "(val)","sortId": "(val)","description": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"attachmentsTypeCode": "(val)","sortId": "(val)","description": "(val)","_primaryKey": "(val)"}
 ### Insert Attachments Entry Types [POST /research-common/api/v1/attachments-entry-types/]
 
 + Request

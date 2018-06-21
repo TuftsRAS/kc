@@ -140,6 +140,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Iacuc Protocol Affiliation Types [PATCH /iacuc/api/v1/iacuc-protocol-affiliation-types/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"affiliationTypeCode": "(val)","description": "(val)","active": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"affiliationTypeCode": "(val)","description": "(val)","active": "(val)","_primaryKey": "(val)"}
 ### Insert Iacuc Protocol Affiliation Types [POST /iacuc/api/v1/iacuc-protocol-affiliation-types/]
 
 + Request

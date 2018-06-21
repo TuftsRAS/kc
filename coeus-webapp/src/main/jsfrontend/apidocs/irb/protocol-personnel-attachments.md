@@ -146,6 +146,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Protocol Personnel Attachments [PATCH /irb/api/v1/protocol-personnel-attachments/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","protocolId": "(val)","protocolNumber": "(val)","sequenceNumber": "(val)","typeCode": "(val)","documentId": "(val)","fileId": "(val)","description": "(val)","personId": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","protocolId": "(val)","protocolNumber": "(val)","sequenceNumber": "(val)","typeCode": "(val)","documentId": "(val)","fileId": "(val)","description": "(val)","personId": "(val)","_primaryKey": "(val)"}
 ### Insert Protocol Personnel Attachments [POST /irb/api/v1/protocol-personnel-attachments/]
 
 + Request

@@ -140,6 +140,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Iacuc Protocol Person Role Mappings [PATCH /iacuc/api/v1/iacuc-protocol-person-role-mappings/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"roleMappingId": "(val)","sourceRoleId": "(val)","targetRoleId": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"roleMappingId": "(val)","sourceRoleId": "(val)","targetRoleId": "(val)","_primaryKey": "(val)"}
 ### Insert Iacuc Protocol Person Role Mappings [POST /iacuc/api/v1/iacuc-protocol-person-role-mappings/]
 
 + Request

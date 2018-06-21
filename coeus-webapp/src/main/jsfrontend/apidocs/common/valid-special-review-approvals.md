@@ -144,6 +144,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Valid Special Review Approvals [PATCH /research-common/api/v1/valid-special-review-approvals/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"validSpecialReviewApprovalId": "(val)","specialReviewTypeCode": "(val)","approvalTypeCode": "(val)","applicationDateFlag": "(val)","approvalDateFlag": "(val)","exemptNumberFlag": "(val)","protocolNumberFlag": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"validSpecialReviewApprovalId": "(val)","specialReviewTypeCode": "(val)","approvalTypeCode": "(val)","applicationDateFlag": "(val)","approvalDateFlag": "(val)","exemptNumberFlag": "(val)","protocolNumberFlag": "(val)","_primaryKey": "(val)"}
 ### Insert Valid Special Review Approvals [POST /research-common/api/v1/valid-special-review-approvals/]
 
 + Request

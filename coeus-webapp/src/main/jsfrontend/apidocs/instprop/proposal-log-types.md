@@ -139,6 +139,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Proposal Log Types [PATCH /instprop/api/v1/proposal-log-types/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"proposalLogTypeCode": "(val)","description": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"proposalLogTypeCode": "(val)","description": "(val)","_primaryKey": "(val)"}
 ### Insert Proposal Log Types [POST /instprop/api/v1/proposal-log-types/]
 
 + Request

@@ -141,6 +141,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Entity Employment Types [PATCH /research-sys/api/v1/entity-employment-types/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"name": "(val)","active": "(val)","code": "(val)","sortCode": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"name": "(val)","active": "(val)","code": "(val)","sortCode": "(val)","_primaryKey": "(val)"}
 ### Insert Entity Employment Types [POST /research-sys/api/v1/entity-employment-types/]
 
 + Request

@@ -143,6 +143,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Budget Person Salary Details [PATCH /research-common/api/v1/budget-person-salary-details/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"budgetPersonSalaryDetailId": "(val)","personSequenceNumber": "(val)","budgetId": "(val)","budgetPeriod": "(val)","personId": "(val)","baseSalary": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"budgetPersonSalaryDetailId": "(val)","personSequenceNumber": "(val)","budgetId": "(val)","budgetPeriod": "(val)","personId": "(val)","baseSalary": "(val)","_primaryKey": "(val)"}
 ### Insert Budget Person Salary Details [POST /research-common/api/v1/budget-person-salary-details/]
 
 + Request

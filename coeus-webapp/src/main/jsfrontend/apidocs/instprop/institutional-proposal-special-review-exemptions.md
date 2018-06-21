@@ -108,3 +108,140 @@
             Content-Type: text/markdown;charset=UTF-8
             Content-Disposition:attachment; filename="Institutional Proposal Special Review Exemptions.md"
             transfer-encoding:chunked
+### Update Institutional Proposal Special Review Exemptions [PUT /instprop/api/v1/institutional-proposal-special-review-exemptions/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"proposalSpecialReviewExemptionId": "(val)","exemptionTypeCode": "(val)","institutionalProposalSpecialReview.proposalSpecialReviewId": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+
+### Update Multiple Institutional Proposal Special Review Exemptions [PUT /instprop/api/v1/institutional-proposal-special-review-exemptions/]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            [
+              {"proposalSpecialReviewExemptionId": "(val)","exemptionTypeCode": "(val)","institutionalProposalSpecialReview.proposalSpecialReviewId": "(val)","_primaryKey": "(val)"},
+              {"proposalSpecialReviewExemptionId": "(val)","exemptionTypeCode": "(val)","institutionalProposalSpecialReview.proposalSpecialReviewId": "(val)","_primaryKey": "(val)"}
+            ]
+			
++ Response 204
+### Update Specific Attributes Institutional Proposal Special Review Exemptions [PATCH /instprop/api/v1/institutional-proposal-special-review-exemptions/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"proposalSpecialReviewExemptionId": "(val)","exemptionTypeCode": "(val)","institutionalProposalSpecialReview.proposalSpecialReviewId": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"proposalSpecialReviewExemptionId": "(val)","exemptionTypeCode": "(val)","institutionalProposalSpecialReview.proposalSpecialReviewId": "(val)","_primaryKey": "(val)"}
+### Insert Institutional Proposal Special Review Exemptions [POST /instprop/api/v1/institutional-proposal-special-review-exemptions/]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"proposalSpecialReviewExemptionId": "(val)","exemptionTypeCode": "(val)","institutionalProposalSpecialReview.proposalSpecialReviewId": "(val)","_primaryKey": "(val)"}
+			
++ Response 201
+    
+    + Body
+            
+            {"proposalSpecialReviewExemptionId": "(val)","exemptionTypeCode": "(val)","institutionalProposalSpecialReview.proposalSpecialReviewId": "(val)","_primaryKey": "(val)"}
+            
+### Insert Multiple Institutional Proposal Special Review Exemptions [POST /instprop/api/v1/institutional-proposal-special-review-exemptions/]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            [
+              {"proposalSpecialReviewExemptionId": "(val)","exemptionTypeCode": "(val)","institutionalProposalSpecialReview.proposalSpecialReviewId": "(val)","_primaryKey": "(val)"},
+              {"proposalSpecialReviewExemptionId": "(val)","exemptionTypeCode": "(val)","institutionalProposalSpecialReview.proposalSpecialReviewId": "(val)","_primaryKey": "(val)"}
+            ]
+			
++ Response 201
+    
+    + Body
+            
+            [
+              {"proposalSpecialReviewExemptionId": "(val)","exemptionTypeCode": "(val)","institutionalProposalSpecialReview.proposalSpecialReviewId": "(val)","_primaryKey": "(val)"},
+              {"proposalSpecialReviewExemptionId": "(val)","exemptionTypeCode": "(val)","institutionalProposalSpecialReview.proposalSpecialReviewId": "(val)","_primaryKey": "(val)"}
+            ]
+### Delete Institutional Proposal Special Review Exemptions by Key [DELETE /instprop/api/v1/institutional-proposal-special-review-exemptions/(key)]
+	 
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}
+            Content-Type: application/json
+
++ Response 204
+
+### Delete All Institutional Proposal Special Review Exemptions [DELETE /instprop/api/v1/institutional-proposal-special-review-exemptions/]
+
++ Parameters
+
+      + _allowMulti (boolean, required) - flag to allow multiple resources to be deleted in one operation
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}
+            Content-Type: application/json
+
++ Response 204
+
+### Delete All Institutional Proposal Special Review Exemptions with Matching [DELETE /instprop/api/v1/institutional-proposal-special-review-exemptions/]
+
++ Parameters
+
+    + _allowMulti (boolean, required) - flag to allow multiple resources to be deleted in one operation
+    + proposalSpecialReviewExemptionId (optional) - Proposal Special Review Exemption Id. Maximum length is 22.
+    + exemptionTypeCode (optional) - Exemption #. Maximum length is 3.
+    + institutionalProposalSpecialReview.proposalSpecialReviewId (optional) - 
+
+      
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}
+            Content-Type: application/json
+
++ Response 204

@@ -142,6 +142,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Kim Document Role Responsibilities [PATCH /research-sys/api/v1/kim-document-role-responsibilities/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"roleResponsibilityId": "(val)","roleId": "(val)","responsibilityId": "(val)","documentNumber": "(val)","active": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"roleResponsibilityId": "(val)","roleId": "(val)","responsibilityId": "(val)","documentNumber": "(val)","active": "(val)","_primaryKey": "(val)"}
 ### Insert Kim Document Role Responsibilities [POST /research-sys/api/v1/kim-document-role-responsibilities/]
 
 + Request

@@ -141,6 +141,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Rule Delegations [PATCH /research-sys/api/v1/rule-delegations/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"ruleDelegationId": "(val)","responsibilityId": "(val)","delegateRuleId": "(val)","delegationTypeCode": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"ruleDelegationId": "(val)","responsibilityId": "(val)","delegateRuleId": "(val)","delegationTypeCode": "(val)","_primaryKey": "(val)"}
 ### Insert Rule Delegations [POST /research-sys/api/v1/rule-delegations/]
 
 + Request

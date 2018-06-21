@@ -147,6 +147,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Person Degrees [PATCH /research-common/api/v1/person-degrees/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"degreeId": "(val)","personId": "(val)","degreeCode": "(val)","degree": "(val)","graduationYear": "(val)","fieldOfStudy": "(val)","specialization": "(val)","school": "(val)","schoolIdCode": "(val)","schoolId": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"degreeId": "(val)","personId": "(val)","degreeCode": "(val)","degree": "(val)","graduationYear": "(val)","fieldOfStudy": "(val)","specialization": "(val)","school": "(val)","schoolIdCode": "(val)","schoolId": "(val)","_primaryKey": "(val)"}
 ### Insert Person Degrees [POST /research-common/api/v1/person-degrees/]
 
 + Request

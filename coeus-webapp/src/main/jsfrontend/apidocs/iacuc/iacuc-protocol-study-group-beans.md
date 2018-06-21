@@ -143,6 +143,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Iacuc Protocol Study Group Beans [PATCH /iacuc/api/v1/iacuc-protocol-study-group-beans/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"iacucProtocolStudyGroupHeaderId": "(val)","protocolId": "(val)","protocolNumber": "(val)","sequenceNumber": "(val)","procedureCategoryCode": "(val)","procedureCode": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"iacucProtocolStudyGroupHeaderId": "(val)","protocolId": "(val)","protocolNumber": "(val)","sequenceNumber": "(val)","procedureCategoryCode": "(val)","procedureCode": "(val)","_primaryKey": "(val)"}
 ### Insert Iacuc Protocol Study Group Beans [POST /iacuc/api/v1/iacuc-protocol-study-group-beans/]
 
 + Request

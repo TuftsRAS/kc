@@ -16,7 +16,7 @@
 
     + Body
     
-            {"id": "(val)","code": "(val)","sponsorHierarchyName": "(val)","description": "(val)","certificationRequired": "(val)","readOnly": "(val)","unitDetailsRequired": "(val)","_primaryKey": "(val)"}
+            {"id": "(val)","code": "(val)","sponsorHierarchyName": "(val)","description": "(val)","certificationRequired": "(val)","readOnly": "(val)","unitDetailsRequired": "(val)","autoPopulateUnitsCode": "(val)","selectedUnitSources": "(val)","_primaryKey": "(val)"}
 
 ### Get All Prop Award Person Roles [GET /research-common/api/v1/prop-award-person-roles/]
 	 
@@ -35,8 +35,8 @@
     + Body
     
             [
-              {"id": "(val)","code": "(val)","sponsorHierarchyName": "(val)","description": "(val)","certificationRequired": "(val)","readOnly": "(val)","unitDetailsRequired": "(val)","_primaryKey": "(val)"},
-              {"id": "(val)","code": "(val)","sponsorHierarchyName": "(val)","description": "(val)","certificationRequired": "(val)","readOnly": "(val)","unitDetailsRequired": "(val)","_primaryKey": "(val)"}
+              {"id": "(val)","code": "(val)","sponsorHierarchyName": "(val)","description": "(val)","certificationRequired": "(val)","readOnly": "(val)","unitDetailsRequired": "(val)","autoPopulateUnitsCode": "(val)","selectedUnitSources": "(val)","_primaryKey": "(val)"},
+              {"id": "(val)","code": "(val)","sponsorHierarchyName": "(val)","description": "(val)","certificationRequired": "(val)","readOnly": "(val)","unitDetailsRequired": "(val)","autoPopulateUnitsCode": "(val)","selectedUnitSources": "(val)","_primaryKey": "(val)"}
             ]
 
 ### Get All Prop Award Person Roles with Filtering [GET /research-common/api/v1/prop-award-person-roles/]
@@ -50,6 +50,8 @@
     + certificationRequired (optional) - Certification Required. Maximum length is 1.
     + readOnly (optional) - Read Only. Maximum length is 1.
     + unitDetailsRequired (optional) - Unit Details Required. Maximum length is 1.
+    + autoPopulateUnitsCode (optional) - Unit Auto-Population. Maximum length is 20.
+    + selectedUnitSources (optional) - Selected Units Source. Maximum length is 300.
 
             
 + Request
@@ -67,8 +69,8 @@
     + Body
     
             [
-              {"id": "(val)","code": "(val)","sponsorHierarchyName": "(val)","description": "(val)","certificationRequired": "(val)","readOnly": "(val)","unitDetailsRequired": "(val)","_primaryKey": "(val)"},
-              {"id": "(val)","code": "(val)","sponsorHierarchyName": "(val)","description": "(val)","certificationRequired": "(val)","readOnly": "(val)","unitDetailsRequired": "(val)","_primaryKey": "(val)"}
+              {"id": "(val)","code": "(val)","sponsorHierarchyName": "(val)","description": "(val)","certificationRequired": "(val)","readOnly": "(val)","unitDetailsRequired": "(val)","autoPopulateUnitsCode": "(val)","selectedUnitSources": "(val)","_primaryKey": "(val)"},
+              {"id": "(val)","code": "(val)","sponsorHierarchyName": "(val)","description": "(val)","certificationRequired": "(val)","readOnly": "(val)","unitDetailsRequired": "(val)","autoPopulateUnitsCode": "(val)","selectedUnitSources": "(val)","_primaryKey": "(val)"}
             ]
 			
 ### Get Schema for Prop Award Person Roles [GET /research-common/api/v1/prop-award-person-roles/]
@@ -91,7 +93,7 @@
 
     + Body
     
-            {"columns":["id","code","sponsorHierarchyName","description","certificationRequired","readOnly","unitDetailsRequired"],"primaryKey":"id"}
+            {"columns":["id","code","sponsorHierarchyName","description","certificationRequired","readOnly","unitDetailsRequired","autoPopulateUnitsCode","selectedUnitSources"],"primaryKey":"id"}
 		
 ### Get Blueprint API specification for Prop Award Person Roles [GET /research-common/api/v1/prop-award-person-roles/]
 	 
@@ -123,7 +125,7 @@
 
     + Body
     
-            {"id": "(val)","code": "(val)","sponsorHierarchyName": "(val)","description": "(val)","certificationRequired": "(val)","readOnly": "(val)","unitDetailsRequired": "(val)","_primaryKey": "(val)"}
+            {"id": "(val)","code": "(val)","sponsorHierarchyName": "(val)","description": "(val)","certificationRequired": "(val)","readOnly": "(val)","unitDetailsRequired": "(val)","autoPopulateUnitsCode": "(val)","selectedUnitSources": "(val)","_primaryKey": "(val)"}
 			
 + Response 204
 
@@ -139,11 +141,29 @@
     + Body
     
             [
-              {"id": "(val)","code": "(val)","sponsorHierarchyName": "(val)","description": "(val)","certificationRequired": "(val)","readOnly": "(val)","unitDetailsRequired": "(val)","_primaryKey": "(val)"},
-              {"id": "(val)","code": "(val)","sponsorHierarchyName": "(val)","description": "(val)","certificationRequired": "(val)","readOnly": "(val)","unitDetailsRequired": "(val)","_primaryKey": "(val)"}
+              {"id": "(val)","code": "(val)","sponsorHierarchyName": "(val)","description": "(val)","certificationRequired": "(val)","readOnly": "(val)","unitDetailsRequired": "(val)","autoPopulateUnitsCode": "(val)","selectedUnitSources": "(val)","_primaryKey": "(val)"},
+              {"id": "(val)","code": "(val)","sponsorHierarchyName": "(val)","description": "(val)","certificationRequired": "(val)","readOnly": "(val)","unitDetailsRequired": "(val)","autoPopulateUnitsCode": "(val)","selectedUnitSources": "(val)","_primaryKey": "(val)"}
             ]
 			
 + Response 204
+### Update Specific Attributes Prop Award Person Roles [PATCH /research-common/api/v1/prop-award-person-roles/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","code": "(val)","sponsorHierarchyName": "(val)","description": "(val)","certificationRequired": "(val)","readOnly": "(val)","unitDetailsRequired": "(val)","autoPopulateUnitsCode": "(val)","selectedUnitSources": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","code": "(val)","sponsorHierarchyName": "(val)","description": "(val)","certificationRequired": "(val)","readOnly": "(val)","unitDetailsRequired": "(val)","autoPopulateUnitsCode": "(val)","selectedUnitSources": "(val)","_primaryKey": "(val)"}
 ### Insert Prop Award Person Roles [POST /research-common/api/v1/prop-award-person-roles/]
 
 + Request
@@ -155,13 +175,13 @@
 
     + Body
     
-            {"id": "(val)","code": "(val)","sponsorHierarchyName": "(val)","description": "(val)","certificationRequired": "(val)","readOnly": "(val)","unitDetailsRequired": "(val)","_primaryKey": "(val)"}
+            {"id": "(val)","code": "(val)","sponsorHierarchyName": "(val)","description": "(val)","certificationRequired": "(val)","readOnly": "(val)","unitDetailsRequired": "(val)","autoPopulateUnitsCode": "(val)","selectedUnitSources": "(val)","_primaryKey": "(val)"}
 			
 + Response 201
     
     + Body
             
-            {"id": "(val)","code": "(val)","sponsorHierarchyName": "(val)","description": "(val)","certificationRequired": "(val)","readOnly": "(val)","unitDetailsRequired": "(val)","_primaryKey": "(val)"}
+            {"id": "(val)","code": "(val)","sponsorHierarchyName": "(val)","description": "(val)","certificationRequired": "(val)","readOnly": "(val)","unitDetailsRequired": "(val)","autoPopulateUnitsCode": "(val)","selectedUnitSources": "(val)","_primaryKey": "(val)"}
             
 ### Insert Multiple Prop Award Person Roles [POST /research-common/api/v1/prop-award-person-roles/]
 
@@ -175,8 +195,8 @@
     + Body
     
             [
-              {"id": "(val)","code": "(val)","sponsorHierarchyName": "(val)","description": "(val)","certificationRequired": "(val)","readOnly": "(val)","unitDetailsRequired": "(val)","_primaryKey": "(val)"},
-              {"id": "(val)","code": "(val)","sponsorHierarchyName": "(val)","description": "(val)","certificationRequired": "(val)","readOnly": "(val)","unitDetailsRequired": "(val)","_primaryKey": "(val)"}
+              {"id": "(val)","code": "(val)","sponsorHierarchyName": "(val)","description": "(val)","certificationRequired": "(val)","readOnly": "(val)","unitDetailsRequired": "(val)","autoPopulateUnitsCode": "(val)","selectedUnitSources": "(val)","_primaryKey": "(val)"},
+              {"id": "(val)","code": "(val)","sponsorHierarchyName": "(val)","description": "(val)","certificationRequired": "(val)","readOnly": "(val)","unitDetailsRequired": "(val)","autoPopulateUnitsCode": "(val)","selectedUnitSources": "(val)","_primaryKey": "(val)"}
             ]
 			
 + Response 201
@@ -184,8 +204,8 @@
     + Body
             
             [
-              {"id": "(val)","code": "(val)","sponsorHierarchyName": "(val)","description": "(val)","certificationRequired": "(val)","readOnly": "(val)","unitDetailsRequired": "(val)","_primaryKey": "(val)"},
-              {"id": "(val)","code": "(val)","sponsorHierarchyName": "(val)","description": "(val)","certificationRequired": "(val)","readOnly": "(val)","unitDetailsRequired": "(val)","_primaryKey": "(val)"}
+              {"id": "(val)","code": "(val)","sponsorHierarchyName": "(val)","description": "(val)","certificationRequired": "(val)","readOnly": "(val)","unitDetailsRequired": "(val)","autoPopulateUnitsCode": "(val)","selectedUnitSources": "(val)","_primaryKey": "(val)"},
+              {"id": "(val)","code": "(val)","sponsorHierarchyName": "(val)","description": "(val)","certificationRequired": "(val)","readOnly": "(val)","unitDetailsRequired": "(val)","autoPopulateUnitsCode": "(val)","selectedUnitSources": "(val)","_primaryKey": "(val)"}
             ]
 ### Delete Prop Award Person Roles by Key [DELETE /research-common/api/v1/prop-award-person-roles/(key)]
 	 
@@ -225,6 +245,8 @@
     + certificationRequired (optional) - Certification Required. Maximum length is 1.
     + readOnly (optional) - Read Only. Maximum length is 1.
     + unitDetailsRequired (optional) - Unit Details Required. Maximum length is 1.
+    + autoPopulateUnitsCode (optional) - Unit Auto-Population. Maximum length is 20.
+    + selectedUnitSources (optional) - Selected Units Source. Maximum length is 300.
 
       
 + Request

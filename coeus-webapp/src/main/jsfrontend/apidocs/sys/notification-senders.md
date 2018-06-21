@@ -139,6 +139,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Notification Senders [PATCH /research-sys/api/v1/notification-senders/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","senderName": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","senderName": "(val)","_primaryKey": "(val)"}
 ### Insert Notification Senders [POST /research-sys/api/v1/notification-senders/]
 
 + Request

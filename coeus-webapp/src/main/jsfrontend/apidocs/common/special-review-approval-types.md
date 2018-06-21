@@ -139,6 +139,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Special Review Approval Types [PATCH /research-common/api/v1/special-review-approval-types/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"approvalTypeCode": "(val)","description": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"approvalTypeCode": "(val)","description": "(val)","_primaryKey": "(val)"}
 ### Insert Special Review Approval Types [POST /research-common/api/v1/special-review-approval-types/]
 
 + Request

@@ -140,6 +140,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Institutional Proposal Attachment Types [PATCH /instprop/api/v1/institutional-proposal-attachment-types/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"attachmentTypeCode": "(val)","description": "(val)","allowMultiple": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"attachmentTypeCode": "(val)","description": "(val)","allowMultiple": "(val)","_primaryKey": "(val)"}
 ### Insert Institutional Proposal Attachment Types [POST /instprop/api/v1/institutional-proposal-attachment-types/]
 
 + Request

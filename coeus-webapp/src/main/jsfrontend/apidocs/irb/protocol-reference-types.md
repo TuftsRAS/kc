@@ -140,6 +140,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Protocol Reference Types [PATCH /irb/api/v1/protocol-reference-types/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"protocolReferenceTypeCode": "(val)","description": "(val)","active": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"protocolReferenceTypeCode": "(val)","description": "(val)","active": "(val)","_primaryKey": "(val)"}
 ### Insert Protocol Reference Types [POST /irb/api/v1/protocol-reference-types/]
 
 + Request

@@ -141,6 +141,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Award Person Unit Credit Splits [PATCH /award/api/v1/award-person-unit-credit-splits/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"awardPersonUnitCreditSplitId": "(val)","awardPersonUnitId": "(val)","invCreditTypeCode": "(val)","credit": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"awardPersonUnitCreditSplitId": "(val)","awardPersonUnitId": "(val)","invCreditTypeCode": "(val)","credit": "(val)","_primaryKey": "(val)"}
 ### Insert Award Person Unit Credit Splits [POST /award/api/v1/award-person-unit-credit-splits/]
 
 + Request

@@ -144,6 +144,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Institutional Proposal Person Mass Changes [PATCH /instprop/api/v1/institutional-proposal-person-mass-changes/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"institutionalProposalPersonMassChangeId": "(val)","personMassChangeId": "(val)","investigator": "(val)","keyStudyPerson": "(val)","unitContact": "(val)","mailingInformation": "(val)","ipReviewer": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"institutionalProposalPersonMassChangeId": "(val)","personMassChangeId": "(val)","investigator": "(val)","keyStudyPerson": "(val)","unitContact": "(val)","mailingInformation": "(val)","ipReviewer": "(val)","_primaryKey": "(val)"}
 ### Insert Institutional Proposal Person Mass Changes [POST /instprop/api/v1/institutional-proposal-person-mass-changes/]
 
 + Request

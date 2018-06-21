@@ -139,6 +139,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Award Basis Of Payments [PATCH /award/api/v1/award-basis-of-payments/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"basisOfPaymentCode": "(val)","description": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"basisOfPaymentCode": "(val)","description": "(val)","_primaryKey": "(val)"}
 ### Insert Award Basis Of Payments [POST /award/api/v1/award-basis-of-payments/]
 
 + Request

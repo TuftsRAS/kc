@@ -140,6 +140,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Budget Sub Award Files [PATCH /propdev/api/v1/budget-sub-award-files/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"subAwardXfdFileData": "(val)","subAwardXfdFileName": "(val)","subAwardXmlFileData": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"subAwardXfdFileData": "(val)","subAwardXfdFileName": "(val)","subAwardXmlFileData": "(val)","_primaryKey": "(val)"}
 ### Insert Budget Sub Award Files [POST /propdev/api/v1/budget-sub-award-files/]
 
 + Request

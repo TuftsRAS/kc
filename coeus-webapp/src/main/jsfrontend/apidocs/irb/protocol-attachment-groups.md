@@ -139,6 +139,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Protocol Attachment Groups [PATCH /irb/api/v1/protocol-attachment-groups/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"code": "(val)","description": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"code": "(val)","description": "(val)","_primaryKey": "(val)"}
 ### Insert Protocol Attachment Groups [POST /irb/api/v1/protocol-attachment-groups/]
 
 + Request

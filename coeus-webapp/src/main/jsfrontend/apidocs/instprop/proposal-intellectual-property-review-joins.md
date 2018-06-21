@@ -140,6 +140,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Proposal Intellectual Property Review Joins [PATCH /instprop/api/v1/proposal-intellectual-property-review-joins/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"proposalIpReviewJoinId": "(val)","proposalId": "(val)","ipReviewId": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"proposalIpReviewJoinId": "(val)","proposalId": "(val)","ipReviewId": "(val)","_primaryKey": "(val)"}
 ### Insert Proposal Intellectual Property Review Joins [POST /instprop/api/v1/proposal-intellectual-property-review-joins/]
 
 + Request

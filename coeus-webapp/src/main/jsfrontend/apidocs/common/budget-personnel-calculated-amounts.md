@@ -55,7 +55,7 @@
     + calculatedCost (optional) - Calculated Cost. Maximum length is 15.
     + rateClassCode (optional) - Rate Class Code. Maximum length is 3.
     + calculatedCostSharing (optional) - Calculated Cost Sharing. Maximum length is 15.
-    + lineItemNumber (optional) - Line Item Number. Maximum length is 3.
+    + lineItemNumber (optional) - Line Item Number. Maximum length is 6.
 
             
 + Request
@@ -150,6 +150,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Budget Personnel Calculated Amounts [PATCH /research-common/api/v1/budget-personnel-calculated-amounts/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"personNumber": "(val)","budgetPersonnelCalculatedAmountId": "(val)","budgetPersonnelLineItemId": "(val)","budgetPeriodId": "(val)","rateTypeDescription": "(val)","applyRateFlag": "(val)","rateTypeCode": "(val)","budgetId": "(val)","budgetPeriod": "(val)","calculatedCost": "(val)","rateClassCode": "(val)","calculatedCostSharing": "(val)","lineItemNumber": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"personNumber": "(val)","budgetPersonnelCalculatedAmountId": "(val)","budgetPersonnelLineItemId": "(val)","budgetPeriodId": "(val)","rateTypeDescription": "(val)","applyRateFlag": "(val)","rateTypeCode": "(val)","budgetId": "(val)","budgetPeriod": "(val)","calculatedCost": "(val)","rateClassCode": "(val)","calculatedCostSharing": "(val)","lineItemNumber": "(val)","_primaryKey": "(val)"}
 ### Insert Budget Personnel Calculated Amounts [POST /research-common/api/v1/budget-personnel-calculated-amounts/]
 
 + Request
@@ -236,7 +254,7 @@
     + calculatedCost (optional) - Calculated Cost. Maximum length is 15.
     + rateClassCode (optional) - Rate Class Code. Maximum length is 3.
     + calculatedCostSharing (optional) - Calculated Cost Sharing. Maximum length is 15.
-    + lineItemNumber (optional) - Line Item Number. Maximum length is 3.
+    + lineItemNumber (optional) - Line Item Number. Maximum length is 6.
 
       
 + Request

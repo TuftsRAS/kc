@@ -146,6 +146,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Kim Document Role Responsibility Actions [PATCH /research-sys/api/v1/kim-document-role-responsibility-actions/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"roleResponsibilityActionId": "(val)","roleResponsibilityId": "(val)","roleMemberId": "(val)","actionTypeCode": "(val)","actionPolicyCode": "(val)","priorityNumber": "(val)","forceAction": "(val)","edit": "(val)","documentNumber": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"roleResponsibilityActionId": "(val)","roleResponsibilityId": "(val)","roleMemberId": "(val)","actionTypeCode": "(val)","actionPolicyCode": "(val)","priorityNumber": "(val)","forceAction": "(val)","edit": "(val)","documentNumber": "(val)","_primaryKey": "(val)"}
 ### Insert Kim Document Role Responsibility Actions [POST /research-sys/api/v1/kim-document-role-responsibility-actions/]
 
 + Request

@@ -139,6 +139,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Account Types [PATCH /research-common/api/v1/account-types/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"accountTypeCode": "(val)","description": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"accountTypeCode": "(val)","description": "(val)","_primaryKey": "(val)"}
 ### Insert Account Types [POST /research-common/api/v1/account-types/]
 
 + Request

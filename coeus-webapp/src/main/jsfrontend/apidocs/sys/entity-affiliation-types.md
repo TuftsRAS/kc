@@ -142,6 +142,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Entity Affiliation Types [PATCH /research-sys/api/v1/entity-affiliation-types/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"employmentAffiliationType": "(val)","code": "(val)","name": "(val)","active": "(val)","sortCode": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"employmentAffiliationType": "(val)","code": "(val)","name": "(val)","active": "(val)","sortCode": "(val)","_primaryKey": "(val)"}
 ### Insert Entity Affiliation Types [POST /research-sys/api/v1/entity-affiliation-types/]
 
 + Request

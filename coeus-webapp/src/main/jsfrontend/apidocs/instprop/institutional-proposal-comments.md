@@ -143,6 +143,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Institutional Proposal Comments [PATCH /instprop/api/v1/institutional-proposal-comments/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"proposalCommentsId": "(val)","proposalId": "(val)","proposalNumber": "(val)","sequenceNumber": "(val)","commentTypeCode": "(val)","comments": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"proposalCommentsId": "(val)","proposalId": "(val)","proposalNumber": "(val)","sequenceNumber": "(val)","commentTypeCode": "(val)","comments": "(val)","_primaryKey": "(val)"}
 ### Insert Institutional Proposal Comments [POST /instprop/api/v1/institutional-proposal-comments/]
 
 + Request

@@ -141,6 +141,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Reports [PATCH /award/api/v1/reports/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"reportCode": "(val)","description": "(val)","finalReportFlag": "(val)","active": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"reportCode": "(val)","description": "(val)","finalReportFlag": "(val)","active": "(val)","_primaryKey": "(val)"}
 ### Insert Reports [POST /award/api/v1/reports/]
 
 + Request

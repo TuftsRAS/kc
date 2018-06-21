@@ -139,6 +139,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Mail By Entries [PATCH /research-common/api/v1/mail-by-entries/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"mailByCode": "(val)","description": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"mailByCode": "(val)","description": "(val)","_primaryKey": "(val)"}
 ### Insert Mail By Entries [POST /research-common/api/v1/mail-by-entries/]
 
 + Request

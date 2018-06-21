@@ -45,7 +45,7 @@
 
     + budgetPersonnelLineItemId (optional) - Budget Personnel Line Item Id.
     + budgetLineItemId (optional) - Budget Line Item Id.
-    + lineItemNumber (optional) - Line Item Number. Maximum length is 3.
+    + lineItemNumber (optional) - Line Item Number. Maximum length is 6.
     + budgetId (optional) - Budget Id.
     + budgetPeriod (optional) - Budget Period. Maximum length is 3.
     + onOffCampusFlag (optional) - On Off CampusContractContract Flag. Maximum length is 1.
@@ -63,7 +63,7 @@
     + periodTypeCode (optional) - Period Type. Maximum length is 3.
     + personId (optional) - KcPerson Id. Maximum length is 40.
     + salaryRequested (optional) - Requested Salary. Maximum length is 15.
-    + sequenceNumber (optional) - Sequence Number. Maximum length is 3.
+    + sequenceNumber (optional) - Sequence Number. Maximum length is 6.
     + budgetPeriodId (optional) - Budget Period Id.
     + personSequenceNumber (optional) - Person. Maximum length is 9.
     + underrecoveryAmount (optional) - Unrecovered F&A. Maximum length is 15.
@@ -162,6 +162,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Budget Personnel Details [PATCH /research-common/api/v1/budget-personnel-details/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"budgetPersonnelLineItemId": "(val)","budgetLineItemId": "(val)","lineItemNumber": "(val)","budgetId": "(val)","budgetPeriod": "(val)","onOffCampusFlag": "(val)","endDate": "(val)","startDate": "(val)","budgetJustification": "(val)","costSharingAmount": "(val)","lineItemDescription": "(val)","applyInRateFlag": "(val)","personNumber": "(val)","costSharingPercent": "(val)","jobCode": "(val)","percentCharged": "(val)","percentEffort": "(val)","periodTypeCode": "(val)","personId": "(val)","salaryRequested": "(val)","sequenceNumber": "(val)","budgetPeriodId": "(val)","personSequenceNumber": "(val)","underrecoveryAmount": "(val)","submitCostSharingFlag": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"budgetPersonnelLineItemId": "(val)","budgetLineItemId": "(val)","lineItemNumber": "(val)","budgetId": "(val)","budgetPeriod": "(val)","onOffCampusFlag": "(val)","endDate": "(val)","startDate": "(val)","budgetJustification": "(val)","costSharingAmount": "(val)","lineItemDescription": "(val)","applyInRateFlag": "(val)","personNumber": "(val)","costSharingPercent": "(val)","jobCode": "(val)","percentCharged": "(val)","percentEffort": "(val)","periodTypeCode": "(val)","personId": "(val)","salaryRequested": "(val)","sequenceNumber": "(val)","budgetPeriodId": "(val)","personSequenceNumber": "(val)","underrecoveryAmount": "(val)","submitCostSharingFlag": "(val)","_primaryKey": "(val)"}
 ### Insert Budget Personnel Details [POST /research-common/api/v1/budget-personnel-details/]
 
 + Request
@@ -238,7 +256,7 @@
     + _allowMulti (boolean, required) - flag to allow multiple resources to be deleted in one operation
     + budgetPersonnelLineItemId (optional) - Budget Personnel Line Item Id.
     + budgetLineItemId (optional) - Budget Line Item Id.
-    + lineItemNumber (optional) - Line Item Number. Maximum length is 3.
+    + lineItemNumber (optional) - Line Item Number. Maximum length is 6.
     + budgetId (optional) - Budget Id.
     + budgetPeriod (optional) - Budget Period. Maximum length is 3.
     + onOffCampusFlag (optional) - On Off CampusContractContract Flag. Maximum length is 1.
@@ -256,7 +274,7 @@
     + periodTypeCode (optional) - Period Type. Maximum length is 3.
     + personId (optional) - KcPerson Id. Maximum length is 40.
     + salaryRequested (optional) - Requested Salary. Maximum length is 15.
-    + sequenceNumber (optional) - Sequence Number. Maximum length is 3.
+    + sequenceNumber (optional) - Sequence Number. Maximum length is 6.
     + budgetPeriodId (optional) - Budget Period Id.
     + personSequenceNumber (optional) - Person. Maximum length is 9.
     + underrecoveryAmount (optional) - Unrecovered F&A. Maximum length is 15.

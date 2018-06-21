@@ -139,6 +139,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Protocol Modules [PATCH /irb/api/v1/protocol-modules/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"protocolModuleCode": "(val)","description": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"protocolModuleCode": "(val)","description": "(val)","_primaryKey": "(val)"}
 ### Insert Protocol Modules [POST /irb/api/v1/protocol-modules/]
 
 + Request

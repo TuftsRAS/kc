@@ -140,6 +140,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Protocol Types [PATCH /irb/api/v1/protocol-types/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"protocolTypeCode": "(val)","description": "(val)","globalFlag": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"protocolTypeCode": "(val)","description": "(val)","globalFlag": "(val)","_primaryKey": "(val)"}
 ### Insert Protocol Types [POST /irb/api/v1/protocol-types/]
 
 + Request

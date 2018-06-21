@@ -142,6 +142,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Delegate Types [PATCH /research-sys/api/v1/delegate-types/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"delegationId": "(val)","roleId": "(val)","active": "(val)","kimTypeId": "(val)","delegationTypeCode": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"delegationId": "(val)","roleId": "(val)","active": "(val)","kimTypeId": "(val)","delegationTypeCode": "(val)","_primaryKey": "(val)"}
 ### Insert Delegate Types [POST /research-sys/api/v1/delegate-types/]
 
 + Request

@@ -144,6 +144,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Role Responsibility Actions [PATCH /research-sys/api/v1/role-responsibility-actions/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","roleResponsibilityId": "(val)","roleMemberId": "(val)","actionTypeCode": "(val)","actionPolicyCode": "(val)","forceAction": "(val)","priorityNumber": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","roleResponsibilityId": "(val)","roleMemberId": "(val)","actionTypeCode": "(val)","actionPolicyCode": "(val)","forceAction": "(val)","priorityNumber": "(val)","_primaryKey": "(val)"}
 ### Insert Role Responsibility Actions [POST /research-sys/api/v1/role-responsibility-actions/]
 
 + Request

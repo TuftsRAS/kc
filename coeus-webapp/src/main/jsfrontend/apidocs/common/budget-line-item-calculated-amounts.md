@@ -54,7 +54,7 @@
     + calculatedCost (optional) - Rate Cost. Maximum length is 15.
     + rateClassCode (optional) - Rate Class. Maximum length is 3.
     + calculatedCostSharing (optional) - Rate Cost Sharing. Maximum length is 15.
-    + lineItemNumber (optional) - Line Item Number. Maximum length is 3.
+    + lineItemNumber (optional) - Line Item Number. Maximum length is 6.
 
             
 + Request
@@ -149,6 +149,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Budget Line Item Calculated Amounts [PATCH /research-common/api/v1/budget-line-item-calculated-amounts/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"budgetLineItemCalculatedAmountId": "(val)","budgetLineItemId": "(val)","budgetPeriodId": "(val)","rateTypeDescription": "(val)","applyRateFlag": "(val)","rateTypeCode": "(val)","budgetId": "(val)","budgetPeriod": "(val)","calculatedCost": "(val)","rateClassCode": "(val)","calculatedCostSharing": "(val)","lineItemNumber": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"budgetLineItemCalculatedAmountId": "(val)","budgetLineItemId": "(val)","budgetPeriodId": "(val)","rateTypeDescription": "(val)","applyRateFlag": "(val)","rateTypeCode": "(val)","budgetId": "(val)","budgetPeriod": "(val)","calculatedCost": "(val)","rateClassCode": "(val)","calculatedCostSharing": "(val)","lineItemNumber": "(val)","_primaryKey": "(val)"}
 ### Insert Budget Line Item Calculated Amounts [POST /research-common/api/v1/budget-line-item-calculated-amounts/]
 
 + Request
@@ -234,7 +252,7 @@
     + calculatedCost (optional) - Rate Cost. Maximum length is 15.
     + rateClassCode (optional) - Rate Class. Maximum length is 3.
     + calculatedCostSharing (optional) - Rate Cost Sharing. Maximum length is 15.
-    + lineItemNumber (optional) - Line Item Number. Maximum length is 3.
+    + lineItemNumber (optional) - Line Item Number. Maximum length is 6.
 
       
 + Request

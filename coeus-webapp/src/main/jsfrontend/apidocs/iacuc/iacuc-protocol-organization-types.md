@@ -139,6 +139,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Iacuc Protocol Organization Types [PATCH /iacuc/api/v1/iacuc-protocol-organization-types/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"protocolOrganizationTypeCode": "(val)","description": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"protocolOrganizationTypeCode": "(val)","description": "(val)","_primaryKey": "(val)"}
 ### Insert Iacuc Protocol Organization Types [POST /iacuc/api/v1/iacuc-protocol-organization-types/]
 
 + Request

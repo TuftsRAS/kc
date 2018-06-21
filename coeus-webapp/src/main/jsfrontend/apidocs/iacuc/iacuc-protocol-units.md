@@ -144,6 +144,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Iacuc Protocol Units [PATCH /iacuc/api/v1/iacuc-protocol-units/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"protocolUnitsId": "(val)","protocolPersonId": "(val)","protocolNumber": "(val)","sequenceNumber": "(val)","unitNumber": "(val)","leadUnitFlag": "(val)","personId": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"protocolUnitsId": "(val)","protocolPersonId": "(val)","protocolNumber": "(val)","sequenceNumber": "(val)","unitNumber": "(val)","leadUnitFlag": "(val)","personId": "(val)","_primaryKey": "(val)"}
 ### Insert Iacuc Protocol Units [POST /iacuc/api/v1/iacuc-protocol-units/]
 
 + Request

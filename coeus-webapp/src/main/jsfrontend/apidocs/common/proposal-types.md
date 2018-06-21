@@ -139,6 +139,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Proposal Types [PATCH /research-common/api/v1/proposal-types/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"code": "(val)","description": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"code": "(val)","description": "(val)","_primaryKey": "(val)"}
 ### Insert Proposal Types [POST /research-common/api/v1/proposal-types/]
 
 + Request

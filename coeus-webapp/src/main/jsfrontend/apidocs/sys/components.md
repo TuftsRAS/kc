@@ -141,6 +141,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Components [PATCH /research-sys/api/v1/components/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"namespaceCode": "(val)","code": "(val)","name": "(val)","active": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"namespaceCode": "(val)","code": "(val)","name": "(val)","active": "(val)","_primaryKey": "(val)"}
 ### Insert Components [POST /research-sys/api/v1/components/]
 
 + Request

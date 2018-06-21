@@ -143,6 +143,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Award Templates [PATCH /award/api/v1/award-templates/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"templateCode": "(val)","statusCode": "(val)","primeSponsorCode": "(val)","description": "(val)","basisOfPaymentCode": "(val)","methodOfPaymentCode": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"templateCode": "(val)","statusCode": "(val)","primeSponsorCode": "(val)","description": "(val)","basisOfPaymentCode": "(val)","methodOfPaymentCode": "(val)","_primaryKey": "(val)"}
 ### Insert Award Templates [POST /award/api/v1/award-templates/]
 
 + Request

@@ -145,6 +145,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Frequencies [PATCH /award/api/v1/frequencies/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"frequencyCode": "(val)","description": "(val)","numberOfDays": "(val)","numberOfMonths": "(val)","repeatFlag": "(val)","advanceNumberOfDays": "(val)","advanceNumberOfMonths": "(val)","active": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"frequencyCode": "(val)","description": "(val)","numberOfDays": "(val)","numberOfMonths": "(val)","repeatFlag": "(val)","advanceNumberOfDays": "(val)","advanceNumberOfMonths": "(val)","active": "(val)","_primaryKey": "(val)"}
 ### Insert Frequencies [POST /award/api/v1/frequencies/]
 
 + Request

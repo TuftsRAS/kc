@@ -46,11 +46,11 @@
     + costSharingAmount (optional) - Cost Sharing. Maximum length is 15.
     + budgetLineItemId (optional) - Budget Line Item Id.
     + budgetPeriodId (optional) - Budget Period Id. Maximum length is 3.
-    + lineItemNumber (optional) - Line Item Number. Maximum length is 3.
+    + lineItemNumber (optional) - Line Item Number. Maximum length is 6.
     + budgetId (optional) - Budget Id.
     + budgetPeriod (optional) - Budget Period. Maximum length is 3.
     + applyInRateFlag (optional) - Apply Inflation?. Maximum length is 1.
-    + basedOnLineItem (optional) - Based On Line Item. Maximum length is 3.
+    + basedOnLineItem (optional) - Based On Line Item. Maximum length is 6.
     + budgetCategoryCode (optional) - Budget Category. Maximum length is 3.
     + budgetJustification (optional) - Budget Justification Notes. Maximum length is 200.
     + costElement (optional) - Object Code Name. Maximum length is 8.
@@ -58,7 +58,7 @@
     + endDate (optional) - End Date. Maximum length is 21.
     + lineItemCost (optional) - Total Base Cost. Maximum length is 15.
     + lineItemDescription (optional) - Description. Maximum length is 80.
-    + lineItemSequence (optional) - Line Item Sequence. Maximum length is 3.
+    + lineItemSequence (optional) - Line Item Sequence. Maximum length is 6.
     + onOffCampusFlag (optional) - On CampusContract?. Maximum length is 1.
     + quantity (optional) - Quantity. Maximum length is 4.
     + startDate (optional) - Start Date. Maximum length is 21.
@@ -162,6 +162,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Budget Line Items [PATCH /research-common/api/v1/budget-line-items/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"costSharingAmount": "(val)","budgetLineItemId": "(val)","budgetPeriodId": "(val)","lineItemNumber": "(val)","budgetId": "(val)","budgetPeriod": "(val)","applyInRateFlag": "(val)","basedOnLineItem": "(val)","budgetCategoryCode": "(val)","budgetJustification": "(val)","costElement": "(val)","groupName": "(val)","endDate": "(val)","lineItemCost": "(val)","lineItemDescription": "(val)","lineItemSequence": "(val)","onOffCampusFlag": "(val)","quantity": "(val)","startDate": "(val)","underrecoveryAmount": "(val)","submitCostSharingFlag": "(val)","formulatedCostElementFlag": "(val)","subAwardNumber": "(val)","hierarchyProposalNumber": "(val)","hiddenInHierarchy": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"costSharingAmount": "(val)","budgetLineItemId": "(val)","budgetPeriodId": "(val)","lineItemNumber": "(val)","budgetId": "(val)","budgetPeriod": "(val)","applyInRateFlag": "(val)","basedOnLineItem": "(val)","budgetCategoryCode": "(val)","budgetJustification": "(val)","costElement": "(val)","groupName": "(val)","endDate": "(val)","lineItemCost": "(val)","lineItemDescription": "(val)","lineItemSequence": "(val)","onOffCampusFlag": "(val)","quantity": "(val)","startDate": "(val)","underrecoveryAmount": "(val)","submitCostSharingFlag": "(val)","formulatedCostElementFlag": "(val)","subAwardNumber": "(val)","hierarchyProposalNumber": "(val)","hiddenInHierarchy": "(val)","_primaryKey": "(val)"}
 ### Insert Budget Line Items [POST /research-common/api/v1/budget-line-items/]
 
 + Request
@@ -239,11 +257,11 @@
     + costSharingAmount (optional) - Cost Sharing. Maximum length is 15.
     + budgetLineItemId (optional) - Budget Line Item Id.
     + budgetPeriodId (optional) - Budget Period Id. Maximum length is 3.
-    + lineItemNumber (optional) - Line Item Number. Maximum length is 3.
+    + lineItemNumber (optional) - Line Item Number. Maximum length is 6.
     + budgetId (optional) - Budget Id.
     + budgetPeriod (optional) - Budget Period. Maximum length is 3.
     + applyInRateFlag (optional) - Apply Inflation?. Maximum length is 1.
-    + basedOnLineItem (optional) - Based On Line Item. Maximum length is 3.
+    + basedOnLineItem (optional) - Based On Line Item. Maximum length is 6.
     + budgetCategoryCode (optional) - Budget Category. Maximum length is 3.
     + budgetJustification (optional) - Budget Justification Notes. Maximum length is 200.
     + costElement (optional) - Object Code Name. Maximum length is 8.
@@ -251,7 +269,7 @@
     + endDate (optional) - End Date. Maximum length is 21.
     + lineItemCost (optional) - Total Base Cost. Maximum length is 15.
     + lineItemDescription (optional) - Description. Maximum length is 80.
-    + lineItemSequence (optional) - Line Item Sequence. Maximum length is 3.
+    + lineItemSequence (optional) - Line Item Sequence. Maximum length is 6.
     + onOffCampusFlag (optional) - On CampusContract?. Maximum length is 1.
     + quantity (optional) - Quantity. Maximum length is 4.
     + startDate (optional) - Start Date. Maximum length is 21.

@@ -165,6 +165,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Lite View Iacuc Protocol Submissions [PATCH /iacuc/api/v1/lite-view-iacuc-protocol-submissions/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"submissionId": "(val)","submissionNumber": "(val)","protocolNumber": "(val)","sequenceNumber": "(val)","scheduleId": "(val)","committeeId": "(val)","submissionTypeCode": "(val)","submissionTypeQualifierCode": "(val)","submissionStatusCode": "(val)","protocolId": "(val)","scheduleIdFk": "(val)","committeeIdFk": "(val)","protocolReviewTypeCode": "(val)","submissionDate": "(val)","comments": "(val)","committeeDecisionMotionTypeCode": "(val)","yesVoteCount": "(val)","noVoteCount": "(val)","abstainerCount": "(val)","recusedCount": "(val)","votingComments": "(val)","billable": "(val)","protocolActive": "(val)","protocolStatusCode": "(val)","protocolTitle": "(val)","piPersonId": "(val)","piPersonName": "(val)","piRolodexId": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"submissionId": "(val)","submissionNumber": "(val)","protocolNumber": "(val)","sequenceNumber": "(val)","scheduleId": "(val)","committeeId": "(val)","submissionTypeCode": "(val)","submissionTypeQualifierCode": "(val)","submissionStatusCode": "(val)","protocolId": "(val)","scheduleIdFk": "(val)","committeeIdFk": "(val)","protocolReviewTypeCode": "(val)","submissionDate": "(val)","comments": "(val)","committeeDecisionMotionTypeCode": "(val)","yesVoteCount": "(val)","noVoteCount": "(val)","abstainerCount": "(val)","recusedCount": "(val)","votingComments": "(val)","billable": "(val)","protocolActive": "(val)","protocolStatusCode": "(val)","protocolTitle": "(val)","piPersonId": "(val)","piPersonName": "(val)","piRolodexId": "(val)","_primaryKey": "(val)"}
 ### Insert Lite View Iacuc Protocol Submissions [POST /iacuc/api/v1/lite-view-iacuc-protocol-submissions/]
 
 + Request

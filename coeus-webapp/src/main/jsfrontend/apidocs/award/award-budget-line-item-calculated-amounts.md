@@ -139,6 +139,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Award Budget Line Item Calculated Amounts [PATCH /award/api/v1/award-budget-line-item-calculated-amounts/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"budgetLineItemCalculatedAmountId": "(val)","obligatedAmount": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"budgetLineItemCalculatedAmountId": "(val)","obligatedAmount": "(val)","_primaryKey": "(val)"}
 ### Insert Award Budget Line Item Calculated Amounts [POST /award/api/v1/award-budget-line-item-calculated-amounts/]
 
 + Request

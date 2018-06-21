@@ -142,6 +142,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Sub Award Funding Sources [PATCH /subaward/api/v1/sub-award-funding-sources/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"subAwardFundingSourceId": "(val)","subAwardId": "(val)","subAwardCode": "(val)","sequenceNumber": "(val)","awardId": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"subAwardFundingSourceId": "(val)","subAwardId": "(val)","subAwardCode": "(val)","sequenceNumber": "(val)","awardId": "(val)","_primaryKey": "(val)"}
 ### Insert Sub Award Funding Sources [POST /subaward/api/v1/sub-award-funding-sources/]
 
 + Request

@@ -142,6 +142,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Units [PATCH /research-common/api/v1/units/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"unitNumber": "(val)","parentUnitNumber": "(val)","organizationId": "(val)","unitName": "(val)","active": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"unitNumber": "(val)","parentUnitNumber": "(val)","organizationId": "(val)","unitName": "(val)","active": "(val)","_primaryKey": "(val)"}
 ### Insert Units [POST /research-common/api/v1/units/]
 
 + Request

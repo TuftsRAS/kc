@@ -152,6 +152,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Transaction Details [PATCH /award/api/v1/transaction-details/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"transactionDetailId": "(val)","awardNumber": "(val)","sequenceNumber": "(val)","transactionId": "(val)","timeAndMoneyDocumentNumber": "(val)","sourceAwardNumber": "(val)","destinationAwardNumber": "(val)","obligatedAmount": "(val)","obligatedDirectAmount": "(val)","obligatedIndirectAmount": "(val)","anticipatedAmount": "(val)","anticipatedDirectAmount": "(val)","anticipatedIndirectAmount": "(val)","comments": "(val)","transactionDetailType": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"transactionDetailId": "(val)","awardNumber": "(val)","sequenceNumber": "(val)","transactionId": "(val)","timeAndMoneyDocumentNumber": "(val)","sourceAwardNumber": "(val)","destinationAwardNumber": "(val)","obligatedAmount": "(val)","obligatedDirectAmount": "(val)","obligatedIndirectAmount": "(val)","anticipatedAmount": "(val)","anticipatedDirectAmount": "(val)","anticipatedIndirectAmount": "(val)","comments": "(val)","transactionDetailType": "(val)","_primaryKey": "(val)"}
 ### Insert Transaction Details [POST /award/api/v1/transaction-details/]
 
 + Request

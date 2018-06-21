@@ -154,6 +154,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Protocol Actions [PATCH /irb/api/v1/protocol-actions/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"protocolActionId": "(val)","actionId": "(val)","protocolId": "(val)","protocolNumber": "(val)","sequenceNumber": "(val)","submissionNumber": "(val)","submissionIdFk": "(val)","protocolActionTypeCode": "(val)","comments": "(val)","prevSubmissionStatusCode": "(val)","submissionTypeCode": "(val)","prevProtocolStatusCode": "(val)","createTimestamp": "(val)","createUser": "(val)","actionDate": "(val)","actualActionDate": "(val)","followupActionCode": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"protocolActionId": "(val)","actionId": "(val)","protocolId": "(val)","protocolNumber": "(val)","sequenceNumber": "(val)","submissionNumber": "(val)","submissionIdFk": "(val)","protocolActionTypeCode": "(val)","comments": "(val)","prevSubmissionStatusCode": "(val)","submissionTypeCode": "(val)","prevProtocolStatusCode": "(val)","createTimestamp": "(val)","createUser": "(val)","actionDate": "(val)","actualActionDate": "(val)","followupActionCode": "(val)","_primaryKey": "(val)"}
 ### Insert Protocol Actions [POST /irb/api/v1/protocol-actions/]
 
 + Request

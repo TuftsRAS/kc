@@ -141,6 +141,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Unit Formulated Costs [PATCH /research-common/api/v1/unit-formulated-costs/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"unitFormulatedCostId": "(val)","formulatedTypeCode": "(val)","unitNumber": "(val)","unitCost": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"unitFormulatedCostId": "(val)","formulatedTypeCode": "(val)","unitNumber": "(val)","unitCost": "(val)","_primaryKey": "(val)"}
 ### Insert Unit Formulated Costs [POST /research-common/api/v1/unit-formulated-costs/]
 
 + Request

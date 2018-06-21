@@ -139,6 +139,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Entities [PATCH /research-sys/api/v1/entities/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","active": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","active": "(val)","_primaryKey": "(val)"}
 ### Insert Entities [POST /research-sys/api/v1/entities/]
 
 + Request

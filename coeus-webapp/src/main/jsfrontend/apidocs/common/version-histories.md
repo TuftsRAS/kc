@@ -145,6 +145,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Version Histories [PATCH /research-common/api/v1/version-histories/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"versionHistoryId": "(val)","sequenceOwnerClassName": "(val)","sequenceOwnerVersionNameField": "(val)","sequenceOwnerVersionNameValue": "(val)","sequenceOwnerSequenceNumber": "(val)","statusForOjb": "(val)","userId": "(val)","versionDate": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"versionHistoryId": "(val)","sequenceOwnerClassName": "(val)","sequenceOwnerVersionNameField": "(val)","sequenceOwnerVersionNameValue": "(val)","sequenceOwnerSequenceNumber": "(val)","statusForOjb": "(val)","userId": "(val)","versionDate": "(val)","_primaryKey": "(val)"}
 ### Insert Version Histories [POST /research-common/api/v1/version-histories/]
 
 + Request

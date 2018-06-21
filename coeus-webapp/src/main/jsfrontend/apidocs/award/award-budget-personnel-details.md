@@ -139,6 +139,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Award Budget Personnel Details [PATCH /award/api/v1/award-budget-personnel-details/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"budgetPersonnelLineItemId": "(val)","obligatedAmount": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"budgetPersonnelLineItemId": "(val)","obligatedAmount": "(val)","_primaryKey": "(val)"}
 ### Insert Award Budget Personnel Details [POST /award/api/v1/award-budget-personnel-details/]
 
 + Request

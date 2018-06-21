@@ -138,6 +138,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Iacuc Protocol Online Review Documents [PATCH /iacuc/api/v1/iacuc-protocol-online-review-documents/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"documentNumber": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"documentNumber": "(val)","_primaryKey": "(val)"}
 ### Insert Iacuc Protocol Online Review Documents [POST /iacuc/api/v1/iacuc-protocol-online-review-documents/]
 
 + Request

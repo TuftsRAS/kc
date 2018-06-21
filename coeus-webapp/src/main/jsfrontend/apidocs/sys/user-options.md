@@ -141,6 +141,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes User Options [PATCH /research-sys/api/v1/user-options/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"workflowId": "(val)","optionId": "(val)","optionVal": "(val)","lockVerNbr": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"workflowId": "(val)","optionId": "(val)","optionVal": "(val)","lockVerNbr": "(val)","_primaryKey": "(val)"}
 ### Insert User Options [POST /research-sys/api/v1/user-options/]
 
 + Request

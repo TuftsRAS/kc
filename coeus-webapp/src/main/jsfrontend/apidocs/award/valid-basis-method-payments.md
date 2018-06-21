@@ -141,6 +141,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Valid Basis Method Payments [PATCH /award/api/v1/valid-basis-method-payments/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"validBasisMethodPaymentId": "(val)","basisOfPaymentCode": "(val)","methodOfPaymentCode": "(val)","invInstructionsIndicator": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"validBasisMethodPaymentId": "(val)","basisOfPaymentCode": "(val)","methodOfPaymentCode": "(val)","invInstructionsIndicator": "(val)","_primaryKey": "(val)"}
 ### Insert Valid Basis Method Payments [POST /award/api/v1/valid-basis-method-payments/]
 
 + Request

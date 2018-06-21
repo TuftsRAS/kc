@@ -139,6 +139,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Iacuc Location Types [PATCH /iacuc/api/v1/iacuc-location-types/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"locationTypeCode": "(val)","location": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"locationTypeCode": "(val)","location": "(val)","_primaryKey": "(val)"}
 ### Insert Iacuc Location Types [POST /iacuc/api/v1/iacuc-location-types/]
 
 + Request

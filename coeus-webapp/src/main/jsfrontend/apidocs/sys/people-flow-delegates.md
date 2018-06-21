@@ -143,6 +143,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes People Flow Delegates [PATCH /research-sys/api/v1/people-flow-delegates/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","memberId": "(val)","memberTypeCode": "(val)","actionRequestPolicyCode": "(val)","delegationTypeCode": "(val)","responsibilityId": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","memberId": "(val)","memberTypeCode": "(val)","actionRequestPolicyCode": "(val)","delegationTypeCode": "(val)","responsibilityId": "(val)","_primaryKey": "(val)"}
 ### Insert People Flow Delegates [POST /research-sys/api/v1/people-flow-delegates/]
 
 + Request

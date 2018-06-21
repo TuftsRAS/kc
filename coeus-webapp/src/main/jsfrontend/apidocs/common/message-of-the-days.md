@@ -141,6 +141,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Message Of The Days [PATCH /research-common/api/v1/message-of-the-days/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"messageOfTheDayId": "(val)","message": "(val)","active": "(val)","displayOrder": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"messageOfTheDayId": "(val)","message": "(val)","active": "(val)","displayOrder": "(val)","_primaryKey": "(val)"}
 ### Insert Message Of The Days [POST /research-common/api/v1/message-of-the-days/]
 
 + Request

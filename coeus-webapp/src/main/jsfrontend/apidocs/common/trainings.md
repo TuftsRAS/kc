@@ -139,6 +139,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Trainings [PATCH /research-common/api/v1/trainings/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"trainingCode": "(val)","description": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"trainingCode": "(val)","description": "(val)","_primaryKey": "(val)"}
 ### Insert Trainings [POST /research-common/api/v1/trainings/]
 
 + Request

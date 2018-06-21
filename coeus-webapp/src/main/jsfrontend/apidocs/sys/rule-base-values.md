@@ -154,6 +154,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Rule Base Values [PATCH /research-sys/api/v1/rule-base-values/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","name": "(val)","ruleTemplateId": "(val)","previousRuleId": "(val)","active": "(val)","description": "(val)","docTypeName": "(val)","documentId": "(val)","fromDateValue": "(val)","toDateValue": "(val)","deactivationDate": "(val)","currentInd": "(val)","versionNbr": "(val)","forceAction": "(val)","activationDate": "(val)","delegateRule": "(val)","templateRuleInd": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","name": "(val)","ruleTemplateId": "(val)","previousRuleId": "(val)","active": "(val)","description": "(val)","docTypeName": "(val)","documentId": "(val)","fromDateValue": "(val)","toDateValue": "(val)","deactivationDate": "(val)","currentInd": "(val)","versionNbr": "(val)","forceAction": "(val)","activationDate": "(val)","delegateRule": "(val)","templateRuleInd": "(val)","_primaryKey": "(val)"}
 ### Insert Rule Base Values [POST /research-sys/api/v1/rule-base-values/]
 
 + Request

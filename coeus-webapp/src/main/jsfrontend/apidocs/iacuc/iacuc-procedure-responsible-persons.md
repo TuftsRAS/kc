@@ -140,6 +140,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Iacuc Procedure Responsible Persons [PATCH /iacuc/api/v1/iacuc-procedure-responsible-persons/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"iacucProcedurePersonResponsibleId": "(val)","iacucProtocolStudyGroupId": "(val)","protocolPersonId": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"iacucProcedurePersonResponsibleId": "(val)","iacucProtocolStudyGroupId": "(val)","protocolPersonId": "(val)","_primaryKey": "(val)"}
 ### Insert Iacuc Procedure Responsible Persons [POST /iacuc/api/v1/iacuc-procedure-responsible-persons/]
 
 + Request

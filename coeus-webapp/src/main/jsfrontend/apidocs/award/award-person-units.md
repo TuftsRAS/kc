@@ -141,6 +141,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Award Person Units [PATCH /award/api/v1/award-person-units/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"awardPersonUnitId": "(val)","awardContactId": "(val)","unitNumber": "(val)","leadUnit": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"awardPersonUnitId": "(val)","awardContactId": "(val)","unitNumber": "(val)","leadUnit": "(val)","_primaryKey": "(val)"}
 ### Insert Award Person Units [POST /award/api/v1/award-person-units/]
 
 + Request

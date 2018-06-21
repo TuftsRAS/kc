@@ -155,6 +155,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Sponsors [PATCH /research-common/api/v1/sponsors/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"sponsorCode": "(val)","acronym": "(val)","auditReportSentForFy": "(val)","cageNumber": "(val)","countryCode": "(val)","dodacNumber": "(val)","dunAndBradstreetNumber": "(val)","dunsPlusFourNumber": "(val)","ownedByUnit": "(val)","postalCode": "(val)","rolodexId": "(val)","sponsorName": "(val)","sponsorTypeCode": "(val)","state": "(val)","createUser": "(val)","dunningCampaignId": "(val)","customerNumber": "(val)","active": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"sponsorCode": "(val)","acronym": "(val)","auditReportSentForFy": "(val)","cageNumber": "(val)","countryCode": "(val)","dodacNumber": "(val)","dunAndBradstreetNumber": "(val)","dunsPlusFourNumber": "(val)","ownedByUnit": "(val)","postalCode": "(val)","rolodexId": "(val)","sponsorName": "(val)","sponsorTypeCode": "(val)","state": "(val)","createUser": "(val)","dunningCampaignId": "(val)","customerNumber": "(val)","active": "(val)","_primaryKey": "(val)"}
 ### Insert Sponsors [POST /research-common/api/v1/sponsors/]
 
 + Request

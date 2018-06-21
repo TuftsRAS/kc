@@ -50,7 +50,7 @@
     + cfdaNumber (optional) - CFDA Number. Maximum length is 7.
     + opportunity (optional) - Opportunity. Maximum length is 50.
     + proposalSequenceStatus (optional) - 
-    + createTimestamp (optional) - Proposal Create Date. Maximum length is 10.
+    + createTimestamp (optional) - Proposal Create Date. Maximum length is 21.
     + awardTypeCode (optional) - Award Type Code. Maximum length is 15.
     + unitNumber (optional) - 
     + proposalId (optional) - Institutional Proposal ID. Maximum length is 22.
@@ -86,12 +86,12 @@
     + mailAccountNumber (optional) - The internal school account number that should be charged the mailing costs. Maximum length is 7.
     + mailDescription (optional) - Any information that will assist in the delivery of the proposal. Maximum length is 80.
     + subcontractFlag (optional) - Subcontract Flag. Maximum length is 3.
-    + costSharingIndicator (optional) - This attribute should always be overridden on the descriptive elements. Maximum length is 1.
-    + idcRateIndicator (optional) - This attribute should always be overridden on the descriptive elements. Maximum length is 1.
-    + specialReviewIndicator (optional) - This attribute should always be overridden on the descriptive elements. Maximum length is 1.
+    + costSharingIndicator (optional) - This attribute should always be overriden on the descriptive elements. Maximum length is 1.
+    + idcRateIndicator (optional) - This attribute should always be overriden on the descriptive elements. Maximum length is 1.
+    + specialReviewIndicator (optional) - This attribute should always be overriden on the descriptive elements. Maximum length is 1.
     + statusCode (optional) - Status Code. Maximum length is 3.
     + scienceCodeIndicator (optional) - 
-    + nsfSequenceNumber (optional) - NSF Code Sequence Number. Maximum length is 12.
+    + nsfSequenceNumber (optional) - NSF Science Code. Maximum length is 12.
     + institutionalProposalDocument.documentNumber (optional) - 
 
             

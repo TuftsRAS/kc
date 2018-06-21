@@ -144,6 +144,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Person Document Roles [PATCH /research-sys/api/v1/person-document-roles/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"roleId": "(val)","kimTypeId": "(val)","roleName": "(val)","namespaceCode": "(val)","edit": "(val)","documentNumber": "(val)","active": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"roleId": "(val)","kimTypeId": "(val)","roleName": "(val)","namespaceCode": "(val)","edit": "(val)","documentNumber": "(val)","active": "(val)","_primaryKey": "(val)"}
 ### Insert Person Document Roles [POST /research-sys/api/v1/person-document-roles/]
 
 + Request

@@ -139,6 +139,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Fanda Rate Types [PATCH /award/api/v1/fanda-rate-types/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"fandaRateTypeCode": "(val)","description": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"fandaRateTypeCode": "(val)","description": "(val)","_primaryKey": "(val)"}
 ### Insert Fanda Rate Types [POST /award/api/v1/fanda-rate-types/]
 
 + Request

@@ -142,6 +142,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Document Accesses [PATCH /research-common/api/v1/document-accesses/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","documentNumber": "(val)","principalId": "(val)","roleName": "(val)","namespaceCode": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","documentNumber": "(val)","principalId": "(val)","roleName": "(val)","namespaceCode": "(val)","_primaryKey": "(val)"}
 ### Insert Document Accesses [POST /research-common/api/v1/document-accesses/]
 
 + Request

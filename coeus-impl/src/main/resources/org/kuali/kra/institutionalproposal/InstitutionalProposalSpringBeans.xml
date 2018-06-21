@@ -418,8 +418,8 @@
     <bean parent="simpleCrudMapBasedRestController" p:dataObjectClazz="org.kuali.kra.institutionalproposal.contacts.InstitutionalProposalPersonUnit" />
     <bean parent="simpleCrudMapBasedRestController" p:dataObjectClazz="org.kuali.kra.institutionalproposal.contacts.InstitutionalProposalPersonUnitCreditSplit" />
     <bean parent="simpleReadOnlyMapBasedRestController" p:dataObjectClazz="org.kuali.kra.institutionalproposal.home.InstitutionalProposalScienceKeyword" />
-    <bean parent="simpleReadOnlyMapBasedRestController" p:dataObjectClazz="org.kuali.kra.institutionalproposal.specialreview.InstitutionalProposalSpecialReview" />
-    <bean parent="simpleReadOnlyMapBasedRestController" p:dataObjectClazz="org.kuali.kra.institutionalproposal.specialreview.InstitutionalProposalSpecialReviewExemption" />
+    <bean parent="simpleReadUpdateOnlyMapBasedRestController" p:dataObjectClazz="org.kuali.kra.institutionalproposal.specialreview.InstitutionalProposalSpecialReview" />
+    <bean parent="simpleCrudMapBasedRestController" p:dataObjectClazz="org.kuali.kra.institutionalproposal.specialreview.InstitutionalProposalSpecialReviewExemption" />
     <bean parent="simpleReadOnlyMapBasedRestController" p:dataObjectClazz="org.kuali.kra.institutionalproposal.contacts.InstitutionalProposalUnitContact" />
     <bean parent="simpleReadOnlyMapBasedRestController" p:dataObjectClazz="org.kuali.kra.institutionalproposal.home.InstitutionalProposalUnrecoveredFandA" p:camelCasePluralName="InstitutionalProposalUnrecoveredFAndAs" />
     <bean parent="simpleCrudMapBasedRestController" p:dataObjectClazz="org.kuali.kra.institutionalproposal.ipreview.IntellectualPropertyReview" />

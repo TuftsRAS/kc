@@ -139,6 +139,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Sub Award Copyright Types [PATCH /subaward/api/v1/sub-award-copyright-types/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"copyRightTypeCode": "(val)","copyRightTypeDescription": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"copyRightTypeCode": "(val)","copyRightTypeDescription": "(val)","_primaryKey": "(val)"}
 ### Insert Sub Award Copyright Types [POST /subaward/api/v1/sub-award-copyright-types/]
 
 + Request

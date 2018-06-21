@@ -148,6 +148,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Award Sync Changes [PATCH /award/api/v1/award-sync-changes/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"awardSyncChangeId": "(val)","awardId": "(val)","xml": "(val)","className": "(val)","attrName": "(val)","objectDesc": "(val)","dataDesc": "(val)","syncType": "(val)","syncDescendants": "(val)","syncFabricated": "(val)","syncCostSharing": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"awardSyncChangeId": "(val)","awardId": "(val)","xml": "(val)","className": "(val)","attrName": "(val)","objectDesc": "(val)","dataDesc": "(val)","syncType": "(val)","syncDescendants": "(val)","syncFabricated": "(val)","syncCostSharing": "(val)","_primaryKey": "(val)"}
 ### Insert Award Sync Changes [POST /award/api/v1/award-sync-changes/]
 
 + Request

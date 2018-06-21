@@ -150,6 +150,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Iacuc Committee Memberships [PATCH /iacuc/api/v1/iacuc-committee-memberships/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"committeeMembershipId": "(val)","committeeIdFk": "(val)","personId": "(val)","rolodexId": "(val)","personName": "(val)","membershipId": "(val)","paidMember": "(val)","termStartDate": "(val)","termEndDate": "(val)","membershipTypeCode": "(val)","comments": "(val)","contactNotes": "(val)","trainingNotes": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"committeeMembershipId": "(val)","committeeIdFk": "(val)","personId": "(val)","rolodexId": "(val)","personName": "(val)","membershipId": "(val)","paidMember": "(val)","termStartDate": "(val)","termEndDate": "(val)","membershipTypeCode": "(val)","comments": "(val)","contactNotes": "(val)","trainingNotes": "(val)","_primaryKey": "(val)"}
 ### Insert Iacuc Committee Memberships [POST /iacuc/api/v1/iacuc-committee-memberships/]
 
 + Request

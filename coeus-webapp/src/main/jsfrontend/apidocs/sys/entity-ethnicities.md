@@ -141,6 +141,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Entity Ethnicities [PATCH /research-sys/api/v1/entity-ethnicities/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","entityId": "(val)","ethnicityCode": "(val)","subEthnicityCode": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","entityId": "(val)","ethnicityCode": "(val)","subEthnicityCode": "(val)","_primaryKey": "(val)"}
 ### Insert Entity Ethnicities [POST /research-sys/api/v1/entity-ethnicities/]
 
 + Request

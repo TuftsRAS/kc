@@ -16,7 +16,7 @@
 
     + Body
     
-            {"awardReportTrackingId": "(val)","awardReportTermId": "(val)","awardNumber": "(val)","piPersonId": "(val)","piRolodexId": "(val)","piName": "(val)","leadUnitNumber": "(val)","reportClassCode": "(val)","reportCode": "(val)","frequencyCode": "(val)","frequencyBaseCode": "(val)","ospDistributionCode": "(val)","statusCode": "(val)","baseDate": "(val)","dueDate": "(val)","overdue": "(val)","activityDate": "(val)","comments": "(val)","preparerId": "(val)","preparerName": "(val)","sponsorCode": "(val)","sponsorAwardNumber": "(val)","title": "(val)","lastUpdateUser": "(val)","lastUpdateDate": "(val)","_primaryKey": "(val)"}
+            {"awardReportTrackingId": "(val)","awardReportTermId": "(val)","awardNumber": "(val)","awardId": "(val)","piPersonId": "(val)","piRolodexId": "(val)","piName": "(val)","leadUnitNumber": "(val)","reportClassCode": "(val)","reportCode": "(val)","frequencyCode": "(val)","frequencyBaseCode": "(val)","ospDistributionCode": "(val)","statusCode": "(val)","baseDate": "(val)","dueDate": "(val)","activityDate": "(val)","comments": "(val)","preparerId": "(val)","preparerName": "(val)","sponsorCode": "(val)","sponsorAwardNumber": "(val)","title": "(val)","lastUpdateUser": "(val)","lastUpdateDate": "(val)","_primaryKey": "(val)"}
 
 ### Get All Report Tracking [GET /award/api/v1/report-tracking/]
 	 
@@ -35,8 +35,8 @@
     + Body
     
             [
-              {"awardReportTrackingId": "(val)","awardReportTermId": "(val)","awardNumber": "(val)","piPersonId": "(val)","piRolodexId": "(val)","piName": "(val)","leadUnitNumber": "(val)","reportClassCode": "(val)","reportCode": "(val)","frequencyCode": "(val)","frequencyBaseCode": "(val)","ospDistributionCode": "(val)","statusCode": "(val)","baseDate": "(val)","dueDate": "(val)","overdue": "(val)","activityDate": "(val)","comments": "(val)","preparerId": "(val)","preparerName": "(val)","sponsorCode": "(val)","sponsorAwardNumber": "(val)","title": "(val)","lastUpdateUser": "(val)","lastUpdateDate": "(val)","_primaryKey": "(val)"},
-              {"awardReportTrackingId": "(val)","awardReportTermId": "(val)","awardNumber": "(val)","piPersonId": "(val)","piRolodexId": "(val)","piName": "(val)","leadUnitNumber": "(val)","reportClassCode": "(val)","reportCode": "(val)","frequencyCode": "(val)","frequencyBaseCode": "(val)","ospDistributionCode": "(val)","statusCode": "(val)","baseDate": "(val)","dueDate": "(val)","overdue": "(val)","activityDate": "(val)","comments": "(val)","preparerId": "(val)","preparerName": "(val)","sponsorCode": "(val)","sponsorAwardNumber": "(val)","title": "(val)","lastUpdateUser": "(val)","lastUpdateDate": "(val)","_primaryKey": "(val)"}
+              {"awardReportTrackingId": "(val)","awardReportTermId": "(val)","awardNumber": "(val)","awardId": "(val)","piPersonId": "(val)","piRolodexId": "(val)","piName": "(val)","leadUnitNumber": "(val)","reportClassCode": "(val)","reportCode": "(val)","frequencyCode": "(val)","frequencyBaseCode": "(val)","ospDistributionCode": "(val)","statusCode": "(val)","baseDate": "(val)","dueDate": "(val)","activityDate": "(val)","comments": "(val)","preparerId": "(val)","preparerName": "(val)","sponsorCode": "(val)","sponsorAwardNumber": "(val)","title": "(val)","lastUpdateUser": "(val)","lastUpdateDate": "(val)","_primaryKey": "(val)"},
+              {"awardReportTrackingId": "(val)","awardReportTermId": "(val)","awardNumber": "(val)","awardId": "(val)","piPersonId": "(val)","piRolodexId": "(val)","piName": "(val)","leadUnitNumber": "(val)","reportClassCode": "(val)","reportCode": "(val)","frequencyCode": "(val)","frequencyBaseCode": "(val)","ospDistributionCode": "(val)","statusCode": "(val)","baseDate": "(val)","dueDate": "(val)","activityDate": "(val)","comments": "(val)","preparerId": "(val)","preparerName": "(val)","sponsorCode": "(val)","sponsorAwardNumber": "(val)","title": "(val)","lastUpdateUser": "(val)","lastUpdateDate": "(val)","_primaryKey": "(val)"}
             ]
 
 ### Get All Report Tracking with Filtering [GET /award/api/v1/report-tracking/]
@@ -46,6 +46,7 @@
     + awardReportTrackingId (optional) - Award Report Tracking Id. Maximum length is 40.
     + awardReportTermId (optional) - Award Report Terms Id. Maximum length is 22.
     + awardNumber (optional) - Award ID. Maximum length is 12.
+    + awardId (optional) - 
     + piPersonId (optional) - 
     + piRolodexId (optional) - 
     + piName (optional) - Full Name. Maximum length is 90.
@@ -58,7 +59,6 @@
     + statusCode (optional) - Status. Maximum length is 22.
     + baseDate (optional) - Base Date. Maximum length is 10.
     + dueDate (optional) - Due Date. Maximum length is 10.
-    + overdue (optional) - Overdue. Maximum length is 22.
     + activityDate (optional) - Activity Date. Maximum length is 10.
     + comments (optional) - Comments. Maximum length is 200.
     + preparerId (optional) - Preparer. Maximum length is 40.
@@ -85,8 +85,8 @@
     + Body
     
             [
-              {"awardReportTrackingId": "(val)","awardReportTermId": "(val)","awardNumber": "(val)","piPersonId": "(val)","piRolodexId": "(val)","piName": "(val)","leadUnitNumber": "(val)","reportClassCode": "(val)","reportCode": "(val)","frequencyCode": "(val)","frequencyBaseCode": "(val)","ospDistributionCode": "(val)","statusCode": "(val)","baseDate": "(val)","dueDate": "(val)","overdue": "(val)","activityDate": "(val)","comments": "(val)","preparerId": "(val)","preparerName": "(val)","sponsorCode": "(val)","sponsorAwardNumber": "(val)","title": "(val)","lastUpdateUser": "(val)","lastUpdateDate": "(val)","_primaryKey": "(val)"},
-              {"awardReportTrackingId": "(val)","awardReportTermId": "(val)","awardNumber": "(val)","piPersonId": "(val)","piRolodexId": "(val)","piName": "(val)","leadUnitNumber": "(val)","reportClassCode": "(val)","reportCode": "(val)","frequencyCode": "(val)","frequencyBaseCode": "(val)","ospDistributionCode": "(val)","statusCode": "(val)","baseDate": "(val)","dueDate": "(val)","overdue": "(val)","activityDate": "(val)","comments": "(val)","preparerId": "(val)","preparerName": "(val)","sponsorCode": "(val)","sponsorAwardNumber": "(val)","title": "(val)","lastUpdateUser": "(val)","lastUpdateDate": "(val)","_primaryKey": "(val)"}
+              {"awardReportTrackingId": "(val)","awardReportTermId": "(val)","awardNumber": "(val)","awardId": "(val)","piPersonId": "(val)","piRolodexId": "(val)","piName": "(val)","leadUnitNumber": "(val)","reportClassCode": "(val)","reportCode": "(val)","frequencyCode": "(val)","frequencyBaseCode": "(val)","ospDistributionCode": "(val)","statusCode": "(val)","baseDate": "(val)","dueDate": "(val)","activityDate": "(val)","comments": "(val)","preparerId": "(val)","preparerName": "(val)","sponsorCode": "(val)","sponsorAwardNumber": "(val)","title": "(val)","lastUpdateUser": "(val)","lastUpdateDate": "(val)","_primaryKey": "(val)"},
+              {"awardReportTrackingId": "(val)","awardReportTermId": "(val)","awardNumber": "(val)","awardId": "(val)","piPersonId": "(val)","piRolodexId": "(val)","piName": "(val)","leadUnitNumber": "(val)","reportClassCode": "(val)","reportCode": "(val)","frequencyCode": "(val)","frequencyBaseCode": "(val)","ospDistributionCode": "(val)","statusCode": "(val)","baseDate": "(val)","dueDate": "(val)","activityDate": "(val)","comments": "(val)","preparerId": "(val)","preparerName": "(val)","sponsorCode": "(val)","sponsorAwardNumber": "(val)","title": "(val)","lastUpdateUser": "(val)","lastUpdateDate": "(val)","_primaryKey": "(val)"}
             ]
 			
 ### Get Schema for Report Tracking [GET /award/api/v1/report-tracking/]
@@ -109,7 +109,7 @@
 
     + Body
     
-            {"columns":["awardReportTrackingId","awardReportTermId","awardNumber","piPersonId","piRolodexId","piName","leadUnitNumber","reportClassCode","reportCode","frequencyCode","frequencyBaseCode","ospDistributionCode","statusCode","baseDate","dueDate","overdue","activityDate","comments","preparerId","preparerName","sponsorCode","sponsorAwardNumber","title","lastUpdateUser","lastUpdateDate"],"primaryKey":"awardReportTrackingId"}
+            {"columns":["awardReportTrackingId","awardReportTermId","awardNumber","awardId","piPersonId","piRolodexId","piName","leadUnitNumber","reportClassCode","reportCode","frequencyCode","frequencyBaseCode","ospDistributionCode","statusCode","baseDate","dueDate","activityDate","comments","preparerId","preparerName","sponsorCode","sponsorAwardNumber","title","lastUpdateUser","lastUpdateDate"],"primaryKey":"awardReportTrackingId"}
 		
 ### Get Blueprint API specification for Report Tracking [GET /award/api/v1/report-tracking/]
 	 
@@ -141,7 +141,7 @@
 
     + Body
     
-            {"awardReportTrackingId": "(val)","awardReportTermId": "(val)","awardNumber": "(val)","piPersonId": "(val)","piRolodexId": "(val)","piName": "(val)","leadUnitNumber": "(val)","reportClassCode": "(val)","reportCode": "(val)","frequencyCode": "(val)","frequencyBaseCode": "(val)","ospDistributionCode": "(val)","statusCode": "(val)","baseDate": "(val)","dueDate": "(val)","overdue": "(val)","activityDate": "(val)","comments": "(val)","preparerId": "(val)","preparerName": "(val)","sponsorCode": "(val)","sponsorAwardNumber": "(val)","title": "(val)","lastUpdateUser": "(val)","lastUpdateDate": "(val)","_primaryKey": "(val)"}
+            {"awardReportTrackingId": "(val)","awardReportTermId": "(val)","awardNumber": "(val)","awardId": "(val)","piPersonId": "(val)","piRolodexId": "(val)","piName": "(val)","leadUnitNumber": "(val)","reportClassCode": "(val)","reportCode": "(val)","frequencyCode": "(val)","frequencyBaseCode": "(val)","ospDistributionCode": "(val)","statusCode": "(val)","baseDate": "(val)","dueDate": "(val)","activityDate": "(val)","comments": "(val)","preparerId": "(val)","preparerName": "(val)","sponsorCode": "(val)","sponsorAwardNumber": "(val)","title": "(val)","lastUpdateUser": "(val)","lastUpdateDate": "(val)","_primaryKey": "(val)"}
 			
 + Response 204
 
@@ -157,11 +157,29 @@
     + Body
     
             [
-              {"awardReportTrackingId": "(val)","awardReportTermId": "(val)","awardNumber": "(val)","piPersonId": "(val)","piRolodexId": "(val)","piName": "(val)","leadUnitNumber": "(val)","reportClassCode": "(val)","reportCode": "(val)","frequencyCode": "(val)","frequencyBaseCode": "(val)","ospDistributionCode": "(val)","statusCode": "(val)","baseDate": "(val)","dueDate": "(val)","overdue": "(val)","activityDate": "(val)","comments": "(val)","preparerId": "(val)","preparerName": "(val)","sponsorCode": "(val)","sponsorAwardNumber": "(val)","title": "(val)","lastUpdateUser": "(val)","lastUpdateDate": "(val)","_primaryKey": "(val)"},
-              {"awardReportTrackingId": "(val)","awardReportTermId": "(val)","awardNumber": "(val)","piPersonId": "(val)","piRolodexId": "(val)","piName": "(val)","leadUnitNumber": "(val)","reportClassCode": "(val)","reportCode": "(val)","frequencyCode": "(val)","frequencyBaseCode": "(val)","ospDistributionCode": "(val)","statusCode": "(val)","baseDate": "(val)","dueDate": "(val)","overdue": "(val)","activityDate": "(val)","comments": "(val)","preparerId": "(val)","preparerName": "(val)","sponsorCode": "(val)","sponsorAwardNumber": "(val)","title": "(val)","lastUpdateUser": "(val)","lastUpdateDate": "(val)","_primaryKey": "(val)"}
+              {"awardReportTrackingId": "(val)","awardReportTermId": "(val)","awardNumber": "(val)","awardId": "(val)","piPersonId": "(val)","piRolodexId": "(val)","piName": "(val)","leadUnitNumber": "(val)","reportClassCode": "(val)","reportCode": "(val)","frequencyCode": "(val)","frequencyBaseCode": "(val)","ospDistributionCode": "(val)","statusCode": "(val)","baseDate": "(val)","dueDate": "(val)","activityDate": "(val)","comments": "(val)","preparerId": "(val)","preparerName": "(val)","sponsorCode": "(val)","sponsorAwardNumber": "(val)","title": "(val)","lastUpdateUser": "(val)","lastUpdateDate": "(val)","_primaryKey": "(val)"},
+              {"awardReportTrackingId": "(val)","awardReportTermId": "(val)","awardNumber": "(val)","awardId": "(val)","piPersonId": "(val)","piRolodexId": "(val)","piName": "(val)","leadUnitNumber": "(val)","reportClassCode": "(val)","reportCode": "(val)","frequencyCode": "(val)","frequencyBaseCode": "(val)","ospDistributionCode": "(val)","statusCode": "(val)","baseDate": "(val)","dueDate": "(val)","activityDate": "(val)","comments": "(val)","preparerId": "(val)","preparerName": "(val)","sponsorCode": "(val)","sponsorAwardNumber": "(val)","title": "(val)","lastUpdateUser": "(val)","lastUpdateDate": "(val)","_primaryKey": "(val)"}
             ]
 			
 + Response 204
+### Update Specific Attributes Report Tracking [PATCH /award/api/v1/report-tracking/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"awardReportTrackingId": "(val)","awardReportTermId": "(val)","awardNumber": "(val)","awardId": "(val)","piPersonId": "(val)","piRolodexId": "(val)","piName": "(val)","leadUnitNumber": "(val)","reportClassCode": "(val)","reportCode": "(val)","frequencyCode": "(val)","frequencyBaseCode": "(val)","ospDistributionCode": "(val)","statusCode": "(val)","baseDate": "(val)","dueDate": "(val)","activityDate": "(val)","comments": "(val)","preparerId": "(val)","preparerName": "(val)","sponsorCode": "(val)","sponsorAwardNumber": "(val)","title": "(val)","lastUpdateUser": "(val)","lastUpdateDate": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"awardReportTrackingId": "(val)","awardReportTermId": "(val)","awardNumber": "(val)","awardId": "(val)","piPersonId": "(val)","piRolodexId": "(val)","piName": "(val)","leadUnitNumber": "(val)","reportClassCode": "(val)","reportCode": "(val)","frequencyCode": "(val)","frequencyBaseCode": "(val)","ospDistributionCode": "(val)","statusCode": "(val)","baseDate": "(val)","dueDate": "(val)","activityDate": "(val)","comments": "(val)","preparerId": "(val)","preparerName": "(val)","sponsorCode": "(val)","sponsorAwardNumber": "(val)","title": "(val)","lastUpdateUser": "(val)","lastUpdateDate": "(val)","_primaryKey": "(val)"}
 ### Insert Report Tracking [POST /award/api/v1/report-tracking/]
 
 + Request
@@ -173,13 +191,13 @@
 
     + Body
     
-            {"awardReportTrackingId": "(val)","awardReportTermId": "(val)","awardNumber": "(val)","piPersonId": "(val)","piRolodexId": "(val)","piName": "(val)","leadUnitNumber": "(val)","reportClassCode": "(val)","reportCode": "(val)","frequencyCode": "(val)","frequencyBaseCode": "(val)","ospDistributionCode": "(val)","statusCode": "(val)","baseDate": "(val)","dueDate": "(val)","overdue": "(val)","activityDate": "(val)","comments": "(val)","preparerId": "(val)","preparerName": "(val)","sponsorCode": "(val)","sponsorAwardNumber": "(val)","title": "(val)","lastUpdateUser": "(val)","lastUpdateDate": "(val)","_primaryKey": "(val)"}
+            {"awardReportTrackingId": "(val)","awardReportTermId": "(val)","awardNumber": "(val)","awardId": "(val)","piPersonId": "(val)","piRolodexId": "(val)","piName": "(val)","leadUnitNumber": "(val)","reportClassCode": "(val)","reportCode": "(val)","frequencyCode": "(val)","frequencyBaseCode": "(val)","ospDistributionCode": "(val)","statusCode": "(val)","baseDate": "(val)","dueDate": "(val)","activityDate": "(val)","comments": "(val)","preparerId": "(val)","preparerName": "(val)","sponsorCode": "(val)","sponsorAwardNumber": "(val)","title": "(val)","lastUpdateUser": "(val)","lastUpdateDate": "(val)","_primaryKey": "(val)"}
 			
 + Response 201
     
     + Body
             
-            {"awardReportTrackingId": "(val)","awardReportTermId": "(val)","awardNumber": "(val)","piPersonId": "(val)","piRolodexId": "(val)","piName": "(val)","leadUnitNumber": "(val)","reportClassCode": "(val)","reportCode": "(val)","frequencyCode": "(val)","frequencyBaseCode": "(val)","ospDistributionCode": "(val)","statusCode": "(val)","baseDate": "(val)","dueDate": "(val)","overdue": "(val)","activityDate": "(val)","comments": "(val)","preparerId": "(val)","preparerName": "(val)","sponsorCode": "(val)","sponsorAwardNumber": "(val)","title": "(val)","lastUpdateUser": "(val)","lastUpdateDate": "(val)","_primaryKey": "(val)"}
+            {"awardReportTrackingId": "(val)","awardReportTermId": "(val)","awardNumber": "(val)","awardId": "(val)","piPersonId": "(val)","piRolodexId": "(val)","piName": "(val)","leadUnitNumber": "(val)","reportClassCode": "(val)","reportCode": "(val)","frequencyCode": "(val)","frequencyBaseCode": "(val)","ospDistributionCode": "(val)","statusCode": "(val)","baseDate": "(val)","dueDate": "(val)","activityDate": "(val)","comments": "(val)","preparerId": "(val)","preparerName": "(val)","sponsorCode": "(val)","sponsorAwardNumber": "(val)","title": "(val)","lastUpdateUser": "(val)","lastUpdateDate": "(val)","_primaryKey": "(val)"}
             
 ### Insert Multiple Report Tracking [POST /award/api/v1/report-tracking/]
 
@@ -193,8 +211,8 @@
     + Body
     
             [
-              {"awardReportTrackingId": "(val)","awardReportTermId": "(val)","awardNumber": "(val)","piPersonId": "(val)","piRolodexId": "(val)","piName": "(val)","leadUnitNumber": "(val)","reportClassCode": "(val)","reportCode": "(val)","frequencyCode": "(val)","frequencyBaseCode": "(val)","ospDistributionCode": "(val)","statusCode": "(val)","baseDate": "(val)","dueDate": "(val)","overdue": "(val)","activityDate": "(val)","comments": "(val)","preparerId": "(val)","preparerName": "(val)","sponsorCode": "(val)","sponsorAwardNumber": "(val)","title": "(val)","lastUpdateUser": "(val)","lastUpdateDate": "(val)","_primaryKey": "(val)"},
-              {"awardReportTrackingId": "(val)","awardReportTermId": "(val)","awardNumber": "(val)","piPersonId": "(val)","piRolodexId": "(val)","piName": "(val)","leadUnitNumber": "(val)","reportClassCode": "(val)","reportCode": "(val)","frequencyCode": "(val)","frequencyBaseCode": "(val)","ospDistributionCode": "(val)","statusCode": "(val)","baseDate": "(val)","dueDate": "(val)","overdue": "(val)","activityDate": "(val)","comments": "(val)","preparerId": "(val)","preparerName": "(val)","sponsorCode": "(val)","sponsorAwardNumber": "(val)","title": "(val)","lastUpdateUser": "(val)","lastUpdateDate": "(val)","_primaryKey": "(val)"}
+              {"awardReportTrackingId": "(val)","awardReportTermId": "(val)","awardNumber": "(val)","awardId": "(val)","piPersonId": "(val)","piRolodexId": "(val)","piName": "(val)","leadUnitNumber": "(val)","reportClassCode": "(val)","reportCode": "(val)","frequencyCode": "(val)","frequencyBaseCode": "(val)","ospDistributionCode": "(val)","statusCode": "(val)","baseDate": "(val)","dueDate": "(val)","activityDate": "(val)","comments": "(val)","preparerId": "(val)","preparerName": "(val)","sponsorCode": "(val)","sponsorAwardNumber": "(val)","title": "(val)","lastUpdateUser": "(val)","lastUpdateDate": "(val)","_primaryKey": "(val)"},
+              {"awardReportTrackingId": "(val)","awardReportTermId": "(val)","awardNumber": "(val)","awardId": "(val)","piPersonId": "(val)","piRolodexId": "(val)","piName": "(val)","leadUnitNumber": "(val)","reportClassCode": "(val)","reportCode": "(val)","frequencyCode": "(val)","frequencyBaseCode": "(val)","ospDistributionCode": "(val)","statusCode": "(val)","baseDate": "(val)","dueDate": "(val)","activityDate": "(val)","comments": "(val)","preparerId": "(val)","preparerName": "(val)","sponsorCode": "(val)","sponsorAwardNumber": "(val)","title": "(val)","lastUpdateUser": "(val)","lastUpdateDate": "(val)","_primaryKey": "(val)"}
             ]
 			
 + Response 201
@@ -202,8 +220,8 @@
     + Body
             
             [
-              {"awardReportTrackingId": "(val)","awardReportTermId": "(val)","awardNumber": "(val)","piPersonId": "(val)","piRolodexId": "(val)","piName": "(val)","leadUnitNumber": "(val)","reportClassCode": "(val)","reportCode": "(val)","frequencyCode": "(val)","frequencyBaseCode": "(val)","ospDistributionCode": "(val)","statusCode": "(val)","baseDate": "(val)","dueDate": "(val)","overdue": "(val)","activityDate": "(val)","comments": "(val)","preparerId": "(val)","preparerName": "(val)","sponsorCode": "(val)","sponsorAwardNumber": "(val)","title": "(val)","lastUpdateUser": "(val)","lastUpdateDate": "(val)","_primaryKey": "(val)"},
-              {"awardReportTrackingId": "(val)","awardReportTermId": "(val)","awardNumber": "(val)","piPersonId": "(val)","piRolodexId": "(val)","piName": "(val)","leadUnitNumber": "(val)","reportClassCode": "(val)","reportCode": "(val)","frequencyCode": "(val)","frequencyBaseCode": "(val)","ospDistributionCode": "(val)","statusCode": "(val)","baseDate": "(val)","dueDate": "(val)","overdue": "(val)","activityDate": "(val)","comments": "(val)","preparerId": "(val)","preparerName": "(val)","sponsorCode": "(val)","sponsorAwardNumber": "(val)","title": "(val)","lastUpdateUser": "(val)","lastUpdateDate": "(val)","_primaryKey": "(val)"}
+              {"awardReportTrackingId": "(val)","awardReportTermId": "(val)","awardNumber": "(val)","awardId": "(val)","piPersonId": "(val)","piRolodexId": "(val)","piName": "(val)","leadUnitNumber": "(val)","reportClassCode": "(val)","reportCode": "(val)","frequencyCode": "(val)","frequencyBaseCode": "(val)","ospDistributionCode": "(val)","statusCode": "(val)","baseDate": "(val)","dueDate": "(val)","activityDate": "(val)","comments": "(val)","preparerId": "(val)","preparerName": "(val)","sponsorCode": "(val)","sponsorAwardNumber": "(val)","title": "(val)","lastUpdateUser": "(val)","lastUpdateDate": "(val)","_primaryKey": "(val)"},
+              {"awardReportTrackingId": "(val)","awardReportTermId": "(val)","awardNumber": "(val)","awardId": "(val)","piPersonId": "(val)","piRolodexId": "(val)","piName": "(val)","leadUnitNumber": "(val)","reportClassCode": "(val)","reportCode": "(val)","frequencyCode": "(val)","frequencyBaseCode": "(val)","ospDistributionCode": "(val)","statusCode": "(val)","baseDate": "(val)","dueDate": "(val)","activityDate": "(val)","comments": "(val)","preparerId": "(val)","preparerName": "(val)","sponsorCode": "(val)","sponsorAwardNumber": "(val)","title": "(val)","lastUpdateUser": "(val)","lastUpdateDate": "(val)","_primaryKey": "(val)"}
             ]
 ### Delete Report Tracking by Key [DELETE /award/api/v1/report-tracking/(key)]
 	 
@@ -239,6 +257,7 @@
     + awardReportTrackingId (optional) - Award Report Tracking Id. Maximum length is 40.
     + awardReportTermId (optional) - Award Report Terms Id. Maximum length is 22.
     + awardNumber (optional) - Award ID. Maximum length is 12.
+    + awardId (optional) - 
     + piPersonId (optional) - 
     + piRolodexId (optional) - 
     + piName (optional) - Full Name. Maximum length is 90.
@@ -251,7 +270,6 @@
     + statusCode (optional) - Status. Maximum length is 22.
     + baseDate (optional) - Base Date. Maximum length is 10.
     + dueDate (optional) - Due Date. Maximum length is 10.
-    + overdue (optional) - Overdue. Maximum length is 22.
     + activityDate (optional) - Activity Date. Maximum length is 10.
     + comments (optional) - Comments. Maximum length is 200.
     + preparerId (optional) - Preparer. Maximum length is 40.

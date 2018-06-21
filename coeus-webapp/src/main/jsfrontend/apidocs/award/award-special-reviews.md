@@ -115,3 +115,53 @@
             Content-Type: text/markdown;charset=UTF-8
             Content-Disposition:attachment; filename="Award Special Reviews.md"
             transfer-encoding:chunked
+### Update Award Special Reviews [PUT /award/api/v1/award-special-reviews/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"awardSpecialReviewId": "(val)","specialReviewNumber": "(val)","specialReviewTypeCode": "(val)","approvalTypeCode": "(val)","protocolNumber": "(val)","applicationDate": "(val)","approvalDate": "(val)","expirationDate": "(val)","comments": "(val)","sequenceOwner.awardId": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+
+### Update Multiple Award Special Reviews [PUT /award/api/v1/award-special-reviews/]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            [
+              {"awardSpecialReviewId": "(val)","specialReviewNumber": "(val)","specialReviewTypeCode": "(val)","approvalTypeCode": "(val)","protocolNumber": "(val)","applicationDate": "(val)","approvalDate": "(val)","expirationDate": "(val)","comments": "(val)","sequenceOwner.awardId": "(val)","_primaryKey": "(val)"},
+              {"awardSpecialReviewId": "(val)","specialReviewNumber": "(val)","specialReviewTypeCode": "(val)","approvalTypeCode": "(val)","protocolNumber": "(val)","applicationDate": "(val)","approvalDate": "(val)","expirationDate": "(val)","comments": "(val)","sequenceOwner.awardId": "(val)","_primaryKey": "(val)"}
+            ]
+			
++ Response 204
+### Update Specific Attributes Award Special Reviews [PATCH /award/api/v1/award-special-reviews/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"awardSpecialReviewId": "(val)","specialReviewNumber": "(val)","specialReviewTypeCode": "(val)","approvalTypeCode": "(val)","protocolNumber": "(val)","applicationDate": "(val)","approvalDate": "(val)","expirationDate": "(val)","comments": "(val)","sequenceOwner.awardId": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"awardSpecialReviewId": "(val)","specialReviewNumber": "(val)","specialReviewTypeCode": "(val)","approvalTypeCode": "(val)","protocolNumber": "(val)","applicationDate": "(val)","approvalDate": "(val)","expirationDate": "(val)","comments": "(val)","sequenceOwner.awardId": "(val)","_primaryKey": "(val)"}

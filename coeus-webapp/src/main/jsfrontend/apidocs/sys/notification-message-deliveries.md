@@ -142,6 +142,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Notification Message Deliveries [PATCH /research-sys/api/v1/notification-message-deliveries/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","messageDeliveryStatus": "(val)","userRecipientId": "(val)","deliverySystemId": "(val)","lockedDateValue": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","messageDeliveryStatus": "(val)","userRecipientId": "(val)","deliverySystemId": "(val)","lockedDateValue": "(val)","_primaryKey": "(val)"}
 ### Insert Notification Message Deliveries [POST /research-sys/api/v1/notification-message-deliveries/]
 
 + Request

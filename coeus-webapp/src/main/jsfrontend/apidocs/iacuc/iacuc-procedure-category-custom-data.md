@@ -148,6 +148,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Iacuc Procedure Category Custom Data [PATCH /iacuc/api/v1/iacuc-procedure-category-custom-data/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","procedureCategoryCode": "(val)","dataLength": "(val)","dataTypeCode": "(val)","defaultValue": "(val)","label": "(val)","lookupClass": "(val)","lookupReturn": "(val)","name": "(val)","active": "(val)","sortId": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","procedureCategoryCode": "(val)","dataLength": "(val)","dataTypeCode": "(val)","defaultValue": "(val)","label": "(val)","lookupClass": "(val)","lookupReturn": "(val)","name": "(val)","active": "(val)","sortId": "(val)","_primaryKey": "(val)"}
 ### Insert Iacuc Procedure Category Custom Data [POST /iacuc/api/v1/iacuc-procedure-category-custom-data/]
 
 + Request

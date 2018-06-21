@@ -142,6 +142,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Kim Types [PATCH /research-sys/api/v1/kim-types/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","serviceName": "(val)","namespaceCode": "(val)","name": "(val)","active": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","serviceName": "(val)","namespaceCode": "(val)","name": "(val)","active": "(val)","_primaryKey": "(val)"}
 ### Insert Kim Types [POST /research-sys/api/v1/kim-types/]
 
 + Request

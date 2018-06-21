@@ -142,6 +142,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Award Template Comments [PATCH /award/api/v1/award-template-comments/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"templateCommentsId": "(val)","commentTypeCode": "(val)","checklistPrintFlag": "(val)","comments": "(val)","template.templateCode": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"templateCommentsId": "(val)","commentTypeCode": "(val)","checklistPrintFlag": "(val)","comments": "(val)","template.templateCode": "(val)","_primaryKey": "(val)"}
 ### Insert Award Template Comments [POST /award/api/v1/award-template-comments/]
 
 + Request

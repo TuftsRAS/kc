@@ -144,6 +144,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Functions [PATCH /research-sys/api/v1/functions/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","namespace": "(val)","name": "(val)","description": "(val)","returnType": "(val)","typeId": "(val)","active": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","namespace": "(val)","name": "(val)","description": "(val)","returnType": "(val)","typeId": "(val)","active": "(val)","_primaryKey": "(val)"}
 ### Insert Functions [POST /research-sys/api/v1/functions/]
 
 + Request

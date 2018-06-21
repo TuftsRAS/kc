@@ -16,7 +16,7 @@
 
     + Body
     
-            {"awardPaymentScheduleId": "(val)","awardNumber": "(val)","sequenceNumber": "(val)","dueDate": "(val)","amount": "(val)","submitDate": "(val)","submittedBy": "(val)","invoiceNumber": "(val)","statusDescription": "(val)","status": "(val)","lastUpdateUser": "(val)","lastUpdateTimestamp": "(val)","overdue": "(val)","reportStatusCode": "(val)","submittedByPersonId": "(val)","awardReportTermDescription": "(val)","_primaryKey": "(val)"}
+            {"awardPaymentScheduleId": "(val)","awardNumber": "(val)","sequenceNumber": "(val)","awardReportTermId": "(val)","dueDate": "(val)","amount": "(val)","submitDate": "(val)","submittedBy": "(val)","invoiceNumber": "(val)","statusDescription": "(val)","status": "(val)","lastUpdateUser": "(val)","lastUpdateTimestamp": "(val)","overdue": "(val)","reportStatusCode": "(val)","submittedByPersonId": "(val)","awardReportTermDescription": "(val)","_primaryKey": "(val)"}
 
 ### Get All Award Payment Schedules [GET /award/api/v1/award-payment-schedules/]
 	 
@@ -35,8 +35,8 @@
     + Body
     
             [
-              {"awardPaymentScheduleId": "(val)","awardNumber": "(val)","sequenceNumber": "(val)","dueDate": "(val)","amount": "(val)","submitDate": "(val)","submittedBy": "(val)","invoiceNumber": "(val)","statusDescription": "(val)","status": "(val)","lastUpdateUser": "(val)","lastUpdateTimestamp": "(val)","overdue": "(val)","reportStatusCode": "(val)","submittedByPersonId": "(val)","awardReportTermDescription": "(val)","_primaryKey": "(val)"},
-              {"awardPaymentScheduleId": "(val)","awardNumber": "(val)","sequenceNumber": "(val)","dueDate": "(val)","amount": "(val)","submitDate": "(val)","submittedBy": "(val)","invoiceNumber": "(val)","statusDescription": "(val)","status": "(val)","lastUpdateUser": "(val)","lastUpdateTimestamp": "(val)","overdue": "(val)","reportStatusCode": "(val)","submittedByPersonId": "(val)","awardReportTermDescription": "(val)","_primaryKey": "(val)"}
+              {"awardPaymentScheduleId": "(val)","awardNumber": "(val)","sequenceNumber": "(val)","awardReportTermId": "(val)","dueDate": "(val)","amount": "(val)","submitDate": "(val)","submittedBy": "(val)","invoiceNumber": "(val)","statusDescription": "(val)","status": "(val)","lastUpdateUser": "(val)","lastUpdateTimestamp": "(val)","overdue": "(val)","reportStatusCode": "(val)","submittedByPersonId": "(val)","awardReportTermDescription": "(val)","_primaryKey": "(val)"},
+              {"awardPaymentScheduleId": "(val)","awardNumber": "(val)","sequenceNumber": "(val)","awardReportTermId": "(val)","dueDate": "(val)","amount": "(val)","submitDate": "(val)","submittedBy": "(val)","invoiceNumber": "(val)","statusDescription": "(val)","status": "(val)","lastUpdateUser": "(val)","lastUpdateTimestamp": "(val)","overdue": "(val)","reportStatusCode": "(val)","submittedByPersonId": "(val)","awardReportTermDescription": "(val)","_primaryKey": "(val)"}
             ]
 
 ### Get All Award Payment Schedules with Filtering [GET /award/api/v1/award-payment-schedules/]
@@ -46,6 +46,7 @@
     + awardPaymentScheduleId (optional) - Award Payment Schedule Id. Maximum length is 22.
     + awardNumber (optional) - Award ID. Maximum length is 12.
     + sequenceNumber (optional) - Sequence Number. Maximum length is 22.
+    + awardReportTermId (optional) - 
     + dueDate (optional) - Due Date. Maximum length is 10.
     + amount (optional) - Amount. Maximum length is 22.
     + submitDate (optional) - Activity Date. Maximum length is 10.
@@ -76,8 +77,8 @@
     + Body
     
             [
-              {"awardPaymentScheduleId": "(val)","awardNumber": "(val)","sequenceNumber": "(val)","dueDate": "(val)","amount": "(val)","submitDate": "(val)","submittedBy": "(val)","invoiceNumber": "(val)","statusDescription": "(val)","status": "(val)","lastUpdateUser": "(val)","lastUpdateTimestamp": "(val)","overdue": "(val)","reportStatusCode": "(val)","submittedByPersonId": "(val)","awardReportTermDescription": "(val)","_primaryKey": "(val)"},
-              {"awardPaymentScheduleId": "(val)","awardNumber": "(val)","sequenceNumber": "(val)","dueDate": "(val)","amount": "(val)","submitDate": "(val)","submittedBy": "(val)","invoiceNumber": "(val)","statusDescription": "(val)","status": "(val)","lastUpdateUser": "(val)","lastUpdateTimestamp": "(val)","overdue": "(val)","reportStatusCode": "(val)","submittedByPersonId": "(val)","awardReportTermDescription": "(val)","_primaryKey": "(val)"}
+              {"awardPaymentScheduleId": "(val)","awardNumber": "(val)","sequenceNumber": "(val)","awardReportTermId": "(val)","dueDate": "(val)","amount": "(val)","submitDate": "(val)","submittedBy": "(val)","invoiceNumber": "(val)","statusDescription": "(val)","status": "(val)","lastUpdateUser": "(val)","lastUpdateTimestamp": "(val)","overdue": "(val)","reportStatusCode": "(val)","submittedByPersonId": "(val)","awardReportTermDescription": "(val)","_primaryKey": "(val)"},
+              {"awardPaymentScheduleId": "(val)","awardNumber": "(val)","sequenceNumber": "(val)","awardReportTermId": "(val)","dueDate": "(val)","amount": "(val)","submitDate": "(val)","submittedBy": "(val)","invoiceNumber": "(val)","statusDescription": "(val)","status": "(val)","lastUpdateUser": "(val)","lastUpdateTimestamp": "(val)","overdue": "(val)","reportStatusCode": "(val)","submittedByPersonId": "(val)","awardReportTermDescription": "(val)","_primaryKey": "(val)"}
             ]
 			
 ### Get Schema for Award Payment Schedules [GET /award/api/v1/award-payment-schedules/]
@@ -100,7 +101,7 @@
 
     + Body
     
-            {"columns":["awardPaymentScheduleId","awardNumber","sequenceNumber","dueDate","amount","submitDate","submittedBy","invoiceNumber","statusDescription","status","lastUpdateUser","lastUpdateTimestamp","overdue","reportStatusCode","submittedByPersonId","awardReportTermDescription"],"primaryKey":"awardPaymentScheduleId"}
+            {"columns":["awardPaymentScheduleId","awardNumber","sequenceNumber","awardReportTermId","dueDate","amount","submitDate","submittedBy","invoiceNumber","statusDescription","status","lastUpdateUser","lastUpdateTimestamp","overdue","reportStatusCode","submittedByPersonId","awardReportTermDescription"],"primaryKey":"awardPaymentScheduleId"}
 		
 ### Get Blueprint API specification for Award Payment Schedules [GET /award/api/v1/award-payment-schedules/]
 	 

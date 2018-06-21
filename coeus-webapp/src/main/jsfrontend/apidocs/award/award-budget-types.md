@@ -139,6 +139,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Award Budget Types [PATCH /award/api/v1/award-budget-types/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"awardBudgetTypeCode": "(val)","description": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"awardBudgetTypeCode": "(val)","description": "(val)","_primaryKey": "(val)"}
 ### Insert Award Budget Types [POST /award/api/v1/award-budget-types/]
 
 + Request

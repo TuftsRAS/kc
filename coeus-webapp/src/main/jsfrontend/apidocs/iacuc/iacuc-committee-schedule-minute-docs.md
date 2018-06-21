@@ -144,6 +144,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Iacuc Committee Schedule Minute Docs [PATCH /iacuc/api/v1/iacuc-committee-schedule-minute-docs/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"commScheduleMinuteDocId": "(val)","scheduleIdFk": "(val)","minuteNumber": "(val)","minuteName": "(val)","pdfStore": "(val)","createTimestamp": "(val)","createUser": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"commScheduleMinuteDocId": "(val)","scheduleIdFk": "(val)","minuteNumber": "(val)","minuteName": "(val)","pdfStore": "(val)","createTimestamp": "(val)","createUser": "(val)","_primaryKey": "(val)"}
 ### Insert Iacuc Committee Schedule Minute Docs [POST /iacuc/api/v1/iacuc-committee-schedule-minute-docs/]
 
 + Request

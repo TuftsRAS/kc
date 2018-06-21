@@ -142,6 +142,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Iacuc Protocol Research Areas [PATCH /iacuc/api/v1/iacuc-protocol-research-areas/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","protocolId": "(val)","protocolNumber": "(val)","sequenceNumber": "(val)","researchAreaCode": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","protocolId": "(val)","protocolNumber": "(val)","sequenceNumber": "(val)","researchAreaCode": "(val)","_primaryKey": "(val)"}
 ### Insert Iacuc Protocol Research Areas [POST /iacuc/api/v1/iacuc-protocol-research-areas/]
 
 + Request

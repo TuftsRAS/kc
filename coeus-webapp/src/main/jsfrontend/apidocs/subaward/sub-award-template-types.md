@@ -139,6 +139,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Sub Award Template Types [PATCH /subaward/api/v1/sub-award-template-types/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"templateTypeCode": "(val)","description": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"templateTypeCode": "(val)","description": "(val)","_primaryKey": "(val)"}
 ### Insert Sub Award Template Types [POST /subaward/api/v1/sub-award-template-types/]
 
 + Request

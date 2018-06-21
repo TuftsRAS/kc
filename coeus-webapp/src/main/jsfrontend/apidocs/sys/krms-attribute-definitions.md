@@ -144,6 +144,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Krms Attribute Definitions [PATCH /research-sys/api/v1/krms-attribute-definitions/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","name": "(val)","namespace": "(val)","label": "(val)","description": "(val)","active": "(val)","componentName": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","name": "(val)","namespace": "(val)","label": "(val)","description": "(val)","active": "(val)","componentName": "(val)","_primaryKey": "(val)"}
 ### Insert Krms Attribute Definitions [POST /research-sys/api/v1/krms-attribute-definitions/]
 
 + Request

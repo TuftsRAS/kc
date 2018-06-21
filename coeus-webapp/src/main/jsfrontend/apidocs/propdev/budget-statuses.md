@@ -139,6 +139,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Budget Statuses [PATCH /propdev/api/v1/budget-statuses/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"budgetStatusCode": "(val)","description": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"budgetStatusCode": "(val)","description": "(val)","_primaryKey": "(val)"}
 ### Insert Budget Statuses [POST /propdev/api/v1/budget-statuses/]
 
 + Request

@@ -140,6 +140,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Committee Research Areas [PATCH /irb/api/v1/committee-research-areas/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","committeeIdFk": "(val)","researchAreaCode": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","committeeIdFk": "(val)","researchAreaCode": "(val)","_primaryKey": "(val)"}
 ### Insert Committee Research Areas [POST /irb/api/v1/committee-research-areas/]
 
 + Request

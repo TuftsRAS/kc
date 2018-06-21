@@ -139,6 +139,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Exempt Studies Checklist Items [PATCH /irb/api/v1/exempt-studies-checklist-items/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"exemptStudiesCheckListCode": "(val)","description": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"exemptStudiesCheckListCode": "(val)","description": "(val)","_primaryKey": "(val)"}
 ### Insert Exempt Studies Checklist Items [POST /irb/api/v1/exempt-studies-checklist-items/]
 
 + Request

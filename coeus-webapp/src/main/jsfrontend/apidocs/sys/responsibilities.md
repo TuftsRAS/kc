@@ -143,6 +143,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Responsibilities [PATCH /research-sys/api/v1/responsibilities/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","namespaceCode": "(val)","name": "(val)","description": "(val)","templateId": "(val)","active": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","namespaceCode": "(val)","name": "(val)","description": "(val)","templateId": "(val)","active": "(val)","_primaryKey": "(val)"}
 ### Insert Responsibilities [POST /research-sys/api/v1/responsibilities/]
 
 + Request

@@ -151,6 +151,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Person Document Names [PATCH /research-sys/api/v1/person-document-names/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"entityNameId": "(val)","nameCode": "(val)","firstName": "(val)","middleName": "(val)","lastName": "(val)","namePrefix": "(val)","nameTitle": "(val)","nameSuffix": "(val)","noteMessage": "(val)","nameChangedDate": "(val)","dflt": "(val)","edit": "(val)","documentNumber": "(val)","active": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"entityNameId": "(val)","nameCode": "(val)","firstName": "(val)","middleName": "(val)","lastName": "(val)","namePrefix": "(val)","nameTitle": "(val)","nameSuffix": "(val)","noteMessage": "(val)","nameChangedDate": "(val)","dflt": "(val)","edit": "(val)","documentNumber": "(val)","active": "(val)","_primaryKey": "(val)"}
 ### Insert Person Document Names [POST /research-sys/api/v1/person-document-names/]
 
 + Request

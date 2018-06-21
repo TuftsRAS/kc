@@ -144,6 +144,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Protocol Recused Votes [PATCH /research-common/api/v1/protocol-recused-votes/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"protocolVoteRecusedId": "(val)","protocolIdFk": "(val)","submissionIdFk": "(val)","personId": "(val)","rolodexId": "(val)","nonEmployeeFlag": "(val)","comments": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"protocolVoteRecusedId": "(val)","protocolIdFk": "(val)","submissionIdFk": "(val)","personId": "(val)","rolodexId": "(val)","nonEmployeeFlag": "(val)","comments": "(val)","_primaryKey": "(val)"}
 ### Insert Protocol Recused Votes [POST /research-common/api/v1/protocol-recused-votes/]
 
 + Request

@@ -143,6 +143,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Agenda Items [PATCH /research-sys/api/v1/agenda-items/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","agendaId": "(val)","subAgendaId": "(val)","whenTrueId": "(val)","whenFalseId": "(val)","alwaysId": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","agendaId": "(val)","subAgendaId": "(val)","whenTrueId": "(val)","whenFalseId": "(val)","alwaysId": "(val)","_primaryKey": "(val)"}
 ### Insert Agenda Items [POST /research-sys/api/v1/agenda-items/]
 
 + Request

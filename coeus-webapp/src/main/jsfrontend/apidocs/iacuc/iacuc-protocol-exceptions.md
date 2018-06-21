@@ -146,6 +146,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Iacuc Protocol Exceptions [PATCH /iacuc/api/v1/iacuc-protocol-exceptions/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"iacucProtocolExceptionId": "(val)","speciesCode": "(val)","protocolId": "(val)","protocolNumber": "(val)","sequenceNumber": "(val)","exceptionId": "(val)","exceptionCategoryCode": "(val)","exceptionDescription": "(val)","exceptionCount": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"iacucProtocolExceptionId": "(val)","speciesCode": "(val)","protocolId": "(val)","protocolNumber": "(val)","sequenceNumber": "(val)","exceptionId": "(val)","exceptionCategoryCode": "(val)","exceptionDescription": "(val)","exceptionCount": "(val)","_primaryKey": "(val)"}
 ### Insert Iacuc Protocol Exceptions [POST /iacuc/api/v1/iacuc-protocol-exceptions/]
 
 + Request

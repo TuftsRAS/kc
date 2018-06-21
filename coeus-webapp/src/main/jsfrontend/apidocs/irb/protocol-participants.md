@@ -143,6 +143,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Protocol Participants [PATCH /irb/api/v1/protocol-participants/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"protocolParticipantId": "(val)","protocolId": "(val)","protocolNumber": "(val)","sequenceNumber": "(val)","participantTypeCode": "(val)","participantCount": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"protocolParticipantId": "(val)","protocolId": "(val)","protocolNumber": "(val)","sequenceNumber": "(val)","participantTypeCode": "(val)","participantCount": "(val)","_primaryKey": "(val)"}
 ### Insert Protocol Participants [POST /irb/api/v1/protocol-participants/]
 
 + Request

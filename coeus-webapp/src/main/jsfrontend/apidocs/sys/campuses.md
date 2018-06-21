@@ -142,6 +142,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Campuses [PATCH /research-sys/api/v1/campuses/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"code": "(val)","name": "(val)","shortName": "(val)","campusTypeCode": "(val)","active": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"code": "(val)","name": "(val)","shortName": "(val)","campusTypeCode": "(val)","active": "(val)","_primaryKey": "(val)"}
 ### Insert Campuses [POST /research-sys/api/v1/campuses/]
 
 + Request

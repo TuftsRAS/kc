@@ -140,6 +140,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Valid Award Basis Payments [PATCH /award/api/v1/valid-award-basis-payments/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"validAwardBasisPaymentId": "(val)","basisOfPaymentCode": "(val)","awardTypeCode": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"validAwardBasisPaymentId": "(val)","basisOfPaymentCode": "(val)","awardTypeCode": "(val)","_primaryKey": "(val)"}
 ### Insert Valid Award Basis Payments [POST /award/api/v1/valid-award-basis-payments/]
 
 + Request

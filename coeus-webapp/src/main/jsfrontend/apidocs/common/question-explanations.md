@@ -141,6 +141,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Question Explanations [PATCH /research-common/api/v1/question-explanations/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","questionId": "(val)","explanationType": "(val)","explanation": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","questionId": "(val)","explanationType": "(val)","explanation": "(val)","_primaryKey": "(val)"}
 ### Insert Question Explanations [POST /research-common/api/v1/question-explanations/]
 
 + Request

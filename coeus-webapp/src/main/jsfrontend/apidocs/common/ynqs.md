@@ -147,6 +147,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Ynqs [PATCH /research-common/api/v1/ynqs/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"questionId": "(val)","dateRequiredFor": "(val)","description": "(val)","effectiveDate": "(val)","explanationRequiredFor": "(val)","groupName": "(val)","noOfAnswers": "(val)","questionType": "(val)","status": "(val)","sortId": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"questionId": "(val)","dateRequiredFor": "(val)","description": "(val)","effectiveDate": "(val)","explanationRequiredFor": "(val)","groupName": "(val)","noOfAnswers": "(val)","questionType": "(val)","status": "(val)","sortId": "(val)","_primaryKey": "(val)"}
 ### Insert Ynqs [POST /research-common/api/v1/ynqs/]
 
 + Request

@@ -146,6 +146,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Unit Administrator Person Mass Changes [PATCH /research-common/api/v1/unit-administrator-person-mass-changes/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"unitAdministratorPersonMassChangeId": "(val)","personMassChangeId": "(val)","administrativeOfficer": "(val)","ospAdministrator": "(val)","unitHead": "(val)","deanVP": "(val)","otherIndividualToNotify": "(val)","administrativeContact": "(val)","financialContact": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"unitAdministratorPersonMassChangeId": "(val)","personMassChangeId": "(val)","administrativeOfficer": "(val)","ospAdministrator": "(val)","unitHead": "(val)","deanVP": "(val)","otherIndividualToNotify": "(val)","administrativeContact": "(val)","financialContact": "(val)","_primaryKey": "(val)"}
 ### Insert Unit Administrator Person Mass Changes [POST /research-common/api/v1/unit-administrator-person-mass-changes/]
 
 + Request

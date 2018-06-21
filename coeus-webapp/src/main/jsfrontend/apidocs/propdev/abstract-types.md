@@ -139,6 +139,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Abstract Types [PATCH /propdev/api/v1/abstract-types/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"code": "(val)","description": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"code": "(val)","description": "(val)","_primaryKey": "(val)"}
 ### Insert Abstract Types [POST /propdev/api/v1/abstract-types/]
 
 + Request

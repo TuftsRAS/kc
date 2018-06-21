@@ -141,6 +141,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Report Classes [PATCH /award/api/v1/report-classes/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"reportClassCode": "(val)","description": "(val)","generateReportRequirements": "(val)","active": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"reportClassCode": "(val)","description": "(val)","generateReportRequirements": "(val)","active": "(val)","_primaryKey": "(val)"}
 ### Insert Report Classes [POST /award/api/v1/report-classes/]
 
 + Request

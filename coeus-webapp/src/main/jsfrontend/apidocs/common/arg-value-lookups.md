@@ -141,6 +141,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Arg Value Lookups [PATCH /research-common/api/v1/arg-value-lookups/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","argumentName": "(val)","value": "(val)","description": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","argumentName": "(val)","value": "(val)","description": "(val)","_primaryKey": "(val)"}
 ### Insert Arg Value Lookups [POST /research-common/api/v1/arg-value-lookups/]
 
 + Request

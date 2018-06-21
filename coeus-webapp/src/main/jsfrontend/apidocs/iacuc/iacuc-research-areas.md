@@ -142,6 +142,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Iacuc Research Areas [PATCH /iacuc/api/v1/iacuc-research-areas/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"researchAreaCode": "(val)","description": "(val)","hasChildrenFlag": "(val)","parentResearchAreaCode": "(val)","active": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"researchAreaCode": "(val)","description": "(val)","hasChildrenFlag": "(val)","parentResearchAreaCode": "(val)","active": "(val)","_primaryKey": "(val)"}
 ### Insert Iacuc Research Areas [POST /iacuc/api/v1/iacuc-research-areas/]
 
 + Request

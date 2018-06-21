@@ -149,6 +149,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Negotiation Unassociated Details [PATCH /negotiation/api/v1/negotiation-unassociated-details/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"negotiationUnassociatedDetailId": "(val)","negotiationId": "(val)","title": "(val)","piPersonId": "(val)","piRolodexId": "(val)","leadUnitNumber": "(val)","sponsorCode": "(val)","piName": "(val)","primeSponsorCode": "(val)","sponsorAwardNumber": "(val)","contactAdminPersonId": "(val)","subAwardOrganizationId": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"negotiationUnassociatedDetailId": "(val)","negotiationId": "(val)","title": "(val)","piPersonId": "(val)","piRolodexId": "(val)","leadUnitNumber": "(val)","sponsorCode": "(val)","piName": "(val)","primeSponsorCode": "(val)","sponsorAwardNumber": "(val)","contactAdminPersonId": "(val)","subAwardOrganizationId": "(val)","_primaryKey": "(val)"}
 ### Insert Negotiation Unassociated Details [POST /negotiation/api/v1/negotiation-unassociated-details/]
 
 + Request

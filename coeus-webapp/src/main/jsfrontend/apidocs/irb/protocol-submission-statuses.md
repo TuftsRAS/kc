@@ -139,6 +139,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Protocol Submission Statuses [PATCH /irb/api/v1/protocol-submission-statuses/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"protocolSubmissionStatusCode": "(val)","description": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"protocolSubmissionStatusCode": "(val)","description": "(val)","_primaryKey": "(val)"}
 ### Insert Protocol Submission Statuses [POST /irb/api/v1/protocol-submission-statuses/]
 
 + Request

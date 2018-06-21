@@ -142,6 +142,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Rate Class Base Inclusions [PATCH /research-common/api/v1/rate-class-base-inclusions/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"rateClassBaseInclusionId": "(val)","rateClassCode": "(val)","rateTypeCode": "(val)","rateClassCodeIncl": "(val)","rateTypeCodeIncl": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"rateClassBaseInclusionId": "(val)","rateClassCode": "(val)","rateTypeCode": "(val)","rateClassCodeIncl": "(val)","rateTypeCodeIncl": "(val)","_primaryKey": "(val)"}
 ### Insert Rate Class Base Inclusions [POST /research-common/api/v1/rate-class-base-inclusions/]
 
 + Request

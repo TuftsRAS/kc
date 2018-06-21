@@ -141,6 +141,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Cfdas [PATCH /research-common/api/v1/cfdas/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"cfdaNumber": "(val)","cfdaProgramTitleName": "(val)","active": "(val)","cfdaMaintenanceTypeId": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"cfdaNumber": "(val)","cfdaProgramTitleName": "(val)","active": "(val)","cfdaMaintenanceTypeId": "(val)","_primaryKey": "(val)"}
 ### Insert Cfdas [POST /research-common/api/v1/cfdas/]
 
 + Request

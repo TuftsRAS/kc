@@ -141,6 +141,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes States [PATCH /research-sys/api/v1/states/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"code": "(val)","countryCode": "(val)","name": "(val)","active": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"code": "(val)","countryCode": "(val)","name": "(val)","active": "(val)","_primaryKey": "(val)"}
 ### Insert States [POST /research-sys/api/v1/states/]
 
 + Request

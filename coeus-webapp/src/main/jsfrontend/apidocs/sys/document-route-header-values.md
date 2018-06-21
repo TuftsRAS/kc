@@ -153,6 +153,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Document Route Header Values [PATCH /research-sys/api/v1/document-route-header-values/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"documentId": "(val)","documentTypeId": "(val)","docRouteStatus": "(val)","docRouteLevel": "(val)","dateModified": "(val)","createDate": "(val)","approvedDate": "(val)","finalizedDate": "(val)","docTitle": "(val)","appDocId": "(val)","docVersion": "(val)","initiatorWorkflowId": "(val)","routedByUserWorkflowId": "(val)","routeStatusDate": "(val)","appDocStatus": "(val)","appDocStatusDate": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"documentId": "(val)","documentTypeId": "(val)","docRouteStatus": "(val)","docRouteLevel": "(val)","dateModified": "(val)","createDate": "(val)","approvedDate": "(val)","finalizedDate": "(val)","docTitle": "(val)","appDocId": "(val)","docVersion": "(val)","initiatorWorkflowId": "(val)","routedByUserWorkflowId": "(val)","routeStatusDate": "(val)","appDocStatus": "(val)","appDocStatusDate": "(val)","_primaryKey": "(val)"}
 ### Insert Document Route Header Values [POST /research-sys/api/v1/document-route-header-values/]
 
 + Request

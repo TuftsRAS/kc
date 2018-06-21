@@ -146,6 +146,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Person Document Citizenships [PATCH /research-sys/api/v1/person-document-citizenships/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"entityCitizenshipId": "(val)","entityId": "(val)","countryCode": "(val)","citizenshipStatusCode": "(val)","startDate": "(val)","endDate": "(val)","edit": "(val)","documentNumber": "(val)","active": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"entityCitizenshipId": "(val)","entityId": "(val)","countryCode": "(val)","citizenshipStatusCode": "(val)","startDate": "(val)","endDate": "(val)","edit": "(val)","documentNumber": "(val)","active": "(val)","_primaryKey": "(val)"}
 ### Insert Person Document Citizenships [POST /research-sys/api/v1/person-document-citizenships/]
 
 + Request

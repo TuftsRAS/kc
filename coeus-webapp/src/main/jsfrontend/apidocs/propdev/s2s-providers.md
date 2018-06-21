@@ -141,6 +141,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes S2s Providers [PATCH /propdev/api/v1/s2s-providers/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"code": "(val)","description": "(val)","connectorServiceName": "(val)","active": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"code": "(val)","description": "(val)","connectorServiceName": "(val)","active": "(val)","_primaryKey": "(val)"}
 ### Insert S2s Providers [POST /propdev/api/v1/s2s-providers/]
 
 + Request

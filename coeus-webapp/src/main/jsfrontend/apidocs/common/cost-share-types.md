@@ -16,7 +16,7 @@
 
     + Body
     
-            {"costShareTypeCode": "(val)","description": "(val)","_primaryKey": "(val)"}
+            {"costShareTypeCode": "(val)","description": "(val)","active": "(val)","_primaryKey": "(val)"}
 
 ### Get All Cost Share Types [GET /research-common/api/v1/cost-share-types/]
 	 
@@ -35,8 +35,8 @@
     + Body
     
             [
-              {"costShareTypeCode": "(val)","description": "(val)","_primaryKey": "(val)"},
-              {"costShareTypeCode": "(val)","description": "(val)","_primaryKey": "(val)"}
+              {"costShareTypeCode": "(val)","description": "(val)","active": "(val)","_primaryKey": "(val)"},
+              {"costShareTypeCode": "(val)","description": "(val)","active": "(val)","_primaryKey": "(val)"}
             ]
 
 ### Get All Cost Share Types with Filtering [GET /research-common/api/v1/cost-share-types/]
@@ -45,6 +45,7 @@
 
     + costShareTypeCode (optional) - Cost Share Type Code. Maximum length is 3.
     + description (optional) - Description. Maximum length is 200.
+    + active (optional) - Active. Maximum length is 1.
 
             
 + Request
@@ -62,8 +63,8 @@
     + Body
     
             [
-              {"costShareTypeCode": "(val)","description": "(val)","_primaryKey": "(val)"},
-              {"costShareTypeCode": "(val)","description": "(val)","_primaryKey": "(val)"}
+              {"costShareTypeCode": "(val)","description": "(val)","active": "(val)","_primaryKey": "(val)"},
+              {"costShareTypeCode": "(val)","description": "(val)","active": "(val)","_primaryKey": "(val)"}
             ]
 			
 ### Get Schema for Cost Share Types [GET /research-common/api/v1/cost-share-types/]
@@ -86,7 +87,7 @@
 
     + Body
     
-            {"columns":["costShareTypeCode","description"],"primaryKey":"costShareTypeCode"}
+            {"columns":["costShareTypeCode","description","active"],"primaryKey":"costShareTypeCode"}
 		
 ### Get Blueprint API specification for Cost Share Types [GET /research-common/api/v1/cost-share-types/]
 	 
@@ -118,7 +119,7 @@
 
     + Body
     
-            {"costShareTypeCode": "(val)","description": "(val)","_primaryKey": "(val)"}
+            {"costShareTypeCode": "(val)","description": "(val)","active": "(val)","_primaryKey": "(val)"}
 			
 + Response 204
 
@@ -134,11 +135,29 @@
     + Body
     
             [
-              {"costShareTypeCode": "(val)","description": "(val)","_primaryKey": "(val)"},
-              {"costShareTypeCode": "(val)","description": "(val)","_primaryKey": "(val)"}
+              {"costShareTypeCode": "(val)","description": "(val)","active": "(val)","_primaryKey": "(val)"},
+              {"costShareTypeCode": "(val)","description": "(val)","active": "(val)","_primaryKey": "(val)"}
             ]
 			
 + Response 204
+### Update Specific Attributes Cost Share Types [PATCH /research-common/api/v1/cost-share-types/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"costShareTypeCode": "(val)","description": "(val)","active": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"costShareTypeCode": "(val)","description": "(val)","active": "(val)","_primaryKey": "(val)"}
 ### Insert Cost Share Types [POST /research-common/api/v1/cost-share-types/]
 
 + Request
@@ -150,13 +169,13 @@
 
     + Body
     
-            {"costShareTypeCode": "(val)","description": "(val)","_primaryKey": "(val)"}
+            {"costShareTypeCode": "(val)","description": "(val)","active": "(val)","_primaryKey": "(val)"}
 			
 + Response 201
     
     + Body
             
-            {"costShareTypeCode": "(val)","description": "(val)","_primaryKey": "(val)"}
+            {"costShareTypeCode": "(val)","description": "(val)","active": "(val)","_primaryKey": "(val)"}
             
 ### Insert Multiple Cost Share Types [POST /research-common/api/v1/cost-share-types/]
 
@@ -170,8 +189,8 @@
     + Body
     
             [
-              {"costShareTypeCode": "(val)","description": "(val)","_primaryKey": "(val)"},
-              {"costShareTypeCode": "(val)","description": "(val)","_primaryKey": "(val)"}
+              {"costShareTypeCode": "(val)","description": "(val)","active": "(val)","_primaryKey": "(val)"},
+              {"costShareTypeCode": "(val)","description": "(val)","active": "(val)","_primaryKey": "(val)"}
             ]
 			
 + Response 201
@@ -179,8 +198,8 @@
     + Body
             
             [
-              {"costShareTypeCode": "(val)","description": "(val)","_primaryKey": "(val)"},
-              {"costShareTypeCode": "(val)","description": "(val)","_primaryKey": "(val)"}
+              {"costShareTypeCode": "(val)","description": "(val)","active": "(val)","_primaryKey": "(val)"},
+              {"costShareTypeCode": "(val)","description": "(val)","active": "(val)","_primaryKey": "(val)"}
             ]
 ### Delete Cost Share Types by Key [DELETE /research-common/api/v1/cost-share-types/(key)]
 	 
@@ -215,6 +234,7 @@
     + _allowMulti (boolean, required) - flag to allow multiple resources to be deleted in one operation
     + costShareTypeCode (optional) - Cost Share Type Code. Maximum length is 3.
     + description (optional) - Description. Maximum length is 200.
+    + active (optional) - Active. Maximum length is 1.
 
       
 + Request

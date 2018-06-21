@@ -141,6 +141,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Frequency Bases [PATCH /award/api/v1/frequency-bases/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"frequencyBaseCode": "(val)","description": "(val)","regenerationTypeName": "(val)","active": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"frequencyBaseCode": "(val)","description": "(val)","regenerationTypeName": "(val)","active": "(val)","_primaryKey": "(val)"}
 ### Insert Frequency Bases [POST /award/api/v1/frequency-bases/]
 
 + Request

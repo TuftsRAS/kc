@@ -140,6 +140,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Rate Types [PATCH /research-common/api/v1/rate-types/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"rateClassCode": "(val)","rateTypeCode": "(val)","description": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"rateClassCode": "(val)","rateTypeCode": "(val)","description": "(val)","_primaryKey": "(val)"}
 ### Insert Rate Types [POST /research-common/api/v1/rate-types/]
 
 + Request

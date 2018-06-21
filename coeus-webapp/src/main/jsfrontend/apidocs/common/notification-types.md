@@ -145,6 +145,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Notification Types [PATCH /research-common/api/v1/notification-types/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"notificationTypeId": "(val)","moduleCode": "(val)","actionCode": "(val)","description": "(val)","subject": "(val)","message": "(val)","promptUser": "(val)","active": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"notificationTypeId": "(val)","moduleCode": "(val)","actionCode": "(val)","description": "(val)","subject": "(val)","message": "(val)","promptUser": "(val)","active": "(val)","_primaryKey": "(val)"}
 ### Insert Notification Types [POST /research-common/api/v1/notification-types/]
 
 + Request

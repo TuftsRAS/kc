@@ -145,6 +145,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Person Document Emails [PATCH /research-sys/api/v1/person-document-emails/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"entityEmailId": "(val)","entityTypeCode": "(val)","emailTypeCode": "(val)","emailAddress": "(val)","dflt": "(val)","edit": "(val)","documentNumber": "(val)","active": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"entityEmailId": "(val)","entityTypeCode": "(val)","emailTypeCode": "(val)","emailAddress": "(val)","dflt": "(val)","edit": "(val)","documentNumber": "(val)","active": "(val)","_primaryKey": "(val)"}
 ### Insert Person Document Emails [POST /research-sys/api/v1/person-document-emails/]
 
 + Request

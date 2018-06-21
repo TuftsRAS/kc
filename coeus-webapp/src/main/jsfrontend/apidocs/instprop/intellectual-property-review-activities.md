@@ -145,6 +145,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Intellectual Property Review Activities [PATCH /instprop/api/v1/intellectual-property-review-activities/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"ipReviewActivityTypeCode": "(val)","activityDate": "(val)","comments": "(val)","proposalIpReviewActivityId": "(val)","ipReviewId": "(val)","proposalNumber": "(val)","sequenceNumber": "(val)","activityNumber": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"ipReviewActivityTypeCode": "(val)","activityDate": "(val)","comments": "(val)","proposalIpReviewActivityId": "(val)","ipReviewId": "(val)","proposalNumber": "(val)","sequenceNumber": "(val)","activityNumber": "(val)","_primaryKey": "(val)"}
 ### Insert Intellectual Property Review Activities [POST /instprop/api/v1/intellectual-property-review-activities/]
 
 + Request

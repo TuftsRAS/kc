@@ -143,6 +143,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes S2s Opportunity Forms [PATCH /propdev/api/v1/s2s-opportunity-forms/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"s2sOppFormsId": "(val)","available": "(val)","formName": "(val)","include": "(val)","mandatory": "(val)","userAttachedForm": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"s2sOppFormsId": "(val)","available": "(val)","formName": "(val)","include": "(val)","mandatory": "(val)","userAttachedForm": "(val)","_primaryKey": "(val)"}
 ### Insert S2s Opportunity Forms [POST /propdev/api/v1/s2s-opportunity-forms/]
 
 + Request

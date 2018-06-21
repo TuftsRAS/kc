@@ -141,6 +141,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Entity Residencies [PATCH /research-sys/api/v1/entity-residencies/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","entityId": "(val)","determinationMethod": "(val)","inState": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","entityId": "(val)","determinationMethod": "(val)","inState": "(val)","_primaryKey": "(val)"}
 ### Insert Entity Residencies [POST /research-sys/api/v1/entity-residencies/]
 
 + Request

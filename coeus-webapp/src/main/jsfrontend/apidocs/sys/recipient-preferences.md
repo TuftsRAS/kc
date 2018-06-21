@@ -142,6 +142,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Recipient Preferences [PATCH /research-sys/api/v1/recipient-preferences/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","recipientId": "(val)","property": "(val)","value": "(val)","lockVerNbr": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","recipientId": "(val)","property": "(val)","value": "(val)","lockVerNbr": "(val)","_primaryKey": "(val)"}
 ### Insert Recipient Preferences [POST /research-sys/api/v1/recipient-preferences/]
 
 + Request

@@ -147,6 +147,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Person Document Phones [PATCH /research-sys/api/v1/person-document-phones/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"entityPhoneId": "(val)","entityTypeCode": "(val)","phoneTypeCode": "(val)","phoneNumber": "(val)","extensionNumber": "(val)","countryCode": "(val)","dflt": "(val)","edit": "(val)","documentNumber": "(val)","active": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"entityPhoneId": "(val)","entityTypeCode": "(val)","phoneTypeCode": "(val)","phoneNumber": "(val)","extensionNumber": "(val)","countryCode": "(val)","dflt": "(val)","edit": "(val)","documentNumber": "(val)","active": "(val)","_primaryKey": "(val)"}
 ### Insert Person Document Phones [POST /research-sys/api/v1/person-document-phones/]
 
 + Request

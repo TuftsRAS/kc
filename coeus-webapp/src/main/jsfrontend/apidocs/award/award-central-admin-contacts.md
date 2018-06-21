@@ -147,6 +147,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Award Central Admin Contacts [PATCH /award/api/v1/award-central-admin-contacts/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"awardContactId": "(val)","personId": "(val)","fullName": "(val)","unitContactType": "(val)","unitAdministratorTypeCode": "(val)","awardNumber": "(val)","sequenceNumber": "(val)","unitAdministratorUnitNumber": "(val)","defaultUnitContact": "(val)","award.awardId": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"awardContactId": "(val)","personId": "(val)","fullName": "(val)","unitContactType": "(val)","unitAdministratorTypeCode": "(val)","awardNumber": "(val)","sequenceNumber": "(val)","unitAdministratorUnitNumber": "(val)","defaultUnitContact": "(val)","award.awardId": "(val)","_primaryKey": "(val)"}
 ### Insert Award Central Admin Contacts [POST /award/api/v1/award-central-admin-contacts/]
 
 + Request

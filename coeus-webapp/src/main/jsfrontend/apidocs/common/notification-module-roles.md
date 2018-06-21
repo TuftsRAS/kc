@@ -140,6 +140,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Notification Module Roles [PATCH /research-common/api/v1/notification-module-roles/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"notificationModuleRoleId": "(val)","moduleCode": "(val)","roleName": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"notificationModuleRoleId": "(val)","moduleCode": "(val)","roleName": "(val)","_primaryKey": "(val)"}
 ### Insert Notification Module Roles [POST /research-common/api/v1/notification-module-roles/]
 
 + Request

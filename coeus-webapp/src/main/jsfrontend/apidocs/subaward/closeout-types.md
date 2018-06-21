@@ -139,6 +139,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Closeout Types [PATCH /subaward/api/v1/closeout-types/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"closeoutTypeCode": "(val)","description": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"closeoutTypeCode": "(val)","description": "(val)","_primaryKey": "(val)"}
 ### Insert Closeout Types [POST /subaward/api/v1/closeout-types/]
 
 + Request

@@ -140,6 +140,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Notification Recipients [PATCH /research-sys/api/v1/notification-recipients/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","recipientType": "(val)","recipientId": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","recipientType": "(val)","recipientId": "(val)","_primaryKey": "(val)"}
 ### Insert Notification Recipients [POST /research-sys/api/v1/notification-recipients/]
 
 + Request

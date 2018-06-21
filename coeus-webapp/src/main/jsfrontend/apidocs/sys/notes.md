@@ -145,6 +145,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Notes [PATCH /research-sys/api/v1/notes/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"noteIdentifier": "(val)","remoteObjectIdentifier": "(val)","authorUniversalIdentifier": "(val)","notePostedTimestamp": "(val)","noteTypeCode": "(val)","noteText": "(val)","noteTopicText": "(val)","notePurgeCode": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"noteIdentifier": "(val)","remoteObjectIdentifier": "(val)","authorUniversalIdentifier": "(val)","notePostedTimestamp": "(val)","noteTypeCode": "(val)","noteText": "(val)","noteTopicText": "(val)","notePurgeCode": "(val)","_primaryKey": "(val)"}
 ### Insert Notes [POST /research-sys/api/v1/notes/]
 
 + Request

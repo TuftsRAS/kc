@@ -141,6 +141,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Document Type Attributes [PATCH /research-sys/api/v1/document-type-attributes/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","ruleAttributeId": "(val)","documentTypeId": "(val)","orderIndex": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","ruleAttributeId": "(val)","documentTypeId": "(val)","orderIndex": "(val)","_primaryKey": "(val)"}
 ### Insert Document Type Attributes [POST /research-sys/api/v1/document-type-attributes/]
 
 + Request

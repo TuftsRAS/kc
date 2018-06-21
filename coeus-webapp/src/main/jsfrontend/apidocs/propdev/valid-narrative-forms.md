@@ -141,6 +141,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Valid Narrative Forms [PATCH /propdev/api/v1/valid-narrative-forms/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"validNarrFormsId": "(val)","formName": "(val)","narrativeTypeCode": "(val)","mandatory": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"validNarrFormsId": "(val)","formName": "(val)","narrativeTypeCode": "(val)","mandatory": "(val)","_primaryKey": "(val)"}
 ### Insert Valid Narrative Forms [POST /propdev/api/v1/valid-narrative-forms/]
 
 + Request

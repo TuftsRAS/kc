@@ -143,6 +143,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Kim Attributes [PATCH /research-sys/api/v1/kim-attributes/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","componentName": "(val)","attributeName": "(val)","namespaceCode": "(val)","attributeLabel": "(val)","active": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","componentName": "(val)","attributeName": "(val)","namespaceCode": "(val)","attributeLabel": "(val)","active": "(val)","_primaryKey": "(val)"}
 ### Insert Kim Attributes [POST /research-sys/api/v1/kim-attributes/]
 
 + Request

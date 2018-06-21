@@ -147,6 +147,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Award Report Terms [PATCH /award/api/v1/award-report-terms/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"awardReportTermId": "(val)","awardNumber": "(val)","sequenceNumber": "(val)","reportClassCode": "(val)","reportCode": "(val)","frequencyCode": "(val)","frequencyBaseCode": "(val)","ospDistributionCode": "(val)","dueDate": "(val)","award.awardId": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"awardReportTermId": "(val)","awardNumber": "(val)","sequenceNumber": "(val)","reportClassCode": "(val)","reportCode": "(val)","frequencyCode": "(val)","frequencyBaseCode": "(val)","ospDistributionCode": "(val)","dueDate": "(val)","award.awardId": "(val)","_primaryKey": "(val)"}
 ### Insert Award Report Terms [POST /award/api/v1/award-report-terms/]
 
 + Request

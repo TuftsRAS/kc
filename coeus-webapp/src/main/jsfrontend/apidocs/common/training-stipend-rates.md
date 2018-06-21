@@ -143,6 +143,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Training Stipend Rates [PATCH /research-common/api/v1/training-stipend-rates/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","careerLevel": "(val)","experienceLevel": "(val)","stipendRate": "(val)","effectiveDate": "(val)","description": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","careerLevel": "(val)","experienceLevel": "(val)","stipendRate": "(val)","effectiveDate": "(val)","description": "(val)","_primaryKey": "(val)"}
 ### Insert Training Stipend Rates [POST /research-common/api/v1/training-stipend-rates/]
 
 + Request

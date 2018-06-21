@@ -139,6 +139,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Protocol Statuses [PATCH /irb/api/v1/protocol-statuses/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"protocolStatusCode": "(val)","description": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"protocolStatusCode": "(val)","description": "(val)","_primaryKey": "(val)"}
 ### Insert Protocol Statuses [POST /irb/api/v1/protocol-statuses/]
 
 + Request

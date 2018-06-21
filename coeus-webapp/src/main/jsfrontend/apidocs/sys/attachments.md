@@ -143,6 +143,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Attachments [PATCH /research-sys/api/v1/attachments/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"noteIdentifier": "(val)","attachmentMimeTypeCode": "(val)","attachmentFileName": "(val)","attachmentIdentifier": "(val)","attachmentFileSize": "(val)","attachmentTypeCode": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"noteIdentifier": "(val)","attachmentMimeTypeCode": "(val)","attachmentFileName": "(val)","attachmentIdentifier": "(val)","attachmentFileSize": "(val)","attachmentTypeCode": "(val)","_primaryKey": "(val)"}
 ### Insert Attachments [POST /research-sys/api/v1/attachments/]
 
 + Request

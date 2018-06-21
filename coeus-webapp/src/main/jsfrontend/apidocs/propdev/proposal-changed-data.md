@@ -144,6 +144,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Proposal Changed Data [PATCH /propdev/api/v1/proposal-changed-data/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"changeNumber": "(val)","columnName": "(val)","proposalNumber": "(val)","changedValue": "(val)","comments": "(val)","displayValue": "(val)","oldDisplayValue": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"changeNumber": "(val)","columnName": "(val)","proposalNumber": "(val)","changedValue": "(val)","comments": "(val)","displayValue": "(val)","oldDisplayValue": "(val)","_primaryKey": "(val)"}
 ### Insert Proposal Changed Data [POST /propdev/api/v1/proposal-changed-data/]
 
 + Request

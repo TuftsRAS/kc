@@ -140,6 +140,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Entity Type Contact Infos [PATCH /research-sys/api/v1/entity-type-contact-infos/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"entityId": "(val)","entityTypeCode": "(val)","active": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"entityId": "(val)","entityTypeCode": "(val)","active": "(val)","_primaryKey": "(val)"}
 ### Insert Entity Type Contact Infos [POST /research-sys/api/v1/entity-type-contact-infos/]
 
 + Request

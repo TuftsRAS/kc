@@ -143,6 +143,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Group Members [PATCH /research-sys/api/v1/group-members/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","groupId": "(val)","activeFromDateValue": "(val)","activeToDateValue": "(val)","memberId": "(val)","typeCode": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","groupId": "(val)","activeFromDateValue": "(val)","activeToDateValue": "(val)","memberId": "(val)","typeCode": "(val)","_primaryKey": "(val)"}
 ### Insert Group Members [POST /research-sys/api/v1/group-members/]
 
 + Request

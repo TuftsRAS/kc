@@ -139,6 +139,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Contact Types [PATCH /award/api/v1/contact-types/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"contactTypeCode": "(val)","description": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"contactTypeCode": "(val)","description": "(val)","_primaryKey": "(val)"}
 ### Insert Contact Types [POST /award/api/v1/contact-types/]
 
 + Request

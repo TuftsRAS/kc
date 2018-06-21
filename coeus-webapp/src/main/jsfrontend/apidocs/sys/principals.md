@@ -142,6 +142,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Principals [PATCH /research-sys/api/v1/principals/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"principalId": "(val)","principalName": "(val)","entityId": "(val)","password": "(val)","active": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"principalId": "(val)","principalName": "(val)","entityId": "(val)","password": "(val)","active": "(val)","_primaryKey": "(val)"}
 ### Insert Principals [POST /research-sys/api/v1/principals/]
 
 + Request

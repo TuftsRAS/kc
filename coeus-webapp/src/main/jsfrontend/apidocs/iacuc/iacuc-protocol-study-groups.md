@@ -142,6 +142,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Iacuc Protocol Study Groups [PATCH /iacuc/api/v1/iacuc-protocol-study-groups/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"iacucProtocolStudyGroupId": "(val)","iacucProtocolStudyGroupHeaderId": "(val)","iacucProtocolSpeciesId": "(val)","painCategoryCode": "(val)","count": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"iacucProtocolStudyGroupId": "(val)","iacucProtocolStudyGroupHeaderId": "(val)","iacucProtocolSpeciesId": "(val)","painCategoryCode": "(val)","count": "(val)","_primaryKey": "(val)"}
 ### Insert Iacuc Protocol Study Groups [POST /iacuc/api/v1/iacuc-protocol-study-groups/]
 
 + Request

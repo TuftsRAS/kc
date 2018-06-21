@@ -139,6 +139,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Degree Types [PATCH /research-common/api/v1/degree-types/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"code": "(val)","description": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"code": "(val)","description": "(val)","_primaryKey": "(val)"}
 ### Insert Degree Types [POST /research-common/api/v1/degree-types/]
 
 + Request

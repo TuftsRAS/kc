@@ -16,7 +16,7 @@
 
     + Body
     
-            {"awardContactId": "(val)","personId": "(val)","rolodexId": "(val)","fullName": "(val)","academicYearEffort": "(val)","calendarYearEffort": "(val)","summerEffort": "(val)","totalEffort": "(val)","faculty": "(val)","roleCode": "(val)","keyPersonRole": "(val)","optInUnitStatus": "(val)","awardNumber": "(val)","sequenceNumber": "(val)","award.awardId": "(val)","_primaryKey": "(val)"}
+            {"awardContactId": "(val)","personId": "(val)","rolodexId": "(val)","fullName": "(val)","academicYearEffort": "(val)","calendarYearEffort": "(val)","summerEffort": "(val)","totalEffort": "(val)","faculty": "(val)","includeInCreditAllocation": "(val)","roleCode": "(val)","keyPersonRole": "(val)","optInUnitStatus": "(val)","awardNumber": "(val)","sequenceNumber": "(val)","award.awardId": "(val)","_primaryKey": "(val)"}
 
 ### Get All Award Persons [GET /award/api/v1/award-persons/]
 	 
@@ -35,8 +35,8 @@
     + Body
     
             [
-              {"awardContactId": "(val)","personId": "(val)","rolodexId": "(val)","fullName": "(val)","academicYearEffort": "(val)","calendarYearEffort": "(val)","summerEffort": "(val)","totalEffort": "(val)","faculty": "(val)","roleCode": "(val)","keyPersonRole": "(val)","optInUnitStatus": "(val)","awardNumber": "(val)","sequenceNumber": "(val)","award.awardId": "(val)","_primaryKey": "(val)"},
-              {"awardContactId": "(val)","personId": "(val)","rolodexId": "(val)","fullName": "(val)","academicYearEffort": "(val)","calendarYearEffort": "(val)","summerEffort": "(val)","totalEffort": "(val)","faculty": "(val)","roleCode": "(val)","keyPersonRole": "(val)","optInUnitStatus": "(val)","awardNumber": "(val)","sequenceNumber": "(val)","award.awardId": "(val)","_primaryKey": "(val)"}
+              {"awardContactId": "(val)","personId": "(val)","rolodexId": "(val)","fullName": "(val)","academicYearEffort": "(val)","calendarYearEffort": "(val)","summerEffort": "(val)","totalEffort": "(val)","faculty": "(val)","includeInCreditAllocation": "(val)","roleCode": "(val)","keyPersonRole": "(val)","optInUnitStatus": "(val)","awardNumber": "(val)","sequenceNumber": "(val)","award.awardId": "(val)","_primaryKey": "(val)"},
+              {"awardContactId": "(val)","personId": "(val)","rolodexId": "(val)","fullName": "(val)","academicYearEffort": "(val)","calendarYearEffort": "(val)","summerEffort": "(val)","totalEffort": "(val)","faculty": "(val)","includeInCreditAllocation": "(val)","roleCode": "(val)","keyPersonRole": "(val)","optInUnitStatus": "(val)","awardNumber": "(val)","sequenceNumber": "(val)","award.awardId": "(val)","_primaryKey": "(val)"}
             ]
 
 ### Get All Award Persons with Filtering [GET /award/api/v1/award-persons/]
@@ -52,6 +52,7 @@
     + summerEffort (optional) - Summer Effort. Maximum length is 7.
     + totalEffort (optional) - Total Effort. Maximum length is 7.
     + faculty (optional) - Faculty flag. Maximum length is 1.
+    + includeInCreditAllocation (optional) - Include in Credit Allocation. Maximum length is 1.
     + roleCode (optional) - 
     + keyPersonRole (optional) - Project Role. Maximum length is 60.
     + optInUnitStatus (optional) - 
@@ -75,8 +76,8 @@
     + Body
     
             [
-              {"awardContactId": "(val)","personId": "(val)","rolodexId": "(val)","fullName": "(val)","academicYearEffort": "(val)","calendarYearEffort": "(val)","summerEffort": "(val)","totalEffort": "(val)","faculty": "(val)","roleCode": "(val)","keyPersonRole": "(val)","optInUnitStatus": "(val)","awardNumber": "(val)","sequenceNumber": "(val)","award.awardId": "(val)","_primaryKey": "(val)"},
-              {"awardContactId": "(val)","personId": "(val)","rolodexId": "(val)","fullName": "(val)","academicYearEffort": "(val)","calendarYearEffort": "(val)","summerEffort": "(val)","totalEffort": "(val)","faculty": "(val)","roleCode": "(val)","keyPersonRole": "(val)","optInUnitStatus": "(val)","awardNumber": "(val)","sequenceNumber": "(val)","award.awardId": "(val)","_primaryKey": "(val)"}
+              {"awardContactId": "(val)","personId": "(val)","rolodexId": "(val)","fullName": "(val)","academicYearEffort": "(val)","calendarYearEffort": "(val)","summerEffort": "(val)","totalEffort": "(val)","faculty": "(val)","includeInCreditAllocation": "(val)","roleCode": "(val)","keyPersonRole": "(val)","optInUnitStatus": "(val)","awardNumber": "(val)","sequenceNumber": "(val)","award.awardId": "(val)","_primaryKey": "(val)"},
+              {"awardContactId": "(val)","personId": "(val)","rolodexId": "(val)","fullName": "(val)","academicYearEffort": "(val)","calendarYearEffort": "(val)","summerEffort": "(val)","totalEffort": "(val)","faculty": "(val)","includeInCreditAllocation": "(val)","roleCode": "(val)","keyPersonRole": "(val)","optInUnitStatus": "(val)","awardNumber": "(val)","sequenceNumber": "(val)","award.awardId": "(val)","_primaryKey": "(val)"}
             ]
 			
 ### Get Schema for Award Persons [GET /award/api/v1/award-persons/]
@@ -99,7 +100,7 @@
 
     + Body
     
-            {"columns":["awardContactId","personId","rolodexId","fullName","academicYearEffort","calendarYearEffort","summerEffort","totalEffort","faculty","roleCode","keyPersonRole","optInUnitStatus","awardNumber","sequenceNumber","award.awardId"],"primaryKey":"awardContactId"}
+            {"columns":["awardContactId","personId","rolodexId","fullName","academicYearEffort","calendarYearEffort","summerEffort","totalEffort","faculty","includeInCreditAllocation","roleCode","keyPersonRole","optInUnitStatus","awardNumber","sequenceNumber","award.awardId"],"primaryKey":"awardContactId"}
 		
 ### Get Blueprint API specification for Award Persons [GET /award/api/v1/award-persons/]
 	 

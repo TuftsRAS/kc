@@ -142,6 +142,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Iacuc Protocol Person Mass Changes [PATCH /iacuc/api/v1/iacuc-protocol-person-mass-changes/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"iacucProtocolPersonMassChangeId": "(val)","personMassChangeId": "(val)","investigator": "(val)","keyStudyPerson": "(val)","correspondents": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"iacucProtocolPersonMassChangeId": "(val)","personMassChangeId": "(val)","investigator": "(val)","keyStudyPerson": "(val)","correspondents": "(val)","_primaryKey": "(val)"}
 ### Insert Iacuc Protocol Person Mass Changes [POST /iacuc/api/v1/iacuc-protocol-person-mass-changes/]
 
 + Request

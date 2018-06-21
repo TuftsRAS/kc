@@ -146,6 +146,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Proposal Person Degrees [PATCH /propdev/api/v1/proposal-person-degrees/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"degreeSequenceNumber": "(val)","graduationYear": "(val)","degreeCode": "(val)","degree": "(val)","fieldOfStudy": "(val)","specialization": "(val)","school": "(val)","schoolIdCode": "(val)","schoolId": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"degreeSequenceNumber": "(val)","graduationYear": "(val)","degreeCode": "(val)","degree": "(val)","fieldOfStudy": "(val)","specialization": "(val)","school": "(val)","schoolIdCode": "(val)","schoolId": "(val)","_primaryKey": "(val)"}
 ### Insert Proposal Person Degrees [POST /propdev/api/v1/proposal-person-degrees/]
 
 + Request

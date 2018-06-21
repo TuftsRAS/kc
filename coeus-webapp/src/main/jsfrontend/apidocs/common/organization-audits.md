@@ -141,6 +141,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Organization Audits [PATCH /research-common/api/v1/organization-audits/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"fiscalYear": "(val)","organizationId": "(val)","auditAcceptedCode": "(val)","auditComment": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"fiscalYear": "(val)","organizationId": "(val)","auditAcceptedCode": "(val)","auditComment": "(val)","_primaryKey": "(val)"}
 ### Insert Organization Audits [POST /research-common/api/v1/organization-audits/]
 
 + Request

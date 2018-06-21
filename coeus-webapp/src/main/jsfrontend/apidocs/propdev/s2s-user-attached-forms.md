@@ -143,6 +143,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes S2s User Attached Forms [PATCH /propdev/api/v1/s2s-user-attached-forms/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","proposalNumber": "(val)","namespace": "(val)","formName": "(val)","formFileName": "(val)","description": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","proposalNumber": "(val)","namespace": "(val)","formName": "(val)","formFileName": "(val)","description": "(val)","_primaryKey": "(val)"}
 ### Insert S2s User Attached Forms [POST /propdev/api/v1/s2s-user-attached-forms/]
 
 + Request

@@ -143,6 +143,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Attachment Files [PATCH /research-common/api/v1/attachment-files/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","sequenceNumber": "(val)","name": "(val)","type": "(val)","data": "(val)","fileDataId": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","sequenceNumber": "(val)","name": "(val)","type": "(val)","data": "(val)","fileDataId": "(val)","_primaryKey": "(val)"}
 ### Insert Attachment Files [POST /research-common/api/v1/attachment-files/]
 
 + Request

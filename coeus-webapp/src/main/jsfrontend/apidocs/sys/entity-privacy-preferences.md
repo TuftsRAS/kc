@@ -143,6 +143,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Entity Privacy Preferences [PATCH /research-sys/api/v1/entity-privacy-preferences/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"entityId": "(val)","suppressName": "(val)","suppressEmail": "(val)","suppressAddress": "(val)","suppressPhone": "(val)","suppressPersonal": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"entityId": "(val)","suppressName": "(val)","suppressEmail": "(val)","suppressAddress": "(val)","suppressPhone": "(val)","suppressPersonal": "(val)","_primaryKey": "(val)"}
 ### Insert Entity Privacy Preferences [POST /research-sys/api/v1/entity-privacy-preferences/]
 
 + Request

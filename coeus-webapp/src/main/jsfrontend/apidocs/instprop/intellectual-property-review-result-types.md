@@ -139,6 +139,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Intellectual Property Review Result Types [PATCH /instprop/api/v1/intellectual-property-review-result-types/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"intellectualPropertyReviewResultTypeCode": "(val)","description": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"intellectualPropertyReviewResultTypeCode": "(val)","description": "(val)","_primaryKey": "(val)"}
 ### Insert Intellectual Property Review Result Types [POST /instprop/api/v1/intellectual-property-review-result-types/]
 
 + Request

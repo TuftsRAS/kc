@@ -142,6 +142,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Protocol Correspondence Templates [PATCH /irb/api/v1/protocol-correspondence-templates/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"protoCorrespTemplId": "(val)","protoCorrespTypeCode": "(val)","committeeId": "(val)","fileName": "(val)","correspondenceTemplate": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"protoCorrespTemplId": "(val)","protoCorrespTypeCode": "(val)","committeeId": "(val)","fileName": "(val)","correspondenceTemplate": "(val)","_primaryKey": "(val)"}
 ### Insert Protocol Correspondence Templates [POST /irb/api/v1/protocol-correspondence-templates/]
 
 + Request

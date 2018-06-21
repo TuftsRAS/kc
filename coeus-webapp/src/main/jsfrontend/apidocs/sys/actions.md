@@ -143,6 +143,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Actions [PATCH /research-sys/api/v1/actions/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","namespace": "(val)","name": "(val)","description": "(val)","typeId": "(val)","sequenceNumber": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","namespace": "(val)","name": "(val)","description": "(val)","typeId": "(val)","sequenceNumber": "(val)","_primaryKey": "(val)"}
 ### Insert Actions [POST /research-sys/api/v1/actions/]
 
 + Request

@@ -141,6 +141,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Namespaces [PATCH /research-sys/api/v1/namespaces/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"applicationId": "(val)","code": "(val)","name": "(val)","active": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"applicationId": "(val)","code": "(val)","name": "(val)","active": "(val)","_primaryKey": "(val)"}
 ### Insert Namespaces [POST /research-sys/api/v1/namespaces/]
 
 + Request

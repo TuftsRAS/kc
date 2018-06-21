@@ -140,6 +140,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Term Parameters [PATCH /research-sys/api/v1/term-parameters/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","name": "(val)","value": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","name": "(val)","value": "(val)","_primaryKey": "(val)"}
 ### Insert Term Parameters [POST /research-sys/api/v1/term-parameters/]
 
 + Request

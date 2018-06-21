@@ -144,6 +144,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Message Deliveries [PATCH /research-sys/api/v1/message-deliveries/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","delivererTypeName": "(val)","delivererSystemId": "(val)","deliveryStatus": "(val)","processCount": "(val)","lockVerNbr": "(val)","lockedDate": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","delivererTypeName": "(val)","delivererSystemId": "(val)","deliveryStatus": "(val)","processCount": "(val)","lockVerNbr": "(val)","lockedDate": "(val)","_primaryKey": "(val)"}
 ### Insert Message Deliveries [POST /research-sys/api/v1/message-deliveries/]
 
 + Request

@@ -144,6 +144,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Award Budget Period Summary Calculated Amounts [PATCH /award/api/v1/award-budget-period-summary-calculated-amounts/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"awardBudgetPeriodSummaryCalculatedAmountId": "(val)","budgetPeriodId": "(val)","costElement": "(val)","onOffCampusFlag": "(val)","rateClassType": "(val)","calculatedCost": "(val)","calculatedCostSharing": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"awardBudgetPeriodSummaryCalculatedAmountId": "(val)","budgetPeriodId": "(val)","costElement": "(val)","onOffCampusFlag": "(val)","rateClassType": "(val)","calculatedCost": "(val)","calculatedCostSharing": "(val)","_primaryKey": "(val)"}
 ### Insert Award Budget Period Summary Calculated Amounts [POST /award/api/v1/award-budget-period-summary-calculated-amounts/]
 
 + Request

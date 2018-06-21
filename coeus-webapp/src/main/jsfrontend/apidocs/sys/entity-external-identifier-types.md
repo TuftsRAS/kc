@@ -142,6 +142,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Entity External Identifier Types [PATCH /research-sys/api/v1/entity-external-identifier-types/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"encryptionRequired": "(val)","code": "(val)","name": "(val)","active": "(val)","sortCode": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"encryptionRequired": "(val)","code": "(val)","name": "(val)","active": "(val)","sortCode": "(val)","_primaryKey": "(val)"}
 ### Insert Entity External Identifier Types [POST /research-sys/api/v1/entity-external-identifier-types/]
 
 + Request

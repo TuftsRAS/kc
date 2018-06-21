@@ -52,9 +52,9 @@
     + subAwardXfdFileName (optional) - Subaward PDF File Name. Maximum length is 256.
     + xmlDataId (optional) - Xml Data Id.
     + translationComments (optional) - Translation Comments. Maximum length is 2000.
-    + xfdUpdateTimestamp (optional) - This attribute should always be overridden on the descriptive elements. Maximum length is 21.
+    + xfdUpdateTimestamp (optional) - This attribute should always be overriden on the descriptive elements. Maximum length is 21.
     + xfdUpdateUser (optional) - xfdUpdateUser. Maximum length is 60.
-    + xmlUpdateTimestamp (optional) - This attribute should always be overridden on the descriptive elements. Maximum length is 21.
+    + xmlUpdateTimestamp (optional) - This attribute should always be overriden on the descriptive elements. Maximum length is 21.
     + xmlUpdateUser (optional) - xmlUpdateUser. Maximum length is 60.
     + namespace (optional) - Namespace. Maximum length is 200.
     + formName (optional) - Form Name. Maximum length is 100.
@@ -154,6 +154,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Budget Sub Awards [PATCH /propdev/api/v1/budget-sub-awards/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"budgetId": "(val)","subAwardNumber": "(val)","comments": "(val)","organizationId": "(val)","subAwardStatusCode": "(val)","fileDataId": "(val)","subAwardXfdFileName": "(val)","xmlDataId": "(val)","translationComments": "(val)","xfdUpdateTimestamp": "(val)","xfdUpdateUser": "(val)","xmlUpdateTimestamp": "(val)","xmlUpdateUser": "(val)","namespace": "(val)","formName": "(val)","hierarchyProposalNumber": "(val)","hiddenInHierarchy": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"budgetId": "(val)","subAwardNumber": "(val)","comments": "(val)","organizationId": "(val)","subAwardStatusCode": "(val)","fileDataId": "(val)","subAwardXfdFileName": "(val)","xmlDataId": "(val)","translationComments": "(val)","xfdUpdateTimestamp": "(val)","xfdUpdateUser": "(val)","xmlUpdateTimestamp": "(val)","xmlUpdateUser": "(val)","namespace": "(val)","formName": "(val)","hierarchyProposalNumber": "(val)","hiddenInHierarchy": "(val)","_primaryKey": "(val)"}
 ### Insert Budget Sub Awards [POST /propdev/api/v1/budget-sub-awards/]
 
 + Request
@@ -237,9 +255,9 @@
     + subAwardXfdFileName (optional) - Subaward PDF File Name. Maximum length is 256.
     + xmlDataId (optional) - Xml Data Id.
     + translationComments (optional) - Translation Comments. Maximum length is 2000.
-    + xfdUpdateTimestamp (optional) - This attribute should always be overridden on the descriptive elements. Maximum length is 21.
+    + xfdUpdateTimestamp (optional) - This attribute should always be overriden on the descriptive elements. Maximum length is 21.
     + xfdUpdateUser (optional) - xfdUpdateUser. Maximum length is 60.
-    + xmlUpdateTimestamp (optional) - This attribute should always be overridden on the descriptive elements. Maximum length is 21.
+    + xmlUpdateTimestamp (optional) - This attribute should always be overriden on the descriptive elements. Maximum length is 21.
     + xmlUpdateUser (optional) - xmlUpdateUser. Maximum length is 60.
     + namespace (optional) - Namespace. Maximum length is 200.
     + formName (optional) - Form Name. Maximum length is 100.

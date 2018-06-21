@@ -16,7 +16,7 @@
 
     + Body
     
-            {"commScheduleMinutesId": "(val)","scheduleIdFk": "(val)","entryNumber": "(val)","minuteEntryTypeCode": "(val)","protocolIdFk": "(val)","commScheduleActItemsIdFk": "(val)","submissionIdFk": "(val)","privateCommentFlag": "(val)","protocolContingencyCode": "(val)","minuteEntry": "(val)","finalFlag": "(val)","createTimestamp": "(val)","createUser": "(val)","protocolReviewerIdFk": "(val)","protocolOnlineReviewIdFk": "(val)","_primaryKey": "(val)"}
+            {"commScheduleMinutesId": "(val)","scheduleIdFk": "(val)","entryNumber": "(val)","minuteEntryTypeCode": "(val)","protocolIdFk": "(val)","protocolNumber": "(val)","submissionNumber": "(val)","commScheduleActItemsIdFk": "(val)","submissionIdFk": "(val)","privateCommentFlag": "(val)","protocolContingencyCode": "(val)","minuteEntry": "(val)","finalFlag": "(val)","createTimestamp": "(val)","createUser": "(val)","protocolReviewerIdFk": "(val)","protocolOnlineReviewIdFk": "(val)","_primaryKey": "(val)"}
 
 ### Get All Committee Schedule Minutes [GET /irb/api/v1/committee-schedule-minutes/]
 	 
@@ -35,8 +35,8 @@
     + Body
     
             [
-              {"commScheduleMinutesId": "(val)","scheduleIdFk": "(val)","entryNumber": "(val)","minuteEntryTypeCode": "(val)","protocolIdFk": "(val)","commScheduleActItemsIdFk": "(val)","submissionIdFk": "(val)","privateCommentFlag": "(val)","protocolContingencyCode": "(val)","minuteEntry": "(val)","finalFlag": "(val)","createTimestamp": "(val)","createUser": "(val)","protocolReviewerIdFk": "(val)","protocolOnlineReviewIdFk": "(val)","_primaryKey": "(val)"},
-              {"commScheduleMinutesId": "(val)","scheduleIdFk": "(val)","entryNumber": "(val)","minuteEntryTypeCode": "(val)","protocolIdFk": "(val)","commScheduleActItemsIdFk": "(val)","submissionIdFk": "(val)","privateCommentFlag": "(val)","protocolContingencyCode": "(val)","minuteEntry": "(val)","finalFlag": "(val)","createTimestamp": "(val)","createUser": "(val)","protocolReviewerIdFk": "(val)","protocolOnlineReviewIdFk": "(val)","_primaryKey": "(val)"}
+              {"commScheduleMinutesId": "(val)","scheduleIdFk": "(val)","entryNumber": "(val)","minuteEntryTypeCode": "(val)","protocolIdFk": "(val)","protocolNumber": "(val)","submissionNumber": "(val)","commScheduleActItemsIdFk": "(val)","submissionIdFk": "(val)","privateCommentFlag": "(val)","protocolContingencyCode": "(val)","minuteEntry": "(val)","finalFlag": "(val)","createTimestamp": "(val)","createUser": "(val)","protocolReviewerIdFk": "(val)","protocolOnlineReviewIdFk": "(val)","_primaryKey": "(val)"},
+              {"commScheduleMinutesId": "(val)","scheduleIdFk": "(val)","entryNumber": "(val)","minuteEntryTypeCode": "(val)","protocolIdFk": "(val)","protocolNumber": "(val)","submissionNumber": "(val)","commScheduleActItemsIdFk": "(val)","submissionIdFk": "(val)","privateCommentFlag": "(val)","protocolContingencyCode": "(val)","minuteEntry": "(val)","finalFlag": "(val)","createTimestamp": "(val)","createUser": "(val)","protocolReviewerIdFk": "(val)","protocolOnlineReviewIdFk": "(val)","_primaryKey": "(val)"}
             ]
 
 ### Get All Committee Schedule Minutes with Filtering [GET /irb/api/v1/committee-schedule-minutes/]
@@ -48,6 +48,8 @@
     + entryNumber (optional) - Entry Number. Maximum length is 12.
     + minuteEntryTypeCode (optional) - Minute Entry Type Code. Maximum length is 3.
     + protocolIdFk (optional) - Protocol Id Fk. Maximum length is 12.
+    + protocolNumber (optional) - 
+    + submissionNumber (optional) - 
     + commScheduleActItemsIdFk (optional) - CommScheduleActItems Id Fk. Maximum length is 12.
     + submissionIdFk (optional) - Submission Id Fk. Maximum length is 12.
     + privateCommentFlag (optional) - Private Comment Flag. Maximum length is 1.
@@ -75,8 +77,8 @@
     + Body
     
             [
-              {"commScheduleMinutesId": "(val)","scheduleIdFk": "(val)","entryNumber": "(val)","minuteEntryTypeCode": "(val)","protocolIdFk": "(val)","commScheduleActItemsIdFk": "(val)","submissionIdFk": "(val)","privateCommentFlag": "(val)","protocolContingencyCode": "(val)","minuteEntry": "(val)","finalFlag": "(val)","createTimestamp": "(val)","createUser": "(val)","protocolReviewerIdFk": "(val)","protocolOnlineReviewIdFk": "(val)","_primaryKey": "(val)"},
-              {"commScheduleMinutesId": "(val)","scheduleIdFk": "(val)","entryNumber": "(val)","minuteEntryTypeCode": "(val)","protocolIdFk": "(val)","commScheduleActItemsIdFk": "(val)","submissionIdFk": "(val)","privateCommentFlag": "(val)","protocolContingencyCode": "(val)","minuteEntry": "(val)","finalFlag": "(val)","createTimestamp": "(val)","createUser": "(val)","protocolReviewerIdFk": "(val)","protocolOnlineReviewIdFk": "(val)","_primaryKey": "(val)"}
+              {"commScheduleMinutesId": "(val)","scheduleIdFk": "(val)","entryNumber": "(val)","minuteEntryTypeCode": "(val)","protocolIdFk": "(val)","protocolNumber": "(val)","submissionNumber": "(val)","commScheduleActItemsIdFk": "(val)","submissionIdFk": "(val)","privateCommentFlag": "(val)","protocolContingencyCode": "(val)","minuteEntry": "(val)","finalFlag": "(val)","createTimestamp": "(val)","createUser": "(val)","protocolReviewerIdFk": "(val)","protocolOnlineReviewIdFk": "(val)","_primaryKey": "(val)"},
+              {"commScheduleMinutesId": "(val)","scheduleIdFk": "(val)","entryNumber": "(val)","minuteEntryTypeCode": "(val)","protocolIdFk": "(val)","protocolNumber": "(val)","submissionNumber": "(val)","commScheduleActItemsIdFk": "(val)","submissionIdFk": "(val)","privateCommentFlag": "(val)","protocolContingencyCode": "(val)","minuteEntry": "(val)","finalFlag": "(val)","createTimestamp": "(val)","createUser": "(val)","protocolReviewerIdFk": "(val)","protocolOnlineReviewIdFk": "(val)","_primaryKey": "(val)"}
             ]
 			
 ### Get Schema for Committee Schedule Minutes [GET /irb/api/v1/committee-schedule-minutes/]
@@ -99,7 +101,7 @@
 
     + Body
     
-            {"columns":["commScheduleMinutesId","scheduleIdFk","entryNumber","minuteEntryTypeCode","protocolIdFk","commScheduleActItemsIdFk","submissionIdFk","privateCommentFlag","protocolContingencyCode","minuteEntry","finalFlag","createTimestamp","createUser","protocolReviewerIdFk","protocolOnlineReviewIdFk"],"primaryKey":"commScheduleMinutesId"}
+            {"columns":["commScheduleMinutesId","scheduleIdFk","entryNumber","minuteEntryTypeCode","protocolIdFk","protocolNumber","submissionNumber","commScheduleActItemsIdFk","submissionIdFk","privateCommentFlag","protocolContingencyCode","minuteEntry","finalFlag","createTimestamp","createUser","protocolReviewerIdFk","protocolOnlineReviewIdFk"],"primaryKey":"commScheduleMinutesId"}
 		
 ### Get Blueprint API specification for Committee Schedule Minutes [GET /irb/api/v1/committee-schedule-minutes/]
 	 
@@ -131,7 +133,7 @@
 
     + Body
     
-            {"commScheduleMinutesId": "(val)","scheduleIdFk": "(val)","entryNumber": "(val)","minuteEntryTypeCode": "(val)","protocolIdFk": "(val)","commScheduleActItemsIdFk": "(val)","submissionIdFk": "(val)","privateCommentFlag": "(val)","protocolContingencyCode": "(val)","minuteEntry": "(val)","finalFlag": "(val)","createTimestamp": "(val)","createUser": "(val)","protocolReviewerIdFk": "(val)","protocolOnlineReviewIdFk": "(val)","_primaryKey": "(val)"}
+            {"commScheduleMinutesId": "(val)","scheduleIdFk": "(val)","entryNumber": "(val)","minuteEntryTypeCode": "(val)","protocolIdFk": "(val)","protocolNumber": "(val)","submissionNumber": "(val)","commScheduleActItemsIdFk": "(val)","submissionIdFk": "(val)","privateCommentFlag": "(val)","protocolContingencyCode": "(val)","minuteEntry": "(val)","finalFlag": "(val)","createTimestamp": "(val)","createUser": "(val)","protocolReviewerIdFk": "(val)","protocolOnlineReviewIdFk": "(val)","_primaryKey": "(val)"}
 			
 + Response 204
 
@@ -147,11 +149,29 @@
     + Body
     
             [
-              {"commScheduleMinutesId": "(val)","scheduleIdFk": "(val)","entryNumber": "(val)","minuteEntryTypeCode": "(val)","protocolIdFk": "(val)","commScheduleActItemsIdFk": "(val)","submissionIdFk": "(val)","privateCommentFlag": "(val)","protocolContingencyCode": "(val)","minuteEntry": "(val)","finalFlag": "(val)","createTimestamp": "(val)","createUser": "(val)","protocolReviewerIdFk": "(val)","protocolOnlineReviewIdFk": "(val)","_primaryKey": "(val)"},
-              {"commScheduleMinutesId": "(val)","scheduleIdFk": "(val)","entryNumber": "(val)","minuteEntryTypeCode": "(val)","protocolIdFk": "(val)","commScheduleActItemsIdFk": "(val)","submissionIdFk": "(val)","privateCommentFlag": "(val)","protocolContingencyCode": "(val)","minuteEntry": "(val)","finalFlag": "(val)","createTimestamp": "(val)","createUser": "(val)","protocolReviewerIdFk": "(val)","protocolOnlineReviewIdFk": "(val)","_primaryKey": "(val)"}
+              {"commScheduleMinutesId": "(val)","scheduleIdFk": "(val)","entryNumber": "(val)","minuteEntryTypeCode": "(val)","protocolIdFk": "(val)","protocolNumber": "(val)","submissionNumber": "(val)","commScheduleActItemsIdFk": "(val)","submissionIdFk": "(val)","privateCommentFlag": "(val)","protocolContingencyCode": "(val)","minuteEntry": "(val)","finalFlag": "(val)","createTimestamp": "(val)","createUser": "(val)","protocolReviewerIdFk": "(val)","protocolOnlineReviewIdFk": "(val)","_primaryKey": "(val)"},
+              {"commScheduleMinutesId": "(val)","scheduleIdFk": "(val)","entryNumber": "(val)","minuteEntryTypeCode": "(val)","protocolIdFk": "(val)","protocolNumber": "(val)","submissionNumber": "(val)","commScheduleActItemsIdFk": "(val)","submissionIdFk": "(val)","privateCommentFlag": "(val)","protocolContingencyCode": "(val)","minuteEntry": "(val)","finalFlag": "(val)","createTimestamp": "(val)","createUser": "(val)","protocolReviewerIdFk": "(val)","protocolOnlineReviewIdFk": "(val)","_primaryKey": "(val)"}
             ]
 			
 + Response 204
+### Update Specific Attributes Committee Schedule Minutes [PATCH /irb/api/v1/committee-schedule-minutes/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"commScheduleMinutesId": "(val)","scheduleIdFk": "(val)","entryNumber": "(val)","minuteEntryTypeCode": "(val)","protocolIdFk": "(val)","protocolNumber": "(val)","submissionNumber": "(val)","commScheduleActItemsIdFk": "(val)","submissionIdFk": "(val)","privateCommentFlag": "(val)","protocolContingencyCode": "(val)","minuteEntry": "(val)","finalFlag": "(val)","createTimestamp": "(val)","createUser": "(val)","protocolReviewerIdFk": "(val)","protocolOnlineReviewIdFk": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"commScheduleMinutesId": "(val)","scheduleIdFk": "(val)","entryNumber": "(val)","minuteEntryTypeCode": "(val)","protocolIdFk": "(val)","protocolNumber": "(val)","submissionNumber": "(val)","commScheduleActItemsIdFk": "(val)","submissionIdFk": "(val)","privateCommentFlag": "(val)","protocolContingencyCode": "(val)","minuteEntry": "(val)","finalFlag": "(val)","createTimestamp": "(val)","createUser": "(val)","protocolReviewerIdFk": "(val)","protocolOnlineReviewIdFk": "(val)","_primaryKey": "(val)"}
 ### Insert Committee Schedule Minutes [POST /irb/api/v1/committee-schedule-minutes/]
 
 + Request
@@ -163,13 +183,13 @@
 
     + Body
     
-            {"commScheduleMinutesId": "(val)","scheduleIdFk": "(val)","entryNumber": "(val)","minuteEntryTypeCode": "(val)","protocolIdFk": "(val)","commScheduleActItemsIdFk": "(val)","submissionIdFk": "(val)","privateCommentFlag": "(val)","protocolContingencyCode": "(val)","minuteEntry": "(val)","finalFlag": "(val)","createTimestamp": "(val)","createUser": "(val)","protocolReviewerIdFk": "(val)","protocolOnlineReviewIdFk": "(val)","_primaryKey": "(val)"}
+            {"commScheduleMinutesId": "(val)","scheduleIdFk": "(val)","entryNumber": "(val)","minuteEntryTypeCode": "(val)","protocolIdFk": "(val)","protocolNumber": "(val)","submissionNumber": "(val)","commScheduleActItemsIdFk": "(val)","submissionIdFk": "(val)","privateCommentFlag": "(val)","protocolContingencyCode": "(val)","minuteEntry": "(val)","finalFlag": "(val)","createTimestamp": "(val)","createUser": "(val)","protocolReviewerIdFk": "(val)","protocolOnlineReviewIdFk": "(val)","_primaryKey": "(val)"}
 			
 + Response 201
     
     + Body
             
-            {"commScheduleMinutesId": "(val)","scheduleIdFk": "(val)","entryNumber": "(val)","minuteEntryTypeCode": "(val)","protocolIdFk": "(val)","commScheduleActItemsIdFk": "(val)","submissionIdFk": "(val)","privateCommentFlag": "(val)","protocolContingencyCode": "(val)","minuteEntry": "(val)","finalFlag": "(val)","createTimestamp": "(val)","createUser": "(val)","protocolReviewerIdFk": "(val)","protocolOnlineReviewIdFk": "(val)","_primaryKey": "(val)"}
+            {"commScheduleMinutesId": "(val)","scheduleIdFk": "(val)","entryNumber": "(val)","minuteEntryTypeCode": "(val)","protocolIdFk": "(val)","protocolNumber": "(val)","submissionNumber": "(val)","commScheduleActItemsIdFk": "(val)","submissionIdFk": "(val)","privateCommentFlag": "(val)","protocolContingencyCode": "(val)","minuteEntry": "(val)","finalFlag": "(val)","createTimestamp": "(val)","createUser": "(val)","protocolReviewerIdFk": "(val)","protocolOnlineReviewIdFk": "(val)","_primaryKey": "(val)"}
             
 ### Insert Multiple Committee Schedule Minutes [POST /irb/api/v1/committee-schedule-minutes/]
 
@@ -183,8 +203,8 @@
     + Body
     
             [
-              {"commScheduleMinutesId": "(val)","scheduleIdFk": "(val)","entryNumber": "(val)","minuteEntryTypeCode": "(val)","protocolIdFk": "(val)","commScheduleActItemsIdFk": "(val)","submissionIdFk": "(val)","privateCommentFlag": "(val)","protocolContingencyCode": "(val)","minuteEntry": "(val)","finalFlag": "(val)","createTimestamp": "(val)","createUser": "(val)","protocolReviewerIdFk": "(val)","protocolOnlineReviewIdFk": "(val)","_primaryKey": "(val)"},
-              {"commScheduleMinutesId": "(val)","scheduleIdFk": "(val)","entryNumber": "(val)","minuteEntryTypeCode": "(val)","protocolIdFk": "(val)","commScheduleActItemsIdFk": "(val)","submissionIdFk": "(val)","privateCommentFlag": "(val)","protocolContingencyCode": "(val)","minuteEntry": "(val)","finalFlag": "(val)","createTimestamp": "(val)","createUser": "(val)","protocolReviewerIdFk": "(val)","protocolOnlineReviewIdFk": "(val)","_primaryKey": "(val)"}
+              {"commScheduleMinutesId": "(val)","scheduleIdFk": "(val)","entryNumber": "(val)","minuteEntryTypeCode": "(val)","protocolIdFk": "(val)","protocolNumber": "(val)","submissionNumber": "(val)","commScheduleActItemsIdFk": "(val)","submissionIdFk": "(val)","privateCommentFlag": "(val)","protocolContingencyCode": "(val)","minuteEntry": "(val)","finalFlag": "(val)","createTimestamp": "(val)","createUser": "(val)","protocolReviewerIdFk": "(val)","protocolOnlineReviewIdFk": "(val)","_primaryKey": "(val)"},
+              {"commScheduleMinutesId": "(val)","scheduleIdFk": "(val)","entryNumber": "(val)","minuteEntryTypeCode": "(val)","protocolIdFk": "(val)","protocolNumber": "(val)","submissionNumber": "(val)","commScheduleActItemsIdFk": "(val)","submissionIdFk": "(val)","privateCommentFlag": "(val)","protocolContingencyCode": "(val)","minuteEntry": "(val)","finalFlag": "(val)","createTimestamp": "(val)","createUser": "(val)","protocolReviewerIdFk": "(val)","protocolOnlineReviewIdFk": "(val)","_primaryKey": "(val)"}
             ]
 			
 + Response 201
@@ -192,8 +212,8 @@
     + Body
             
             [
-              {"commScheduleMinutesId": "(val)","scheduleIdFk": "(val)","entryNumber": "(val)","minuteEntryTypeCode": "(val)","protocolIdFk": "(val)","commScheduleActItemsIdFk": "(val)","submissionIdFk": "(val)","privateCommentFlag": "(val)","protocolContingencyCode": "(val)","minuteEntry": "(val)","finalFlag": "(val)","createTimestamp": "(val)","createUser": "(val)","protocolReviewerIdFk": "(val)","protocolOnlineReviewIdFk": "(val)","_primaryKey": "(val)"},
-              {"commScheduleMinutesId": "(val)","scheduleIdFk": "(val)","entryNumber": "(val)","minuteEntryTypeCode": "(val)","protocolIdFk": "(val)","commScheduleActItemsIdFk": "(val)","submissionIdFk": "(val)","privateCommentFlag": "(val)","protocolContingencyCode": "(val)","minuteEntry": "(val)","finalFlag": "(val)","createTimestamp": "(val)","createUser": "(val)","protocolReviewerIdFk": "(val)","protocolOnlineReviewIdFk": "(val)","_primaryKey": "(val)"}
+              {"commScheduleMinutesId": "(val)","scheduleIdFk": "(val)","entryNumber": "(val)","minuteEntryTypeCode": "(val)","protocolIdFk": "(val)","protocolNumber": "(val)","submissionNumber": "(val)","commScheduleActItemsIdFk": "(val)","submissionIdFk": "(val)","privateCommentFlag": "(val)","protocolContingencyCode": "(val)","minuteEntry": "(val)","finalFlag": "(val)","createTimestamp": "(val)","createUser": "(val)","protocolReviewerIdFk": "(val)","protocolOnlineReviewIdFk": "(val)","_primaryKey": "(val)"},
+              {"commScheduleMinutesId": "(val)","scheduleIdFk": "(val)","entryNumber": "(val)","minuteEntryTypeCode": "(val)","protocolIdFk": "(val)","protocolNumber": "(val)","submissionNumber": "(val)","commScheduleActItemsIdFk": "(val)","submissionIdFk": "(val)","privateCommentFlag": "(val)","protocolContingencyCode": "(val)","minuteEntry": "(val)","finalFlag": "(val)","createTimestamp": "(val)","createUser": "(val)","protocolReviewerIdFk": "(val)","protocolOnlineReviewIdFk": "(val)","_primaryKey": "(val)"}
             ]
 ### Delete Committee Schedule Minutes by Key [DELETE /irb/api/v1/committee-schedule-minutes/(key)]
 	 
@@ -231,6 +251,8 @@
     + entryNumber (optional) - Entry Number. Maximum length is 12.
     + minuteEntryTypeCode (optional) - Minute Entry Type Code. Maximum length is 3.
     + protocolIdFk (optional) - Protocol Id Fk. Maximum length is 12.
+    + protocolNumber (optional) - 
+    + submissionNumber (optional) - 
     + commScheduleActItemsIdFk (optional) - CommScheduleActItems Id Fk. Maximum length is 12.
     + submissionIdFk (optional) - Submission Id Fk. Maximum length is 12.
     + privateCommentFlag (optional) - Private Comment Flag. Maximum length is 1.

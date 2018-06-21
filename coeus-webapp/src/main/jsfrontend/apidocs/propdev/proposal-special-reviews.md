@@ -149,6 +149,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Proposal Special Reviews [PATCH /propdev/api/v1/proposal-special-reviews/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","hierarchyProposalNumber": "(val)","hiddenInHierarchy": "(val)","approvalTypeCode": "(val)","approvalDate": "(val)","comments": "(val)","protocolStatus": "(val)","protocolNumber": "(val)","specialReviewTypeCode": "(val)","specialReviewNumber": "(val)","applicationDate": "(val)","expirationDate": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","hierarchyProposalNumber": "(val)","hiddenInHierarchy": "(val)","approvalTypeCode": "(val)","approvalDate": "(val)","comments": "(val)","protocolStatus": "(val)","protocolNumber": "(val)","specialReviewTypeCode": "(val)","specialReviewNumber": "(val)","applicationDate": "(val)","expirationDate": "(val)","_primaryKey": "(val)"}
 ### Insert Proposal Special Reviews [POST /propdev/api/v1/proposal-special-reviews/]
 
 + Request

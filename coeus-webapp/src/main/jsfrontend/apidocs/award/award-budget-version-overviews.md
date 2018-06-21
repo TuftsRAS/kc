@@ -143,6 +143,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Award Budget Version Overviews [PATCH /award/api/v1/award-budget-version-overviews/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"budgetId": "(val)","awardBudgetStatusCode": "(val)","awardBudgetTypeCode": "(val)","obligatedAmount": "(val)","description": "(val)","budgetInitiator": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"budgetId": "(val)","awardBudgetStatusCode": "(val)","awardBudgetTypeCode": "(val)","obligatedAmount": "(val)","description": "(val)","budgetInitiator": "(val)","_primaryKey": "(val)"}
 ### Insert Award Budget Version Overviews [POST /award/api/v1/award-budget-version-overviews/]
 
 + Request

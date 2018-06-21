@@ -16,7 +16,7 @@
 
     + Body
     
-            {"documentComponentId": "(val)","budgetId": "(val)","projectPeriod": "(val)","shareAmount": "(val)","sharePercentage": "(val)","sourceAccount": "(val)","hierarchyProposalNumber": "(val)","hiddenInHierarchy": "(val)","_primaryKey": "(val)"}
+            {"documentComponentId": "(val)","budgetId": "(val)","projectPeriod": "(val)","shareAmount": "(val)","sharePercentage": "(val)","sourceAccount": "(val)","hierarchyProposalNumber": "(val)","hiddenInHierarchy": "(val)","unitNumber": "(val)","costShareTypeCode": "(val)","_primaryKey": "(val)"}
 
 ### Get All Budget Cost Shares [GET /research-common/api/v1/budget-cost-shares/]
 	 
@@ -35,8 +35,8 @@
     + Body
     
             [
-              {"documentComponentId": "(val)","budgetId": "(val)","projectPeriod": "(val)","shareAmount": "(val)","sharePercentage": "(val)","sourceAccount": "(val)","hierarchyProposalNumber": "(val)","hiddenInHierarchy": "(val)","_primaryKey": "(val)"},
-              {"documentComponentId": "(val)","budgetId": "(val)","projectPeriod": "(val)","shareAmount": "(val)","sharePercentage": "(val)","sourceAccount": "(val)","hierarchyProposalNumber": "(val)","hiddenInHierarchy": "(val)","_primaryKey": "(val)"}
+              {"documentComponentId": "(val)","budgetId": "(val)","projectPeriod": "(val)","shareAmount": "(val)","sharePercentage": "(val)","sourceAccount": "(val)","hierarchyProposalNumber": "(val)","hiddenInHierarchy": "(val)","unitNumber": "(val)","costShareTypeCode": "(val)","_primaryKey": "(val)"},
+              {"documentComponentId": "(val)","budgetId": "(val)","projectPeriod": "(val)","shareAmount": "(val)","sharePercentage": "(val)","sourceAccount": "(val)","hierarchyProposalNumber": "(val)","hiddenInHierarchy": "(val)","unitNumber": "(val)","costShareTypeCode": "(val)","_primaryKey": "(val)"}
             ]
 
 ### Get All Budget Cost Shares with Filtering [GET /research-common/api/v1/budget-cost-shares/]
@@ -51,6 +51,8 @@
     + sourceAccount (optional) - Source Account. Maximum length is 32.
     + hierarchyProposalNumber (optional) - Hierarchy Proposal Number.
     + hiddenInHierarchy (optional) - Hidden In Hierarchy.
+    + unitNumber (optional) - Unit Number. Maximum length is 8.
+    + costShareTypeCode (optional) - Cost Share Type Code.
 
             
 + Request
@@ -68,8 +70,8 @@
     + Body
     
             [
-              {"documentComponentId": "(val)","budgetId": "(val)","projectPeriod": "(val)","shareAmount": "(val)","sharePercentage": "(val)","sourceAccount": "(val)","hierarchyProposalNumber": "(val)","hiddenInHierarchy": "(val)","_primaryKey": "(val)"},
-              {"documentComponentId": "(val)","budgetId": "(val)","projectPeriod": "(val)","shareAmount": "(val)","sharePercentage": "(val)","sourceAccount": "(val)","hierarchyProposalNumber": "(val)","hiddenInHierarchy": "(val)","_primaryKey": "(val)"}
+              {"documentComponentId": "(val)","budgetId": "(val)","projectPeriod": "(val)","shareAmount": "(val)","sharePercentage": "(val)","sourceAccount": "(val)","hierarchyProposalNumber": "(val)","hiddenInHierarchy": "(val)","unitNumber": "(val)","costShareTypeCode": "(val)","_primaryKey": "(val)"},
+              {"documentComponentId": "(val)","budgetId": "(val)","projectPeriod": "(val)","shareAmount": "(val)","sharePercentage": "(val)","sourceAccount": "(val)","hierarchyProposalNumber": "(val)","hiddenInHierarchy": "(val)","unitNumber": "(val)","costShareTypeCode": "(val)","_primaryKey": "(val)"}
             ]
 			
 ### Get Schema for Budget Cost Shares [GET /research-common/api/v1/budget-cost-shares/]
@@ -92,7 +94,7 @@
 
     + Body
     
-            {"columns":["documentComponentId","budgetId","projectPeriod","shareAmount","sharePercentage","sourceAccount","hierarchyProposalNumber","hiddenInHierarchy"],"primaryKey":"budget:budgetId:documentComponentId"}
+            {"columns":["documentComponentId","budgetId","projectPeriod","shareAmount","sharePercentage","sourceAccount","hierarchyProposalNumber","hiddenInHierarchy","unitNumber","costShareTypeCode"],"primaryKey":"budget:budgetId:documentComponentId"}
 		
 ### Get Blueprint API specification for Budget Cost Shares [GET /research-common/api/v1/budget-cost-shares/]
 	 
@@ -124,7 +126,7 @@
 
     + Body
     
-            {"documentComponentId": "(val)","budgetId": "(val)","projectPeriod": "(val)","shareAmount": "(val)","sharePercentage": "(val)","sourceAccount": "(val)","hierarchyProposalNumber": "(val)","hiddenInHierarchy": "(val)","_primaryKey": "(val)"}
+            {"documentComponentId": "(val)","budgetId": "(val)","projectPeriod": "(val)","shareAmount": "(val)","sharePercentage": "(val)","sourceAccount": "(val)","hierarchyProposalNumber": "(val)","hiddenInHierarchy": "(val)","unitNumber": "(val)","costShareTypeCode": "(val)","_primaryKey": "(val)"}
 			
 + Response 204
 
@@ -140,11 +142,29 @@
     + Body
     
             [
-              {"documentComponentId": "(val)","budgetId": "(val)","projectPeriod": "(val)","shareAmount": "(val)","sharePercentage": "(val)","sourceAccount": "(val)","hierarchyProposalNumber": "(val)","hiddenInHierarchy": "(val)","_primaryKey": "(val)"},
-              {"documentComponentId": "(val)","budgetId": "(val)","projectPeriod": "(val)","shareAmount": "(val)","sharePercentage": "(val)","sourceAccount": "(val)","hierarchyProposalNumber": "(val)","hiddenInHierarchy": "(val)","_primaryKey": "(val)"}
+              {"documentComponentId": "(val)","budgetId": "(val)","projectPeriod": "(val)","shareAmount": "(val)","sharePercentage": "(val)","sourceAccount": "(val)","hierarchyProposalNumber": "(val)","hiddenInHierarchy": "(val)","unitNumber": "(val)","costShareTypeCode": "(val)","_primaryKey": "(val)"},
+              {"documentComponentId": "(val)","budgetId": "(val)","projectPeriod": "(val)","shareAmount": "(val)","sharePercentage": "(val)","sourceAccount": "(val)","hierarchyProposalNumber": "(val)","hiddenInHierarchy": "(val)","unitNumber": "(val)","costShareTypeCode": "(val)","_primaryKey": "(val)"}
             ]
 			
 + Response 204
+### Update Specific Attributes Budget Cost Shares [PATCH /research-common/api/v1/budget-cost-shares/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"documentComponentId": "(val)","budgetId": "(val)","projectPeriod": "(val)","shareAmount": "(val)","sharePercentage": "(val)","sourceAccount": "(val)","hierarchyProposalNumber": "(val)","hiddenInHierarchy": "(val)","unitNumber": "(val)","costShareTypeCode": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"documentComponentId": "(val)","budgetId": "(val)","projectPeriod": "(val)","shareAmount": "(val)","sharePercentage": "(val)","sourceAccount": "(val)","hierarchyProposalNumber": "(val)","hiddenInHierarchy": "(val)","unitNumber": "(val)","costShareTypeCode": "(val)","_primaryKey": "(val)"}
 ### Insert Budget Cost Shares [POST /research-common/api/v1/budget-cost-shares/]
 
 + Request
@@ -156,13 +176,13 @@
 
     + Body
     
-            {"documentComponentId": "(val)","budgetId": "(val)","projectPeriod": "(val)","shareAmount": "(val)","sharePercentage": "(val)","sourceAccount": "(val)","hierarchyProposalNumber": "(val)","hiddenInHierarchy": "(val)","_primaryKey": "(val)"}
+            {"documentComponentId": "(val)","budgetId": "(val)","projectPeriod": "(val)","shareAmount": "(val)","sharePercentage": "(val)","sourceAccount": "(val)","hierarchyProposalNumber": "(val)","hiddenInHierarchy": "(val)","unitNumber": "(val)","costShareTypeCode": "(val)","_primaryKey": "(val)"}
 			
 + Response 201
     
     + Body
             
-            {"documentComponentId": "(val)","budgetId": "(val)","projectPeriod": "(val)","shareAmount": "(val)","sharePercentage": "(val)","sourceAccount": "(val)","hierarchyProposalNumber": "(val)","hiddenInHierarchy": "(val)","_primaryKey": "(val)"}
+            {"documentComponentId": "(val)","budgetId": "(val)","projectPeriod": "(val)","shareAmount": "(val)","sharePercentage": "(val)","sourceAccount": "(val)","hierarchyProposalNumber": "(val)","hiddenInHierarchy": "(val)","unitNumber": "(val)","costShareTypeCode": "(val)","_primaryKey": "(val)"}
             
 ### Insert Multiple Budget Cost Shares [POST /research-common/api/v1/budget-cost-shares/]
 
@@ -176,8 +196,8 @@
     + Body
     
             [
-              {"documentComponentId": "(val)","budgetId": "(val)","projectPeriod": "(val)","shareAmount": "(val)","sharePercentage": "(val)","sourceAccount": "(val)","hierarchyProposalNumber": "(val)","hiddenInHierarchy": "(val)","_primaryKey": "(val)"},
-              {"documentComponentId": "(val)","budgetId": "(val)","projectPeriod": "(val)","shareAmount": "(val)","sharePercentage": "(val)","sourceAccount": "(val)","hierarchyProposalNumber": "(val)","hiddenInHierarchy": "(val)","_primaryKey": "(val)"}
+              {"documentComponentId": "(val)","budgetId": "(val)","projectPeriod": "(val)","shareAmount": "(val)","sharePercentage": "(val)","sourceAccount": "(val)","hierarchyProposalNumber": "(val)","hiddenInHierarchy": "(val)","unitNumber": "(val)","costShareTypeCode": "(val)","_primaryKey": "(val)"},
+              {"documentComponentId": "(val)","budgetId": "(val)","projectPeriod": "(val)","shareAmount": "(val)","sharePercentage": "(val)","sourceAccount": "(val)","hierarchyProposalNumber": "(val)","hiddenInHierarchy": "(val)","unitNumber": "(val)","costShareTypeCode": "(val)","_primaryKey": "(val)"}
             ]
 			
 + Response 201
@@ -185,8 +205,8 @@
     + Body
             
             [
-              {"documentComponentId": "(val)","budgetId": "(val)","projectPeriod": "(val)","shareAmount": "(val)","sharePercentage": "(val)","sourceAccount": "(val)","hierarchyProposalNumber": "(val)","hiddenInHierarchy": "(val)","_primaryKey": "(val)"},
-              {"documentComponentId": "(val)","budgetId": "(val)","projectPeriod": "(val)","shareAmount": "(val)","sharePercentage": "(val)","sourceAccount": "(val)","hierarchyProposalNumber": "(val)","hiddenInHierarchy": "(val)","_primaryKey": "(val)"}
+              {"documentComponentId": "(val)","budgetId": "(val)","projectPeriod": "(val)","shareAmount": "(val)","sharePercentage": "(val)","sourceAccount": "(val)","hierarchyProposalNumber": "(val)","hiddenInHierarchy": "(val)","unitNumber": "(val)","costShareTypeCode": "(val)","_primaryKey": "(val)"},
+              {"documentComponentId": "(val)","budgetId": "(val)","projectPeriod": "(val)","shareAmount": "(val)","sharePercentage": "(val)","sourceAccount": "(val)","hierarchyProposalNumber": "(val)","hiddenInHierarchy": "(val)","unitNumber": "(val)","costShareTypeCode": "(val)","_primaryKey": "(val)"}
             ]
 ### Delete Budget Cost Shares by Key [DELETE /research-common/api/v1/budget-cost-shares/(key)]
 	 
@@ -227,6 +247,8 @@
     + sourceAccount (optional) - Source Account. Maximum length is 32.
     + hierarchyProposalNumber (optional) - Hierarchy Proposal Number.
     + hiddenInHierarchy (optional) - Hidden In Hierarchy.
+    + unitNumber (optional) - Unit Number. Maximum length is 8.
+    + costShareTypeCode (optional) - Cost Share Type Code.
 
       
 + Request

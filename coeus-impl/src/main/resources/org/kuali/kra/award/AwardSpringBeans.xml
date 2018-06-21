@@ -1494,8 +1494,8 @@
     <bean parent="simpleCrudMapBasedRestController" p:dataObjectClazz="org.kuali.kra.award.paymentreports.awardreports.AwardReportTerm" />
     <bean parent="simpleCrudMapBasedRestController" p:dataObjectClazz="org.kuali.kra.award.paymentreports.awardreports.AwardReportTermRecipient" />
     <bean parent="simpleReadOnlyMapBasedRestController" p:dataObjectClazz="org.kuali.kra.award.home.keywords.AwardScienceKeyword" />
-    <bean parent="simpleReadOnlyMapBasedRestController" p:dataObjectClazz="org.kuali.kra.award.specialreview.AwardSpecialReview" />
-    <bean parent="simpleReadOnlyMapBasedRestController" p:dataObjectClazz="org.kuali.kra.award.specialreview.AwardSpecialReviewExemption" />
+    <bean parent="simpleReadUpdateOnlyMapBasedRestController" p:dataObjectClazz="org.kuali.kra.award.specialreview.AwardSpecialReview" />
+    <bean parent="simpleCrudMapBasedRestController" p:dataObjectClazz="org.kuali.kra.award.specialreview.AwardSpecialReviewExemption" />
     <bean parent="simpleReadOnlyMapBasedRestController" p:dataObjectClazz="org.kuali.kra.award.contacts.AwardSponsorContact" />
     <bean parent="simpleReadOnlyMapBasedRestController" p:dataObjectClazz="org.kuali.kra.award.home.AwardSponsorTerm" />
     <bean parent="simpleCrudMapBasedRestController" p:dataObjectClazz="org.kuali.kra.award.home.AwardStatus" />

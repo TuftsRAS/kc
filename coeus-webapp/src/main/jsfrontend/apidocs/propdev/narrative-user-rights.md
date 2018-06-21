@@ -141,6 +141,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Narrative User Rights [PATCH /propdev/api/v1/narrative-user-rights/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"moduleNumber": "(val)","proposalNumber": "(val)","userId": "(val)","accessType": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"moduleNumber": "(val)","proposalNumber": "(val)","userId": "(val)","accessType": "(val)","_primaryKey": "(val)"}
 ### Insert Narrative User Rights [POST /propdev/api/v1/narrative-user-rights/]
 
 + Request

@@ -143,6 +143,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Award Amount Transactions [PATCH /award/api/v1/award-amount-transactions/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"awardAmountTransactionId": "(val)","awardNumber": "(val)","documentNumber": "(val)","transactionTypeCode": "(val)","noticeDate": "(val)","comments": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"awardAmountTransactionId": "(val)","awardNumber": "(val)","documentNumber": "(val)","transactionTypeCode": "(val)","noticeDate": "(val)","comments": "(val)","_primaryKey": "(val)"}
 ### Insert Award Amount Transactions [POST /award/api/v1/award-amount-transactions/]
 
 + Request

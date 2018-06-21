@@ -140,6 +140,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Proposal Log Person Mass Changes [PATCH /instprop/api/v1/proposal-log-person-mass-changes/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"proposalLogPersonMassChangeId": "(val)","personMassChangeId": "(val)","principalInvestigator": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"proposalLogPersonMassChangeId": "(val)","personMassChangeId": "(val)","principalInvestigator": "(val)","_primaryKey": "(val)"}
 ### Insert Proposal Log Person Mass Changes [POST /instprop/api/v1/proposal-log-person-mass-changes/]
 
 + Request

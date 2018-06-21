@@ -140,6 +140,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Correspondent Types [PATCH /irb/api/v1/correspondent-types/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"correspondentTypeCode": "(val)","description": "(val)","qualifier": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"correspondentTypeCode": "(val)","description": "(val)","qualifier": "(val)","_primaryKey": "(val)"}
 ### Insert Correspondent Types [POST /irb/api/v1/correspondent-types/]
 
 + Request

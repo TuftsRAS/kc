@@ -141,6 +141,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Investigator Credit Types [PATCH /research-common/api/v1/investigator-credit-types/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"code": "(val)","addsToHundred": "(val)","active": "(val)","description": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"code": "(val)","addsToHundred": "(val)","active": "(val)","description": "(val)","_primaryKey": "(val)"}
 ### Insert Investigator Credit Types [POST /research-common/api/v1/investigator-credit-types/]
 
 + Request

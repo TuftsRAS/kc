@@ -144,6 +144,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Delegate Members [PATCH /research-sys/api/v1/delegate-members/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"delegationMemberId": "(val)","delegationId": "(val)","roleMemberId": "(val)","activeFromDateValue": "(val)","activeToDateValue": "(val)","memberId": "(val)","typeCode": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"delegationMemberId": "(val)","delegationId": "(val)","roleMemberId": "(val)","activeFromDateValue": "(val)","activeToDateValue": "(val)","memberId": "(val)","typeCode": "(val)","_primaryKey": "(val)"}
 ### Insert Delegate Members [POST /research-sys/api/v1/delegate-members/]
 
 + Request

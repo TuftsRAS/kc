@@ -142,6 +142,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Person Signature Modules [PATCH /research-common/api/v1/person-signature-modules/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"personSignatureModuleId": "(val)","personSignatureId": "(val)","defaultSignature": "(val)","signatureActive": "(val)","moduleCode": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"personSignatureModuleId": "(val)","personSignatureId": "(val)","defaultSignature": "(val)","signatureActive": "(val)","moduleCode": "(val)","_primaryKey": "(val)"}
 ### Insert Person Signature Modules [POST /research-common/api/v1/person-signature-modules/]
 
 + Request

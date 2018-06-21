@@ -140,6 +140,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Iacuc Location Names [PATCH /iacuc/api/v1/iacuc-location-names/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"locationId": "(val)","locationName": "(val)","locationTypeCode": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"locationId": "(val)","locationName": "(val)","locationTypeCode": "(val)","_primaryKey": "(val)"}
 ### Insert Iacuc Location Names [POST /iacuc/api/v1/iacuc-location-names/]
 
 + Request

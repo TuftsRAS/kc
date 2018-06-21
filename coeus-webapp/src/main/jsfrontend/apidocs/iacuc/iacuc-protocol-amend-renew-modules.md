@@ -142,6 +142,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Iacuc Protocol Amend Renew Modules [PATCH /iacuc/api/v1/iacuc-protocol-amend-renew-modules/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"protocolAmendRenewModuleId": "(val)","protocolAmendRenewalNumber": "(val)","protocolAmendRenewalId": "(val)","protocolNumber": "(val)","protocolModuleTypeCode": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"protocolAmendRenewModuleId": "(val)","protocolAmendRenewalNumber": "(val)","protocolAmendRenewalId": "(val)","protocolNumber": "(val)","protocolModuleTypeCode": "(val)","_primaryKey": "(val)"}
 ### Insert Iacuc Protocol Amend Renew Modules [POST /iacuc/api/v1/iacuc-protocol-amend-renew-modules/]
 
 + Request

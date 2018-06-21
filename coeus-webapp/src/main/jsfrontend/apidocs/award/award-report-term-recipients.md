@@ -143,6 +143,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Award Report Term Recipients [PATCH /award/api/v1/award-report-term-recipients/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"awardReportTermRecipientId": "(val)","contactId": "(val)","contactTypeCode": "(val)","rolodexId": "(val)","numberOfCopies": "(val)","awardReportTerm.awardReportTermId": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"awardReportTermRecipientId": "(val)","contactId": "(val)","contactTypeCode": "(val)","rolodexId": "(val)","numberOfCopies": "(val)","awardReportTerm.awardReportTermId": "(val)","_primaryKey": "(val)"}
 ### Insert Award Report Term Recipients [POST /award/api/v1/award-report-term-recipients/]
 
 + Request

@@ -147,6 +147,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Role Document Delegation Members [PATCH /research-sys/api/v1/role-document-delegation-members/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"delegationMemberId": "(val)","roleMemberId": "(val)","delegationId": "(val)","memberId": "(val)","memberTypeCode": "(val)","memberName": "(val)","activeFromDate": "(val)","activeToDate": "(val)","documentNumber": "(val)","active": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"delegationMemberId": "(val)","roleMemberId": "(val)","delegationId": "(val)","memberId": "(val)","memberTypeCode": "(val)","memberName": "(val)","activeFromDate": "(val)","activeToDate": "(val)","documentNumber": "(val)","active": "(val)","_primaryKey": "(val)"}
 ### Insert Role Document Delegation Members [POST /research-sys/api/v1/role-document-delegation-members/]
 
 + Request

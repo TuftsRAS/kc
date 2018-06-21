@@ -140,6 +140,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Financial Indirect Cost Recovery Type Codes [PATCH /award/api/v1/financial-indirect-cost-recovery-type-codes/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"icrTypeCode": "(val)","rateClassCode": "(val)","rateTypeCode": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"icrTypeCode": "(val)","rateClassCode": "(val)","rateTypeCode": "(val)","_primaryKey": "(val)"}
 ### Insert Financial Indirect Cost Recovery Type Codes [POST /award/api/v1/financial-indirect-cost-recovery-type-codes/]
 
 + Request

@@ -139,6 +139,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Committee Types [PATCH /research-common/api/v1/committee-types/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"committeeTypeCode": "(val)","description": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"committeeTypeCode": "(val)","description": "(val)","_primaryKey": "(val)"}
 ### Insert Committee Types [POST /research-common/api/v1/committee-types/]
 
 + Request

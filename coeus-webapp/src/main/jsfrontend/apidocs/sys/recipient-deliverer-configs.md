@@ -142,6 +142,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Recipient Deliverer Configs [PATCH /research-sys/api/v1/recipient-deliverer-configs/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","recipientId": "(val)","delivererName": "(val)","channel": "(val)","lockVerNbr": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","recipientId": "(val)","delivererName": "(val)","channel": "(val)","lockVerNbr": "(val)","_primaryKey": "(val)"}
 ### Insert Recipient Deliverer Configs [POST /research-sys/api/v1/recipient-deliverer-configs/]
 
 + Request

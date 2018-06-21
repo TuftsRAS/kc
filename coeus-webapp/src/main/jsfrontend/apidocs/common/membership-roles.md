@@ -140,6 +140,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Membership Roles [PATCH /research-common/api/v1/membership-roles/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"membershipRoleCode": "(val)","description": "(val)","committeeTypeCode": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"membershipRoleCode": "(val)","description": "(val)","committeeTypeCode": "(val)","_primaryKey": "(val)"}
 ### Insert Membership Roles [POST /research-common/api/v1/membership-roles/]
 
 + Request

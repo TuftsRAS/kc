@@ -151,6 +151,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Iacuc Protocol Species [PATCH /iacuc/api/v1/iacuc-protocol-species/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"iacucProtocolSpeciesId": "(val)","protocolId": "(val)","protocolNumber": "(val)","sequenceNumber": "(val)","speciesId": "(val)","speciesCode": "(val)","speciesGroup": "(val)","usdaCovered": "(val)","strain": "(val)","speciesCount": "(val)","painCategoryCode": "(val)","speciesCountCode": "(val)","procedureSummary": "(val)","exceptionsPresent": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"iacucProtocolSpeciesId": "(val)","protocolId": "(val)","protocolNumber": "(val)","sequenceNumber": "(val)","speciesId": "(val)","speciesCode": "(val)","speciesGroup": "(val)","usdaCovered": "(val)","strain": "(val)","speciesCount": "(val)","painCategoryCode": "(val)","speciesCountCode": "(val)","procedureSummary": "(val)","exceptionsPresent": "(val)","_primaryKey": "(val)"}
 ### Insert Iacuc Protocol Species [POST /iacuc/api/v1/iacuc-protocol-species/]
 
 + Request

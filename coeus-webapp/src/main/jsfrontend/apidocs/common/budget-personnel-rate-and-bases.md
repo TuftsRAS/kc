@@ -61,7 +61,7 @@
     + onOffCampusFlag (optional) - On CampusContract?. Maximum length is 1.
     + rateClassCode (optional) - Rate Class. Maximum length is 3.
     + calculatedCostSharing (optional) - Calculated Cost Sharing. Maximum length is 15.
-    + lineItemNumber (optional) - Line Item Number. Maximum length is 3.
+    + lineItemNumber (optional) - Line Item Number. Maximum length is 6.
     + startDate (optional) - Start Date. Maximum length is 21.
 
             
@@ -157,6 +157,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Budget Personnel Rate And Bases [PATCH /research-common/api/v1/budget-personnel-rate-and-bases/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"budgetPersonnelRateAndBaseId": "(val)","budgetPersonnelCalculatedAmountId": "(val)","budgetPersonnelLineItemId": "(val)","personId": "(val)","personNumber": "(val)","salaryRequested": "(val)","baseCostSharing": "(val)","budgetPeriodId": "(val)","endDate": "(val)","rateTypeCode": "(val)","budgetId": "(val)","rateNumber": "(val)","appliedRate": "(val)","budgetPeriod": "(val)","calculatedCost": "(val)","onOffCampusFlag": "(val)","rateClassCode": "(val)","calculatedCostSharing": "(val)","lineItemNumber": "(val)","startDate": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"budgetPersonnelRateAndBaseId": "(val)","budgetPersonnelCalculatedAmountId": "(val)","budgetPersonnelLineItemId": "(val)","personId": "(val)","personNumber": "(val)","salaryRequested": "(val)","baseCostSharing": "(val)","budgetPeriodId": "(val)","endDate": "(val)","rateTypeCode": "(val)","budgetId": "(val)","rateNumber": "(val)","appliedRate": "(val)","budgetPeriod": "(val)","calculatedCost": "(val)","onOffCampusFlag": "(val)","rateClassCode": "(val)","calculatedCostSharing": "(val)","lineItemNumber": "(val)","startDate": "(val)","_primaryKey": "(val)"}
 ### Insert Budget Personnel Rate And Bases [POST /research-common/api/v1/budget-personnel-rate-and-bases/]
 
 + Request
@@ -249,7 +267,7 @@
     + onOffCampusFlag (optional) - On CampusContract?. Maximum length is 1.
     + rateClassCode (optional) - Rate Class. Maximum length is 3.
     + calculatedCostSharing (optional) - Calculated Cost Sharing. Maximum length is 15.
-    + lineItemNumber (optional) - Line Item Number. Maximum length is 3.
+    + lineItemNumber (optional) - Line Item Number. Maximum length is 6.
     + startDate (optional) - Start Date. Maximum length is 21.
 
       

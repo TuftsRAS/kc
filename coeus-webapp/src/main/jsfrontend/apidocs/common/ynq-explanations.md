@@ -140,6 +140,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Ynq Explanations [PATCH /research-common/api/v1/ynq-explanations/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"explanationType": "(val)","questionId": "(val)","explanation": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"explanationType": "(val)","questionId": "(val)","explanation": "(val)","_primaryKey": "(val)"}
 ### Insert Ynq Explanations [POST /research-common/api/v1/ynq-explanations/]
 
 + Request

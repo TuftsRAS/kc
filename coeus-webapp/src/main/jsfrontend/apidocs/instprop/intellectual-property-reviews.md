@@ -43,7 +43,7 @@
     
 + Parameters
 
-    + ipReviewer (optional) - Reviewer. Maximum length is 40.
+    + ipReviewer (optional) - KcPerson Id. Maximum length is 40.
     + ipReviewRequirementTypeCode (optional) - Review Requirement. Maximum length is 22.
     + ipReviewSequenceStatus (optional) - 
     + reviewSubmissionDate (optional) - Submitted for Review. Maximum length is 10.
@@ -146,6 +146,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Intellectual Property Reviews [PATCH /instprop/api/v1/intellectual-property-reviews/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"ipReviewer": "(val)","ipReviewRequirementTypeCode": "(val)","ipReviewSequenceStatus": "(val)","reviewSubmissionDate": "(val)","reviewResultCode": "(val)","reviewReceiveDate": "(val)","ipReviewId": "(val)","proposalNumber": "(val)","sequenceNumber": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"ipReviewer": "(val)","ipReviewRequirementTypeCode": "(val)","ipReviewSequenceStatus": "(val)","reviewSubmissionDate": "(val)","reviewResultCode": "(val)","reviewReceiveDate": "(val)","ipReviewId": "(val)","proposalNumber": "(val)","sequenceNumber": "(val)","_primaryKey": "(val)"}
 ### Insert Intellectual Property Reviews [POST /instprop/api/v1/intellectual-property-reviews/]
 
 + Request
@@ -220,7 +238,7 @@
 + Parameters
 
     + _allowMulti (boolean, required) - flag to allow multiple resources to be deleted in one operation
-    + ipReviewer (optional) - Reviewer. Maximum length is 40.
+    + ipReviewer (optional) - KcPerson Id. Maximum length is 40.
     + ipReviewRequirementTypeCode (optional) - Review Requirement. Maximum length is 22.
     + ipReviewSequenceStatus (optional) - 
     + reviewSubmissionDate (optional) - Submitted for Review. Maximum length is 10.

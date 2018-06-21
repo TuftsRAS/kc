@@ -145,6 +145,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Generic Permissions [PATCH /research-sys/api/v1/generic-permissions/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","namespaceCode": "(val)","name": "(val)","description": "(val)","active": "(val)","templateId": "(val)","detailValues": "(val)","details": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","namespaceCode": "(val)","name": "(val)","description": "(val)","active": "(val)","templateId": "(val)","detailValues": "(val)","details": "(val)","_primaryKey": "(val)"}
 ### Insert Generic Permissions [POST /research-sys/api/v1/generic-permissions/]
 
 + Request

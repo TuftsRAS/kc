@@ -144,6 +144,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Award Sync Statuses [PATCH /award/api/v1/award-sync-statuses/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"awardSyncStatusId": "(val)","awardId": "(val)","awardNumber": "(val)","parentAwardId": "(val)","success": "(val)","status": "(val)","syncComplete": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"awardSyncStatusId": "(val)","awardId": "(val)","awardNumber": "(val)","parentAwardId": "(val)","success": "(val)","status": "(val)","syncComplete": "(val)","_primaryKey": "(val)"}
 ### Insert Award Sync Statuses [POST /award/api/v1/award-sync-statuses/]
 
 + Request

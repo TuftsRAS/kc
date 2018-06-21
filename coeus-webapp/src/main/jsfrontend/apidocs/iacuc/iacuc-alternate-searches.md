@@ -145,6 +145,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Iacuc Alternate Searches [PATCH /iacuc/api/v1/iacuc-alternate-searches/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"iacucAltSearchId": "(val)","protocolId": "(val)","protocolNumber": "(val)","sequenceNumber": "(val)","searchDate": "(val)","yearsSearched": "(val)","keywords": "(val)","comments": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"iacucAltSearchId": "(val)","protocolId": "(val)","protocolNumber": "(val)","sequenceNumber": "(val)","searchDate": "(val)","yearsSearched": "(val)","keywords": "(val)","comments": "(val)","_primaryKey": "(val)"}
 ### Insert Iacuc Alternate Searches [POST /iacuc/api/v1/iacuc-alternate-searches/]
 
 + Request

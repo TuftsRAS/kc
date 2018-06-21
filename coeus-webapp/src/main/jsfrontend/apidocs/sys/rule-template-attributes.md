@@ -143,6 +143,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Rule Template Attributes [PATCH /research-sys/api/v1/rule-template-attributes/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","ruleAttributeId": "(val)","required": "(val)","active": "(val)","displayOrder": "(val)","defaultValue": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","ruleAttributeId": "(val)","required": "(val)","active": "(val)","displayOrder": "(val)","defaultValue": "(val)","_primaryKey": "(val)"}
 ### Insert Rule Template Attributes [POST /research-sys/api/v1/rule-template-attributes/]
 
 + Request

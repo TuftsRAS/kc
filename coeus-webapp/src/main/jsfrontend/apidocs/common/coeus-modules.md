@@ -139,6 +139,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Coeus Modules [PATCH /research-common/api/v1/coeus-modules/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"moduleCode": "(val)","description": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"moduleCode": "(val)","description": "(val)","_primaryKey": "(val)"}
 ### Insert Coeus Modules [POST /research-common/api/v1/coeus-modules/]
 
 + Request

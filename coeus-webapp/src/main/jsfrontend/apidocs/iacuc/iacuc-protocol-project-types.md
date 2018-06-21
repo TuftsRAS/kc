@@ -139,6 +139,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Iacuc Protocol Project Types [PATCH /iacuc/api/v1/iacuc-protocol-project-types/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"projectTypeCode": "(val)","description": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"projectTypeCode": "(val)","description": "(val)","_primaryKey": "(val)"}
 ### Insert Iacuc Protocol Project Types [POST /iacuc/api/v1/iacuc-protocol-project-types/]
 
 + Request

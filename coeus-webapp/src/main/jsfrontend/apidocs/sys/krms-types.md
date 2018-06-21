@@ -142,6 +142,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Krms Types [PATCH /research-sys/api/v1/krms-types/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","name": "(val)","namespace": "(val)","serviceName": "(val)","active": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","name": "(val)","namespace": "(val)","serviceName": "(val)","active": "(val)","_primaryKey": "(val)"}
 ### Insert Krms Types [POST /research-sys/api/v1/krms-types/]
 
 + Request

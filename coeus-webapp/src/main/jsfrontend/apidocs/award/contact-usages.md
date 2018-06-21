@@ -140,6 +140,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Contact Usages [PATCH /award/api/v1/contact-usages/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"contactUsageId": "(val)","contactTypeCode": "(val)","moduleCode": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"contactUsageId": "(val)","contactTypeCode": "(val)","moduleCode": "(val)","_primaryKey": "(val)"}
 ### Insert Contact Usages [POST /award/api/v1/contact-usages/]
 
 + Request

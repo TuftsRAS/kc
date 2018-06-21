@@ -141,6 +141,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Valid Class Report Frequencies [PATCH /award/api/v1/valid-class-report-frequencies/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"validClassReportFreqId": "(val)","reportClassCode": "(val)","reportCode": "(val)","frequencyCode": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"validClassReportFreqId": "(val)","reportClassCode": "(val)","reportCode": "(val)","frequencyCode": "(val)","_primaryKey": "(val)"}
 ### Insert Valid Class Report Frequencies [POST /award/api/v1/valid-class-report-frequencies/]
 
 + Request

@@ -144,6 +144,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Iacuc Protocol Study Group Locations [PATCH /iacuc/api/v1/iacuc-protocol-study-group-locations/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"iacucProtocolStudyGroupLocationId": "(val)","iacucProtocolStudyGroupId": "(val)","locationTypeCode": "(val)","studyGroupLocationId": "(val)","locationId": "(val)","locationRoom": "(val)","studyGroupLocationDescription": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"iacucProtocolStudyGroupLocationId": "(val)","iacucProtocolStudyGroupId": "(val)","locationTypeCode": "(val)","studyGroupLocationId": "(val)","locationId": "(val)","locationRoom": "(val)","studyGroupLocationDescription": "(val)","_primaryKey": "(val)"}
 ### Insert Iacuc Protocol Study Group Locations [POST /iacuc/api/v1/iacuc-protocol-study-group-locations/]
 
 + Request

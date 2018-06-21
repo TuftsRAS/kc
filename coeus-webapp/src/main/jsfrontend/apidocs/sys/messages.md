@@ -149,6 +149,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Messages [PATCH /research-sys/api/v1/messages/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","originId": "(val)","deliveryType": "(val)","channel": "(val)","producer": "(val)","creationDateTime": "(val)","title": "(val)","content": "(val)","contentType": "(val)","url": "(val)","recipient": "(val)","lockVerNbr": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","originId": "(val)","deliveryType": "(val)","channel": "(val)","producer": "(val)","creationDateTime": "(val)","title": "(val)","content": "(val)","contentType": "(val)","url": "(val)","recipient": "(val)","lockVerNbr": "(val)","_primaryKey": "(val)"}
 ### Insert Messages [POST /research-sys/api/v1/messages/]
 
 + Request

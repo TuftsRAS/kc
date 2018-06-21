@@ -142,6 +142,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Special Review Usages [PATCH /research-common/api/v1/special-review-usages/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"specialReviewUsageId": "(val)","specialReviewTypeCode": "(val)","moduleCode": "(val)","global": "(val)","active": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"specialReviewUsageId": "(val)","specialReviewTypeCode": "(val)","moduleCode": "(val)","global": "(val)","active": "(val)","_primaryKey": "(val)"}
 ### Insert Special Review Usages [POST /research-common/api/v1/special-review-usages/]
 
 + Request

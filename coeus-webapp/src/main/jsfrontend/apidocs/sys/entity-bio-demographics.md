@@ -150,6 +150,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Entity Bio Demographics [PATCH /research-sys/api/v1/entity-bio-demographics/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"entityId": "(val)","birthDateValue": "(val)","genderCode": "(val)","genderChangeCode": "(val)","deceasedDateValue": "(val)","maritalStatusCode": "(val)","primaryLanguageCode": "(val)","secondaryLanguageCode": "(val)","birthCountry": "(val)","birthStateProvinceCode": "(val)","birthCity": "(val)","geographicOrigin": "(val)","noteMessage": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"entityId": "(val)","birthDateValue": "(val)","genderCode": "(val)","genderChangeCode": "(val)","deceasedDateValue": "(val)","maritalStatusCode": "(val)","primaryLanguageCode": "(val)","secondaryLanguageCode": "(val)","birthCountry": "(val)","birthStateProvinceCode": "(val)","birthCity": "(val)","geographicOrigin": "(val)","noteMessage": "(val)","_primaryKey": "(val)"}
 ### Insert Entity Bio Demographics [POST /research-sys/api/v1/entity-bio-demographics/]
 
 + Request

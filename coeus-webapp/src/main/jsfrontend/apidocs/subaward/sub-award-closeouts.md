@@ -147,6 +147,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Sub Award Closeouts [PATCH /subaward/api/v1/sub-award-closeouts/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"subAwardCloseoutId": "(val)","subAwardId": "(val)","sequenceNumber": "(val)","subAwardCode": "(val)","closeoutNumber": "(val)","closeoutTypeCode": "(val)","dateRequested": "(val)","dateFollowup": "(val)","dateReceived": "(val)","comments": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"subAwardCloseoutId": "(val)","subAwardId": "(val)","sequenceNumber": "(val)","subAwardCode": "(val)","closeoutNumber": "(val)","closeoutTypeCode": "(val)","dateRequested": "(val)","dateFollowup": "(val)","dateReceived": "(val)","comments": "(val)","_primaryKey": "(val)"}
 ### Insert Sub Award Closeouts [POST /subaward/api/v1/sub-award-closeouts/]
 
 + Request

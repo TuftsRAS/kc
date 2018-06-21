@@ -143,6 +143,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Financial Object Code Mappings [PATCH /research-common/api/v1/financial-object-code-mappings/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"mappingId": "(val)","activityTypeCode": "(val)","financialObjectCode": "(val)","rateClassCode": "(val)","rateTypeCode": "(val)","unitNumber": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"mappingId": "(val)","activityTypeCode": "(val)","financialObjectCode": "(val)","rateClassCode": "(val)","rateTypeCode": "(val)","unitNumber": "(val)","_primaryKey": "(val)"}
 ### Insert Financial Object Code Mappings [POST /research-common/api/v1/financial-object-code-mappings/]
 
 + Request

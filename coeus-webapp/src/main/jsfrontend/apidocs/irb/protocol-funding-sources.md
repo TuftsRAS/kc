@@ -144,6 +144,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Protocol Funding Sources [PATCH /irb/api/v1/protocol-funding-sources/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"protocolFundingSourceId": "(val)","protocolId": "(val)","protocolNumber": "(val)","sequenceNumber": "(val)","fundingSourceTypeCode": "(val)","fundingSourceNumber": "(val)","fundingSourceName": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"protocolFundingSourceId": "(val)","protocolId": "(val)","protocolNumber": "(val)","sequenceNumber": "(val)","fundingSourceTypeCode": "(val)","fundingSourceNumber": "(val)","fundingSourceName": "(val)","_primaryKey": "(val)"}
 ### Insert Protocol Funding Sources [POST /irb/api/v1/protocol-funding-sources/]
 
 + Request

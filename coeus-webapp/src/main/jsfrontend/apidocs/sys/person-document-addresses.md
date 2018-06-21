@@ -156,6 +156,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Person Document Addresses [PATCH /research-sys/api/v1/person-document-addresses/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"entityAddressId": "(val)","addressTypeCode": "(val)","city": "(val)","stateProvinceCode": "(val)","postalCode": "(val)","countryCode": "(val)","attentionLine": "(val)","line1": "(val)","line2": "(val)","line3": "(val)","addressFormat": "(val)","modifiedDate": "(val)","validatedDate": "(val)","validated": "(val)","noteMessage": "(val)","dflt": "(val)","edit": "(val)","documentNumber": "(val)","active": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"entityAddressId": "(val)","addressTypeCode": "(val)","city": "(val)","stateProvinceCode": "(val)","postalCode": "(val)","countryCode": "(val)","attentionLine": "(val)","line1": "(val)","line2": "(val)","line3": "(val)","addressFormat": "(val)","modifiedDate": "(val)","validatedDate": "(val)","validated": "(val)","noteMessage": "(val)","dflt": "(val)","edit": "(val)","documentNumber": "(val)","active": "(val)","_primaryKey": "(val)"}
 ### Insert Person Document Addresses [POST /research-sys/api/v1/person-document-addresses/]
 
 + Request

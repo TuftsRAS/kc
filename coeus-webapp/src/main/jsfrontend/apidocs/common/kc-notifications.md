@@ -142,6 +142,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Kc Notifications [PATCH /research-common/api/v1/kc-notifications/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"notificationId": "(val)","notificationTypeId": "(val)","documentNumber": "(val)","subject": "(val)","message": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"notificationId": "(val)","notificationTypeId": "(val)","documentNumber": "(val)","subject": "(val)","message": "(val)","_primaryKey": "(val)"}
 ### Insert Kc Notifications [POST /research-common/api/v1/kc-notifications/]
 
 + Request

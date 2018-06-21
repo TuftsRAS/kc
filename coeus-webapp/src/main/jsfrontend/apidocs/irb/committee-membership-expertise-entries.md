@@ -140,6 +140,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Committee Membership Expertise Entries [PATCH /irb/api/v1/committee-membership-expertise-entries/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"committeeMembershipExpertiseId": "(val)","committeeMembershipIdFk": "(val)","researchAreaCode": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"committeeMembershipExpertiseId": "(val)","committeeMembershipIdFk": "(val)","researchAreaCode": "(val)","_primaryKey": "(val)"}
 ### Insert Committee Membership Expertise Entries [POST /irb/api/v1/committee-membership-expertise-entries/]
 
 + Request

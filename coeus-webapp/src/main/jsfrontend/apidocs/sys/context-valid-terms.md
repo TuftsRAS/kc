@@ -139,6 +139,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Context Valid Terms [PATCH /research-sys/api/v1/context-valid-terms/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","contextId": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","contextId": "(val)","_primaryKey": "(val)"}
 ### Insert Context Valid Terms [POST /research-sys/api/v1/context-valid-terms/]
 
 + Request

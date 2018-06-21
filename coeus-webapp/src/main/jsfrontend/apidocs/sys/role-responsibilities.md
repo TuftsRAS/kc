@@ -141,6 +141,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Role Responsibilities [PATCH /research-sys/api/v1/role-responsibilities/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"roleResponsibilityId": "(val)","roleId": "(val)","responsibilityId": "(val)","active": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"roleResponsibilityId": "(val)","roleId": "(val)","responsibilityId": "(val)","active": "(val)","_primaryKey": "(val)"}
 ### Insert Role Responsibilities [POST /research-sys/api/v1/role-responsibilities/]
 
 + Request

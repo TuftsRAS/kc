@@ -145,6 +145,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Institute La Rates [PATCH /research-common/api/v1/institute-la-rates/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"fiscalYear": "(val)","onOffCampusFlag": "(val)","rateClassCode": "(val)","rateTypeCode": "(val)","startDate": "(val)","unitNumber": "(val)","instituteRate": "(val)","active": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"fiscalYear": "(val)","onOffCampusFlag": "(val)","rateClassCode": "(val)","rateTypeCode": "(val)","startDate": "(val)","unitNumber": "(val)","instituteRate": "(val)","active": "(val)","_primaryKey": "(val)"}
 ### Insert Institute La Rates [POST /research-common/api/v1/institute-la-rates/]
 
 + Request

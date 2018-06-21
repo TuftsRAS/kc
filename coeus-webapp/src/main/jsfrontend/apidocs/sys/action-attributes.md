@@ -139,6 +139,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Action Attributes [PATCH /research-sys/api/v1/action-attributes/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","value": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","value": "(val)","_primaryKey": "(val)"}
 ### Insert Action Attributes [POST /research-sys/api/v1/action-attributes/]
 
 + Request

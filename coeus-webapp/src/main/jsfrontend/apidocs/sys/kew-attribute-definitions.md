@@ -144,6 +144,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Kew Attribute Definitions [PATCH /research-sys/api/v1/kew-attribute-definitions/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","name": "(val)","namespace": "(val)","label": "(val)","active": "(val)","componentName": "(val)","description": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","name": "(val)","namespace": "(val)","label": "(val)","active": "(val)","componentName": "(val)","description": "(val)","_primaryKey": "(val)"}
 ### Insert Kew Attribute Definitions [POST /research-sys/api/v1/kew-attribute-definitions/]
 
 + Request

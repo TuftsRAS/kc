@@ -142,6 +142,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Kc Krms Term Functions [PATCH /research-common/api/v1/kc-krms-term-functions/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"kcKrmsTermFunctionId": "(val)","krmsTermName": "(val)","description": "(val)","returnType": "(val)","functionType": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"kcKrmsTermFunctionId": "(val)","krmsTermName": "(val)","description": "(val)","returnType": "(val)","functionType": "(val)","_primaryKey": "(val)"}
 ### Insert Kc Krms Term Functions [POST /research-common/api/v1/kc-krms-term-functions/]
 
 + Request

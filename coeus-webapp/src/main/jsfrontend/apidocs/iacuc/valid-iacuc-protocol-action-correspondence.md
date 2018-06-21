@@ -141,6 +141,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Valid Iacuc Protocol Action Correspondence [PATCH /iacuc/api/v1/valid-iacuc-protocol-action-correspondence/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"validProtoActionCorespId": "(val)","protocolActionTypeCode": "(val)","protoCorrespTypeCode": "(val)","finalFlag": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"validProtoActionCorespId": "(val)","protocolActionTypeCode": "(val)","protoCorrespTypeCode": "(val)","finalFlag": "(val)","_primaryKey": "(val)"}
 ### Insert Valid Iacuc Protocol Action Correspondence [POST /iacuc/api/v1/valid-iacuc-protocol-action-correspondence/]
 
 + Request

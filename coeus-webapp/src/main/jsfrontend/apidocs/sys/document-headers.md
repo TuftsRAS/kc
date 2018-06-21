@@ -142,6 +142,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Document Headers [PATCH /research-sys/api/v1/document-headers/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"documentNumber": "(val)","documentDescription": "(val)","organizationDocumentNumber": "(val)","documentTemplateNumber": "(val)","explanation": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"documentNumber": "(val)","documentDescription": "(val)","organizationDocumentNumber": "(val)","documentTemplateNumber": "(val)","explanation": "(val)","_primaryKey": "(val)"}
 ### Insert Document Headers [POST /research-sys/api/v1/document-headers/]
 
 + Request

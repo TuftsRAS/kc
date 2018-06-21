@@ -140,6 +140,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Campus Types [PATCH /research-sys/api/v1/campus-types/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"code": "(val)","name": "(val)","active": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"code": "(val)","name": "(val)","active": "(val)","_primaryKey": "(val)"}
 ### Insert Campus Types [POST /research-sys/api/v1/campus-types/]
 
 + Request

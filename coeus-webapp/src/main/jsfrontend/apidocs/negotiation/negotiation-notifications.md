@@ -144,6 +144,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Negotiation Notifications [PATCH /negotiation/api/v1/negotiation-notifications/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"notificationId": "(val)","notificationTypeId": "(val)","documentNumber": "(val)","owningDocumentIdFk": "(val)","recipients": "(val)","subject": "(val)","message": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"notificationId": "(val)","notificationTypeId": "(val)","documentNumber": "(val)","owningDocumentIdFk": "(val)","recipients": "(val)","subject": "(val)","message": "(val)","_primaryKey": "(val)"}
 ### Insert Negotiation Notifications [POST /negotiation/api/v1/negotiation-notifications/]
 
 + Request

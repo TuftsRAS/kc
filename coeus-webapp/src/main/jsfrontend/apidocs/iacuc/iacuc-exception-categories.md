@@ -140,6 +140,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Iacuc Exception Categories [PATCH /iacuc/api/v1/iacuc-exception-categories/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"exceptionCategoryCode": "(val)","exceptionCategoryDesc": "(val)","active": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"exceptionCategoryCode": "(val)","exceptionCategoryDesc": "(val)","active": "(val)","_primaryKey": "(val)"}
 ### Insert Iacuc Exception Categories [POST /iacuc/api/v1/iacuc-exception-categories/]
 
 + Request

@@ -47,10 +47,10 @@
     + personId (optional) - Person Id. Maximum length is 40.
     + trainingNumber (optional) - Training Number. Maximum length is 4.
     + trainingCode (optional) - Training Code. Maximum length is 22.
-    + dateRequested (optional) - Date Requested. Maximum length is 10.
-    + dateSubmitted (optional) - Date Submitted. Maximum length is 10.
-    + dateAcknowledged (optional) - Date Acknowledged. Maximum length is 10.
-    + followupDate (optional) - Followup Date. Maximum length is 10.
+    + dateRequested (optional) - Date Requested. Maximum length is 21.
+    + dateSubmitted (optional) - Date Submitted. Maximum length is 21.
+    + dateAcknowledged (optional) - Date Acknowledged. Maximum length is 21.
+    + followupDate (optional) - Followup Date. Maximum length is 21.
     + score (optional) - Score. Maximum length is 9.
     + comments (optional) - Comments. Maximum length is 4000.
     + active (optional) - Is Active. Maximum length is 1.
@@ -148,6 +148,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Person Trainings [PATCH /research-common/api/v1/person-trainings/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"personTrainingId": "(val)","personId": "(val)","trainingNumber": "(val)","trainingCode": "(val)","dateRequested": "(val)","dateSubmitted": "(val)","dateAcknowledged": "(val)","followupDate": "(val)","score": "(val)","comments": "(val)","active": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"personTrainingId": "(val)","personId": "(val)","trainingNumber": "(val)","trainingCode": "(val)","dateRequested": "(val)","dateSubmitted": "(val)","dateAcknowledged": "(val)","followupDate": "(val)","score": "(val)","comments": "(val)","active": "(val)","_primaryKey": "(val)"}
 ### Insert Person Trainings [POST /research-common/api/v1/person-trainings/]
 
 + Request
@@ -226,10 +244,10 @@
     + personId (optional) - Person Id. Maximum length is 40.
     + trainingNumber (optional) - Training Number. Maximum length is 4.
     + trainingCode (optional) - Training Code. Maximum length is 22.
-    + dateRequested (optional) - Date Requested. Maximum length is 10.
-    + dateSubmitted (optional) - Date Submitted. Maximum length is 10.
-    + dateAcknowledged (optional) - Date Acknowledged. Maximum length is 10.
-    + followupDate (optional) - Followup Date. Maximum length is 10.
+    + dateRequested (optional) - Date Requested. Maximum length is 21.
+    + dateSubmitted (optional) - Date Submitted. Maximum length is 21.
+    + dateAcknowledged (optional) - Date Acknowledged. Maximum length is 21.
+    + followupDate (optional) - Followup Date. Maximum length is 21.
     + score (optional) - Score. Maximum length is 9.
     + comments (optional) - Comments. Maximum length is 4000.
     + active (optional) - Is Active. Maximum length is 1.

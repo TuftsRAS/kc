@@ -44,7 +44,7 @@
 + Parameters
 
     + proposalNumber (optional) - Proposal Number. Maximum length is 8.
-    + application (optional) - Application. Maximum length is 4000.
+    + application (optional) - Application.
 
             
 + Request
@@ -139,6 +139,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes S2s Applications [PATCH /propdev/api/v1/s2s-applications/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"proposalNumber": "(val)","application": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"proposalNumber": "(val)","application": "(val)","_primaryKey": "(val)"}
 ### Insert S2s Applications [POST /propdev/api/v1/s2s-applications/]
 
 + Request
@@ -214,7 +232,7 @@
 
     + _allowMulti (boolean, required) - flag to allow multiple resources to be deleted in one operation
     + proposalNumber (optional) - Proposal Number. Maximum length is 8.
-    + application (optional) - Application. Maximum length is 4000.
+    + application (optional) - Application.
 
       
 + Request

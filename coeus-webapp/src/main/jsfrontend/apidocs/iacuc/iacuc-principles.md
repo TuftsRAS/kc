@@ -146,6 +146,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Iacuc Principles [PATCH /iacuc/api/v1/iacuc-principles/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"iacucPrinciplesId": "(val)","protocolId": "(val)","protocolNumber": "(val)","sequenceNumber": "(val)","reduction": "(val)","refinement": "(val)","replacement": "(val)","searchRequired": "(val)","exceptionsPresent": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"iacucPrinciplesId": "(val)","protocolId": "(val)","protocolNumber": "(val)","sequenceNumber": "(val)","reduction": "(val)","refinement": "(val)","replacement": "(val)","searchRequired": "(val)","exceptionsPresent": "(val)","_primaryKey": "(val)"}
 ### Insert Iacuc Principles [POST /iacuc/api/v1/iacuc-principles/]
 
 + Request

@@ -151,6 +151,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Institutional Proposal Attachments [PATCH /instprop/api/v1/institutional-proposal-attachments/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"proposalAttachmentId": "(val)","proposalId": "(val)","proposalNumber": "(val)","fileDataId": "(val)","sequenceNumber": "(val)","attachmentNumber": "(val)","attachmentTitle": "(val)","attachmentTypeCode": "(val)","fileName": "(val)","contentType": "(val)","comments": "(val)","documentStatusCode": "(val)","lastUpdateTimestamp": "(val)","lastUpdateUser": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"proposalAttachmentId": "(val)","proposalId": "(val)","proposalNumber": "(val)","fileDataId": "(val)","sequenceNumber": "(val)","attachmentNumber": "(val)","attachmentTitle": "(val)","attachmentTypeCode": "(val)","fileName": "(val)","contentType": "(val)","comments": "(val)","documentStatusCode": "(val)","lastUpdateTimestamp": "(val)","lastUpdateUser": "(val)","_primaryKey": "(val)"}
 ### Insert Institutional Proposal Attachments [POST /instprop/api/v1/institutional-proposal-attachments/]
 
 + Request

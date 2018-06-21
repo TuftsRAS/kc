@@ -140,6 +140,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Report Statuses [PATCH /award/api/v1/report-statuses/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"reportStatusCode": "(val)","description": "(val)","active": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"reportStatusCode": "(val)","description": "(val)","active": "(val)","_primaryKey": "(val)"}
 ### Insert Report Statuses [POST /award/api/v1/report-statuses/]
 
 + Request

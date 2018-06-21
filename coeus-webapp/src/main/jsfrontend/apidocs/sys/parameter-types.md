@@ -140,6 +140,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Parameter Types [PATCH /research-sys/api/v1/parameter-types/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"code": "(val)","name": "(val)","active": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"code": "(val)","name": "(val)","active": "(val)","_primaryKey": "(val)"}
 ### Insert Parameter Types [POST /research-sys/api/v1/parameter-types/]
 
 + Request

@@ -150,6 +150,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Sub Award Attachments [PATCH /subaward/api/v1/sub-award-attachments/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"attachmentId": "(val)","subAwardId": "(val)","subAwardCode": "(val)","sequenceNumber": "(val)","subAwardAttachmentTypeCode": "(val)","documentId": "(val)","fileDataId": "(val)","fileName": "(val)","mimeType": "(val)","documentStatusCode": "(val)","description": "(val)","lastUpdateTimestamp": "(val)","lastUpdateUser": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"attachmentId": "(val)","subAwardId": "(val)","subAwardCode": "(val)","sequenceNumber": "(val)","subAwardAttachmentTypeCode": "(val)","documentId": "(val)","fileDataId": "(val)","fileName": "(val)","mimeType": "(val)","documentStatusCode": "(val)","description": "(val)","lastUpdateTimestamp": "(val)","lastUpdateUser": "(val)","_primaryKey": "(val)"}
 ### Insert Sub Award Attachments [POST /subaward/api/v1/sub-award-attachments/]
 
 + Request

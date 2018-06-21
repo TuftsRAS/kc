@@ -144,6 +144,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Sponsor Form Templates [PATCH /research-common/api/v1/sponsor-form-templates/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"sponsorFormTemplateId": "(val)","sponsorFormId": "(val)","attachmentContent": "(val)","pageDescription": "(val)","pageNumber": "(val)","fileName": "(val)","contentType": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"sponsorFormTemplateId": "(val)","sponsorFormId": "(val)","attachmentContent": "(val)","pageDescription": "(val)","pageNumber": "(val)","fileName": "(val)","contentType": "(val)","_primaryKey": "(val)"}
 ### Insert Sponsor Form Templates [POST /research-common/api/v1/sponsor-form-templates/]
 
 + Request

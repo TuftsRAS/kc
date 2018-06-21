@@ -139,6 +139,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Iacuc Species Count Types [PATCH /iacuc/api/v1/iacuc-species-count-types/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"speciesCountCode": "(val)","description": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"speciesCountCode": "(val)","description": "(val)","_primaryKey": "(val)"}
 ### Insert Iacuc Species Count Types [POST /iacuc/api/v1/iacuc-species-count-types/]
 
 + Request

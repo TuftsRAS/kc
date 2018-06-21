@@ -146,6 +146,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Iacuc Protocol Personnel Attachments [PATCH /iacuc/api/v1/iacuc-protocol-personnel-attachments/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","protocolId": "(val)","protocolNumber": "(val)","sequenceNumber": "(val)","typeCode": "(val)","documentId": "(val)","fileId": "(val)","description": "(val)","personId": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","protocolId": "(val)","protocolNumber": "(val)","sequenceNumber": "(val)","typeCode": "(val)","documentId": "(val)","fileId": "(val)","description": "(val)","personId": "(val)","_primaryKey": "(val)"}
 ### Insert Iacuc Protocol Personnel Attachments [POST /iacuc/api/v1/iacuc-protocol-personnel-attachments/]
 
 + Request

@@ -146,6 +146,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Custom Attributes [PATCH /research-common/api/v1/custom-attributes/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","dataLength": "(val)","dataTypeCode": "(val)","defaultValue": "(val)","groupName": "(val)","label": "(val)","lookupClass": "(val)","lookupReturn": "(val)","name": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","dataLength": "(val)","dataTypeCode": "(val)","defaultValue": "(val)","groupName": "(val)","label": "(val)","lookupClass": "(val)","lookupReturn": "(val)","name": "(val)","_primaryKey": "(val)"}
 ### Insert Custom Attributes [POST /research-common/api/v1/custom-attributes/]
 
 + Request

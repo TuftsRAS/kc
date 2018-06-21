@@ -139,6 +139,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Sponsor Term Types [PATCH /research-common/api/v1/sponsor-term-types/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"sponsorTermTypeCode": "(val)","description": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"sponsorTermTypeCode": "(val)","description": "(val)","_primaryKey": "(val)"}
 ### Insert Sponsor Term Types [POST /research-common/api/v1/sponsor-term-types/]
 
 + Request

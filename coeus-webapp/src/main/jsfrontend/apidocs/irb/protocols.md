@@ -58,7 +58,7 @@
     + fdaApplicationNumber (optional) - Fda Application Number. Maximum length is 15.
     + referenceNumber1 (optional) - Reference Number 1. Maximum length is 50.
     + referenceNumber2 (optional) - Reference Number 2. Maximum length is 50.
-    + createTimestamp (optional) - 
+    + createTimestamp (optional) - Protocol Create Date. Maximum length is 21.
     + createUser (optional) - 
     + protocolDocument.documentNumber (optional) - 
 

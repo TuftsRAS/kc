@@ -142,6 +142,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Protocol Action Types [PATCH /irb/api/v1/protocol-action-types/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"protocolActionTypeCode": "(val)","description": "(val)","triggerSubmission": "(val)","triggerCorrespondence": "(val)","finalActionForBatchCorrespondence": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"protocolActionTypeCode": "(val)","description": "(val)","triggerSubmission": "(val)","triggerCorrespondence": "(val)","finalActionForBatchCorrespondence": "(val)","_primaryKey": "(val)"}
 ### Insert Protocol Action Types [POST /irb/api/v1/protocol-action-types/]
 
 + Request

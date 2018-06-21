@@ -142,6 +142,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Countries [PATCH /research-sys/api/v1/countries/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"code": "(val)","alternateCode": "(val)","name": "(val)","restricted": "(val)","active": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"code": "(val)","alternateCode": "(val)","name": "(val)","restricted": "(val)","active": "(val)","_primaryKey": "(val)"}
 ### Insert Countries [POST /research-sys/api/v1/countries/]
 
 + Request

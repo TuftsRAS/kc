@@ -139,6 +139,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Expedited Review Checklist Items [PATCH /irb/api/v1/expedited-review-checklist-items/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"expeditedReviewCheckListCode": "(val)","description": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"expeditedReviewCheckListCode": "(val)","description": "(val)","_primaryKey": "(val)"}
 ### Insert Expedited Review Checklist Items [POST /irb/api/v1/expedited-review-checklist-items/]
 
 + Request

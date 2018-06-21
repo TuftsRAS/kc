@@ -142,6 +142,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Award Notice Printouts [PATCH /award/api/v1/award-notice-printouts/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"awardNoticeId": "(val)","awardId": "(val)","awardNumber": "(val)","unitNumber": "(val)","pdfContent": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"awardNoticeId": "(val)","awardId": "(val)","awardNumber": "(val)","unitNumber": "(val)","pdfContent": "(val)","_primaryKey": "(val)"}
 ### Insert Award Notice Printouts [POST /award/api/v1/award-notice-printouts/]
 
 + Request

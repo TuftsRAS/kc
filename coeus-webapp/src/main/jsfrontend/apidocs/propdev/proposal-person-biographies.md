@@ -145,6 +145,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Proposal Person Biographies [PATCH /propdev/api/v1/proposal-person-biographies/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"proposalPersonNumber": "(val)","personId": "(val)","biographyNumber": "(val)","rolodexId": "(val)","description": "(val)","documentTypeCode": "(val)","name": "(val)","type": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"proposalPersonNumber": "(val)","personId": "(val)","biographyNumber": "(val)","rolodexId": "(val)","description": "(val)","documentTypeCode": "(val)","name": "(val)","type": "(val)","_primaryKey": "(val)"}
 ### Insert Proposal Person Biographies [POST /propdev/api/v1/proposal-person-biographies/]
 
 + Request

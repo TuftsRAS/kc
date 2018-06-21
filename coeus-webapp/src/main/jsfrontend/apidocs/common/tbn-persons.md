@@ -16,7 +16,7 @@
 
     + Body
     
-            {"tbnId": "(val)","personName": "(val)","jobCode": "(val)","_primaryKey": "(val)"}
+            {"tbnId": "(val)","personName": "(val)","jobCode": "(val)","active": "(val)","_primaryKey": "(val)"}
 
 ### Get All Tbn Persons [GET /research-common/api/v1/tbn-persons/]
 	 
@@ -35,8 +35,8 @@
     + Body
     
             [
-              {"tbnId": "(val)","personName": "(val)","jobCode": "(val)","_primaryKey": "(val)"},
-              {"tbnId": "(val)","personName": "(val)","jobCode": "(val)","_primaryKey": "(val)"}
+              {"tbnId": "(val)","personName": "(val)","jobCode": "(val)","active": "(val)","_primaryKey": "(val)"},
+              {"tbnId": "(val)","personName": "(val)","jobCode": "(val)","active": "(val)","_primaryKey": "(val)"}
             ]
 
 ### Get All Tbn Persons with Filtering [GET /research-common/api/v1/tbn-persons/]
@@ -46,6 +46,7 @@
     + tbnId (optional) - TBN Id. Maximum length is 9.
     + personName (optional) - Person Name. Maximum length is 90.
     + jobCode (optional) - Job Code. Maximum length is 6.
+    + active (optional) - Is Active. Maximum length is 1.
 
             
 + Request
@@ -63,8 +64,8 @@
     + Body
     
             [
-              {"tbnId": "(val)","personName": "(val)","jobCode": "(val)","_primaryKey": "(val)"},
-              {"tbnId": "(val)","personName": "(val)","jobCode": "(val)","_primaryKey": "(val)"}
+              {"tbnId": "(val)","personName": "(val)","jobCode": "(val)","active": "(val)","_primaryKey": "(val)"},
+              {"tbnId": "(val)","personName": "(val)","jobCode": "(val)","active": "(val)","_primaryKey": "(val)"}
             ]
 			
 ### Get Schema for Tbn Persons [GET /research-common/api/v1/tbn-persons/]
@@ -87,7 +88,7 @@
 
     + Body
     
-            {"columns":["tbnId","personName","jobCode"],"primaryKey":"tbnId"}
+            {"columns":["tbnId","personName","jobCode","active"],"primaryKey":"tbnId"}
 		
 ### Get Blueprint API specification for Tbn Persons [GET /research-common/api/v1/tbn-persons/]
 	 
@@ -119,7 +120,7 @@
 
     + Body
     
-            {"tbnId": "(val)","personName": "(val)","jobCode": "(val)","_primaryKey": "(val)"}
+            {"tbnId": "(val)","personName": "(val)","jobCode": "(val)","active": "(val)","_primaryKey": "(val)"}
 			
 + Response 204
 
@@ -135,11 +136,29 @@
     + Body
     
             [
-              {"tbnId": "(val)","personName": "(val)","jobCode": "(val)","_primaryKey": "(val)"},
-              {"tbnId": "(val)","personName": "(val)","jobCode": "(val)","_primaryKey": "(val)"}
+              {"tbnId": "(val)","personName": "(val)","jobCode": "(val)","active": "(val)","_primaryKey": "(val)"},
+              {"tbnId": "(val)","personName": "(val)","jobCode": "(val)","active": "(val)","_primaryKey": "(val)"}
             ]
 			
 + Response 204
+### Update Specific Attributes Tbn Persons [PATCH /research-common/api/v1/tbn-persons/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"tbnId": "(val)","personName": "(val)","jobCode": "(val)","active": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"tbnId": "(val)","personName": "(val)","jobCode": "(val)","active": "(val)","_primaryKey": "(val)"}
 ### Insert Tbn Persons [POST /research-common/api/v1/tbn-persons/]
 
 + Request
@@ -151,13 +170,13 @@
 
     + Body
     
-            {"tbnId": "(val)","personName": "(val)","jobCode": "(val)","_primaryKey": "(val)"}
+            {"tbnId": "(val)","personName": "(val)","jobCode": "(val)","active": "(val)","_primaryKey": "(val)"}
 			
 + Response 201
     
     + Body
             
-            {"tbnId": "(val)","personName": "(val)","jobCode": "(val)","_primaryKey": "(val)"}
+            {"tbnId": "(val)","personName": "(val)","jobCode": "(val)","active": "(val)","_primaryKey": "(val)"}
             
 ### Insert Multiple Tbn Persons [POST /research-common/api/v1/tbn-persons/]
 
@@ -171,8 +190,8 @@
     + Body
     
             [
-              {"tbnId": "(val)","personName": "(val)","jobCode": "(val)","_primaryKey": "(val)"},
-              {"tbnId": "(val)","personName": "(val)","jobCode": "(val)","_primaryKey": "(val)"}
+              {"tbnId": "(val)","personName": "(val)","jobCode": "(val)","active": "(val)","_primaryKey": "(val)"},
+              {"tbnId": "(val)","personName": "(val)","jobCode": "(val)","active": "(val)","_primaryKey": "(val)"}
             ]
 			
 + Response 201
@@ -180,8 +199,8 @@
     + Body
             
             [
-              {"tbnId": "(val)","personName": "(val)","jobCode": "(val)","_primaryKey": "(val)"},
-              {"tbnId": "(val)","personName": "(val)","jobCode": "(val)","_primaryKey": "(val)"}
+              {"tbnId": "(val)","personName": "(val)","jobCode": "(val)","active": "(val)","_primaryKey": "(val)"},
+              {"tbnId": "(val)","personName": "(val)","jobCode": "(val)","active": "(val)","_primaryKey": "(val)"}
             ]
 ### Delete Tbn Persons by Key [DELETE /research-common/api/v1/tbn-persons/(key)]
 	 
@@ -217,6 +236,7 @@
     + tbnId (optional) - TBN Id. Maximum length is 9.
     + personName (optional) - Person Name. Maximum length is 90.
     + jobCode (optional) - Job Code. Maximum length is 6.
+    + active (optional) - Is Active. Maximum length is 1.
 
       
 + Request

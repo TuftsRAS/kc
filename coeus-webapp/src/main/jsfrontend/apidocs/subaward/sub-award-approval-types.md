@@ -139,6 +139,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Sub Award Approval Types [PATCH /subaward/api/v1/sub-award-approval-types/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"subAwardApprovalTypeCode": "(val)","description": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"subAwardApprovalTypeCode": "(val)","description": "(val)","_primaryKey": "(val)"}
 ### Insert Sub Award Approval Types [POST /subaward/api/v1/sub-award-approval-types/]
 
 + Request

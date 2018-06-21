@@ -143,6 +143,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Protocol Person Mass Changes [PATCH /irb/api/v1/protocol-person-mass-changes/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"protocolPersonMassChangeId": "(val)","personMassChangeId": "(val)","investigator": "(val)","keyStudyPerson": "(val)","correspondents": "(val)","reviewer": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"protocolPersonMassChangeId": "(val)","personMassChangeId": "(val)","investigator": "(val)","keyStudyPerson": "(val)","correspondents": "(val)","reviewer": "(val)","_primaryKey": "(val)"}
 ### Insert Protocol Person Mass Changes [POST /irb/api/v1/protocol-person-mass-changes/]
 
 + Request

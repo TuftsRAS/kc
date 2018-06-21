@@ -141,6 +141,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Institutional Proposal Person Unit Credit Splits [PATCH /instprop/api/v1/institutional-proposal-person-unit-credit-splits/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"institutionalProposalPersonUnitCreditSplitId": "(val)","institutionalProposalPersonUnitId": "(val)","invCreditTypeCode": "(val)","credit": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"institutionalProposalPersonUnitCreditSplitId": "(val)","institutionalProposalPersonUnitId": "(val)","invCreditTypeCode": "(val)","credit": "(val)","_primaryKey": "(val)"}
 ### Insert Institutional Proposal Person Unit Credit Splits [POST /instprop/api/v1/institutional-proposal-person-unit-credit-splits/]
 
 + Request

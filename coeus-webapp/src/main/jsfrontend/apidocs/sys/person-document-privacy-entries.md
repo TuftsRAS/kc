@@ -144,6 +144,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Person Document Privacy Entries [PATCH /research-sys/api/v1/person-document-privacy-entries/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"suppressName": "(val)","suppressEmail": "(val)","suppressAddress": "(val)","suppressPhone": "(val)","suppressPersonal": "(val)","edit": "(val)","documentNumber": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"suppressName": "(val)","suppressEmail": "(val)","suppressAddress": "(val)","suppressPhone": "(val)","suppressPersonal": "(val)","edit": "(val)","documentNumber": "(val)","_primaryKey": "(val)"}
 ### Insert Person Document Privacy Entries [POST /research-sys/api/v1/person-document-privacy-entries/]
 
 + Request

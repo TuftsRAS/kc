@@ -149,6 +149,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Iacuc Protocol Correspondences [PATCH /iacuc/api/v1/iacuc-protocol-correspondences/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","protocolId": "(val)","protocolNumber": "(val)","sequenceNumber": "(val)","actionId": "(val)","actionIdFk": "(val)","protoCorrespTypeCode": "(val)","correspondence": "(val)","finalFlag": "(val)","createUser": "(val)","createTimestamp": "(val)","finalFlagTimestamp": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","protocolId": "(val)","protocolNumber": "(val)","sequenceNumber": "(val)","actionId": "(val)","actionIdFk": "(val)","protoCorrespTypeCode": "(val)","correspondence": "(val)","finalFlag": "(val)","createUser": "(val)","createTimestamp": "(val)","finalFlagTimestamp": "(val)","_primaryKey": "(val)"}
 ### Insert Iacuc Protocol Correspondences [POST /iacuc/api/v1/iacuc-protocol-correspondences/]
 
 + Request

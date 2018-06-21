@@ -141,6 +141,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Rule Extension Values [PATCH /research-sys/api/v1/rule-extension-values/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"ruleExtensionValueId": "(val)","value": "(val)","key": "(val)","lockVerNbr": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"ruleExtensionValueId": "(val)","value": "(val)","key": "(val)","lockVerNbr": "(val)","_primaryKey": "(val)"}
 ### Insert Rule Extension Values [POST /research-sys/api/v1/rule-extension-values/]
 
 + Request

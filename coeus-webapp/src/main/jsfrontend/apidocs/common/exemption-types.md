@@ -140,6 +140,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Exemption Types [PATCH /research-common/api/v1/exemption-types/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"code": "(val)","description": "(val)","detailedDescription": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"code": "(val)","description": "(val)","detailedDescription": "(val)","_primaryKey": "(val)"}
 ### Insert Exemption Types [POST /research-common/api/v1/exemption-types/]
 
 + Request

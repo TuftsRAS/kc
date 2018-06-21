@@ -142,6 +142,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Permission Attributes [PATCH /research-sys/api/v1/permission-attributes/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","assignedToId": "(val)","attributeValue": "(val)","kimTypeId": "(val)","kimAttributeId": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","assignedToId": "(val)","attributeValue": "(val)","kimTypeId": "(val)","kimAttributeId": "(val)","_primaryKey": "(val)"}
 ### Insert Permission Attributes [POST /research-sys/api/v1/permission-attributes/]
 
 + Request

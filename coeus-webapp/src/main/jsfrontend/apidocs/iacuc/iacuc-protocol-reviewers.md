@@ -147,6 +147,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Iacuc Protocol Reviewers [PATCH /iacuc/api/v1/iacuc-protocol-reviewers/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"protocolReviewerId": "(val)","protocolIdFk": "(val)","submissionIdFk": "(val)","protocolNumber": "(val)","sequenceNumber": "(val)","rolodexId": "(val)","submissionNumber": "(val)","reviewerTypeCode": "(val)","personId": "(val)","nonEmployeeFlag": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"protocolReviewerId": "(val)","protocolIdFk": "(val)","submissionIdFk": "(val)","protocolNumber": "(val)","sequenceNumber": "(val)","rolodexId": "(val)","submissionNumber": "(val)","reviewerTypeCode": "(val)","personId": "(val)","nonEmployeeFlag": "(val)","_primaryKey": "(val)"}
 ### Insert Iacuc Protocol Reviewers [POST /iacuc/api/v1/iacuc-protocol-reviewers/]
 
 + Request

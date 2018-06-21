@@ -142,6 +142,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Proposal Development Person Mass Changes [PATCH /propdev/api/v1/proposal-development-person-mass-changes/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"proposalDevelopmentPersonMassChangeId": "(val)","personMassChangeId": "(val)","investigator": "(val)","mailingInformation": "(val)","keyStudyPerson": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"proposalDevelopmentPersonMassChangeId": "(val)","personMassChangeId": "(val)","investigator": "(val)","mailingInformation": "(val)","keyStudyPerson": "(val)","_primaryKey": "(val)"}
 ### Insert Proposal Development Person Mass Changes [POST /propdev/api/v1/proposal-development-person-mass-changes/]
 
 + Request

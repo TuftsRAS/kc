@@ -44,7 +44,7 @@
 + Parameters
 
     + moduleNumber (optional) - Module Number. Maximum length is 4.
-    + comments (optional) - Proposal attachment comments. Maximum length is 300.
+    + comments (optional) - Proposal attachment comments. Maximum length is 3950.
     + contactName (optional) - Contact Name. Maximum length is 30.
     + emailAddress (optional) - Email Address. Maximum length is 60.
     + moduleSequenceNumber (optional) - Module Sequence Number. Maximum length is 4.
@@ -150,6 +150,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Narratives [PATCH /propdev/api/v1/narratives/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"moduleNumber": "(val)","comments": "(val)","contactName": "(val)","emailAddress": "(val)","moduleSequenceNumber": "(val)","moduleStatusCode": "(val)","moduleTitle": "(val)","narrativeTypeCode": "(val)","phoneNumber": "(val)","name": "(val)","type": "(val)","hierarchyProposalNumber": "(val)","hiddenInHierarchy": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"moduleNumber": "(val)","comments": "(val)","contactName": "(val)","emailAddress": "(val)","moduleSequenceNumber": "(val)","moduleStatusCode": "(val)","moduleTitle": "(val)","narrativeTypeCode": "(val)","phoneNumber": "(val)","name": "(val)","type": "(val)","hierarchyProposalNumber": "(val)","hiddenInHierarchy": "(val)","_primaryKey": "(val)"}
 ### Insert Narratives [POST /propdev/api/v1/narratives/]
 
 + Request
@@ -225,7 +243,7 @@
 
     + _allowMulti (boolean, required) - flag to allow multiple resources to be deleted in one operation
     + moduleNumber (optional) - Module Number. Maximum length is 4.
-    + comments (optional) - Proposal attachment comments. Maximum length is 300.
+    + comments (optional) - Proposal attachment comments. Maximum length is 3950.
     + contactName (optional) - Contact Name. Maximum length is 30.
     + emailAddress (optional) - Email Address. Maximum length is 60.
     + moduleSequenceNumber (optional) - Module Sequence Number. Maximum length is 4.

@@ -139,6 +139,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Sub Award Statuses [PATCH /subaward/api/v1/sub-award-statuses/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"subAwardStatusCode": "(val)","description": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"subAwardStatusCode": "(val)","description": "(val)","_primaryKey": "(val)"}
 ### Insert Sub Award Statuses [POST /subaward/api/v1/sub-award-statuses/]
 
 + Request

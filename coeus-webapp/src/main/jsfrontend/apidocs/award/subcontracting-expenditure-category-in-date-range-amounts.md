@@ -148,6 +148,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Subcontracting Expenditure Category In Date Range Amounts [PATCH /award/api/v1/subcontracting-expenditure-category-in-date-range-amounts/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"awardNumber": "(val)","rangeStartDate": "(val)","rangeEndDate": "(val)","largeBusinessExpenditureAmount": "(val)","smallBusinessExpenditureAmount": "(val)","womanOwnedExpenditureAmount": "(val)","eightADisadvantageExpenditureAmount": "(val)","hubZoneExpenditureAmount": "(val)","veteranOwnedExpenditureAmount": "(val)","serviceDisabledVeteranOwnedExpenditureAmount": "(val)","historicalBlackCollegeExpenditureAmount": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"awardNumber": "(val)","rangeStartDate": "(val)","rangeEndDate": "(val)","largeBusinessExpenditureAmount": "(val)","smallBusinessExpenditureAmount": "(val)","womanOwnedExpenditureAmount": "(val)","eightADisadvantageExpenditureAmount": "(val)","hubZoneExpenditureAmount": "(val)","veteranOwnedExpenditureAmount": "(val)","serviceDisabledVeteranOwnedExpenditureAmount": "(val)","historicalBlackCollegeExpenditureAmount": "(val)","_primaryKey": "(val)"}
 ### Insert Subcontracting Expenditure Category In Date Range Amounts [POST /award/api/v1/subcontracting-expenditure-category-in-date-range-amounts/]
 
 + Request

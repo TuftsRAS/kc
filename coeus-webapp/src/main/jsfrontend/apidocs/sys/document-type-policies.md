@@ -140,6 +140,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Document Type Policies [PATCH /research-sys/api/v1/document-type-policies/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"policyName": "(val)","policyValue": "(val)","policyStringValue": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"policyName": "(val)","policyValue": "(val)","policyStringValue": "(val)","_primaryKey": "(val)"}
 ### Insert Document Type Policies [POST /research-sys/api/v1/document-type-policies/]
 
 + Request

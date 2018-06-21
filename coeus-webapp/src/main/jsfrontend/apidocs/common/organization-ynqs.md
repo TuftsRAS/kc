@@ -142,6 +142,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Organization Ynqs [PATCH /research-common/api/v1/organization-ynqs/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"organizationId": "(val)","questionId": "(val)","answer": "(val)","explanation": "(val)","reviewDate": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"organizationId": "(val)","questionId": "(val)","answer": "(val)","explanation": "(val)","reviewDate": "(val)","_primaryKey": "(val)"}
 ### Insert Organization Ynqs [POST /research-common/api/v1/organization-ynqs/]
 
 + Request

@@ -139,6 +139,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Sub Award Attachment Types [PATCH /subaward/api/v1/sub-award-attachment-types/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"subAwardAttachmentTypeCode": "(val)","description": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"subAwardAttachmentTypeCode": "(val)","description": "(val)","_primaryKey": "(val)"}
 ### Insert Sub Award Attachment Types [POST /subaward/api/v1/sub-award-attachment-types/]
 
 + Request

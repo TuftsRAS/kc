@@ -140,6 +140,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Award Transaction Types [PATCH /award/api/v1/award-transaction-types/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"awardTransactionTypeCode": "(val)","description": "(val)","showInActionSummary": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"awardTransactionTypeCode": "(val)","description": "(val)","showInActionSummary": "(val)","_primaryKey": "(val)"}
 ### Insert Award Transaction Types [POST /award/api/v1/award-transaction-types/]
 
 + Request

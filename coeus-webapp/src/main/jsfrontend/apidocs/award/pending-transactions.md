@@ -150,6 +150,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Pending Transactions [PATCH /award/api/v1/pending-transactions/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"transactionId": "(val)","documentNumber": "(val)","sourceAwardNumber": "(val)","destinationAwardNumber": "(val)","obligatedAmount": "(val)","obligatedDirectAmount": "(val)","obligatedIndirectAmount": "(val)","anticipatedAmount": "(val)","anticipatedDirectAmount": "(val)","anticipatedIndirectAmount": "(val)","comments": "(val)","processedFlag": "(val)","singleNodeTransaction": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"transactionId": "(val)","documentNumber": "(val)","sourceAwardNumber": "(val)","destinationAwardNumber": "(val)","obligatedAmount": "(val)","obligatedDirectAmount": "(val)","obligatedIndirectAmount": "(val)","anticipatedAmount": "(val)","anticipatedDirectAmount": "(val)","anticipatedIndirectAmount": "(val)","comments": "(val)","processedFlag": "(val)","singleNodeTransaction": "(val)","_primaryKey": "(val)"}
 ### Insert Pending Transactions [POST /award/api/v1/pending-transactions/]
 
 + Request

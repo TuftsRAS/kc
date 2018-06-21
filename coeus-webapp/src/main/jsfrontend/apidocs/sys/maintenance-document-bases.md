@@ -139,6 +139,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Maintenance Document Bases [PATCH /research-sys/api/v1/maintenance-document-bases/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"xmlDocumentContents": "(val)","documentNumber": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"xmlDocumentContents": "(val)","documentNumber": "(val)","_primaryKey": "(val)"}
 ### Insert Maintenance Document Bases [POST /research-sys/api/v1/maintenance-document-bases/]
 
 + Request

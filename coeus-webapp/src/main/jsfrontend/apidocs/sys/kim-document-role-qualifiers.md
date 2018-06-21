@@ -145,6 +145,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Kim Document Role Qualifiers [PATCH /research-sys/api/v1/kim-document-role-qualifiers/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"roleMemberId": "(val)","kimTypId": "(val)","kimAttrDefnId": "(val)","edit": "(val)","documentNumber": "(val)","attrVal": "(val)","active": "(val)","attrDataId": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"roleMemberId": "(val)","kimTypId": "(val)","kimAttrDefnId": "(val)","edit": "(val)","documentNumber": "(val)","attrVal": "(val)","active": "(val)","attrDataId": "(val)","_primaryKey": "(val)"}
 ### Insert Kim Document Role Qualifiers [POST /research-sys/api/v1/kim-document-role-qualifiers/]
 
 + Request

@@ -48,9 +48,9 @@
     + agencyTrackingId (optional) - Agency Tracking Id. Maximum length is 50.
     + comments (optional) - Comments. Maximum length is 2000.
     + ggTrackingId (optional) - S2S Tracking Id. Maximum length is 50.
-    + lastModifiedDate (optional) - This attribute should always be overridden on the descriptive elements. Maximum length is 21.
-    + lastNotifiedDate (optional) - This attribute should always be overridden on the descriptive elements. Maximum length is 21.
-    + receivedDate (optional) - This attribute should always be overridden on the descriptive elements. Maximum length is 21.
+    + lastModifiedDate (optional) - This attribute should always be overriden on the descriptive elements. Maximum length is 21.
+    + lastNotifiedDate (optional) - This attribute should always be overriden on the descriptive elements. Maximum length is 21.
+    + receivedDate (optional) - This attribute should always be overriden on the descriptive elements. Maximum length is 21.
     + status (optional) - Status. Maximum length is 50.
 
             
@@ -146,6 +146,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes S2s Application Submissions [PATCH /propdev/api/v1/s2s-application-submissions/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"proposalNumber": "(val)","submissionNumber": "(val)","agencyTrackingId": "(val)","comments": "(val)","ggTrackingId": "(val)","lastModifiedDate": "(val)","lastNotifiedDate": "(val)","receivedDate": "(val)","status": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"proposalNumber": "(val)","submissionNumber": "(val)","agencyTrackingId": "(val)","comments": "(val)","ggTrackingId": "(val)","lastModifiedDate": "(val)","lastNotifiedDate": "(val)","receivedDate": "(val)","status": "(val)","_primaryKey": "(val)"}
 ### Insert S2s Application Submissions [POST /propdev/api/v1/s2s-application-submissions/]
 
 + Request
@@ -225,9 +243,9 @@
     + agencyTrackingId (optional) - Agency Tracking Id. Maximum length is 50.
     + comments (optional) - Comments. Maximum length is 2000.
     + ggTrackingId (optional) - S2S Tracking Id. Maximum length is 50.
-    + lastModifiedDate (optional) - This attribute should always be overridden on the descriptive elements. Maximum length is 21.
-    + lastNotifiedDate (optional) - This attribute should always be overridden on the descriptive elements. Maximum length is 21.
-    + receivedDate (optional) - This attribute should always be overridden on the descriptive elements. Maximum length is 21.
+    + lastModifiedDate (optional) - This attribute should always be overriden on the descriptive elements. Maximum length is 21.
+    + lastNotifiedDate (optional) - This attribute should always be overriden on the descriptive elements. Maximum length is 21.
+    + receivedDate (optional) - This attribute should always be overriden on the descriptive elements. Maximum length is 21.
     + status (optional) - Status. Maximum length is 50.
 
       

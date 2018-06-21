@@ -142,6 +142,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Rate Class Base Exclusions [PATCH /research-common/api/v1/rate-class-base-exclusions/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"rateClassBaseExclusionId": "(val)","rateClassCode": "(val)","rateTypeCode": "(val)","rateClassCodeExcl": "(val)","rateTypeCodeExcl": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"rateClassBaseExclusionId": "(val)","rateClassCode": "(val)","rateTypeCode": "(val)","rateClassCodeExcl": "(val)","rateTypeCodeExcl": "(val)","_primaryKey": "(val)"}
 ### Insert Rate Class Base Exclusions [POST /research-common/api/v1/rate-class-base-exclusions/]
 
 + Request

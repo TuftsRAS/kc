@@ -140,6 +140,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Component Sets [PATCH /research-sys/api/v1/component-sets/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"componentSetId": "(val)","lastUpdateTimestamp": "(val)","checksum": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"componentSetId": "(val)","lastUpdateTimestamp": "(val)","checksum": "(val)","_primaryKey": "(val)"}
 ### Insert Component Sets [POST /research-sys/api/v1/component-sets/]
 
 + Request

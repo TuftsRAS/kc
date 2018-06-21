@@ -139,6 +139,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Award Attachment Types [PATCH /award/api/v1/award-attachment-types/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"typeCode": "(val)","description": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"typeCode": "(val)","description": "(val)","_primaryKey": "(val)"}
 ### Insert Award Attachment Types [POST /award/api/v1/award-attachment-types/]
 
 + Request

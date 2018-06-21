@@ -139,6 +139,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes School Codes [PATCH /research-common/api/v1/school-codes/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"schoolCode": "(val)","description": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"schoolCode": "(val)","description": "(val)","_primaryKey": "(val)"}
 ### Insert School Codes [POST /research-common/api/v1/school-codes/]
 
 + Request

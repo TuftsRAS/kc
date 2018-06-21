@@ -142,6 +142,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Protocol Amend Renew Modules [PATCH /irb/api/v1/protocol-amend-renew-modules/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"protocolAmendRenewModuleId": "(val)","protocolAmendRenewalNumber": "(val)","protocolAmendRenewalId": "(val)","protocolNumber": "(val)","protocolModuleTypeCode": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"protocolAmendRenewModuleId": "(val)","protocolAmendRenewalNumber": "(val)","protocolAmendRenewalId": "(val)","protocolNumber": "(val)","protocolModuleTypeCode": "(val)","_primaryKey": "(val)"}
 ### Insert Protocol Amend Renew Modules [POST /irb/api/v1/protocol-amend-renew-modules/]
 
 + Request

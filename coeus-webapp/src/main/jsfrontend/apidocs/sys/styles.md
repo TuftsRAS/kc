@@ -141,6 +141,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Styles [PATCH /research-sys/api/v1/styles/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","name": "(val)","xmlContent": "(val)","active": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","name": "(val)","xmlContent": "(val)","active": "(val)","_primaryKey": "(val)"}
 ### Insert Styles [POST /research-sys/api/v1/styles/]
 
 + Request

@@ -141,6 +141,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Iacuc Batch Correspondence Details [PATCH /iacuc/api/v1/iacuc-batch-correspondence-details/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"batchCorrespondenceDetailId": "(val)","batchCorrespondenceTypeCode": "(val)","protoCorrespTypeCode": "(val)","daysToEvent": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"batchCorrespondenceDetailId": "(val)","batchCorrespondenceTypeCode": "(val)","protoCorrespTypeCode": "(val)","daysToEvent": "(val)","_primaryKey": "(val)"}
 ### Insert Iacuc Batch Correspondence Details [POST /iacuc/api/v1/iacuc-batch-correspondence-details/]
 
 + Request

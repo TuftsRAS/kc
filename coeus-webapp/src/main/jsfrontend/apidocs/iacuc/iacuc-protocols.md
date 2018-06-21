@@ -66,7 +66,7 @@
     + referenceIndicator (optional) - Reference Indicator. Maximum length is 2.
     + layStatement1 (optional) - Lay Statement 1. Maximum length is 2000.
     + layStatement2 (optional) - Lay Statement 2. Maximum length is 2000.
-    + createTimestamp (optional) - 
+    + createTimestamp (optional) - Protocol Create Date. Maximum length is 21.
     + createUser (optional) - 
     + lastApprovalDate (optional) - Last Approval Date. Maximum length is 10.
     + overviewTimeline (optional) - Overview and Timeline. Maximum length is 2000.

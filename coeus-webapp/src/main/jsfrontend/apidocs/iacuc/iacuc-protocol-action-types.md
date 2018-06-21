@@ -142,6 +142,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Iacuc Protocol Action Types [PATCH /iacuc/api/v1/iacuc-protocol-action-types/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"protocolActionTypeCode": "(val)","description": "(val)","triggerSubmission": "(val)","triggerCorrespondence": "(val)","finalActionForBatchCorrespondence": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"protocolActionTypeCode": "(val)","description": "(val)","triggerSubmission": "(val)","triggerCorrespondence": "(val)","finalActionForBatchCorrespondence": "(val)","_primaryKey": "(val)"}
 ### Insert Iacuc Protocol Action Types [POST /iacuc/api/v1/iacuc-protocol-action-types/]
 
 + Request

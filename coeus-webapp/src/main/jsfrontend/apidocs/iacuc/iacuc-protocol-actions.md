@@ -155,6 +155,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Iacuc Protocol Actions [PATCH /iacuc/api/v1/iacuc-protocol-actions/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"protocolActionId": "(val)","protocolNumber": "(val)","sequenceNumber": "(val)","actionId": "(val)","protocolActionTypeCode": "(val)","submissionNumber": "(val)","comments": "(val)","createTimestamp": "(val)","createUser": "(val)","actionDate": "(val)","protocolId": "(val)","submissionIdFk": "(val)","actualActionDate": "(val)","prevSubmissionStatusCode": "(val)","submissionTypeCode": "(val)","prevProtocolStatusCode": "(val)","followupActionCode": "(val)","createdSubmission": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"protocolActionId": "(val)","protocolNumber": "(val)","sequenceNumber": "(val)","actionId": "(val)","protocolActionTypeCode": "(val)","submissionNumber": "(val)","comments": "(val)","createTimestamp": "(val)","createUser": "(val)","actionDate": "(val)","protocolId": "(val)","submissionIdFk": "(val)","actualActionDate": "(val)","prevSubmissionStatusCode": "(val)","submissionTypeCode": "(val)","prevProtocolStatusCode": "(val)","followupActionCode": "(val)","createdSubmission": "(val)","_primaryKey": "(val)"}
 ### Insert Iacuc Protocol Actions [POST /iacuc/api/v1/iacuc-protocol-actions/]
 
 + Request

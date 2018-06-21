@@ -157,6 +157,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Proposal Development Budget Overviews [PATCH /propdev/api/v1/proposal-development-budget-overviews/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"budgetId": "(val)","documentNumber": "(val)","budgetVersionNumber": "(val)","costSharingAmount": "(val)","endDate": "(val)","modularBudgetFlag": "(val)","ohRateTypeCode": "(val)","ohRateClassCode": "(val)","residualFunds": "(val)","startDate": "(val)","totalCost": "(val)","totalCostLimit": "(val)","totalDirectCostLimit": "(val)","totalDirectCost": "(val)","totalIndirectCost": "(val)","underrecoveryAmount": "(val)","comments": "(val)","onOffCampusFlag": "(val)","urRateClassCode": "(val)","submitCostSharingFlag": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"budgetId": "(val)","documentNumber": "(val)","budgetVersionNumber": "(val)","costSharingAmount": "(val)","endDate": "(val)","modularBudgetFlag": "(val)","ohRateTypeCode": "(val)","ohRateClassCode": "(val)","residualFunds": "(val)","startDate": "(val)","totalCost": "(val)","totalCostLimit": "(val)","totalDirectCostLimit": "(val)","totalDirectCost": "(val)","totalIndirectCost": "(val)","underrecoveryAmount": "(val)","comments": "(val)","onOffCampusFlag": "(val)","urRateClassCode": "(val)","submitCostSharingFlag": "(val)","_primaryKey": "(val)"}
 ### Insert Proposal Development Budget Overviews [POST /propdev/api/v1/proposal-development-budget-overviews/]
 
 + Request

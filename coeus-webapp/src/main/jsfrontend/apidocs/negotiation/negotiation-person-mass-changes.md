@@ -140,6 +140,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Negotiation Person Mass Changes [PATCH /negotiation/api/v1/negotiation-person-mass-changes/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"negotiationPersonMassChangeId": "(val)","personMassChangeId": "(val)","negotiator": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"negotiationPersonMassChangeId": "(val)","personMassChangeId": "(val)","negotiator": "(val)","_primaryKey": "(val)"}
 ### Insert Negotiation Person Mass Changes [POST /negotiation/api/v1/negotiation-person-mass-changes/]
 
 + Request

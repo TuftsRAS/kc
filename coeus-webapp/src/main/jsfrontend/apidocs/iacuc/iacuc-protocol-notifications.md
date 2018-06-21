@@ -146,6 +146,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Iacuc Protocol Notifications [PATCH /iacuc/api/v1/iacuc-protocol-notifications/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"notificationId": "(val)","notificationTypeId": "(val)","documentNumber": "(val)","owningDocumentIdFk": "(val)","recipients": "(val)","subject": "(val)","message": "(val)","createUser": "(val)","createTimestamp": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"notificationId": "(val)","notificationTypeId": "(val)","documentNumber": "(val)","owningDocumentIdFk": "(val)","recipients": "(val)","subject": "(val)","message": "(val)","createUser": "(val)","createTimestamp": "(val)","_primaryKey": "(val)"}
 ### Insert Iacuc Protocol Notifications [POST /iacuc/api/v1/iacuc-protocol-notifications/]
 
 + Request

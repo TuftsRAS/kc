@@ -139,6 +139,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Intellectual Property Review Requirement Types [PATCH /instprop/api/v1/intellectual-property-review-requirement-types/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"intellectualPropertyReviewRequirementTypeCode": "(val)","description": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"intellectualPropertyReviewRequirementTypeCode": "(val)","description": "(val)","_primaryKey": "(val)"}
 ### Insert Intellectual Property Review Requirement Types [POST /instprop/api/v1/intellectual-property-review-requirement-types/]
 
 + Request

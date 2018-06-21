@@ -139,6 +139,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Organization Types [PATCH /research-common/api/v1/organization-types/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"organizationId": "(val)","organizationTypeCode": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"organizationId": "(val)","organizationTypeCode": "(val)","_primaryKey": "(val)"}
 ### Insert Organization Types [POST /research-common/api/v1/organization-types/]
 
 + Request

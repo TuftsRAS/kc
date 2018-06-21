@@ -148,6 +148,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Proposal Admin Details [PATCH /instprop/api/v1/proposal-admin-details/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"proposalAdminDetailId": "(val)","dateSubmittedByDept": "(val)","dateReturnedToDept": "(val)","dateApprovedByOsp": "(val)","dateSubmittedToAgency": "(val)","instPropCreateDate": "(val)","instPropCreateUser": "(val)","signedBy": "(val)","submissionType": "(val)","devProposalNumber": "(val)","instProposalId": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"proposalAdminDetailId": "(val)","dateSubmittedByDept": "(val)","dateReturnedToDept": "(val)","dateApprovedByOsp": "(val)","dateSubmittedToAgency": "(val)","instPropCreateDate": "(val)","instPropCreateUser": "(val)","signedBy": "(val)","submissionType": "(val)","devProposalNumber": "(val)","instProposalId": "(val)","_primaryKey": "(val)"}
 ### Insert Proposal Admin Details [POST /instprop/api/v1/proposal-admin-details/]
 
 + Request

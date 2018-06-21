@@ -142,6 +142,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Iacuc Person Trainings [PATCH /iacuc/api/v1/iacuc-person-trainings/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"iacucPersonTrainingId": "(val)","personTrainingId": "(val)","personId": "(val)","speciesCode": "(val)","procedureCode": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"iacucPersonTrainingId": "(val)","personTrainingId": "(val)","personId": "(val)","speciesCode": "(val)","procedureCode": "(val)","_primaryKey": "(val)"}
 ### Insert Iacuc Person Trainings [POST /iacuc/api/v1/iacuc-person-trainings/]
 
 + Request

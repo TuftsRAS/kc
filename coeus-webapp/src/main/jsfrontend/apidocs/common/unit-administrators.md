@@ -43,7 +43,7 @@
     
 + Parameters
 
-    + personId (optional) - KC Person. Maximum length is 40.
+    + personId (optional) - KcPerson Id. Maximum length is 40.
     + unitAdministratorTypeCode (optional) - Unit Administrator Type Code. Maximum length is 3.
     + unitNumber (optional) - Unit Number. Maximum length is 8.
 
@@ -140,6 +140,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Unit Administrators [PATCH /research-common/api/v1/unit-administrators/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"personId": "(val)","unitAdministratorTypeCode": "(val)","unitNumber": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"personId": "(val)","unitAdministratorTypeCode": "(val)","unitNumber": "(val)","_primaryKey": "(val)"}
 ### Insert Unit Administrators [POST /research-common/api/v1/unit-administrators/]
 
 + Request
@@ -214,7 +232,7 @@
 + Parameters
 
     + _allowMulti (boolean, required) - flag to allow multiple resources to be deleted in one operation
-    + personId (optional) - KC Person. Maximum length is 40.
+    + personId (optional) - KcPerson Id. Maximum length is 40.
     + unitAdministratorTypeCode (optional) - Unit Administrator Type Code. Maximum length is 3.
     + unitNumber (optional) - Unit Number. Maximum length is 8.
 

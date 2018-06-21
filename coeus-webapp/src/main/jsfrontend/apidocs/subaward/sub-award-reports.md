@@ -142,6 +142,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Sub Award Reports [PATCH /subaward/api/v1/sub-award-reports/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"subAwardReportId": "(val)","subAwardId": "(val)","subAwardCode": "(val)","sequenceNumber": "(val)","subAwardReportTypeCode": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"subAwardReportId": "(val)","subAwardId": "(val)","subAwardCode": "(val)","sequenceNumber": "(val)","subAwardReportTypeCode": "(val)","_primaryKey": "(val)"}
 ### Insert Sub Award Reports [POST /subaward/api/v1/sub-award-reports/]
 
 + Request

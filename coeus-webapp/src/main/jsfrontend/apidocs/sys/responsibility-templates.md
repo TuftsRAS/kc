@@ -143,6 +143,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Responsibility Templates [PATCH /research-sys/api/v1/responsibility-templates/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","kimTypeId": "(val)","name": "(val)","active": "(val)","description": "(val)","namespaceCode": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","kimTypeId": "(val)","name": "(val)","active": "(val)","description": "(val)","namespaceCode": "(val)","_primaryKey": "(val)"}
 ### Insert Responsibility Templates [POST /research-sys/api/v1/responsibility-templates/]
 
 + Request

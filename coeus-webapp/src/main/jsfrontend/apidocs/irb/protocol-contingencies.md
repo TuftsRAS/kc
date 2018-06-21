@@ -139,6 +139,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Protocol Contingencies [PATCH /irb/api/v1/protocol-contingencies/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"protocolContingencyCode": "(val)","description": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"protocolContingencyCode": "(val)","description": "(val)","_primaryKey": "(val)"}
 ### Insert Protocol Contingencies [POST /irb/api/v1/protocol-contingencies/]
 
 + Request

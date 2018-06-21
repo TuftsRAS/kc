@@ -151,6 +151,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Watermarks [PATCH /research-common/api/v1/watermarks/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"watermarkId": "(val)","statusCode": "(val)","watermarkText": "(val)","watermarkStatus": "(val)","fontSize": "(val)","fontColor": "(val)","watermarkType": "(val)","fileName": "(val)","contentType": "(val)","attachmentContent": "(val)","watermarkPosition": "(val)","watermarkAlignment": "(val)","positionFontSize": "(val)","groupName": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"watermarkId": "(val)","statusCode": "(val)","watermarkText": "(val)","watermarkStatus": "(val)","fontSize": "(val)","fontColor": "(val)","watermarkType": "(val)","fileName": "(val)","contentType": "(val)","attachmentContent": "(val)","watermarkPosition": "(val)","watermarkAlignment": "(val)","positionFontSize": "(val)","groupName": "(val)","_primaryKey": "(val)"}
 ### Insert Watermarks [POST /research-common/api/v1/watermarks/]
 
 + Request

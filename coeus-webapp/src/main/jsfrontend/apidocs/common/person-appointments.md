@@ -147,6 +147,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Person Appointments [PATCH /research-common/api/v1/person-appointments/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"appointmentId": "(val)","personId": "(val)","unitNumber": "(val)","startDate": "(val)","endDate": "(val)","typeCode": "(val)","jobTitle": "(val)","preferedJobTitle": "(val)","jobCode": "(val)","salary": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"appointmentId": "(val)","personId": "(val)","unitNumber": "(val)","startDate": "(val)","endDate": "(val)","typeCode": "(val)","jobTitle": "(val)","preferedJobTitle": "(val)","jobCode": "(val)","salary": "(val)","_primaryKey": "(val)"}
 ### Insert Person Appointments [POST /research-common/api/v1/person-appointments/]
 
 + Request

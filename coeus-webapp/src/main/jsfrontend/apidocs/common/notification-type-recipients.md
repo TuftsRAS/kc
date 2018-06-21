@@ -141,6 +141,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Notification Type Recipients [PATCH /research-common/api/v1/notification-type-recipients/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"notificationTypeRecipientId": "(val)","notificationTypeId": "(val)","roleName": "(val)","roleSubQualifier": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"notificationTypeRecipientId": "(val)","notificationTypeId": "(val)","roleName": "(val)","roleSubQualifier": "(val)","_primaryKey": "(val)"}
 ### Insert Notification Type Recipients [POST /research-common/api/v1/notification-type-recipients/]
 
 + Request

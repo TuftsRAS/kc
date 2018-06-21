@@ -143,6 +143,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Sub Award Forms [PATCH /subaward/api/v1/sub-award-forms/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"formId": "(val)","description": "(val)","attachmentContent": "(val)","fileName": "(val)","contentType": "(val)","templateTypeCode": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"formId": "(val)","description": "(val)","attachmentContent": "(val)","fileName": "(val)","contentType": "(val)","templateTypeCode": "(val)","_primaryKey": "(val)"}
 ### Insert Sub Award Forms [POST /subaward/api/v1/sub-award-forms/]
 
 + Request

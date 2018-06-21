@@ -139,6 +139,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Proposal Location Types [PATCH /propdev/api/v1/proposal-location-types/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"locationTypeCode": "(val)","locationTypeDesc": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"locationTypeCode": "(val)","locationTypeDesc": "(val)","_primaryKey": "(val)"}
 ### Insert Proposal Location Types [POST /propdev/api/v1/proposal-location-types/]
 
 + Request

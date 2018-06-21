@@ -145,6 +145,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Group Document Qualifiers [PATCH /research-sys/api/v1/group-document-qualifiers/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"groupId": "(val)","kimTypId": "(val)","kimAttrDefnId": "(val)","edit": "(val)","documentNumber": "(val)","attrVal": "(val)","active": "(val)","attrDataId": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"groupId": "(val)","kimTypId": "(val)","kimAttrDefnId": "(val)","edit": "(val)","documentNumber": "(val)","attrVal": "(val)","active": "(val)","attrDataId": "(val)","_primaryKey": "(val)"}
 ### Insert Group Document Qualifiers [POST /research-sys/api/v1/group-document-qualifiers/]
 
 + Request

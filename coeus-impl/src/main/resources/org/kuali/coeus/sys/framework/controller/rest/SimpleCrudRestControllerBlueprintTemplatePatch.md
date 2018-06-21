@@ -1,4 +1,4 @@
-### Insert ${resourceName} [PATCH ${endpoint}]
+### Update Specific Attributes ${resourceName} [PATCH ${endpoint}${sampleKey}]
 
 + Request
 
@@ -11,9 +11,8 @@
     
             ${sampleResource1}
 			
-+ Response 201
++ Response 204
     
     + Body
             
             ${sampleResource1}
-            

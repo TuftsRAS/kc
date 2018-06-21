@@ -142,6 +142,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Proposal Sites [PATCH /propdev/api/v1/proposal-sites/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"siteNumber": "(val)","locationName": "(val)","locationTypeCode": "(val)","organizationId": "(val)","rolodexId": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"siteNumber": "(val)","locationName": "(val)","locationTypeCode": "(val)","organizationId": "(val)","rolodexId": "(val)","_primaryKey": "(val)"}
 ### Insert Proposal Sites [POST /propdev/api/v1/proposal-sites/]
 
 + Request

@@ -83,7 +83,7 @@
     <bean parent="simpleCrudMapBasedRestController" p:dataObjectClazz="org.kuali.coeus.propdev.impl.location.ProposalLocationType" />
     <bean parent="simpleCrudMapBasedRestController" p:dataObjectClazz="org.kuali.coeus.propdev.impl.docperm.ProposalRoleTemplate" />
     <bean parent="simpleCrudMapBasedRestController" p:dataObjectClazz="org.kuali.coeus.propdev.impl.specialreview.ProposalSpecialReview" />
-    <bean parent="simpleReadOnlyMapBasedRestController" p:dataObjectClazz="org.kuali.coeus.propdev.impl.specialreview.ProposalSpecialReviewExemption" />
+    <bean parent="simpleCrudMapBasedRestController" p:dataObjectClazz="org.kuali.coeus.propdev.impl.specialreview.ProposalSpecialReviewExemption" />
     <bean parent="simpleCrudMapBasedRestController" p:dataObjectClazz="org.kuali.coeus.propdev.impl.state.ProposalState" />
     <bean parent="simpleCrudMapBasedRestController" p:dataObjectClazz="org.kuali.coeus.propdev.impl.attachment.ValidNarrForms" p:camelCasePluralName="ValidNarrativeForms" />
     <bean parent="simpleCrudMapBasedRestController" p:dataObjectClazz="org.kuali.coeus.propdev.impl.s2s.S2sAppAttachments" p:camelCasePluralName="S2sApplicationAttachments" />

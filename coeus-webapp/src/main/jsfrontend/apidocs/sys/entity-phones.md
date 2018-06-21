@@ -146,6 +146,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Entity Phones [PATCH /research-sys/api/v1/entity-phones/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","phoneNumber": "(val)","countryCode": "(val)","defaultValue": "(val)","entityTypeCode": "(val)","extensionNumber": "(val)","active": "(val)","entityId": "(val)","phoneTypeCode": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","phoneNumber": "(val)","countryCode": "(val)","defaultValue": "(val)","entityTypeCode": "(val)","extensionNumber": "(val)","active": "(val)","entityId": "(val)","phoneTypeCode": "(val)","_primaryKey": "(val)"}
 ### Insert Entity Phones [POST /research-sys/api/v1/entity-phones/]
 
 + Request

@@ -143,6 +143,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Award Sync Logs [PATCH /award/api/v1/award-sync-logs/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"awardSyncLogId": "(val)","awardSyncStatusId": "(val)","awardSyncChangeId": "(val)","success": "(val)","logTypeCode": "(val)","status": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"awardSyncLogId": "(val)","awardSyncStatusId": "(val)","awardSyncChangeId": "(val)","success": "(val)","logTypeCode": "(val)","status": "(val)","_primaryKey": "(val)"}
 ### Insert Award Sync Logs [POST /award/api/v1/award-sync-logs/]
 
 + Request

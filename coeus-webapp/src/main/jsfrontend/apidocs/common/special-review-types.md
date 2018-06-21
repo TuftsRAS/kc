@@ -140,6 +140,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Special Review Types [PATCH /research-common/api/v1/special-review-types/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"specialReviewTypeCode": "(val)","description": "(val)","sortId": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"specialReviewTypeCode": "(val)","description": "(val)","sortId": "(val)","_primaryKey": "(val)"}
 ### Insert Special Review Types [POST /research-common/api/v1/special-review-types/]
 
 + Request

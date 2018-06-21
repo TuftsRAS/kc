@@ -141,6 +141,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Question Multi Choices [PATCH /research-common/api/v1/question-multi-choices/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","questionId": "(val)","prompt": "(val)","description": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","questionId": "(val)","prompt": "(val)","description": "(val)","_primaryKey": "(val)"}
 ### Insert Question Multi Choices [POST /research-common/api/v1/question-multi-choices/]
 
 + Request

@@ -142,6 +142,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Custom Attribute Documents [PATCH /research-common/api/v1/custom-attribute-documents/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","documentTypeName": "(val)","required": "(val)","typeName": "(val)","active": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","documentTypeName": "(val)","required": "(val)","typeName": "(val)","active": "(val)","_primaryKey": "(val)"}
 ### Insert Custom Attribute Documents [POST /research-common/api/v1/custom-attribute-documents/]
 
 + Request

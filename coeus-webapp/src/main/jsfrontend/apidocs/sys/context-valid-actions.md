@@ -140,6 +140,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Context Valid Actions [PATCH /research-sys/api/v1/context-valid-actions/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","contextId": "(val)","actionTypeId": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","contextId": "(val)","actionTypeId": "(val)","_primaryKey": "(val)"}
 ### Insert Context Valid Actions [POST /research-sys/api/v1/context-valid-actions/]
 
 + Request

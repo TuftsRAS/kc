@@ -142,6 +142,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Sponsor Forms [PATCH /research-common/api/v1/sponsor-forms/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"sponsorFormId": "(val)","packageName": "(val)","packageNumber": "(val)","sponsorCode": "(val)","sponsorHierarchyName": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"sponsorFormId": "(val)","packageName": "(val)","packageNumber": "(val)","sponsorCode": "(val)","sponsorHierarchyName": "(val)","_primaryKey": "(val)"}
 ### Insert Sponsor Forms [POST /research-common/api/v1/sponsor-forms/]
 
 + Request

@@ -141,6 +141,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Role Permissions [PATCH /research-sys/api/v1/role-permissions/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","roleId": "(val)","permissionId": "(val)","active": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","roleId": "(val)","permissionId": "(val)","active": "(val)","_primaryKey": "(val)"}
 ### Insert Role Permissions [POST /research-sys/api/v1/role-permissions/]
 
 + Request

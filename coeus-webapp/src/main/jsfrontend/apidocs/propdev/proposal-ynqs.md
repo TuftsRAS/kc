@@ -143,6 +143,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Proposal Ynqs [PATCH /propdev/api/v1/proposal-ynqs/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"proposalNumber": "(val)","questionId": "(val)","answer": "(val)","explanation": "(val)","reviewDate": "(val)","sortId": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"proposalNumber": "(val)","questionId": "(val)","answer": "(val)","explanation": "(val)","reviewDate": "(val)","sortId": "(val)","_primaryKey": "(val)"}
 ### Insert Proposal Ynqs [POST /propdev/api/v1/proposal-ynqs/]
 
 + Request

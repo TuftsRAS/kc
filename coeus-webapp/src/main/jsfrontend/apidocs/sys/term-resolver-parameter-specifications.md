@@ -139,6 +139,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Term Resolver Parameter Specifications [PATCH /research-sys/api/v1/term-resolver-parameter-specifications/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","name": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","name": "(val)","_primaryKey": "(val)"}
 ### Insert Term Resolver Parameter Specifications [POST /research-sys/api/v1/term-resolver-parameter-specifications/]
 
 + Request

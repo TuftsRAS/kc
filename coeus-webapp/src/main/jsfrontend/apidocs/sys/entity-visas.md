@@ -142,6 +142,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Entity Visas [PATCH /research-sys/api/v1/entity-visas/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","entityId": "(val)","visaTypeKey": "(val)","visaEntry": "(val)","visaId": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","entityId": "(val)","visaTypeKey": "(val)","visaEntry": "(val)","visaId": "(val)","_primaryKey": "(val)"}
 ### Insert Entity Visas [POST /research-sys/api/v1/entity-visas/]
 
 + Request

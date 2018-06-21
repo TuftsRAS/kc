@@ -148,6 +148,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Person Document Groups [PATCH /research-sys/api/v1/person-document-groups/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"groupMemberId": "(val)","groupType": "(val)","groupId": "(val)","groupName": "(val)","namespaceCode": "(val)","principalId": "(val)","activeFromDate": "(val)","activeToDate": "(val)","edit": "(val)","documentNumber": "(val)","active": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"groupMemberId": "(val)","groupType": "(val)","groupId": "(val)","groupName": "(val)","namespaceCode": "(val)","principalId": "(val)","activeFromDate": "(val)","activeToDate": "(val)","edit": "(val)","documentNumber": "(val)","active": "(val)","_primaryKey": "(val)"}
 ### Insert Person Document Groups [POST /research-sys/api/v1/person-document-groups/]
 
 + Request

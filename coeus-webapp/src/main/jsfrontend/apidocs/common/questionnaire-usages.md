@@ -145,6 +145,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Questionnaire Usages [PATCH /research-common/api/v1/questionnaire-usages/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","moduleItemCode": "(val)","moduleSubItemCode": "(val)","questionnaireSequenceNumber": "(val)","questionnaireId": "(val)","ruleId": "(val)","questionnaireLabel": "(val)","mandatory": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","moduleItemCode": "(val)","moduleSubItemCode": "(val)","questionnaireSequenceNumber": "(val)","questionnaireId": "(val)","ruleId": "(val)","questionnaireLabel": "(val)","mandatory": "(val)","_primaryKey": "(val)"}
 ### Insert Questionnaire Usages [POST /research-common/api/v1/questionnaire-usages/]
 
 + Request

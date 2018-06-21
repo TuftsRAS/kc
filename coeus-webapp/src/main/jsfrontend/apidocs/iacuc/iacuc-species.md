@@ -139,6 +139,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Iacuc Species [PATCH /iacuc/api/v1/iacuc-species/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"speciesCode": "(val)","speciesName": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"speciesCode": "(val)","speciesName": "(val)","_primaryKey": "(val)"}
 ### Insert Iacuc Species [POST /iacuc/api/v1/iacuc-species/]
 
 + Request

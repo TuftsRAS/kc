@@ -145,6 +145,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Notification Content Types [PATCH /research-sys/api/v1/notification-content-types/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","name": "(val)","current": "(val)","version": "(val)","description": "(val)","namespace": "(val)","xsd": "(val)","xsl": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","name": "(val)","current": "(val)","version": "(val)","description": "(val)","namespace": "(val)","xsd": "(val)","xsl": "(val)","_primaryKey": "(val)"}
 ### Insert Notification Content Types [POST /research-sys/api/v1/notification-content-types/]
 
 + Request

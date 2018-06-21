@@ -149,6 +149,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Entity Default Info Caches [PATCH /research-sys/api/v1/entity-default-info-caches/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"principalId": "(val)","principalName": "(val)","entityId": "(val)","entityTypeCode": "(val)","firstName": "(val)","middleName": "(val)","lastName": "(val)","name": "(val)","campusCode": "(val)","primaryDepartmentCode": "(val)","employeeId": "(val)","lastUpdateTimestamp": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"principalId": "(val)","principalName": "(val)","entityId": "(val)","entityTypeCode": "(val)","firstName": "(val)","middleName": "(val)","lastName": "(val)","name": "(val)","campusCode": "(val)","primaryDepartmentCode": "(val)","employeeId": "(val)","lastUpdateTimestamp": "(val)","_primaryKey": "(val)"}
 ### Insert Entity Default Info Caches [POST /research-sys/api/v1/entity-default-info-caches/]
 
 + Request

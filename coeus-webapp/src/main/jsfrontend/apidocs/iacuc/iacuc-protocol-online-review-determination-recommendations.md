@@ -141,6 +141,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Iacuc Protocol Online Review Determination Recommendations [PATCH /iacuc/api/v1/iacuc-protocol-online-review-determination-recommendations/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"protocolOnlineReviewDeterminationRecommendationCode": "(val)","description": "(val)","iacucProtocolReviewTypeCode": "(val)","iacucProtocolActionTypeCode": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"protocolOnlineReviewDeterminationRecommendationCode": "(val)","description": "(val)","iacucProtocolReviewTypeCode": "(val)","iacucProtocolActionTypeCode": "(val)","_primaryKey": "(val)"}
 ### Insert Iacuc Protocol Online Review Determination Recommendations [POST /iacuc/api/v1/iacuc-protocol-online-review-determination-recommendations/]
 
 + Request

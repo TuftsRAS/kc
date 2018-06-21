@@ -139,6 +139,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Award Budget Line Items [PATCH /award/api/v1/award-budget-line-items/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"budgetLineItemId": "(val)","obligatedAmount": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"budgetLineItemId": "(val)","obligatedAmount": "(val)","_primaryKey": "(val)"}
 ### Insert Award Budget Line Items [POST /award/api/v1/award-budget-line-items/]
 
 + Request

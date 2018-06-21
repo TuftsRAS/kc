@@ -142,6 +142,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Multi Document Attachments [PATCH /research-sys/api/v1/multi-document-attachments/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","documentNumber": "(val)","fileName": "(val)","attachmentContent": "(val)","contentType": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","documentNumber": "(val)","fileName": "(val)","attachmentContent": "(val)","contentType": "(val)","_primaryKey": "(val)"}
 ### Insert Multi Document Attachments [POST /research-sys/api/v1/multi-document-attachments/]
 
 + Request

@@ -16,7 +16,7 @@
 
     + Body
     
-            {"institutionalProposalContactId": "(val)","personId": "(val)","rolodexId": "(val)","fullName": "(val)","academicYearEffort": "(val)","calendarYearEffort": "(val)","summerEffort": "(val)","totalEffort": "(val)","faculty": "(val)","roleCode": "(val)","keyPersonRole": "(val)","proposalNumber": "(val)","sequenceNumber": "(val)","institutionalProposal.proposalId": "(val)","_primaryKey": "(val)"}
+            {"institutionalProposalContactId": "(val)","personId": "(val)","rolodexId": "(val)","fullName": "(val)","academicYearEffort": "(val)","calendarYearEffort": "(val)","summerEffort": "(val)","totalEffort": "(val)","faculty": "(val)","includeInCreditAllocation": "(val)","roleCode": "(val)","keyPersonRole": "(val)","proposalNumber": "(val)","sequenceNumber": "(val)","institutionalProposal.proposalId": "(val)","_primaryKey": "(val)"}
 
 ### Get All Institutional Proposal Persons [GET /instprop/api/v1/institutional-proposal-persons/]
 	 
@@ -35,8 +35,8 @@
     + Body
     
             [
-              {"institutionalProposalContactId": "(val)","personId": "(val)","rolodexId": "(val)","fullName": "(val)","academicYearEffort": "(val)","calendarYearEffort": "(val)","summerEffort": "(val)","totalEffort": "(val)","faculty": "(val)","roleCode": "(val)","keyPersonRole": "(val)","proposalNumber": "(val)","sequenceNumber": "(val)","institutionalProposal.proposalId": "(val)","_primaryKey": "(val)"},
-              {"institutionalProposalContactId": "(val)","personId": "(val)","rolodexId": "(val)","fullName": "(val)","academicYearEffort": "(val)","calendarYearEffort": "(val)","summerEffort": "(val)","totalEffort": "(val)","faculty": "(val)","roleCode": "(val)","keyPersonRole": "(val)","proposalNumber": "(val)","sequenceNumber": "(val)","institutionalProposal.proposalId": "(val)","_primaryKey": "(val)"}
+              {"institutionalProposalContactId": "(val)","personId": "(val)","rolodexId": "(val)","fullName": "(val)","academicYearEffort": "(val)","calendarYearEffort": "(val)","summerEffort": "(val)","totalEffort": "(val)","faculty": "(val)","includeInCreditAllocation": "(val)","roleCode": "(val)","keyPersonRole": "(val)","proposalNumber": "(val)","sequenceNumber": "(val)","institutionalProposal.proposalId": "(val)","_primaryKey": "(val)"},
+              {"institutionalProposalContactId": "(val)","personId": "(val)","rolodexId": "(val)","fullName": "(val)","academicYearEffort": "(val)","calendarYearEffort": "(val)","summerEffort": "(val)","totalEffort": "(val)","faculty": "(val)","includeInCreditAllocation": "(val)","roleCode": "(val)","keyPersonRole": "(val)","proposalNumber": "(val)","sequenceNumber": "(val)","institutionalProposal.proposalId": "(val)","_primaryKey": "(val)"}
             ]
 
 ### Get All Institutional Proposal Persons with Filtering [GET /instprop/api/v1/institutional-proposal-persons/]
@@ -52,6 +52,7 @@
     + summerEffort (optional) - Summer Effort. Maximum length is 7.
     + totalEffort (optional) - Total Effort. Maximum length is 7.
     + faculty (optional) - Faculty flag. Maximum length is 1.
+    + includeInCreditAllocation (optional) - Include in Credit Allocation. Maximum length is 1.
     + roleCode (optional) - 
     + keyPersonRole (optional) - Project Role. Maximum length is 60.
     + proposalNumber (optional) - Institutional Proposal Number. Maximum length is 8.
@@ -74,8 +75,8 @@
     + Body
     
             [
-              {"institutionalProposalContactId": "(val)","personId": "(val)","rolodexId": "(val)","fullName": "(val)","academicYearEffort": "(val)","calendarYearEffort": "(val)","summerEffort": "(val)","totalEffort": "(val)","faculty": "(val)","roleCode": "(val)","keyPersonRole": "(val)","proposalNumber": "(val)","sequenceNumber": "(val)","institutionalProposal.proposalId": "(val)","_primaryKey": "(val)"},
-              {"institutionalProposalContactId": "(val)","personId": "(val)","rolodexId": "(val)","fullName": "(val)","academicYearEffort": "(val)","calendarYearEffort": "(val)","summerEffort": "(val)","totalEffort": "(val)","faculty": "(val)","roleCode": "(val)","keyPersonRole": "(val)","proposalNumber": "(val)","sequenceNumber": "(val)","institutionalProposal.proposalId": "(val)","_primaryKey": "(val)"}
+              {"institutionalProposalContactId": "(val)","personId": "(val)","rolodexId": "(val)","fullName": "(val)","academicYearEffort": "(val)","calendarYearEffort": "(val)","summerEffort": "(val)","totalEffort": "(val)","faculty": "(val)","includeInCreditAllocation": "(val)","roleCode": "(val)","keyPersonRole": "(val)","proposalNumber": "(val)","sequenceNumber": "(val)","institutionalProposal.proposalId": "(val)","_primaryKey": "(val)"},
+              {"institutionalProposalContactId": "(val)","personId": "(val)","rolodexId": "(val)","fullName": "(val)","academicYearEffort": "(val)","calendarYearEffort": "(val)","summerEffort": "(val)","totalEffort": "(val)","faculty": "(val)","includeInCreditAllocation": "(val)","roleCode": "(val)","keyPersonRole": "(val)","proposalNumber": "(val)","sequenceNumber": "(val)","institutionalProposal.proposalId": "(val)","_primaryKey": "(val)"}
             ]
 			
 ### Get Schema for Institutional Proposal Persons [GET /instprop/api/v1/institutional-proposal-persons/]
@@ -98,7 +99,7 @@
 
     + Body
     
-            {"columns":["institutionalProposalContactId","personId","rolodexId","fullName","academicYearEffort","calendarYearEffort","summerEffort","totalEffort","faculty","roleCode","keyPersonRole","proposalNumber","sequenceNumber","institutionalProposal.proposalId"],"primaryKey":"institutionalProposalContactId"}
+            {"columns":["institutionalProposalContactId","personId","rolodexId","fullName","academicYearEffort","calendarYearEffort","summerEffort","totalEffort","faculty","includeInCreditAllocation","roleCode","keyPersonRole","proposalNumber","sequenceNumber","institutionalProposal.proposalId"],"primaryKey":"institutionalProposalContactId"}
 		
 ### Get Blueprint API specification for Institutional Proposal Persons [GET /instprop/api/v1/institutional-proposal-persons/]
 	 

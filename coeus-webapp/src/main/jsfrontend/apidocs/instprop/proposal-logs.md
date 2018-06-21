@@ -47,7 +47,7 @@
     + proposalTypeCode (optional) - Proposal Type Code. Maximum length is 3.
     + proposalLogTypeCode (optional) - Proposal Log Type Code. Maximum length is 3.
     + title (optional) - Title. Maximum length is 200.
-    + piId (optional) - Principal Investigator (Employee). Maximum length is 40.
+    + piId (optional) - KcPerson Id. Maximum length is 40.
     + mergedWith (optional) - Proposal Merged With. Maximum length is 8.
     + instProposalNumber (optional) - Created Institutional Proposal. Maximum length is 200.
     + rolodexId (optional) - Rolodex Id. Maximum length is 6.
@@ -57,7 +57,7 @@
     + sponsorName (optional) - Sponsor Name. Maximum length is 200.
     + logStatus (optional) - Log Status. Maximum length is 3.
     + comments (optional) - Comments. Maximum length is 300.
-    + createTimestamp (optional) - The creation timestamp. Maximum length is 21.
+    + createTimestamp (optional) - Log Create Date. Maximum length is 21.
     + createUser (optional) - The user who created the object. Maximum length is 60.
     + deadlineDate (optional) - Deadline Date. Maximum length is 10.
     + deadlineTime (optional) - The time in which the proposal is due to the sponsoring agency.  Additional deadlines may be set by the office authorized to submit proposals on behalf of the institution (e.g. sponsored programs, etc.). Maximum length is 15.
@@ -157,6 +157,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Proposal Logs [PATCH /instprop/api/v1/proposal-logs/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"proposalNumber": "(val)","proposalTypeCode": "(val)","proposalLogTypeCode": "(val)","title": "(val)","piId": "(val)","mergedWith": "(val)","instProposalNumber": "(val)","rolodexId": "(val)","piName": "(val)","leadUnit": "(val)","sponsorCode": "(val)","sponsorName": "(val)","logStatus": "(val)","comments": "(val)","createTimestamp": "(val)","createUser": "(val)","deadlineDate": "(val)","deadlineTime": "(val)","fiscalMonth": "(val)","fiscalYear": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"proposalNumber": "(val)","proposalTypeCode": "(val)","proposalLogTypeCode": "(val)","title": "(val)","piId": "(val)","mergedWith": "(val)","instProposalNumber": "(val)","rolodexId": "(val)","piName": "(val)","leadUnit": "(val)","sponsorCode": "(val)","sponsorName": "(val)","logStatus": "(val)","comments": "(val)","createTimestamp": "(val)","createUser": "(val)","deadlineDate": "(val)","deadlineTime": "(val)","fiscalMonth": "(val)","fiscalYear": "(val)","_primaryKey": "(val)"}
 ### Insert Proposal Logs [POST /instprop/api/v1/proposal-logs/]
 
 + Request
@@ -235,7 +253,7 @@
     + proposalTypeCode (optional) - Proposal Type Code. Maximum length is 3.
     + proposalLogTypeCode (optional) - Proposal Log Type Code. Maximum length is 3.
     + title (optional) - Title. Maximum length is 200.
-    + piId (optional) - Principal Investigator (Employee). Maximum length is 40.
+    + piId (optional) - KcPerson Id. Maximum length is 40.
     + mergedWith (optional) - Proposal Merged With. Maximum length is 8.
     + instProposalNumber (optional) - Created Institutional Proposal. Maximum length is 200.
     + rolodexId (optional) - Rolodex Id. Maximum length is 6.
@@ -245,7 +263,7 @@
     + sponsorName (optional) - Sponsor Name. Maximum length is 200.
     + logStatus (optional) - Log Status. Maximum length is 3.
     + comments (optional) - Comments. Maximum length is 300.
-    + createTimestamp (optional) - The creation timestamp. Maximum length is 21.
+    + createTimestamp (optional) - Log Create Date. Maximum length is 21.
     + createUser (optional) - The user who created the object. Maximum length is 60.
     + deadlineDate (optional) - Deadline Date. Maximum length is 10.
     + deadlineTime (optional) - The time in which the proposal is due to the sponsoring agency.  Additional deadlines may be set by the office authorized to submit proposals on behalf of the institution (e.g. sponsored programs, etc.). Maximum length is 15.

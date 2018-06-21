@@ -139,6 +139,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Deadline Types [PATCH /research-common/api/v1/deadline-types/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"deadlineTypeCode": "(val)","description": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"deadlineTypeCode": "(val)","description": "(val)","_primaryKey": "(val)"}
 ### Insert Deadline Types [POST /research-common/api/v1/deadline-types/]
 
 + Request

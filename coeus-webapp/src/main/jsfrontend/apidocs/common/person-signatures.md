@@ -44,7 +44,7 @@
 + Parameters
 
     + personSignatureId (optional) - Person Signature Code. Maximum length is 12.
-    + personId (optional) - KC Person. Maximum length is 40.
+    + personId (optional) - KcPerson Id. Maximum length is 40.
     + signatureActive (optional) - Indicate if this signature is active. Maximum length is 1.
     + attachmentContent (optional) - 
     + fileName (optional) - 
@@ -143,6 +143,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Person Signatures [PATCH /research-common/api/v1/person-signatures/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"personSignatureId": "(val)","personId": "(val)","signatureActive": "(val)","attachmentContent": "(val)","fileName": "(val)","contentType": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"personSignatureId": "(val)","personId": "(val)","signatureActive": "(val)","attachmentContent": "(val)","fileName": "(val)","contentType": "(val)","_primaryKey": "(val)"}
 ### Insert Person Signatures [POST /research-common/api/v1/person-signatures/]
 
 + Request
@@ -218,7 +236,7 @@
 
     + _allowMulti (boolean, required) - flag to allow multiple resources to be deleted in one operation
     + personSignatureId (optional) - Person Signature Code. Maximum length is 12.
-    + personId (optional) - KC Person. Maximum length is 40.
+    + personId (optional) - KcPerson Id. Maximum length is 40.
     + signatureActive (optional) - Indicate if this signature is active. Maximum length is 1.
     + attachmentContent (optional) - 
     + fileName (optional) - 

@@ -139,6 +139,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Prop Science Keywords [PATCH /propdev/api/v1/prop-science-keywords/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"hierarchyProposalNumber": "(val)","hiddenInHierarchy": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"hierarchyProposalNumber": "(val)","hiddenInHierarchy": "(val)","_primaryKey": "(val)"}
 ### Insert Prop Science Keywords [POST /propdev/api/v1/prop-science-keywords/]
 
 + Request

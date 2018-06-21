@@ -163,6 +163,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Budgets [PATCH /research-common/api/v1/budgets/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"parentDocumentTypeCode": "(val)","budgetJustification": "(val)","createTimestamp": "(val)","createUser": "(val)","budgetAdjustmentDocumentNumber": "(val)","residualFunds": "(val)","endDate": "(val)","modularBudgetFlag": "(val)","documentNumber": "(val)","totalDirectCostLimit": "(val)","costSharingAmount": "(val)","totalDirectCost": "(val)","ohRateClassCode": "(val)","comments": "(val)","underrecoveryAmount": "(val)","budgetId": "(val)","budgetVersionNumber": "(val)","urRateClassCode": "(val)","totalIndirectCost": "(val)","totalCostLimit": "(val)","name": "(val)","onOffCampusFlag": "(val)","submitCostSharingFlag": "(val)","ohRateTypeCode": "(val)","startDate": "(val)","totalCost": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"parentDocumentTypeCode": "(val)","budgetJustification": "(val)","createTimestamp": "(val)","createUser": "(val)","budgetAdjustmentDocumentNumber": "(val)","residualFunds": "(val)","endDate": "(val)","modularBudgetFlag": "(val)","documentNumber": "(val)","totalDirectCostLimit": "(val)","costSharingAmount": "(val)","totalDirectCost": "(val)","ohRateClassCode": "(val)","comments": "(val)","underrecoveryAmount": "(val)","budgetId": "(val)","budgetVersionNumber": "(val)","urRateClassCode": "(val)","totalIndirectCost": "(val)","totalCostLimit": "(val)","name": "(val)","onOffCampusFlag": "(val)","submitCostSharingFlag": "(val)","ohRateTypeCode": "(val)","startDate": "(val)","totalCost": "(val)","_primaryKey": "(val)"}
 ### Insert Budgets [POST /research-common/api/v1/budgets/]
 
 + Request

@@ -141,6 +141,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Proposition Parameters [PATCH /research-sys/api/v1/proposition-parameters/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","value": "(val)","parameterType": "(val)","sequenceNumber": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","value": "(val)","parameterType": "(val)","sequenceNumber": "(val)","_primaryKey": "(val)"}
 ### Insert Proposition Parameters [POST /research-sys/api/v1/proposition-parameters/]
 
 + Request

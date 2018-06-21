@@ -139,6 +139,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Valid Ce Job Codes [PATCH /research-common/api/v1/valid-ce-job-codes/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"costElement": "(val)","jobCode": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"costElement": "(val)","jobCode": "(val)","_primaryKey": "(val)"}
 ### Insert Valid Ce Job Codes [POST /research-common/api/v1/valid-ce-job-codes/]
 
 + Request

@@ -140,6 +140,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Activity Types [PATCH /research-common/api/v1/activity-types/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"code": "(val)","description": "(val)","higherEducationFunctionCode": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"code": "(val)","description": "(val)","higherEducationFunctionCode": "(val)","_primaryKey": "(val)"}
 ### Insert Activity Types [POST /research-common/api/v1/activity-types/]
 
 + Request

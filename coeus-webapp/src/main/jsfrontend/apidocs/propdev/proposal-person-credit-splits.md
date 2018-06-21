@@ -139,6 +139,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Proposal Person Credit Splits [PATCH /propdev/api/v1/proposal-person-credit-splits/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"invCreditTypeCode": "(val)","credit": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"invCreditTypeCode": "(val)","credit": "(val)","_primaryKey": "(val)"}
 ### Insert Proposal Person Credit Splits [POST /propdev/api/v1/proposal-person-credit-splits/]
 
 + Request

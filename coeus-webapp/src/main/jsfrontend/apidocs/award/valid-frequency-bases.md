@@ -140,6 +140,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Valid Frequency Bases [PATCH /award/api/v1/valid-frequency-bases/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"validFrequencyBaseId": "(val)","frequencyCode": "(val)","frequencyBaseCode": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"validFrequencyBaseId": "(val)","frequencyCode": "(val)","frequencyBaseCode": "(val)","_primaryKey": "(val)"}
 ### Insert Valid Frequency Bases [POST /award/api/v1/valid-frequency-bases/]
 
 + Request

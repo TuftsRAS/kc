@@ -146,6 +146,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Irb Protocol Notifications [PATCH /irb/api/v1/irb-protocol-notifications/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"notificationId": "(val)","notificationTypeId": "(val)","documentNumber": "(val)","owningDocumentIdFk": "(val)","recipients": "(val)","subject": "(val)","message": "(val)","createUser": "(val)","createTimestamp": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"notificationId": "(val)","notificationTypeId": "(val)","documentNumber": "(val)","owningDocumentIdFk": "(val)","recipients": "(val)","subject": "(val)","message": "(val)","createUser": "(val)","createTimestamp": "(val)","_primaryKey": "(val)"}
 ### Insert Irb Protocol Notifications [POST /irb/api/v1/irb-protocol-notifications/]
 
 + Request

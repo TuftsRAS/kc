@@ -146,6 +146,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Budget Unrecovered F And As [PATCH /research-common/api/v1/budget-unrecovered-f-and-as/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"documentComponentId": "(val)","budgetId": "(val)","amount": "(val)","applicableRate": "(val)","onCampusFlag": "(val)","fiscalYear": "(val)","sourceAccount": "(val)","hierarchyProposalNumber": "(val)","hiddenInHierarchy": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"documentComponentId": "(val)","budgetId": "(val)","amount": "(val)","applicableRate": "(val)","onCampusFlag": "(val)","fiscalYear": "(val)","sourceAccount": "(val)","hierarchyProposalNumber": "(val)","hiddenInHierarchy": "(val)","_primaryKey": "(val)"}
 ### Insert Budget Unrecovered F And As [POST /research-common/api/v1/budget-unrecovered-f-and-as/]
 
 + Request

@@ -139,6 +139,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Participant Types [PATCH /irb/api/v1/participant-types/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"participantTypeCode": "(val)","description": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"participantTypeCode": "(val)","description": "(val)","_primaryKey": "(val)"}
 ### Insert Participant Types [POST /irb/api/v1/participant-types/]
 
 + Request

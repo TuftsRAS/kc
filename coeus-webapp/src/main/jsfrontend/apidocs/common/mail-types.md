@@ -139,6 +139,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Mail Types [PATCH /research-common/api/v1/mail-types/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"mailType": "(val)","description": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"mailType": "(val)","description": "(val)","_primaryKey": "(val)"}
 ### Insert Mail Types [POST /research-common/api/v1/mail-types/]
 
 + Request

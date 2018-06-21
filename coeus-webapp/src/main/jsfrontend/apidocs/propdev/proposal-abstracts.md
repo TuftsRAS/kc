@@ -142,6 +142,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Proposal Abstracts [PATCH /propdev/api/v1/proposal-abstracts/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"proposalNumber": "(val)","abstractTypeCode": "(val)","abstractDetails": "(val)","timestampDisplay": "(val)","uploadUserDisplay": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"proposalNumber": "(val)","abstractTypeCode": "(val)","abstractDetails": "(val)","timestampDisplay": "(val)","uploadUserDisplay": "(val)","_primaryKey": "(val)"}
 ### Insert Proposal Abstracts [POST /propdev/api/v1/proposal-abstracts/]
 
 + Request

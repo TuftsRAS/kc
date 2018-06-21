@@ -142,6 +142,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Proposal Investigator Certifications [PATCH /propdev/api/v1/proposal-investigator-certifications/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"proposalPersonNumber": "(val)","proposalNumber": "(val)","certified": "(val)","dateCertified": "(val)","dateReceivedByOsp": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"proposalPersonNumber": "(val)","proposalNumber": "(val)","certified": "(val)","dateCertified": "(val)","dateReceivedByOsp": "(val)","_primaryKey": "(val)"}
 ### Insert Proposal Investigator Certifications [POST /propdev/api/v1/proposal-investigator-certifications/]
 
 + Request

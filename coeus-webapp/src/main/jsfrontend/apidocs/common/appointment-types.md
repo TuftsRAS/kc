@@ -44,7 +44,7 @@
 + Parameters
 
     + appointmentTypeCode (optional) - Appointment Type Code. Maximum length is 3.
-    + duration (optional) - Duration. Maximum length is 6.
+    + duration (optional) - Duration. Maximum length is 5.
     + description (optional) - Description. Maximum length is 200.
 
             
@@ -140,6 +140,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Appointment Types [PATCH /research-common/api/v1/appointment-types/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"appointmentTypeCode": "(val)","duration": "(val)","description": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"appointmentTypeCode": "(val)","duration": "(val)","description": "(val)","_primaryKey": "(val)"}
 ### Insert Appointment Types [POST /research-common/api/v1/appointment-types/]
 
 + Request
@@ -215,7 +233,7 @@
 
     + _allowMulti (boolean, required) - flag to allow multiple resources to be deleted in one operation
     + appointmentTypeCode (optional) - Appointment Type Code. Maximum length is 3.
-    + duration (optional) - Duration. Maximum length is 6.
+    + duration (optional) - Duration. Maximum length is 5.
     + description (optional) - Description. Maximum length is 200.
 
       

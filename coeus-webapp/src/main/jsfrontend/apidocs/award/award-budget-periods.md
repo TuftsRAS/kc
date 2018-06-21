@@ -141,6 +141,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Award Budget Periods [PATCH /award/api/v1/award-budget-periods/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"budgetPeriodId": "(val)","obligatedAmount": "(val)","totalFringeAmount": "(val)","rateOverrideFlag": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"budgetPeriodId": "(val)","obligatedAmount": "(val)","totalFringeAmount": "(val)","rateOverrideFlag": "(val)","_primaryKey": "(val)"}
 ### Insert Award Budget Periods [POST /award/api/v1/award-budget-periods/]
 
 + Request

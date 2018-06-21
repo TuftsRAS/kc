@@ -139,6 +139,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Award Budget Statuses [PATCH /award/api/v1/award-budget-statuses/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"awardBudgetStatusCode": "(val)","description": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"awardBudgetStatusCode": "(val)","description": "(val)","_primaryKey": "(val)"}
 ### Insert Award Budget Statuses [POST /award/api/v1/award-budget-statuses/]
 
 + Request

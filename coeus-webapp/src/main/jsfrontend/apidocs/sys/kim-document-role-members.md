@@ -146,6 +146,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Kim Document Role Members [PATCH /research-sys/api/v1/kim-document-role-members/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"roleMemberId": "(val)","roleId": "(val)","memberId": "(val)","memberTypeCode": "(val)","activeFromDate": "(val)","activeToDate": "(val)","edit": "(val)","documentNumber": "(val)","active": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"roleMemberId": "(val)","roleId": "(val)","memberId": "(val)","memberTypeCode": "(val)","activeFromDate": "(val)","activeToDate": "(val)","edit": "(val)","documentNumber": "(val)","active": "(val)","_primaryKey": "(val)"}
 ### Insert Kim Document Role Members [POST /research-sys/api/v1/kim-document-role-members/]
 
 + Request

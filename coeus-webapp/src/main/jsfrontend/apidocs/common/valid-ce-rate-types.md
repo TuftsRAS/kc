@@ -141,6 +141,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Valid Ce Rate Types [PATCH /research-common/api/v1/valid-ce-rate-types/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"costElement": "(val)","rateClassCode": "(val)","rateTypeCode": "(val)","active": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"costElement": "(val)","rateClassCode": "(val)","rateTypeCode": "(val)","active": "(val)","_primaryKey": "(val)"}
 ### Insert Valid Ce Rate Types [POST /research-common/api/v1/valid-ce-rate-types/]
 
 + Request

@@ -206,6 +206,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Iacuc Protocol Persons [PATCH /iacuc/api/v1/iacuc-protocol-persons/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"protocolPersonId": "(val)","protocolId": "(val)","protocolNumber": "(val)","sequenceNumber": "(val)","personId": "(val)","personName": "(val)","protocolPersonRoleId": "(val)","rolodexId": "(val)","affiliationTypeCode": "(val)","comments": "(val)","lastName": "(val)","firstName": "(val)","middleName": "(val)","fullName": "(val)","priorName": "(val)","userName": "(val)","emailAddress": "(val)","dateOfBirth": "(val)","age": "(val)","ageByFiscalYear": "(val)","gender": "(val)","race": "(val)","educationLevel": "(val)","degree": "(val)","major": "(val)","handicappedFlag": "(val)","handicapType": "(val)","veteranFlag": "(val)","veteranType": "(val)","visaCode": "(val)","visaType": "(val)","visaRenewalDate": "(val)","hasVisa": "(val)","officeLocation": "(val)","officePhone": "(val)","secondaryOfficeLocation": "(val)","secondaryOfficePhone": "(val)","school": "(val)","yearGraduated": "(val)","directoryDepartment": "(val)","saluation": "(val)","countryOfCitizenship": "(val)","primaryTitle": "(val)","directoryTitle": "(val)","homeUnit": "(val)","facultyFlag": "(val)","graduateStudentStaffFlag": "(val)","researchStaffFlag": "(val)","serviceStaffFlag": "(val)","supportStaffFlag": "(val)","otherAcademicGroupFlag": "(val)","medicalStaffFlag": "(val)","vacationAccrualFlag": "(val)","onSabbaticalFlag": "(val)","idProvided": "(val)","idVerified": "(val)","addressLine1": "(val)","addressLine2": "(val)","addressLine3": "(val)","city": "(val)","county": "(val)","state": "(val)","postalCode": "(val)","countryCode": "(val)","faxNumber": "(val)","pagerNumber": "(val)","mobilePhoneNumber": "(val)","eraCommonsUserName": "(val)","procedureQualificationDescription": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"protocolPersonId": "(val)","protocolId": "(val)","protocolNumber": "(val)","sequenceNumber": "(val)","personId": "(val)","personName": "(val)","protocolPersonRoleId": "(val)","rolodexId": "(val)","affiliationTypeCode": "(val)","comments": "(val)","lastName": "(val)","firstName": "(val)","middleName": "(val)","fullName": "(val)","priorName": "(val)","userName": "(val)","emailAddress": "(val)","dateOfBirth": "(val)","age": "(val)","ageByFiscalYear": "(val)","gender": "(val)","race": "(val)","educationLevel": "(val)","degree": "(val)","major": "(val)","handicappedFlag": "(val)","handicapType": "(val)","veteranFlag": "(val)","veteranType": "(val)","visaCode": "(val)","visaType": "(val)","visaRenewalDate": "(val)","hasVisa": "(val)","officeLocation": "(val)","officePhone": "(val)","secondaryOfficeLocation": "(val)","secondaryOfficePhone": "(val)","school": "(val)","yearGraduated": "(val)","directoryDepartment": "(val)","saluation": "(val)","countryOfCitizenship": "(val)","primaryTitle": "(val)","directoryTitle": "(val)","homeUnit": "(val)","facultyFlag": "(val)","graduateStudentStaffFlag": "(val)","researchStaffFlag": "(val)","serviceStaffFlag": "(val)","supportStaffFlag": "(val)","otherAcademicGroupFlag": "(val)","medicalStaffFlag": "(val)","vacationAccrualFlag": "(val)","onSabbaticalFlag": "(val)","idProvided": "(val)","idVerified": "(val)","addressLine1": "(val)","addressLine2": "(val)","addressLine3": "(val)","city": "(val)","county": "(val)","state": "(val)","postalCode": "(val)","countryCode": "(val)","faxNumber": "(val)","pagerNumber": "(val)","mobilePhoneNumber": "(val)","eraCommonsUserName": "(val)","procedureQualificationDescription": "(val)","_primaryKey": "(val)"}
 ### Insert Iacuc Protocol Persons [POST /iacuc/api/v1/iacuc-protocol-persons/]
 
 + Request

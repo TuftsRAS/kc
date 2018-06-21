@@ -154,6 +154,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Released Sub Award Amounts [PATCH /subaward/api/v1/released-sub-award-amounts/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"subAwardAmtReleasedId": "(val)","documentNumber": "(val)","subAwardId": "(val)","sequenceNumber": "(val)","subAwardCode": "(val)","amountReleased": "(val)","effectiveDate": "(val)","comments": "(val)","invoiceNumber": "(val)","startDate": "(val)","endDate": "(val)","document": "(val)","fileName": "(val)","createdBy": "(val)","createdDate": "(val)","mimeType": "(val)","invoiceStatus": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"subAwardAmtReleasedId": "(val)","documentNumber": "(val)","subAwardId": "(val)","sequenceNumber": "(val)","subAwardCode": "(val)","amountReleased": "(val)","effectiveDate": "(val)","comments": "(val)","invoiceNumber": "(val)","startDate": "(val)","endDate": "(val)","document": "(val)","fileName": "(val)","createdBy": "(val)","createdDate": "(val)","mimeType": "(val)","invoiceStatus": "(val)","_primaryKey": "(val)"}
 ### Insert Released Sub Award Amounts [POST /subaward/api/v1/released-sub-award-amounts/]
 
 + Request

@@ -46,7 +46,7 @@
     + correspondentId (optional) - 
     + unitNumber (optional) - Unit Number. Maximum length is 8.
     + correspondentTypeCode (optional) - Correspondent Type Code. Maximum length is 22.
-    + personId (optional) - This is a generic implementation of a 'SystemId' attribute. It should always be overridden on the label, shortLabel, summary, and description, as these are only generic placeholders. Maximum length is 40.
+    + personId (optional) - This is a generic implementation of a 'SystemId' attribute. It should always be overriden on the label, shortLabel, summary, and description, as these are only generic placeholders. Maximum length is 40.
     + nonEmployeeFlag (optional) - Non Employee Flag. Maximum length is 1.
     + description (optional) - Description. Maximum length is 2000.
 
@@ -143,6 +143,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Unit Correspondents [PATCH /research-common/api/v1/unit-correspondents/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"correspondentId": "(val)","unitNumber": "(val)","correspondentTypeCode": "(val)","personId": "(val)","nonEmployeeFlag": "(val)","description": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"correspondentId": "(val)","unitNumber": "(val)","correspondentTypeCode": "(val)","personId": "(val)","nonEmployeeFlag": "(val)","description": "(val)","_primaryKey": "(val)"}
 ### Insert Unit Correspondents [POST /research-common/api/v1/unit-correspondents/]
 
 + Request
@@ -220,7 +238,7 @@
     + correspondentId (optional) - 
     + unitNumber (optional) - Unit Number. Maximum length is 8.
     + correspondentTypeCode (optional) - Correspondent Type Code. Maximum length is 22.
-    + personId (optional) - This is a generic implementation of a 'SystemId' attribute. It should always be overridden on the label, shortLabel, summary, and description, as these are only generic placeholders. Maximum length is 40.
+    + personId (optional) - This is a generic implementation of a 'SystemId' attribute. It should always be overriden on the label, shortLabel, summary, and description, as these are only generic placeholders. Maximum length is 40.
     + nonEmployeeFlag (optional) - Non Employee Flag. Maximum length is 1.
     + description (optional) - Description. Maximum length is 2000.
 

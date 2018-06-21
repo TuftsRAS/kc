@@ -140,6 +140,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Rate Classes [PATCH /research-common/api/v1/rate-classes/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"code": "(val)","description": "(val)","rateClassTypeCode": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"code": "(val)","description": "(val)","rateClassTypeCode": "(val)","_primaryKey": "(val)"}
 ### Insert Rate Classes [POST /research-common/api/v1/rate-classes/]
 
 + Request

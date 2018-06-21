@@ -156,6 +156,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Entity Addresses [PATCH /research-sys/api/v1/entity-addresses/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","city": "(val)","defaultValue": "(val)","addressFormat": "(val)","postalCode": "(val)","active": "(val)","entityId": "(val)","attentionLine": "(val)","noteMessage": "(val)","stateProvinceCode": "(val)","addressTypeCode": "(val)","validated": "(val)","countryCode": "(val)","entityTypeCode": "(val)","validatedDate": "(val)","modifiedDate": "(val)","line3": "(val)","line2": "(val)","line1": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","city": "(val)","defaultValue": "(val)","addressFormat": "(val)","postalCode": "(val)","active": "(val)","entityId": "(val)","attentionLine": "(val)","noteMessage": "(val)","stateProvinceCode": "(val)","addressTypeCode": "(val)","validated": "(val)","countryCode": "(val)","entityTypeCode": "(val)","validatedDate": "(val)","modifiedDate": "(val)","line3": "(val)","line2": "(val)","line1": "(val)","_primaryKey": "(val)"}
 ### Insert Entity Addresses [POST /research-sys/api/v1/entity-addresses/]
 
 + Request

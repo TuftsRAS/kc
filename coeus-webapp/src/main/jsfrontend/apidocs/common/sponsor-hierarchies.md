@@ -159,6 +159,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Sponsor Hierarchies [PATCH /research-common/api/v1/sponsor-hierarchies/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"hierarchyName": "(val)","sponsorCode": "(val)","level1": "(val)","level10": "(val)","level10Sortid": "(val)","level1Sortid": "(val)","level2": "(val)","level2Sortid": "(val)","level3": "(val)","level3Sortid": "(val)","level4": "(val)","level4Sortid": "(val)","level5": "(val)","level5Sortid": "(val)","level6": "(val)","level6Sortid": "(val)","level7": "(val)","level7Sortid": "(val)","level8": "(val)","level8Sortid": "(val)","level9": "(val)","level9Sortid": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"hierarchyName": "(val)","sponsorCode": "(val)","level1": "(val)","level10": "(val)","level10Sortid": "(val)","level1Sortid": "(val)","level2": "(val)","level2Sortid": "(val)","level3": "(val)","level3Sortid": "(val)","level4": "(val)","level4Sortid": "(val)","level5": "(val)","level5Sortid": "(val)","level6": "(val)","level6Sortid": "(val)","level7": "(val)","level7Sortid": "(val)","level8": "(val)","level8Sortid": "(val)","level9": "(val)","level9Sortid": "(val)","_primaryKey": "(val)"}
 ### Insert Sponsor Hierarchies [POST /research-common/api/v1/sponsor-hierarchies/]
 
 + Request

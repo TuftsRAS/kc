@@ -141,6 +141,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Negotiation Agreement Types [PATCH /negotiation/api/v1/negotiation-agreement-types/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","code": "(val)","description": "(val)","active": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","code": "(val)","description": "(val)","active": "(val)","_primaryKey": "(val)"}
 ### Insert Negotiation Agreement Types [POST /negotiation/api/v1/negotiation-agreement-types/]
 
 + Request

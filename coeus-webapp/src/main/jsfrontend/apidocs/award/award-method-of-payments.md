@@ -139,6 +139,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Award Method Of Payments [PATCH /award/api/v1/award-method-of-payments/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"methodOfPaymentCode": "(val)","description": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"methodOfPaymentCode": "(val)","description": "(val)","_primaryKey": "(val)"}
 ### Insert Award Method Of Payments [POST /award/api/v1/award-method-of-payments/]
 
 + Request

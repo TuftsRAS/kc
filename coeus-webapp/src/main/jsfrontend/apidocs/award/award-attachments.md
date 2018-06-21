@@ -148,6 +148,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Award Attachments [PATCH /award/api/v1/award-attachments/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"awardAttachmentId": "(val)","awardId": "(val)","awardNumber": "(val)","sequenceNumber": "(val)","typeCode": "(val)","documentId": "(val)","fileId": "(val)","description": "(val)","documentStatusCode": "(val)","lastUpdateTimestamp": "(val)","lastUpdateUser": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"awardAttachmentId": "(val)","awardId": "(val)","awardNumber": "(val)","sequenceNumber": "(val)","typeCode": "(val)","documentId": "(val)","fileId": "(val)","description": "(val)","documentStatusCode": "(val)","lastUpdateTimestamp": "(val)","lastUpdateUser": "(val)","_primaryKey": "(val)"}
 ### Insert Award Attachments [POST /award/api/v1/award-attachments/]
 
 + Request

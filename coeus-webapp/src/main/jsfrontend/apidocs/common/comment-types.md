@@ -142,6 +142,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Comment Types [PATCH /research-common/api/v1/comment-types/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"commentTypeCode": "(val)","description": "(val)","templateFlag": "(val)","checklistFlag": "(val)","awardCommentScreenFlag": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"commentTypeCode": "(val)","description": "(val)","templateFlag": "(val)","checklistFlag": "(val)","awardCommentScreenFlag": "(val)","_primaryKey": "(val)"}
 ### Insert Comment Types [POST /research-common/api/v1/comment-types/]
 
 + Request

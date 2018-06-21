@@ -144,6 +144,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Session Documents [PATCH /research-sys/api/v1/session-documents/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"sessionId": "(val)","documentNumber": "(val)","principalId": "(val)","ipAddress": "(val)","lastUpdatedDate": "(val)","serializedDocumentForm": "(val)","encrypted": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"sessionId": "(val)","documentNumber": "(val)","principalId": "(val)","ipAddress": "(val)","lastUpdatedDate": "(val)","serializedDocumentForm": "(val)","encrypted": "(val)","_primaryKey": "(val)"}
 ### Insert Session Documents [POST /research-sys/api/v1/session-documents/]
 
 + Request

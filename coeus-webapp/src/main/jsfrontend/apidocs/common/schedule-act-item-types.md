@@ -139,6 +139,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Schedule Act Item Types [PATCH /research-common/api/v1/schedule-act-item-types/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"scheduleActItemTypeCode": "(val)","description": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"scheduleActItemTypeCode": "(val)","description": "(val)","_primaryKey": "(val)"}
 ### Insert Schedule Act Item Types [POST /research-common/api/v1/schedule-act-item-types/]
 
 + Request

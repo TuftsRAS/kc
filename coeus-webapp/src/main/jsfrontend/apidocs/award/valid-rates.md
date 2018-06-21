@@ -143,6 +143,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Valid Rates [PATCH /award/api/v1/valid-rates/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"validRatesId": "(val)","onCampusRate": "(val)","offCampusRate": "(val)","rateClassType": "(val)","adjustmentKey": "(val)","icrRateCode": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"validRatesId": "(val)","onCampusRate": "(val)","offCampusRate": "(val)","rateClassType": "(val)","adjustmentKey": "(val)","icrRateCode": "(val)","_primaryKey": "(val)"}
 ### Insert Valid Rates [POST /award/api/v1/valid-rates/]
 
 + Request

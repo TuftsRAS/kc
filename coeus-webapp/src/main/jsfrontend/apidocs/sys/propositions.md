@@ -144,6 +144,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Propositions [PATCH /research-sys/api/v1/propositions/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","description": "(val)","ruleId": "(val)","typeId": "(val)","propositionTypeCode": "(val)","compoundOpCode": "(val)","compoundSequenceNumber": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","description": "(val)","ruleId": "(val)","typeId": "(val)","propositionTypeCode": "(val)","compoundOpCode": "(val)","compoundSequenceNumber": "(val)","_primaryKey": "(val)"}
 ### Insert Propositions [POST /research-sys/api/v1/propositions/]
 
 + Request

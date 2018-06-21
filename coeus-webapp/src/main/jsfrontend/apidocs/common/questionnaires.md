@@ -146,6 +146,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Questionnaires [PATCH /research-common/api/v1/questionnaires/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","questionnaireSeqId": "(val)","sequenceNumber": "(val)","name": "(val)","description": "(val)","active": "(val)","documentNumber": "(val)","fileName": "(val)","template": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","questionnaireSeqId": "(val)","sequenceNumber": "(val)","name": "(val)","description": "(val)","active": "(val)","documentNumber": "(val)","fileName": "(val)","template": "(val)","_primaryKey": "(val)"}
 ### Insert Questionnaires [POST /research-common/api/v1/questionnaires/]
 
 + Request

@@ -145,6 +145,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Parameters [PATCH /research-sys/api/v1/parameters/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"namespaceCode": "(val)","componentCode": "(val)","name": "(val)","applicationId": "(val)","value": "(val)","description": "(val)","parameterTypeCode": "(val)","evaluationOperatorCode": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"namespaceCode": "(val)","componentCode": "(val)","name": "(val)","applicationId": "(val)","value": "(val)","description": "(val)","parameterTypeCode": "(val)","evaluationOperatorCode": "(val)","_primaryKey": "(val)"}
 ### Insert Parameters [POST /research-sys/api/v1/parameters/]
 
 + Request

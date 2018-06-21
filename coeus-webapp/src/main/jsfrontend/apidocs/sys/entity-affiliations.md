@@ -143,6 +143,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Entity Affiliations [PATCH /research-sys/api/v1/entity-affiliations/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"id": "(val)","campusCode": "(val)","defaultValue": "(val)","active": "(val)","affiliationTypeCode": "(val)","entityId": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"id": "(val)","campusCode": "(val)","defaultValue": "(val)","active": "(val)","affiliationTypeCode": "(val)","entityId": "(val)","_primaryKey": "(val)"}
 ### Insert Entity Affiliations [POST /research-sys/api/v1/entity-affiliations/]
 
 + Request

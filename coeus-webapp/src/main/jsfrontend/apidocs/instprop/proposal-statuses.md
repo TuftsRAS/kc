@@ -139,6 +139,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Proposal Statuses [PATCH /instprop/api/v1/proposal-statuses/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"proposalStatusCode": "(val)","description": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"proposalStatusCode": "(val)","description": "(val)","_primaryKey": "(val)"}
 ### Insert Proposal Statuses [POST /instprop/api/v1/proposal-statuses/]
 
 + Request

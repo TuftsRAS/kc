@@ -142,6 +142,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Committee Schedule Action Items [PATCH /irb/api/v1/committee-schedule-action-items/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"commScheduleActItemsId": "(val)","scheduleIdFk": "(val)","actionItemNumber": "(val)","scheduleActItemTypeCode": "(val)","itemDescription": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"commScheduleActItemsId": "(val)","scheduleIdFk": "(val)","actionItemNumber": "(val)","scheduleActItemTypeCode": "(val)","itemDescription": "(val)","_primaryKey": "(val)"}
 ### Insert Committee Schedule Action Items [POST /irb/api/v1/committee-schedule-action-items/]
 
 + Request

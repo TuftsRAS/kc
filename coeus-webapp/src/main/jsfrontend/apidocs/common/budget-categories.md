@@ -140,6 +140,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Budget Categories [PATCH /research-common/api/v1/budget-categories/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"budgetCategoryTypeCode": "(val)","code": "(val)","description": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"budgetCategoryTypeCode": "(val)","code": "(val)","description": "(val)","_primaryKey": "(val)"}
 ### Insert Budget Categories [POST /research-common/api/v1/budget-categories/]
 
 + Request

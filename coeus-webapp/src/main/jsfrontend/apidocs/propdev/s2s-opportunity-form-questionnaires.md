@@ -141,6 +141,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes S2s Opportunity Form Questionnaires [PATCH /propdev/api/v1/s2s-opportunity-form-questionnaires/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"s2sOppFormQuestionnaireId": "(val)","oppNameSpace": "(val)","formName": "(val)","questionnaireId": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"s2sOppFormQuestionnaireId": "(val)","oppNameSpace": "(val)","formName": "(val)","questionnaireId": "(val)","_primaryKey": "(val)"}
 ### Insert S2s Opportunity Form Questionnaires [POST /propdev/api/v1/s2s-opportunity-form-questionnaires/]
 
 + Request

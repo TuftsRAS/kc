@@ -143,6 +143,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Valid Calculation Types [PATCH /research-common/api/v1/valid-calculation-types/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"calcTypeId": "(val)","dependentSeqNumber": "(val)","rateClassType": "(val)","dependentRateClassType": "(val)","rateClassCode": "(val)","rateTypeCode": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"calcTypeId": "(val)","dependentSeqNumber": "(val)","rateClassType": "(val)","dependentRateClassType": "(val)","rateClassCode": "(val)","rateTypeCode": "(val)","_primaryKey": "(val)"}
 ### Insert Valid Calculation Types [POST /research-common/api/v1/valid-calculation-types/]
 
 + Request

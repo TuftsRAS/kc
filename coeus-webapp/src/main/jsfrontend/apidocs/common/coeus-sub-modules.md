@@ -142,6 +142,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Coeus Sub Modules [PATCH /research-common/api/v1/coeus-sub-modules/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"coeusSubModuleId": "(val)","moduleCode": "(val)","subModuleCode": "(val)","description": "(val)","requireUniqueQuestionnareUsage": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"coeusSubModuleId": "(val)","moduleCode": "(val)","subModuleCode": "(val)","description": "(val)","requireUniqueQuestionnareUsage": "(val)","_primaryKey": "(val)"}
 ### Insert Coeus Sub Modules [POST /research-common/api/v1/coeus-sub-modules/]
 
 + Request

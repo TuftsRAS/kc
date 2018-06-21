@@ -140,6 +140,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Maintenance Locks [PATCH /research-sys/api/v1/maintenance-locks/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"lockId": "(val)","lockingRepresentation": "(val)","documentNumber": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"lockId": "(val)","lockingRepresentation": "(val)","documentNumber": "(val)","_primaryKey": "(val)"}
 ### Insert Maintenance Locks [POST /research-sys/api/v1/maintenance-locks/]
 
 + Request

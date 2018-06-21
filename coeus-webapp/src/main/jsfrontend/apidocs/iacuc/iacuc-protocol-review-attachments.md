@@ -149,6 +149,24 @@
             ]
 			
 + Response 204
+### Update Specific Attributes Iacuc Protocol Review Attachments [PATCH /iacuc/api/v1/iacuc-protocol-review-attachments/(key)]
+
++ Request
+
+    + Headers
+
+            Authorization: Bearer {api-key}   
+            Content-Type: application/json
+
+    + Body
+    
+            {"reviewerAttachmentId": "(val)","protocolOnlineReviewIdFk": "(val)","protocolIdFk": "(val)","submissionIdFk": "(val)","attachmentId": "(val)","description": "(val)","fileId": "(val)","personId": "(val)","createUser": "(val)","createTimestamp": "(val)","privateFlag": "(val)","protocolPersonCanView": "(val)","_primaryKey": "(val)"}
+			
++ Response 204
+    
+    + Body
+            
+            {"reviewerAttachmentId": "(val)","protocolOnlineReviewIdFk": "(val)","protocolIdFk": "(val)","submissionIdFk": "(val)","attachmentId": "(val)","description": "(val)","fileId": "(val)","personId": "(val)","createUser": "(val)","createTimestamp": "(val)","privateFlag": "(val)","protocolPersonCanView": "(val)","_primaryKey": "(val)"}
 ### Insert Iacuc Protocol Review Attachments [POST /iacuc/api/v1/iacuc-protocol-review-attachments/]
 
 + Request
