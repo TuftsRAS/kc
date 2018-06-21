@@ -1,6 +1,17 @@
 
 
 ## CURRENT
+* RESKC-2918: Update s2sgen version to fix EIN mapping issue on SF424Short and SF424 (non-RR). (#2949)
+
+  * Omar Soto Fortuño on Thu, 21 Jun 2018 08:40:01 -0400 [View Commit](../../commit/3912e158d4004e5d930ac2581d2f7785457e3eb1)
+* RESKC-2987: Fix salary inflation issue when multiple years within the same period. (#2948)
+
+  * Omar Soto Fortuño on Thu, 21 Jun 2018 08:15:02 -0400 [View Commit](../../commit/0e0616f5d74a5669ecf01f2af5f1a0c57cd9c86a)
+* RESKC-1492: Fix Leap Year issue on an edge case. (#2942)
+
+  * Omar Soto Fortuño on Thu, 21 Jun 2018 08:14:47 -0400 [View Commit](../../commit/2e5b66b0b9fe60dea4d5dbfed3bd3b84fb6ef51d)
+
+## coeus-1806.0029
 * No Changes
 
 
