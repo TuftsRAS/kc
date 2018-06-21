@@ -7,9 +7,11 @@
  */
 package org.kuali.coeus.common.budget.impl.summary;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.Assert;
+import org.kuali.rice.core.api.datetime.DateTimeService;
+import org.kuali.rice.core.impl.datetime.DateTimeServiceImpl;
 
 import java.sql.Date;
 import java.text.DateFormat;
@@ -19,6 +21,7 @@ import java.util.List;
 
 public class BudgetSummaryServiceImplTest {
     BudgetSummaryServiceImpl budgetSummaryService;
+    DateTimeService dateTimeService;
 
     public List<Date> createStartEndDates(String start, String end) throws Exception {
         return new ArrayList<Date>() {{
@@ -156,5 +159,29 @@ public class BudgetSummaryServiceImplTest {
         List<Date> newDates = budgetSummaryService.getNewStartEndDates(dates, 181, 30, null, false, false);
         Assert.assertEquals("start date should be 07/01/2020", createDateFromString("07/01/2020"), newDates.get(0));
         Assert.assertEquals("end date should be 07/31/2020", createDateFromString("07/31/2020"), newDates.get(1));
+    }
+
+    @Test
+    public void getNewStartEndDates_lastFebruaryOnNonLeapToLeap() throws Exception {
+        List<Date> periodDates = createStartEndDates("03/01/2019", "02/29/2020");
+        List<Date> lineItemDates = createStartEndDates("09/01/2019", "02/28/2020");
+
+        int gap = getDateTimeService().dateDiff(periodDates.get(0), lineItemDates.get(0), false);
+        int lineDuration = getDateTimeService().dateDiff(lineItemDates.get(0), lineItemDates.get(1), false);
+        boolean isLeapDayInGap = budgetSummaryService.isLeapDaysInPeriod(periodDates.get(0), lineItemDates.get(0));
+        boolean isLeapDateInPeriod = budgetSummaryService.isLeapDaysInPeriod(lineItemDates.get(0), lineItemDates.get(1));
+
+        List <Date> dates = budgetSummaryService.getNewStartEndDates(periodDates, gap, lineDuration, lineItemDates.get(0), isLeapDateInPeriod, isLeapDayInGap);
+
+        Assert.assertEquals(createDateFromString("09/01/2019"), dates.get(0));
+        Assert.assertEquals(createDateFromString("02/29/2020"), dates.get(1));
+    }
+
+    private DateTimeService getDateTimeService() {
+        if (dateTimeService == null) {
+            dateTimeService = new DateTimeServiceImpl();
+        }
+
+        return dateTimeService;
     }
 }

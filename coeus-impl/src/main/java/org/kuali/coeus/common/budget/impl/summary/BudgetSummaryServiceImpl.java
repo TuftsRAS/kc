@@ -8,24 +8,18 @@
 package org.kuali.coeus.common.budget.impl.summary;
 
 import org.apache.commons.collections4.CollectionUtils;
-
-import java.util.Objects;
-import org.kuali.coeus.common.budget.framework.summary.BudgetSummaryService;
 import org.kuali.coeus.common.budget.framework.calculator.BudgetCalculationService;
-import org.kuali.coeus.common.budget.framework.core.Budget;
-import org.kuali.coeus.common.budget.framework.core.BudgetCommonService;
-import org.kuali.coeus.common.budget.framework.core.BudgetCommonServiceFactory;
-import org.kuali.coeus.common.budget.framework.core.BudgetConstants;
-import org.kuali.coeus.common.budget.framework.core.BudgetParent;
+import org.kuali.coeus.common.budget.framework.core.*;
 import org.kuali.coeus.common.budget.framework.nonpersonnel.BudgetLineItem;
 import org.kuali.coeus.common.budget.framework.period.BudgetPeriod;
 import org.kuali.coeus.common.budget.framework.personnel.BudgetPerson;
 import org.kuali.coeus.common.budget.framework.personnel.BudgetPersonSalaryDetails;
 import org.kuali.coeus.common.budget.framework.personnel.BudgetPersonnelDetails;
-import org.kuali.kra.infrastructure.Constants;
-import org.kuali.kra.infrastructure.OnOffCampusFlagConstants;
+import org.kuali.coeus.common.budget.framework.summary.BudgetSummaryService;
 import org.kuali.coeus.propdev.impl.budget.subaward.BudgetSubAwardPeriodDetail;
 import org.kuali.coeus.propdev.impl.budget.subaward.BudgetSubAwards;
+import org.kuali.kra.infrastructure.Constants;
+import org.kuali.kra.infrastructure.OnOffCampusFlagConstants;
 import org.kuali.rice.core.api.datetime.DateTimeService;
 import org.kuali.rice.krad.data.CopyOption;
 import org.kuali.rice.krad.data.DataObjectService;
@@ -34,11 +28,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 @Component("budgetSummaryService")
 public class BudgetSummaryServiceImpl implements BudgetSummaryService {
@@ -545,15 +535,19 @@ public class BudgetSummaryServiceImpl implements BudgetSummaryService {
     public List<Date> getNewStartEndDates(List<Date> startEndDates, int gap, int duration, Date prevDate, boolean leapDayInPeriod,  boolean leapDayInGap) {
         Date startDate = startEndDates.get(0);
         Date newStartDate = add(startDate, gap);
-        Date newEndDate = add(newStartDate,duration);
+        Date newEndDate = add(newStartDate, duration);
 
         boolean isLeapDayInNewPeriod = isLeapDaysInPeriod(startDate, newEndDate);
-        boolean isLeapDayInNewGap = isLeapDaysInPeriod(startDate,newStartDate);
+        boolean isLeapDayInNewGap = isLeapDaysInPeriod(startDate, newStartDate);
         boolean isLeapDayInInitialPeriod = leapDayInPeriod || leapDayInGap;
+        boolean isLeapYearOnEndDate = isLeapYear(newEndDate);
+        boolean isLastFebDayOnNonLeap = isLastFebOnNonLeap(newEndDate);
 
         if (isLeapDayInInitialPeriod && !isLeapDayInNewPeriod) {
             newEndDate = add(newEndDate, -1);
         } else if (!isLeapDayInInitialPeriod && isLeapDayInNewPeriod) {
+            newEndDate = add(newEndDate, 1);
+        } else if (isLeapYearOnEndDate && isLastFebDayOnNonLeap) {
             newEndDate = add(newEndDate, 1);
         }
 
@@ -567,6 +561,17 @@ public class BudgetSummaryServiceImpl implements BudgetSummaryService {
         newStartEndDates.add(0,newStartDate);
         newStartEndDates.add(1,newEndDate);
         return newStartEndDates;
+    }
+
+    protected boolean isLastFebOnNonLeap(Date date) {
+        Calendar c1 = Calendar.getInstance();
+        c1.setTime(date);
+
+        Calendar c2 = Calendar.getInstance();
+        c2.clear();
+        c2.set(c1.get(Calendar.YEAR), 1, 28);
+
+        return c1.compareTo(c2) == 0;
     }
 
     protected boolean isLeapYear(Date date) {
