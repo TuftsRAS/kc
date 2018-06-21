@@ -1,6 +1,11 @@
 
 
 ## CURRENT
+* RESKC-1826: Fix issue when editing an Award that was modified before clicking the edit button. (#2950)
+
+  * Omar Soto Fortuño on Thu, 21 Jun 2018 11:53:35 -0400 [View Commit](../../commit/52a887e86d6190d2af72dccb38429b08a3eda635)
+
+## coeus-1806.0031
 * No Changes
 
 
