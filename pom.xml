@@ -1819,7 +1819,7 @@
             <properties>
                 <build.spring.profiles.active>grm</build.spring.profiles.active>
                 <commons-dbcp2.version>2.1.1</commons-dbcp2.version>
-                <rsmart.hr.rest.version>1806.0002</rsmart.hr.rest.version>
+                <rsmart.hr.rest.version>1806.0003</rsmart.hr.rest.version>
                 <kc-s3.version>1709.0002</kc-s3.version>
                 <kc-sql.version>1801.0001</kc-sql.version>
 
