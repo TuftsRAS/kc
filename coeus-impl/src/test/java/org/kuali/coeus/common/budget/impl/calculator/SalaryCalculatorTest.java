@@ -669,7 +669,7 @@ public class SalaryCalculatorTest {
         budget.getBudgetPeriods().add(createBudgetPeriod(1, "01/01/2017", "12/31/2018", budgetLineItem2));
 
         SalaryCalculator salaryCalculator = new MockSalaryCalculator(budget, budgetPersonnelDetails2);
-        java.util.Date date = salaryCalculator.getPreviousPeriodEndDate();
+        java.util.Date date = salaryCalculator.getPreviousPersonnelLineItemEndDate();
         Assert.assertTrue(date.compareTo(createDateFromString("12/31/2016")) == 0);
     }
 }
