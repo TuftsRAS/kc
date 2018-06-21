@@ -1,6 +1,11 @@
 
 
 ## CURRENT
+* RESKC-2989: Update documentation and make Special Review support PUT/PATCH (#2951)
+
+  * Terry Durkin on Thu, 21 Jun 2018 17:55:19 -0400 [View Commit](../../commit/c695815ea63c43b68284f8766422b127494b4297)
+
+## coeus-1806.0032
 * RESKC-1826: Fix issue when editing an Award that was modified before clicking the edit button. (#2950)
 
   * Omar Soto Fortuño on Thu, 21 Jun 2018 11:53:35 -0400 [View Commit](../../commit/52a887e86d6190d2af72dccb38429b08a3eda635)
