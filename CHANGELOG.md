@@ -1,6 +1,11 @@
 
 
 ## CURRENT
+* RESKC-1974: Fix Budget Salary Report issue related to TBNs. (#2952)
+
+  * Omar Soto Fortuño on Mon, 25 Jun 2018 09:29:29 -0400 [View Commit](../../commit/65fb6411bd66d24270e62b34c9448bacec395dd0)
+
+## coeus-1806.0033
 * RESKC-2989: Update documentation and make Special Review support PUT/PATCH (#2951)
 
   * Terry Durkin on Thu, 21 Jun 2018 17:55:19 -0400 [View Commit](../../commit/c695815ea63c43b68284f8766422b127494b4297)
