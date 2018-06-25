@@ -1,6 +1,11 @@
 
 
 ## CURRENT
+* RESKC-2953: Add endpoint for in progress documents (#2947)
+
+  * Gayathri Athreya on Mon, 25 Jun 2018 14:02:12 -0400 [View Commit](../../commit/9679b8c9ba0695f251dea28d890057d32143fae4)
+
+## coeus-1806.0035
 * RESKC-2540: Fix Notification Type Recipients issue when ProposalDevelopmentDocument is returned. (#2953)
 
   * Omar Soto Fortuño on Mon, 25 Jun 2018 13:05:46 -0400 [View Commit](../../commit/f7b39720608f0b35f01ab830a8b4c197b5ac577b)
