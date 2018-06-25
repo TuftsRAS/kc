@@ -104,7 +104,7 @@ public class BudgetSalaryXmlStream extends BudgetBaseSalaryStream {
             SalaryTypeVO salaryTypeVoPerPerson = new SalaryTypeVO();
             salaryTypeVoPerPerson.setName(details.getBudgetPerson().getPersonName());
             salaryTypeVoPerPerson.setBudgetPeriodVOs(getBudgetPeriodData(
-                    budget.getObjectCodePersonnelSalaryTotals().get(costElement.getCostElement() + "," + details.getPersonId())));
+                    budget.getObjectCodePersonnelSalaryTotals().get(costElement.getCostElement() + "," + details.getPersonId() + "," + details.getBudgetPerson().getPersonName())));
             salaryTypeVoList.add(salaryTypeVoPerPerson);
         }
         if (budget.getObjectCodePersonnelSalaryTotals().get(costElement.getCostElement()) != null) {

@@ -10,16 +10,9 @@ package org.kuali.coeus.common.budget.impl.calculator;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.kuali.coeus.common.budget.api.rate.RateClassType;
-import org.kuali.coeus.common.budget.framework.calculator.*;
-import org.kuali.coeus.common.budget.framework.query.QueryList;
-import org.kuali.coeus.common.budget.framework.rate.BudgetRatesService;
-import org.kuali.coeus.common.budget.framework.rate.ValidCeRateType;
-import org.kuali.coeus.sys.api.model.ScaleTwoDecimal;
-import org.kuali.coeus.sys.framework.gv.GlobalVariableService;
-import org.kuali.coeus.common.budget.framework.query.operator.And;
-import org.kuali.coeus.common.budget.framework.query.operator.Equals;
-import org.kuali.coeus.common.budget.framework.core.category.BudgetCategoryType;
+import org.kuali.coeus.common.budget.framework.calculator.BudgetCalculationService;
 import org.kuali.coeus.common.budget.framework.core.*;
+import org.kuali.coeus.common.budget.framework.core.category.BudgetCategoryType;
 import org.kuali.coeus.common.budget.framework.distribution.BudgetDistributionService;
 import org.kuali.coeus.common.budget.framework.nonpersonnel.BudgetFormulatedCostDetail;
 import org.kuali.coeus.common.budget.framework.nonpersonnel.BudgetLineItem;
@@ -29,12 +22,20 @@ import org.kuali.coeus.common.budget.framework.period.BudgetPeriod;
 import org.kuali.coeus.common.budget.framework.personnel.BudgetPersonnelCalculatedAmount;
 import org.kuali.coeus.common.budget.framework.personnel.BudgetPersonnelDetails;
 import org.kuali.coeus.common.budget.framework.personnel.BudgetPersonnelRateAndBase;
+import org.kuali.coeus.common.budget.framework.query.QueryList;
+import org.kuali.coeus.common.budget.framework.query.operator.And;
+import org.kuali.coeus.common.budget.framework.query.operator.Equals;
+import org.kuali.coeus.common.budget.framework.rate.BudgetRatesService;
 import org.kuali.coeus.common.budget.framework.rate.RateClass;
 import org.kuali.coeus.common.budget.framework.rate.RateType;
+import org.kuali.coeus.common.budget.framework.rate.ValidCeRateType;
 import org.kuali.coeus.common.framework.impl.LineItemGroup;
 import org.kuali.coeus.common.framework.impl.LineItemObject;
 import org.kuali.coeus.common.framework.impl.Period;
 import org.kuali.coeus.propdev.impl.hierarchy.HierarchyStatusConstants;
+import org.kuali.coeus.sys.api.model.AbstractDecimal;
+import org.kuali.coeus.sys.api.model.ScaleTwoDecimal;
+import org.kuali.coeus.sys.framework.gv.GlobalVariableService;
 import org.kuali.kra.award.budget.AwardBudgetService;
 import org.kuali.kra.infrastructure.Constants;
 import org.kuali.rice.core.api.criteria.QueryByCriteria;
@@ -48,6 +49,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Component("budgetCalculationService")
 public class BudgetCalculationServiceImpl implements BudgetCalculationService {
@@ -507,7 +509,7 @@ public class BudgetCalculationServiceImpl implements BudgetCalculationService {
                     lineItemQueryList.addAll(budgetPeriod.getBudgetLineItems());
                     Equals objectCodeEquals = new Equals("costElement", personnelCostElement.getCostElement());
                     QueryList<BudgetLineItem> filteredLineItems = lineItemQueryList.filter(objectCodeEquals);
-                    QueryList<BudgetPersonnelDetails> personnelQueryList = new QueryList<>();
+                    List<BudgetPersonnelDetails> personnelQueryList = new ArrayList<>();
 
                     //Loop thru the matching Line Items to gather personnel info
                     for(BudgetLineItem matchingLineItem : filteredLineItems) {
@@ -516,23 +518,26 @@ public class BudgetCalculationServiceImpl implements BudgetCalculationService {
 
                     for(BudgetLineItem matchingLineItem : filteredLineItems) {
                         for(BudgetPersonnelDetails budgetPersonnelDetails : matchingLineItem.getBudgetPersonnelDetailsList()) {
-                            Equals personIdEquals = new Equals("personId", budgetPersonnelDetails.getPersonId());
-                            QueryList personOccurrencesForSameObjectCode = personnelQueryList.filter(personIdEquals);
+                            List<BudgetPersonnelDetails> personOccurrencesForSameObjectCode = personnelQueryList.stream().filter(budgetPersonnelDetails1 ->
+                                            budgetPersonnelDetails1.getPersonId().equals(budgetPersonnelDetails.getPersonId()) &&
+                                                    budgetPersonnelDetails1.getBudgetPerson().getPersonName().equals(budgetPersonnelDetails.getBudgetPerson().getPersonName())
+                            ).collect(Collectors.toList());
 
                             //Calculate the Salary Totals for each Person
-                            ScaleTwoDecimal personSalaryTotalsForCurrentPeriod = personOccurrencesForSameObjectCode.sumObjects("salaryRequested");
+                            ScaleTwoDecimal personSalaryTotalsForCurrentPeriod = personOccurrencesForSameObjectCode.stream().map(BudgetPersonnelDetails::getSalaryRequested).reduce(ScaleTwoDecimal.ZERO, AbstractDecimal::add);
+                            String objectCodePersonnelSalaryTotalsKey = matchingLineItem.getCostElement() + "," + budgetPersonnelDetails.getPersonId() + "," + budgetPersonnelDetails.getBudgetPerson().getPersonName();
 
-                            if (!objectCodePersonnelSalaryTotals.containsKey(matchingLineItem.getCostElement()+","+budgetPersonnelDetails.getPersonId())) {
+                            if (!objectCodePersonnelSalaryTotals.containsKey(objectCodePersonnelSalaryTotalsKey)) {
                                 objectCodeUniquePersonnelList.get(matchingLineItem.getCostElementBO()).add(budgetPersonnelDetails);
                                 // set up for all periods and put into map
                                 List <ScaleTwoDecimal> periodTotals = new ArrayList<>();
                                 for (int i = 0; i < budget.getBudgetPeriods().size(); i++) {
                                     periodTotals.add(i, ScaleTwoDecimal.ZERO);
                                 }
-                                objectCodePersonnelSalaryTotals.put(matchingLineItem.getCostElement()+","+budgetPersonnelDetails.getPersonId(), periodTotals);
+                                objectCodePersonnelSalaryTotals.put(objectCodePersonnelSalaryTotalsKey, periodTotals);
                             }
                             //Setting the total lines here - so that they'll be set just once for a unique person within an Object Code
-                            objectCodePersonnelSalaryTotals.get(matchingLineItem.getCostElement()+","+budgetPersonnelDetails.getPersonId()).set(budgetPeriod.getBudgetPeriod() - 1, personSalaryTotalsForCurrentPeriod);
+                            objectCodePersonnelSalaryTotals.get(objectCodePersonnelSalaryTotalsKey).set(budgetPeriod.getBudgetPeriod() - 1, personSalaryTotalsForCurrentPeriod);
                             if (objectCodePersonnelSalaryTotalsByPeriod.add(budgetPeriod.getBudgetPeriod().toString() + ","+ matchingLineItem.getCostElement()+","+budgetPersonnelDetails.getPersonId())) {
                                 subTotalsBySubSection.get("personnelSalaryTotals").set(budgetPeriod.getBudgetPeriod() - 1, ((subTotalsBySubSection.get("personnelSalaryTotals").get(budgetPeriod.getBudgetPeriod() - 1))).add(personSalaryTotalsForCurrentPeriod));
                             }
@@ -548,8 +553,7 @@ public class BudgetCalculationServiceImpl implements BudgetCalculationService {
                             }
                             ScaleTwoDecimal personFringeTotalsForCurrentPeriod = ScaleTwoDecimal.ZERO;
                             //Calculate the Fringe Totals for that Person (cumulative fringe for all occurrences of the person)
-                                for(Object person : personOccurrencesForSameObjectCode) {
-                                    BudgetPersonnelDetails personOccurrence = (BudgetPersonnelDetails) person;
+                                for(BudgetPersonnelDetails personOccurrence : personOccurrencesForSameObjectCode) {
                                     for(BudgetPersonnelCalculatedAmount calcExpenseAmount : personOccurrence.getBudgetPersonnelCalculatedAmounts()) {
                                         calcExpenseAmount.refreshReferenceObject("rateClass");
                                         //Check for Employee Benefits RateClassType
