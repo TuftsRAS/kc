@@ -1,6 +1,11 @@
 
 
 ## CURRENT
+* RESKC-2540: Fix Notification Type Recipients issue when ProposalDevelopmentDocument is returned. (#2953)
+
+  * Omar Soto Fortuño on Mon, 25 Jun 2018 13:05:46 -0400 [View Commit](../../commit/f7b39720608f0b35f01ab830a8b4c197b5ac577b)
+
+## coeus-1806.0034
 * RESKC-1974: Fix Budget Salary Report issue related to TBNs. (#2952)
 
   * Omar Soto Fortuño on Mon, 25 Jun 2018 09:29:29 -0400 [View Commit](../../commit/65fb6411bd66d24270e62b34c9448bacec395dd0)
