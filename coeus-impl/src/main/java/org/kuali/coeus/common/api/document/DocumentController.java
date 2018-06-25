@@ -13,6 +13,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.kuali.coeus.common.api.document.dto.DocumentDetailsDto;
 import org.kuali.coeus.common.api.document.service.KewDocHeaderDao;
+import org.kuali.coeus.propdev.impl.core.ProposalDevelopmentConstants;
 import org.kuali.coeus.propdev.impl.core.ProposalDevelopmentDocument;
 import org.kuali.coeus.sys.framework.gv.GlobalVariableService;
 import org.kuali.coeus.sys.framework.rest.UnauthorizedAccessException;
@@ -76,6 +77,15 @@ public class DocumentController {
         return documentSavedForUser(user, limit, skip);
     }
 
+    @RequestMapping(method= RequestMethod.GET, value="/progress-documents", consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ResponseStatus(value = HttpStatus.OK)
+    @ResponseBody
+    public List<DocumentDetailsDto> getDocumentsInProgressForUser(@RequestParam(value = "user") String user,
+                                                          @RequestParam(value = "limit", required = false) Integer limit,
+                                                          @RequestParam(value = "skip", required = false) Integer skip) {
+        return documentsInProgressForUser(user, limit, skip);
+    }
+
     private List<DocumentDetailsDto> getDocumentsRoutingForUser(String routingToUser, Integer limit, Integer skip) {
         checkAndRetrievePerson(routingToUser);
         List<DocumentDetailsDto> documentList;
@@ -95,9 +105,20 @@ public class DocumentController {
         return documentList;
     }
 
+    protected List<DocumentDetailsDto> documentsInProgressForUser(String inProgressForUser, Integer limit, Integer skip) {
+        checkAndRetrievePerson(inProgressForUser);
+        final List<DocumentSearchResult> inProgressDocuments = kewDocHeaderDao.getSavedDocuments(inProgressForUser,
+                                                                                            ProposalDevelopmentConstants.KewConstants.PROPOSAL_DEVELOPMENT_DOCUMENT,
+                                                                                            limit, skip);
+
+        return CollectionUtils.isNotEmpty(inProgressDocuments) ? inProgressDocuments.stream()
+                .map(documentSearchResult -> getDocumentDetailsDto(documentSearchResult))
+                .collect(Collectors.toList()) :  new ArrayList<>();
+    }
+
     protected List<DocumentDetailsDto> documentSavedForUser(String savedForUser, Integer limit, Integer skip) {
         checkAndRetrievePerson(savedForUser);
-        final List<DocumentSearchResult> savedDocuments = kewDocHeaderDao.getSavedDocuments(savedForUser, limit, skip);
+        final List<DocumentSearchResult> savedDocuments = kewDocHeaderDao.getSavedDocuments(savedForUser, null, limit, skip);
 
         return CollectionUtils.isNotEmpty(savedDocuments) ? savedDocuments.stream()
                 .map(documentSearchResult -> getDocumentDetailsDto(documentSearchResult))

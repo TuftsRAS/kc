@@ -8,8 +8,10 @@
 
 package org.kuali.coeus.common.api.document.impl;
 
+import org.apache.commons.lang3.StringUtils;
 import org.kuali.coeus.common.api.document.DocumentWorkflowUserDetails;
 import org.kuali.coeus.common.api.document.service.KewDocHeaderDao;
+import org.kuali.coeus.propdev.impl.core.ProposalDevelopmentConstants;
 import org.kuali.rice.core.api.criteria.OrderByField;
 import org.kuali.rice.core.api.criteria.OrderDirection;
 import org.kuali.rice.core.api.criteria.QueryByCriteria;
@@ -29,9 +31,13 @@ import java.util.*;
 @Repository("kewDocHeaderDao")
 public class KewDocHeaderDaoImpl extends LookupDaoOjb implements KewDocHeaderDao {
 
-    private static final String PROPOSAL_DEVELOPMENT_DOCUMENT = "ProposalDevelopmentDocument";
     private static final String PRINCIPAL_ID = "principalId";
     private static final String DOCUMENT_NUMBER = "documentNumber";
+    private static final String AWARD_DOCUMENT = "AwardDocument";
+    private static final String NEGOTIATION_DOCUMENT = "NegotiationDocument";
+    private static final String SUBAWARD_DOCUMENT = "SubawardDocument";
+    private static final String INSTITUTIONAL_PROPOSAL_DOCUMENT = "InstitutionalProposalDocument";
+    private static final String AWARD_BUDGET_DOCUMENT = "AwardBudgetDocument";
 
     @Autowired
     @Qualifier("documentSearchService")
@@ -51,12 +57,23 @@ public class KewDocHeaderDaoImpl extends LookupDaoOjb implements KewDocHeaderDao
         if (!Objects.isNull(skip)) {
             builder.setStartAtIndex(skip);
         }
-        builder.setDocumentTypeName(PROPOSAL_DEVELOPMENT_DOCUMENT);
+        builder.setDocumentTypeName(ProposalDevelopmentConstants.KewConstants.PROPOSAL_DEVELOPMENT_DOCUMENT);
         return documentSearchService.lookupDocuments(user, builder.build()).getSearchResults();
     }
 
-    public List<DocumentSearchResult> getSavedDocuments(String user, Integer limit, Integer skip) {
+    public List<DocumentSearchResult> getSavedDocuments(String user, String documentTypeFilter, Integer limit, Integer skip) {
         DocumentSearchCriteria.Builder builder = DocumentSearchCriteria.Builder.create();
+        if (StringUtils.isNotEmpty(documentTypeFilter)) {
+            builder.setDocumentTypeName(documentTypeFilter);
+        } else {
+            builder.setDocumentTypeName(AWARD_DOCUMENT);
+            List<String> additionalDocTypes = new ArrayList<>();
+            additionalDocTypes.add(NEGOTIATION_DOCUMENT);
+            additionalDocTypes.add(SUBAWARD_DOCUMENT);
+            additionalDocTypes.add(INSTITUTIONAL_PROPOSAL_DOCUMENT);
+            additionalDocTypes.add(AWARD_BUDGET_DOCUMENT);
+            builder.setAdditionalDocumentTypeNames(additionalDocTypes);
+        }
         builder.setDocumentStatuses(Arrays.asList(DocumentStatus.SAVED));
         builder.setViewerPrincipalId(user);
         if (!Objects.isNull(limit)) {
@@ -67,6 +84,7 @@ public class KewDocHeaderDaoImpl extends LookupDaoOjb implements KewDocHeaderDao
         }
         return documentSearchService.lookupDocuments(user, builder.build()).getSearchResults();
     }
+
 
     public List<DocumentWorkflowUserDetails> getWorkflowDetailsForEnrouteDocuments(String user, Integer limit, Integer skip) {
 

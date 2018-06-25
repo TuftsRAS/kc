@@ -26,7 +26,7 @@ import java.util.List;
 public interface KewDocHeaderDao {
 
     List<DocumentSearchResult> getEnrouteProposalDocs(String user, Integer limit, Integer skip);
-    List<DocumentSearchResult> getSavedDocuments(String user, Integer limit, Integer skip);
+    List<DocumentSearchResult> getSavedDocuments(String user, String documentTypeFilter, Integer limit, Integer skip);
     List<DocumentWorkflowUserDetails> getWorkflowDetailsForEnrouteDocuments(String user, Integer limit, Integer skip);
 
 }
