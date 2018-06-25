@@ -841,9 +841,7 @@ public class ProposalDevelopmentSubmitController extends ProposalDevelopmentCont
             getProposalHierarchyService().rejectProposalDevelopmentDocument(form.getDevelopmentProposal().getProposalNumber(), bean.getActionReason(),
                     getGlobalVariableService().getUserSession().getPrincipalId(),bean.getActionFile());
             updateProposalAdminDetailsForReject(form.getDevelopmentProposal());
-            if (recipients.size() != 0) {
-                sendRejectNotification(form, recipients);
-            }
+            sendRejectNotification(form, recipients);
         }
 
         if (canOpenDocument(form.getDocument())) {
@@ -866,7 +864,9 @@ public class ProposalDevelopmentSubmitController extends ProposalDevelopmentCont
                                                                         form.getDevelopmentProposal(),
                                                                         RETURN_ACTION_TYPE_CODE, RETURN_NOTIFICATION, getRenderer());
         form.getNotificationHelper().initializeDefaultValues(notificationContext);
-        if (getKcNotificationService().getNotificationType(notificationContext) != null) {
+        recipients.addAll(form.getNotificationHelper().getNotificationRecipients());
+
+        if (!recipients.isEmpty() && getKcNotificationService().getNotificationType(notificationContext) != null) {
             getKcNotificationService().sendNotification(notificationContext, form.getNotificationHelper().getNotification(), recipients);
         }
     }

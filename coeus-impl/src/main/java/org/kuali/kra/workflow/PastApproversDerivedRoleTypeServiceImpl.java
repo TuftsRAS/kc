@@ -31,7 +31,7 @@ public class PastApproversDerivedRoleTypeServiceImpl extends DerivedRoleTypeServ
         List<RoleMembership> members = new ArrayList<RoleMembership>();
         String documentNumber = qualification.get(KimConstants.AttributeConstants.DOCUMENT_NUMBER);
         if (documentNumber != null) {
-            List<ActionTaken> actions = getWorkflowDocumentService().getActionsTaken(documentNumber);
+            List<ActionTaken> actions = getWorkflowDocumentService().getAllActionsTaken(documentNumber);
             
             if (actions != null && !actions.isEmpty()) {
                 for (ActionTaken action : actions) {
