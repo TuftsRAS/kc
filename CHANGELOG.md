@@ -1,6 +1,11 @@
 
 
 ## CURRENT
+* RESKC-2943: Fix STE when adding a person to Proposal Development and that person had no units (while Proposal Award Person Role Maintenance table is 'All Affiliations & Appointments'). (#2955)
+
+  * Omar Soto Fortuño on Tue, 26 Jun 2018 12:46:23 -0400 [View Commit](../../commit/856febffcda65b564087639fd1aae2ca3afd7f92)
+
+## coeus-1806.0036
 * RESKC-2953: Add endpoint for in progress documents (#2947)
 
   * Gayathri Athreya on Mon, 25 Jun 2018 14:02:12 -0400 [View Commit](../../commit/9679b8c9ba0695f251dea28d890057d32143fae4)
