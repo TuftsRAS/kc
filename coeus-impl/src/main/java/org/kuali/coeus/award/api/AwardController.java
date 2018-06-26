@@ -52,7 +52,6 @@ import org.springframework.web.bind.annotation.*;
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -201,7 +200,7 @@ public class AwardController extends AwardControllerBase implements Initializing
             consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseStatus(value = HttpStatus.CREATED)
     @ResponseBody
-    public AwardDto createAward(@RequestBody AwardDto awardDto) throws WorkflowException, InvocationTargetException, IllegalAccessException {
+    public AwardDto createAward(@RequestBody AwardDto awardDto) throws WorkflowException {
         assertUserHasWriteAccess();
         commonApiService.clearErrors();
         Award award = commonApiService.convertObject(awardDto, Award.class);
@@ -257,7 +256,7 @@ public class AwardController extends AwardControllerBase implements Initializing
             consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
-    void submitDocument(@PathVariable Long awardId) throws WorkflowException {
+    void submitDocument(@PathVariable Long awardId) {
         assertUserHasWriteAccess();
         commonApiService.clearErrors();
         AwardDocument awardDocument = getAwardDocumentById(awardId);
@@ -299,7 +298,7 @@ public class AwardController extends AwardControllerBase implements Initializing
             produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
-    List<AwardPersonDto> getAwardPersons(@PathVariable Long awardId) throws WorkflowException {
+    List<AwardPersonDto> getAwardPersons(@PathVariable Long awardId) {
         assertUserHasAwardPersonReadAccess();
         commonApiService.clearErrors();
         AwardDocument awardDocument = getAwardDocumentById(awardId);
@@ -368,7 +367,7 @@ public class AwardController extends AwardControllerBase implements Initializing
     public void addFundingProposals(AwardDto awardDto, Award award) {
         award.setFundingProposals(new ArrayList<>());
         if(CollectionUtils.isNotEmpty(awardDto.getFundingProposals())) {
-            awardDto.getFundingProposals().stream().forEach(awardFundingProposalDto -> {
+            awardDto.getFundingProposals().forEach(awardFundingProposalDto -> {
                 AwardFundingProposalBean fundingProposalBean = new AwardFundingProposalBean();
                 fundingProposalBean.setMergeTypeCode(awardFundingProposalDto.getMergeTypeCode());
                 InstitutionalProposal institutionalProposal = institutionalProposalService.getInstitutionalProposal(awardFundingProposalDto.getProposalId().toString());
@@ -406,7 +405,7 @@ public class AwardController extends AwardControllerBase implements Initializing
     }
 
     protected List<String> getDtoProperties(Class dtoClass) throws IntrospectionException {
-        return Arrays.asList(Introspector.getBeanInfo(dtoClass).getPropertyDescriptors()).stream()
+        return Arrays.stream(Introspector.getBeanInfo(dtoClass).getPropertyDescriptors())
                 .map(PropertyDescriptor::getName)
                 .filter(prop -> !"class".equals(prop))
                 .collect(Collectors.toList());

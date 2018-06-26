@@ -8,13 +8,12 @@
 package org.kuali.kra.institutionalproposal.home;
 
 import org.kuali.coeus.common.framework.version.sequence.associate.SequenceAssociate;
-import org.kuali.coeus.common.framework.version.sequence.owner.SequenceOwner;
 import org.kuali.kra.award.home.ValuableItem;
 import org.kuali.kra.institutionalproposal.IndirectcostRateType;
 import org.kuali.kra.institutionalproposal.InstitutionalProposalAssociate;
 import org.kuali.coeus.sys.api.model.ScaleTwoDecimal;
 
-public class InstitutionalProposalUnrecoveredFandA extends InstitutionalProposalAssociate implements ValuableItem, SequenceAssociate {
+public class InstitutionalProposalUnrecoveredFandA extends InstitutionalProposalAssociate implements ValuableItem, SequenceAssociate<InstitutionalProposal> {
 
     private static final long serialVersionUID = 1L;
 
@@ -103,13 +102,13 @@ public class InstitutionalProposalUnrecoveredFandA extends InstitutionalProposal
     }
 
     @Override
-    public SequenceOwner getSequenceOwner() {
+    public InstitutionalProposal getSequenceOwner() {
         return getInstitutionalProposal();
     }
 
     @Override
-    public void setSequenceOwner(SequenceOwner newlyVersionedOwner) {
-        setInstitutionalProposal((InstitutionalProposal) newlyVersionedOwner);
+    public void setSequenceOwner(InstitutionalProposal newlyVersionedOwner) {
+        setInstitutionalProposal(newlyVersionedOwner);
     }
 
     @Override

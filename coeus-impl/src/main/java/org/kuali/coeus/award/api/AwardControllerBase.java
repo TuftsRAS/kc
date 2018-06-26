@@ -126,7 +126,7 @@ public class AwardControllerBase extends RestController {
         List<AwardCustomDataDto> awardCustomDataList = awardDto.getAwardCustomDataList();
         award.setAwardCustomDataList(new ArrayList<>());
         if (awardDto.getAwardCustomDataList() != null) {
-            awardCustomDataList.stream().forEach(customDataDto -> {
+            awardCustomDataList.forEach(customDataDto -> {
                 String customAttributeId = customDataDto.getCustomAttributeId().toString();
                 String customDataValue = customDataDto.getValue();
                 Map<String, CustomAttributeDocument> customAttributeDocuments = awardDocument.getCustomAttributeDocuments();

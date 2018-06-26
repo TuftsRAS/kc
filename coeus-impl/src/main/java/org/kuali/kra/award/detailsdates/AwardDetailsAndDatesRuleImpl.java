@@ -27,11 +27,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Default implementation of AwardDetailsAndDatesRule
- * 
- * @author Kuali Coeus development team (kc.dev@kuali.org)
- */
 public class AwardDetailsAndDatesRuleImpl extends KcTransactionalDocumentRuleBase implements AwardDetailsAndDatesRule {
     
     private static final String SPONSOR_CODE_PROPERTY_NAME = "detailsAndDatesFormHelper.newAwardTransferringSponsor.sponsorCode";
@@ -44,11 +39,7 @@ public class AwardDetailsAndDatesRuleImpl extends KcTransactionalDocumentRuleBas
     private static final String AWARD_CFDA_NUMBER = "awardCfdas[%s].cfdaNumber";
     private ParameterService parameterService;
     AccountCreationClient accountCreationClient;
-    
-    /**
-     * @see org.kuali.kra.award.detailsdates.AwardDetailsAndDatesRule#processAddAwardTransferringSponsorEvent
-     * (org.kuali.kra.award.rule.event.AddAwardTransferringSponsorEvent)
-     */
+
     @Override
     public boolean processAddAwardTransferringSponsorEvent(AddAwardTransferringSponsorEvent addAwardTransferringSponsorEvent) {
         boolean valid = true;
@@ -120,7 +111,7 @@ public class AwardDetailsAndDatesRuleImpl extends KcTransactionalDocumentRuleBas
             }
         }
         if (!isValidAccountNumber((AwardDocument) awardDetailsAndDatesSaveEvent.getDocument())) {
-            valid &= false;
+            valid = false;
         }
 
         for (int i = 0; i < award.getAwardCfdas().size(); i ++) {
@@ -153,8 +144,6 @@ public class AwardDetailsAndDatesRuleImpl extends KcTransactionalDocumentRuleBas
      *  it checks if the combination of account number and chart code is valid.
      *  Only if the financial system integration parameter is on,
      *  use the financial system service to verify if the account number is valid.
-     * @param award
-     * @return
      */
     protected boolean isValidAccountNumber(AwardDocument awardDocument) {
         boolean isValid = true;
@@ -174,7 +163,7 @@ public class AwardDetailsAndDatesRuleImpl extends KcTransactionalDocumentRuleBas
             if (ObjectUtils.isNotNull(accountNumber) || ObjectUtils.isNotNull(chartOfAccountsCode)) {               
                 AccountCreationClient client = getAccountCreationClientService();            
                 if (ObjectUtils.isNull(chartOfAccountsCode) || ObjectUtils.isNull(accountNumber)) {
-                    isValid &= false;
+                    isValid = false;
                    //report error
                     reportError(AWARD_ACCOUNT_NUMBER_PROPERTY_NAME, KeyConstants.BOTH_ACCOUNT_AND_CHART_REQUIRED);
                 } else {
@@ -182,13 +171,13 @@ public class AwardDetailsAndDatesRuleImpl extends KcTransactionalDocumentRuleBas
                     if (ObjectUtils.isNull(isValidChartAccount)) {
                         // Error if cannot connect to financial system service
                         reportError(AWARD_FIN_CHART_OF_ACCOUNTS_CODE_PROPERTY_NAME, KeyConstants.VALIDATION_DID_NOT_OCCUR);
-                        isValid &= false; 
+                        isValid = false;
                     }
                     if (StringUtils.equalsIgnoreCase(isValidChartAccount, "false")) {
                         reportError(AWARD_ACCOUNT_NUMBER_PROPERTY_NAME, 
                                     KeyConstants.AWARD_CHART_OF_ACCOUNTS_CODE_NOT_VALID, 
                                     award.getAccountNumber(), award.getFinancialChartOfAccountsCode());               
-                        isValid &= false;
+                        isValid = false;
                     }
                 }
             }   
@@ -201,16 +190,14 @@ public class AwardDetailsAndDatesRuleImpl extends KcTransactionalDocumentRuleBas
      * not required. Validation is required ONLY if the account number on the eDoc
      * is different from the one stored for the award in the db. This prevents all the
      * round trips back and forth to KFS to verify the account number and chart.
-     * @param award
-     * @return
      */
     protected boolean validationRequired(Award award) {
         boolean isRequired = true;
         // If awardId is null, new award is being created, so validation required
         if (ObjectUtils.isNotNull(award.getAwardId())) {
-            Map<String, String> criteria = new HashMap<String, String>();
+            Map<String, String> criteria = new HashMap<>();
             criteria.put("awardId", award.getAwardId() + "");
-            Award awardStored = (Award) getBusinessObjectService().findByPrimaryKey(Award.class, criteria);
+            Award awardStored = getBusinessObjectService().findByPrimaryKey(Award.class, criteria);
             if (ObjectUtils.isNotNull(awardStored)) {
                 String accountNumberStored = awardStored.getAccountNumber(); 
                 String chartStored = awardStored.getFinancialChartOfAccountsCode();
@@ -219,7 +206,7 @@ public class AwardDetailsAndDatesRuleImpl extends KcTransactionalDocumentRuleBas
                 }
                 if (award.getAccountNumber().equalsIgnoreCase(accountNumberStored)
                     && chartStored.equalsIgnoreCase(award.getFinancialChartOfAccountsCode())) {
-                    isRequired &= false;
+                    isRequired = false;
                 }
             }
         }
@@ -228,7 +215,7 @@ public class AwardDetailsAndDatesRuleImpl extends KcTransactionalDocumentRuleBas
     
     protected AccountCreationClient getAccountCreationClientService() {
         if (accountCreationClient == null) {
-            accountCreationClient = (AccountCreationClient) KcServiceLocator.getService("accountCreationClient");
+            accountCreationClient = KcServiceLocator.getService("accountCreationClient");
         }
         return accountCreationClient;
     }

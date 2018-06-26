@@ -74,7 +74,7 @@ public class CommonApiServiceImpl implements CommonApiService {
         }
 
         if (rolodex == null && personEntity == null) {
-            throw new UnprocessableEntityException("Invalid person or rolodex for person " + personId != null ? personId : rolodexId.toString() );
+            throw new UnprocessableEntityException("Invalid person or rolodex for person " + (personId != null ? personId : rolodexId.toString()) );
         }
     }
 

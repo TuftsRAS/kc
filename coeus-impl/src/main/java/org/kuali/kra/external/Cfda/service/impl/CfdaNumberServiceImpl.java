@@ -53,33 +53,27 @@ public class CfdaNumberServiceImpl implements CfdaNumberService {
 
     @Override
     public List<CfdaDTO> lookupCfda(List<HashMapElement> criteria) {
-        HashMap<String, String> searchCriteria =  new HashMap<String, String>();
-        List<CFDA> cfdaNumbers = new ArrayList<CFDA>();
+        HashMap<String, String> searchCriteria =  new HashMap<>();
+        final List<CFDA> cfdaNumbers;
         // if the criteria passed is null, then return all units.
         if (ObjectUtils.isNull(criteria)) {
-            cfdaNumbers =  new ArrayList<CFDA>(businessObjectService.findAll(CFDA.class));
+            cfdaNumbers =  new ArrayList<>(businessObjectService.findAll(CFDA.class));
         } else {
             // Reconstruct Hashmap from object list
             for (HashMapElement element : criteria) {
                 searchCriteria.put(element.getKey(), element.getValue());  
             }
-            cfdaNumbers =  new ArrayList<CFDA>(businessObjectService.findMatching(CFDA.class, searchCriteria));
+            cfdaNumbers =  new ArrayList<>(businessObjectService.findMatching(CFDA.class, searchCriteria));
         }
         
-        List<CfdaDTO> cfdaDTOs = new ArrayList<CfdaDTO>();
+        List<CfdaDTO> cfdaDTOs = new ArrayList<>();
         for (CFDA cfda : cfdaNumbers) {
             cfdaDTOs.add(boToDTO(cfda));
         }
         
         return cfdaDTOs;
     }
-    
-    /**
-     * This method converts the BO to a DTO.
-     * @param cfda
-     * @param award
-     * @return
-     */
+
     protected CfdaDTO boToDTO(CFDA cfda) {
         CfdaDTO cfdaDTO = new CfdaDTO();
         cfdaDTO.setCfdaMaintenanceTypeId(cfda.getCfdaMaintenanceTypeId());
@@ -91,16 +85,13 @@ public class CfdaNumberServiceImpl implements CfdaNumberService {
     
     /**
      * This method returns awards based on the account number and chart of account.
-     * @param financialAccountNumber
-     * @param chartOfAccounts
-     * @return
      */
     protected List<Award> getAwards(String financialAccountNumber, String chartOfAccounts) {
         List<Award> awards;
-        HashMap<String, String> searchCriteria =  new HashMap<String, String>();
+        HashMap<String, String> searchCriteria =  new HashMap<>();
         searchCriteria.put("accountNumber", financialAccountNumber);  
         searchCriteria.put("financialChartOfAccountsCode", chartOfAccounts);
-        awards = new ArrayList<Award>(businessObjectService.findMatching(Award.class, searchCriteria));
+        awards = new ArrayList<>(businessObjectService.findMatching(Award.class, searchCriteria));
         if (ObjectUtils.isNotNull(awards) && !awards.isEmpty()) {
             return awards;
         } else {
@@ -109,11 +100,6 @@ public class CfdaNumberServiceImpl implements CfdaNumberService {
         }   
     }
 
-    /**
-     * Sets the businessObjectService attribute value. Injected by Spring.
-     * 
-     * @param businessObjectService The businessObjectService to set.
-     */
     public void setBusinessObjectService(BusinessObjectService businessObjectService) {
         this.businessObjectService = businessObjectService;
     }

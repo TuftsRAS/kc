@@ -35,10 +35,10 @@ public class AwardInquirable extends KualiInquirableImpl {
 
     @Override
     public List<Section> getSections(BusinessObject bo) {
-        List<Section> sections = new ArrayList<Section>();
+        List<Section> sections = new ArrayList<>();
         Section section = new Section();
         
-        section.setRows(new ArrayList<Row>());
+        section.setRows(new ArrayList<>());
         section.setDefaultOpen(true);
         section.setNumberOfColumns(2);
         
@@ -78,7 +78,7 @@ public class AwardInquirable extends KualiInquirableImpl {
         section.setSectionTitle(sectionTitle);
 
         //Adding the rows to the sections
-        section.setRows(new ArrayList<Row>());
+        section.setRows(new ArrayList<>());
         Row row1 = new Row();
         addField(awardNode.getProjectStartDate() + "", row1, "projectStartDate", "Project Start Date");
         addField(awardNode.getCurrentFundEffectiveDate() + "", row1, "obligationStartDate", "Obligation Start Date");

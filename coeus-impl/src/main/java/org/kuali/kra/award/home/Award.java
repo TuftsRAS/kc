@@ -1871,20 +1871,11 @@ public class Award extends KcPersistableBusinessObjectBase implements KeywordsMa
     
     }
 
-
-    /**
-     * Gets the awardReportTermItems attribute.
-     * @return Returns the awardReportTermItems.
-     */
     public List<AwardReportTerm> getAwardReportTermItems() {
         awardReportTermItems.sort(new ARTComparator());
         return awardReportTermItems;
     }
 
-    /**
-     * Sets the awardReportTermItems attribute value.
-     * @param awardReportTermItems The awardReportTermItems to set.
-     */
     public void setAwardReportTermItems(List<AwardReportTerm> awardReportTermItems) {
         this.awardReportTermItems = awardReportTermItems;
     }
@@ -2271,7 +2262,7 @@ public class Award extends KcPersistableBusinessObjectBase implements KeywordsMa
 
     @Override
     public void populateAdditionalQualifiedRoleAttributes(Map<String, String> qualifiedRoleAttributes) {
-        /**
+        /*
          * when we check to see if the logged in user can create an award account, this function is called, but awardDocument is null at that time.
          */
         String documentNumber = getAwardDocument() != null ? getAwardDocument().getDocumentNumber() : "";

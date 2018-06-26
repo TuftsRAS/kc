@@ -68,24 +68,24 @@ public class ProposalDevelopmentSponsorProgramInformationAuditRule implements Do
         if (proposal.getS2sOpportunity() != null) {
             if (proposal.getS2sOpportunity().getOpportunityId() != null && proposal.getProgramAnnouncementNumber() != null 
                     && !StringUtils.equalsIgnoreCase(proposal.getS2sOpportunity().getOpportunityId(), proposal.getProgramAnnouncementNumber())) {
-                valid &= false;
+                valid = false;
                 getAuditErrors(SPONSOR_PROGRAM_INFO_PAGE_NAME,AUDIT_ERRORS).add(new AuditError(OPPORTUNITY_ID_KEY, KeyConstants.ERROR_OPPORTUNITY_ID_DIFFER, SPONSOR_PROGRAM_INFO_PAGE_ID));
             }
             if (CollectionUtils.isNotEmpty(proposal.getS2sOpportunity().getS2sOpportunityCfdas()) && CollectionUtils.isNotEmpty(proposal.getProposalCfdas())
                     && !CollectionUtils.isEqualCollection(proposal.getS2sOpportunity().getS2sOpportunityCfdas().stream().map(S2sOpportunityCfda::getCfdaNumber).collect(Collectors.toList()), proposal.getProposalCfdas().stream().map(ProposalCfda::getCfdaNumber).collect(Collectors.toList()))) {
-                valid &= false;
+                valid = false;
                 IntStream.range(0, proposal.getProposalCfdas().size())
                         .forEach(i -> getAuditErrors(SPONSOR_PROGRAM_INFO_PAGE_NAME,AUDIT_ERRORS).add(new AuditError(String.format(CFDA_NUMBER_KEY, i), KeyConstants.ERROR_CFDA_NUMBER_DIFFER, SPONSOR_PROGRAM_INFO_PAGE_ID)));
             }
             if (proposal.getProgramAnnouncementTitle() == null 
                     || StringUtils.equalsIgnoreCase(proposal.getProgramAnnouncementTitle().trim(), "")) {
-                valid &= false;
+                valid = false;
                 getAuditErrors(SPONSOR_PROGRAM_INFO_PAGE_NAME,AUDIT_ERRORS).add(new AuditError(OPPORTUNITY_TITLE_KEY, KeyConstants.ERROR_OPPORTUNITY_TITLE_DELETED, SPONSOR_PROGRAM_INFO_PAGE_ID));
             }
 
             if (proposal.isSponsorProgramAndDivCodeRequired()) {
                 if (StringUtils.isEmpty(proposal.getAgencyDivisionCode())) {
-                    valid &= false;
+                    valid = false;
                     getAuditErrors(SPONSOR_PROGRAM_INFO_PAGE_NAME,AUDIT_ERRORS).add(new AuditError(SPONSOR_DIV_CODE_KEY, KeyConstants.ERROR_REQUIRED_SPONSOR_DIV_CODE, SPONSOR_PROGRAM_INFO_PAGE_ID, new String[] {proposal.getSponsorName()}));
                 }
                 if (StringUtils.isEmpty(proposal.getAgencyProgramCode())) {
@@ -100,7 +100,7 @@ public class ProposalDevelopmentSponsorProgramInformationAuditRule implements Do
                 valid = false;
             }
             
-            String federalIdComesFromAwardStr = null;
+            String federalIdComesFromAwardStr;
             try {
                 federalIdComesFromAwardStr = getParameterService().getParameterValueAsString(ProposalDevelopmentDocument.class, "FEDERAL_ID_COMES_FROM_CURRENT_AWARD");
             } catch (Exception e) {
@@ -171,9 +171,8 @@ public class ProposalDevelopmentSponsorProgramInformationAuditRule implements Do
     }
 
 
-    private List<AuditError> getAuditErrors(String areaName, String severity) {
-        List<AuditError> auditErrors = new ArrayList<AuditError>();
-        String clusterKey = areaName;
+    private List<AuditError> getAuditErrors(String clusterKey, String severity) {
+        List<AuditError> auditErrors = new ArrayList<>();
         if (!GlobalVariables.getAuditErrorMap().containsKey(clusterKey+severity)) {
             GlobalVariables.getAuditErrorMap().put(clusterKey+severity, new AuditCluster(clusterKey, auditErrors,severity));
         }

@@ -9,12 +9,10 @@ package org.kuali.kra.institutionalproposal.rules;
 
 import org.kuali.coeus.common.framework.sponsor.Sponsor;
 import org.kuali.coeus.sys.framework.rule.KcTransactionalDocumentRuleBase;
-import org.kuali.coeus.sys.framework.service.KcServiceLocator;
 import org.kuali.coeus.sys.framework.util.DateUtils;
 import org.kuali.kra.infrastructure.Constants;
 import org.kuali.kra.infrastructure.KeyConstants;
 import org.kuali.kra.institutionalproposal.home.InstitutionalProposal;
-import org.kuali.rice.krad.service.BusinessObjectService;
 import org.kuali.rice.krad.util.GlobalVariables;
 
 import java.util.HashMap;
@@ -25,7 +23,6 @@ import java.util.Map;
 public class InstitutionalProposalSponsorAndProgramRuleImpl extends KcTransactionalDocumentRuleBase implements
         InstitutionalProposalSponsorAndProgramRule {
 
-
     public static final String CFDA_NUMBER = "cfdaNumber";
 
     @Override
@@ -33,12 +30,7 @@ public class InstitutionalProposalSponsorAndProgramRuleImpl extends KcTransactio
             InstitutionalProposalSponsorAndProgramRuleEvent institutionalProposalSponsorAndProgramRuleEvent) {
         return processCommonValidations(institutionalProposalSponsorAndProgramRuleEvent.getInstitutionalProposalForValidation());
     }
-    
-    
-    /**
-     * This method processes common validations for business rules
-     * @return
-     */
+
     public boolean processCommonValidations(InstitutionalProposal institutionalProposal) {
         boolean validSponsorCode = validateSponsorCodeExists(institutionalProposal.getSponsorCode());
         
@@ -65,15 +57,12 @@ public class InstitutionalProposalSponsorAndProgramRuleImpl extends KcTransactio
         return valid;
     }
 
-
-    @SuppressWarnings("unchecked")
     private boolean validateSponsorCodeExists(String sponsorCode) {
         boolean valid = true;
         if(!(sponsorCode == null)) {
-            Map<String, Object> fieldValues = new HashMap<String, Object>();
+            Map<String, Object> fieldValues = new HashMap<>();
             fieldValues.put("sponsorCode", sponsorCode);
-            BusinessObjectService businessObjectService =  KcServiceLocator.getService(BusinessObjectService.class);
-            List<Sponsor> sponsors = (List<Sponsor>)businessObjectService.findMatching(Sponsor.class, fieldValues);
+            List<Sponsor> sponsors = (List<Sponsor>)getBusinessObjectService().findMatching(Sponsor.class, fieldValues);
             if(sponsors.size() == 0) {
                 this.reportError("document.institutionalProposalList[0].sponsorCode", KeyConstants.ERROR_INVALID_SPONSOR_CODE);
                 valid = false;
@@ -82,15 +71,13 @@ public class InstitutionalProposalSponsorAndProgramRuleImpl extends KcTransactio
        return valid;
         
     }
-    
-    @SuppressWarnings("unchecked")
+
     private boolean validatePrimeSponsorIdExists(String primeSponsorId) {
         boolean valid = true;
         if (!(primeSponsorId == null)) {
-            Map<String, Object> fieldValues = new HashMap<String, Object>();
+            Map<String, Object> fieldValues = new HashMap<>();
             fieldValues.put("sponsorCode", primeSponsorId);
-            BusinessObjectService businessObjectService =  KcServiceLocator.getService(BusinessObjectService.class);
-            List<Sponsor> sponsors = (List<Sponsor>)businessObjectService.findMatching(Sponsor.class, fieldValues);
+            List<Sponsor> sponsors = (List<Sponsor>)getBusinessObjectService().findMatching(Sponsor.class, fieldValues);
             if(sponsors.size() == 0) {
                 this.reportError("document.institutionalProposalList[0].primeSponsorCode", KeyConstants.ERROR_INVALID_PRIME_SPONSOR_CODE);
                 valid = false;

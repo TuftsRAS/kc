@@ -614,7 +614,7 @@ public class ProposalHierarchyServiceImpl implements ProposalHierarchyService {
      * proposal, then this also aggregates that key person back to the parent proposal from a different child proposal, making sure that all the key persons
      * in all of the child proposals are represented in the parent proposal.
      */
-    protected boolean synchronizeChildProposal(DevelopmentProposal hierarchyProposal, DevelopmentProposal childProposal,
+    protected void synchronizeChildProposal(DevelopmentProposal hierarchyProposal, DevelopmentProposal childProposal,
                                                boolean syncPersonnelAttachments, List<DevelopmentProposal> hierarchyChildren) throws ProposalHierarchyException {
         List<BudgetPeriod> oldBudgetPeriods = getOldBudgetPeriods(proposalBudgetHierarchyService.getHierarchyBudget(hierarchyProposal));
         ProposalPerson principalInvestigator = hierarchyProposal.getPrincipalInvestigator();
@@ -637,8 +637,6 @@ public class ProposalHierarchyServiceImpl implements ProposalHierarchyService {
 
         synchronizePersonUnits(hierarchyChildren, hierarchyProposal);
         dataObjectService.save(childProposal);
-
-        return true;
     }
 
     @Override
@@ -653,9 +651,7 @@ public class ProposalHierarchyServiceImpl implements ProposalHierarchyService {
      * Gets the old budget periods before removing them from the parent.
      */
     protected List<BudgetPeriod> getOldBudgetPeriods(Budget oldBudget) {
-        List<BudgetPeriod> oldBudgetPeriods = new ArrayList<>();
-        oldBudgetPeriods.addAll(oldBudget.getBudgetPeriods());
-        return oldBudgetPeriods;
+        return new ArrayList<>(oldBudget.getBudgetPeriods());
     }
 
     /**
@@ -1371,9 +1367,8 @@ public class ProposalHierarchyServiceImpl implements ProposalHierarchyService {
     @Override
     public List<HierarchyPersonnelSummary> getHierarchyPersonnelSummaries(String parentProposalNumber) throws ProposalHierarchyException {
         List<HierarchyPersonnelSummary> summaries = new ArrayList<>();
-        
-        List<String> proposalNumbers = new ArrayList<>();
-        proposalNumbers.addAll(proposalHierarchyDao.getHierarchyChildProposalNumbers(parentProposalNumber));
+
+        List<String> proposalNumbers = new ArrayList<>(proposalHierarchyDao.getHierarchyChildProposalNumbers(parentProposalNumber));
         Collections.sort(proposalNumbers);
         
         for (String proposalNumber : proposalNumbers) {

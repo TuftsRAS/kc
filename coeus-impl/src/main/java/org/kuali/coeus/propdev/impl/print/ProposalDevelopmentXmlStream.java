@@ -31,7 +31,6 @@ import edu.mit.coeus.utils.xml.v2.propdev.PROPOSALDocument;
 import edu.mit.coeus.utils.xml.v2.propdev.PROPOSALDocument.PROPOSAL;
 import edu.mit.coeus.utils.xml.v2.propdev.PROPOSALMASTERDocument.PROPOSALMASTER;
 import edu.mit.coeus.utils.xml.v2.propdev.PROPOSALMASTERDocument.PROPOSALMASTER.PRIMESPONSOR;
-import edu.mit.coeus.utils.xml.v2.propdev.PROPOSALMASTERDocument.PROPOSALMASTER.PRINCIPALINVESTIGATORNAME;
 import edu.mit.coeus.utils.xml.v2.propdev.PROPPERCREDITSPLITDocument.PROPPERCREDITSPLIT;
 import edu.mit.coeus.utils.xml.v2.propdev.PROPPERSONDocument.PROPPERSON;
 import edu.mit.coeus.utils.xml.v2.propdev.PROPSCIENCECODEDocument.PROPSCIENCECODE;
@@ -127,7 +126,7 @@ public class ProposalDevelopmentXmlStream extends ProposalBaseStream {
         proposal.setCURDATE(getCURDATE());
         proposal.setLOGOPATH(getLOGOPATH());
         proposalDocument.setPROPOSAL(proposal); 
-        Map<String, XmlObject> xmlObjectList = new LinkedHashMap<String, XmlObject>();
+        Map<String, XmlObject> xmlObjectList = new LinkedHashMap<>();
         xmlObjectList.put("summary", proposalDocument);
         return xmlObjectList;
 
@@ -140,12 +139,11 @@ public class ProposalDevelopmentXmlStream extends ProposalBaseStream {
     private String getCURDATE() {
         Date todayDate =new Date();   
         DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");  
-        String currentDate = dateFormat.format(todayDate);  
-        return currentDate;
+        return dateFormat.format(todayDate);
     }
 
     private PROPUNITS[] getPROPUNITSArray() {
-        List<PROPUNITS> propUnitList = new ArrayList<PROPUNITS>();
+        List<PROPUNITS> propUnitList = new ArrayList<>();
         Unit proposalUnit = developmentProposal.getUnit();
         PROPUNITS propUnits = PROPUNITS.Factory.newInstance();
         propUnits.setPROPOSALNUMBER(developmentProposal.getProposalNumber());
@@ -160,7 +158,7 @@ public class ProposalDevelopmentXmlStream extends ProposalBaseStream {
     }
     
     private PROPUNITS[] getPROPUNITSArray(ProposalPerson person) {
-        List<PROPUNITS> propUnitList = new ArrayList<PROPUNITS>();
+        List<PROPUNITS> propUnitList = new ArrayList<>();
         developmentProposal.refresh();
         Unit proposalUnit;
         PROPPERSON propPerson = PROPPERSON.Factory.newInstance();
@@ -235,8 +233,8 @@ public class ProposalDevelopmentXmlStream extends ProposalBaseStream {
      * @return BUDGETPERIOD
      */
     private BUDGETPERIOD[] getBUDGETPERIODArray() {
-        List<BUDGETPERIOD> budgetPeriodList = new ArrayList<BUDGETPERIOD>();
-        BUDGETPERIOD budgetPeriod = null;
+        List<BUDGETPERIOD> budgetPeriodList = new ArrayList<>();
+        BUDGETPERIOD budgetPeriod;
         Budget budget = getBudget(developmentProposal.getProposalDocument());
         for (BudgetPeriod budgetPeriodData : budget.getBudgetPeriods()) {
             budgetPeriod = BUDGETPERIOD.Factory.newInstance();
@@ -262,8 +260,8 @@ public class ProposalDevelopmentXmlStream extends ProposalBaseStream {
     }
    
     private PROPYNQ[] getPROPYNQArray() {
-        List<PROPYNQ> propYnqList = new ArrayList<PROPYNQ>();
-        PROPYNQ propynq = null;
+        List<PROPYNQ> propYnqList = new ArrayList<>();
+        PROPYNQ propynq;
         for (ProposalYnq proposalYnq : developmentProposal.getProposalYnqs()) {
             propynq = PROPYNQ.Factory.newInstance();
             propynq.setANSWER(proposalYnq.getAnswer());
@@ -282,12 +280,12 @@ public class ProposalDevelopmentXmlStream extends ProposalBaseStream {
     }
 
     private PROPUSERROLES[] getPROPUSERROLESArray() {
-        List<PROPUSERROLES> propUserRolesList = new ArrayList<PROPUSERROLES>();
+        List<PROPUSERROLES> propUserRolesList = new ArrayList<>();
         return propUserRolesList.toArray(new PROPUSERROLES[0]);
     }
 
     private PROPUNITCREDITSPLIT[] getPROPUNITCREDITSPLITArray() {
-        List<PROPUNITCREDITSPLIT> propUnitCreditList = new ArrayList<PROPUNITCREDITSPLIT>();
+        List<PROPUNITCREDITSPLIT> propUnitCreditList = new ArrayList<>();
         return propUnitCreditList.toArray(new PROPUNITCREDITSPLIT[0]);
     }
 
@@ -296,9 +294,9 @@ public class ProposalDevelopmentXmlStream extends ProposalBaseStream {
     }
 
     private PROPSPECIALREVIEW[] getPROPSPECIALREVIEWArray() {
-        List<PROPSPECIALREVIEW> propSpecialReviewList = new ArrayList<PROPSPECIALREVIEW>();
+        List<PROPSPECIALREVIEW> propSpecialReviewList = new ArrayList<>();
         List<ProposalSpecialReview> propSpecialReviews = developmentProposal.getPropSpecialReviews();
-        PROPSPECIALREVIEW proposalReview = null;
+        PROPSPECIALREVIEW proposalReview;
         for (ProposalSpecialReview specialReview : propSpecialReviews) {
             proposalReview = PROPSPECIALREVIEW.Factory.newInstance();
             proposalReview.setPROPOSALNUMBER(developmentProposal.getProposalNumber());
@@ -416,7 +414,7 @@ public class ProposalDevelopmentXmlStream extends ProposalBaseStream {
        
         proposalmaster.setNSFCODE(developmentProposal.getNsfCode());
         proposalmaster.setORGANIZATION(getORGANIZATION());
-        PRINCIPALINVESTIGATORNAME PincipalInvestigatorName = PRINCIPALINVESTIGATORNAME.Factory.newInstance();
+
         proposalmaster.setPRINCIPALINVESTIGATORNAME(developmentProposal.getPrincipalInvestigatorName());
         proposalmaster.setTITLE(developmentProposal.getTitle());
         proposalmaster.setPERIOD(getPERIOD());
@@ -429,18 +427,13 @@ public class ProposalDevelopmentXmlStream extends ProposalBaseStream {
     }
 
     private String getPERIOD() {
-        StringBuffer stringBuffer = new StringBuffer();
+        StringBuilder stringBuffer = new StringBuilder();
         stringBuffer.append(simpleDateFormat.format(developmentProposal.getRequestedStartDateInitial()));
         stringBuffer.append(HIPHEN);
         stringBuffer.append(simpleDateFormat.format(developmentProposal.getRequestedEndDateInitial()));
         return stringBuffer.toString();
     }
 
-    /**
-     * Method returns the Organization
-     * 
-     * @return
-     */
     private ORGANIZATION getORGANIZATION() {
         ORGANIZATION organization = ORGANIZATION.Factory.newInstance();
         ROLODEX rolodex = ROLODEX.Factory.newInstance();
@@ -502,10 +495,10 @@ public class ProposalDevelopmentXmlStream extends ProposalBaseStream {
      * @return PROPINVESTIGATORTYPE List
      */
     private PROPINVESTIGATORTYPE[] getPROPINVESTIGATORSArray() {
-        List<PROPINVESTIGATORTYPE> propInvestigatorList = new ArrayList<PROPINVESTIGATORTYPE>();
+        List<PROPINVESTIGATORTYPE> propInvestigatorList = new ArrayList<>();
 
         List<ProposalPerson> investigatorList = developmentProposal.getInvestigators();
-        PROPINVESTIGATORTYPE propInvestigator = null;
+        PROPINVESTIGATORTYPE propInvestigator;
         for (ProposalPerson proposalPerson : investigatorList) {
             propInvestigator = PROPINVESTIGATORTYPE.Factory.newInstance();
             propInvestigator.setPROPOSALNUMBER(developmentProposal.getProposalNumber());

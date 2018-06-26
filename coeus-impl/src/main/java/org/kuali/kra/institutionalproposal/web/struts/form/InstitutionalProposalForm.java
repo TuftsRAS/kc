@@ -104,7 +104,7 @@ public class InstitutionalProposalForm extends KcTransactionalDocumentFormBase i
     public void initialize() {
         specialReviewHelper = new SpecialReviewHelper(this);
         institutionalProposalCustomDataFormHelper = new InstitutionalProposalCustomDataFormHelper(this);
-        notificationHelper = new NotificationHelper<InstitutionalProposalNotificationContext>();
+        notificationHelper = new NotificationHelper<>();
         institutionalProposalNotepadBean = new InstitutionalProposalNotepadBean(this);
         institutionalProposalCostShareBean = new InstitutionalProposalCostShareBean(this);
         institutionalProposalUnrecoveredFandABean = new InstitutionalProposalUnrecoveredFandABean(this);
@@ -119,17 +119,11 @@ public class InstitutionalProposalForm extends KcTransactionalDocumentFormBase i
         docOpenedFromIPSearch = false;
     }
     
-    /**
-     * 
-     * This method returns the AwardDocument object.
-     */
+
     public InstitutionalProposalDocument getInstitutionalProposalDocument() {
         return (InstitutionalProposalDocument) super.getDocument();
     }
-    
-    /**
-     * This method returns a string representation of the document type
-     */
+
     public String getDocumentTypeName() {
         return "InstitutionalProposalDocument";
     }
@@ -341,7 +335,7 @@ public class InstitutionalProposalForm extends KcTransactionalDocumentFormBase i
     public boolean isCfdaLookupRequired() {
         String integration = getParameterService().getParameterValueAsString(Constants.MODULE_NAMESPACE_AWARD, 
                 Constants.PARAMETER_COMPONENT_DOCUMENT, Constants.FIN_SYSTEM_INTEGRATION_ON_OFF_PARAMETER);
-        cfdaLookupRequired = StringUtils.equals(integration, Constants.FIN_SYSTEM_INTEGRATION_ON) ? true : false;
+        cfdaLookupRequired = StringUtils.equals(integration, Constants.FIN_SYSTEM_INTEGRATION_ON);
         return cfdaLookupRequired;
     }
 

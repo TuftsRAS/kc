@@ -30,11 +30,9 @@ import org.kuali.kra.award.specialreview.AwardSpecialReview;
 import org.kuali.kra.bo.FundingSourceType;
 import org.kuali.kra.infrastructure.Constants;
 import org.kuali.kra.infrastructure.KeyConstants;
-import org.kuali.rice.coreservice.framework.parameter.ParameterService;
 import org.kuali.rice.kew.api.exception.WorkflowException;
 import org.kuali.rice.kns.question.ConfirmationQuestion;
 import org.kuali.rice.kns.util.KNSGlobalVariables;
-import org.kuali.rice.krad.service.BusinessObjectService;
 import org.kuali.rice.krad.util.GlobalVariables;
 import org.kuali.rice.krad.util.KRADConstants;
 
@@ -55,7 +53,6 @@ public class AwardHomeAction extends AwardAction {
     private static final String AWARD_VERSION_EDITPENDING_PROMPT_KEY = "message.award.version.editpending.prompt";
 
     private ApprovedSubawardActionHelper approvedSubawardActionHelper;
-    private ParameterService parameterService;
     private GlobalVariableService globalVariableService;
 
     private static final String AWARD_LIST = "awardList";
@@ -283,18 +280,6 @@ public class AwardHomeAction extends AwardAction {
         }
     }
     
-    /**
-     * Looks up and returns the ParameterService.
-     * @return the parameter service. 
-     */
-    @Override
-    protected ParameterService getParameterService() {
-        if (this.parameterService == null) {
-            this.parameterService = KcServiceLocator.getService(ParameterService.class);
-        }
-        return this.parameterService;
-    }
-    
     @Override
     public ActionForward close(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
         // The user is prompted to save when the document is closed.  If they say yes, it will save the document but won't call back to the Action.save.
@@ -438,11 +423,6 @@ public class AwardHomeAction extends AwardAction {
     public ActionForward deleteAwardFundingProposal(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
         ((AwardForm) form).getFundingProposalBean().deleteAwardFundingProposal(getLineToDelete(request));
         return mapping.findForward(Constants.MAPPING_BASIC);
-    }
-    
-    @Override
-    protected BusinessObjectService getBusinessObjectService() {
-        return KcServiceLocator.getService(BusinessObjectService.class);
     }
     
     /**

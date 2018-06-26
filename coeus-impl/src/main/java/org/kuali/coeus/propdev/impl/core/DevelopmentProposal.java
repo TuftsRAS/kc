@@ -1983,7 +1983,7 @@ public class DevelopmentProposal extends KcPersistableBusinessObjectBase impleme
         private static final String NARRATIVES = "narratives";
 
         @Override
-        public void customize(ClassDescriptor descriptor) throws Exception {
+        public void customize(ClassDescriptor descriptor) {
             final String value = getParameterService().getParameterValueAsString(Constants.MODULE_NAMESPACE_PROPOSAL_DEVELOPMENT,Constants.PARAMETER_COMPONENT_DOCUMENT, Constants.PROPOSAL_NARRATIVE_TYPE_GROUP);
             ForeignReferenceMapping frMapping = (ForeignReferenceMapping) descriptor.getMappingForAttributeName(NARRATIVES);
 
@@ -2003,7 +2003,7 @@ public class DevelopmentProposal extends KcPersistableBusinessObjectBase impleme
         private static final String INSTITUTE_ATTACHMENTS = "instituteAttachments";
 
         @Override
-        public void customize(ClassDescriptor descriptor) throws Exception {
+        public void customize(ClassDescriptor descriptor) {
             final String value = getParameterService().getParameterValueAsString(Constants.MODULE_NAMESPACE_PROPOSAL_DEVELOPMENT,Constants.PARAMETER_COMPONENT_DOCUMENT, Constants.INSTITUTE_NARRATIVE_TYPE_GROUP);
             ForeignReferenceMapping frMapping = (ForeignReferenceMapping) descriptor.getMappingForAttributeName(INSTITUTE_ATTACHMENTS);
 

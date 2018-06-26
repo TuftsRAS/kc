@@ -69,7 +69,7 @@ public abstract class AccountCreationClientBase implements AccountCreationClient
     
     @Override
     public String isValidAccountNumber(String accountNumber) {
-        boolean isValidAccountNumber = false;
+        boolean isValidAccountNumber;
         
         try {
             AccountCreationService port = getServiceHandle();   
@@ -84,7 +84,7 @@ public abstract class AccountCreationClientBase implements AccountCreationClient
     
     @Override
     public String isValidChartAccount(String chartOfAccountsCode, String accountNumber) {
-        boolean isValidChartOfAccountsCode = false;
+        boolean isValidChartOfAccountsCode;
         
         try {
             AccountCreationService port = getServiceHandle();   
@@ -121,14 +121,14 @@ public abstract class AccountCreationClientBase implements AccountCreationClient
         if (createAccountResult != null) {
             // if failure status
             if (!StringUtils.equalsIgnoreCase(createAccountResult.getStatus(), "success")) {
-                String completeErrorMessage = "";
+                StringBuilder completeErrorMessage = new StringBuilder();
                 List<String> errorMessages = createAccountResult.getErrorMessages();
                 for (String errorMessage : errorMessages) {
-                    completeErrorMessage += errorMessage;
+                    completeErrorMessage.append(errorMessage);
                 }
                 GlobalVariables.getMessageMap().putError(KeyConstants.CREATE_ACCOUNT_SERVICE_ERRORS, 
-                                                     KeyConstants.CREATE_ACCOUNT_SERVICE_ERRORS, 
-                                                     completeErrorMessage);
+                                                     KeyConstants.CREATE_ACCOUNT_SERVICE_ERRORS,
+                        completeErrorMessage.toString());
             } else {
                 // if account created successfully, then update the award table with the document number and date
                 //if there are error messages but the document was saved in KFS
@@ -152,14 +152,14 @@ public abstract class AccountCreationClientBase implements AccountCreationClient
                 }      
                 if (ObjectUtils.isNotNull(createAccountResult.getErrorMessages()) 
                         && !createAccountResult.getErrorMessages().isEmpty()) {
-                    String completeErrorMessage = "";
+                    StringBuilder completeErrorMessage = new StringBuilder();
                     List<String> errorMessages = createAccountResult.getErrorMessages();
                     for (String errorMessage : errorMessages) {
-                        completeErrorMessage += errorMessage;
+                        completeErrorMessage.append(errorMessage);
                     }
                     GlobalVariables.getMessageMap().putError(KeyConstants.DOCUMENT_SAVED_WITH_ERRORS, 
                                                                  KeyConstants.DOCUMENT_SAVED_WITH_ERRORS,
-                                                                 completeErrorMessage);
+                            completeErrorMessage.toString());
                 }
             }  
         }
@@ -169,8 +169,6 @@ public abstract class AccountCreationClientBase implements AccountCreationClient
     /**
      * This method sets the necessary values in the AccountParametersDTO object to be sent 
      * across to the financial service.
-     * @param award
-     * @throws DatatypeConfigurationException
      */
     protected AccountParametersDTO getAccountParameters(Award award) throws DatatypeConfigurationException {
 
@@ -238,17 +236,13 @@ public abstract class AccountCreationClientBase implements AccountCreationClient
     }
    
     protected String getIndirectCostTypeCode(String rateClassCode, String rateTypeCode) {
-        Map <String, Object> criteria = new HashMap<String, Object>();
+        Map <String, Object> criteria = new HashMap<>();
         criteria.put("rateClassCode", rateClassCode);
         criteria.put("rateTypeCode", rateTypeCode);
         FinancialIndirectCostRecoveryTypeCode icrCostTypeCode= businessObjectService.findByPrimaryKey(FinancialIndirectCostRecoveryTypeCode.class, criteria);
         return ObjectUtils.isNotNull(icrCostTypeCode)? icrCostTypeCode.getIcrTypeCode() : "";
     }
 
-    /**
-     * This method sets the name.
-     * @param award
-     */
     protected void setName(Award award, AccountParametersDTO accountParameters) {
         
         final int ACCOUNT_NAME_LENGTH = 40;
@@ -271,11 +265,7 @@ public abstract class AccountCreationClientBase implements AccountCreationClient
         }
         accountParameters.setAccountName(accountName);
     }
-    
-    /**
-     * This method sets the default address.
-     * @param award
-     */
+
     protected void setDefaultAddress(Award award, AccountParametersDTO accountParameters) {
         //default address is the PI address
         KcPerson principalInvestigator = award.getPrincipalInvestigator().getPerson();
@@ -299,11 +289,7 @@ public abstract class AccountCreationClientBase implements AccountCreationClient
             accountParameters.setDefaultAddressZipCode(principalInvestigator.getPostalCode());
         }
     }
-    
-    /**
-     * This method sets the admin address.
-     * @param award
-     */
+
     protected void setAdminAddress(Award award, AccountParametersDTO accountParameters) {
         List<AwardUnitContact> unitContacts = award.getAwardUnitContacts();
         for (AwardUnitContact contact : unitContacts) {
@@ -335,11 +321,7 @@ public abstract class AccountCreationClientBase implements AccountCreationClient
             }
         }
     }
-    
-    /**
-     * This method sets the income guideline text.
-     * @param award
-     */
+
     protected void setIncomeGuidelineText(Award award, AccountParametersDTO accountParameters) {
         //income guideline text
         award.refreshReferenceObject("awardBasisOfPayment");        
@@ -356,13 +338,7 @@ public abstract class AccountCreationClientBase implements AccountCreationClient
         }
         accountParameters.setIncomeGuidelineText(incomeGuidelineText);
     }
-  
 
-    /**
-     * Sets the documentService attribute value. Injected by Spring.
-     * 
-     * @param documentService The documentService to set.
-     */
     @Override
     public void setDocumentService(DocumentService documentService) {
         this.documentService = documentService;

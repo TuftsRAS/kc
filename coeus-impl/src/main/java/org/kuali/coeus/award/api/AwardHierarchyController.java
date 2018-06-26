@@ -9,7 +9,6 @@ package org.kuali.coeus.award.api;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.kuali.coeus.award.dto.AwardDto;
-import org.kuali.coeus.common.api.document.service.CommonApiService;
 import org.kuali.coeus.common.framework.version.VersionStatus;
 import org.kuali.coeus.common.framework.version.history.VersionHistory;
 import org.kuali.coeus.common.framework.version.history.VersionHistoryService;
@@ -26,7 +25,6 @@ import org.kuali.kra.institutionalproposal.service.InstitutionalProposalService;
 import org.kuali.rice.kew.api.exception.WorkflowException;
 import org.kuali.rice.krad.UserSessionUtils;
 import org.kuali.rice.krad.document.Document;
-import org.kuali.rice.krad.service.BusinessObjectService;
 import org.kuali.rice.krad.service.DocumentService;
 import org.kuali.rice.krad.util.GlobalVariables;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,14 +43,6 @@ public class AwardHierarchyController extends AwardControllerBase {
     @Autowired
     @Qualifier("awardDao")
     private AwardDao awardDao;
-
-    @Autowired
-    @Qualifier("commonApiService")
-    private CommonApiService commonApiService;
-
-    @Autowired
-    @Qualifier("businessObjectService")
-    private BusinessObjectService businessObjectService;
 
     @Autowired
     @Qualifier("documentService")
@@ -144,14 +134,6 @@ public class AwardHierarchyController extends AwardControllerBase {
         this.documentService = documentService;
     }
 
-    public void setCommonApiService(CommonApiService commonApiService) {
-        this.commonApiService = commonApiService;
-    }
-
-    public void setBusinessObjectService(BusinessObjectService businessObjectService) {
-        this.businessObjectService = businessObjectService;
-    }
-
     protected void defaultValues(Award award, AwardDto awardDto) {
         if(award.getAwardAmountInfos() == null) award.initializeAwardAmountInfoObjects();
         if(award.getAwardCostShares() == null) award.setAwardCostShares(new ArrayList<>());
@@ -201,4 +183,27 @@ public class AwardHierarchyController extends AwardControllerBase {
         return awardDao;
     }
 
+    public void setAwardDao(AwardDao awardDao) {
+        this.awardDao = awardDao;
+    }
+
+    public DocumentService getDocumentService() {
+        return documentService;
+    }
+
+    public VersionHistoryService getVersionHistoryService() {
+        return versionHistoryService;
+    }
+
+    public void setVersionHistoryService(VersionHistoryService versionHistoryService) {
+        this.versionHistoryService = versionHistoryService;
+    }
+
+    public InstitutionalProposalService getInstitutionalProposalService() {
+        return institutionalProposalService;
+    }
+
+    public void setInstitutionalProposalService(InstitutionalProposalService institutionalProposalService) {
+        this.institutionalProposalService = institutionalProposalService;
+    }
 }

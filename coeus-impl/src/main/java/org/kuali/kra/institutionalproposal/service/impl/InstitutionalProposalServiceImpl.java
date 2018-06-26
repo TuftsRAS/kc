@@ -933,6 +933,4 @@ public class InstitutionalProposalServiceImpl implements InstitutionalProposalSe
     public void setProposalTypeService(ProposalTypeService proposalTypeService) {
         this.proposalTypeService = proposalTypeService;
     }
-
-
 }

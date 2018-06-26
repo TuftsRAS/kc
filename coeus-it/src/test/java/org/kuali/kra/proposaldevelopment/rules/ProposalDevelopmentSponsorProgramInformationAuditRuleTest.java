@@ -83,7 +83,7 @@ public class ProposalDevelopmentSponsorProgramInformationAuditRuleTest extends K
     @Before
     public void setUp() throws Exception {
         GlobalVariables.setUserSession(new UserSession("quickstart"));
-        GlobalVariables.setAuditErrorMap(new HashMap());
+        GlobalVariables.setAuditErrorMap(new HashMap<>());
         documentService = KRADServiceLocatorWeb.getDocumentService();
         parameterService = CoreFrameworkServiceLocator.getParameterService();
         auditRule = new ProposalDevelopmentSponsorProgramInformationAuditRule();
@@ -114,7 +114,7 @@ public class ProposalDevelopmentSponsorProgramInformationAuditRuleTest extends K
     @Test public void testValidDate() throws Exception {
         ProposalDevelopmentDocument document = getNewProposalDevelopmentDocument();
 
-        document.getDevelopmentProposal().setDeadlineDate(tomorrow);;
+        document.getDevelopmentProposal().setDeadlineDate(tomorrow);
         assertTrue("Audit Rule shouldn't produce any audit errors", auditRule.processRunAuditBusinessRules(document));
         assertEquals(0, GlobalVariables.getAuditErrorMap().size());
     }

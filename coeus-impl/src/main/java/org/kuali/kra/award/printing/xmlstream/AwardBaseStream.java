@@ -171,7 +171,7 @@ public abstract class AwardBaseStream implements XmlStream {
 	 * This method will set the values to school info attributes and finally
 	 * returns SchoolInfoType XmlObject
 	 * </p>
-	 * 
+	 *
 	 * @return returns SchoolInfoType XmlObject
 	 */
 	protected SchoolInfoType2 getSchoolInfoType() {
@@ -186,7 +186,7 @@ public abstract class AwardBaseStream implements XmlStream {
 				schoolInfoType.setAcronym(schoolAcronym);
 			}
 		} catch (Exception e) {
-			// LOg e
+			LOG.error(e.getMessage(), e);
 		}
 		return schoolInfoType;
 	}
@@ -445,8 +445,7 @@ public abstract class AwardBaseStream implements XmlStream {
 			String prevAwardStatus) {
 		String awardStatusMod = null;
 		if (CurrAwardStatus != null) {
-			if (prevAwardStatus == null
-					|| !CurrAwardStatus.equals(prevAwardStatus)) {
+			if (!CurrAwardStatus.equals(prevAwardStatus)) {
 				awardStatusMod = new StringBuilder(CurrAwardStatus).append(
 						END_ASTERISK_SPACE_INDICATOR).toString();
 				} else {
@@ -2694,8 +2693,7 @@ public abstract class AwardBaseStream implements XmlStream {
 			String prevAwardTypeDescription) {
 		String awardTypeDesc = null;
 		if (awardTypeDescription != null) {
-			if (prevAwardTypeDescription == null
-					|| !awardTypeDescription.equals(prevAwardTypeDescription)) {
+			if (!awardTypeDescription.equals(prevAwardTypeDescription)) {
 				awardTypeDesc = new StringBuilder(awardTypeDescription).append(
 						END_ASTERISK_SPACE_INDICATOR).toString();
 
