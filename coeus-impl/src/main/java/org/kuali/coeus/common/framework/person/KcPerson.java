@@ -7,6 +7,7 @@
  */
 package org.kuali.coeus.common.framework.person;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.apache.commons.lang3.time.DurationFormatUtils;
@@ -18,6 +19,7 @@ import org.kuali.coeus.common.framework.person.attr.KcPersonExtendedAttributes;
 import org.kuali.coeus.common.framework.person.attr.PersonAppointment;
 import org.kuali.coeus.common.framework.unit.Unit;
 import org.kuali.coeus.sys.framework.service.KcServiceLocator;
+import org.kuali.kra.kim.bo.KcKimAttributes;
 import org.kuali.rice.core.api.mo.common.active.Inactivatable;
 import org.kuali.rice.kim.api.identity.IdentityService;
 import org.kuali.rice.kim.api.identity.address.EntityAddress;
@@ -974,7 +976,7 @@ public class KcPerson extends TransientBusinessObjectBase implements Contactable
                     .map(PersonAppointment::getUnitNumber))
                 .collect(Collectors.toList());
 
-        return this.getBusinessObjectService().findMatching(Unit.class, Collections.singletonMap("unitNumber", unitNumbers));
+        return (CollectionUtils.isEmpty(unitNumbers)) ? Collections.emptyList() : getBusinessObjectService().findMatching(Unit.class, Collections.singletonMap(KcKimAttributes.UNIT_NUMBER, unitNumbers));
     }
 
     @Override
