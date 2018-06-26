@@ -8,6 +8,7 @@
 package org.kuali.kra.external.award.impl;
 
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
@@ -20,6 +21,7 @@ import org.kuali.kra.award.commitments.AwardFandaRate;
 import org.kuali.kra.award.contacts.AwardUnitContact;
 import org.kuali.kra.award.document.AwardDocument;
 import org.kuali.kra.award.home.Award;
+import org.kuali.kra.award.home.AwardCfda;
 import org.kuali.kra.external.award.AccountCreationClient;
 import org.kuali.kra.external.award.FinancialIndirectCostRecoveryTypeCode;
 import org.kuali.kra.infrastructure.Constants;
@@ -178,12 +180,10 @@ public abstract class AccountCreationClientBase implements AccountCreationClient
         //Account number
         accountParameters.setAccountNumber(award.getAccountNumber());
         setDefaultAddress(award, accountParameters);
-        setAdminAddress(award, accountParameters);       
-        
-        //cfdaNumber
-        String cfdaNumber = award.getCfdaNumber();
-        if  (cfdaNumber != null) {
-            accountParameters.setCfdaNumber(cfdaNumber);
+        setAdminAddress(award, accountParameters);
+
+        if  (CollectionUtils.isNotEmpty(award.getAwardCfdas())) {
+            award.getAwardCfdas().stream().map(AwardCfda::getCfdaNumber).findFirst().ifPresent(accountParameters::setCfdaNumber);
         }
         
         //effective date

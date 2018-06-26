@@ -25,10 +25,7 @@ import org.kuali.kra.infrastructure.Constants;
 import org.kuali.kra.infrastructure.KeyConstants;
 import org.kuali.kra.infrastructure.TaskName;
 import org.kuali.kra.institutionalproposal.document.InstitutionalProposalDocument;
-import org.kuali.kra.institutionalproposal.home.InstitutionalProposal;
-import org.kuali.kra.institutionalproposal.home.InstitutionalProposalComment;
-import org.kuali.kra.institutionalproposal.home.InstitutionalProposalNotepad;
-import org.kuali.kra.institutionalproposal.home.InstitutionalProposalScienceKeyword;
+import org.kuali.kra.institutionalproposal.home.*;
 import org.kuali.kra.institutionalproposal.proposallog.ProposalLog;
 import org.kuali.kra.institutionalproposal.proposallog.ProposalLogUtils;
 import org.kuali.kra.institutionalproposal.proposallog.service.ProposalLogService;
@@ -172,6 +169,38 @@ public class InstitutionalProposalHomeAction extends InstitutionalProposalAction
             prop.refreshReferenceObject("rolodex");
         }
         
+        return mapping.findForward(Constants.MAPPING_BASIC);
+    }
+
+    public ActionForward addInstitutionalProposalCfda(ActionMapping mapping, ActionForm form,
+                                      HttpServletRequest request,
+                                      HttpServletResponse response) throws Exception {
+
+        final InstitutionalProposalForm institutionalProposalForm = (InstitutionalProposalForm) form;;
+        final InstitutionalProposalDocument institutionalProposalDocument = institutionalProposalForm.getInstitutionalProposalDocument();
+        final InstitutionalProposalCfda newProposalCfda = institutionalProposalForm.getNewProposalCfda();
+        final InstitutionalProposal institutionalProposal = institutionalProposalDocument.getInstitutionalProposal();
+
+        newProposalCfda.setSequenceNumber(institutionalProposal.getSequenceNumber());
+        newProposalCfda.setProposalNumber(institutionalProposal.getProposalNumber());
+        newProposalCfda.setInstitutionalProposal(institutionalProposal);
+        newProposalCfda.setProposalId(institutionalProposal.getProposalId());
+        institutionalProposal.getProposalCfdas().add(newProposalCfda);
+        institutionalProposalForm.setNewProposalCfda(new InstitutionalProposalCfda());
+
+        getKualiRuleService().applyRules(new InstitutionalProposalCfdaRuleEvent(StringUtils.EMPTY, institutionalProposalForm.getInstitutionalProposalDocument()));
+
+        return mapping.findForward(Constants.MAPPING_BASIC);
+    }
+
+    public ActionForward deleteInstitutionalProposalCfda(ActionMapping mapping, ActionForm form,
+                                         HttpServletRequest request,
+                                         HttpServletResponse response) throws Exception {
+        final InstitutionalProposalForm institutionalProposalForm = (InstitutionalProposalForm) form;;
+        final InstitutionalProposalDocument institutionalProposalDocument = institutionalProposalForm.getInstitutionalProposalDocument();
+        final int delIpCfda = getLineToDelete(request);
+        institutionalProposalDocument.getInstitutionalProposal().getProposalCfdas().remove(delIpCfda);
+
         return mapping.findForward(Constants.MAPPING_BASIC);
     }
 

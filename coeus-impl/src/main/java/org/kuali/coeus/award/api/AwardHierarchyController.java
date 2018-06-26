@@ -178,6 +178,7 @@ public class AwardHierarchyController extends AwardControllerBase {
         if(award.getAwardAttachments() == null) award.setAttachments(new ArrayList<>());
         if(award.getAwardBudgetLimits() == null) award.setAwardBudgetLimits(new ArrayList<>());
         if(award.getAwardCustomDataList() == null) award.setAwardCustomDataList(new ArrayList<>());
+        if(award.getAwardCfdas() == null) award.setAwardCfdas(new ArrayList<>());
 
         award.setProjectEndDate(awardDto.getProjectEndDate());
         if(award.getAwardNumber() == null) award.setAwardNumber(Award.DEFAULT_AWARD_NUMBER);

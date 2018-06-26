@@ -9,6 +9,7 @@ package org.kuali.coeus.award.finance;
 
 import com.codiform.moo.curry.Translate;
 
+import org.kuali.coeus.award.api.AwardApiService;
 import org.kuali.coeus.award.dto.AwardDto;
 import org.kuali.coeus.award.finance.dao.AccountDao;
 import org.kuali.coeus.common.api.document.service.CommonApiService;
@@ -62,6 +63,10 @@ public class AwardAccountController extends RestController {
     @Autowired
     @Qualifier("commonApiService")
     private CommonApiService commonApiService;
+
+    @Autowired
+    @Qualifier("awardApiService")
+    private AwardApiService awardApiService;
 
     @Autowired
     @Qualifier("permissionService")
@@ -132,7 +137,7 @@ public class AwardAccountController extends RestController {
     protected AwardPostsDto translateAwardPosts(AwardPosts awardPosts) {
         AwardPostsDto awardPostsDto = commonApiService.convertObject(awardPosts, AwardPostsDto.class);
         Award award = awardDao.getAward(awardPosts.getAwardId());
-        AwardDto awardDto = commonApiService.convertAwardToDto(award);
+        AwardDto awardDto = awardApiService.convertAwardToDto(award);
         awardPostsDto.setAwardDto(awardDto);
         return awardPostsDto;
     }
@@ -220,4 +225,59 @@ public class AwardAccountController extends RestController {
         this.accountDao = accountDao;
     }
 
+    public DataObjectService getDataObjectService() {
+        return dataObjectService;
+    }
+
+    public void setDataObjectService(DataObjectService dataObjectService) {
+        this.dataObjectService = dataObjectService;
+    }
+
+    public AwardDao getAwardDao() {
+        return awardDao;
+    }
+
+    public void setAwardDao(AwardDao awardDao) {
+        this.awardDao = awardDao;
+    }
+
+    public CommonApiService getCommonApiService() {
+        return commonApiService;
+    }
+
+    public void setCommonApiService(CommonApiService commonApiService) {
+        this.commonApiService = commonApiService;
+    }
+
+    public AwardApiService getAwardApiService() {
+        return awardApiService;
+    }
+
+    public void setAwardApiService(AwardApiService awardApiService) {
+        this.awardApiService = awardApiService;
+    }
+
+    public PermissionService getPermissionService() {
+        return permissionService;
+    }
+
+    public void setPermissionService(PermissionService permissionService) {
+        this.permissionService = permissionService;
+    }
+
+    public GlobalVariableService getGlobalVariableService() {
+        return globalVariableService;
+    }
+
+    public void setGlobalVariableService(GlobalVariableService globalVariableService) {
+        this.globalVariableService = globalVariableService;
+    }
+
+    public ParameterService getParameterService() {
+        return parameterService;
+    }
+
+    public void setParameterService(ParameterService parameterService) {
+        this.parameterService = parameterService;
+    }
 }

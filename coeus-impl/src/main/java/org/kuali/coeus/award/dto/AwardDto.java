@@ -64,6 +64,7 @@ public class AwardDto {
     private String activityTypeCode;
     private String primeSponsorCode;
     private Integer awardTypeCode;
+    @Property(source = "mvel:awardCfdas[0].?cfdaNumber")
     private String cfdaNumber;
     private String methodOfPaymentCode;
     private String proposalNumber;

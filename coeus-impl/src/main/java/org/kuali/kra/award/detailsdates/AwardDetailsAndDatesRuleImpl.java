@@ -22,6 +22,7 @@ import org.kuali.coeus.sys.api.model.ScaleTwoDecimal;
 import org.kuali.rice.coreservice.framework.parameter.ParameterService;
 import org.kuali.rice.krad.util.ObjectUtils;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,6 +41,7 @@ public class AwardDetailsAndDatesRuleImpl extends KcTransactionalDocumentRuleBas
     private static final String OBLIGATION_EXPIRATION_DATE_PROPERTY_NAME = "awardAmountInfos[0].obligationExpirationDate";
     private static final String AWARD_ACCOUNT_NUMBER_PROPERTY_NAME = "accountNumber";
     private static final String AWARD_FIN_CHART_OF_ACCOUNTS_CODE_PROPERTY_NAME = "financialChartOfAccountsCode";
+    private static final String AWARD_CFDA_NUMBER = "awardCfdas[%s].cfdaNumber";
     private ParameterService parameterService;
     AccountCreationClient accountCreationClient;
     
@@ -120,11 +122,17 @@ public class AwardDetailsAndDatesRuleImpl extends KcTransactionalDocumentRuleBas
         if (!isValidAccountNumber((AwardDocument) awardDetailsAndDatesSaveEvent.getDocument())) {
             valid &= false;
         }
-        
-        if (!isValidCfdaNumber(award)) {
-            valid &= false; 
-            reportError(Constants.CFDA_NUMBER, KeyConstants.ERROR_INVALID_CFDA, award.getCfdaNumber());
+
+        for (int i = 0; i < award.getAwardCfdas().size(); i ++) {
+            final String cfdaNumber = award.getAwardCfdas().get(i).getCfdaNumber();
+            if (StringUtils.isBlank(cfdaNumber)) {
+                reportError(String.format(AWARD_CFDA_NUMBER, i), KeyConstants.CFDA_REQUIRED);
+            } else if (!isValidCfdaNumber(cfdaNumber)) {
+                valid = false;
+                reportError(String.format(AWARD_CFDA_NUMBER, i), KeyConstants.ERROR_INVALID_CFDA, cfdaNumber);
+            }
         }
+
         return valid;
     }
     
@@ -132,12 +140,10 @@ public class AwardDetailsAndDatesRuleImpl extends KcTransactionalDocumentRuleBas
      * This check is only done if the integration parameter is on, otherwise the regular checks 
      * are used
      */
-    protected boolean isValidCfdaNumber(Award award) {
-        if (isIntegrationParameterOn() && StringUtils.isNotEmpty(award.getCfdaNumber())) {
-            Map<String, String> criteria = new HashMap<String, String>();
-            criteria.put("cfdaNumber", award.getCfdaNumber());
-            CFDA cfdaNumber = (CFDA) getBusinessObjectService().findByPrimaryKey(CFDA.class, criteria);
-            return ObjectUtils.isNotNull(cfdaNumber) ? true : false;
+    protected boolean isValidCfdaNumber(String cfdaNumberStr) {
+        if (isIntegrationParameterOn() && StringUtils.isNotEmpty(cfdaNumberStr)) {
+            CFDA cfdaNumber = getBusinessObjectService().findByPrimaryKey(CFDA.class, Collections.singletonMap("cfdaNumber", cfdaNumberStr));
+            return ObjectUtils.isNotNull(cfdaNumber);
         } 
         return true;
     }

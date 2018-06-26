@@ -47,7 +47,7 @@
     <property name="controlField">
       <bean p:size="20" parent="Uif-TextControl"/>
     </property>
-    <property name="summary" value="The CFDA Number for this Award." />
+    <property name="summary" value="The CFDA Number" />
     <property name="description" value="A unique identifier for the sponsor and the funding opportunity announcement.  AKA &quot;Catalogue of Federal Domestic Assistance Number.&quot; The format for this CFDA Number is XX.XXX" />
   </bean>
 
@@ -58,11 +58,11 @@
     <property name="label" value="CFDA Program Title Name" />
     <property name="shortLabel" value="CFDA program Title Name" />
     <property name="maxLength" value="300" />
-    <property name="validationPattern" >
-      <bean parent="AnyCharacterValidationPattern" p:allowWhitespace="true"/>
+    <property name="validationPattern">
+      <bean parent="UTF8AnyCharacterValidationPattern" p:allowWhitespace="true"/>
     </property>
     <property name="validCharactersConstraint">
-      <bean parent="AnyCharacterPatternConstraint">
+      <bean parent="UTF8AnyCharacterPatternConstraint">
         <property name="allowWhitespace" value="true"/>
       </bean>
     </property>

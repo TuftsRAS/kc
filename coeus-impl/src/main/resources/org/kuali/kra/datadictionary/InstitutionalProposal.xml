@@ -64,6 +64,7 @@
                 <ref bean="InstitutionalProposal-initialContractAdmin" />
                 <ref bean="InstitutionalProposal-ipReviewActivityIndicator" />
                 <ref bean="InstitutionalProposal-currentAwardNumber" />
+                <!--cfdaNumber deprecated. Included here for REST api compatibility.  Do not use. -->
                 <ref bean="InstitutionalProposal-cfdaNumber" />
                 <ref bean="InstitutionalProposal-opportunity" />
                 <ref bean="InstitutionalProposal-awardTypeCode" />
@@ -1022,22 +1023,9 @@
         <property name="description" value="Current Award Number" />
     </bean>
 
+    <!--cfdaNumber deprecated. Included here for REST api compatibility.  Do not use. -->
     <bean id="InstitutionalProposal-cfdaNumber" parent="InstitutionalProposal-cfdaNumber-parentBean" />
-    <bean id="InstitutionalProposal-cfdaNumber-parentBean" abstract="true" parent="AttributeDefinition" >
-        <property name="name" value="cfdaNumber" />
-        <property name="forceUppercase" value="false" />
-        <property name="label" value="CFDA Number" />
-        <property name="shortLabel" value="CFDA Number" />
-        <property name="maxLength" value="7" />
-        <property name="control" >
-      <bean parent="TextControlDefinition" p:size="10"/>
-    </property>
-    <property name="controlField">
-      <bean p:size="10" parent="Uif-TextControl"/>
-        </property>
-        <property name="summary" value="CFDA Number" />
-        <property name="description" value="CFDA Number" />
-    </bean>
+    <bean id="InstitutionalProposal-cfdaNumber-parentBean" abstract="true" parent="CFDA-cfdaNumber" />
 
     <bean id="InstitutionalProposal-opportunity" parent="InstitutionalProposal-opportunity-parentBean" />
     <bean id="InstitutionalProposal-opportunity-parentBean" abstract="true" parent="AttributeDefinition" >
@@ -1380,9 +1368,26 @@
               <bean parent="FieldDefinition" p:attributeName="initialContractAdmin"/>
               <bean parent="FieldDefinition" p:attributeName="ipReviewActivityIndicator"/>
               <bean parent="FieldDefinition" p:attributeName="currentAwardNumber"/>
-              <bean parent="FieldDefinition" p:attributeName="cfdaNumber"/>
               <bean parent="FieldDefinition" p:attributeName="opportunity"/>
               <bean parent="FieldDefinition" p:attributeName="awardTypeCode"/>
+                <bean parent="InquiryCollectionDefinition">
+                    <property name="attributeName" value="proposalCfdas"/>
+                    <property name="businessObjectClass" value="org.kuali.kra.institutionalproposal.home.InstitutionalProposalCfda"/>
+                    <property name="numberOfColumns" value="2"/>
+                    <property name="summaryTitle" value="CFDA"/>
+                    <property name="summaryFields">
+                        <list>
+                            <bean parent="FieldDefinition" p:attributeName="cfdaNumber"/>
+                            <bean parent="FieldDefinition" p:attributeName="cfdaDescription"/>
+                        </list>
+                    </property>
+                    <property name="inquiryFields">
+                        <list>
+                            <bean parent="FieldDefinition" p:attributeName="cfdaNumber"/>
+                            <bean parent="FieldDefinition" p:attributeName="cfdaDescription"/>
+                        </list>
+                    </property>
+                </bean>
             </list>
           </property>
         </bean>
@@ -1439,14 +1444,29 @@
               <bean p:propertyName="initialContractAdmin" parent="Uif-DataField"/>
               <bean p:propertyName="ipReviewActivityIndicator" parent="Uif-DataField"/>
               <bean p:propertyName="currentAwardNumber" parent="Uif-DataField"/>
-              <bean p:propertyName="cfdaNumber" parent="Uif-DataField"/>
               <bean p:propertyName="opportunity" parent="Uif-DataField"/>
               <bean p:propertyName="awardTypeCode" parent="Uif-DataField"/>
-                        </list>
-                    </property>
-                </bean>
+            <bean parent="Uif-StackedCollectionSection">
+                <property name="headerText" value="CFDA"/>
+                <property name="layoutManager.lineGroupPrototype.layoutManager.numberOfColumns" value="2"/>
+                <property name="propertyName" value="proposalCfdas"/>
+                <property name="collectionObjectClass" value="org.kuali.kra.institutionalproposal.home.InstitutionalProposalCfda"/>
+                <property name="items">
+                    <list>
+                        <bean p:propertyName="cfdaNumber" parent="Uif-DataField"/>
+                        <bean p:propertyName="cfdaDescription" parent="Uif-DataField"/>
+                    </list>
+                </property>
+                <property name="layoutManager.summaryFields">
+                    <list>
+                        <value>cfdaNumber</value>
+                    </list>
+                </property>
+            </bean>
             </list>
-        </property>
-    </bean>
-
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
 </beans>

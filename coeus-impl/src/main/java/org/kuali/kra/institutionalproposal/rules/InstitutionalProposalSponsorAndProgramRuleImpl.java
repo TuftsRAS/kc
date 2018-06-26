@@ -7,7 +7,6 @@
  */
 package org.kuali.kra.institutionalproposal.rules;
 
-import org.apache.commons.lang3.StringUtils;
 import org.kuali.coeus.common.framework.sponsor.Sponsor;
 import org.kuali.coeus.sys.framework.rule.KcTransactionalDocumentRuleBase;
 import org.kuali.coeus.sys.framework.service.KcServiceLocator;
@@ -15,7 +14,6 @@ import org.kuali.coeus.sys.framework.util.DateUtils;
 import org.kuali.kra.infrastructure.Constants;
 import org.kuali.kra.infrastructure.KeyConstants;
 import org.kuali.kra.institutionalproposal.home.InstitutionalProposal;
-import org.kuali.rice.kns.service.DataDictionaryService;
 import org.kuali.rice.krad.service.BusinessObjectService;
 import org.kuali.rice.krad.util.GlobalVariables;
 
@@ -101,18 +99,4 @@ public class InstitutionalProposalSponsorAndProgramRuleImpl extends KcTransactio
        return valid;
         
     }
-    
-    private boolean validateCfdaNumber(InstitutionalProposal institutionalProposal) {
-        DataDictionaryService dataDictionaryService = KcServiceLocator.getService(DataDictionaryService.class);
-        if (!isValidCfda(institutionalProposal.getCfdaNumber())
-                && GlobalVariables.getMessageMap().getMessages(Constants.INSTITUTIONAL_PROPOSAL_CFDA_NUMBER) == null) {
-            this.reportWarning(Constants.INSTITUTIONAL_PROPOSAL_CFDA_NUMBER, KeyConstants.CFDA_INVALID, new String[]{institutionalProposal.getCfdaNumber()});
-         }
-        return Boolean.TRUE;
-    }
-
-    public boolean isValidCfda(String cfdaNumber) {
-        return StringUtils.isNotBlank(cfdaNumber) && cfdaNumber.matches(Constants.CFDA_REGEX);
-    }
-
 }

@@ -26,6 +26,8 @@ import org.kuali.rice.krad.util.ObjectUtils;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class AwardInquirable extends KualiInquirableImpl {
     
@@ -107,9 +109,15 @@ public class AwardInquirable extends KualiInquirableImpl {
         addField(award.getCloseoutDate() + "", row6, "closeoutDate", "Closeout Date");
         section.getRows().add(row6);
 
-        Row row7 = new Row();
-        addField(award.getCfdaNumber(), row7, "cfdaNumber", "CFDA Number");
-        section.getRows().add(row7);
+        section.getRows().addAll(IntStream.range(0, award.getAwardCfdas().size())
+                .mapToObj(i -> {
+                    final Row row = new Row();
+                    addField(award.getAwardCfdas().get(i).getCfdaNumber(), row, String.format("awardCfdas[%s].cfdaNumber", i), "CFDA Number " + i + 1);
+                    addField(award.getAwardCfdas().get(i).getCfdaNumber(), row, String.format("awardCfdas[%s].cfdaDescription", i), "CFDA Program Title Name " + i + 1);
+
+                    return row;
+                }).collect(Collectors.toList()));
+
         sections.add(section);
         return sections;
     }

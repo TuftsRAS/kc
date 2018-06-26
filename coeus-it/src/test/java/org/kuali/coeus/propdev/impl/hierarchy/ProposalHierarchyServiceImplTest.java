@@ -43,6 +43,7 @@ import org.kuali.coeus.propdev.impl.person.attachment.PropPerDocType;
 import org.kuali.coeus.propdev.impl.person.attachment.ProposalPersonBiography;
 import org.kuali.coeus.propdev.impl.person.attachment.ProposalPersonBiographyAttachment;
 import org.kuali.coeus.propdev.impl.specialreview.ProposalSpecialReview;
+import org.kuali.coeus.propdev.impl.sponsor.ProposalCfda;
 import org.kuali.coeus.sys.framework.service.KcServiceLocator;
 import org.kuali.coeus.sys.framework.util.DateUtils;
 import org.kuali.kra.infrastructure.Constants;
@@ -928,7 +929,11 @@ public class ProposalHierarchyServiceImplTest extends KcIntegrationTestBase {
 		developmentProposal.setMailDescription("test");
 		developmentProposal.setDeadlineTime("1:00 AM");
 		developmentProposal.setAnticipatedAwardTypeCode(1);
-		developmentProposal.setCfdaNumber("00.000");
+
+        ProposalCfda proposalCfda = new ProposalCfda();
+        proposalCfda.setCfdaNumber("00.000");
+        proposalCfda.setProposalNumber(developmentProposal.getProposalNumber());
+
 		developmentProposal.setSponsorProposalNumber("100");
 		developmentProposal.setAgencyDivisionCode("ADC");
 		developmentProposal.setAgencyProgramCode("APC");

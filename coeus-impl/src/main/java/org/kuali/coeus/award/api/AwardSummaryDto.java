@@ -27,6 +27,7 @@ public class AwardSummaryDto {
 	private String accountNumber;
 	private String modificationNumber;
 	private String sponsorAwardNumber;
+	@Property(source = "mvel:awardCfdas[0].?cfdaNumber")
 	private String cfdaNumber;
 	private String title;
 	private Date updateTimestamp;

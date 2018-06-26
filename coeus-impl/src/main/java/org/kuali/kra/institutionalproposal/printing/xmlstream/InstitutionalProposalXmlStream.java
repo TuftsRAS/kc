@@ -43,6 +43,7 @@ import org.kuali.rice.coreservice.framework.parameter.ParameterService;
 import org.kuali.rice.krad.service.BusinessObjectService;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * This class generates XML that conforms with the XSD related to Institution
@@ -126,7 +127,7 @@ public class InstitutionalProposalXmlStream implements XmlStream {
 		instituteProposalXmlObject.setKeyPersonsArray(getKeyPersons(
 				institutionalProposal));
 		instituteProposalXmlObject.setCostSharingProjectPeriodFieldDescription(getProjectPeriodFieldDescription());
-		instituteProposalXmlObject.setCFDANum(institutionalProposal.getCfdaNumber());
+		instituteProposalXmlObject.setCFDANum(institutionalProposal.getProposalCfdas().stream().map(InstitutionalProposalCfda::getCfdaNumber).collect(Collectors.joining(",")));
 		instituteProposalXmlObject.setOpportunityID(institutionalProposal.getOpportunity());
 	    instituteProposalXmlObject.setOtherData(getCustomData(institutionalProposal));
 		

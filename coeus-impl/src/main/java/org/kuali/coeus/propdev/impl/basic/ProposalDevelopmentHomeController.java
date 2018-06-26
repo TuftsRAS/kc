@@ -19,7 +19,9 @@ import org.kuali.coeus.propdev.impl.notification.ProposalDevelopmentNotification
 import org.kuali.coeus.propdev.impl.person.AddEmployeePiHelper;
 import org.kuali.coeus.propdev.impl.person.ProposalPerson;
 import org.kuali.coeus.propdev.impl.s2s.S2sOpportunity;
+import org.kuali.coeus.propdev.impl.s2s.S2sOpportunityCfda;
 import org.kuali.coeus.propdev.impl.s2s.S2sSubmissionService;
+import org.kuali.coeus.propdev.impl.sponsor.ProposalCfda;
 import org.kuali.coeus.propdev.impl.state.ProposalState;
 import org.kuali.kra.authorization.KraAuthorizationConstants;
 import org.kuali.kra.infrastructure.Constants;
@@ -55,6 +57,8 @@ import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Controller
 public class ProposalDevelopmentHomeController extends ProposalDevelopmentControllerBase {
@@ -455,7 +459,8 @@ public class ProposalDevelopmentHomeController extends ProposalDevelopmentContro
             opportunity.setOpeningDate(openingDate);
             opportunity.setCompetetionId(form.getRequest().getParameter(ProposalDevelopmentConstants.S2sConstants.COMPETETION_ID));
             opportunity.setInstructionUrl(form.getRequest().getParameter(ProposalDevelopmentConstants.S2sConstants.INSTRUCTION_URL));
-            opportunity.setCfdaNumber(form.getRequest().getParameter(ProposalDevelopmentConstants.S2sConstants.CFDA_NUMBER));
+            opportunity.setS2sOpportunityCfdasSerialized(form.getRequest().getParameter(ProposalDevelopmentConstants.S2sConstants.S2S_OPPORTUNITY_CFDAS_SERIALIZED));
+            opportunity.getS2sOpportunityCfdas().forEach(cfda -> cfda.setProposalNumber(developmentProposal.getProposalNumber()));
             opportunity.setOpportunityId(form.getRequest().getParameter(ProposalDevelopmentConstants.S2sConstants.OPPORTUNITY_ID));
             final String opportunityTitle = form.getRequest().getParameter(ProposalDevelopmentConstants.S2sConstants.OPPORTUNITY_TITLE);
             String trimmedTitle = StringUtils.substring(opportunityTitle, 0, ProposalDevelopmentConstants.S2sConstants.OPP_TITLE_MAX_LENGTH);
@@ -467,7 +472,13 @@ public class ProposalDevelopmentHomeController extends ProposalDevelopmentContro
             developmentProposal.setS2sOpportunity(opportunity);
             developmentProposal.setProgramAnnouncementTitle(opportunityTitle);
             developmentProposal.setProgramAnnouncementNumber(opportunity.getOpportunityId());
-            developmentProposal.setCfdaNumber(opportunity.getCfdaNumber());
+            developmentProposal.setProposalCfdas(opportunity.getS2sOpportunityCfdas().stream().map(cfda -> {
+                final ProposalCfda proposalCfda = new ProposalCfda();
+                proposalCfda.setCfdaNumber(cfda.getCfdaNumber());
+                proposalCfda.setCfdaDescription(cfda.getCfdaDescription());
+                proposalCfda.setProposalNumber(developmentProposal.getProposalNumber());
+                return proposalCfda;
+            }).collect(Collectors.toList()));
         }
     }
 

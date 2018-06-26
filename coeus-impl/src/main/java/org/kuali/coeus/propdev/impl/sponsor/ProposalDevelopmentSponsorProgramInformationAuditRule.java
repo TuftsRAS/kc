@@ -7,6 +7,7 @@
  */
 package org.kuali.coeus.propdev.impl.sponsor;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeComparator;
@@ -14,6 +15,7 @@ import org.kuali.coeus.common.framework.sponsor.Sponsor;
 import org.kuali.coeus.propdev.api.core.SubmissionInfoService;
 import org.kuali.coeus.propdev.impl.core.ProposalDevelopmentDocument;
 import org.kuali.coeus.propdev.impl.core.ProposalTypeService;
+import org.kuali.coeus.propdev.impl.s2s.S2sOpportunityCfda;
 import org.kuali.coeus.propdev.impl.s2s.S2sSubmissionType;
 import org.kuali.coeus.sys.framework.service.KcServiceLocator;
 import org.kuali.kra.infrastructure.Constants;
@@ -29,6 +31,8 @@ import org.kuali.rice.krad.rules.rule.DocumentAuditRule;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static org.kuali.coeus.propdev.impl.datavalidation.ProposalDevelopmentDataValidationConstants.*;
 
@@ -67,10 +71,11 @@ public class ProposalDevelopmentSponsorProgramInformationAuditRule implements Do
                 valid &= false;
                 getAuditErrors(SPONSOR_PROGRAM_INFO_PAGE_NAME,AUDIT_ERRORS).add(new AuditError(OPPORTUNITY_ID_KEY, KeyConstants.ERROR_OPPORTUNITY_ID_DIFFER, SPONSOR_PROGRAM_INFO_PAGE_ID));
             }
-            if (proposal.getS2sOpportunity().getCfdaNumber() != null && proposal.getCfdaNumber() != null 
-                    && !StringUtils.equalsIgnoreCase(proposal.getS2sOpportunity().getCfdaNumber(), proposal.getCfdaNumber())) {
+            if (CollectionUtils.isNotEmpty(proposal.getS2sOpportunity().getS2sOpportunityCfdas()) && CollectionUtils.isNotEmpty(proposal.getProposalCfdas())
+                    && !CollectionUtils.isEqualCollection(proposal.getS2sOpportunity().getS2sOpportunityCfdas().stream().map(S2sOpportunityCfda::getCfdaNumber).collect(Collectors.toList()), proposal.getProposalCfdas().stream().map(ProposalCfda::getCfdaNumber).collect(Collectors.toList()))) {
                 valid &= false;
-                getAuditErrors(SPONSOR_PROGRAM_INFO_PAGE_NAME,AUDIT_ERRORS).add(new AuditError(CFDA_NUMBER_KEY, KeyConstants.ERROR_CFDA_NUMBER_DIFFER, SPONSOR_PROGRAM_INFO_PAGE_ID));
+                IntStream.range(0, proposal.getProposalCfdas().size())
+                        .forEach(i -> getAuditErrors(SPONSOR_PROGRAM_INFO_PAGE_NAME,AUDIT_ERRORS).add(new AuditError(String.format(CFDA_NUMBER_KEY, i), KeyConstants.ERROR_CFDA_NUMBER_DIFFER, SPONSOR_PROGRAM_INFO_PAGE_ID)));
             }
             if (proposal.getProgramAnnouncementTitle() == null 
                     || StringUtils.equalsIgnoreCase(proposal.getProgramAnnouncementTitle().trim(), "")) {
@@ -125,12 +130,15 @@ public class ProposalDevelopmentSponsorProgramInformationAuditRule implements Do
             }            
         }
 
+        for (int i = 0; i < proposalDevelopmentDocument.getDevelopmentProposal().getProposalCfdas().size(); i ++) {
+            final String cfdaNumber = proposalDevelopmentDocument.getDevelopmentProposal().getProposalCfdas().get(i).getCfdaNumber();
 
-        if (StringUtils.isNotBlank(proposalDevelopmentDocument.getDevelopmentProposal().getCfdaNumber())
-                && !(proposalDevelopmentDocument.getDevelopmentProposal().getCfdaNumber().matches(Constants.CFDA_REGEX))) {
-            getAuditErrors(SPONSOR_PROGRAM_INFO_PAGE_NAME,AUDIT_WARNINGS).add(new AuditError("document.developmentProposal.cfdaNumber",
-                    KeyConstants.CFDA_INVALID, SPONSOR_PROGRAM_INFO_PAGE_ID, new String[] { proposalDevelopmentDocument.getDevelopmentProposal().getCfdaNumber() }));
-            valid = true;
+            if (StringUtils.isNotBlank(cfdaNumber)
+                    && !(cfdaNumber.matches(Constants.CFDA_REGEX))) {
+                getAuditErrors(SPONSOR_PROGRAM_INFO_PAGE_NAME,AUDIT_WARNINGS).add(new AuditError(String.format("document.developmentProposal.proposalCfdas[%s].cfdaNumber", i),
+                        KeyConstants.CFDA_INVALID, SPONSOR_PROGRAM_INFO_PAGE_ID, new String[] { cfdaNumber }));
+                valid = true;
+            }
         }
 
         if (!StringUtils.isEmpty(proposal.getPrimeSponsorCode())) {

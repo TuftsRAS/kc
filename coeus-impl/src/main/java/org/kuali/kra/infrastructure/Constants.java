@@ -941,12 +941,11 @@ public interface Constants {
     String ENABLE_SUBAWARD_DC_IDC = "Enable_Subaward_DC_IDC";
     String ENABLE_SUBAWARD_FDP = "Enable_Subaward_FDP";
     String ENABLE_AWARD_BUDGET_QUEUED_STATUS = "Enable_Award_Budget_Queued_Status";
-    String DEVELOPMENT_PROPOSAL_CFDA_NUMBER = "developmentProposalList[0].cfdaNumber";
-    String DOCUMENT_DEVELOPMENT_PROPOSAL_CFDA_NUMBER = "document.developmentProposalList[0].cfdaNumber";
-    String DOCUMENT_AWARD_CFDA_NUMBER = "document.awardList[0].cfdaNumber";
+    String DEVELOPMENT_PROPOSAL_CFDA_NUMBER = "developmentProposalList[0].proposalCfdas[%s].cfdaNumber";
+    String DOCUMENT_DEVELOPMENT_PROPOSAL_CFDA_NUMBER = "document.developmentProposalList[0].proposalCfdas[%s].cfdaNumber";
+    String DOCUMENT_AWARD_CFDA_NUMBER = "document.awardList[0].awardCfdas[%s].cfdaNumber";
 
-    String DOCUMENT_INSTITUTIONAL_PROPOSAL_CFDA_NUMBER = "document.institutionalProposalList[0].cfdaNumber";
-    String INSTITUTIONAL_PROPOSAL_CFDA_NUMBER = "document.institutionalProposal.cfdaNumber";
+    String INSTITUTIONAL_PROPOSAL_CFDA_NUMBER = "document.institutionalProposalList[0].proposalCfdas[%s].cfdaNumber";
     String NOTIFICATION_HELPER = "notificationHelper";
     String S2S_PAGE_ID = "PropDev-OpportunityPage";
     String S2S_PAGE_NAME = "S2S Opportunity Search";

@@ -38,6 +38,7 @@ import org.kuali.coeus.propdev.impl.person.creditsplit.ProposalUnitCreditSplit;
 import org.kuali.coeus.propdev.impl.s2s.S2sOppForms;
 import org.kuali.coeus.propdev.impl.s2s.S2sOpportunity;
 import org.kuali.coeus.propdev.impl.specialreview.ProposalSpecialReview;
+import org.kuali.coeus.propdev.impl.sponsor.ProposalCfda;
 import org.kuali.coeus.propdev.impl.state.ProposalState;
 import org.kuali.coeus.sys.api.model.ScaleTwoDecimal;
 import org.kuali.coeus.sys.framework.gv.GlobalVariableService;
@@ -190,6 +191,7 @@ public class ProposalHierarchyServiceImpl implements ProposalHierarchyService {
 
         ProposalDevelopmentDocument hierarchyDoc = saveDocument(newDoc);
 
+        copyProposalCfda(initialChild, hierarchyDoc.getDevelopmentProposal());
         copyOpportunity(initialChild, hierarchyDoc.getDevelopmentProposal());
 
         // add aggregator to the document
@@ -450,7 +452,6 @@ public class ProposalHierarchyServiceImpl implements ProposalHierarchyService {
         hierarchyProposal.setDeadlineType(srcProposal.getDeadlineType());
         hierarchyProposal.setAnticipatedAwardTypeCode(srcProposal.getAnticipatedAwardTypeCode());
         hierarchyProposal.setNoticeOfOpportunityCode(srcProposal.getNoticeOfOpportunityCode());
-        hierarchyProposal.setCfdaNumber(srcProposal.getCfdaNumber());
         hierarchyProposal.setPrimeSponsorCode(srcProposal.getPrimeSponsorCode());
         hierarchyProposal.setNsfSequenceNumber(srcProposal.getNsfSequenceNumber());
         hierarchyProposal.setSponsorProposalNumber(srcProposal.getSponsorProposalNumber());
@@ -504,6 +505,16 @@ public class ProposalHierarchyServiceImpl implements ProposalHierarchyService {
                 form.getS2sOppFormsId().setProposalNumber(hierarchyProposal.getProposalNumber());
             }
         }
+    }
+
+    protected void copyProposalCfda(DevelopmentProposal srcProposal, DevelopmentProposal hierarchyProposal) {
+        hierarchyProposal.setProposalCfdas(srcProposal.getProposalCfdas().stream().map(src -> {
+            final ProposalCfda cfda = new ProposalCfda();
+            cfda.setCfdaNumber(src.getCfdaNumber());
+            cfda.setCfdaDescription(src.getCfdaDescription());
+            cfda.setProposalNumber(hierarchyProposal.getProposalNumber());
+            return cfda;
+        }).collect(Collectors.toList()));
     }
 
     protected <T extends KcDataObject> T deepCopy(T oldObject) {

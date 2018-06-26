@@ -826,7 +826,6 @@
 
 	<class-descriptor class="org.kuali.coeus.propdev.impl.s2s.S2sOpportunity" table="S2S_OPPORTUNITY">
 		<field-descriptor name="proposalNumber" column="PROPOSAL_NUMBER" jdbc-type="VARCHAR" primarykey="true"/>
-		<field-descriptor name="cfdaNumber" column="CFDA_NUMBER" jdbc-type="VARCHAR"/>
 		<field-descriptor name="closingDate" column="CLOSING_DATE" jdbc-type="TIMESTAMP" conversion="org.kuali.coeus.sys.framework.persistence.OjbCalendarSqlTimestampConversion"/>
 		<field-descriptor name="competetionId" column="COMPETETION_ID" jdbc-type="VARCHAR"/>
 		<field-descriptor name="instructionUrl" column="INSTRUCTION_URL" jdbc-type="VARCHAR"/>
@@ -841,7 +840,6 @@
 		<field-descriptor name="providerCode" column="PROVIDER" jdbc-type="VARCHAR"/>
 		<field-descriptor name="offeringAgency" column="OFFERING_AGENCY" jdbc-type="VARCHAR"/>
 		<field-descriptor name="agencyContactInfo" column="AGENCY_CONTACT_INFO" jdbc-type="VARCHAR"/>
-		<field-descriptor name="cfdaDescription" column="CFDA_DESCRIPTION" jdbc-type="VARCHAR"/>
 		<field-descriptor name="isMultiProject" column="MULTI_PROJECT" jdbc-type="CHAR" conversion="org.kuali.rice.core.framework.persistence.ojb.conversion.OjbCharBooleanConversion"/>
 		<field-descriptor name="updateTimestamp" column="UPDATE_TIMESTAMP" jdbc-type="TIMESTAMP"/>
 		<field-descriptor name="updateUser" column="UPDATE_USER" jdbc-type="VARCHAR"/>
@@ -859,7 +857,22 @@
 		<reference-descriptor name="s2sProvider" class-ref="org.kuali.coeus.propdev.impl.s2s.S2sProvider" auto-retrieve="true" auto-update="none" auto-delete="none">
 			<foreignkey field-ref="providerCode"/> 
 		</reference-descriptor>
-	</class-descriptor>    
+
+		<collection-descriptor name="s2sOpportunityCfdas" proxy="true" element-class-ref="org.kuali.coeus.propdev.impl.s2s.S2sOpportunityCfda" collection-class="org.apache.ojb.broker.util.collections.ManageableArrayList" auto-retrieve="true" auto-update="object" auto-delete="object">
+			<inverse-foreignkey field-ref="proposalNumber"/>
+		</collection-descriptor>
+	</class-descriptor>
+
+	<class-descriptor class="org.kuali.coeus.propdev.impl.s2s.S2sOpportunityCfda" table="S2S_OPPORTUNITY_CFDA">
+		<field-descriptor name="id" column="S2S_OPPORTUNITY_CFDA_ID" jdbc-type="BIGINT" primarykey="true" sequence-name="SEQ_S2S_OPPORTUNITY_CFDA_ID" autoincrement="true"/>
+		<field-descriptor name="proposalNumber" column="PROPOSAL_NUMBER" jdbc-type="VARCHAR" primarykey="true"/>
+		<field-descriptor name="cfdaNumber" column="CFDA_NUMBER" jdbc-type="VARCHAR"/>
+		<field-descriptor name="cfdaDescription" column="CFDA_DESCRIPTION" jdbc-type="VARCHAR"/>
+		<field-descriptor name="updateTimestamp" column="UPDATE_TIMESTAMP" jdbc-type="TIMESTAMP"/>
+		<field-descriptor name="updateUser" column="UPDATE_USER" jdbc-type="VARCHAR"/>
+		<field-descriptor name="objectId" column="OBJ_ID" jdbc-type="VARCHAR" />
+		<field-descriptor name="versionNumber" column="VER_NBR" jdbc-type="BIGINT" locking="false" />
+	</class-descriptor>
 	
 	<class-descriptor class="org.kuali.coeus.propdev.impl.s2s.S2sAppSubmission" table="S2S_APP_SUBMISSION">
 		<field-descriptor name="proposalNumber" column="PROPOSAL_NUMBER" jdbc-type="VARCHAR" primarykey="true"/>

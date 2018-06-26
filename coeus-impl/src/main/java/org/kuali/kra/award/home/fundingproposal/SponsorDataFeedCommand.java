@@ -8,7 +8,10 @@
 package org.kuali.kra.award.home.fundingproposal;
 
 import org.kuali.kra.award.home.Award;
+import org.kuali.kra.award.home.AwardCfda;
 import org.kuali.kra.institutionalproposal.home.InstitutionalProposal;
+
+import java.util.stream.Collectors;
 
 class SponsorDataFeedCommand extends ProposalDataFeedCommandBase {
 
@@ -26,7 +29,17 @@ class SponsorDataFeedCommand extends ProposalDataFeedCommandBase {
                 || mergeType == FundingProposalMergeType.REPLACE) {
             award.setPrimeSponsor(proposal.getPrimeSponsor());
             award.setPrimeSponsorCode(proposal.getPrimeSponsorCode());
-            award.setCfdaNumber(proposal.getCfdaNumber());
+            award.setAwardCfdas(proposal.getProposalCfdas().stream().map(cfda -> {
+                final AwardCfda awardCfda = new AwardCfda();
+                awardCfda.setCfdaNumber(cfda.getCfdaNumber());
+                awardCfda.setCfdaDescription(cfda.getCfdaDescription());
+                awardCfda.setAwardId(award.getAwardId());
+                awardCfda.setAwardNumber(award.getAwardNumber());
+                awardCfda.setSequenceNumber(award.getSequenceNumber());
+                awardCfda.setAward(award);
+
+                return awardCfda;
+            }).collect(Collectors.toList()));
             award.setNsfSequenceNumber(proposal.getNsfSequenceNumber());
         }
     }

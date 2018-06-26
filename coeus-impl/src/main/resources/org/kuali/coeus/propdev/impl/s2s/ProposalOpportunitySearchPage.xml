@@ -84,8 +84,9 @@
 			<bean parent="Uif-QuickFinder" p:dataObjectClassName="org.kuali.coeus.propdev.impl.s2s.S2sOpportunity"
 				p:hideCriteriaOnSearch="true"
                 p:viewName="S2sOpportunity-LookupViewName"
-				p:fieldConversions="opportunityId:newS2sOpportunity.opportunityId,cfdaNumber:newS2sOpportunity.cfdaNumber,opportunityTitle:newS2sOpportunity.opportunityTitle,s2sSubmissionTypeCode:newS2sOpportunity.s2sSubmissionTypeCode,revisionCode:newS2sOpportunity.revisionCode,competetionId:newS2sOpportunity.competetionId,openingDate:newS2sOpportunity.openingDate,closingDate:newS2sOpportunity.closingDate,instructionUrl:newS2sOpportunity.instructionUrl,schemaUrl:newS2sOpportunity.schemaUrl,providerCode:newS2sOpportunity.providerCode">
-				<property name="quickfinderAction">
+				p:fieldConversions='opportunityId:newS2sOpportunity.opportunityId,cfdaNumber:newS2sOpportunity.cfdaNumber,opportunityTitle:newS2sOpportunity.opportunityTitle,s2sSubmissionTypeCode:newS2sOpportunity.s2sSubmissionTypeCode,revisionCode:newS2sOpportunity.revisionCode,competetionId:newS2sOpportunity.competetionId,openingDate:newS2sOpportunity.openingDate,closingDate:newS2sOpportunity.closingDate,instructionUrl:newS2sOpportunity.instructionUrl,schemaUrl:newS2sOpportunity.schemaUrl,providerCode:newS2sOpportunity.providerCode,s2sOpportunityCfdasSerialized:newS2sOpportunity.s2sOpportunityCfdasSerialized'>
+
+                <property name="quickfinderAction">
 					<bean parent="Uif-SecondaryActionButton-Small" p:methodToCall="performLookup"
 						p:focusOnIdAfterSubmit="NEXT_INPUT" p:wrapperCssClasses="input-group-btn"
 						p:actionLabel="Find an opportunity" p:iconClass="icon-search" />
@@ -107,7 +108,7 @@
 					p:fieldLabel.renderColon="false" p:order="10" />
 				<bean parent="Uif-DataField" p:propertyName="opportunityTitle"
 					p:fieldLabel.renderColon="false" p:order="20" />
-				<bean parent="PropDev-OpportunityPage-S2sSubmissionTypeCode" 
+				<bean parent="PropDev-OpportunityPage-S2sSubmissionTypeCode"
  					p:enableAutoQuickfinder="false" p:propertyName="s2sSubmissionTypeCode" p:order="30" />
 				<bean parent="Uif-FieldGroupBase" p:fieldLabel.labelText="S2S Revision Type" p:order="40">
                     <property name="group">
@@ -124,25 +125,36 @@
                         </bean>
                     </property>
 				</bean>
-				<bean parent="Uif-DataField" p:propertyName="cfdaNumber"
-					p:fieldLabel.renderColon="false" p:order="50" />
 				<bean parent="Uif-DataField" p:propertyName="competetionId"
-					p:fieldLabel.renderColon="false" p:order="60" />
+					p:fieldLabel.renderColon="false" p:order="50" />
 				<bean parent="Uif-DataField" p:propertyName="openingDate"
-					p:fieldLabel.renderColon="false" p:order="70" />
+					p:fieldLabel.renderColon="false" p:order="60" />
 				<bean parent="Uif-DataField" p:propertyName="closingDate"
-					p:fieldLabel.renderColon="false" p:order="80" />
+					p:fieldLabel.renderColon="false" p:order="70" />
 				<bean parent="Uif-LinkField" p:fieldLabel.labelText="Instruction Page"
 					p:href="@{document.developmentProposal.s2sOpportunity?.instructionUrl}"
-					p:linkText="Download Instructions" p:order="90" />
+					p:linkText="Download Instructions" p:order="80" />
 				<bean parent="Uif-LinkField" p:fieldLabel.labelText="Schema URL"
 					p:href="@{document.developmentProposal.s2sOpportunity?.schemaUrl}"
-					p:linkText="View schema" p:order="100" />
+					p:linkText="View schema" p:order="90" />
 				<bean parent="Uif-DataField" p:propertyName="s2sProvider.description"
-					p:label ="S2S Provider" p:fieldLabel.renderColon="false" p:order="110" />
+					p:label ="S2S Provider" p:fieldLabel.renderColon="false" p:order="100" />
+                <bean parent="PropDev-OpportunityPage-General-Cfda" p:order="110" p:colSpan="2"/>
 			</list>
 		</property>
 	</bean>
+
+    <bean id="PropDev-OpportunityPage-General-Cfda" parent="PropDev-OpportunityPage-General-Cfda-parentBean"/>
+    <bean id="PropDev-OpportunityPage-General-Cfda-parentBean" abstract="true" parent="Uif-Disclosure-TableCollectionSection" p:headerText="CFDA" p:renderAddLine="false" p:renderLineActions="false" p:layoutManager.richTable.render="false" p:layoutManager.renderSequenceField="false"
+          p:propertyName="s2sOpportunityCfdas"
+          p:collectionObjectClass="org.kuali.coeus.propdev.impl.s2s.S2sOpportunityCfda">
+        <property name="items">
+            <list>
+                <bean parent="Uif-DataField" p:propertyName="cfdaNumber" p:order="10" p:labelLeft="false"/>
+                <bean parent="Uif-DataField" p:propertyName="cfdaDescription" p:order="20" p:labelLeft="false"/>
+            </list>
+        </property>
+    </bean>
 	
 	<bean id="PropDev-OpportunityPage-S2sSubmissionTypeCode" parent="PropDev-OpportunityPage-S2sSubmissionTypeCode-parentBean" />
  	<bean id="PropDev-OpportunityPage-S2sSubmissionTypeCode-parentBean"

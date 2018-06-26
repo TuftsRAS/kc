@@ -47,6 +47,7 @@ import org.kuali.kra.award.customdata.CustomDataHelper;
 import org.kuali.kra.award.detailsdates.DetailsAndDatesFormHelper;
 import org.kuali.kra.award.document.AwardDocument;
 import org.kuali.kra.award.home.Award;
+import org.kuali.kra.award.home.AwardCfda;
 import org.kuali.kra.award.home.AwardComment;
 import org.kuali.kra.award.home.AwardService;
 import org.kuali.kra.award.home.approvedsubawards.ApprovedSubawardFormHelper;
@@ -136,7 +137,7 @@ public class AwardForm extends BudgetVersionFormBase implements MultiLookupForm,
     private String prevRootAwardNumber;
 
     private AwardComment newAwardCostShareComment;
-    
+    private AwardCfda newAwardCfda;
     private AwardFandaRate newAwardFandaRate;    
     private List<ConcreteKeyValue> reportClasses;
     private String directIndirectViewEnabled;
@@ -361,6 +362,13 @@ public class AwardForm extends BudgetVersionFormBase implements MultiLookupForm,
         this.newAwardCostShareComment = newAwardCostShareComment;
     }
 
+    public AwardCfda getNewAwardCfda() {
+        return newAwardCfda;
+    }
+
+    public void setNewAwardCfda(AwardCfda newAwardCfda) {
+        this.newAwardCfda = newAwardCfda;
+    }
 
     public AwardFandaRate getNewAwardFandaRate() {
         return newAwardFandaRate;

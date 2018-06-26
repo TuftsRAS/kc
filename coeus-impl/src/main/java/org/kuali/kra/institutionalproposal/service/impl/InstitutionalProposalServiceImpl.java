@@ -49,10 +49,7 @@ import org.kuali.kra.institutionalproposal.customdata.InstitutionalProposalCusto
 import org.kuali.kra.institutionalproposal.dao.InstitutionalProposalDao;
 import org.kuali.kra.institutionalproposal.document.InstitutionalProposalDocument;
 import org.kuali.kra.institutionalproposal.exception.InstitutionalProposalCreationException;
-import org.kuali.kra.institutionalproposal.home.InstitutionalProposal;
-import org.kuali.kra.institutionalproposal.home.InstitutionalProposalCostShare;
-import org.kuali.kra.institutionalproposal.home.InstitutionalProposalFandA;
-import org.kuali.kra.institutionalproposal.home.InstitutionalProposalUnrecoveredFandA;
+import org.kuali.kra.institutionalproposal.home.*;
 import org.kuali.kra.institutionalproposal.printing.service.InstitutionalProposalPersonService;
 import org.kuali.kra.institutionalproposal.proposaladmindetails.ProposalAdminDetails;
 import org.kuali.kra.institutionalproposal.service.InstitutionalProposalService;
@@ -499,13 +496,21 @@ public class InstitutionalProposalServiceImpl implements InstitutionalProposalSe
         institutionalProposal.setMailDescription(developmentProposal.getMailDescription());
         institutionalProposal.setPrimeSponsorCode(developmentProposal.getPrimeSponsorCode());
         institutionalProposal.setCurrentAwardNumber(developmentProposal.getCurrentAwardNumber());
-        institutionalProposal.setCfdaNumber(developmentProposal.getCfdaNumber());
         institutionalProposal.setNewDescription(developmentProposal.getNewDescription());
         institutionalProposal.setNoticeOfOpportunityCode(developmentProposal.getNoticeOfOpportunityCode());
         institutionalProposal.setNsfSequenceNumber(developmentProposal.getNsfSequenceNumber());
         institutionalProposal.setSponsorProposalNumber(developmentProposal.getSponsorProposalNumber());
         institutionalProposal.setOpportunity(developmentProposal.getProgramAnnouncementNumber());
-        institutionalProposal.setCfdaNumber(developmentProposal.getCfdaNumber());
+        institutionalProposal.setProposalCfdas(developmentProposal.getProposalCfdas().stream().map(cfda -> {
+            final InstitutionalProposalCfda ipCfda = new InstitutionalProposalCfda();
+            ipCfda.setCfdaNumber(cfda.getCfdaNumber());
+            ipCfda.setCfdaDescription(cfda.getCfdaDescription());
+            ipCfda.setInstitutionalProposal(institutionalProposal);
+            ipCfda.setProposalId(institutionalProposal.getProposalId());
+            ipCfda.setProposalNumber(institutionalProposal.getProposalNumber());
+            ipCfda.setSequenceNumber(institutionalProposal.getSequenceNumber());
+            return ipCfda;
+        }).collect(Collectors.toList()));
         institutionalProposal.setLeadUnitNumber(developmentProposal.getUnitNumber());
         institutionalProposal.setDefaultInitialContractAdmin();
         if (developmentProposal.getRolodex() != null) {

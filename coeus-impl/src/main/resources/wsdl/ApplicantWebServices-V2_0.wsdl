@@ -9,6 +9,7 @@
 	
 	xmlns:GrantsCommonElements="http://apply.grants.gov/system/GrantsCommonElements-V1.0"
 	xmlns:applicantws="http://apply.grants.gov/services/ApplicantWebServices-V2.0"
+	xmlns:ApplicantCommonElements_1_0="http://apply.grants.gov/system/ApplicantCommonElements-V1.0"
 	
 	targetNamespace="http://apply.grants.gov/services/ApplicantWebServices-V2.0"
 	name="ApplicantWebServices-V2_0">
@@ -21,6 +22,7 @@
 			xmlns:xmime="http://www.w3.org/2005/05/xmlmime"
 			xmlns:GrantsCommonElements="http://apply.grants.gov/system/GrantsCommonElements-V1.0"
 			xmlns:applicantws="http://apply.grants.gov/services/ApplicantWebServices-V2.0"
+			xmlns:ApplicantCommonElements_1_0="http://apply.grants.gov/system/ApplicantCommonElements-V1.0"
 			
 			elementFormDefault="qualified" 
 			attributeFormDefault="qualified"
@@ -29,14 +31,15 @@
 			<!--Data Types-->
 			<xsd:import namespace="http://schemas.xmlsoap.org/wsdl/" schemaLocation="http://schemas.xmlsoap.org/wsdl/" />
 			<xsd:import namespace="http://schemas.xmlsoap.org/wsdl/soap/" schemaLocation="http://schemas.xmlsoap.org/wsdl/soap/" />
-			
-			<!--
-			<xsd:import namespace="http://apply.grants.gov/system/GrantsCommonElements-V1.0" schemaLocation="file:/Dev/grants_schemas/Source/schema/bizobj/GrantsCommonElements-V1.0.xsd"  /> 
-			-->	
-			
-			<xsd:import namespace="http://apply.grants.gov/system/GrantsCommonElements-V1.0" schemaLocation="coeus-impl/src/main/resources/wsdl/schemas/GrantsCommonElements-V1.0.xsd" />
- 			
 
+ 			<!-- 
+        	<xsd:import namespace="http://apply.grants.gov/system/GrantsCommonElements-V1.0" schemaLocation="file:///Dev/grants_schemas/Source/schema/bizobj/GrantsCommonElements-V1.0.xsd" />
+        	<xsd:import namespace="http://apply.grants.gov/system/ApplicantCommonElements-V1.0" schemaLocation="file:///Dev/grants_schemas/Source/schema/applicantws/ApplicantCommonElements-V1.0.xsd" />
+     		-->	      
+       	
+			<xsd:import namespace="http://apply.grants.gov/system/GrantsCommonElements-V1.0" schemaLocation="https://apply07.grants.gov/apply/system/schemas/GrantsCommonElements-V1.0.xsd" />
+			<xsd:import namespace="http://apply.grants.gov/system/ApplicantCommonElements-V1.0" schemaLocation="https://apply07.grants.gov/apply/system/schemas/ApplicantCommonElements-V1.0.xsd" />
+     	
 			<xsd:element name="GetOpportunitiesRequest">
 				<xsd:complexType>
 					<xsd:sequence>
@@ -47,6 +50,7 @@
 					</xsd:sequence>
 				</xsd:complexType>
 			</xsd:element>
+			
 			<xsd:element name="GetOpportunitiesResponse">
 				<xsd:complexType>
 					<xsd:sequence>
@@ -237,6 +241,7 @@
 					<xsd:sequence>
 						<xsd:element name="AORUserID" type="xsd:string" minOccurs="1" maxOccurs="1" />
 						<xsd:element name="AORPassword" type="xsd:string" minOccurs="1" maxOccurs="1" />
+						<xsd:element ref="GrantsCommonElements:DUNS" minOccurs="0" maxOccurs="1" />
 					</xsd:sequence>
 				</xsd:complexType>
 			</xsd:element>
@@ -248,6 +253,163 @@
 					</xsd:sequence>
 				</xsd:complexType>
 			</xsd:element>
+			
+			<!--  Begin Release 14.0.0 New WSDL Schema Definitions -->
+         	<xsd:element name="GetApplicationZipRequest">
+            	<xsd:complexType>
+               		<xsd:sequence>
+                  		<xsd:element ref="GrantsCommonElements:GrantsGovTrackingNumber" />
+               		</xsd:sequence>
+            	</xsd:complexType>
+         	</xsd:element>
+         	<xsd:element name="GetApplicationZipResponse">
+            	<xsd:complexType>
+               		<xsd:sequence>
+						<xsd:element name="FileDataHandler" type="xsd:base64Binary" xmime:expectedContentTypes="application/octet-stream" minOccurs="0" maxOccurs="1" />
+               		</xsd:sequence>
+            	</xsd:complexType>
+         	</xsd:element>
+         	<!-- End Release 14.0.0 New WSDL Schema Definitions -->
+         	
+         	<!--  Begin Release 14.1.0 New WSDL Schema Definitions -->
+			<xsd:element name="GetOpportunitiesPlusCompTitleRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<!-- One of the elements are required -->
+						<xsd:element ref="GrantsCommonElements:FundingOpportunityNumber" minOccurs="0" />
+						<xsd:element ref="GrantsCommonElements:CFDANumber" minOccurs="0" />
+						<xsd:element ref="GrantsCommonElements:CompetitionID" minOccurs="0" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			
+			<xsd:element name="GetOpportunitiesPlusCompTitleResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="OpportunityInfo" minOccurs="0" maxOccurs="unbounded">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element ref="GrantsCommonElements:FundingOpportunityNumber" minOccurs="1" maxOccurs="1" />
+									<xsd:element ref="GrantsCommonElements:CFDANumber" minOccurs="0"  maxOccurs="1" />
+									<xsd:element ref="GrantsCommonElements:CompetitionID" minOccurs="0" maxOccurs="1" />
+									<xsd:element ref="GrantsCommonElements:CompetitionTitle" minOccurs="0" maxOccurs="1" />
+									<xsd:element name="OpeningDate" type="xsd:date" minOccurs="0" maxOccurs="1" />
+									<xsd:element name="ClosingDate" type="xsd:date" minOccurs="1" maxOccurs="1" />
+									<xsd:element ref="GrantsCommonElements:FundingOpportunityTitle" minOccurs="0" maxOccurs="1" />
+									<xsd:element ref="GrantsCommonElements:OfferingAgency" minOccurs="0" maxOccurs="1" />
+									<xsd:element ref="GrantsCommonElements:AgencyContactInfo" minOccurs="0" maxOccurs="1" />
+									<xsd:element ref="GrantsCommonElements:CFDADescription" minOccurs="0" maxOccurs="1" />
+									<xsd:element ref="GrantsCommonElements:SchemaURL" minOccurs="0" maxOccurs="1" />
+									<xsd:element ref="GrantsCommonElements:InstructionsURL" minOccurs="0" maxOccurs="1" />
+									<xsd:element name="IsMultiProject" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
+								</xsd:sequence>
+							</xsd:complexType>
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<!-- End Release 14.1.0 New WSDL Schema Definitions -->
+			
+			<!-- Begin Release 15.3.0 New WSDL Schema Definitions -->
+			<xsd:element name="GetOpportunitiesExpandedRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<!-- One of the elements are required -->
+						<xsd:element ref="GrantsCommonElements:FundingOpportunityNumber" minOccurs="0" />
+						<xsd:element ref="GrantsCommonElements:CFDANumber" minOccurs="0" />
+						<xsd:element ref="GrantsCommonElements:CompetitionID" minOccurs="0" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			
+			<xsd:element name="GetOpportunitiesExpandedResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="OpportunityInfo" minOccurs="0" maxOccurs="unbounded">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element ref="GrantsCommonElements:FundingOpportunityNumber" minOccurs="1" maxOccurs="1" />
+									<xsd:element ref="GrantsCommonElements:CFDANumber" minOccurs="0"  maxOccurs="1" />
+									<xsd:element ref="GrantsCommonElements:CompetitionID" minOccurs="0" maxOccurs="1" />
+									<xsd:element ref="GrantsCommonElements:CompetitionTitle" minOccurs="0" maxOccurs="1" />
+									<xsd:element name="OpeningDate" type="xsd:date" minOccurs="0" maxOccurs="1" />
+									<xsd:element name="ClosingDate" type="xsd:date" minOccurs="1" maxOccurs="1" />
+									<xsd:element ref="GrantsCommonElements:FundingOpportunityTitle" minOccurs="0" maxOccurs="1" />
+									<xsd:element ref="GrantsCommonElements:OfferingAgency" minOccurs="0" maxOccurs="1" />
+									<xsd:element ref="GrantsCommonElements:AgencyContactInfo" minOccurs="0" maxOccurs="1" />
+									<xsd:element ref="GrantsCommonElements:CFDADescription" minOccurs="0" maxOccurs="1" />
+									<xsd:element ref="GrantsCommonElements:SchemaURL" minOccurs="0" maxOccurs="1" />
+									<xsd:element ref="GrantsCommonElements:InstructionsURL" minOccurs="0" maxOccurs="1" />
+									<xsd:element name="IsMultiProject" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
+									<xsd:element ref="GrantsCommonElements:PackageID" minOccurs="0" maxOccurs="1" />
+								</xsd:sequence>
+							</xsd:complexType>
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<!-- End Release 15.3.0 New WSDL Schema Definitions -->
+			
+			<!-- Begin Release 16.2.1 New WSDL Schema Definitions -->
+			<xsd:element name="GetOpportunityListRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:choice minOccurs="1" maxOccurs="1" >
+							<xsd:element ref="GrantsCommonElements:PackageID" minOccurs="0" maxOccurs="1" />
+							<xsd:element ref="ApplicantCommonElements_1_0:OpportunityFilter" minOccurs="0" maxOccurs="1" />
+						</xsd:choice>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			
+			<xsd:element name="GetOpportunityListResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+							<xsd:element ref="ApplicantCommonElements_1_0:OpportunityDetails" minOccurs="0" maxOccurs="unbounded" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			
+			<xsd:element name="GetSubmissionListRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element ref="ApplicantCommonElements_1_0:SubmissionFilter" minOccurs="0" maxOccurs="5" />
+               		</xsd:sequence>
+				</xsd:complexType>
+            	<xsd:unique name="SubmissionFilter-Type-Uniqueness">
+               		<xsd:selector xpath="ApplicantCommonElements_1_0:SubmissionFilter"/>
+               		<xsd:field xpath="ApplicantCommonElements_1_0:Type" />
+            	</xsd:unique>
+         	</xsd:element>
+         	<xsd:element name="GetSubmissionListResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="AvailableApplicationNumber" type="xsd:int" />
+						<xsd:element ref="ApplicantCommonElements_1_0:SubmissionDetails" minOccurs="0" maxOccurs="unbounded" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			
+						<xsd:element name="GetSubmissionListAsThirdPartyRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element ref="ApplicantCommonElements_1_0:SubmissionFilter" minOccurs="0" maxOccurs="5" />
+               		</xsd:sequence>
+				</xsd:complexType>
+            	<xsd:unique name="SubmissionFilterAsThirdParty-Type-Uniqueness">
+               		<xsd:selector xpath="ApplicantCommonElements_1_0:SubmissionFilter"/>
+               		<xsd:field xpath="ApplicantCommonElements_1_0:Type" />
+            	</xsd:unique>
+         	</xsd:element>
+         	<xsd:element name="GetSubmissionListAsThirdPartyResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="AvailableApplicationNumber" type="xsd:int" />
+						<xsd:element ref="ApplicantCommonElements_1_0:SubmissionDetails" minOccurs="0" maxOccurs="unbounded" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<!-- End Release 16.2.1 New WSDL Schema Definitions -->
 			
 		</xsd:schema>
 	</wsdl:types>
@@ -321,8 +483,57 @@
 		<wsdl:part name="AuthenticateAORResponse" element="applicantws:AuthenticateAORResponse" />
 	</wsdl:message>
 	
+	<!-- Begin Release 14.0.0 New WSDL Message Definitions -->
+	<wsdl:message name="GetApplicationZipRequestMessage">
+		<wsdl:part name="GetApplicationZipRequest" element="applicantws:GetApplicationZipRequest"/>
+	</wsdl:message>
+	<wsdl:message name="GetApplicationZipResponseMessage">
+		<wsdl:part name="GetApplicationZipResponse" element="applicantws:GetApplicationZipResponse"/>
+	</wsdl:message>
+	<!-- End Release 14.0.0 New WSDL Message Definitions -->
 	
-
+	<!-- Begin Release 14.1.0 New WSDL Message Definitions -->
+	<wsdl:message name="GetOpportunitiesPlusCompTitleRequestMessage">
+		<wsdl:part name="GetOpportunitiesPlusCompTitleRequest" element="applicantws:GetOpportunitiesPlusCompTitleRequest" />
+	</wsdl:message>
+	<wsdl:message name="GetOpportunitiesPlusCompTitleResponseMessage">
+		<wsdl:part name="GetOpportunitiesPlusCompTitleResponse" element="applicantws:GetOpportunitiesPlusCompTitleResponse" />
+	</wsdl:message>
+	<!-- End Release 14.1.0 New WSDL Message Definitions -->
+	
+	<!-- Begin Release 15.3.0 New WSDL Message Definitions -->
+	<wsdl:message name="GetOpportunitiesExpandedRequestMessage">
+		<wsdl:part name="GetOpportunitiesExpandedRequest" element="applicantws:GetOpportunitiesExpandedRequest" />
+	</wsdl:message>
+	<wsdl:message name="GetOpportunitiesExpandedResponseMessage">
+		<wsdl:part name="GetOpportunitiesExpandedResponse" element="applicantws:GetOpportunitiesExpandedResponse" />
+	</wsdl:message>
+	<!-- End Release 15.3.0 New WSDL Message Definitions -->
+	
+	<!-- Begin Release 16.2.1 New WSDL Message Definitions -->
+	<wsdl:message name="GetOpportunityListRequestMessage">
+		<wsdl:part name="GetOpportunityListRequest" element="applicantws:GetOpportunityListRequest" />
+	</wsdl:message>
+	<wsdl:message name="GetOpportunityListResponseMessage">
+		<wsdl:part name="GetOpportunityListResponse" element="applicantws:GetOpportunityListResponse" />
+	</wsdl:message>
+	
+	<wsdl:message name="GetSubmissionListRequestMessage">
+		<wsdl:part name="GetSubmissionListRequest" element="applicantws:GetSubmissionListRequest" />
+	</wsdl:message>
+	<wsdl:message name="GetSubmissionListResponseMessage">
+		<wsdl:part name="GetSubmissionListResponse" element="applicantws:GetSubmissionListResponse" />
+	</wsdl:message>
+	
+	<wsdl:message name="GetSubmissionListAsThirdPartyRequestMessage">
+		<wsdl:part name="GetSubmissionListAsThirdPartyRequest" element="applicantws:GetSubmissionListAsThirdPartyRequest" />
+	</wsdl:message>
+	<wsdl:message name="GetSubmissionListAsThirdPartyResponseMessage">
+		<wsdl:part name="GetSubmissionListAsThirdPartyResponse" element="applicantws:GetSubmissionListAsThirdPartyResponse" />
+	</wsdl:message>
+	<!-- End Release 16.2.1 New WSDL Message Definitions -->
+	
+	
 	<wsdl:portType name="ApplicantWebServicesPortType">
 		<wsdl:operation name="GetOpportunities">
 			<wsdl:input message="applicantws:GetOpportunitiesRequestMessage" />
@@ -378,14 +589,58 @@
 			<wsdl:output message="applicantws:AuthenticateAORResponseMessage" />
 			<wsdl:fault name="AuthenticateAORErrorMessage" message="applicantws:ErrorMessage" />
 		</wsdl:operation>
-
+		
+		<!-- Begin Release 14.0.0 New WSDL Operation Binding Definitions -->
+		<wsdl:operation name="GetApplicationZip">
+			<wsdl:input message="applicantws:GetApplicationZipRequestMessage"/>
+			<wsdl:output message="applicantws:GetApplicationZipResponseMessage"/>
+			<wsdl:fault name="GetApplicationZipErrorMessage" message="applicantws:ErrorMessage" />
+		</wsdl:operation>
+		<!-- End Release 14.0.0 New WSDL Operation Binding Definitions -->
+		
+		<!-- Begin Release 14.1.0 New WSDL Operation Binding Definitions -->
+		<wsdl:operation name="GetOpportunitiesPlusCompTitle">
+			<wsdl:input message="applicantws:GetOpportunitiesPlusCompTitleRequestMessage" />
+			<wsdl:output message="applicantws:GetOpportunitiesPlusCompTitleResponseMessage" />
+			<wsdl:fault name="GetOpportunitiesPlusCompTitleErrorMessage" message="applicantws:ErrorMessage" />
+		</wsdl:operation>
+		<!-- End Release 14.1.0 New WSDL Operation Binding Definitions -->
+		
+		<!-- Begin Release 15.3.0 New WSDL Operation Binding Definitions -->
+		<wsdl:operation name="GetOpportunitiesExpanded">
+			<wsdl:input message="applicantws:GetOpportunitiesExpandedRequestMessage" />
+			<wsdl:output message="applicantws:GetOpportunitiesExpandedResponseMessage" />
+			<wsdl:fault name="GetOpportunitiesExpandedErrorMessage" message="applicantws:ErrorMessage" />
+		</wsdl:operation>
+		<!-- End Release 15.3.0 New WSDL Operation Binding Definitions -->
+		
+		<!-- Begin Release 16.2.1 New WSDL Schema Definitions -->
+		<wsdl:operation name="GetOpportunityList">
+			<wsdl:input message="applicantws:GetOpportunityListRequestMessage" />
+			<wsdl:output message="applicantws:GetOpportunityListResponseMessage" />
+			<wsdl:fault name="GetOpportunityListErrorMessage" message="applicantws:ErrorMessage" />
+		</wsdl:operation>
+		
+		<wsdl:operation name="GetSubmissionList">
+			<wsdl:input message="applicantws:GetSubmissionListRequestMessage" />
+			<wsdl:output message="applicantws:GetSubmissionListResponseMessage" />
+			<wsdl:fault name="GetSubmissionListErrorMessage" message="applicantws:ErrorMessage" />
+		</wsdl:operation>
+		
+		<wsdl:operation name="GetSubmissionListAsThirdParty">
+			<wsdl:input message="applicantws:GetSubmissionListAsThirdPartyRequestMessage" />
+			<wsdl:output message="applicantws:GetSubmissionListAsThirdPartyResponseMessage" />
+			<wsdl:fault name="GetSubmissionListAsThirdPartyErrorMessage" message="applicantws:ErrorMessage" />
+		</wsdl:operation>
+		<!-- End Release 16.2.1 New WSDL Schema Definitions -->
+		
 	</wsdl:portType>
 
 	<wsdl:binding name="ApplicantWebServicesSoapBinding" type="applicantws:ApplicantWebServicesPortType">
 		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
 		
 		<wsdl:operation name="GetOpportunities">
-			<soap:operation soapAction="http://ws.grants.gov:443/grantsws-applicant/services/v2/ApplicantWebServicesSoapPort/GetOpportunities" style="document" />
+			<soap:operation soapAction="https://trainingws.grants.gov/grantsws-applicant/services/v2/ApplicantWebServicesSoapPort/GetOpportunities" style="document" />
 			<wsdl:input>
 				<soap:body use="literal" />
 			</wsdl:input>
@@ -399,7 +654,7 @@
 		</wsdl:operation>
 
 		<wsdl:operation name="SubmitApplication">
-			<soap:operation soapAction="http://ws.grants.gov:443/grantsws-applicant/services/v2/ApplicantWebServicesSoapPort/SubmitApplication" style="document" />
+			<soap:operation soapAction="https://trainingws.grants.gov/grantsws-applicant/services/v2/ApplicantWebServicesSoapPort/SubmitApplication" style="document" />
 			<wsdl:input>
 				<soap:body use="literal" />
 			</wsdl:input>
@@ -412,7 +667,7 @@
 		</wsdl:operation>
 		
 		<wsdl:operation name="SubmitApplicationAsThirdParty">
-			<soap:operation soapAction="http://ws.grants.gov:443/grantsws-applicant/services/v2/ApplicantWebServicesSoapPort/SubmitApplicationAsThirdParty" style="document" />
+			<soap:operation soapAction="https://trainingws.grants.gov/grantsws-applicant/services/v2/ApplicantWebServicesSoapPort/SubmitApplicationAsThirdParty" style="document" />
 			<wsdl:input>
 				<soap:body use="literal" />
 			</wsdl:input>
@@ -425,7 +680,7 @@
 		</wsdl:operation>
 
 		<wsdl:operation name="GetApplicationList">
-			<soap:operation soapAction="http://ws.grants.gov:443/grantsws-applicant/services/v2/ApplicantWebServicesSoapPort/GetApplicationList" style="document" />
+			<soap:operation soapAction="https://trainingws.grants.gov/grantsws-applicant/services/v2/ApplicantWebServicesSoapPort/GetApplicationList" style="document" />
 			<wsdl:input>
 				<soap:body use="literal" />
 			</wsdl:input>
@@ -438,7 +693,7 @@
 		</wsdl:operation>
 		
 		<wsdl:operation name="GetApplicationListAsThirdParty">
-			<soap:operation soapAction="http://ws.grants.gov:443/grantsws-applicant/services/v2/ApplicantWebServicesSoapPort/GetApplicationListAsThirdParty" style="document" />
+			<soap:operation soapAction="https://trainingws.grants.gov/grantsws-applicant/services/v2/ApplicantWebServicesSoapPort/GetApplicationListAsThirdParty" style="document" />
 			<wsdl:input>
 				<soap:body use="literal" />
 			</wsdl:input>
@@ -452,7 +707,7 @@
 		
 		<!-- GetApplicationStatusDetail Deprecated ... remove from next version of Applicant Web Services -->
 		<wsdl:operation name="GetApplicationStatusDetail">
-			<soap:operation soapAction="http://ws.grants.gov:443/grantsws-applicant/services/v2/ApplicantWebServicesSoapPort/GetApplicationStatusDetail" style="document" />
+			<soap:operation soapAction="https://trainingws.grants.gov/grantsws-applicant/services/v2/ApplicantWebServicesSoapPort/GetApplicationStatusDetail" style="document" />
 			<wsdl:input>
 				<soap:body use="literal" />
 			</wsdl:input>
@@ -466,7 +721,7 @@
 		</wsdl:operation>
 
 		<wsdl:operation name="GetApplicationInfo">
-			<soap:operation soapAction="http://ws.grants.gov:443/grantsws-applicant/services/v2/ApplicantWebServicesSoapPort/GetApplicationInfo" style="document" />
+			<soap:operation soapAction="https://trainingws.grants.gov/grantsws-applicant/services/v2/ApplicantWebServicesSoapPort/GetApplicationInfo" style="document" />
 			<wsdl:input>
 				<soap:body use="literal" />
 			</wsdl:input>
@@ -480,7 +735,7 @@
 		</wsdl:operation>
 		
 		<wsdl:operation name="GetApplicationInfoAsThirdParty">
-			<soap:operation soapAction="http://ws.grants.gov:443/grantsws-applicant/services/v2/ApplicantWebServicesSoapPort/GetApplicationInfoAsThirdParty" style="document" />
+			<soap:operation soapAction="https://trainingws.grants.gov/grantsws-applicant/services/v2/ApplicantWebServicesSoapPort/GetApplicationInfoAsThirdParty" style="document" />
 			<wsdl:input>
 				<soap:body use="literal" />
 			</wsdl:input>
@@ -494,7 +749,7 @@
 		</wsdl:operation>
 		
 		<wsdl:operation name="AuthenticateAOR">
-			<soap:operation soapAction="http://ws.grants.gov:443/grantsws-applicant/services/v2/ApplicantWebServicesSoapPort/AuthenticateAOR" style="document" />
+			<soap:operation soapAction="https://trainingws.grants.gov/grantsws-applicant/services/v2/ApplicantWebServicesSoapPort/AuthenticateAOR" style="document" />
 			<wsdl:input>
 				<soap:body use="literal" />
 			</wsdl:input>
@@ -507,13 +762,102 @@
 			</wsdl:fault>
 		</wsdl:operation>
 		
+		<!-- Begin Release 14.0.0 New WSDL Operation Binding Definitions -->
+		<wsdl:operation name="GetApplicationZip">
+			<soap:operation soapAction="https://ws.grants.gov:446/grantsws-agency/services/v2/AgencyWebServicesSoapPort/GetApplicationZip" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="GetApplicationZipErrorMessage">
+				<soap:fault name="GetApplicationZipErrorMessage"
+					use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+		<!-- End Release 14.0.0 New WSDL Operation Binding Definitions -->
+		
+		<!-- Begin Release 14.1.0 New WSDL Operation Binding Definitions -->
+		<wsdl:operation name="GetOpportunitiesPlusCompTitle">
+			<soap:operation soapAction="https://trainingws.grants.gov/grantsws-applicant/services/v2/ApplicantWebServicesSoapPort/GetOpportunitiesPlusCompTitle" style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="GetOpportunitiesPlusCompTitleErrorMessage">
+				<soap:fault name="GetOpportunitiesPlusCompTitleErrorMessage"
+					use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+		<!-- End Release 14.1.0 New WSDL Operation Binding Definitions -->
+		
+		<!-- Begin Release 15.3.0 New WSDL Operation Binding Definitions -->
+		<wsdl:operation name="GetOpportunitiesExpanded">
+			<soap:operation soapAction="https://trainingws.grants.gov/grantsws-applicant/services/v2/ApplicantWebServicesSoapPort/GetOpportunitiesExpanded" style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="GetOpportunitiesExpandedErrorMessage">
+				<soap:fault name="GetOpportunitiesExpandedErrorMessage"
+					use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+		<!-- End Release 15.3.0 New WSDL Operation Binding Definitions -->
+		
+		<!-- Begin Release 16.2.1 New WSDL Operation Binding Definitions -->
+		<wsdl:operation name="GetOpportunityList">
+			<soap:operation soapAction="https://trainingws.grants.gov/grantsws-applicant/services/v2/ApplicantWebServicesSoapPort/GetOpportunityList" style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="GetOpportunityListErrorMessage">
+				<soap:fault name="GetOpportunityListErrorMessage"
+					use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="GetSubmissionList">
+			<soap:operation soapAction="https://trainingws.grants.gov/grantsws-applicant/services/v2/ApplicantWebServicesSoapPort/GetSubmissionList" style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="GetSubmissionListErrorMessage">
+				<soap:fault name="GetSubmissionListErrorMessage"
+					use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="GetSubmissionListAsThirdParty">
+			<soap:operation soapAction="https://trainingws.grants.gov/grantsws-applicant/services/v2/ApplicantWebServicesSoapPort/GetSubmissionListAsThirdParty" style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="GetSubmissionListAsThirdPartyErrorMessage">
+				<soap:fault name="GetSubmissionListAsThirdPartyErrorMessage"
+					use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+		<!-- End Release 16.2.1 New WSDL Operation Binding Definitions -->
 	</wsdl:binding>
 
 	<wsdl:service name="ApplicantWebServices-V2.0">
 		<wsdl:port name="ApplicantWebServicesSoapPort"
 			binding="applicantws:ApplicantWebServicesSoapBinding">
 			<soap:address
-				location="http://ws.grants.gov:443/grantsws-applicant/services/v2/ApplicantWebServicesSoapPort/" />
+				location="https://trainingws.grants.gov/grantsws-applicant/services/v2/ApplicantWebServicesSoapPort" />
 		</wsdl:port>
 	</wsdl:service>
 

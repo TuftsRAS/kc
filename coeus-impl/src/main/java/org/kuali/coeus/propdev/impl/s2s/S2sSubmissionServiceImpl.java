@@ -49,6 +49,7 @@ import java.net.URL;
 import java.sql.Timestamp;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.kuali.coeus.sys.framework.util.CollectionUtils.entriesToMap;
 import static org.kuali.coeus.sys.framework.util.CollectionUtils.entry;
@@ -261,7 +262,9 @@ public class S2sSubmissionServiceImpl implements S2sSubmissionService {
             String proposalNumber) throws S2sCommunicationException {
         S2sOpportunityContract s2sOpportunity = s2sOpportunityService.findS2SOpportunityByProposalNumber(proposalNumber);
 
-        return getS2sConnectorService(s2sOpportunity).getApplicationList(s2sOpportunity.getOpportunityId(), s2sOpportunity.getCfdaNumber(), s2sOpportunity.getProposalNumber());
+        final String firstCfdaNumber = s2sOpportunity.getS2sOpportunityCfdas().stream().findFirst().get().getCfdaNumber();
+
+        return getS2sConnectorService(s2sOpportunity).getApplicationList(s2sOpportunity.getOpportunityId(), firstCfdaNumber, s2sOpportunity.getProposalNumber());
     }
 
     /**
@@ -387,7 +390,7 @@ public class S2sSubmissionServiceImpl implements S2sSubmissionService {
             String providerCode, GetOpportunitiesResponse.OpportunityInfo oppInfo) {
 
         S2sOpportunity s2Opportunity = new S2sOpportunity();
-        s2Opportunity.setCfdaNumber(oppInfo.getCFDANumber());
+
         s2Opportunity
                 .setClosingDate(oppInfo.getClosingDate() == null ? null
                         : endOfDay(oppInfo.getClosingDate()
@@ -406,8 +409,14 @@ public class S2sSubmissionServiceImpl implements S2sSubmissionService {
         s2Opportunity.setProviderCode(providerCode);
         s2Opportunity.setOfferingAgency(oppInfo.getOfferingAgency());
         s2Opportunity.setAgencyContactInfo(oppInfo.getAgencyContactInfo());
-        s2Opportunity.setCfdaDescription(oppInfo.getCFDADescription());
+
         s2Opportunity.setMultiProject(oppInfo.isIsMultiProject());
+
+        final S2sOpportunityCfda cfda = new S2sOpportunityCfda();
+        cfda.setCfdaDescription(oppInfo.getCFDADescription());
+        cfda.setCfdaNumber(oppInfo.getCFDANumber());
+
+        s2Opportunity.setS2sOpportunityCfdas(Stream.of(cfda).collect(Collectors.toList()));
 
         return s2Opportunity;
     }

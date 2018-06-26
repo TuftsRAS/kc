@@ -23,6 +23,7 @@ import org.kuali.kra.award.AwardForm;
 import org.kuali.kra.award.document.AwardDocument;
 import org.kuali.kra.award.home.Award;
 import org.kuali.kra.award.home.AwardAmountInfo;
+import org.kuali.kra.award.home.AwardCfda;
 import org.kuali.kra.award.home.keywords.AwardScienceKeyword;
 import org.kuali.kra.award.home.rules.AwardAddCfdaEvent;
 import org.kuali.kra.award.specialreview.AwardSpecialReview;
@@ -93,6 +94,39 @@ public class AwardHomeAction extends AwardAction {
         
         return mapping.findForward(Constants.MAPPING_BASIC);
      
+    }
+
+    public ActionForward addAwardCfda(ActionMapping mapping, ActionForm form,
+                                             HttpServletRequest request,
+                                             HttpServletResponse response) throws Exception {
+
+        final AwardForm awardForm = (AwardForm) form;
+        final AwardDocument awardDocument = awardForm.getAwardDocument();
+        final AwardCfda newAwardCfda = awardForm.getNewAwardCfda();
+        final Award award = awardDocument.getAward();
+
+        newAwardCfda.setAwardId(award.getAwardId());
+        newAwardCfda.setAward(award);
+        newAwardCfda.setAwardNumber(award.getAwardNumber());
+        newAwardCfda.setSequenceNumber(award.getSequenceNumber());
+        award.getAwardCfdas().add(newAwardCfda);
+
+        awardForm.setNewAwardCfda(new AwardCfda());
+
+        getKualiRuleService().applyRules(new AwardAddCfdaEvent(awardDocument));
+
+        return mapping.findForward(Constants.MAPPING_BASIC);
+    }
+
+    public ActionForward deleteAwardCfda(ActionMapping mapping, ActionForm form,
+                                                HttpServletRequest request,
+                                                HttpServletResponse response) throws Exception {
+        final AwardForm awardForm = (AwardForm) form;
+        final AwardDocument awardDocument = awardForm.getAwardDocument();
+        final int delAwardCfda = getLineToDelete(request);
+        awardDocument.getAward().getAwardCfdas().remove(delAwardCfda);
+
+        return mapping.findForward(Constants.MAPPING_BASIC);
     }
     
     /**

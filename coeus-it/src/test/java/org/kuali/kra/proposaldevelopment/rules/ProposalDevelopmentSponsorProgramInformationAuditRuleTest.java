@@ -12,6 +12,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.kuali.coeus.propdev.impl.core.SubmissionInfoServiceImpl;
+import org.kuali.coeus.propdev.impl.s2s.S2sOpportunityCfda;
+import org.kuali.coeus.propdev.impl.sponsor.ProposalCfda;
 import org.kuali.coeus.propdev.impl.sponsor.ProposalDevelopmentSponsorProgramInformationAuditRule;
 import org.kuali.coeus.propdev.impl.core.ProposalDevelopmentDocument;
 import org.kuali.kra.award.home.Award;
@@ -142,8 +144,15 @@ public class ProposalDevelopmentSponsorProgramInformationAuditRuleTest extends K
         proposal.setProposalTypeCode(proposalTypeCodeRenewal);
         proposal.setS2sOpportunity(new S2sOpportunity());
         proposal.getS2sOpportunity().setOpportunityId("12345");
-        proposal.getS2sOpportunity().setCfdaNumber("00.000");
-        proposal.setCfdaNumber("00.000");
+        S2sOpportunityCfda s2sCfda = new S2sOpportunityCfda();
+        s2sCfda.setCfdaNumber("00.000");
+        s2sCfda.setProposalNumber(proposal.getProposalNumber());
+        proposal.getS2sOpportunity().getS2sOpportunityCfdas().add(s2sCfda);
+
+        ProposalCfda proposalCfda = new ProposalCfda();
+        proposalCfda.setCfdaNumber("00.000");
+        proposalCfda.setProposalNumber(proposal.getProposalNumber());
+        proposal.getProposalCfdas().add(proposalCfda);
         proposal.setProgramAnnouncementTitle("Test Title");
         proposal.setSponsorCode("000100");
         
@@ -164,8 +173,15 @@ public class ProposalDevelopmentSponsorProgramInformationAuditRuleTest extends K
         proposal.setProposalTypeCode(proposalTypeCodeResubmission);
         proposal.setS2sOpportunity(new S2sOpportunity());
         proposal.getS2sOpportunity().setOpportunityId("12345");
-        proposal.getS2sOpportunity().setCfdaNumber("00.000");
-        proposal.setCfdaNumber("00.000");
+        S2sOpportunityCfda s2sCfda = new S2sOpportunityCfda();
+        s2sCfda.setCfdaNumber("00.000");
+        s2sCfda.setProposalNumber(proposal.getProposalNumber());
+        proposal.getS2sOpportunity().getS2sOpportunityCfdas().add(s2sCfda);
+
+        ProposalCfda proposalCfda = new ProposalCfda();
+        proposalCfda.setCfdaNumber("00.000");
+        proposalCfda.setProposalNumber(proposal.getProposalNumber());
+        proposal.getProposalCfdas().add(proposalCfda);
         proposal.setProgramAnnouncementTitle("Test Title");
         proposal.setSponsorCode("000100");
 

@@ -76,7 +76,6 @@
 		<field-descriptor name="awardTypeCode" column="AWARD_TYPE_CODE" jdbc-type="INTEGER"/>
 		<field-descriptor name="primeSponsorCode" column="PRIME_SPONSOR_CODE" jdbc-type="VARCHAR"/>
 		<field-descriptor name="basisOfPaymentCode" column="BASIS_OF_PAYMENT_CODE" jdbc-type="VARCHAR"/>
-		<field-descriptor name="cfdaNumber" column="CFDA_NUMBER" jdbc-type="VARCHAR"/>
 		<field-descriptor name="documentFundingId" column="DFAFS_NUMBER" jdbc-type="VARCHAR"/>
 		<field-descriptor name="methodOfPaymentCode" column="METHOD_OF_PAYMENT_CODE" jdbc-type="VARCHAR"/>
 		<field-descriptor name="preAwardAuthorizedAmount" column="PRE_AWARD_AUTHORIZED_AMOUNT" jdbc-type="DECIMAL" conversion="org.kuali.coeus.sys.framework.persistence.OjbScaleTwoDecimalFieldConversion"/>
@@ -253,7 +252,22 @@
 		<collection-descriptor name="awardCgbList" proxy="true" element-class-ref="org.kuali.kra.award.cgb.AwardCgb" collection-class="org.apache.ojb.broker.util.collections.ManageableArrayList" auto-retrieve="true" auto-update="object" auto-delete="object">
 			<inverse-foreignkey field-ref="awardId"/>
 		</collection-descriptor>
+		<collection-descriptor name="awardCfdas" proxy="true" element-class-ref="org.kuali.kra.award.home.AwardCfda" collection-class="org.apache.ojb.broker.util.collections.ManageableArrayList" auto-retrieve="true" auto-update="object" auto-delete="object">
+			<inverse-foreignkey field-ref="awardId"/>
+		</collection-descriptor>
+	</class-descriptor>
 
+	<class-descriptor class="org.kuali.kra.award.home.AwardCfda" table="AWARD_CFDA">
+		<field-descriptor name="awardCfdaId" column="AWARD_CFDA_ID" jdbc-type="BIGINT" primarykey="true" autoincrement="true" sequence-name="SEQ_AWARD_CFDA_ID" />
+		<field-descriptor name="awardId" column="AWARD_ID" jdbc-type="BIGINT" access="anonymous"/>
+		<field-descriptor name="awardNumber" column="AWARD_NUMBER" jdbc-type="VARCHAR"/>
+		<field-descriptor name="sequenceNumber" column="SEQUENCE_NUMBER" jdbc-type="INTEGER"/>
+		<field-descriptor name="cfdaNumber" column="CFDA_NUMBER" jdbc-type="VARCHAR"/>
+        <field-descriptor name="cfdaDescription" column="CFDA_DESCRIPTION" jdbc-type="VARCHAR"/>
+		<field-descriptor name="updateTimestamp" column="UPDATE_TIMESTAMP" jdbc-type="TIMESTAMP"/>
+		<field-descriptor name="updateUser" column="UPDATE_USER" jdbc-type="VARCHAR"/>
+		<field-descriptor name="objectId" column="OBJ_ID" jdbc-type="VARCHAR" />
+		<field-descriptor name="versionNumber" column="VER_NBR" jdbc-type="BIGINT" locking="false" />
 	</class-descriptor>
 	
 	<class-descriptor class="org.kuali.kra.award.contacts.AwardPerson" table="AWARD_PERSONS">

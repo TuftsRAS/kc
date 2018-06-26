@@ -17,9 +17,8 @@ import org.kuali.kra.external.HashMapElement;
 import org.kuali.rice.krad.service.BusinessObjectService;
 import org.kuali.rice.krad.util.ObjectUtils;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * This class is used for querying CFDA data from KC.
@@ -31,27 +30,21 @@ public class CfdaNumberServiceImpl implements CfdaNumberService {
     
     /**
      * This method is used to return the cfda number of an award.
-     * @see org.kuali.kra.external.Cfda.service.CfdaNumberService#getCfdaNumber(java.lang.String)
      */
     @Override
     public List<CfdaDTO> getCfdaNumber(String financialAccountNumber, String financialChartOfAccounts) {
-        
-        List<Award> awards = getAwards(financialAccountNumber, financialChartOfAccounts);
-        List<CfdaDTO> cfdaNumbers = new ArrayList<CfdaDTO>();
-        if (ObjectUtils.isNotNull(awards)) {           
-            for (Award award : awards) {
-                HashMap<String, String> searchCriteria =  new HashMap<String, String>();
-                searchCriteria.put("cfdaNumber", award.getCfdaNumber());
-                if (ObjectUtils.isNotNull(award.getCfdaNumber())) {
-                    CFDA cfda = (CFDA) businessObjectService.findByPrimaryKey(CFDA.class, searchCriteria);
+        final List<Award> awards = getAwards(financialAccountNumber, financialChartOfAccounts);
+        if (ObjectUtils.isNotNull(awards)) {
+            return awards.stream().flatMap(award -> award.getAwardCfdas().stream()).map(awardCfda -> {
+                    final CFDA cfda = businessObjectService.findByPrimaryKey(CFDA.class, Collections.singletonMap("cfdaNumber", awardCfda.getCfdaNumber()));
                     if (ObjectUtils.isNotNull(cfda)) {
-                        CfdaDTO cfdaDTO = boToDTO(cfda);
-                        cfdaDTO.setAwardId(award.getAwardId() + "");
-                        cfdaNumbers.add(cfdaDTO);
+                        final CfdaDTO cfdaDTO = boToDTO(cfda);
+                        cfdaDTO.setAwardId(awardCfda.getAwardId() + "");
+                        return cfdaDTO;
                     }
-                }
-            }
-            return cfdaNumbers;
+                    return null;
+            }).filter(Objects::nonNull)
+                    .collect(Collectors.toList());
         } else {
             return null;
         }

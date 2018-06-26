@@ -27,11 +27,18 @@ public class InstitutionalProposalCfdaRuleImpl extends KcTransactionalDocumentRu
     }
     
     private boolean validateCfdaNumber(InstitutionalProposal institutionalProposal) {
-        if (!isValidCfda(institutionalProposal.getCfdaNumber())
-                && GlobalVariables.getMessageMap().getMessages(Constants.INSTITUTIONAL_PROPOSAL_CFDA_NUMBER) == null) {
-            this.reportWarning(Constants.INSTITUTIONAL_PROPOSAL_CFDA_NUMBER, KeyConstants.CFDA_INVALID, new String[]{institutionalProposal.getCfdaNumber()});
-         }
-        return Boolean.TRUE;
+        boolean valid = true;
+
+        for (int i = 0; i < institutionalProposal.getProposalCfdas().size(); i ++) {
+            final String cfdaNumber = institutionalProposal.getProposalCfdas().get(i).getCfdaNumber();
+            if (StringUtils.isBlank(cfdaNumber)) {
+                this.reportError(String.format(Constants.INSTITUTIONAL_PROPOSAL_CFDA_NUMBER, i), KeyConstants.CFDA_REQUIRED);
+            } else if (!isValidCfda(cfdaNumber)
+                    && GlobalVariables.getMessageMap().getMessages(String.format(Constants.INSTITUTIONAL_PROPOSAL_CFDA_NUMBER, i)) == null) {
+                this.reportWarning(String.format(Constants.INSTITUTIONAL_PROPOSAL_CFDA_NUMBER, i), KeyConstants.CFDA_INVALID, cfdaNumber);
+            }
+        }
+        return valid;
     }
 
     public boolean isValidCfda(String cfdaNumber) {

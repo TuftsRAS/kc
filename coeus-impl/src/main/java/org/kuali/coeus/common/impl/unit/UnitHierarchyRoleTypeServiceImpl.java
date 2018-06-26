@@ -111,7 +111,8 @@ public class UnitHierarchyRoleTypeServiceImpl extends RoleTypeServiceBase {
     }
     
     protected boolean performWildCardMatching(Map<String,String> qualification, Map<String,String> roleQualifier) {
-        if(qualification.get(KcKimAttributes.UNIT_NUMBER).equalsIgnoreCase(UNIT_NUMBER_WILDCARD)) {
+        final String unitNumber = qualification.get(KcKimAttributes.UNIT_NUMBER);
+        if (UNIT_NUMBER_WILDCARD.equalsIgnoreCase(unitNumber)) {
             return true;
         }
         //If necessary, we can include logic for other pattern matching later.

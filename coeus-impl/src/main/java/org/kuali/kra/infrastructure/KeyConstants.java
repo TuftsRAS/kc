@@ -218,6 +218,7 @@ public final class KeyConstants {
     public static final String ERROR_REQUIRED_REVISIONTYPE = "error.required.s2sopportunity.revisionType";
     public static final String ERROR_IF_CFDANUMBER_IS_INVALID = "error.s2sopportunity.cfdaNumberInvalid";
     public static final String CFDA_INVALID = "error.format.cfda";
+    public static final String CFDA_REQUIRED = "cfda.required";
     public static final String ERROR_IF_OPPORTUNITY_ID_IS_INVALID = "error.s2sopportunity.opportunityIdInvalid";
     public static final String ERROR_OPPORTUNITY_ID_DIFFER = "error.opportunityId.differ";
     public static final String ERROR_OPPORTUNITY_TITLE_DELETED = "error.opportunityTitle.deleted";

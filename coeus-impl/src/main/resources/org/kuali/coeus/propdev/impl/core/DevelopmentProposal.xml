@@ -41,6 +41,7 @@
 				<ref bean="DevelopmentProposal-agencyDivisionCode" />
 				<ref bean="DevelopmentProposal-programAnnouncementTitle" />
 				<ref bean="DevelopmentProposal-noticeOfOpportunityCode" />
+                <!--cfdaNumber deprecated. Included here for REST api compatibility.  Do not use. -->
 				<ref bean="DevelopmentProposal-cfdaNumber" />
 				<ref bean="DevelopmentProposal-programAnnouncementNumber" />
 				<ref bean="DevelopmentProposal-sponsorProposalNumber" />
@@ -600,23 +601,9 @@
     <property name="description" value="Indicates if the proposal was in response to a solicitation, the type of solicitation or if it is unsolicited."/>
 	</bean>
 
+    <!--cfdaNumber deprecated. Included here for REST api compatibility.  Do not use. -->
 	<bean id="DevelopmentProposal-cfdaNumber" parent="DevelopmentProposal-cfdaNumber-parentBean" />
-  <bean id="DevelopmentProposal-cfdaNumber-parentBean" abstract="true" parent="AttributeDefinition">
-		<property name="name" value="cfdaNumber" />
-		<property name="forceUppercase" value="false" />
-		<property name="label" value="CFDA Number" />
-		<property name="shortLabel" value="CFDA Number" />
-		<property name="maxLength" value="7" />
-		<property name="required" value="false" />
-		<property name="control">
-			<bean parent="TextControlDefinition" p:size="20" />
-		</property>
-    <property name="controlField">
-      <bean p:size="20" parent="Uif-TextControl"/>
-    </property>
-		<property name="summary" value="The CFDA Number for this Proposal." />
-    <property name="description" value="A unique identifier for the sponsor and the funding opportunity announcement.  AKA &quot;Catalogue of Federal Domestic Assistance Number.&quot; The format for this CFDA Number is XX.XXX"/>
-	</bean>
+    <bean id="DevelopmentProposal-cfdaNumber-parentBean" abstract="true" parent="CFDA-cfdaNumber"/>
 
   <bean id="DevelopmentProposal-programAnnouncementNumber" parent="DevelopmentProposal-programAnnouncementNumber-parentBean"/>
   <bean id="DevelopmentProposal-programAnnouncementNumber-parentBean" abstract="true" parent="AttributeDefinition">
@@ -1160,7 +1147,24 @@
                 <bean parent="FieldDefinition" p:attributeName="prevGrantsGovTrackingID" />
                 <bean parent="FieldDefinition" p:attributeName="programAnnouncementNumber" />
                 <bean parent="FieldDefinition" p:attributeName="programAnnouncementTitle" />
-                <bean parent="FieldDefinition" p:attributeName="cfdaNumber" />
+				<bean parent="InquiryCollectionDefinition">
+					<property name="attributeName" value="proposalCfdas"/>
+					<property name="businessObjectClass" value="org.kuali.coeus.propdev.impl.sponsor.ProposalCfda"/>
+					<property name="numberOfColumns" value="2"/>
+					<property name="summaryTitle" value="CFDA"/>
+					<property name="summaryFields">
+						<list>
+							<bean parent="FieldDefinition" p:attributeName="cfdaNumber"/>
+							<bean parent="FieldDefinition" p:attributeName="cfdaDescription"/>
+						</list>
+					</property>
+					<property name="inquiryFields">
+						<list>
+							<bean parent="FieldDefinition" p:attributeName="cfdaNumber"/>
+							<bean parent="FieldDefinition" p:attributeName="cfdaDescription"/>
+						</list>
+					</property>
+				</bean>
 				<bean parent="FieldDefinition" p:attributeName="proposalType.description" />
 				<bean parent="FieldDefinition" p:attributeName="hierarchyAwareProposalStatus.description" />
 				<bean parent="FieldDefinition" p:attributeName="title" />
@@ -1303,7 +1307,17 @@
         <bean p:propertyName="prevGrantsGovTrackingID" parent="Uif-DataField"/>
         <bean p:propertyName="programAnnouncementNumber" parent="Uif-DataField"/>
         <bean p:propertyName="programAnnouncementTitle" parent="Uif-DataField"/>
-        <bean p:propertyName="cfdaNumber" parent="Uif-DataField"/>
+		<bean parent="Uif-Disclosure-TableCollectionSection" p:headerText="CFDA" p:renderAddLine="false" p:renderLineActions="false"
+			p:layoutManager.richTable.render="false" p:layoutManager.renderSequenceField="false" p:colSpan="2"
+			p:propertyName="proposalCfdas"
+			p:collectionObjectClass="org.kuali.coeus.propdev.impl.sponsor.ProposalCfda">
+		  <property name="items">
+			  <list>
+				  <bean parent="Uif-DataField" p:propertyName="cfdaNumber" p:fieldLabel.render="false" p:order="10" />
+				  <bean parent="Uif-DataField" p:propertyName="cfdaDescription" p:fieldLabel.render="false" p:order="20" />
+			  </list>
+		  </property>
+		</bean>
         <bean p:propertyName="agencyRoutingIdentifier" parent="Uif-DataField"/>
         <bean p:propertyName="sponsor.sponsorName" parent="Uif-DataField">
             <property name="inquiry">
@@ -1473,7 +1487,17 @@
 		<bean p:propertyName="displayedS2sAppSubmission.agencyTrackingId" parent="Uif-DataField" 
 			p:dictionaryAttributeName="agencyTrackingId" p:dictionaryObjectEntry="org.kuali.coeus.propdev.impl.s2s.S2sAppSubmission" />
 		<bean p:propertyName="programAnnouncementNumber" parent="Uif-DataField"/>
-		<bean p:propertyName="cfdaNumber" parent="Uif-DataField"/>
+		<bean parent="Uif-Disclosure-TableCollectionSection" p:headerText="CFDA" p:renderAddLine="false" p:renderLineActions="false"
+			p:layoutManager.richTable.render="false" p:layoutManager.renderSequenceField="false" p:colSpan="2"
+			p:propertyName="proposalCfdas"
+			p:collectionObjectClass="org.kuali.coeus.propdev.impl.sponsor.ProposalCfda">
+		  <property name="items">
+			  <list>
+				  <bean parent="Uif-DataField" p:propertyName="cfdaNumber" p:fieldLabel.render="false" p:order="10" />
+				  <bean parent="Uif-DataField" p:propertyName="cfdaDescription" p:fieldLabel.render="false" p:order="20" />
+			  </list>
+		  </property>
+		</bean>
 		<bean p:propertyName="programAnnouncementTitle" parent="Uif-DataField"/>
 		<bean p:propertyName="s2sOpportunity.competetionId" parent="Uif-DataField"/>
 		<bean p:propertyName="principalInvestigatorName" parent="Uif-DataField"/>

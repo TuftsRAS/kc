@@ -26,6 +26,7 @@ import org.kuali.kra.award.home.Award;
 import org.kuali.kra.award.home.AwardServiceImpl;
 import org.kuali.kra.bo.NsfCode;
 import org.kuali.kra.institutionalproposal.home.InstitutionalProposal;
+import org.kuali.kra.institutionalproposal.home.InstitutionalProposalCfda;
 import org.kuali.kra.test.infrastructure.KcIntegrationTestBase;
 import org.kuali.rice.kns.service.KNSServiceLocator;
 import org.kuali.rice.krad.service.KRADServiceLocatorWeb;
@@ -364,7 +365,13 @@ public class AwardHierarchyServiceImplTest extends KcIntegrationTestBase {
         ip.setProposalNumber(InstitutionalProposal.PROPOSAL_NUMBER_TEST_DEFAULT_STRING);
         ip.setTitle("Test Title");
         ip.setActivityTypeCode("RES");
-        ip.setCfdaNumber("11.111a");
+        InstitutionalProposalCfda proposalCfda = new InstitutionalProposalCfda();
+        proposalCfda.setCfdaNumber("11.111a");
+        proposalCfda.setProposalNumber(ip.getProposalNumber());
+        proposalCfda.setProposalId(ip.getProposalId());
+        proposalCfda.setSequenceNumber(ip.getSequenceNumber());
+        ip.getProposalCfdas().add(proposalCfda);
+
         ip.setNsfSequenceNumber(2);
         ip.setActivityType(new ActivityType());
         ip.setSponsor(testSponsor);

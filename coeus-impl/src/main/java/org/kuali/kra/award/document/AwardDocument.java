@@ -201,6 +201,7 @@ public class AwardDocument extends BudgetParentDocument<Award> implements  Copya
         managedLists.add(reportTerms);
         
         managedLists.add(award.getFundingProposals());
+        managedLists.add(award.getAwardCfdas());
 
         managedLists.add(awardList);
         

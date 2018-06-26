@@ -9,6 +9,7 @@ package org.kuali.kra.external.award;
 
 import org.kuali.kra.external.service.KcDtoServiceBase;
 import org.kuali.kra.institutionalproposal.home.InstitutionalProposal;
+import org.kuali.kra.institutionalproposal.home.InstitutionalProposalCfda;
 
 public class ProposalDtoService extends KcDtoServiceBase<ProposalDTO, InstitutionalProposal> {
 
@@ -26,7 +27,7 @@ public class ProposalDtoService extends KcDtoServiceBase<ProposalDTO, Institutio
 			dto.setAwardTypeCode(proposal.getAwardTypeCode());
 			dto.setSponsorCode(proposal.getSponsorCode());
 			dto.setStatusCode(proposal.getStatusCode());
-			dto.setCfdaNumber(proposal.getCfdaNumber());
+			proposal.getProposalCfdas().stream().map(InstitutionalProposalCfda::getCfdaNumber).findFirst().ifPresent(dto::setCfdaNumber);
 			dto.setTitle(proposal.getTitle());
 			dto.setSponsorAwardNumber(proposal.getSponsorAwardNumber());
 			return dto;

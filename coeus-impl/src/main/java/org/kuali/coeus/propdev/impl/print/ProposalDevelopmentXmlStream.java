@@ -51,6 +51,7 @@ import org.kuali.coeus.common.framework.unit.Unit;
 import org.kuali.coeus.propdev.impl.core.DevelopmentProposal;
 import org.kuali.coeus.propdev.impl.person.ProposalPerson;
 import org.kuali.coeus.propdev.impl.person.ProposalPersonUnit;
+import org.kuali.coeus.propdev.impl.sponsor.ProposalCfda;
 import org.kuali.coeus.propdev.impl.ynq.ProposalYnq;
 import org.kuali.coeus.sys.framework.model.KcPersistableBusinessObjectBase;
 import org.kuali.coeus.common.budget.framework.core.Budget;
@@ -67,6 +68,7 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * This class generates XML that confirms with the RaR XSD related to Proposal Submission Report or Sponsor Report. The data for XML
@@ -408,7 +410,7 @@ public class ProposalDevelopmentXmlStream extends ProposalBaseStream {
         proposalmaster.setSPONSORPROPOSALNUMBER(developmentProposal.getSponsorProposalNumber());
         proposalmaster.setPROGRAMANNOUNCEMENTTITLE(developmentProposal.getProgramAnnouncementTitle());
         proposalmaster.setPROGRAMANNOUNCEMENTNUMBER(developmentProposal.getProgramAnnouncementNumber());
-        proposalmaster.setCFDANUMBER(developmentProposal.getCfdaNumber());
+        proposalmaster.setCFDANUMBER(developmentProposal.getProposalCfdas().stream().map(ProposalCfda::getCfdaNumber).collect(Collectors.joining(",")));
         proposalmaster.setCONTINUEDFROM(developmentProposal.getContinuedFrom());
         proposalmaster.setCURRENTAWARDNUMBER(developmentProposal.getCurrentAwardNumber());
        

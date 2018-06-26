@@ -10,8 +10,8 @@ package org.kuali.coeus.propdev.impl.s2s.nih;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
-import gov.nih.era.svs.SubmissionValidationServiceStub;
-import gov.nih.era.svs.ValidateApplicationError;
+import gov.nih.era.external.SubmissionValidationServiceStub;
+import gov.nih.era.external.ValidateApplicationError;
 import gov.nih.era.svs.types.*;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.Logger;

@@ -10,6 +10,7 @@ package org.kuali.kra.award.home.fundingproposal;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.kuali.kra.institutionalproposal.home.InstitutionalProposalCfda;
 
 public class SponsorDataFeedCommandTest extends BaseDataFeedCommandTest {
     
@@ -47,7 +48,13 @@ public class SponsorDataFeedCommandTest extends BaseDataFeedCommandTest {
         proposal.setPrimeSponsorCode("000107");
         proposal.refreshReferenceObject("sponsor");
         proposal.refreshReferenceObject("primeSponsor");
-        proposal.setCfdaNumber("abc.123");
+
+        InstitutionalProposalCfda proposalCfda = new InstitutionalProposalCfda();
+        proposalCfda.setCfdaNumber("abc.123");
+        proposalCfda.setProposalNumber(proposal.getProposalNumber());
+        proposalCfda.setProposalId(proposal.getProposalId());
+        proposalCfda.setSequenceNumber(proposal.getSequenceNumber());
+        proposal.getProposalCfdas().add(proposalCfda);
         proposal.setNsfSequenceNumber(1);
     }
 }

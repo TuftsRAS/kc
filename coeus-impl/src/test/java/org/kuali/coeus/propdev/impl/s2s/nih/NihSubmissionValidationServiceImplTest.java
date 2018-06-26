@@ -9,8 +9,7 @@
 
 package org.kuali.coeus.propdev.impl.s2s.nih;
 
-
-import gov.nih.era.svs.SubmissionValidationServiceStub;
+import gov.nih.era.external.SubmissionValidationServiceStub;
 import gov.nih.era.svs.types.*;
 import org.junit.Assert;
 import org.junit.Before;

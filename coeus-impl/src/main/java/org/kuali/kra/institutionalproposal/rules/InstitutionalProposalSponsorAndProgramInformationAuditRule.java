@@ -52,10 +52,13 @@ public class InstitutionalProposalSponsorAndProgramInformationAuditRule implemen
             valid = false;
         }
 
-        if (!isValidCfda(institutionalProposalDocument.getInstitutionalProposal().getCfdaNumber())) {
-            programInfoAuditWarnings.add(new AuditError(Constants.INSTITUTIONAL_PROPOSAL_CFDA_NUMBER, KeyConstants.CFDA_INVALID,
-                    Constants.MAPPING_INSTITUTIONAL_PROPOSAL_HOME_PAGE + "." + Constants.INSTITUTIONAL_PROPOSAL_IP_PANEL_ANCHOR,
-                    new String[]{institutionalProposalDocument.getInstitutionalProposal().getCfdaNumber()} ));
+        for (int i = 0; i < institutionalProposalDocument.getInstitutionalProposal().getProposalCfdas().size(); i ++) {
+            final String cfdaNumber = institutionalProposalDocument.getInstitutionalProposal().getProposalCfdas().get(i).getCfdaNumber();
+            if (!isValidCfda(cfdaNumber)) {
+                programInfoAuditWarnings.add(new AuditError(String.format(Constants.INSTITUTIONAL_PROPOSAL_CFDA_NUMBER, i), KeyConstants.CFDA_INVALID,
+                        Constants.MAPPING_INSTITUTIONAL_PROPOSAL_HOME_PAGE + "." + Constants.INSTITUTIONAL_PROPOSAL_IP_PANEL_ANCHOR,
+                        new String[]{cfdaNumber} ));
+            }
         }
 
         if (!sponsorAuditWarnings.isEmpty()) {

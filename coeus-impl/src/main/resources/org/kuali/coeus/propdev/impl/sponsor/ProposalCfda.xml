@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright © 2005-2018 Kuali, Inc. - All Rights Reserved
+  ~ You may use and modify this code under the terms of the Kuali, Inc.
+  ~ Pre-Release License Agreement. You may not distribute it.
+  ~
+  ~ You should have received a copy of the Kuali, Inc. Pre-Release License
+  ~ Agreement with this file. If not, please write to license@kuali.co.
+  -->
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p" xsi:schemaLocation="http://www.springframework.org/schema/beans         http://www.springframework.org/schema/beans/spring-beans.xsd">
+  <bean id="ProposalCfda" parent="ProposalCfda-parentBean" />
+  <bean id="ProposalCfda-parentBean" abstract="true" parent="BusinessObjectEntry">
+    <property name="businessObjectClass" value="org.kuali.coeus.propdev.impl.sponsor.ProposalCfda" />
+    <property name="objectLabel" value="Proposal Abstract" />
+    <property name="titleAttribute" value="cfdaNumber" />
+    <property name="attributes" >
+      <list>
+        <ref bean="ProposalCfda-proposalNumber" />
+        <ref bean="ProposalCfda-cfdaNumber" />
+        <ref bean="ProposalCfda-cfdaDescription" />
+        <ref bean="ProposalCfda-updateUser" />
+        <ref bean="ProposalCfda-updateTimestamp" />
+      </list>
+    </property>
+  </bean>
+
+  <!-- Attribute Definitions -->
+  <bean id="ProposalCfda-proposalNumber" parent="ProposalCfda-proposalNumber-parentBean" />
+
+  <bean id="ProposalCfda-proposalNumber-parentBean" abstract="true" parent="AttributeDefinition">
+    <property name="name" value="proposalNumber" />
+    <property name="forceUppercase" value="false" />
+    <property name="label" value="Proposal Number" />
+    <property name="shortLabel" value="Proposal Number" />
+    <property name="maxLength" value="12" />
+    <property name="validationPattern" >
+      <bean parent="NumericValidationPattern" />
+    </property>
+    <property name="validCharactersConstraint">
+      <bean parent="NumericPatternConstraint"/>
+    </property>
+    <property name="control" >
+      <bean parent="HiddenControlDefinition" />
+    </property>
+    <property name="controlField">
+      <bean parent="Uif-HiddenControl"/>
+    </property>
+    <property name="summary" value="Proposal Number" />
+    <property name="description" value="Proposal Number" />
+  </bean>
+
+  <bean id="ProposalCfda-cfdaNumber" parent="ProposalCfda-cfdaNumber-parentBean" />
+  <bean id="ProposalCfda-cfdaNumber-parentBean" abstract="true" parent="CFDA-cfdaNumber"/>
+
+  <bean id="ProposalCfda-cfdaDescription" parent="ProposalCfda-cfdaDescription-parentBean"/>
+  <bean id="ProposalCfda-cfdaDescription-parentBean" abstract="true" parent="CFDA-cfdaProgramTitleName">
+    <property name="name" value="cfdaDescription" />
+  </bean>
+
+  <bean id="ProposalCfda-updateUser" parent="ProposalCfda-updateUser-parentBean"/>
+  <bean id="ProposalCfda-updateUser-parentBean" abstract="true" parent="KraAttributeReferenceDummy-updateUser">
+    <property name="description" value="The user who created or last modified the Abstract." />
+  </bean>
+
+  <bean id="ProposalCfda-updateTimestamp" parent="ProposalCfda-updateTimestamp-parentBean"/>
+  <bean id="ProposalCfda-updateTimestamp-parentBean" abstract="true" parent="KraAttributeReferenceDummy-updateTimestamp">
+    <property name="description" value="The timestamp when the Abstract was created or last modified." />
+  </bean>
+
+</beans>

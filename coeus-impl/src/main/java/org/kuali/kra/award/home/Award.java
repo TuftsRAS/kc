@@ -182,7 +182,6 @@ public class Award extends KcPersistableBusinessObjectBase implements KeywordsMa
     private String activityTypeCode;
     private Integer awardTypeCode;
     private AwardType awardType;
-    private String cfdaNumber;
     private String documentFundingId;
     private ScaleTwoDecimal preAwardAuthorizedAmount;
     private Date preAwardEffectiveDate;
@@ -236,6 +235,8 @@ public class Award extends KcPersistableBusinessObjectBase implements KeywordsMa
     private List<AwardSponsorTerm> awardSponsorTerms;
     @AwardSyncableList(syncClass = AwardSponsorContact.class, syncSourceClass = AwardTemplateContact.class, scopes = { AwardTemplateSyncScope.SPONSOR_CONTACTS_TAB })
     private List<AwardSponsorContact> sponsorContacts;
+
+    private List<AwardCfda> awardCfdas;
 
     private List<AwardCustomData> awardCustomDataList;
     private List<Boolean> awardCommentHistoryFlags;
@@ -883,21 +884,44 @@ public class Award extends KcPersistableBusinessObjectBase implements KeywordsMa
     }
 
     /**
-     * 
-     * cfdaNumber is an acronym. Its full meaning is Catalog of Federal Domestic Assistance
+     * @deprecated Included here for REST api compatibility.  Do not use.
      */
+    @Deprecated
     public String getCfdaNumber() {
-        return cfdaNumber;
+        return findFirstCfda().map(AwardCfda::getCfdaNumber).orElse(null);
     }
 
     /**
-     * 
-     * cfdaNumber is an acronym. Its full meaning is Catalog of Federal Domestic Assistance
+     * @deprecated Included here for REST api compatibility.  Do not use.
      */
+    @Deprecated
     public void setCfdaNumber(String cfdaNumber) {
-        this.cfdaNumber = cfdaNumber;
+        if (awardCfdas == null) {
+            awardCfdas = new ArrayList<>();
+        }
+
+        final AwardCfda cfda = findFirstCfda().orElseGet(AwardCfda::new);
+        awardCfdas.clear();
+        cfda.setCfdaNumber(cfdaNumber);
+        cfda.setAwardId(this.getAwardId());
+        cfda.setAwardNumber(this.getAwardNumber());
+        cfda.setSequenceNumber(this.getSequenceNumber());
+        cfda.setAward(this);
+
+        awardCfdas.add(cfda);
     }
 
+    /**
+     * @deprecated Included here for REST api compatibility.  Do not use.
+     */
+    @Deprecated
+    private Optional<AwardCfda> findFirstCfda() {
+        if (awardCfdas != null) {
+            return awardCfdas.stream().findFirst();
+        }
+
+        return Optional.empty();
+    }
 
     public String getDocumentFundingId() {
         return documentFundingId;
@@ -1448,6 +1472,7 @@ public class Award extends KcPersistableBusinessObjectBase implements KeywordsMa
         syncStatuses = new ArrayList<>();
         subAwardList = new ArrayList<>();
         currentVersionBudgets = new ArrayList<>();
+        awardCfdas = new ArrayList<>();
     }
 
     public void initializeAwardAmountInfoObjects() {
@@ -2979,5 +3004,13 @@ public class Award extends KcPersistableBusinessObjectBase implements KeywordsMa
             this.fiscalYearMonthService = KcServiceLocator.getService(FiscalYearMonthService.class);
         }
         return this.fiscalYearMonthService;
+    }
+
+    public List<AwardCfda> getAwardCfdas() {
+        return awardCfdas;
+    }
+
+    public void setAwardCfdas(List<AwardCfda> awardCfdas) {
+        this.awardCfdas = awardCfdas;
     }
 }

@@ -29,13 +29,17 @@ public class AwardCfdaAuditRule implements DocumentAuditRule {
     @Override
     public boolean processRunAuditBusinessRules(Document document) {
         AwardDocument awardDocument = (AwardDocument) document;
-        final String cfdaNumber = awardDocument.getAward().getCfdaNumber();
-        if(!isValidCfda(cfdaNumber)) {
-            getAuditWarnings(HOME_PAGE_AUDIT_WARNINGS, Constants.AUDIT_WARNINGS).add(
-                    new AuditError(Constants.DOCUMENT_AWARD_CFDA_NUMBER, KeyConstants.CFDA_INVALID,
-                            Constants.MAPPING_AWARD_HOME_PAGE + "." + Constants.MAPPING_AWARD_HOME_DETAILS_AND_DATES_PAGE_ANCHOR, new String[]{cfdaNumber}));
 
+        for (int i = 0; i < awardDocument.getAward().getAwardCfdas().size(); i ++) {
+            final String cfdaNumber = awardDocument.getAward().getAwardCfdas().get(i).getCfdaNumber();
+            if(!isValidCfda(cfdaNumber)) {
+                getAuditWarnings(HOME_PAGE_AUDIT_WARNINGS, Constants.AUDIT_WARNINGS).add(
+                        new AuditError(String.format(Constants.DOCUMENT_AWARD_CFDA_NUMBER, i), KeyConstants.CFDA_INVALID,
+                                Constants.MAPPING_AWARD_HOME_PAGE + "." + Constants.MAPPING_AWARD_HOME_DETAILS_AND_DATES_PAGE_ANCHOR, new String[]{cfdaNumber}));
+
+            }
         }
+
         return true;
     }
 

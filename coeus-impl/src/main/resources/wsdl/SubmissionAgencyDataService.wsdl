@@ -1,0 +1,965 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="SubmissionAgencyDataService" targetNamespace="http://era.nih.gov/sads/external" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:tns="http://era.nih.gov/sads/external" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns2="http://schemas.xmlsoap.org/soap/http" xmlns:ns1="http://era.nih.gov/sads/types">
+  <wsdl:types>
+    <xs:schema elementFormDefault="qualified" targetNamespace="http://era.nih.gov/sads/types" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://era.nih.gov/sads/types">
+      <xs:element name="CanIncludeDirectCostPageRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="rfapaNumber" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="CanIncludeDirectCostPageResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="canIncludeDirectCostPageFlag" type="xs:boolean"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="DoesContinuationExistRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="dunsId" type="xs:string"/>
+            <xs:element name="formTypeCode" type="xs:string"/>
+            <xs:element name="activityCode" type="xs:string"/>
+            <xs:element name="adminPhsOrgCode" type="xs:string"/>
+            <xs:element name="serialNum" type="xs:string"/>
+            <xs:element name="supportYear" type="xs:int"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="DoesContinuationExistResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="doesType5SubmissionExistFlag" type="xs:boolean"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="DoesPIHaveAwardedR01R21Request">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="piCredencial" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="DoesPIHaveAwardedR01R21Response">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="doesPIHaveAwardedR01R21Flag" type="xs:boolean"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="DoesPIHaveAwardedRenewalRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="piCredencial" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="DoesPIHaveAwardedRenewalResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="doesPIHaveAwardedRenewalFlag" type="xs:boolean"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetContinuationScheduleRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="grantNum" type="xs:string"/>
+            <xs:element name="supportYear" type="xs:int"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetContinuationScheduleResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="result" type="tns:GetContinuationScheduleResponseType"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetCredentialRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="lastName" type="xs:string"/>
+            <xs:element name="email" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetCredentialResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="credential" nillable="true" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetFOAInfoRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="rfapaNumber" type="xs:string"/>
+            <xs:element minOccurs="0" name="receiptDate" type="xs:date"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetFOAInfoResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="foa" type="tns:FOAInfoType"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetGrantStatusRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="trackingNumber" type="xs:string"/>
+            <xs:element minOccurs="0" name="projectTitle" type="xs:string"/>
+            <xs:element minOccurs="0" name="grantNumber" type="tns:GrantNumber"/>
+            <xs:element minOccurs="0" name="accessionNumber" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetGrantStatusResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="grantStatus" type="tns:GrantStatusResponseType"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetOrganizationInfoRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="dunsID" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetOrganizationInfoResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="organization" type="tns:OrganizationInfoType"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetPersonInfoRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="userID" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetPersonInfoResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="person" type="tns:PersonType"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetPersonInfoWithEmploymentRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="userID" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetPersonInfoWithEmploymentResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="person" type="tns:PersonEmploymentType"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetPreviousSubmissionInfoRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="userID" type="xs:string"/>
+            <xs:element name="projectTitle" type="xs:string"/>
+            <xs:element name="councilRound" type="xs:string"/>
+            <xs:element name="dunsID" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetPreviousSubmissionInfoResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="priorGrant" type="tns:PriorGrantInfoType"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetPriorAwardedGrantDatesRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="federalID" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetPriorAwardedGrantDatesResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="priorAwardedGrantDatesType" type="tns:PriorAwardedGrantDatesType"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetPriorGrantInfoRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="federalID" type="xs:string"/>
+            <xs:element name="applicationType" type="xs:string"/>
+            <xs:element name="projectStartDate" type="xs:date"/>
+            <xs:element name="projectEndDate" type="xs:date"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetPriorGrantInfoResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="priorGrant" type="tns:PriorGrantInfoType"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetSAMOrgInfoRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="dunsID" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetSAMOrgInfoResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="SAMOrgInfo" type="tns:SAMOrgInfoType"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetStemCellLineStatusRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" name="stemCellLineCode" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetStemCellLineStatusResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="stemCellLine" nillable="true" type="tns:StemCellLineType"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetValidationMessagesRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="trackingNumber" type="xs:string"/>
+            <xs:element minOccurs="0" name="accessionNumber" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetValidationMessagesResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="message" nillable="true" type="tns:ValidationMessage"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="ServiceFault">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="message" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="SetContinuationIdRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="requestType" type="tns:SetContinuationIdRequestType"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="SetContinuationIdResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="result" type="tns:SetContinuationIdResponseType"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:complexType name="FOAInfoType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="activityCode" type="xs:string"/>
+          <xs:element minOccurs="0" name="phsOrgCode" type="xs:string"/>
+          <xs:element minOccurs="0" name="optOutCode" type="xs:string"/>
+          <xs:element minOccurs="0" name="isCombinedMechanism" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="programTypeCode" type="xs:string"/>
+          <xs:element minOccurs="0" name="directPhaseII" type="xs:string"/>
+          <xs:element minOccurs="0" name="noticeTitle" type="xs:string"/>
+          <xs:element minOccurs="0" name="noticeTypeCode" type="xs:string"/>
+          <xs:element minOccurs="0" name="collaborativeTypeCode" type="xs:string"/>
+          <xs:element minOccurs="0" name="councilMeetingDate" type="xs:string"/>
+          <xs:element minOccurs="0" name="agency" type="xs:string"/>
+          <xs:element minOccurs="0" name="aidsRelatedCode" type="xs:string"/>
+          <xs:element minOccurs="0" name="isComplex" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="projectPeriodExceptionFlag" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="component" nillable="true" type="tns:Component"/>
+          <xs:element minOccurs="0" name="projectCostExceptionFlag" type="xs:string"/>
+          <xs:element minOccurs="0" name="pageLimitExceptionFlag" type="xs:string"/>
+          <xs:element minOccurs="0" name="projectPeriodExcepLT5YFlag" type="xs:string"/>
+          <xs:element minOccurs="0" name="diversityFlag" type="xs:string"/>
+          <xs:element minOccurs="0" name="clinicalTrialCode" type="xs:string"/>
+          <xs:element minOccurs="0" name="combinedActivityCode" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="Component">
+        <xs:sequence>
+          <xs:element name="componentLabel" type="xs:string"/>
+          <xs:element minOccurs="0" name="pageLimit" type="xs:int"/>
+          <xs:element minOccurs="0" name="minIterationNum" type="xs:int"/>
+          <xs:element minOccurs="0" name="maxIterationNum" type="xs:int"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="StemCellLineType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="stemCellLineCode" type="xs:string"/>
+          <xs:element minOccurs="0" name="valid" type="xs:boolean"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="PriorGrantInfoType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="accessionNum" type="xs:int"/>
+          <xs:element minOccurs="0" name="grantStatus" type="xs:string"/>
+          <xs:element minOccurs="0" name="rfapaNumber" type="xs:string"/>
+          <xs:element minOccurs="0" name="activityCode" type="xs:string"/>
+          <xs:element minOccurs="0" name="applicationTypeCode" type="xs:string"/>
+          <xs:element minOccurs="0" name="interimFundingCode" type="xs:string"/>
+          <xs:element minOccurs="0" name="suffixCode" type="xs:string"/>
+          <xs:element minOccurs="0" name="projectTitle" type="xs:string"/>
+          <xs:element minOccurs="0" name="applReceivedDate" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="projectStartDate" type="xs:date"/>
+          <xs:element minOccurs="0" name="projectEndDate" type="xs:date"/>
+          <xs:element minOccurs="0" name="grantNum" type="xs:string"/>
+          <xs:element minOccurs="0" name="supportYear" type="xs:int"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="dunsIdInfo" nillable="true" type="tns:DunsIdInfoType"/>
+          <xs:element minOccurs="0" name="awdDocNum" type="xs:string"/>
+          <xs:element minOccurs="0" name="isBudgetModular" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="doesSummaryStatementExist" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="isAppAwarded" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="isVerified" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="piCommonsID" type="xs:string"/>
+          <xs:element minOccurs="0" name="existingTransLastName" type="xs:string"/>
+          <xs:element minOccurs="0" name="sbirSttrProcessCode" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="DunsIdInfoType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="primaryIndicator" type="xs:string"/>
+          <xs:element minOccurs="0" name="dunsId" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="GrantNumber">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="activityCode" type="xs:string"/>
+          <xs:element minOccurs="0" name="PHSOrgCode" type="xs:string"/>
+          <xs:element minOccurs="0" name="suffixCode" type="xs:string"/>
+          <xs:element minOccurs="0" name="supportYear" type="xs:int"/>
+          <xs:element minOccurs="0" name="applicationTypeCode" type="xs:string"/>
+          <xs:element minOccurs="0" name="serialNumber" type="xs:int"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="GrantStatusResponseType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ESubmissionStatusDate" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="SRAContact" type="tns:ContactType"/>
+          <xs:element minOccurs="0" name="grantStatus" type="xs:string"/>
+          <xs:element minOccurs="0" name="trackingNumber" type="xs:string"/>
+          <xs:element minOccurs="0" name="POContact" type="tns:ContactType"/>
+          <xs:element minOccurs="0" name="grantStatusDate" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="IRGAssignment" type="xs:string"/>
+          <xs:element minOccurs="0" name="projectTitle" type="xs:string"/>
+          <xs:element minOccurs="0" name="advisoryCouncilMeeting" type="tns:MeetingType"/>
+          <xs:element minOccurs="0" name="studySectionMeeting" type="tns:MeetingType"/>
+          <xs:element minOccurs="0" name="proposalReceiptDate" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="ESubmissionStatus" type="xs:string"/>
+          <xs:element minOccurs="0" name="accessionNumber" type="xs:string"/>
+          <xs:element minOccurs="0" name="grantNumber" type="tns:GrantNumber"/>
+          <xs:element minOccurs="0" name="applId" type="xs:int"/>
+          <xs:element minOccurs="0" name="GMSContact" type="tns:ContactType"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ContactType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="phone" type="xs:string"/>
+          <xs:element minOccurs="0" name="email" type="xs:string"/>
+          <xs:element minOccurs="0" name="name" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="MeetingType">
+        <xs:sequence>
+          <xs:element name="meetingDate" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="meetingLocation" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ValidationMessage">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="severity" type="xs:string"/>
+          <xs:element minOccurs="0" name="messageText" type="xs:string"/>
+          <xs:element minOccurs="0" name="componentId" type="xs:string"/>
+          <xs:element minOccurs="0" name="formName" type="xs:string"/>
+          <xs:element minOccurs="0" name="ruleNum" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="PersonType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="employmentAddress" type="tns:AddressType"/>
+          <xs:element minOccurs="0" name="commonsUserId" type="xs:string"/>
+          <xs:element minOccurs="0" name="contact" type="tns:CommunicationContact"/>
+          <xs:element minOccurs="0" name="personName" type="tns:PersonName"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="roles" nillable="true" type="tns:RoleType"/>
+          <xs:element minOccurs="0" name="positionTitle" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="priorAwardedGrants" nillable="true" type="tns:GrantNumber"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="degree" nillable="true" type="tns:DegreeType"/>
+          <xs:element minOccurs="0" name="preferredAddressCode" type="xs:boolean"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="AddressType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="postalCode" type="xs:string"/>
+          <xs:element minOccurs="0" name="lineAddress1" type="xs:string"/>
+          <xs:element minOccurs="0" name="lineAddress2" type="xs:string"/>
+          <xs:element minOccurs="0" name="lineAddress3" type="xs:string"/>
+          <xs:element minOccurs="0" name="lineAddress4" type="xs:string"/>
+          <xs:element minOccurs="0" name="state" type="xs:string"/>
+          <xs:element minOccurs="0" name="countryCode" type="xs:string"/>
+          <xs:element minOccurs="0" name="city" type="xs:string"/>
+          <xs:element minOccurs="0" name="county" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="CommunicationContact">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="phone" type="xs:string"/>
+          <xs:element minOccurs="0" name="email" type="xs:string"/>
+          <xs:element minOccurs="0" name="fax" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="PersonName">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="namePrefix" type="xs:string"/>
+          <xs:element minOccurs="0" name="middleName" type="xs:string"/>
+          <xs:element minOccurs="0" name="nameSuffix" type="xs:string"/>
+          <xs:element minOccurs="0" name="firstName" type="xs:string"/>
+          <xs:element minOccurs="0" name="lastName" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="RoleType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="role" type="xs:string"/>
+          <xs:element minOccurs="0" name="externalOrgId" type="xs:long"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="dunsIdInfo" nillable="true" type="tns:DunsIdInfoType"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="DegreeType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="degreeName" type="xs:string"/>
+          <xs:element minOccurs="0" name="degreeDate" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="OrganizationInfoType">
+        <xs:sequence>
+          <xs:element name="externalOrgID" type="xs:long"/>
+          <xs:element minOccurs="0" name="organizationName" type="xs:string"/>
+          <xs:element minOccurs="0" name="ein" type="xs:string"/>
+          <xs:element minOccurs="0" name="address" type="tns:AddressType"/>
+          <xs:element minOccurs="0" name="status" type="xs:string"/>
+          <xs:element minOccurs="0" name="humanSubjectAssuranceNumber" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="animalWelfareAssuranceNumber" nillable="true" type="tns:animalWelfareAssuranceNumberType"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="animalWelfareAssuranceNumberType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="newAnimalWelfareAssuranceNumber" type="xs:string"/>
+          <xs:element minOccurs="0" name="oldAnimalWelfareAssuranceNumber" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="SAMOrgInfoType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="samOrgsId" type="xs:string"/>
+          <xs:element minOccurs="0" name="dunsID" type="xs:string"/>
+          <xs:element minOccurs="0" name="dunsIDPlus4" type="xs:string"/>
+          <xs:element minOccurs="0" name="cageCode" type="xs:string"/>
+          <xs:element minOccurs="0" name="registerationExpirationDate" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="legalBusinessName" type="xs:string"/>
+          <xs:element minOccurs="0" name="dbaName" type="xs:string"/>
+          <xs:element minOccurs="0" name="companyDivision" type="xs:string"/>
+          <xs:element minOccurs="0" name="divisionNumber" type="xs:string"/>
+          <xs:element minOccurs="0" name="samCongressionalDistrict" type="xs:string"/>
+          <xs:element minOccurs="0" name="entityUrl" type="xs:string"/>
+          <xs:element minOccurs="0" name="entityStructure" type="xs:string"/>
+          <xs:element minOccurs="0" name="stateOfIncorporation" type="xs:string"/>
+          <xs:element minOccurs="0" name="countryOfIncorporation" type="xs:string"/>
+          <xs:element minOccurs="0" name="businessTypeCounter" type="xs:string"/>
+          <xs:element minOccurs="0" name="mailingAddressLine1" type="xs:string"/>
+          <xs:element minOccurs="0" name="mailingAddressLine2" type="xs:string"/>
+          <xs:element minOccurs="0" name="mailingAddressCity" type="xs:string"/>
+          <xs:element minOccurs="0" name="mailingAddPostalCode" type="xs:string"/>
+          <xs:element minOccurs="0" name="mailingAddZipCodePlus4" type="xs:string"/>
+          <xs:element minOccurs="0" name="mailingAddressCountry" type="xs:string"/>
+          <xs:element minOccurs="0" name="mailingAddStateOrProvince" type="xs:string"/>
+          <xs:element minOccurs="0" name="govtBusPocFirstName" type="xs:string"/>
+          <xs:element minOccurs="0" name="govtBusPocMiddleInitial" type="xs:string"/>
+          <xs:element minOccurs="0" name="govtBusPocLastName" type="xs:string"/>
+          <xs:element minOccurs="0" name="govtBusPocTitle" type="xs:string"/>
+          <xs:element minOccurs="0" name="govtBusPocFaxUsOnly" type="xs:string"/>
+          <xs:element minOccurs="0" name="govtBusPocStAdd1" type="xs:string"/>
+          <xs:element minOccurs="0" name="govtBusPocStAdd2" type="xs:string"/>
+          <xs:element minOccurs="0" name="govtBusPocCity" type="xs:string"/>
+          <xs:element minOccurs="0" name="govtBusPocStateOrProvince" type="xs:string"/>
+          <xs:element minOccurs="0" name="govtBusPocZipPostalCode" type="xs:string"/>
+          <xs:element minOccurs="0" name="govtBusPocZipCodePlus4" type="xs:string"/>
+          <xs:element minOccurs="0" name="govtBusPocCountryCode" type="xs:string"/>
+          <xs:element minOccurs="0" name="govtBusPocEmail" type="xs:string"/>
+          <xs:element minOccurs="0" name="govtBusPocUsPhone" type="xs:string"/>
+          <xs:element minOccurs="0" name="govtBusPocUsPhoneExt" type="xs:string"/>
+          <xs:element minOccurs="0" name="govtBusPocUsNonUsPhone" type="xs:string"/>
+          <xs:element minOccurs="0" name="altgovtBusPocFirstName" type="xs:string"/>
+          <xs:element minOccurs="0" name="altgovtBusPocMiddleInitial" type="xs:string"/>
+          <xs:element minOccurs="0" name="altgovtBusPocLastName" type="xs:string"/>
+          <xs:element minOccurs="0" name="altgovtBusPocTitle" type="xs:string"/>
+          <xs:element minOccurs="0" name="altgovtBusPocStAdd1" type="xs:string"/>
+          <xs:element minOccurs="0" name="altgovtBusPocStAdd2" type="xs:string"/>
+          <xs:element minOccurs="0" name="altgovtBusPocCity" type="xs:string"/>
+          <xs:element minOccurs="0" name="altgovtBusPocStateOrProvince" type="xs:string"/>
+          <xs:element minOccurs="0" name="altgovtBusPocZipPostalCode" type="xs:string"/>
+          <xs:element minOccurs="0" name="altgovtBusPocZipCodePlus4" type="xs:string"/>
+          <xs:element minOccurs="0" name="altgovtBusPocCountryCode" type="xs:string"/>
+          <xs:element minOccurs="0" name="altgovtBusPocEmail" type="xs:string"/>
+          <xs:element minOccurs="0" name="altgovtBusPocUsPhone" type="xs:string"/>
+          <xs:element minOccurs="0" name="altgovtBusPocUsPhoneExt" type="xs:string"/>
+          <xs:element minOccurs="0" name="altgovtBusPocUsNonUsPhone" type="xs:string"/>
+          <xs:element minOccurs="0" name="altgovtBusPocFaxUsOnly" type="xs:string"/>
+          <xs:element minOccurs="0" name="pastPerfPocFirstName" type="xs:string"/>
+          <xs:element minOccurs="0" name="pastPerfPocMiddleInitial" type="xs:string"/>
+          <xs:element minOccurs="0" name="pastPerfPocLastName" type="xs:string"/>
+          <xs:element minOccurs="0" name="pastPerfPocTitle" type="xs:string"/>
+          <xs:element minOccurs="0" name="pastPerfPocStAdd1" type="xs:string"/>
+          <xs:element minOccurs="0" name="pastPerfPocStAdd2" type="xs:string"/>
+          <xs:element minOccurs="0" name="pastPerfPocCity" type="xs:string"/>
+          <xs:element minOccurs="0" name="pastPerfPocStateOrProvince" type="xs:string"/>
+          <xs:element minOccurs="0" name="pastPerfPocZipPostalCode" type="xs:string"/>
+          <xs:element minOccurs="0" name="pastPerfPocZipCodePlus4" type="xs:string"/>
+          <xs:element minOccurs="0" name="pastPerfPocCountryCode" type="xs:string"/>
+          <xs:element minOccurs="0" name="pastPerfPocEmail" type="xs:string"/>
+          <xs:element minOccurs="0" name="pastPerfPocUsPhone" type="xs:string"/>
+          <xs:element minOccurs="0" name="pastPerfPocUsPhoneExt" type="xs:string"/>
+          <xs:element minOccurs="0" name="pastPerfPocUsNonUsPhone" type="xs:string"/>
+          <xs:element minOccurs="0" name="pastPerfPocFaxUsOnly" type="xs:string"/>
+          <xs:element minOccurs="0" name="altPastPerfPocFirstName" type="xs:string"/>
+          <xs:element minOccurs="0" name="altPastPerfPocMiddleInitial" type="xs:string"/>
+          <xs:element minOccurs="0" name="altPastPerfPocLastName" type="xs:string"/>
+          <xs:element minOccurs="0" name="altPastPerfPocTitle" type="xs:string"/>
+          <xs:element minOccurs="0" name="altPastPerfPocStAdd1" type="xs:string"/>
+          <xs:element minOccurs="0" name="altPastPerfPocStAdd2" type="xs:string"/>
+          <xs:element minOccurs="0" name="altPastPerfPocCity" type="xs:string"/>
+          <xs:element minOccurs="0" name="altPastPerfPocStateOrProvince" type="xs:string"/>
+          <xs:element minOccurs="0" name="altPastPerfPocZipPostalCode" type="xs:string"/>
+          <xs:element minOccurs="0" name="altPastPerfPocZipCodePlus4" type="xs:string"/>
+          <xs:element minOccurs="0" name="altPastPerfPocCountryCode" type="xs:string"/>
+          <xs:element minOccurs="0" name="altPastPerfPocEmail" type="xs:string"/>
+          <xs:element minOccurs="0" name="altPastPerfPocUsPhone" type="xs:string"/>
+          <xs:element minOccurs="0" name="altPastPerfPocUsPhoneExt" type="xs:string"/>
+          <xs:element minOccurs="0" name="altPastPerfPocUsNonUsPhone" type="xs:string"/>
+          <xs:element minOccurs="0" name="altPastPerfPocFaxUsOnly" type="xs:string"/>
+          <xs:element minOccurs="0" name="elecBusPocFirstName" type="xs:string"/>
+          <xs:element minOccurs="0" name="elecBusPocMiddleInital" type="xs:string"/>
+          <xs:element minOccurs="0" name="elecBusPocLastName" type="xs:string"/>
+          <xs:element minOccurs="0" name="electBusPocTitle" type="xs:string"/>
+          <xs:element minOccurs="0" name="elecBusPocStAdd1" type="xs:string"/>
+          <xs:element minOccurs="0" name="elecBusPocStAdd2" type="xs:string"/>
+          <xs:element minOccurs="0" name="elecBusPocCity" type="xs:string"/>
+          <xs:element minOccurs="0" name="elecBusPocZipPostalCode" type="xs:string"/>
+          <xs:element minOccurs="0" name="elecBusPocZipPostalCodePlus4" type="xs:string"/>
+          <xs:element minOccurs="0" name="elecBusPocCountryCode" type="xs:string"/>
+          <xs:element minOccurs="0" name="elecBusPocStateOrProvince" type="xs:string"/>
+          <xs:element minOccurs="0" name="elecBusPocUsPhone" type="xs:string"/>
+          <xs:element minOccurs="0" name="elecBusPocUsPhoneExt" type="xs:string"/>
+          <xs:element minOccurs="0" name="elecBusPocNonUsPhone" type="xs:string"/>
+          <xs:element minOccurs="0" name="elecBusPocFaxUsOnly" type="xs:string"/>
+          <xs:element minOccurs="0" name="elecBusPocEmail" type="xs:string"/>
+          <xs:element minOccurs="0" name="altElecBusPocFirstName" type="xs:string"/>
+          <xs:element minOccurs="0" name="altElecBusPocMiddleInital" type="xs:string"/>
+          <xs:element minOccurs="0" name="altElecBusPocLastName" type="xs:string"/>
+          <xs:element minOccurs="0" name="altElectBusPocTitle" type="xs:string"/>
+          <xs:element minOccurs="0" name="altElecBusPocStAdd1" type="xs:string"/>
+          <xs:element minOccurs="0" name="altElecBusPocStAdd2" type="xs:string"/>
+          <xs:element minOccurs="0" name="altElecBusPocCity" type="xs:string"/>
+          <xs:element minOccurs="0" name="altElecBusPocZipPostalCode" type="xs:string"/>
+          <xs:element minOccurs="0" name="altElecBusPocZipPostalCodePlus4" type="xs:string"/>
+          <xs:element minOccurs="0" name="altElecBusPocCountryCode" type="xs:string"/>
+          <xs:element minOccurs="0" name="altElecBusPocStateOrProvince" type="xs:string"/>
+          <xs:element minOccurs="0" name="altElecBusPocUsPhone" type="xs:string"/>
+          <xs:element minOccurs="0" name="altElecBusPocUsPhoneExt" type="xs:string"/>
+          <xs:element minOccurs="0" name="altElecBusPocNonUsPhone" type="xs:string"/>
+          <xs:element minOccurs="0" name="altElecBusPocFaxUsOnly" type="xs:string"/>
+          <xs:element minOccurs="0" name="altElecBusPocEmail" type="xs:string"/>
+          <xs:element minOccurs="0" name="domesticParentDunsNumber" type="xs:string"/>
+          <xs:element minOccurs="0" name="domesticParentStAdd1" type="xs:string"/>
+          <xs:element minOccurs="0" name="domesticParentStAdd2" type="xs:string"/>
+          <xs:element minOccurs="0" name="domesticParentCity" type="xs:string"/>
+          <xs:element minOccurs="0" name="domesticParentPostalCode" type="xs:string"/>
+          <xs:element minOccurs="0" name="domesticParentCountryCode" type="xs:string"/>
+          <xs:element minOccurs="0" name="domesticParentStateOrProv" type="xs:string"/>
+          <xs:element minOccurs="0" name="domesticParentPhone" type="xs:string"/>
+          <xs:element minOccurs="0" name="averageNumberOfEmployees" type="xs:string"/>
+          <xs:element minOccurs="0" name="delinquentFederalDebtFlag" type="xs:string"/>
+          <xs:element minOccurs="0" name="exclusionStatusFlag" type="xs:string"/>
+          <xs:element minOccurs="0" name="lastMonthlyRunDate" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="softDeletedFlag" type="xs:string"/>
+          <xs:element minOccurs="0" name="lastUpdId" type="xs:string"/>
+          <xs:element minOccurs="0" name="lastUpdDate" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="registrationDate" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="samAddress1" type="xs:string"/>
+          <xs:element minOccurs="0" name="samAddress2" type="xs:string"/>
+          <xs:element minOccurs="0" name="samCity" type="xs:string"/>
+          <xs:element minOccurs="0" name="samPostalCode" type="xs:string"/>
+          <xs:element minOccurs="0" name="samProvinceOrState" type="xs:string"/>
+          <xs:element minOccurs="0" name="samCountryCode" type="xs:string"/>
+          <xs:element minOccurs="0" name="samZipCodePlus4" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="PersonEmploymentType">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="employments" nillable="true" type="tns:EmploymentType"/>
+          <xs:element minOccurs="0" name="commonsUserId" type="xs:string"/>
+          <xs:element minOccurs="0" name="personName" type="tns:PersonName"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="roles" nillable="true" type="tns:RoleType"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="priorAwardedGrants" nillable="true" type="tns:GrantNumber"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="degrees" nillable="true" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="EmploymentType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="employmentAddress" type="tns:AddressType"/>
+          <xs:element minOccurs="0" name="organizationId" type="xs:string"/>
+          <xs:element minOccurs="0" name="organizationName" type="xs:string"/>
+          <xs:element minOccurs="0" name="contact" type="tns:CommunicationContact"/>
+          <xs:element minOccurs="0" name="preferredAddressCode" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="positionTitle" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="GetContinuationScheduleResponseType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="applOpenDate" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="applDueDate" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="continuationId" type="xs:long"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="PriorAwardedGrantDatesType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="projectEndDate" type="xs:date"/>
+          <xs:element minOccurs="0" name="budgetEndDate" type="xs:date"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="SetContinuationIdRequestType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="grantNum" type="xs:string"/>
+          <xs:element minOccurs="0" name="supportYear" type="xs:int"/>
+          <xs:element name="continuationId" nillable="true" type="xs:long"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="SetContinuationIdResponseType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="result" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="PersonInvolvementType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="personName" type="tns:PersonName"/>
+          <xs:element minOccurs="0" name="title" type="xs:string"/>
+          <xs:element minOccurs="0" name="organizationName" type="xs:string"/>
+          <xs:element minOccurs="0" name="contactAddress" type="tns:AddressType"/>
+          <xs:element minOccurs="0" name="contactInfo" type="tns:CommunicationContact"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:simpleType name="SBIRSTTRProcessCodeType">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="Phase I"/>
+          <xs:enumeration value="Phase II"/>
+          <xs:enumeration value="Fast-Track"/>
+          <xs:enumeration value="Direct Phase II"/>
+          <xs:enumeration value="Phase IIA"/>
+          <xs:enumeration value="Phase IIB"/>
+          <xs:enumeration value="Commercialization Readiness Program"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="OrganizationStatus">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="ACTIVE"/>
+          <xs:enumeration value="CLOSED"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="getSAMOrgInfoResponse">
+    <wsdl:part element="ns1:GetSAMOrgInfoResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="GetFOAInfoFault">
+    <wsdl:part element="ns1:ServiceFault" name="GetFOAInfoFault"/>
+  </wsdl:message>
+  <wsdl:message name="GetStemCellLineStatusFault">
+    <wsdl:part element="ns1:ServiceFault" name="GetStemCellLineStatusFault"/>
+  </wsdl:message>
+  <wsdl:message name="GetPriorGrantInfoFault">
+    <wsdl:part element="ns1:ServiceFault" name="GetPriorGrantInfoFault"/>
+  </wsdl:message>
+  <wsdl:message name="getOrganizationInfo">
+    <wsdl:part element="ns1:GetOrganizationInfoRequest" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="getPriorGrantInfoResponse">
+    <wsdl:part element="ns1:GetPriorGrantInfoResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="getPersonInfoResponse">
+    <wsdl:part element="ns1:GetPersonInfoResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="getValidationMessagesResponse">
+    <wsdl:part element="ns1:GetValidationMessagesResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="getCredentialResponse">
+    <wsdl:part element="ns1:GetCredentialResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="GetCredentialFault">
+    <wsdl:part element="ns1:ServiceFault" name="GetCredentialFault"/>
+  </wsdl:message>
+  <wsdl:message name="getPersonInfoWithEmployment">
+    <wsdl:part element="ns1:GetPersonInfoWithEmploymentRequest" name="fault"/>
+  </wsdl:message>
+  <wsdl:message name="GetSAMOrgInfoFault">
+    <wsdl:part element="ns1:ServiceFault" name="GetSAMOrgInfoFault"/>
+  </wsdl:message>
+  <wsdl:message name="getGrantStatus">
+    <wsdl:part element="ns1:GetGrantStatusRequest" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="getValidationMessages">
+    <wsdl:part element="ns1:GetValidationMessagesRequest" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="getStemCellLineStatusResponse">
+    <wsdl:part element="ns1:GetStemCellLineStatusResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="getPersonInfo">
+    <wsdl:part element="ns1:GetPersonInfoRequest" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="getSAMOrgInfo">
+    <wsdl:part element="ns1:GetSAMOrgInfoRequest" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="GetPersonInfoWithEmploymentFault">
+    <wsdl:part element="ns1:ServiceFault" name="GetPersonInfoWithEmploymentFault"/>
+  </wsdl:message>
+  <wsdl:message name="getPersonInfoWithEmploymentResponse">
+    <wsdl:part element="ns1:GetPersonInfoWithEmploymentResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="getStemCellLineStatus">
+    <wsdl:part element="ns1:GetStemCellLineStatusRequest" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="GetOrganizationInfoFault">
+    <wsdl:part element="ns1:ServiceFault" name="GetOrganizationInfoFault"/>
+  </wsdl:message>
+  <wsdl:message name="getCredential">
+    <wsdl:part element="ns1:GetCredentialRequest" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="getOrganizationInfoResponse">
+    <wsdl:part element="ns1:GetOrganizationInfoResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="GetGrantStatusFault">
+    <wsdl:part element="ns1:ServiceFault" name="GetGrantStatusFault"/>
+  </wsdl:message>
+  <wsdl:message name="getFOAInfoResponse">
+    <wsdl:part element="ns1:GetFOAInfoResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="getFOAInfo">
+    <wsdl:part element="ns1:GetFOAInfoRequest" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="GetPersonInfoFault">
+    <wsdl:part element="ns1:ServiceFault" name="GetPersonInfoFault"/>
+  </wsdl:message>
+  <wsdl:message name="getPriorGrantInfo">
+    <wsdl:part element="ns1:GetPriorGrantInfoRequest" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="getGrantStatusResponse">
+    <wsdl:part element="ns1:GetGrantStatusResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="GetValidationMessagesFault">
+    <wsdl:part element="ns1:ServiceFault" name="GetValidationMessagesFault"/>
+  </wsdl:message>
+  <wsdl:portType name="externalSubmissionAgencyDataServiceStub">
+    <wsdl:operation name="getFOAInfo">
+      <wsdl:input message="tns:getFOAInfo" name="getFOAInfo" wsam:Action="getFOAInfo" wsaw:Action="getFOAInfo"/>
+      <wsdl:output message="tns:getFOAInfoResponse" name="getFOAInfoResponse" wsam:Action="http://era.nih.gov/sads/external/externalSubmissionAgencyDataServiceStub/getFOAInfoResponse"/>
+      <wsdl:fault message="tns:GetFOAInfoFault" name="GetFOAInfoFault" wsam:Action="http://era.nih.gov/sads/external/externalSubmissionAgencyDataServiceStub/getFOAInfo/Fault/GetFOAInfoFault"/>
+    </wsdl:operation>
+    <wsdl:operation name="getStemCellLineStatus">
+      <wsdl:input message="tns:getStemCellLineStatus" name="getStemCellLineStatus" wsam:Action="getStemCellLineStatus" wsaw:Action="getStemCellLineStatus"/>
+      <wsdl:output message="tns:getStemCellLineStatusResponse" name="getStemCellLineStatusResponse" wsam:Action="http://era.nih.gov/sads/external/externalSubmissionAgencyDataServiceStub/getStemCellLineStatusResponse"/>
+      <wsdl:fault message="tns:GetStemCellLineStatusFault" name="GetStemCellLineStatusFault" wsam:Action="http://era.nih.gov/sads/external/externalSubmissionAgencyDataServiceStub/getStemCellLineStatus/Fault/GetStemCellLineStatusFault"/>
+    </wsdl:operation>
+    <wsdl:operation name="getPriorGrantInfo">
+      <wsdl:input message="tns:getPriorGrantInfo" name="getPriorGrantInfo" wsam:Action="getPriorGrantInfo" wsaw:Action="getPriorGrantInfo"/>
+      <wsdl:output message="tns:getPriorGrantInfoResponse" name="getPriorGrantInfoResponse" wsam:Action="http://era.nih.gov/sads/external/externalSubmissionAgencyDataServiceStub/getPriorGrantInfoResponse"/>
+      <wsdl:fault message="tns:GetPriorGrantInfoFault" name="GetPriorGrantInfoFault" wsam:Action="http://era.nih.gov/sads/external/externalSubmissionAgencyDataServiceStub/getPriorGrantInfo/Fault/GetPriorGrantInfoFault"/>
+    </wsdl:operation>
+    <wsdl:operation name="getGrantStatus">
+      <wsdl:input message="tns:getGrantStatus" name="getGrantStatus" wsam:Action="getGrantStatus" wsaw:Action="getGrantStatus"/>
+      <wsdl:output message="tns:getGrantStatusResponse" name="getGrantStatusResponse" wsam:Action="http://era.nih.gov/sads/external/externalSubmissionAgencyDataServiceStub/getGrantStatusResponse"/>
+      <wsdl:fault message="tns:GetGrantStatusFault" name="GetGrantStatusFault" wsam:Action="http://era.nih.gov/sads/external/externalSubmissionAgencyDataServiceStub/getGrantStatus/Fault/GetGrantStatusFault"/>
+    </wsdl:operation>
+    <wsdl:operation name="getValidationMessages">
+      <wsdl:input message="tns:getValidationMessages" name="getValidationMessages" wsam:Action="getValidationMessages" wsaw:Action="getValidationMessages"/>
+      <wsdl:output message="tns:getValidationMessagesResponse" name="getValidationMessagesResponse" wsam:Action="http://era.nih.gov/sads/external/externalSubmissionAgencyDataServiceStub/getValidationMessagesResponse"/>
+      <wsdl:fault message="tns:GetValidationMessagesFault" name="GetValidationMessagesFault" wsam:Action="http://era.nih.gov/sads/external/externalSubmissionAgencyDataServiceStub/getValidationMessages/Fault/GetValidationMessagesFault"/>
+    </wsdl:operation>
+    <wsdl:operation name="getCredential">
+      <wsdl:input message="tns:getCredential" name="getCredential" wsam:Action="getCredential" wsaw:Action="getCredential"/>
+      <wsdl:output message="tns:getCredentialResponse" name="getCredentialResponse" wsam:Action="http://era.nih.gov/sads/external/externalSubmissionAgencyDataServiceStub/getCredentialResponse"/>
+      <wsdl:fault message="tns:GetCredentialFault" name="GetCredentialFault" wsam:Action="http://era.nih.gov/sads/external/externalSubmissionAgencyDataServiceStub/getCredential/Fault/GetCredentialFault"/>
+    </wsdl:operation>
+    <wsdl:operation name="getPersonInfo">
+      <wsdl:input message="tns:getPersonInfo" name="getPersonInfo" wsam:Action="getPersonInfo" wsaw:Action="getPersonInfo"/>
+      <wsdl:output message="tns:getPersonInfoResponse" name="getPersonInfoResponse" wsam:Action="http://era.nih.gov/sads/external/externalSubmissionAgencyDataServiceStub/getPersonInfoResponse"/>
+      <wsdl:fault message="tns:GetPersonInfoFault" name="GetPersonInfoFault" wsam:Action="http://era.nih.gov/sads/external/externalSubmissionAgencyDataServiceStub/getPersonInfo/Fault/GetPersonInfoFault"/>
+    </wsdl:operation>
+    <wsdl:operation name="getOrganizationInfo">
+      <wsdl:input message="tns:getOrganizationInfo" name="getOrganizationInfo" wsam:Action="getOrganizationInfo" wsaw:Action="getOrganizationInfo"/>
+      <wsdl:output message="tns:getOrganizationInfoResponse" name="getOrganizationInfoResponse" wsam:Action="http://era.nih.gov/sads/external/externalSubmissionAgencyDataServiceStub/getOrganizationInfoResponse"/>
+      <wsdl:fault message="tns:GetOrganizationInfoFault" name="GetOrganizationInfoFault" wsam:Action="http://era.nih.gov/sads/external/externalSubmissionAgencyDataServiceStub/getOrganizationInfo/Fault/GetOrganizationInfoFault"/>
+    </wsdl:operation>
+    <wsdl:operation name="getSAMOrgInfo">
+      <wsdl:input message="tns:getSAMOrgInfo" name="getSAMOrgInfo" wsam:Action="getSAMOrgInfo" wsaw:Action="getSAMOrgInfo"/>
+      <wsdl:output message="tns:getSAMOrgInfoResponse" name="getSAMOrgInfoResponse" wsam:Action="http://era.nih.gov/sads/external/externalSubmissionAgencyDataServiceStub/getSAMOrgInfoResponse"/>
+      <wsdl:fault message="tns:GetSAMOrgInfoFault" name="GetSAMOrgInfoFault" wsam:Action="http://era.nih.gov/sads/external/externalSubmissionAgencyDataServiceStub/getSAMOrgInfo/Fault/GetSAMOrgInfoFault"/>
+    </wsdl:operation>
+    <wsdl:operation name="getPersonInfoWithEmployment">
+      <wsdl:input message="tns:getPersonInfoWithEmployment" name="getPersonInfoWithEmployment" wsam:Action="getPersonInfoWithEmployment" wsaw:Action="getPersonInfoWithEmployment"/>
+      <wsdl:output message="tns:getPersonInfoWithEmploymentResponse" name="getPersonInfoWithEmploymentResponse" wsam:Action="http://era.nih.gov/sads/external/externalSubmissionAgencyDataServiceStub/getPersonInfoWithEmploymentResponse"/>
+      <wsdl:fault message="tns:GetPersonInfoWithEmploymentFault" name="GetPersonInfoWithEmploymentFault" wsam:Action="http://era.nih.gov/sads/external/externalSubmissionAgencyDataServiceStub/getPersonInfoWithEmployment/Fault/GetPersonInfoWithEmploymentFault"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="SubmissionAgencyDataServiceSoapBinding" type="tns:externalSubmissionAgencyDataServiceStub">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="getFOAInfo">
+      <soap:operation soapAction="getFOAInfo" style="document"/>
+      <wsdl:input name="getFOAInfo">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getFOAInfoResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="GetFOAInfoFault">
+        <soap:fault name="GetFOAInfoFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getStemCellLineStatus">
+      <soap:operation soapAction="getStemCellLineStatus" style="document"/>
+      <wsdl:input name="getStemCellLineStatus">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getStemCellLineStatusResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="GetStemCellLineStatusFault">
+        <soap:fault name="GetStemCellLineStatusFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getPriorGrantInfo">
+      <soap:operation soapAction="getPriorGrantInfo" style="document"/>
+      <wsdl:input name="getPriorGrantInfo">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getPriorGrantInfoResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="GetPriorGrantInfoFault">
+        <soap:fault name="GetPriorGrantInfoFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getGrantStatus">
+      <soap:operation soapAction="getGrantStatus" style="document"/>
+      <wsdl:input name="getGrantStatus">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getGrantStatusResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="GetGrantStatusFault">
+        <soap:fault name="GetGrantStatusFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getValidationMessages">
+      <soap:operation soapAction="getValidationMessages" style="document"/>
+      <wsdl:input name="getValidationMessages">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getValidationMessagesResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="GetValidationMessagesFault">
+        <soap:fault name="GetValidationMessagesFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getCredential">
+      <soap:operation soapAction="getCredential" style="document"/>
+      <wsdl:input name="getCredential">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getCredentialResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="GetCredentialFault">
+        <soap:fault name="GetCredentialFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getPersonInfo">
+      <soap:operation soapAction="getPersonInfo" style="document"/>
+      <wsdl:input name="getPersonInfo">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getPersonInfoResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="GetPersonInfoFault">
+        <soap:fault name="GetPersonInfoFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getOrganizationInfo">
+      <soap:operation soapAction="getOrganizationInfo" style="document"/>
+      <wsdl:input name="getOrganizationInfo">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getOrganizationInfoResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="GetOrganizationInfoFault">
+        <soap:fault name="GetOrganizationInfoFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getSAMOrgInfo">
+      <soap:operation soapAction="getSAMOrgInfo" style="document"/>
+      <wsdl:input name="getSAMOrgInfo">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getSAMOrgInfoResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="GetSAMOrgInfoFault">
+        <soap:fault name="GetSAMOrgInfoFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getPersonInfoWithEmployment">
+      <soap:operation soapAction="getPersonInfoWithEmployment" style="document"/>
+      <wsdl:input name="getPersonInfoWithEmployment">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getPersonInfoWithEmploymentResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="GetPersonInfoWithEmploymentFault">
+        <soap:fault name="GetPersonInfoWithEmploymentFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="SubmissionAgencyDataService">
+    <wsdl:port binding="tns:SubmissionAgencyDataServiceSoapBinding" name="HttpSoap11Endpoint">
+      <soap:address location="http://services.external.era.nih.gov/eraexchange/services/SubmissionAgencyDataService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

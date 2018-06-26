@@ -10,10 +10,12 @@ package org.kuali.kra.institutionalproposal.notification;
 import org.apache.commons.lang3.StringUtils;
 import org.kuali.coeus.common.notification.impl.NotificationRendererBase;
 import org.kuali.kra.institutionalproposal.home.InstitutionalProposal;
+import org.kuali.kra.institutionalproposal.home.InstitutionalProposalCfda;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Renders fields for the Institutional Proposal notifications.
@@ -52,7 +54,7 @@ public class InstitutionalProposalNotificationRenderer extends NotificationRende
             result.put("{DEADLINE_DATE}", StringUtils.EMPTY);
         }
         result.put("{DEADLINE_TIME}", institutionalProposal.getDeadlineTime());
-        result.put("{CFDA_NUMBER}", institutionalProposal.getCfdaNumber());
+        result.put("{CFDA_NUMBER}", institutionalProposal.getProposalCfdas().stream().map(InstitutionalProposalCfda::getCfdaNumber).collect(Collectors.joining(",")));
         result.put("{OPPORTUNITY}", institutionalProposal.getOpportunity());
         return result;
     }

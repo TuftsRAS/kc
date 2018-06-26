@@ -9,8 +9,6 @@
 
 package org.kuali.coeus.common.api.document.service;
 
-import org.kuali.coeus.award.dto.AwardDto;
-import org.kuali.kra.award.home.Award;
 import org.kuali.rice.kew.api.WorkflowDocument;
 import org.kuali.rice.kew.api.exception.WorkflowException;
 import org.kuali.rice.krad.document.Document;
@@ -40,7 +38,4 @@ public interface CommonApiService {
     public void clearErrors();
 
     public void updateDataObjectFromDto(Object existingDataObject, Object input);
-
-    public AwardDto convertAwardToDto(Award award);
-
 }

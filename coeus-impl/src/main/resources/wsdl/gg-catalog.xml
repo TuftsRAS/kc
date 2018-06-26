@@ -14,6 +14,21 @@
 <catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="public">  
   <public publicId="http://schemas.xmlsoap.org/wsdl/" uri="jar:file:/${settings.localRepository}/org/apache/cxf/cxf-common-schemas/${cxf.version}/cxf-common-schemas-${cxf.version}.jar!/schemas/wsdl/wsdl.xsd"/>  
   <public publicId="http://schemas.xmlsoap.org/wsdl/soap/" uri="jar:file:/${settings.localRepository}/org/apache/cxf/cxf-common-schemas/${cxf.version}/cxf-common-schemas-${cxf.version}.jar!/schemas/wsdl/soap-binding.xsd" />
-<!--   <rewriteURI uriStartString="http://apply.grants.gov/apply/system/schemas/" rewritePrefix="classpath:/wsdl/schemas/"/>
- -->
+
+  <group prefer="public">
+    <public publicId="http://apply.grants.gov/system/ApplicantCommonElements-V1.0" uri="ApplicantCommonElements-V1.0.xsd"/>
+  </group>
+
+  <group prefer="public">
+    <public publicId="http://apply.grants.gov/system/Global-V1.0" uri="Global-V1.0.xsd"/>
+  </group>
+
+  <group prefer="public">
+    <public publicId="http://apply.grants.gov/system/GrantsCommonElements-V1.0" uri="GrantsCommonElements-V1.0.xsd"/>
+  </group>
+
+  <group prefer="public">
+    <public publicId="http://apply.grants.gov/system/GrantsCommonTypes-V1.0" uri="GrantsCommonTypes-V1.0.xsd"/>
+  </group>
+
 </catalog>

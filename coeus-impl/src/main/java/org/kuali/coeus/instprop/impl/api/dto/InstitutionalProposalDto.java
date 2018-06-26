@@ -71,6 +71,7 @@ public class InstitutionalProposalDto {
     private String initialContractAdmin;
     private String ipReviewActivityIndicator;
     private String currentAwardNumber;
+    @Property(source = "mvel:proposalCfdas[0].?cfdaNumber")
     private String cfdaNumber;
     private String opportunity;
     private Integer awardTypeCode;

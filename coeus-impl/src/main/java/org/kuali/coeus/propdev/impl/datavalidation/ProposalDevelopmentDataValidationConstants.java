@@ -24,7 +24,7 @@ public final class ProposalDevelopmentDataValidationConstants {
     public static final String SPONSOR_PROGRAM_INFO_PAGE_NAME = "Sponsor & Program Info";
     public static final String DEADLINE_DATE_KEY = "document.developmentProposal.deadlineDate";
     public static final String OPPORTUNITY_ID_KEY="document.developmentProposal.programAnnouncementNumber";
-    public static final String CFDA_NUMBER_KEY = "document.developmentProposal.cfdaNumber";
+    public static final String CFDA_NUMBER_KEY = "document.developmentProposal.proposalCfdas[%s].cfdaNumber";
     public static final String OPPORTUNITY_TITLE_KEY="document.developmentProposal.programAnnouncementTitle";
     public static final String SPONSOR_PROPOSAL_KEY = "document.developmentProposal.sponsorProposalNumber";
     public static final String SPONSOR_KEY = "document.developmentProposal.sponsorCode";
