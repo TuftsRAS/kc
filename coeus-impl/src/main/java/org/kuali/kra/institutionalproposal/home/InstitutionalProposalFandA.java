@@ -10,14 +10,16 @@ package org.kuali.kra.institutionalproposal.home;
 
 import org.kuali.coeus.common.budget.framework.rate.RateClass;
 import org.kuali.coeus.common.budget.framework.rate.RateType;
+import org.kuali.coeus.common.framework.version.sequence.associate.SequenceAssociate;
 import org.kuali.coeus.sys.api.model.ScaleTwoDecimal;
 import org.kuali.coeus.sys.framework.model.KcPersistableBusinessObjectBase;
 import org.kuali.kra.award.home.ValuableItem;
+import org.kuali.kra.institutionalproposal.InstitutionalProposalAssociate;
 
 import java.sql.Date;
 
 
-public class InstitutionalProposalFandA extends KcPersistableBusinessObjectBase implements ValuableItem {
+public class InstitutionalProposalFandA extends InstitutionalProposalAssociate implements ValuableItem, SequenceAssociate<InstitutionalProposal> {
 
     private static final long serialVersionUID = 1L;
 
@@ -34,15 +36,6 @@ public class InstitutionalProposalFandA extends KcPersistableBusinessObjectBase 
     private ScaleTwoDecimal applicableRate;
     private String activityTypeCode;
     private ScaleTwoDecimal amount;
-    private InstitutionalProposal institutionalProposal;
-
-    public InstitutionalProposal getInstitutionalProposal() {
-        return institutionalProposal;
-    }
-
-    public void setInstitutionalProposal(InstitutionalProposal institutionalProposal) {
-        this.institutionalProposal = institutionalProposal;
-    }
 
     public ScaleTwoDecimal getApplicableRate() {
         return applicableRate;
@@ -149,5 +142,20 @@ public class InstitutionalProposalFandA extends KcPersistableBusinessObjectBase 
 
     public void setAmount(ScaleTwoDecimal amount) {
         this.amount = amount;
+    }
+
+    @Override
+    public void setSequenceOwner(InstitutionalProposal newlyVersionedOwner) {
+        setInstitutionalProposal(newlyVersionedOwner);
+    }
+
+    @Override
+    public InstitutionalProposal getSequenceOwner() {
+        return getInstitutionalProposal();
+    }
+
+    @Override
+    public void resetPersistenceState() {
+        setProposalFandARateId(null);
     }
 }

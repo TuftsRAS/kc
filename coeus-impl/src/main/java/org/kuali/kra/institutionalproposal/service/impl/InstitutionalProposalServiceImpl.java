@@ -69,7 +69,6 @@ import org.kuali.rice.krad.service.SequenceAccessorService;
 import org.kuali.rice.krad.util.ObjectUtils;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -778,12 +777,9 @@ public class InstitutionalProposalServiceImpl implements InstitutionalProposalSe
 
     @Override
     public InstitutionalProposalDocument createAndSaveNewVersion(InstitutionalProposal currentInstitutionalProposal,
-                                                                 InstitutionalProposalDocument currentInstitutionalProposalDocument) throws VersionException,
-            WorkflowException, IOException{
+                                                                 InstitutionalProposalDocument currentInstitutionalProposalDocument) throws VersionException, WorkflowException {
         InstitutionalProposal newVersion = getVersioningService().createNewVersion(currentInstitutionalProposal);
-        Map<String, String> fieldValues = new HashMap<>();
-        fieldValues.put(PROPOSAL_NUMBER, currentInstitutionalProposal.getProposalNumber());
-        synchNewCustomAttributes(newVersion, currentInstitutionalProposal);
+        syncNewCustomAttributes(newVersion, currentInstitutionalProposal);
 
         newVersion.setProposalSequenceStatus(VersionStatus.PENDING.toString());
         newVersion.setAwardFundingProposals(null);
@@ -800,7 +796,7 @@ public class InstitutionalProposalServiceImpl implements InstitutionalProposalSe
      * available in the old document is copied. We need to make sure we have all the latest custom attributes
      * tied to the new document.
      */
-    protected void synchNewCustomAttributes(InstitutionalProposal newInstitutionalProposal, InstitutionalProposal oldInstitutionalProposal) {
+    protected void syncNewCustomAttributes(InstitutionalProposal newInstitutionalProposal, InstitutionalProposal oldInstitutionalProposal) {
         final Set<Integer> availableCustomAttributes = newInstitutionalProposal.getInstitutionalProposalCustomDataList().stream().map(customData -> customData.getCustomAttributeId().intValue()).collect(Collectors.toSet());
 
         if(oldInstitutionalProposal.getInstitutionalProposalDocument() != null) {

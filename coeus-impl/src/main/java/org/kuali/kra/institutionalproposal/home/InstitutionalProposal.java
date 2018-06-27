@@ -325,6 +325,7 @@ public class InstitutionalProposal extends KcPersistableBusinessObjectBase imple
     }
 
     public void add(InstitutionalProposalFandA fandA) {
+        fandA.setInstitutionalProposal(this);
         institutionalProposalFandAs.add(fandA);
     }
 

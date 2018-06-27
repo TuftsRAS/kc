@@ -51,9 +51,9 @@ public class InstitutionalProposalFandABean implements Serializable {
         return getNewInstitutionalProposalFandA();
     }
 
-    public boolean addFandA(InstitutionalProposalFandABean formBean) throws Exception {
-                formBean.getInstitutionalProposalDocument().getInstitutionalProposal().add(formBean.getNewInstitutionalProposalFandA());
-                formBean.init();
-                return true;
+    public boolean addFandA(InstitutionalProposalFandABean formBean) {
+        formBean.getInstitutionalProposalDocument().getInstitutionalProposal().add(formBean.getNewInstitutionalProposalFandA());
+        formBean.init();
+        return true;
     }
 }

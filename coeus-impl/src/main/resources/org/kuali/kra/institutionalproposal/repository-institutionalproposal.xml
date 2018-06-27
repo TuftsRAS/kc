@@ -606,6 +606,8 @@
     <class-descriptor class="org.kuali.kra.institutionalproposal.home.InstitutionalProposalFandA" table="PROPOSAL_FNA_RATE">
         <field-descriptor name="proposalFandARateId" column="PROPOSAL_FNA_RATE_ID" jdbc-type="BIGINT" primarykey="true" autoincrement="true" sequence-name="SEQ_PROPOSAL_FNA_RATE_ID"/>
         <field-descriptor name="proposalId" column="PROPOSAL_ID" jdbc-type="BIGINT"/>
+        <field-descriptor name="proposalNumber" column="PROPOSAL_NUMBER" jdbc-type="VARCHAR"/>
+        <field-descriptor name="sequenceNumber" column="SEQUENCE_NUMBER" jdbc-type="INTEGER"/>
         <field-descriptor name="fiscalYear" column="FISCAL_YEAR" jdbc-type="VARCHAR" />
         <field-descriptor name="onOffCampusFlag" column="ON_OFF_CAMPUS_FLAG" jdbc-type="CHAR" conversion="org.kuali.kra.infrastructure.OjbOnOffCampusFlagFieldConversion"/>
         <field-descriptor name="rateClassCode" column="RATE_CLASS_CODE" jdbc-type="VARCHAR"/>
