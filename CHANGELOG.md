@@ -1,6 +1,11 @@
 
 
 ## CURRENT
+* RESKC-2740: Add sequencing to Institutional Proposal F&A. (#2956)
+
+  * Omar Soto Fortuño on Wed, 27 Jun 2018 09:58:06 -0400 [View Commit](../../commit/44779ce89f4fae2e8932aa723cef4d316c29bbd4)
+
+## coeus-1806.0038
 * No Changes
 
 
