@@ -1,6 +1,10 @@
 
 
 ## CURRENT
+* No Changes
+
+
+## coeus-1806.0037
 * RESKC-2943: Fix STE when adding a person to Proposal Development and that person had no units (while Proposal Award Person Role Maintenance table is 'All Affiliations & Appointments'). (#2955)
 
   * Omar Soto Fortuño on Tue, 26 Jun 2018 12:46:23 -0400 [View Commit](../../commit/856febffcda65b564087639fd1aae2ca3afd7f92)
