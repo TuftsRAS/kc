@@ -1152,6 +1152,48 @@ public class PropDevJavaFunctionKrmsTermServiceImplTest {
 		assertTrue(propDevJavaFunctionKrmsTermService.otherOrganizationExists(developmentProposal));
 	}
 	
+	@Test
+	public void test_proposalPersonUnitBelowRule() {
+		final DevelopmentProposal developmentProposal = createDevelopmentProposal();
+		String subUnitNumber = "000005";
+		String personUnitNumber = "000005";
+		String paramUnitNumber = "000001";
+		String invalidUnitNumber = "000003";
+		String projectRole = "PI";
+		setProposalPersonUnit(developmentProposal, personUnitNumber);
+		
+		final List<Unit> units = new ArrayList<Unit>();
+		Unit unit = new Unit();
+		unit.setUnitNumber(subUnitNumber);
+		units.add(unit);
+		context.checking(new Expectations() {
+			{
+				exactly(2).of(unitService).getAllSubUnits(paramUnitNumber);
+				will(returnValue(units));
+			}
+		});
+		assertTrue(propDevJavaFunctionKrmsTermService.proposalPersonUnitBelowRule(developmentProposal, projectRole, paramUnitNumber));
+		setProposalPersonUnit(developmentProposal, invalidUnitNumber);
+		assertFalse(propDevJavaFunctionKrmsTermService.proposalPersonUnitBelowRule(developmentProposal, projectRole, paramUnitNumber));
+	} 
+
+	@Test
+	public void test_proposalPersonUnitRule() {
+		final DevelopmentProposal developmentProposal = createDevelopmentProposal();
+		String personUnitNumber = "000001";
+		String invalidUnitNumber = "000003";
+		String projectRole = "PI";
+		setProposalPersonUnit(developmentProposal, personUnitNumber);
+		assertTrue(propDevJavaFunctionKrmsTermService.proposalPersonUnitRule(developmentProposal, projectRole, personUnitNumber));
+		assertFalse(propDevJavaFunctionKrmsTermService.proposalPersonUnitRule(developmentProposal, projectRole, invalidUnitNumber));
+	}
+	
+	protected void setProposalPersonUnit(DevelopmentProposal developmentProposal, String personUnitNumber) {
+		List<ProposalPersonUnit> proposalPersonUnits = new ArrayList<ProposalPersonUnit>();
+		proposalPersonUnits.add(createProposalPersonUnit(personUnitNumber));
+		developmentProposal.getProposalPerson(0).setUnits(proposalPersonUnits);
+	}
+	
 	public ProposalSite createOtherOrganization() {
 		String defaultCongressionalDistrict = "TEST";
 		Organization organization = new Organization();

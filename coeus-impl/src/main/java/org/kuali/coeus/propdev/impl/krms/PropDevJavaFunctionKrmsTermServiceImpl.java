@@ -8,6 +8,7 @@
 package org.kuali.coeus.propdev.impl.krms;
 
 import org.apache.commons.beanutils.PropertyUtils;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -1184,6 +1185,39 @@ public class PropDevJavaFunctionKrmsTermServiceImpl extends KcKrmsJavaFunctionTe
     @Override
     public Boolean otherOrganizationExists(DevelopmentProposal developmentProposal) {
         return !developmentProposal.getOtherOrganizations().isEmpty();
+    }
+    
+    @Override
+    public Boolean proposalPersonUnitBelowRule(DevelopmentProposal developmentProposal, String projectRole, String unitNumber) {
+    	List<ProposalPersonUnit> units = getProposalPersonUnit(developmentProposal, projectRole, unitNumber);
+    	if(CollectionUtils.isNotEmpty(units)) {
+        	boolean unitFound = isMatchingProposalPersonUnit(units, unitNumber);
+            if (unitFound) {
+                return true;
+            } else {
+                return getUnitService().getAllSubUnits(unitNumber).stream()
+                .filter(subUnit -> units.stream()
+                    .anyMatch(personUnit -> personUnit.getUnitNumber().equals(subUnit.getUnitNumber())))
+                .count() > 0;
+            }
+    	}
+        return false;
+    }
+    
+    @Override
+    public Boolean proposalPersonUnitRule(DevelopmentProposal developmentProposal, String projectRole, String unitNumber) {
+    	return isMatchingProposalPersonUnit(getProposalPersonUnit(developmentProposal,projectRole,unitNumber), unitNumber);
+    }
+    
+    protected List<ProposalPersonUnit> getProposalPersonUnit(DevelopmentProposal developmentProposal, String projectRole, String unitNumber) {
+     	return developmentProposal.getProposalPersons().stream()
+     	    	.filter(proposal -> projectRole.equals(proposal.getProposalPersonRoleId()))
+     	        .flatMap(person -> person.getUnits().stream())
+     	        .collect(Collectors.toList());
+    }
+    
+    protected boolean isMatchingProposalPersonUnit(List<ProposalPersonUnit> units, String unitNumber) {
+     	return units.stream().anyMatch(unit -> unitNumber.equals(unit.getUnitNumber()));
     }
     
     public DateTimeService getDateTimeService() {
