@@ -11,13 +11,20 @@ package org.kuali.coeus.common.api.document;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.kuali.coeus.common.api.document.dto.DevelopmentProposalSummaryDto;
 import org.kuali.coeus.common.api.document.dto.DocumentDetailsDto;
 import org.kuali.coeus.common.api.document.service.KewDocHeaderDao;
+import org.kuali.coeus.propdev.impl.core.DevelopmentProposal;
 import org.kuali.coeus.propdev.impl.core.ProposalDevelopmentConstants;
 import org.kuali.coeus.propdev.impl.core.ProposalDevelopmentDocument;
 import org.kuali.coeus.sys.framework.gv.GlobalVariableService;
 import org.kuali.coeus.sys.framework.rest.UnauthorizedAccessException;
 import org.kuali.coeus.sys.framework.rest.UnprocessableEntityException;
+import org.kuali.kra.infrastructure.Constants;
+import org.kuali.rice.coreservice.framework.parameter.ParameterConstants;
+import org.kuali.rice.coreservice.framework.parameter.ParameterService;
+import org.kuali.rice.kew.actionrequest.ActionRequestValue;
+import org.kuali.rice.kew.actionrequest.service.ActionRequestService;
 import org.kuali.rice.kew.api.WorkflowDocument;
 import org.kuali.rice.kew.api.document.search.DocumentSearchResult;
 import org.kuali.rice.kew.api.exception.WorkflowException;
@@ -32,15 +39,15 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RequestMapping(value="/api/v1")
 @Controller("documentController")
 public class DocumentController {
 
+    private static final String WORKLOAD_BALANCING_PRIORITY_STOP = "Workload_Balancing_Priority_Stop";
+    private static final String SEPARATOR = ", ";
     @Autowired
     @Qualifier("documentService")
     private DocumentService documentService;
@@ -57,6 +64,14 @@ public class DocumentController {
     @Qualifier("globalVariableService")
     private GlobalVariableService globalVariableService;
 
+    @Autowired
+    @Qualifier("parameterService")
+    private ParameterService parameterService;
+
+    @Autowired
+    @Qualifier("actionRequestService")
+    private ActionRequestService actionRequestService;
+
     private static final Log LOG = LogFactory.getLog(DocumentController.class);
 
     @RequestMapping(method= RequestMethod.GET, value="/enroute-documents", consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
@@ -66,6 +81,14 @@ public class DocumentController {
                                                            @RequestParam(value = "limit", required = false) Integer limit,
                                                            @RequestParam(value = "skip", required = false) Integer skip) {
         return getDocumentsRoutingForUser(user, limit, skip);
+    }
+
+    @RequestMapping(method= RequestMethod.GET, value="/workload-balancing-documents", consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ResponseStatus(value = HttpStatus.OK)
+    @ResponseBody
+    public List<DevelopmentProposalSummaryDto> documentsRoutingToUser(@RequestParam(value = "limit", required = false) Integer limit,
+                                                           @RequestParam(value = "skip", required = false) Integer skip) {
+        return getDocumentsAtWorkloadBalancingStop(limit, skip);
     }
 
     @RequestMapping(method= RequestMethod.GET, value="/saved-documents", consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
@@ -86,11 +109,68 @@ public class DocumentController {
         return documentsInProgressForUser(user, limit, skip);
     }
 
+    protected List<DevelopmentProposalSummaryDto> getDocumentsAtWorkloadBalancingStop(Integer limit, Integer skip) {
+        List<DocumentWorkloadDetails> documentDetails = kewDocHeaderDao.getProposalsInWorkloadStop(getWorkloadBalancingStop(), limit, skip);
+        List<DevelopmentProposalSummaryDto> documentList;
+        try {
+            List<Document> documents =  getAllDocuments(documentDetails.stream().map(DocumentWorkloadDetails::getDocumentNumber).collect(Collectors.toList()));
+            documentList = documents.stream().map(document -> getDocumentSummary(document, documentDetails)).collect(Collectors.toList());
+        } catch (WorkflowException e) {
+            LOG.error("An error occurred" + e);
+            throw new UnprocessableEntityException("An error occurred " + e.getMessage());
+        }
+        return documentList;
+    }
+
+    protected String getWorkloadBalancingStop() {
+        return parameterService.getParameterValueAsString(Constants.MODULE_NAMESPACE_PROPOSAL_DEVELOPMENT,
+                ParameterConstants.DOCUMENT_COMPONENT, WORKLOAD_BALANCING_PRIORITY_STOP);
+    }
+
+    private DevelopmentProposalSummaryDto getDocumentSummary(Document document, List<DocumentWorkloadDetails> documentDetails) {
+        final ProposalDevelopmentDocument proposalDevelopmentDocument = (ProposalDevelopmentDocument) document;
+        DevelopmentProposal proposal = proposalDevelopmentDocument.getDevelopmentProposal();
+        DevelopmentProposalSummaryDto developmentProposalSummaryDto = new DevelopmentProposalSummaryDto();
+        developmentProposalSummaryDto.setProposalNumber(proposal.getProposalNumber());
+        developmentProposalSummaryDto.setTitle(proposal.getTitle());
+        final String piName = Objects.isNull(proposal.getPrincipalInvestigator()) ? "" :
+                proposal.getPrincipalInvestigator().getLastName() + SEPARATOR + proposal.getPrincipalInvestigator().getFirstName();
+        developmentProposalSummaryDto.setPiName(piName);
+        developmentProposalSummaryDto.setUnitNumber(proposal.getUnitNumber());
+        developmentProposalSummaryDto.setSponsorName(proposal.getSponsorName());
+
+        DocumentWorkloadDetails workloadDetails = documentDetails.stream().filter(documentWorkflowDetails ->
+                documentWorkflowDetails.getDocumentNumber().equalsIgnoreCase(document.getDocumentNumber())).findFirst().get();
+        developmentProposalSummaryDto.setStopNumber(workloadDetails.getCurrentPeopleFlowStop());
+        developmentProposalSummaryDto.setLastActionTaken(workloadDetails.getLastActionTime().getTime());
+        setApprovers(document, developmentProposalSummaryDto);
+        return developmentProposalSummaryDto;
+    }
+
+    private void setApprovers(Document document, DevelopmentProposalSummaryDto developmentProposalSummaryDto) {
+        final List<ActionRequestValue> allPendingRequests = actionRequestService.findAllPendingRequests(document.getDocumentNumber());
+        developmentProposalSummaryDto.setAllApprovers(
+                allPendingRequests.stream().
+                        filter(request -> !request.isRoleRequest()).
+                        map(request -> Objects.isNull(request.getPerson()) ? "" : request.getPerson().getName()).
+                        collect(Collectors.toSet()));
+        String primaryApprover = allPendingRequests.stream()
+                .filter(actionRequestValue -> actionRequestValue.isRoleRequest())
+                .findFirst()
+                .map(ActionRequestValue::getQualifiedRoleNameLabel)
+                .orElseGet(() -> getPersonName(allPendingRequests.stream().findFirst().get().getPerson()));
+
+        developmentProposalSummaryDto.setPrimaryApprover(primaryApprover);
+    }
+
+    private String getPersonName(Person person) {
+        return person.getLastName() + SEPARATOR + person.getFirstName();
+    }
+
     private List<DocumentDetailsDto> getDocumentsRoutingForUser(String routingToUser, Integer limit, Integer skip) {
         checkAndRetrievePerson(routingToUser);
         List<DocumentDetailsDto> documentList;
-        List<DocumentWorkflowUserDetails> documentDetails = kewDocHeaderDao.getWorkflowDetailsForEnrouteDocuments(routingToUser, limit, skip);
-
+        List<DocumentWorkflowUserDetails> documentDetails = kewDocHeaderDao.getWorkflowDetailsOfEnrouteProposalsForUser(routingToUser, limit, skip);
         try {
             List<Document> documents =  getAllDocuments(documentDetails.stream().map(DocumentWorkflowUserDetails::getDocumentNumber).collect(Collectors.toList()));
             documentList = documents.stream().map(document -> getDocumentDetailsDto(document,

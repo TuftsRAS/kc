@@ -24,6 +24,7 @@ public class DocumentWorkflowUserDetails extends KcPersistableBusinessObjectBase
     @Column(name = "STEPS")
     private int steps;
 
+
     public DocumentWorkflowUserDetails() {
     }
 
@@ -64,4 +65,5 @@ public class DocumentWorkflowUserDetails extends KcPersistableBusinessObjectBase
     public void setSteps(Integer steps) {
         this.steps = steps;
     }
+
 }

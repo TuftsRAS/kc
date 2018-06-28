@@ -10,6 +10,7 @@ package org.kuali.coeus.common.api.document.impl;
 
 import org.apache.commons.lang3.StringUtils;
 import org.kuali.coeus.common.api.document.DocumentWorkflowUserDetails;
+import org.kuali.coeus.common.api.document.DocumentWorkloadDetails;
 import org.kuali.coeus.common.api.document.service.KewDocHeaderDao;
 import org.kuali.coeus.propdev.impl.core.ProposalDevelopmentConstants;
 import org.kuali.rice.core.api.criteria.OrderByField;
@@ -38,6 +39,7 @@ public class KewDocHeaderDaoImpl extends LookupDaoOjb implements KewDocHeaderDao
     private static final String SUBAWARD_DOCUMENT = "SubawardDocument";
     private static final String INSTITUTIONAL_PROPOSAL_DOCUMENT = "InstitutionalProposalDocument";
     private static final String AWARD_BUDGET_DOCUMENT = "AwardBudgetDocument";
+    private static final String CURRENT_PEOPLE_FLOW_STOP = "currentPeopleFlowStop";
 
     @Autowired
     @Qualifier("documentSearchService")
@@ -86,22 +88,36 @@ public class KewDocHeaderDaoImpl extends LookupDaoOjb implements KewDocHeaderDao
     }
 
 
-    public List<DocumentWorkflowUserDetails> getWorkflowDetailsForEnrouteDocuments(String user, Integer limit, Integer skip) {
-
+    public List<DocumentWorkflowUserDetails> getWorkflowDetailsOfEnrouteProposalsForUser(String user, Integer limit, Integer skip) {
         Map<String,String> queryMap = new HashMap<>();
         queryMap.put(PRINCIPAL_ID, user);
+        return getDocumentWorkflowUserDetails(limit, skip, queryMap);
+    }
+
+    public List<DocumentWorkloadDetails> getProposalsInWorkloadStop(String stopNumber, Integer limit, Integer skip) {
+        Map<String,String> queryMap = new HashMap<>();
+        queryMap.put(CURRENT_PEOPLE_FLOW_STOP, stopNumber);
+        QueryByCriteria.Builder query = addOrderByAndPagingFields(limit, skip, queryMap);
+        return dataObjectService.findMatching(DocumentWorkloadDetails.class, query.build()).getResults();
+    }
+
+    public List<DocumentWorkflowUserDetails> getDocumentWorkflowUserDetails(Integer limit, Integer skip, Map<String, String> queryMap) {
+        QueryByCriteria.Builder query = addOrderByAndPagingFields(limit, skip, queryMap);
+        return dataObjectService.findMatching(DocumentWorkflowUserDetails.class, query.build()).getResults();
+    }
+
+    public QueryByCriteria.Builder addOrderByAndPagingFields(Integer limit, Integer skip, Map<String, String> queryMap) {
         QueryByCriteria.Builder query = QueryByCriteria.Builder.andAttributes(queryMap);
         List<OrderByField> orderByFields = new ArrayList<>();
         orderByFields.add(OrderByField.Builder.create(DOCUMENT_NUMBER, OrderDirection.DESCENDING ).build());
         query.setOrderByFields(orderByFields);
-
         if (limit != null) {
             query.setMaxResults(limit);
         }
         if (skip != null && skip > 0) {
             query.setStartAtIndex(skip);
         }
-        return dataObjectService.
-                findMatching(DocumentWorkflowUserDetails.class, query.build()).getResults();
+        return query;
     }
+
 }
