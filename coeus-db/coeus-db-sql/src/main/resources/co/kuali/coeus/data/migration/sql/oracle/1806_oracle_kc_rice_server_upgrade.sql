@@ -30,4 +30,5 @@ spool 1806_oracle_kc_rice_server_upgrade.sql.log
 @./rice/bootstrap/V1806_010__excluded_ipstatuses_pending.sql
 @./rice/bootstrap/V1806_011__RESOPS-2414.sql
 @./rice/bootstrap/V1806_013__RESOPS-2415.sql
+@./rice/bootstrap/V1806_014__workload_stop_parameter.sql
 commit;

@@ -1,6 +1,18 @@
 
 
 ## CURRENT
+* RESKC-2806: Workload balancing endpoints (#2959)
+
+* RESKC-2806: Workload balancing endpoints
+  * 
+* Change id to name
+  * 
+* RESKC-2806: PR changes
+  * 
+* RESKC-2806: More PR comments
+  * Gayathri Athreya on Thu, 28 Jun 2018 14:19:41 -0700 [View Commit](../../commit/786948b8314fce8e436de1b6a420ac62dc01bfa0)
+
+## coeus-1806.0042
 * No Changes
 
 
