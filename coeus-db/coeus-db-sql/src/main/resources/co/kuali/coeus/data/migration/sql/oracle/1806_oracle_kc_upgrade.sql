@@ -26,4 +26,5 @@ spool 1806_oracle_kc_upgrade.sql.log
 @./kc/bootstrap/V1806_009__RESKC-2971.sql
 @./kc/bootstrap/V1806_012__add_sequencing_to_proposal_fna_rate.sql
 @./kc/bootstrap/V1806_015__workload_balancing.sql
+@./kc/bootstrap/V1806_016__RESKC-2999-ArgValueLookup_active_flag.sql
 commit;

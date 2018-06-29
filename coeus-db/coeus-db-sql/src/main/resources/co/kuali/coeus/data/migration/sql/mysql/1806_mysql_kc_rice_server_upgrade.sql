@@ -28,4 +28,5 @@
 \. ./rice/bootstrap/V1806_011__RESOPS-2414.sql
 \. ./rice/bootstrap/V1806_013__RESOPS-2415.sql
 \. ./rice/bootstrap/V1806_014__workload_stop_parameter.sql
+\. ./rice/bootstrap/V1806_017__RESKC-2999-KNS_arg_value_lookup_dropdown.sql
 commit;

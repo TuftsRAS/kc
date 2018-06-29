@@ -1,6 +1,14 @@
 
 
 ## CURRENT
+* RESKC-2999: Merged, updated, and reconciled PR contribution
+
+* Added new Boolean custom data type for Yes / No values
+* Added an active flag to ArgValueLookup entries so they can be hidden / shown in the document screens
+* Added the ability to display ArgValueLookups as KRAD-style drop-downs in the KNS modules. This is off by default, but can be turned on with the feature flag Display_KNS_Arg_Value_Lookups_As_Dropdowns
+  * Jeff Largent on Fri, 29 Jun 2018 12:57:47 -0400 [View Commit](../../commit/c890c19e56b0cbb57188992bca26b9e7861c23f2)
+
+## coeus-1806.0043
 * RESKC-2806: Workload balancing endpoints (#2959)
 
 * RESKC-2806: Workload balancing endpoints
