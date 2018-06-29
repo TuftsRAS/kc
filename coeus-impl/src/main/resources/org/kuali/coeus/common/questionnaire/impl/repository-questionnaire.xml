@@ -91,8 +91,8 @@
         <field-descriptor name="objectId" column="OBJ_ID" jdbc-type="VARCHAR" />
     </class-descriptor>
 
-    <class-descriptor class="org.kuali.coeus.common.framework.custom.arg.ArgValueLookup" table="ARG_VALUE_LOOKUP">
-        <field-descriptor name="id" column="ARG_VALUE_LOOKUP_ID" jdbc-type="BIGINT" primarykey="true" />
+    <class-descriptor class="org.kuali.coeus.common.framework.custom.arg.ArgValueLookup" table="ARG_VALUE_LOOKUP" >
+        <field-descriptor name="id" column="ARG_VALUE_LOOKUP_ID" jdbc-type="BIGINT" sequence-name="SEQ_ARG_VALUE_LOOKUP_ID" autoincrement="true" primarykey="true" />
         <field-descriptor name="argumentName" column="ARGUMENT_NAME" jdbc-type="VARCHAR" />
         <field-descriptor name="value" column="VALUE" jdbc-type="VARCHAR" />
         <field-descriptor name="description" column="DESCRIPTION" jdbc-type="VARCHAR" />
@@ -100,6 +100,7 @@
         <field-descriptor name="updateUser" column="UPDATE_USER" jdbc-type="VARCHAR" />
         <field-descriptor name="versionNumber" column="VER_NBR" jdbc-type="BIGINT" locking="true" />
         <field-descriptor name="objectId" column="OBJ_ID" jdbc-type="VARCHAR" />
+        <field-descriptor name="active" column="ACTV_IND" jdbc-type="CHAR" conversion="org.kuali.rice.core.framework.persistence.ojb.conversion.OjbCharBooleanConversion" />
     </class-descriptor>
         
     <class-descriptor class="org.kuali.coeus.common.questionnaire.framework.answer.AnswerHeader" table="QUESTIONNAIRE_ANSWER_HEADER">

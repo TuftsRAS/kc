@@ -8,7 +8,9 @@
 package org.kuali.coeus.common.impl.custom;
 
 import org.apache.commons.lang3.StringUtils;
+import org.kuali.coeus.common.framework.custom.AuditCustomDataEvent;
 import org.kuali.coeus.common.framework.custom.DocumentCustomData;
+import org.kuali.coeus.common.framework.custom.SaveCustomDataEvent;
 import org.kuali.coeus.common.framework.custom.arg.ArgValueLookup;
 import org.kuali.coeus.common.framework.custom.attr.CustomAttribute;
 import org.kuali.coeus.common.framework.custom.attr.CustomAttributeDataType;
@@ -16,12 +18,12 @@ import org.kuali.coeus.common.framework.custom.attr.CustomAttributeDocument;
 import org.kuali.coeus.common.framework.custom.attr.CustomAttributeService;
 import org.kuali.coeus.common.framework.person.KcPerson;
 import org.kuali.coeus.common.framework.person.KcPersonService;
+import org.kuali.coeus.propdev.impl.custom.AuditProposalCustomDataEvent;
 import org.kuali.coeus.sys.framework.rule.KcBusinessRule;
 import org.kuali.coeus.sys.framework.rule.KcTransactionalDocumentRuleBase;
 import org.kuali.coeus.sys.framework.service.KcServiceLocator;
 import org.kuali.kra.infrastructure.Constants;
 import org.kuali.kra.infrastructure.KeyConstants;
-import org.kuali.coeus.common.framework.custom.SaveCustomDataEvent;
 import org.kuali.rice.core.api.util.RiceKeyConstants;
 import org.kuali.rice.kew.api.WorkflowDocument;
 import org.kuali.rice.kns.datadictionary.validation.charlevel.NumericValidationPattern;
@@ -200,7 +202,7 @@ public class CustomDataRule extends KcTransactionalDocumentRuleBase implements K
                     addError(customAttribute, errorKey, event, customAttribute.getValue(), validFormat);
                     return false;
                 }
-            }                 
+            }
         }
         return isValid;
     }
@@ -208,13 +210,24 @@ public class CustomDataRule extends KcTransactionalDocumentRuleBase implements K
     public boolean isValidArgValue(CustomAttribute customAttribute, String errorKey, SaveCustomDataEvent event, CustomAttributeDataType customAttributeDataType) {
         Collection<ArgValueLookup> searchResults = getMatchingArgValues(customAttribute);
         String validFormat;
-        boolean matchedArgValues = searchResults.stream().anyMatch(argValueLookup1 -> customAttribute.getValue().equals(argValueLookup1.getValue()));
+        Optional<ArgValueLookup> matchedArgValue = searchResults.stream()
+                .filter(argValueLookup1 -> customAttribute.getValue().equals(argValueLookup1.getValue()))
+                .findFirst();
 
-        if (!matchedArgValues) {
+        if (!matchedArgValue.isPresent()) {
             validFormat = getValidFormat(customAttributeDataType.getDescription());
             addError(customAttribute, errorKey, event, customAttribute.getValue(), validFormat);
             return false;
         }
+
+        if (event instanceof AuditCustomDataEvent || event instanceof AuditProposalCustomDataEvent) {
+            ArgValueLookup argValue = matchedArgValue.get();
+            if (!argValue.isActive() && StringUtils.equals(customAttribute.getValue(), argValue.getValue())) {
+                event.reportWarning(customAttribute, errorKey, KeyConstants.ERROR_INACTIVE_ARGUMENT_VALUE, customAttribute.getLabel());
+                return false;
+            }
+        }
+
         return true;
     }
 
@@ -238,7 +251,7 @@ public class CustomDataRule extends KcTransactionalDocumentRuleBase implements K
         }
         return validFormat;
     }
-    
+
     /**
      * Gets the Custom Attribute Service.
      * @return the Custom Attribute Service

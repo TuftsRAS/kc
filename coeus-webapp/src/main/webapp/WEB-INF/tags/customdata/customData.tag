@@ -18,6 +18,7 @@
 <c:if test="${empty excludeInactive}" >
 	<c:set var="excludeInactive" value="false" />
 </c:if>
+<c:set var="displayArgValuesAsDropdowns" value="${krafn:getParameterValueAsBoolean('KC-GEN', 'Document', 'Display_KNS_Arg_Value_Lookups_As_Dropdowns')}" />
 
 <c:choose>
 		<c:when test="${fn:length(fullName) > 90}">
@@ -67,23 +68,33 @@
 						</c:forEach>
 					</c:forEach>
 				</c:if>
-					
+
+				<c:set var="showTextField" value="${(customAttributeDocument.customAttribute.lookupClass ne 'org.kuali.coeus.common.framework.custom.arg.ArgValueLookup' or !displayArgValuesAsDropdowns) and customAttributeDocument.customAttribute.customAttributeDataType.description != 'Boolean'}" />
 				<c:choose>
-                	<c:when test="${readOnly}">
+                	<c:when test="${readOnly and showTextField}">
                 		<c:out value="${fn:escapeXml(customAttributeValue)}" />
                 	</c:when>
                 	<c:otherwise>
                 		${kfunc:registerEditableProperty(KualiForm, customAttributeId)}
-                        <input size="60" id="${customAttributeId}" type="text" name="${customAttributeId}" value='${fn:escapeXml(customAttributeValue)}' style="${customAttributeErrorStyle}"/>
+
+						<c:if test="${showTextField}">
+                        	<input size="60" id="${customAttributeId}" type="text" name="${customAttributeId}" value='${fn:escapeXml(customAttributeValue)}' style="${customAttributeErrorStyle}" />
+						</c:if>
 
 						<c:if test="${not empty customAttributeDocument.customAttribute.lookupClass}">
 						 <c:choose>
 						   <c:when test="${customAttributeDocument.customAttribute.lookupClass eq 'org.kuali.coeus.common.framework.custom.arg.ArgValueLookup'}">
-							<kul:lookup boClassName="${customAttributeDocument.customAttribute.lookupClass}" 
-								lookupParameters="'${customAttributeDocument.customAttribute.lookupReturn}':argumentName"
-								readOnlyFields="argumentName"
-								fieldConversions="value:${customAttributeId}," 
-								fieldLabel="${customAttributeDocument.customAttribute.label}"  anchor="${tabKey}" />
+							   <c:choose>
+								   <c:when test="${krafn:getParameterValueAsBoolean('KC-GEN', 'Document', 'Display_KNS_Arg_Value_Lookups_As_Dropdowns')}">
+									   <kra:argValueLookupOptions property="${customAttributeId}" argName="${customAttributeDocument.customAttribute.lookupReturn}" currentValue="${customAttributeValue}" readOnly="${readOnly}" anchor="${tabKey}" />
+								   </c:when>
+								   <c:otherwise>
+									   <kul:lookup boClassName="${customAttributeDocument.customAttribute.lookupClass}"
+												   lookupParameters="'${customAttributeDocument.customAttribute.lookupReturn}':argumentName"
+												   readOnlyFields="argumentName" fieldConversions="value:${customAttributeId},"
+												   fieldLabel="${customAttributeDocument.customAttribute.label}" anchor="${tabKey}" />
+								   </c:otherwise>
+							   </c:choose>
 						   </c:when>
 						   <c:otherwise>						   
 							<kul:lookup boClassName="${customAttributeDocument.customAttribute.lookupClass}" fieldConversions="${customAttributeDocument.customAttribute.lookupReturn}:${customAttributeId}," fieldLabel="${customAttributeDocument.customAttribute.label}"  anchor="${tabKey}"/>
@@ -105,7 +116,15 @@
 					             );
 					        </script>
 						</c:if>
-						</c:otherwise>
+
+						<c:if test="${customAttributeDocument.customAttribute.customAttributeDataType.description == 'Boolean'}">
+							<input type="radio" class="Custom Data answer QanswerYesNo" name="${customAttributeId}" value="Yes"
+								${customAttributeValue == 'Yes' ? "checked='true'" : ''} ${readOnly == 'true' ? "disabled" : ''} />Yes
+							<input type="radio" class="Custom Data answer QanswerYesNo" name="${customAttributeId}" value="No"
+								${customAttributeValue == 'No' ? "checked='true'" : ''} ${readOnly == 'true' ? "disabled" : ''} />No
+						</c:if>
+
+					</c:otherwise>
 					</c:choose>
 				</td>
 			</tr>

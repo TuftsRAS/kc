@@ -34,7 +34,11 @@ public class ArgValueLookupValuesFinder extends UifKeyValuesFinderBase {
 
 	private transient ParameterService parameterService;
 	private transient BusinessObjectService businessObjectService;
+    private static final String INACTIVE_IND = "(inactive)";
+
     private String argName;
+    private String currentValue;
+    private boolean excludeInactive = true;
 
     @Override
     public List<KeyValue> getKeyValues() {
@@ -47,21 +51,22 @@ public class ArgValueLookupValuesFinder extends UifKeyValuesFinderBase {
 		final String cfg = StringUtils.isNotBlank(argConfig) ? argConfig : defaultConfig;
 
 		return Stream.concat(Stream.of(ValuesFinderUtils.getSelectOption()), argValueLookups.stream()
-				.map(argValueLookup -> new ConcreteKeyValue(argValueLookup.getValue(), getKeyValueValue(argValueLookup, cfg)))
-				.sorted(Comparator.comparing(ConcreteKeyValue::getValue)))
+                .filter(argValue -> !isExcludeInactive() || argValue.isActive() || StringUtils.equals(currentValue, argValue.getValue()))
+                .sorted(Comparator.comparing((ArgValueLookup argValue) -> getKeyValueValue(argValue, cfg)).thenComparing(ArgValueLookup::isActive))
+				.map(argValueLookup -> new ConcreteKeyValue(argValueLookup.getValue(), getKeyValueValue(argValueLookup, cfg))))
 				.collect(Collectors.toList());
     }
 
 	protected String getKeyValueValue(ArgValueLookup argValueLookup, String cfg) {
+        String value = argValueLookup.getValue();
 		if (ArgValueConfig.VALUE.toString().equals(cfg)) {
-			return argValueLookup.getValue();
+			value = argValueLookup.getValue();
 		} else if (ArgValueConfig.DESCRIPTION.toString().equals(cfg))  {
-			return argValueLookup.getDescription();
+			value = argValueLookup.getDescription();
 		} else if (ArgValueConfig.BOTH.toString().equals(cfg)) {
-			return argValueLookup.getValue() + (StringUtils.isNotBlank(argValueLookup.getDescription()) ? ( " - " + argValueLookup.getDescription()) : "");
-		} else {
-			return  argValueLookup.getValue();
+			value = argValueLookup.getValue() + (StringUtils.isNotBlank(argValueLookup.getDescription()) ? ( " - " + argValueLookup.getDescription()) : "");
 		}
+		return argValueLookup.isActive() ? value : value + " " + INACTIVE_IND;
 	}
 
     public String getArgName() {
@@ -93,4 +98,19 @@ public class ArgValueLookupValuesFinder extends UifKeyValuesFinderBase {
 	public void setBusinessObjectService(BusinessObjectService businessObjectService) {
 		this.businessObjectService = businessObjectService;
 	}
+    public String getCurrentValue() {
+        return currentValue;
+    }
+
+    public void setCurrentValue(String currentValue) {
+        this.currentValue = currentValue;
+    }
+
+    public boolean isExcludeInactive() {
+        return excludeInactive;
+    }
+
+    public void setExcludeInactive(boolean excludeInactive) {
+        this.excludeInactive = excludeInactive;
+    }
 }

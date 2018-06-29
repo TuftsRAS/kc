@@ -58,10 +58,18 @@
     <c:when test="${bean.answerHeaders[answerHeaderIndex].answers[questionIndex].question.questionTypeId == 6}" >
         <c:choose>
             <c:when test = "${bean.answerHeaders[answerHeaderIndex].answers[questionIndex].question.lookupClass == 'org.kuali.coeus.common.framework.custom.arg.ArgValueLookup'}">
-                <kra-questionnaire:argValueLookupQuestion question="${bean.answerHeaders[answerHeaderIndex].answers[questionIndex].question}"
-                    answer="${bean.answerHeaders[answerHeaderIndex].answers[questionIndex]}" questionIndex="${questionIndex}"
-                    bean="${bean}" property="${property}" answerHeaderIndex = "${answerHeaderIndex}"
-                    answerValidationError = "${answerValidationError}"/>
+                <c:choose>
+                    <c:when test="${krafn:getParameterValueAsBoolean('KC-GEN', 'All', 'Display_KNS_Arg_Value_Lookups_As_Dropdowns')}">
+                        <kra:argValueLookupOptions property="${fieldName}" argName="${bean.answerHeaders[answerHeaderIndex].answers[questionIndex].question.lookupReturn}"
+                                                   currentValue="${bean.answerHeaders[answerHeaderIndex].answers[questionIndex].answer}" styleClass="Qanswer answer questionnaireAnswer" readOnly="false"/>
+                    </c:when>
+                    <c:otherwise>
+                        <kra-questionnaire:argValueLookupQuestion question="${bean.answerHeaders[answerHeaderIndex].answers[questionIndex].question}"
+                                                                  answer="${bean.answerHeaders[answerHeaderIndex].answers[questionIndex]}" questionIndex="${questionIndex}"
+                                                                  bean="${bean}" property="${property}" answerHeaderIndex = "${answerHeaderIndex}"
+                                                                  answerValidationError = "${answerValidationError}"/>
+                    </c:otherwise>
+                </c:choose>
             </c:when>
             <c:otherwise>
                 <kra-questionnaire:lookupQuestion question="${bean.answerHeaders[answerHeaderIndex].answers[questionIndex].question}"
