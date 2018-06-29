@@ -10,6 +10,7 @@ package org.kuali.coeus.common.framework.custom;
 import org.kuali.coeus.common.framework.custom.attr.CustomAttribute;
 import org.kuali.coeus.common.framework.custom.attr.CustomAttributeDocument;
 import org.kuali.coeus.common.impl.custom.CustomDataRule;
+import org.kuali.coeus.sys.framework.gv.GlobalVariableService;
 import org.kuali.coeus.sys.framework.model.KcTransactionalDocumentBase;
 import org.kuali.coeus.sys.framework.rule.KcBusinessRule;
 import org.kuali.coeus.sys.framework.rule.KcDocumentEventBaseExtension;
@@ -29,6 +30,7 @@ public class SaveCustomDataEvent extends KcDocumentEventBaseExtension {
     private List<? extends DocumentCustomData> customDataList;
     private Map<String, CustomAttributeDocument> customAttributeDocuments;
     protected ErrorReporter errorReporter = KcServiceLocator.getService(ErrorReporter.class);
+    protected GlobalVariableService globalVariableService;
     
     /**
      * Constructs a SaveCustomAttributeEvent.
@@ -86,6 +88,17 @@ public class SaveCustomDataEvent extends KcDocumentEventBaseExtension {
     
     public void reportError(CustomAttribute customAttribute, String propertyName, String errorKey, String... errorParams) {
         errorReporter.reportError(propertyName, errorKey, errorParams);
+    }
+
+    public void reportWarning(CustomAttribute customAttribute, String propertyName, String warningKey, String... warningParams) {
+        errorReporter.reportWarning(propertyName, warningKey, warningParams);
+    }
+
+    protected GlobalVariableService getGlobalVariableService() {
+        if (this.globalVariableService == null) {
+            this.globalVariableService = KcServiceLocator.getService(GlobalVariableService.class);
+        }
+        return this.globalVariableService;
     }
 
 }

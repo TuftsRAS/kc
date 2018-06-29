@@ -12,19 +12,28 @@ import org.kuali.coeus.common.framework.custom.arg.ArgValueLookup;
 import org.kuali.coeus.common.framework.custom.attr.CustomAttributeDocValue;
 import org.kuali.coeus.common.framework.person.KcPerson;
 import org.kuali.coeus.common.framework.rolodex.Rolodex;
-import org.kuali.coeus.common.impl.custom.arg.ArgValueLookupValuesFinder;
 import org.kuali.coeus.common.framework.rolodex.RolodexConstants;
+import org.kuali.coeus.common.impl.custom.arg.ArgValueLookupValuesFinder;
 import org.kuali.kra.web.krad.KcBindingInfo;
 import org.kuali.rice.kim.impl.identity.principal.PrincipalBo;
 import org.kuali.rice.krad.uif.control.Control;
+import org.kuali.rice.krad.uif.control.MultiValueControlBase;
 import org.kuali.rice.krad.uif.control.TextControlBase;
 import org.kuali.rice.krad.uif.field.InputFieldBase;
 import org.kuali.rice.krad.uif.util.ComponentFactory;
 import org.kuali.rice.krad.uif.util.LifecycleElement;
 import org.kuali.rice.krad.uif.util.ObjectPropertyUtils;
+import org.kuali.rice.krad.uif.util.UifKeyValue;
+
+import java.util.Arrays;
 
 
 public class ProposalDevelopmentCustomDataField extends InputFieldBase {
+
+    private static final long serialVersionUID = -3826980245026916902L;
+
+    private static final String CUSTOM_DATA_DATE_TYPE = "3";
+    private static final String CUSTOM_DATA_BOOLEAN_TYPE = "4";
 
     @Override
     public void performApplyModel(Object model, LifecycleElement parent) {
@@ -37,6 +46,7 @@ public class ProposalDevelopmentCustomDataField extends InputFieldBase {
                 ArgValueLookupValuesFinder valuesFinder = new ArgValueLookupValuesFinder();
                 valuesFinder.setArgName(customData.getCustomAttribute().getLookupReturn());
                 valuesFinder.setAddBlankOption(false);
+                valuesFinder.setCurrentValue(customData.getValue());
                 setOptionsFinder(valuesFinder);
                 getInquiry().setRender(true);
             } else {
@@ -60,9 +70,13 @@ public class ProposalDevelopmentCustomDataField extends InputFieldBase {
                     getQuickfinder().setViewName(RolodexConstants.EDITABLE_ROLODEX_QUICKFINDER);
                 }
             }
-        } else if (customData.getCustomAttribute().getDataTypeCode().equals("3")) {
+        } else if (customData.getCustomAttribute().getDataTypeCode().equals(CUSTOM_DATA_DATE_TYPE)) {
             setControl((Control) ComponentFactory.getNewComponentInstance("Uif-DateControlOnFocus"));
             ((TextControlBase)getControl()).setWatermarkText("mm/dd/yyyy");
+        } else if (customData.getCustomAttribute().getDataTypeCode().equals(CUSTOM_DATA_BOOLEAN_TYPE)) {
+            MultiValueControlBase booleanControl = (MultiValueControlBase) ComponentFactory.getNewComponentInstance("Uif-HorizontalRadioControl");
+            booleanControl.setOptions(Arrays.asList(new UifKeyValue("Yes", "Yes"), new UifKeyValue("No", "No")));
+            setControl(booleanControl);
         }
         super.performApplyModel(model, parent);
     }
