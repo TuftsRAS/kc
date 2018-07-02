@@ -174,7 +174,9 @@ public class BudgetModularServiceImpl implements BudgetModularService {
                                                       Collection<String> consortiumFnaOnlyCostElements) {
         ScaleTwoDecimal directCostWithoutConsortiumFna = new ScaleTwoDecimal(0);
         ScaleTwoDecimal consortiumFna = new ScaleTwoDecimal(0);
-        for (BudgetLineItem budgetLineItem: budgetPeriod.getBudgetLineItems()) {
+
+        ArrayList<BudgetLineItem> budgetLineItems = new ArrayList<>(budgetPeriod.getBudgetLineItems());
+        for (BudgetLineItem budgetLineItem: budgetLineItems) {
             getBudgetCalculationService().calculateBudgetLineItem(budget, budgetLineItem);
             if (consortiumFnaOnlyCostElements.contains(budgetLineItem.getCostElement())) {
                 // this line item is ALL F&A so add everything to consortium FnA
