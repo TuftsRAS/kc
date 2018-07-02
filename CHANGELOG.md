@@ -1,6 +1,11 @@
 
 
 ## CURRENT
+* RESKC-3007: Attempting to fix concurrent modification exception (#2961)
+
+  * Gayathri Athreya on Mon, 2 Jul 2018 15:21:33 -0700 [View Commit](../../commit/68ede7cdd5e0170e0936c830ad4b916e6727a411)
+
+## coeus-1806.0044
 * RESKC-2999: Merged, updated, and reconciled PR contribution
 
 * Added new Boolean custom data type for Yes / No values
