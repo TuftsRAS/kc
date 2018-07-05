@@ -1,6 +1,11 @@
 
 
 ## CURRENT
+* RESKC-2806: Minor changes (#2963)
+
+  * Gayathri Athreya on Thu, 5 Jul 2018 07:38:39 -0700 [View Commit](../../commit/48883f92d8fdd5681458eae3b1e7618eba3cb583)
+
+## coeus-1807.0001
 * RESKC-3007: Attempting to fix concurrent modification exception (#2961)
 
   * Gayathri Athreya on Mon, 2 Jul 2018 15:21:33 -0700 [View Commit](../../commit/68ede7cdd5e0170e0936c830ad4b916e6727a411)
