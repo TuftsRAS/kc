@@ -9,9 +9,11 @@ public class DevelopmentProposalSummaryDto {
     private String unitNumber;
     private String sponsorName;
     private String title;
-    private Long lastActionTaken;
+    private Long lastActionTime;
     private String primaryApprover;
     private Integer stopNumber;
+    private Long dueDate;
+    private String documentNumber;
     private Set<String> allApprovers;
 
     public Set<String> getAllApprovers() {
@@ -28,6 +30,22 @@ public class DevelopmentProposalSummaryDto {
 
     public void setStopNumber(Integer stopNumber) {
         this.stopNumber = stopNumber;
+    }
+
+    public Long getDueDate() {
+        return dueDate;
+    }
+
+    public void setDueDate(Long dueDate) {
+        this.dueDate = dueDate;
+    }
+
+    public String getDocumentNumber() {
+        return documentNumber;
+    }
+
+    public void setDocumentNumber(String documentNumber) {
+        this.documentNumber = documentNumber;
     }
 
     public String getProposalNumber() {
@@ -70,12 +88,12 @@ public class DevelopmentProposalSummaryDto {
         this.title = title;
     }
 
-    public Long getLastActionTaken() {
-        return lastActionTaken;
+    public Long getLastActionTime() {
+        return lastActionTime;
     }
 
-    public void setLastActionTaken(Long lastActionTaken) {
-        this.lastActionTaken = lastActionTaken;
+    public void setLastActionTime(Long lastActionTime) {
+        this.lastActionTime = lastActionTime;
     }
 
     public String getPrimaryApprover() {

@@ -138,11 +138,12 @@ public class DocumentController {
         developmentProposalSummaryDto.setPiName(piName);
         developmentProposalSummaryDto.setUnitNumber(proposal.getUnitNumber());
         developmentProposalSummaryDto.setSponsorName(proposal.getSponsorName());
-
+        developmentProposalSummaryDto.setDocumentNumber(proposalDevelopmentDocument.getDocumentNumber());
+        developmentProposalSummaryDto.setDueDate(proposal.getDeadlineDate()  == null ? null : proposal.getDeadlineDate().getTime());
         DocumentWorkloadDetails workloadDetails = documentDetails.stream().filter(documentWorkflowDetails ->
                 documentWorkflowDetails.getDocumentNumber().equalsIgnoreCase(document.getDocumentNumber())).findFirst().get();
         developmentProposalSummaryDto.setStopNumber(workloadDetails.getCurrentPeopleFlowStop());
-        developmentProposalSummaryDto.setLastActionTaken(workloadDetails.getLastActionTime().getTime());
+        developmentProposalSummaryDto.setLastActionTime(workloadDetails.getLastActionTime().getTime());
         setApprovers(document, developmentProposalSummaryDto);
         return developmentProposalSummaryDto;
     }
