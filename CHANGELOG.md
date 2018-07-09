@@ -1,6 +1,10 @@
 
 
 ## CURRENT
+* No Changes
+
+
+## coeus-1807.0003
 * RESKC-3009:Error invoking roles API to create new role
   * Issue is related to object relation in ojb/jpa. Fix verify relations method.
   * Rajeev Mancheril on Mon, 9 Jul 2018 14:30:46 -0400 [View Commit](../../commit/7bc8ad4b0a32988986fe27fa04eb9040a5315cf9)
