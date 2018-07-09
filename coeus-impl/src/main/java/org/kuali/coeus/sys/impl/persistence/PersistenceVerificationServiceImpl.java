@@ -77,13 +77,19 @@ public class PersistenceVerificationServiceImpl implements PersistenceVerificati
         if (ignoredRelationships == null) {
             throw new IllegalArgumentException("ignoredRelationships cannot be null");
         }
-        final MessageMap ojb = verifyOjbRelationshipsForDelete(bo, ignoredRelationships);
+        MessageMap relation = new MessageMap();
+        try {
+            final MessageMap ojb = verifyOjbRelationshipsForDelete(bo, ignoredRelationships);
+            relation.merge(ojb);
+        } catch (ClassNotPersistableException e) {
+            LOG.debug(e.getMessage(), e);
+        }
         final MessageMap dd = verifyDDRelationshipsForDelete(bo, ignoredRelationships);
         final MessageMap krad = verifyKradDataRelationshipsForDelete(bo, ignoredRelationships);
 
-        ojb.merge(dd);
-        ojb.merge(krad);
-        return ojb;
+        relation.merge(dd);
+        relation.merge(krad);
+        return relation;
     }
 
     @Override
@@ -150,13 +156,20 @@ public class PersistenceVerificationServiceImpl implements PersistenceVerificati
             throw new IllegalArgumentException("ignoredRelationships cannot be null");
         }
 
-        final MessageMap ojb = verifyOjbRelationshipsForUpsert(bo, ignoredRelationships);
+        MessageMap relation = new MessageMap();
+        try {
+            final MessageMap ojb = verifyOjbRelationshipsForUpsert(bo, ignoredRelationships);
+            relation.merge(ojb);
+            relation.merge(ojb);
+        } catch (ClassNotPersistableException e) {
+            LOG.debug(e.getMessage(), e);
+        }
         final MessageMap dd = verifyDDRelationshipsForUpsert(bo, ignoredRelationships);
         final MessageMap krad = verifyKradDataRelationshipsForUpsert(bo, ignoredRelationships);
 
-        ojb.merge(dd);
-        ojb.merge(krad);
-        return ojb;
+        relation.merge(dd);
+        relation.merge(krad);
+        return relation;
     }
 
     protected MessageMap verifyOjbRelationshipsForUpsert(Object bo, Collection<Class<?>> ignoredRelationships) {
