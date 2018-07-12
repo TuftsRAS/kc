@@ -1,6 +1,10 @@
 
 
 ## CURRENT
+* No Changes
+
+
+## coeus-1807.0005
 * RESKC-3009:Error invoking roles API to create new role
   * Rajeev Mancheril on Mon, 9 Jul 2018 17:00:35 -0400 [View Commit](../../commit/7dceb39ca3f733e4c5e1958eb57550ffd06859bb)
 
