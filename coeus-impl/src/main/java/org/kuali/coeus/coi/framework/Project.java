@@ -46,7 +46,7 @@ public class Project implements Serializable, ProjectMetadata {
      * @deprecated use {@link #sponsors}
      */
     @Deprecated
-    @Size(min = 1, max = 6)
+    @Size(min = 1, max = 20)
     private String sponsorCode;
 
     /**
