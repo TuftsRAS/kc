@@ -1,6 +1,11 @@
 
 
 ## CURRENT
+* RESKC-3015:Error invoking permission API
+  * Fix permission and set generic permission readonly
+  * Rajeev Mancheril on Fri, 13 Jul 2018 15:31:23 -0400 [View Commit](../../commit/6aafd2423bb2182ca5186fae959c9a42a1ca3c67)
+
+## coeus-1807.0010
 * RESKC-2977: Sponsor code fix (#2970)
 
   * Gayathri Athreya on Fri, 13 Jul 2018 10:47:23 -0700 [View Commit](../../commit/63c9b037408efaabb588bdc99e4a029435f4763f)
