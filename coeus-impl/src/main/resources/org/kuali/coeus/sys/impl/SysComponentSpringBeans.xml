@@ -449,7 +449,7 @@
     <bean parent="simpleCrudMapBasedRestController" p:dataObjectClazz="org.kuali.rice.kew.doctype.bo.DocumentType" />
     <bean parent="simpleCrudMapBasedRestController" p:dataObjectClazz="org.kuali.rice.kew.doctype.DocumentTypePolicy" />
     <bean parent="simpleCrudMapBasedRestController" p:dataObjectClazz="org.kuali.rice.krad.bo.DocumentHeader" />
-    <bean parent="simpleCrudMapBasedRestController" p:dataObjectClazz="org.kuali.rice.kim.impl.permission.GenericPermissionBo" />
+    <bean parent="simpleReadOnlyMapBasedRestController" p:dataObjectClazz="org.kuali.rice.kim.impl.permission.GenericPermissionBo" />
     <bean parent="simpleCrudMapBasedRestController" p:dataObjectClazz="org.kuali.rice.kim.bo.ui.GroupDocumentMember" />
     <bean parent="simpleCrudMapBasedRestController" p:dataObjectClazz="org.kuali.rice.kim.bo.ui.GroupDocumentQualifier" />
     <bean parent="simpleCrudMapBasedRestController" p:dataObjectClazz="org.kuali.rice.kew.rule.GroupRuleResponsibility" />
@@ -469,7 +469,6 @@
     <bean parent="simpleCrudMapBasedRestController" p:dataObjectClazz="org.kuali.rice.ken.bo.NotificationRecipientBo" />
     <bean parent="simpleCrudMapBasedRestController" p:dataObjectClazz="org.kuali.rice.ken.bo.NotificationRecipientListBo" />
     <bean parent="simpleCrudMapBasedRestController" p:dataObjectClazz="org.kuali.rice.ken.bo.NotificationSenderBo" />
-    <bean parent="simpleCrudMapBasedRestController" p:dataObjectClazz="org.kuali.rice.kim.impl.permission.PermissionBo" />
     <bean parent="simpleCrudMapBasedRestController" p:dataObjectClazz="org.kuali.rice.kim.impl.permission.PermissionTemplateBo" />
     <bean parent="simpleCrudMapBasedRestController" p:dataObjectClazz="org.kuali.rice.kim.bo.ui.PersonDocumentAddress" />
     <bean parent="simpleCrudMapBasedRestController" p:dataObjectClazz="org.kuali.rice.kim.bo.ui.PersonDocumentAffiliation" />
@@ -611,5 +610,6 @@
     <bean parent="simpleCrudMapBasedRestController" p:dataObjectClazz="org.kuali.rice.krms.impl.repository.TermResolverParameterSpecificationBo" />
     <bean parent="simpleCrudMapBasedRestController" p:dataObjectClazz="org.kuali.rice.krms.impl.repository.TermSpecificationBo" />
     <bean parent="simpleCrudMapBasedRestController" p:dataObjectClazz="org.kuali.rice.krms.impl.repository.TypeTypeRelationBo" />
+    <bean id="permissionController" class="org.kuali.coeus.sys.impl.auth.PermissionController" p:dataObjectClazz="org.kuali.rice.kim.impl.permission.PermissionBo" />
 
 </beans>
