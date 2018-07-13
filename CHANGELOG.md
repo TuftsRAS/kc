@@ -1,6 +1,14 @@
 
 
 ## CURRENT
+* RESKC-2977: Increased width of Sponsor Code column to 20 chars (#2964)
+
+* RESKC-2977: Increased width of Sponsor Code column to 20 chars
+  * 
+* RESKC-2977: Fixed length
+  * Gayathri Athreya on Fri, 13 Jul 2018 06:45:41 -0700 [View Commit](../../commit/1ac3bea2086ba812fbf91284075b70bb861fef9f)
+
+## coeus-1807.0006
 * No Changes
 
 
