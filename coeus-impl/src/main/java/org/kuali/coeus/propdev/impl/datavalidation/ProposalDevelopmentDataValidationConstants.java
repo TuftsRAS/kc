@@ -27,6 +27,7 @@ public final class ProposalDevelopmentDataValidationConstants {
     public static final String CFDA_NUMBER_KEY = "document.developmentProposal.cfdaNumber";
     public static final String OPPORTUNITY_TITLE_KEY="document.developmentProposal.programAnnouncementTitle";
     public static final String SPONSOR_PROPOSAL_KEY = "document.developmentProposal.sponsorProposalNumber";
+    public static final String SPONSOR_KEY = "document.developmentProposal.sponsorCode";
     public static final String PRIME_SPONSOR_KEY = "document.developmentProposal.primeSponsorCode";
     public static final String PREV_GG_TRACKING_ID_KEY = "document.developmentProposal.prevGrantsGovTrackingID";
     public static final String SPONSOR_DIV_CODE_KEY = "document.developmentProposal.agencyDivisionCode";

@@ -9,6 +9,7 @@ package org.kuali.coeus.propdev.impl.core;
 
 import org.apache.commons.lang3.StringUtils;
 import org.kuali.coeus.common.api.sponsor.SponsorService;
+import org.kuali.coeus.common.budget.framework.core.Budget;
 import org.kuali.coeus.common.framework.compliance.core.SaveSpecialReviewEvent;
 import org.kuali.coeus.common.framework.compliance.core.SaveSpecialReviewRule;
 import org.kuali.coeus.common.framework.custom.SaveCustomDataEvent;
@@ -16,19 +17,13 @@ import org.kuali.coeus.common.framework.ruleengine.KcBusinessRulesEngine;
 import org.kuali.coeus.common.framework.ynq.YnqGroupName;
 import org.kuali.coeus.common.impl.custom.CustomDataRule;
 import org.kuali.coeus.propdev.api.core.SubmissionInfoService;
+import org.kuali.coeus.propdev.impl.abstrct.AbstractsRule;
+import org.kuali.coeus.propdev.impl.abstrct.ProposalAbstract;
 import org.kuali.coeus.propdev.impl.abstrct.ProposalDevelopmentAbstractsRule;
 import org.kuali.coeus.propdev.impl.attachment.*;
 import org.kuali.coeus.propdev.impl.attachment.institute.*;
-import org.kuali.coeus.propdev.impl.abstrct.AbstractsRule;
-import org.kuali.coeus.propdev.impl.abstrct.ProposalAbstract;
 import org.kuali.coeus.propdev.impl.basic.ProposalDevelopmentProposalRequiredFieldsAuditRule;
 import org.kuali.coeus.propdev.impl.budget.ProposalBudgetService;
-import org.kuali.coeus.propdev.impl.datavalidation.ProposalDevelopmentDataValidationConstants;
-import org.kuali.coeus.propdev.impl.krms.ProposalDevelopmentKRMSAuditRule;
-import org.kuali.coeus.propdev.impl.specialreview.ProposalSpecialReview;
-import org.kuali.coeus.propdev.impl.sponsor.AddProposalSponsorAndProgramInformationRule;
-import org.kuali.coeus.propdev.impl.sponsor.AddProposalSponsorAndProgramInformationRuleImpl;
-import org.kuali.coeus.propdev.impl.sponsor.ProposalDevelopmentSponsorProgramInformationAuditRule;
 import org.kuali.coeus.propdev.impl.budget.editable.BudgetDataOverrideEvent;
 import org.kuali.coeus.propdev.impl.budget.editable.BudgetDataOverrideRule;
 import org.kuali.coeus.propdev.impl.budget.editable.ProposalBudgetDataOverrideRule;
@@ -36,27 +31,31 @@ import org.kuali.coeus.propdev.impl.copy.CopyProposalRule;
 import org.kuali.coeus.propdev.impl.copy.ProposalCopyCriteria;
 import org.kuali.coeus.propdev.impl.copy.ProposalDevelopmentCopyRule;
 import org.kuali.coeus.propdev.impl.custom.AuditProposalCustomDataEvent;
-import org.kuali.coeus.propdev.impl.docperm.*;
+import org.kuali.coeus.propdev.impl.datavalidation.ProposalDevelopmentDataValidationConstants;
+import org.kuali.coeus.propdev.impl.docperm.PermissionsRule;
+import org.kuali.coeus.propdev.impl.docperm.ProposalDevelopmentPermissionsRule;
+import org.kuali.coeus.propdev.impl.docperm.ProposalUserRoles;
 import org.kuali.coeus.propdev.impl.editable.ProposalDataOverrideEvent;
 import org.kuali.coeus.propdev.impl.editable.ProposalDataOverrideRule;
 import org.kuali.coeus.propdev.impl.editable.ProposalDevelopmentDataOverrideRule;
+import org.kuali.coeus.propdev.impl.hierarchy.ProposalHierarchyException;
 import org.kuali.coeus.propdev.impl.keyword.PropScienceKeyword;
+import org.kuali.coeus.propdev.impl.krms.ProposalDevelopmentKRMSAuditRule;
 import org.kuali.coeus.propdev.impl.location.*;
-import org.kuali.coeus.propdev.impl.person.KeyPersonnelAuditRule;
-import org.kuali.coeus.propdev.impl.person.KeyPersonnelCertificationRule;
-import org.kuali.coeus.propdev.impl.person.ProposalPerson;
+import org.kuali.coeus.propdev.impl.person.*;
 import org.kuali.coeus.propdev.impl.person.attachment.*;
 import org.kuali.coeus.propdev.impl.person.creditsplit.CalculateCreditSplitRule;
-import org.kuali.coeus.propdev.impl.person.AddKeyPersonRule;
-import org.kuali.coeus.propdev.impl.person.ChangeKeyPersonRule;
-import org.kuali.coeus.propdev.impl.person.ProposalDevelopmentKeyPersonsRule;
-import org.kuali.coeus.propdev.impl.person.SaveKeyPersonRule;
 import org.kuali.coeus.propdev.impl.questionnaire.ProposalDevelopmentQuestionnaireAuditRule;
 import org.kuali.coeus.propdev.impl.resubmit.ProposalDevelopmentResubmissionPromptRule;
 import org.kuali.coeus.propdev.impl.resubmit.ResubmissionPromptRule;
 import org.kuali.coeus.propdev.impl.resubmit.ResubmissionRuleEvent;
 import org.kuali.coeus.propdev.impl.s2s.ProposalDevelopmentGrantsGovAuditRule;
 import org.kuali.coeus.propdev.impl.s2s.question.ProposalDevelopmentS2sQuestionnaireAuditRule;
+import org.kuali.coeus.propdev.impl.specialreview.ProposalSpecialReview;
+import org.kuali.coeus.propdev.impl.sponsor.AddProposalSponsorAndProgramInformationRule;
+import org.kuali.coeus.propdev.impl.sponsor.AddProposalSponsorAndProgramInformationRuleImpl;
+import org.kuali.coeus.propdev.impl.sponsor.ProposalDevelopmentSponsorAuditRule;
+import org.kuali.coeus.propdev.impl.sponsor.ProposalDevelopmentSponsorProgramInformationAuditRule;
 import org.kuali.coeus.propdev.impl.ynq.ProposalDevelopmentYnqAuditRule;
 import org.kuali.coeus.propdev.impl.ynq.ProposalYnq;
 import org.kuali.coeus.sys.framework.model.KcTransactionalDocumentBase;
@@ -65,30 +64,28 @@ import org.kuali.coeus.sys.framework.rule.KcDocumentEventBaseExtension;
 import org.kuali.coeus.sys.framework.rule.KcTransactionalDocumentRuleBase;
 import org.kuali.coeus.sys.framework.service.KcServiceLocator;
 import org.kuali.coeus.sys.framework.util.DateUtils;
-import org.kuali.coeus.common.budget.framework.core.Budget;
 import org.kuali.kra.award.home.Award;
 import org.kuali.kra.infrastructure.Constants;
 import org.kuali.kra.infrastructure.KeyConstants;
-import org.kuali.coeus.propdev.impl.hierarchy.ProposalHierarchyException;
 import org.kuali.rice.core.api.util.RiceKeyConstants;
 import org.kuali.rice.coreservice.framework.parameter.ParameterService;
 import org.kuali.rice.kns.service.DataDictionaryService;
 import org.kuali.rice.kns.service.KNSServiceLocator;
-import org.kuali.rice.krad.util.AuditCluster;
-import org.kuali.rice.krad.util.AuditError;
-import org.kuali.rice.krad.util.GlobalVariables;
 import org.kuali.rice.krad.bo.BusinessObject;
 import org.kuali.rice.krad.document.Document;
 import org.kuali.rice.krad.rules.rule.DocumentAuditRule;
 import org.kuali.rice.krad.rules.rule.event.ApproveDocumentEvent;
+import org.kuali.rice.krad.util.AuditCluster;
+import org.kuali.rice.krad.util.AuditError;
+import org.kuali.rice.krad.util.GlobalVariables;
 import org.kuali.rice.krad.util.MessageMap;
-
-import static org.kuali.coeus.propdev.impl.core.ProposalDevelopmentConstants.PropDevParameterConstants.ENABLE_KEY_PERSON_VALIDATION_FOR_NON_EMPLOYEE_PERSONNEL;
-import static org.kuali.kra.infrastructure.KeyConstants.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import static org.kuali.coeus.propdev.impl.core.ProposalDevelopmentConstants.PropDevParameterConstants.ENABLE_KEY_PERSON_VALIDATION_FOR_NON_EMPLOYEE_PERSONNEL;
+import static org.kuali.kra.infrastructure.KeyConstants.ERROR_PROPOSAL_PERSON_NONEMPLOYEE_CERTIFICATION_INCOMPLETE;
 
 
 /**
@@ -177,7 +174,6 @@ public class ProposalDevelopmentDocumentRule extends KcTransactionalDocumentRule
             valid &= processProposalGrantsGovBusinessRule(proposalDevelopmentDocument);
             valid &= processSponsorProgramBusinessRule(proposalDevelopmentDocument);
             valid &= processKeywordBusinessRule(proposalDevelopmentDocument);
-            valid &= proccessValidateSponsor(proposalDevelopmentDocument);
             valid &= processCustomDataRule(proposalDevelopmentDocument);
             valid &= processAttachmentRules(proposalDevelopmentDocument);
             valid &= processSaveSpecialReviewRule(proposalDevelopmentDocument);
@@ -216,22 +212,6 @@ public class ProposalDevelopmentDocumentRule extends KcTransactionalDocumentRule
         retval &= new KeyPersonnelCertificationRule().processApproveDocument(approveEvent);
         
         return retval;
-    }
-    
-    private boolean proccessValidateSponsor(ProposalDevelopmentDocument proposalDevelopmentDocument) {
-        boolean valid = true;
-        DataDictionaryService dataDictionaryService = getDataDictionaryService();
-        if (!this.getSponsorService().isValidSponsor(proposalDevelopmentDocument.getDevelopmentProposal().getSponsor())) {
-            valid = false;
-            GlobalVariables.getMessageMap().putError("sponsorCode", KeyConstants.ERROR_MISSING, dataDictionaryService.getAttributeErrorLabel(DevelopmentProposal.class, "sponsorCode"));
-        }
-        if (!StringUtils.isEmpty(proposalDevelopmentDocument.getDevelopmentProposal().getPrimeSponsorCode()) && 
-                !this.getSponsorService().isValidSponsor(proposalDevelopmentDocument.getDevelopmentProposal().getPrimeSponsor())) {
-            valid = false;
-            GlobalVariables.getMessageMap().putError("primeSponsorCode", KeyConstants.ERROR_MISSING, dataDictionaryService.getAttributeErrorLabel(DevelopmentProposal.class, "primeSponsorCode"));
-            
-        }
-        return valid;
     }
 
     @Override
@@ -470,9 +450,7 @@ public class ProposalDevelopmentDocumentRule extends KcTransactionalDocumentRule
         if (((ProposalDevelopmentDocument)document).getDevelopmentProposal().isChild()) {
             throw new RuntimeException(new ProposalHierarchyException("Cannot run validation on a Proposal Hierarchy Child."));
         }
-        boolean retval = true;
-
-        retval &= processAttachmentAuditRules((ProposalDevelopmentDocument)document);
+        boolean retval = processAttachmentAuditRules((ProposalDevelopmentDocument)document);
 
         retval &= new CustomDataRule().processRules(new AuditProposalCustomDataEvent((KcTransactionalDocumentBase)document));
         
@@ -502,6 +480,8 @@ public class ProposalDevelopmentDocumentRule extends KcTransactionalDocumentRule
         // audit check for budgetversion with final status
         retval &= processRunAuditBudgetVersionRule(proposalDevelopmentDocument.getDevelopmentProposal());
         retval &= new ProposalDevelopmentKRMSAuditRule().processRunAuditBusinessRules(proposalDevelopmentDocument);
+
+        retval &= new ProposalDevelopmentSponsorAuditRule().processRunAuditBusinessRules(document);
        
         return retval;
     }

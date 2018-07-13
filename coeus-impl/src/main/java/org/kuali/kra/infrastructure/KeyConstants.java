@@ -29,6 +29,8 @@ public final class KeyConstants {
     public static final String ERROR_REQUIRED_GG_TRACKING_ID = "error.ggtrackingid.required";
     public static final String ERROR_REQUIRED_SPONSOR_DIV_CODE = "error.required.divisionCode";
     public static final String ERROR_REQUIRED_SPONSOR_PROGRAM_CODE = "error.required.programCode";
+    public static final String WARNING_PROPOSAL_INACTIVE_SPONSOR = "warning.proposal.inactive.sponsor";
+    public static final String WARNING_PROPOSAL_INACTIVE_PRIMESPONSOR = "warning.proposal.inactive.primesponsor";
 
 
     public static final String QUESTION_DELETE_CONFIRMATION = "document.question.delete.text";
