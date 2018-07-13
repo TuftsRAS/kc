@@ -1,6 +1,11 @@
 
 
 ## CURRENT
+* RESKC-2996: Moving sponsor inactive validations to validation errors to avoid issue that didn't allowed viewing approved proposal with inactive sponsor. (#2967)
+
+  * Omar Soto Fortuño on Fri, 13 Jul 2018 10:51:44 -0400 [View Commit](../../commit/9fe09eab383804465c0b8436c660d895fccb41a3)
+
+## coeus-1807.0007
 * RESKC-2977: Increased width of Sponsor Code column to 20 chars (#2964)
 
 * RESKC-2977: Increased width of Sponsor Code column to 20 chars
