@@ -592,7 +592,7 @@
         <property name="forceUppercase" value="false"/>
         <property name="label" value="Sponsor ID"/>
         <property name="shortLabel" value="Sponsor"/>
-        <property name="maxLength" value="6"/>
+    <property name="maxLength" value="20" />
         <property name="validationPattern">
             <bean parent="AnyCharacterValidationPattern"/>
         </property>
@@ -601,10 +601,10 @@
         </property>
         <property name="required" value="true"/>
         <property name="control">
-            <bean parent="TextControlDefinition" p:size="12"/>
+      <bean parent="TextControlDefinition" p:size="20"/>
         </property>
         <property name="controlField">
-            <bean p:size="12" parent="Uif-TextControl"/>
+      <bean p:size="20" parent="Uif-TextControl"/>
         </property>
         <property name="summary" value="Agency/Sponsor #"/>
         <property name="description"
