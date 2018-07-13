@@ -1,6 +1,11 @@
 
 
 ## CURRENT
+* fixOracle (#2968)
+
+  * Gayathri Athreya on Fri, 13 Jul 2018 09:26:42 -0700 [View Commit](../../commit/44520d93f9bcb8cc3aa9ff626f4aa276173026aa)
+
+## coeus-1807.0008
 * RESKC-2996: Moving sponsor inactive validations to validation errors to avoid issue that didn't allowed viewing approved proposal with inactive sponsor. (#2967)
 
   * Omar Soto Fortuño on Fri, 13 Jul 2018 10:51:44 -0400 [View Commit](../../commit/9fe09eab383804465c0b8436c660d895fccb41a3)
