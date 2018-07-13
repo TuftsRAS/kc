@@ -7,8 +7,8 @@
  */
 package org.kuali.kra.external.award.impl;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.common.framework.version.VersionStatus;
 import org.kuali.kra.award.home.Award;
 import org.kuali.kra.external.award.AwardAccountDTO;
@@ -33,7 +33,7 @@ public class AwardAccountServiceImpl implements AwardAccountService {
     private BusinessObjectService businessObjectService;
     private ParameterService parameterService;
 
-    private static final Log LOG = LogFactory.getLog(AwardAccountServiceImpl.class);
+    private static final Logger LOG = LogManager.getLogger(AwardAccountServiceImpl.class);
     private KcDtoService<AwardAccountDTO, Award> awardAccountDtoService;
 
     /**

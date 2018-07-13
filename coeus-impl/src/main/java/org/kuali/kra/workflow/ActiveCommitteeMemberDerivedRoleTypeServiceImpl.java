@@ -23,7 +23,7 @@ import java.util.*;
 public class ActiveCommitteeMemberDerivedRoleTypeServiceImpl extends DerivedRoleTypeServiceBase {
     
     private CommitteeService committeeService;
-    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(ActiveCommitteeMemberDerivedRoleTypeServiceImpl.class);
+    private static final org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger(ActiveCommitteeMemberDerivedRoleTypeServiceImpl.class);
     private static final String DEFAULT_QUALIFYING_COMMITTEE_MEMBERSHIP_TYPE_CODE = "1";
  
     /**

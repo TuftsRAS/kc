@@ -7,8 +7,8 @@
  */
 package org.kuali.coeus.common.impl.version;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.common.framework.version.sequence.Sequenceable;
 import org.kuali.coeus.common.framework.version.sequence.associate.SeparatelySequenceableAssociate;
 import org.kuali.coeus.common.framework.version.sequence.owner.SequenceOwner;
@@ -31,7 +31,7 @@ public class VersioningServiceImpl implements VersioningService {
     private static final String TO = " to ";
     private static final String VERSIONED_FROM = " versioned from ";
     private static final String PERIOD = ".";
-    private static final Log LOG = LogFactory.getLog(VersioningServiceImpl.class);
+    private static final Logger LOG = LogManager.getLogger(VersioningServiceImpl.class);
     
     @Override
     public <T extends SequenceOwner<?>> T createNewVersion(T oldVersion) throws VersionException {

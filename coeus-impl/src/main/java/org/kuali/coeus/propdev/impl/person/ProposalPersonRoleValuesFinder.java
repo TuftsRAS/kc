@@ -15,7 +15,7 @@ import org.kuali.rice.krad.uif.field.InputField;
 import org.kuali.rice.krad.uif.view.ViewModel;
 
 public class ProposalPersonRoleValuesFinder extends PropAwardPersonRoleValuesFinder {
-    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(PropAwardPersonRoleValuesFinder.class);
+    private static final org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger(PropAwardPersonRoleValuesFinder.class);
 
     @Override
 	protected String getSponsorCodeFromModel(ViewModel model) {

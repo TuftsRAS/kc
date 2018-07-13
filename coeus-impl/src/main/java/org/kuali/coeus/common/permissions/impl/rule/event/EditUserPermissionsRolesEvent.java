@@ -25,7 +25,7 @@ import java.util.List;
  */
 public class EditUserPermissionsRolesEvent extends KcDocumentEventBase {
     
-    private static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(EditUserPermissionsRolesEvent.class);
+    private static final org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger(EditUserPermissionsRolesEvent.class);
     
     private PermissionsUserEditRoles editRoles;
     private List<User> users;

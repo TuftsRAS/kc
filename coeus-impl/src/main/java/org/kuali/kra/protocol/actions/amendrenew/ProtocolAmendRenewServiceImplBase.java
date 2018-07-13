@@ -14,8 +14,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.kuali.coeus.common.questionnaire.framework.answer.AnswerHeader;
 import org.kuali.coeus.common.questionnaire.framework.answer.ModuleQuestionnaireBean;
 import org.kuali.coeus.common.questionnaire.framework.answer.QuestionnaireAnswerService;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.kra.dao.KraLookupDao;
 import org.kuali.kra.protocol.ProtocolBase;
 import org.kuali.kra.protocol.ProtocolDocumentBase;
@@ -47,7 +47,7 @@ import java.util.concurrent.TimeUnit;
 
 public abstract class ProtocolAmendRenewServiceImplBase implements ProtocolAmendRenewService {
 
-    private static Log LOGGER = LogFactory.getLog(ProtocolAmendRenewServiceImplBase.class);
+    private static Logger LOGGER = LogManager.getLogger(ProtocolAmendRenewServiceImplBase.class);
     protected static final int DIGIT_COUNT = 3;
     protected static final String AMEND_NEXT_VALUE = "nextAmendValue";
     protected static final String RENEW_NEXT_VALUE = "nextRenewValue";

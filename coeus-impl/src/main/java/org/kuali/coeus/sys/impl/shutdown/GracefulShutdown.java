@@ -10,8 +10,8 @@
 package org.kuali.coeus.sys.impl.shutdown;
 
 import co.kuali.coeus.sys.impl.shutdown.GrmGracefulShutdown;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.stereotype.Component;
 
@@ -25,7 +25,7 @@ import java.util.Collections;
 @Component("gracefulShutdown")
 public class GracefulShutdown implements DisposableBean {
 
-    private static final Log LOG = LogFactory.getLog(GrmGracefulShutdown.class);
+    private static final Logger LOG = LogManager.getLogger(GrmGracefulShutdown.class);
 
     @Override
     public void destroy() throws Exception {

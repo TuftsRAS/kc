@@ -9,8 +9,8 @@ package org.kuali.kra.award.lookup;
 
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.kra.award.AwardForm;
 import org.kuali.kra.award.home.Award;
 import org.kuali.kra.award.home.AwardAmountInfo;
@@ -29,7 +29,7 @@ public class AwardTransactionLookupServiceImpl implements AwardTransactionLookup
     private static final String INITIAL = "Initial";
 
     private BusinessObjectService businessObjectService;
-    private static final Log LOG = LogFactory.getLog(AwardTransactionLookupServiceImpl.class);
+    private static final Logger LOG = LogManager.getLogger(AwardTransactionLookupServiceImpl.class);
     
     @Override
     public Map<Integer, String> getApplicableTransactionIds(String awardNumber, Integer sequenceNumber) {

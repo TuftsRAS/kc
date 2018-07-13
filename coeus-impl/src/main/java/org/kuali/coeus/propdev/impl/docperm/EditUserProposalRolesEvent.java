@@ -22,7 +22,7 @@ import java.util.List;
  * @author Kuali Research Administration Team (kualidev@oncourse.iu.edu)
  */
 public class EditUserProposalRolesEvent extends KcDocumentEventBase {
-    private static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(EditUserProposalRolesEvent.class);
+    private static final org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger(EditUserProposalRolesEvent.class);
     
     private ProposalUserRoles editRoles;
     private List<ProposalUserRoles> list;

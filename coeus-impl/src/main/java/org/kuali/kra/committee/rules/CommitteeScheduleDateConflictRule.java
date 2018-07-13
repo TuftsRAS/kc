@@ -24,7 +24,7 @@ import java.util.Set;
 public class CommitteeScheduleDateConflictRule extends KcTransactionalDocumentRuleBase implements KcBusinessRule<CommitteeScheduleDateConflictEvent> {
     
     @SuppressWarnings("unused")
-    private static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(CommitteeScheduleDateConflictRule.class);
+    private static final org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger(CommitteeScheduleDateConflictRule.class);
     
     public static final String ID = "document.committeeList[0].committeeSchedules[%1$s].scheduledDate";
     

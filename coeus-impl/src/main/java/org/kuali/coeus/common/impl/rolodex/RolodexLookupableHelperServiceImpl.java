@@ -10,8 +10,6 @@ package org.kuali.coeus.common.impl.rolodex;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.kuali.coeus.common.framework.rolodex.Rolodex;
 import org.kuali.coeus.sys.framework.lookup.KcKualiLookupableHelperServiceImpl;
 import org.kuali.rice.kns.lookup.HtmlData;
@@ -24,8 +22,6 @@ import org.springframework.stereotype.Component;
 @Component("rolodexLookupableHelperService")
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class RolodexLookupableHelperServiceImpl extends KcKualiLookupableHelperServiceImpl {
-
-    private final Log LOG = LogFactory.getLog(RolodexLookupableHelperServiceImpl.class);
 
     private static final String IS_SPONSOR_ADDRESS = "isSponsorAddress";
     private static final String SPONSOR_NAME = "sponsor.sponsorName";

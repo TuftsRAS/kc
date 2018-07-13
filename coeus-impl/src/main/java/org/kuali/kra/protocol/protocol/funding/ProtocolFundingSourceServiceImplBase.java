@@ -8,8 +8,8 @@
 package org.kuali.kra.protocol.protocol.funding;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.common.api.sponsor.SponsorService;
 import org.kuali.coeus.common.framework.sponsor.Sponsor;
 import org.kuali.coeus.common.framework.unit.Unit;
@@ -61,7 +61,7 @@ public abstract class ProtocolFundingSourceServiceImplBase implements ProtocolFu
     private static final String AWARD_NUMBER = "awardNumber";
     
     private static final String MAINT_DOC_LOOKUP_URL_PREFIX = "${kuali.docHandler.url.prefix}/kr/";
-    private static final Log LOG = LogFactory.getLog(ProtocolFundingSourceServiceImplBase.class);
+    private static final Logger LOG = LogManager.getLogger(ProtocolFundingSourceServiceImplBase.class);
 
     private FundingSourceTypeService fundingSourceTypeService;
     private SponsorService sponsorService;

@@ -8,8 +8,8 @@
 package org.kuali.coeus.common.budget.impl.struts;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -68,7 +68,7 @@ public class BudgetActionsAction extends BudgetAction implements AuditModeAction
     private static final String UPDATE_COST_LIMITS_QUESTION = "UpdateCostLimitsQuestion";
     private BudgetJustificationService budgetJustificationService;
     private PropDevBudgetSubAwardService propDevBudgetSubAwardService;
-    private static final Log LOG = LogFactory.getLog(BudgetActionsAction.class);
+    private static final Logger LOG = LogManager.getLogger(BudgetActionsAction.class);
     private KcBusinessRulesEngine kcBusinessRulesEngine;
     private AwardBudgetService awardBudgetService;
 

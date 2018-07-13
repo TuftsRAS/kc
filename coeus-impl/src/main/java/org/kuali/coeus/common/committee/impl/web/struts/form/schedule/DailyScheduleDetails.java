@@ -13,7 +13,7 @@ package org.kuali.coeus.common.committee.impl.web.struts.form.schedule;
 public class DailyScheduleDetails extends ScheduleDetails {
     
     @SuppressWarnings("unused")
-    private static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(DailyScheduleDetails.class);
+    private static final org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger(DailyScheduleDetails.class);
     
     private int defaultDay;
 

@@ -9,8 +9,8 @@ package org.kuali.kra.award;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.kra.award.document.AwardDocument;
 import org.kuali.kra.award.home.*;
 import org.kuali.kra.award.paymentreports.awardreports.AwardReportTermRecipient;
@@ -30,7 +30,7 @@ public class AwardTemplateSyncServiceImpl implements AwardTemplateSyncService {
     private BusinessObjectService businessObjectService;
     private KualiRuleService kualiRuleService;
     
-    private static final Log LOG = LogFactory.getLog(AwardTemplateSyncService.class);
+    private static final Logger LOG = LogManager.getLogger(AwardTemplateSyncService.class);
     
     @Override
     public boolean syncAwardToTemplate(AwardDocument awardDocument, AwardTemplateSyncScope[] scopes ) {

@@ -14,8 +14,8 @@ import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.common.framework.attachment.KcAttachmentDataDao;
 import org.kuali.coeus.common.framework.attachment.KcAttachmentDataDaoConversion;
 import org.quartz.JobExecutionContext;
@@ -24,7 +24,7 @@ import org.springframework.scheduling.quartz.QuartzJobBean;
 
 public class KcAttachmentDataDaoConversionImpl extends QuartzJobBean implements KcAttachmentDataDaoConversion {
 
-	private static final Log LOG = LogFactory.getLog(KcAttachmentDataDaoConversionImpl.class);
+	private static final Logger LOG = LogManager.getLogger(KcAttachmentDataDaoConversionImpl.class);
 
 	private KcAttachmentDataDao kcAttachmentDataDao;
 

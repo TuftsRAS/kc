@@ -34,7 +34,7 @@ public class ProposalDevelopmentInstituteAttachmentRule extends KcTransactionalD
     private static final String NEW_INSTITUTE_ATTACHMENT = "newInstituteAttachment";
     private static final String NARRATIVE_TYPE_CODE = "code";
     private static final String NARRATIVE_FILE = ".narrativeFile";
-    private static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(ProposalDevelopmentInstituteAttachmentRule.class);
+    private static final org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger(ProposalDevelopmentInstituteAttachmentRule.class);
     private ParameterService parameterService;
     private KcAttachmentService kcAttachmentService;
     private DictionaryValidationService dictionaryValidationService;

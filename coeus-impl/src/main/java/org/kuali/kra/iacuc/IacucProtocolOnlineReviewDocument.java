@@ -41,7 +41,7 @@ public class IacucProtocolOnlineReviewDocument  extends ProtocolOnlineReviewDocu
 
     private static final long serialVersionUID = 43793212884887769L;
     private static final String DOCUMENT_TYPE_CODE = "PTRV";
-    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(IacucProtocolOnlineReviewDocument.class);
+    private static final org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger(IacucProtocolOnlineReviewDocument.class);
     private static final String OLR_DOC_ID_PARAM = "olrDocId";
     private static final String OLR_EVENT_PARAM = "olrEvent";
 

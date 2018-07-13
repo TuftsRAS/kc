@@ -7,7 +7,7 @@
  */
 package org.kuali.kra.iacuc.onlinereview;
 
-import org.apache.commons.logging.Log;
+import org.apache.logging.log4j.Logger;
 import org.kuali.coeus.common.framework.auth.perm.KcAuthorizationService;
 import org.kuali.coeus.common.framework.auth.task.TaskAuthorizationService;
 import org.kuali.coeus.sys.framework.service.KcServiceLocator;
@@ -32,7 +32,7 @@ public class IacucProtocolOnlineReviewForm  extends ProtocolOnlineReviewFormBase
 
     private static final long serialVersionUID = -5729500189953414964L;
   
-    private static org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(IacucProtocolOnlineReviewForm.class);
+    private static org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger(IacucProtocolOnlineReviewForm.class);
     
     private static final Map<String,String> ONLINE_REVIEW_APPROVE_BUTTON_MAP;
     
@@ -95,7 +95,7 @@ public class IacucProtocolOnlineReviewForm  extends ProtocolOnlineReviewFormBase
 
 
     @Override
-    protected Log getLogHook() {
+    protected Logger getLogHook() {
         return LOG;
     }
     

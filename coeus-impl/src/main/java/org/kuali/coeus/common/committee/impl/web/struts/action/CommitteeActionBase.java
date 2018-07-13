@@ -48,7 +48,7 @@ import static org.kuali.coeus.sys.framework.service.KcServiceLocator.getService;
 public abstract class CommitteeActionBase extends KcTransactionalDocumentActionBase {
     
     @SuppressWarnings("unused")
-    private static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(CommitteeActionBase.class);
+    private static final org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger(CommitteeActionBase.class);
     
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)

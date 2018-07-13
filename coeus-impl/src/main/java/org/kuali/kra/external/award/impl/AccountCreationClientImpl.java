@@ -8,8 +8,8 @@
 package org.kuali.kra.external.award.impl;
 
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.kfs.module.external.kc.service.AccountCreationService;
 import org.kuali.kfs.module.external.kc.service.AccountCreationServiceSOAP;
 import org.kuali.kra.external.award.AccountCreationClient;
@@ -33,7 +33,7 @@ public final class AccountCreationClientImpl extends AccountCreationClientBase {
     
     private static AccountCreationClientImpl client;
     
-    private static final Log LOG = LogFactory.getLog(AccountCreationClientImpl.class);
+    private static final Logger LOG = LogManager.getLogger(AccountCreationClientImpl.class);
     
     private AccountCreationClientImpl() {
     }

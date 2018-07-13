@@ -7,8 +7,8 @@
  */
 package org.kuali.kra.award.paymentreports.closeout;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.sys.framework.rule.KcDocumentEventBase;
 import org.kuali.kra.award.document.AwardDocument;
 import org.kuali.kra.award.home.Award;
@@ -18,7 +18,7 @@ import org.kuali.rice.krad.rules.rule.BusinessRule;
  * This the AwardCloseoutRuleEvent
  */
 public class AwardCloseoutRuleEvent extends KcDocumentEventBase {
-    private static final Log LOG = LogFactory.getLog(AwardCloseoutRuleEvent.class);
+    private static final Logger LOG = LogManager.getLogger(AwardCloseoutRuleEvent.class);
     
     private Award award;
     private AwardCloseout closeoutItem;

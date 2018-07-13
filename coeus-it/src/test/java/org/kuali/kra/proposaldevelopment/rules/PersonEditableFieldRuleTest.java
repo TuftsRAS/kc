@@ -7,8 +7,8 @@
  */
 package org.kuali.kra.proposaldevelopment.rules;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,7 +23,7 @@ import static org.junit.Assert.*;
 
 public class PersonEditableFieldRuleTest extends MaintenanceRuleTestBase {
 
-    private static final Log LOG = LogFactory.getLog(PersonEditableFieldRuleTest.class);
+    private static final Logger LOG = LogManager.getLogger(PersonEditableFieldRuleTest.class);
 
     private static final PersonEditableFieldFixture ADDRESS_LINE1_FIELD = PersonEditableFieldFixture.ADDRESS_LINE1_FIELD;
     private static final PersonEditableFieldFixture ADDRESS_LINE2_FIELD = PersonEditableFieldFixture.ADDRESS_LINE2_FIELD;

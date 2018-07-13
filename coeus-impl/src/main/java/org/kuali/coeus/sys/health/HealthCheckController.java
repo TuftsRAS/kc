@@ -11,8 +11,8 @@ import java.sql.Connection;
 
 import javax.sql.DataSource;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.rice.core.api.config.property.ConfigurationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -26,7 +26,7 @@ public class HealthCheckController {
 	
 	protected static final String DEFAULT_HEALTH_QUERY = "select 1 from dual";
 	
-	protected final Log LOG = LogFactory.getLog(HealthCheckController.class);
+	protected final Logger LOG = LogManager.getLogger(HealthCheckController.class);
 
 	@Autowired
 	@Qualifier("dataSource")

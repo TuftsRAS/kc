@@ -7,8 +7,8 @@
  */
 package org.kuali.coeus.common.budget.framework.nonpersonnel;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.w3c.dom.CDATASection;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -33,7 +33,7 @@ public class BudgetJustificationWrapper implements Serializable {
     private String justificationText;        
     private String lastUpdateTime;
     private String lastUpdateUser;        
-    private static final Log LOG = LogFactory.getLog(BudgetJustificationWrapper.class);
+    private static final Logger LOG = LogManager.getLogger(BudgetJustificationWrapper.class);
     
     public BudgetJustificationWrapper(String budgetJustificationAsXML) {
         super();

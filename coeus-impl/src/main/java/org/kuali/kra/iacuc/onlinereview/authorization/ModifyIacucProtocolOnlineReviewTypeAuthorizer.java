@@ -19,7 +19,7 @@ import java.util.Calendar;
 
 public class ModifyIacucProtocolOnlineReviewTypeAuthorizer extends IacucProtocolOnlineReviewAuthorizer {
 
-    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(ModifyIacucProtocolOnlineReviewTypeAuthorizer.class);
+    private static final org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger(ModifyIacucProtocolOnlineReviewTypeAuthorizer.class);
 
     private KcWorkflowService kraWorkflowService;
 

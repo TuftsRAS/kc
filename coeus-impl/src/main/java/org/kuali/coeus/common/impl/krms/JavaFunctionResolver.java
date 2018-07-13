@@ -7,8 +7,8 @@
  */
 package org.kuali.coeus.common.impl.krms;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.sys.framework.service.KcServiceLocator;
 import org.kuali.rice.krms.api.repository.function.FunctionDefinition;
 import org.kuali.rice.krms.api.repository.function.FunctionParameterDefinition;
@@ -22,7 +22,7 @@ import java.util.*;
  */
 public class JavaFunctionResolver extends FunctionTermResolver {
     
-    protected final Log LOG = LogFactory.getLog(JavaFunctionResolver.class);
+    protected final Logger LOG = LogManager.getLogger(JavaFunctionResolver.class);
 
     public JavaFunctionResolver(List<String> orderedInputParams, Set<String> parameterNames, String output,FunctionDefinition functionTerm) {
         super(orderedInputParams, parameterNames, output);

@@ -9,8 +9,8 @@ package org.kuali.coeus.propdev.impl.s2s;
 
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.propdev.impl.core.ProposalDevelopmentDocumentForm;
 import org.kuali.coeus.sys.framework.gv.GlobalVariableService;
 import org.kuali.kra.infrastructure.Constants;
@@ -24,7 +24,7 @@ import java.util.Map;
 @Component("statusDetailsAjaxService")
 public class StatusDetailsAjaxServiceImpl implements StatusDetailsAjaxService {
 
-    private static final Log LOG = LogFactory.getLog(StatusDetailsAjaxServiceImpl.class);
+    private static final Logger LOG = LogManager.getLogger(StatusDetailsAjaxServiceImpl.class);
 
     @Autowired
     @Qualifier("s2sSubmissionService")

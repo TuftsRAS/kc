@@ -8,8 +8,8 @@
 package org.kuali.kra.test;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.junit.*;
 import org.kuali.rice.core.api.config.property.Config;
 import org.kuali.rice.core.api.util.ClassLoaderUtils;
@@ -47,7 +47,7 @@ import java.util.Properties;
  */
 public class OjbRepositoryMappingTest {
     
-    private static final Log LOG = LogFactory.getLog(OjbRepositoryMappingTest.class);
+    private static final Logger LOG = LogManager.getLogger(OjbRepositoryMappingTest.class);
     
     private static final String INTERNAL_TEST_CONFIG_FILE_PATH = "classpath:META-INF/kc-test-config.xml";
     

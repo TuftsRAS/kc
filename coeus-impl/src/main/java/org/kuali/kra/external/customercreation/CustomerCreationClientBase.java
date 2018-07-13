@@ -13,8 +13,8 @@ import java.util.List;
 import javax.xml.namespace.QName;
 
 import org.apache.commons.beanutils.BeanUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.kfs.module.external.kc.dto.CustomerCreationStatusDto;
 import org.kuali.kfs.module.external.kc.dto.CustomerTypeDto;
 import org.kuali.kfs.module.external.kc.dto.RolodexDTO;
@@ -32,7 +32,7 @@ public abstract class CustomerCreationClientBase implements CustomerCreationClie
 	protected static final String SOAP_SERVICE_NAME = "customerCreationServiceSOAP";
 	protected static final QName SERVICE_NAME = new QName(Constants.FINANCIAL_SYSTEM_SERVICE_NAMESPACE, SOAP_SERVICE_NAME);
     private static final String ERROR_MESSAGE = "Cannot connect to the service. The service may be down, please try again later.";
-    private static final Log LOG = LogFactory.getLog(CustomerCreationClientBase.class);
+    private static final Logger LOG = LogManager.getLogger(CustomerCreationClientBase.class);
     
     private KcDtoService<org.kuali.kra.external.sponsor.SponsorDTO, Sponsor> sponsorDtoService;
     private ParameterService parameterService;

@@ -8,8 +8,8 @@
 package org.kuali.coeus.sys.impl.workflow;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.sys.framework.workflow.KcDocumentRejectionService;
 import org.kuali.rice.kew.api.WorkflowDocument;
 import org.kuali.rice.kew.api.doctype.DocumentTypeService;
@@ -27,7 +27,7 @@ import java.util.Collection;
 @Component("kcDocumentRejectionService")
 public class KcDocumentRejectionServiceImpl implements KcDocumentRejectionService {
 
-    private static final Log LOG = LogFactory.getLog(KcDocumentRejectionServiceImpl.class);
+    private static final Logger LOG = LogManager.getLogger(KcDocumentRejectionServiceImpl.class);
 
     @Autowired
     @Qualifier("routeHeaderService")

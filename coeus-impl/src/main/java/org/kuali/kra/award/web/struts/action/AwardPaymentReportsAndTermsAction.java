@@ -9,8 +9,8 @@ package org.kuali.kra.award.web.struts.action;
 
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -50,7 +50,7 @@ import java.util.stream.Collectors;
  * Reports &amp; Terms page(AwardPaymentsReportsAndTerms.jsp)
  */
 public class AwardPaymentReportsAndTermsAction extends AwardAction {
-    private static final Log LOG = LogFactory.getLog( AwardPaymentReportsAndTermsAction.class );
+    private static final Logger LOG = LogManager.getLogger( AwardPaymentReportsAndTermsAction.class );
     private static final String ROLODEX = "rolodex";
     private static final String PERIOD = ".";    
     private static final String AWARD_REPORT_TERM_PROPERTY = "awardReportTermItems";

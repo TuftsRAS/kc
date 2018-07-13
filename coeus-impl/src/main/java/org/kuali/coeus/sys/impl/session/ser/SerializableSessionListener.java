@@ -9,8 +9,8 @@ package org.kuali.coeus.sys.impl.session.ser;
 
 
 import org.apache.commons.lang3.SystemUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import javax.servlet.http.HttpSessionAttributeListener;
 import javax.servlet.http.HttpSessionBindingEvent;
@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 
 public class SerializableSessionListener implements HttpSessionAttributeListener {
 
-    private static final Log LOG = LogFactory.getLog(SerializableSessionListener.class);
+    private static final Logger LOG = LogManager.getLogger(SerializableSessionListener.class);
 
     @Override
     public void attributeAdded(HttpSessionBindingEvent event) {

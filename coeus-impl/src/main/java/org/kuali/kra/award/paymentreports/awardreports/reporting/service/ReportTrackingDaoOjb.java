@@ -8,8 +8,8 @@
 package org.kuali.kra.award.paymentreports.awardreports.reporting.service;
 
 import org.apache.commons.beanutils.BeanUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.apache.ojb.broker.query.*;
 import org.kuali.coeus.common.framework.version.VersionStatus;
 import org.kuali.kra.award.home.Award;
@@ -30,7 +30,7 @@ import java.util.*;
  */
 public class ReportTrackingDaoOjb extends LookupDaoOjb implements ReportTrackingDao {
 
-    private static final Log LOG = LogFactory.getLog(ReportTrackingDaoOjb.class);
+    private static final Logger LOG = LogManager.getLogger(ReportTrackingDaoOjb.class);
 
     private PersistenceStructureService persistenceStructureServiceLocal;
 

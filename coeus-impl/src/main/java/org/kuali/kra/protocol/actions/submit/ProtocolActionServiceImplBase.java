@@ -9,7 +9,7 @@ package org.kuali.kra.protocol.actions.submit;
 
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
+import org.apache.logging.log4j.Logger;
 import org.kuali.coeus.common.framework.auth.UnitAuthorizationService;
 import org.kuali.coeus.common.framework.auth.perm.KcAuthorizationService;
 import org.kuali.kra.irb.actions.ProtocolActionType;
@@ -168,7 +168,7 @@ public abstract class ProtocolActionServiceImplBase implements ProtocolActionSer
     }
 
    
-    protected abstract Log getLOGHook();
+    protected abstract Logger getLOGHook();
     
     protected abstract int getPerformActionRuleIndexHook();    
 

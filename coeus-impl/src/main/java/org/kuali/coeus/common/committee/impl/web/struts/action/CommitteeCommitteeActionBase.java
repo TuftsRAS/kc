@@ -42,7 +42,7 @@ public abstract class CommitteeCommitteeActionBase extends CommitteeActionBase {
     private static final String COMMITTEE_DOCUMENT = "CommitteeDocument";
 
     @SuppressWarnings("unused")
-    private static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(CommitteeCommitteeActionBase.class);
+    private static final org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger(CommitteeCommitteeActionBase.class);
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)

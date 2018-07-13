@@ -37,8 +37,6 @@ import org.kuali.rice.kim.api.permission.PermissionService;
 import org.kuali.rice.krad.service.BusinessObjectService;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -58,8 +56,6 @@ import com.codiform.moo.curry.Translate;
 
 @Controller("budgetRatesRestController")
 public class BudgetRatesRestController extends RestController {
-	
-	private static final Log LOG = LogFactory.getLog(BudgetRatesRestController.class);
 
 	@Autowired
 	@Qualifier("businessObjectService")

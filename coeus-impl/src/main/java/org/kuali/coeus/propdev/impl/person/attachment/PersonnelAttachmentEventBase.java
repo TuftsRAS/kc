@@ -12,8 +12,8 @@ import org.kuali.coeus.propdev.impl.core.ProposalDevelopmentDocument;
 import org.kuali.coeus.sys.framework.rule.KcDocumentEventBase;
 
 public abstract class PersonnelAttachmentEventBase extends KcDocumentEventBase implements PersonnelAttachmentEvent {
-    private static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory
-            .getLog(PersonnelAttachmentEventBase.class);
+    private static final org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager
+            .getLogger(PersonnelAttachmentEventBase.class);
 
     private ProposalPersonBiography proposalPersonBiography;
 

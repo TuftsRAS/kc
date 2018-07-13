@@ -8,8 +8,8 @@
 package org.kuali.kra.award.paymentreports.awardreports.reporting.service;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.common.framework.module.CoeusModule;
 import org.kuali.coeus.common.framework.version.VersionStatus;
 import org.kuali.coeus.common.notification.impl.bo.NotificationType;
@@ -37,7 +37,7 @@ import java.util.*;
  */
 public class ReportTrackingNotificationServiceImpl implements ReportTrackingNotificationService {
 
-    private static final Log LOG = LogFactory.getLog(ReportTrackingNotificationServiceImpl.class);
+    private static final Logger LOG = LogManager.getLogger(ReportTrackingNotificationServiceImpl.class);
     private static final String ASCEND_UNIT_HIERARCHY_FOR_DIGEST_NOTIFICATIONS_PARAM = "Ascend_Unit_Hierarchy_For_Report_Tracking_Digest_Unit_Admins";
 
     private BusinessObjectService businessObjectService;

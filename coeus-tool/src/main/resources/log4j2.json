@@ -1,0 +1,45 @@
+{
+ "configuration": {
+  "name": "coeus-tool",
+  "ThresholdFilter": {
+   "level": "debug"
+  },
+  "appenders": {
+   "Console": {
+    "name": "STDOUT",
+    "JSONLayout": {
+     "eventEol": true,
+     "properties": true,
+     "locationInfo": false
+    }
+   }
+  },
+  "loggers": {
+   "logger": [
+    {
+     "name": "org.kuali.coeus.sys.framework.util.PdfBoxUtils",
+     "level": "info",
+     "additivity": "false",
+     "AppenderRef": {
+      "ref": "STDOUT"
+     }
+    },
+    {
+     "name": "org.apache.pdfbox.pdfparser",
+     "level": "info",
+     "additivity": "false",
+     "AppenderRef": {
+      "ref": "STDOUT"
+     }
+    }
+   ],
+   "root": {
+    "level": "error",
+    "AppenderRef": {
+     "ref": "STDOUT"
+    }
+   }
+  }
+ }
+}
+

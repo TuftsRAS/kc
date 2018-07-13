@@ -8,8 +8,8 @@
 package org.kuali.coeus.propdev.impl.resubmit;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.sys.framework.rule.KcDocumentEventBase;
 import org.kuali.rice.krad.document.Document;
 import org.kuali.rice.krad.rules.rule.BusinessRule;
@@ -19,7 +19,7 @@ import org.kuali.rice.krad.rules.rule.BusinessRule;
  */
 public class ResubmissionRuleEvent extends KcDocumentEventBase {
     
-    private static final Log LOG = LogFactory.getLog(ResubmissionRuleEvent.class);
+    private static final Logger LOG = LogManager.getLogger(ResubmissionRuleEvent.class);
     
     private String resubmissionOption;
     

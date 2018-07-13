@@ -32,7 +32,7 @@ import java.util.List;
 @Component("keywordsService")
 public class KeywordsServiceImpl implements KeywordsService {
 	
-    private static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(KeywordsServiceImpl.class);
+    private static final org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger(KeywordsServiceImpl.class);
 
     @Autowired
     @Qualifier("lookupResultsService")

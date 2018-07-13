@@ -7,8 +7,8 @@
  */
 package org.kuali.coeus.common.impl.krms;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.rice.core.framework.persistence.ojb.dao.PlatformAwareDaoBaseOjb;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.CallableStatementCallback;
@@ -24,7 +24,7 @@ import java.util.List;
 
 
 public class StoredFunctionDao extends PlatformAwareDaoBaseOjb {
-    private static final Log LOG = LogFactory.getLog(StoredFunctionDao.class);
+    private static final Logger LOG = LogManager.getLogger(StoredFunctionDao.class);
     private DataSource dataSource;
     public DataSource getDataSource() {
         return dataSource;

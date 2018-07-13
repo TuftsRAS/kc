@@ -8,8 +8,8 @@
 package org.kuali.kra.protocol;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.common.framework.org.Organization;
 import org.kuali.coeus.common.framework.person.KcPersonService;
 import org.kuali.coeus.common.framework.rolodex.Rolodex;
@@ -61,7 +61,7 @@ public abstract class ProtocolLookupableHelperServiceImplBase<GenericProtocol ex
     private static final String RESEARCH_AREA_CLASS_PATH = ResearchArea.class.getName();
     private static final String ORGANIZATION_CLASS_PATH = Organization.class.getName();
     
-    private static final Log LOG = LogFactory.getLog(ProtocolLookupableHelperServiceImplBase.class);
+    private static final Logger LOG = LogManager.getLogger(ProtocolLookupableHelperServiceImplBase.class);
 
     private DictionaryValidationService dictionaryValidationService;
     

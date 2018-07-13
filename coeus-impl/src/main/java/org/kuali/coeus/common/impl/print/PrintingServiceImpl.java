@@ -11,8 +11,8 @@ import com.lowagie.text.*;
 import com.lowagie.text.pdf.*;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.apache.fop.apps.FOPException;
 import org.apache.fop.apps.FOUserAgent;
 import org.apache.fop.apps.Fop;
@@ -53,7 +53,7 @@ public class PrintingServiceImpl implements PrintingService {
 
     private static final String FORCED_XSL_FORMS_PARAMETER = "FORCED_XSL_FORMS";
 
-    private static final Log LOG = LogFactory.getLog(PrintingServiceImpl.class);
+    private static final Logger LOG = LogManager.getLogger(PrintingServiceImpl.class);
 
     @Autowired
     @Qualifier("dateTimeService")

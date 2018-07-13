@@ -9,8 +9,8 @@ package org.kuali.coeus.common.notification.impl.service.impl;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.common.api.rolodex.RolodexContract;
 import org.kuali.coeus.common.api.rolodex.RolodexService;
 import org.kuali.coeus.common.framework.mail.EmailAttachment;
@@ -59,7 +59,7 @@ public class KcNotificationServiceImpl implements KcNotificationService {
     private static final String NOTIFICATION_TYPE_ID = "notificationTypeId";
     private static final String DOCUMENT_NUMBER = "documentNumber";
     
-    private static final Log LOG = LogFactory.getLog(KcNotificationServiceImpl.class);
+    private static final Logger LOG = LogManager.getLogger(KcNotificationServiceImpl.class);
     private static final String KC_NOTIFICATION_DOC_TYPE_NAME = "KcNotificationDocumentTypeName";
     
     private static final String ACTIVE = "active";

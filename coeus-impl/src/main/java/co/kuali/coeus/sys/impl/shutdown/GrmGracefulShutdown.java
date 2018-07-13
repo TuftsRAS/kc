@@ -9,8 +9,8 @@
 
 package co.kuali.coeus.sys.impl.shutdown;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.DisposableBean;
 
 import java.lang.reflect.InvocationTargetException;
@@ -19,7 +19,7 @@ import java.lang.reflect.Method;
 
 public class GrmGracefulShutdown implements DisposableBean {
 
-    private static final Log LOG = LogFactory.getLog(GrmGracefulShutdown.class);
+    private static final Logger LOG = LogManager.getLogger(GrmGracefulShutdown.class);
 
     @Override
     public void destroy() {

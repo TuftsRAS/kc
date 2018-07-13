@@ -30,7 +30,7 @@ public class IntellectualPropertyReviewMaintainableImpl extends KraMaintainableI
     
     private static final String KIM_PERSON_LOOKUPABLE_REFRESH_CALLER = "kimPersonLookupable";
     
-    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(IntellectualPropertyReviewMaintainableImpl.class);
+    private static final org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger(IntellectualPropertyReviewMaintainableImpl.class);
     
     /**
      * If returning from a person lookup, default the lead unit to the selected person's home unit.

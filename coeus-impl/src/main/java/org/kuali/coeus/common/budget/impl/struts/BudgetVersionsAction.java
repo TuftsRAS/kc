@@ -9,8 +9,8 @@ package org.kuali.coeus.common.budget.impl.struts;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -48,7 +48,7 @@ import static org.kuali.rice.krad.util.KRADConstants.QUESTION_INST_ATTRIBUTE_NAM
  */
 public class BudgetVersionsAction extends BudgetAction {
 
-    private static final Log LOG = LogFactory.getLog(BudgetVersionsAction.class);
+    private static final Logger LOG = LogManager.getLogger(BudgetVersionsAction.class);
 
     private static final String CONFIRM_SYNCH_BUDGET_RATE_BUDGET_DOCUMENT = "confirmSynchBudgetRateForBudgetDocument";
     private static final String NO_SYNCH_BUDGET_RATE_BUDGET_DOCUMENT = "noSynchBudgetRateForBudgetDocument";

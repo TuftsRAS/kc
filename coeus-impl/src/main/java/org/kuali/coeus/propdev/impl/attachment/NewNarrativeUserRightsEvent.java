@@ -23,7 +23,7 @@ import java.util.List;
  * @author Kuali Research Administration Team (kualidev@oncourse.iu.edu)
  */
 public class NewNarrativeUserRightsEvent extends KcDocumentEventBase {
-    private static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(NewNarrativeUserRightsEvent.class);
+    private static final org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger(NewNarrativeUserRightsEvent.class);
     
     private List<NarrativeUserRights> newNarrativeUserRights;
     private int narrativeIndex;

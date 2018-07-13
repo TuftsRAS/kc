@@ -62,7 +62,7 @@ public abstract class OnlineReviewsActionHelperBase implements Serializable {
     private boolean initComplete = false;
 
 
-    private static org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(OnlineReviewsActionHelperBase.class);
+    private static org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger(OnlineReviewsActionHelperBase.class);
     private boolean hideReviewerName;
     private boolean hideReviewerNameForAttachment;
     

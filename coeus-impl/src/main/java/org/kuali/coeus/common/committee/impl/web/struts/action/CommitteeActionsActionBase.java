@@ -51,7 +51,7 @@ import java.util.List;
  */
 public abstract class CommitteeActionsActionBase extends CommitteeActionBase {
 
-    private static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(CommitteeActionsActionBase.class);
+    private static final org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger(CommitteeActionsActionBase.class);
 
     // signifies that a response has already be handled therefore forwarding to obtain a response is not needed. 
     private static final ActionForward RESPONSE_ALREADY_HANDLED = null;

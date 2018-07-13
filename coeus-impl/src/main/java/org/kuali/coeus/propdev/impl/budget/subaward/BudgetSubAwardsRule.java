@@ -10,8 +10,8 @@ package org.kuali.coeus.propdev.impl.budget.subaward;
 import com.lowagie.text.pdf.*;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.encryption.InvalidPasswordException;
 import org.kuali.coeus.common.framework.ruleengine.KcBusinessRule;
@@ -30,7 +30,7 @@ import java.util.List;
 @KcBusinessRule("budgetSubAwardsRule")
 public class BudgetSubAwardsRule  {
 
-    private static final Log LOG = LogFactory.getLog(BudgetSubAwardsRule.class);
+    private static final Logger LOG = LogManager.getLogger(BudgetSubAwardsRule.class);
     public static final String SUBAWARD_ORG_NAME_FIELD_NAME = "organizationId";
 
     @Autowired

@@ -7,8 +7,8 @@
  */
 package org.kuali.coeus.sys.framework.listener;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionEvent;
@@ -19,7 +19,7 @@ import javax.servlet.http.HttpSessionListener;
  * of a session.
  */
 public class SessionLoggingListener implements HttpSessionListener {
-    private static final Log LOG = LogFactory.getLog(SessionLoggingListener.class);
+    private static final Logger LOG = LogManager.getLogger(SessionLoggingListener.class);
     
     /**
      * Triggered when the session is created. Reports the amount of memory currently being used at the time the session

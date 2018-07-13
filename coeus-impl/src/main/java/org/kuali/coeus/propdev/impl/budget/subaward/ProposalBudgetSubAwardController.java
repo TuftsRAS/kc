@@ -16,8 +16,8 @@ import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.common.budget.framework.core.Budget;
 import org.kuali.coeus.common.budget.framework.period.BudgetPeriod;
 import org.kuali.coeus.common.framework.attachment.KcAttachmentService;
@@ -47,7 +47,7 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/proposalBudget")
 public class ProposalBudgetSubAwardController extends ProposalBudgetControllerBase {
 	
-	private static final Log LOG = LogFactory.getLog(ProposalBudgetSubAwardController.class);
+	private static final Logger LOG = LogManager.getLogger(ProposalBudgetSubAwardController.class);
 
 	@Autowired
 	@Qualifier("propDevBudgetSubAwardService")

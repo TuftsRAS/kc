@@ -10,8 +10,8 @@ package org.kuali.coeus.common.budget.framework.core;
 import com.codiform.moo.annotation.CollectionProperty;
 import com.codiform.moo.annotation.Ignore;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.common.budget.api.core.BudgetContract;
 import org.kuali.coeus.common.budget.framework.core.category.BudgetCategoryType;
 import org.kuali.coeus.common.budget.framework.rate.AbstractBudgetRate;
@@ -84,7 +84,7 @@ public class Budget extends AbstractBudget implements BudgetContract {
 
     private static final String TRUE_FLAG = "Y";
 
-    private static final Log LOG = LogFactory.getLog(Budget.class);
+    private static final Logger LOG = LogManager.getLogger(Budget.class);
 
 	@Column(name = "PARENT_DOCUMENT_TYPE_CODE")
     private String parentDocumentTypeCode;

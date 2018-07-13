@@ -8,8 +8,8 @@
 package org.kuali.coeus.common.impl.auth.task;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.common.framework.auth.task.*;
 import org.kuali.rice.core.api.resourceloader.GlobalResourceLoader;
 import org.springframework.beans.factory.InitializingBean;
@@ -25,7 +25,7 @@ import java.util.*;
 @Component("taskAuthorizationService")
 public class TaskAuthorizationServiceImpl implements TaskAuthorizationService, InitializingBean {
 
-    private static final Log LOG = LogFactory.getLog(TaskAuthorizationServiceImpl.class);
+    private static final Logger LOG = LogManager.getLogger(TaskAuthorizationServiceImpl.class);
 
     @Value("#{taskAuthorizerGroupNames}")
     private Set<String> taskAuthorizerGroupNames = new HashSet<>();

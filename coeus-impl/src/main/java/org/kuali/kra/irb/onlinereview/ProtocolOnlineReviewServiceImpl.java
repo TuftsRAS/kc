@@ -8,8 +8,8 @@
 package org.kuali.kra.irb.onlinereview;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.common.committee.impl.meeting.CommitteeScheduleMinuteBase;
 import org.kuali.kra.infrastructure.Constants;
 import org.kuali.kra.irb.Protocol;
@@ -32,7 +32,7 @@ import java.util.List;
 
 public class ProtocolOnlineReviewServiceImpl extends ProtocolOnlineReviewServiceImplBase implements ProtocolOnlineReviewService {
 
-    private static final Log LOG = LogFactory.getLog(ProtocolOnlineReviewServiceImpl.class);
+    private static final Logger LOG = LogManager.getLogger(ProtocolOnlineReviewServiceImpl.class);
     private static final String PROTOCOL_ONLINE_REVIEW_DOCUMENT_TYPE = "ProtocolOnlineReviewDocument";
 
     @Override

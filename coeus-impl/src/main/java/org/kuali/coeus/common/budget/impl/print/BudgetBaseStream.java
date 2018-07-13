@@ -17,8 +17,8 @@ import org.kuali.kra.printing.schema.ReportType;
 import org.kuali.kra.printing.schema.SubReportType;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.common.budget.api.rate.RateClassType;
 import org.kuali.coeus.common.budget.framework.calculator.ValidCalcType;
 import org.kuali.coeus.common.budget.framework.core.Budget;
@@ -41,7 +41,7 @@ import java.util.stream.Collectors;
 
 public abstract class BudgetBaseStream implements XmlStream {
 
-    private static final Log LOG = LogFactory.getLog(BudgetBaseStream.class);
+    private static final Logger LOG = LogManager.getLogger(BudgetBaseStream.class);
     public static final String RATE_CLASS_TYPE = "rateClassType";
 	private static final String DEPENDENT_RATE_CLASS_TYPE = "dependentRateClassType";
 	private static final String RATE_CLASS_CODE = "rateClassCode";

@@ -15,8 +15,8 @@ import java.util.Map;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.rice.core.api.criteria.OrderByField;
 import org.kuali.rice.core.api.criteria.OrderDirection;
 import org.kuali.rice.core.api.criteria.QueryByCriteria;
@@ -30,7 +30,7 @@ import org.springframework.stereotype.Component;
 @Component("dataObjectValuesFinder")
 public class DataObjectValuesFinder extends UifKeyValuesFinderBase {
 
-    private static final Log LOG = LogFactory.getLog(DataObjectValuesFinder.class);
+    private static final Logger LOG = LogManager.getLogger(DataObjectValuesFinder.class);
     private static final long serialVersionUID = 1L;
 
     protected Class<?> dataObjectClass;

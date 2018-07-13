@@ -7,8 +7,8 @@
  */
 package org.kuali.kra.coi.disclosure;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
@@ -69,7 +69,7 @@ import java.util.*;
 
 
 public class CoiDisclosureServiceImpl implements CoiDisclosureService {
-    private static final Log LOG = LogFactory.getLog(CoiDisclosureServiceImpl.class);
+    private static final Logger LOG = LogManager.getLogger(CoiDisclosureServiceImpl.class);
 
     public static final String UNIT_AGENDA_TYPE_ID = "KC1000";
 

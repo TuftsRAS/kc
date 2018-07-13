@@ -7,8 +7,8 @@
  */
 package org.kuali.coeus.common.budget.framework.version;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.common.budget.framework.core.Budget;
 import org.kuali.coeus.common.budget.framework.core.BudgetDocumentRule;
 import org.kuali.coeus.common.budget.framework.core.BudgetParent;
@@ -29,7 +29,7 @@ import static org.springframework.util.StringUtils.hasText;
  **/
 public abstract class BudgetVersionRule {
 
-    private static final Log LOG = LogFactory.getLog(BudgetVersionRule.class);
+    private static final Logger LOG = LogManager.getLogger(BudgetVersionRule.class);
 
     /**
      * Entry method for the business rule

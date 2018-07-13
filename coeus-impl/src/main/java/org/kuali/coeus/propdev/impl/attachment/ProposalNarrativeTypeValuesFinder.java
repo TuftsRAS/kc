@@ -46,7 +46,7 @@ import java.util.*;
  * database and service lookups. 
  */
 public class ProposalNarrativeTypeValuesFinder  extends UifKeyValuesFinderBase {
-    private static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(ProposalNarrativeTypeValuesFinder.class);
+    private static final org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger(ProposalNarrativeTypeValuesFinder.class);
     public static final String NARRATIVE_TYPE_GROUP = "narrativeTypeGroup";
     public static final String PROPOSAL_NUMBER = "proposalNumber";
     public static final String FORM_NAME = "formName";

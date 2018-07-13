@@ -14,8 +14,8 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.common.framework.person.citi.CitiDataLoadingService;
 import org.kuali.coeus.common.framework.person.citi.PersonTrainingCitiRecord;
 import org.kuali.coeus.common.framework.person.citi.PersonTrainingCitiRecordError;
@@ -42,7 +42,7 @@ import java.util.stream.StreamSupport;
 @Component("citiDataLoadingService")
 public class CitiDataLoadingServiceImpl implements CitiDataLoadingService {
 
-    private static final Log LOG = LogFactory.getLog(CitiDataLoadingServiceImpl.class);
+    private static final Logger LOG = LogManager.getLogger(CitiDataLoadingServiceImpl.class);
 
     private static final Pattern COMMA_REGEX = Pattern.compile(",");
     private static final String CITI_ENDPOINTS = "citi.endpoints";

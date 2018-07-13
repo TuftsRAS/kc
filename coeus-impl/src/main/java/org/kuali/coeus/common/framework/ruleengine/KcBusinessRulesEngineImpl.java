@@ -14,8 +14,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.sys.framework.gv.GlobalVariableService;
 import org.kuali.rice.krad.util.AuditCluster;
 import org.kuali.rice.krad.util.ErrorMessage;
@@ -26,7 +26,7 @@ import org.springframework.stereotype.Service;
 @Service("kcBusinessRulesEngine")
 public class KcBusinessRulesEngineImpl implements KcBusinessRulesEngine {
 	
-	private static final Log LOG = LogFactory.getLog(KcBusinessRulesEngineImpl.class);
+	private static final Logger LOG = LogManager.getLogger(KcBusinessRulesEngineImpl.class);
 	
 	private Map<Class<?>, List<RuleMethod>> rules = new ConcurrentHashMap<>();
 	

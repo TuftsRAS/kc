@@ -8,8 +8,8 @@
 package org.kuali.kra.award.printing.xmlstream;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.common.framework.person.KcPerson;
 import org.kuali.coeus.common.framework.print.stream.xml.XmlStream;
 import org.kuali.coeus.common.framework.rolodex.Rolodex;
@@ -85,7 +85,7 @@ public abstract class AwardBaseStream implements XmlStream {
     private static final String PRESENT_INDICATOR = "P";
     protected static final String OBLIGATED_DIRECT_INDIRECT_COST_CONSTANT = "ENABLE_AWD_ANT_OBL_DIRECT_INDIRECT_COST";
 	private static final String ON_CAMPUS_FLAG_SET = "N";
-	private static final Log LOG = LogFactory.getLog(AwardBaseStream.class);
+	private static final Logger LOG = LogManager.getLogger(AwardBaseStream.class);
 	private static final String STRING_SEPARATER = ",";
     protected static final String OTHER_DATA = "otherData";
 	protected static final String SIGNATURE_REQUIRED = "signatureRequired";

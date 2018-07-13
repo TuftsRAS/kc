@@ -14,8 +14,8 @@ import org.kuali.rice.krad.util.ObjectUtils;
 
 public abstract class ProtocolUnitEventBase extends KcDocumentEventBase implements ProtocolUnitEvent {
 
-    private static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory
-            .getLog(ProtocolUnitEventBase.class);
+    private static final org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager
+            .getLogger(ProtocolUnitEventBase.class);
 
     private ProtocolUnitBase protocolUnit;
     private int personIndex;

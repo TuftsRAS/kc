@@ -8,7 +8,7 @@
 package org.kuali.kra.protocol.actions.decision;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
+import org.apache.logging.log4j.Logger;
 import org.kuali.coeus.sys.framework.rule.KcDocumentEventBase;
 import org.kuali.kra.protocol.ProtocolDocumentBase;
 import org.kuali.rice.krad.rules.rule.BusinessRule;
@@ -45,7 +45,7 @@ public abstract class CommitteeDecisionAbstainerEventBase<CD extends CommitteeDe
 
     }
     
-    protected abstract Log getLOGHook();
+    protected abstract Logger getLOGHook();
 
     @Override
     public Class<ExecuteCommitteeDecisionAbstainerRule> getRuleInterfaceClass() {

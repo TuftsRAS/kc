@@ -7,8 +7,8 @@
  */
 package org.kuali.coeus.propdev.impl.action;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.propdev.impl.attachment.ProposalDevelopmentProposalAttachmentsAuditRule;
 import org.kuali.coeus.propdev.impl.core.ProposalDevelopmentDocument;
 import org.kuali.coeus.propdev.impl.core.ProposalDevelopmentUtils;
@@ -37,7 +37,7 @@ public class ProposalAttachmentSubmitToSponsorRule extends KcTransactionalDocume
     private static final String AUDIT_PARM = ProposalDevelopmentUtils.AUDIT_INCOMPLETE_PROPOSAL_ATTATCHMENTS_PARM;
     private static final String AUDIT_PARAMETER_VALUE_NO = "N";
 
-    private static final Log LOG = LogFactory.getLog(ProposalDevelopmentProposalAttachmentsAuditRule.class);
+    private static final Logger LOG = LogManager.getLogger(ProposalDevelopmentProposalAttachmentsAuditRule.class);
 
     private ParameterService parameterService;
 

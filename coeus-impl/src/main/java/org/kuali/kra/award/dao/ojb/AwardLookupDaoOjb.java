@@ -26,8 +26,6 @@ import java.util.stream.Collectors;
 @SuppressWarnings("unchecked")
 public class AwardLookupDaoOjb extends LookupDaoOjb  implements AwardLookupDao{
 
-	private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(AwardLookupDaoOjb.class);
-
     private static final String ACTIVE_OR_PENDING_AWARD_SEQUENCE_STATUS = "ACTIVE|PENDING";
     private static final String BOTH_AWARD_SEQUENCE_STATUS = "BOTH";
 

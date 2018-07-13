@@ -9,8 +9,8 @@ package org.kuali.coeus.propdev.impl.s2s.schedule;
 
 import gov.grants.apply.services.applicantwebservices_v2.GetApplicationListResponse;
 import gov.grants.apply.services.applicantwebservices_v2.GetApplicationListResponse.ApplicationInfo;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.propdev.impl.core.ProposalDevelopmentDocument;
 import org.kuali.coeus.propdev.impl.s2s.S2sAppSubmission;
 import org.kuali.coeus.propdev.impl.s2s.S2sAppSubmissionConstants;
@@ -41,7 +41,7 @@ import java.util.*;
  */
 public class S2SPollingTask {
 
-    private static final Log LOG = LogFactory.getLog(S2SPollingTask.class);
+    private static final Logger LOG = LogManager.getLogger(S2SPollingTask.class);
     private final List<String> lstStatus = new ArrayList<>();
     private final Map<String, String> sortMsgKeyMap = new Hashtable<>();
 

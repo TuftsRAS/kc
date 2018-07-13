@@ -11,8 +11,8 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.common.framework.attachment.KcAttachmentDataDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -37,7 +37,7 @@ public class KcAttachmentDataDaoImpl implements KcAttachmentDataDao {
 	protected static final String INSERT_RECORD = "insert into file_data (id, data) values (?, ?)";
 	protected static final String DELETE_SINGLE_RECORD = "delete from file_data where id = ?";
 
-	private static Log LOG = LogFactory.getLog(KcAttachmentDataDaoImpl.class);
+	private static Logger LOG = LogManager.getLogger(KcAttachmentDataDaoImpl.class);
 
     @Autowired
     @Qualifier("dataSource")

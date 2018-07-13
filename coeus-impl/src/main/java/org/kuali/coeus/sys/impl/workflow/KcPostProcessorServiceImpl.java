@@ -8,8 +8,8 @@
 package org.kuali.coeus.sys.impl.workflow;
 
 import org.apache.commons.beanutils.PropertyUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.sys.framework.gv.GlobalVariableService;
 import org.kuali.coeus.sys.framework.workflow.LastActionService;
 import org.kuali.rice.coreservice.framework.parameter.ParameterService;
@@ -38,7 +38,7 @@ import java.util.List;
 @Transactional
 public class KcPostProcessorServiceImpl implements PostProcessorService {
 
-    private static final Log LOG = LogFactory.getLog(KcPostProcessorServiceImpl.class);
+    private static final Logger LOG = LogManager.getLogger(KcPostProcessorServiceImpl.class);
 
     @Autowired
     @Qualifier("lastActionService")

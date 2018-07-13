@@ -8,8 +8,8 @@
 package org.kuali.coeus.common.questionnaire.impl.answer;
 
 import java.util.Objects;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.common.questionnaire.framework.answer.Answer;
 
 import java.util.ArrayList;
@@ -23,7 +23,7 @@ import java.util.List;
  * on questionnaire questions order
  */
 public class AnswerComparator implements Comparator<Answer>  {
-    private static final Log LOG = LogFactory.getLog(AnswerComparator.class);
+    private static final Logger LOG = LogManager.getLogger(AnswerComparator.class);
     
     @Override
     public int compare(Answer ans1, Answer argAnswer) {

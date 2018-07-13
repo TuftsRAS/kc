@@ -9,8 +9,8 @@ package org.kuali.coeus.sys.framework.controller;
 
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -101,7 +101,7 @@ import static org.kuali.rice.krad.util.KRADConstants.*;
 
 public class KcTransactionalDocumentActionBase extends KualiTransactionalDocumentActionBase {
 
-    private static final Log LOG = LogFactory.getLog(KcTransactionalDocumentActionBase.class);
+    private static final Logger LOG = LogManager.getLogger(KcTransactionalDocumentActionBase.class);
     
     private static final String DEFAULT_TAB = "Versions";
     private static final String ALTERNATE_OPEN_TAB = "Parameters";

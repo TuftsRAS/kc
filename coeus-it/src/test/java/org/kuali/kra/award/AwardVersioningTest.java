@@ -7,8 +7,8 @@
  */
 package org.kuali.kra.award;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -48,7 +48,7 @@ import java.util.*;
 import static org.junit.Assert.*;
 
 public class AwardVersioningTest extends KcIntegrationTestBase {
-    private static final Log LOG = LogFactory.getLog(AwardVersioningTest.class); 
+    private static final Logger LOG = LogManager.getLogger(AwardVersioningTest.class);
     private static final double COST_SHARE_COMMIT_AMT = 1000.00;
     private static final String COST_SHARE_DEST1 = "576434";
     private static final String COST_SHARE_DEST2 = "777777";

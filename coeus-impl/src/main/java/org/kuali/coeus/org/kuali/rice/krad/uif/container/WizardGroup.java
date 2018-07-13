@@ -8,7 +8,8 @@
 package org.kuali.coeus.org.kuali.rice.krad.uif.container;
 
 import org.apache.commons.beanutils.PropertyUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.kuali.coeus.common.notification.impl.NotificationHelper;
 import org.kuali.kra.infrastructure.Constants;
 import org.kuali.rice.krad.uif.component.Component;
@@ -25,7 +26,7 @@ import java.util.List;
 
 public class WizardGroup extends DialogGroup {
 
-    private static final Logger LOG = Logger.getLogger(WizardGroup.class.getName());
+    private static final Logger LOG = LogManager.getLogger(WizardGroup.class);
 
     @Override
     public void performApplyModel(Object model, LifecycleElement parent) {

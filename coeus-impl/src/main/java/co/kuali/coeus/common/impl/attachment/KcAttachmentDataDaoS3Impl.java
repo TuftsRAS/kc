@@ -13,8 +13,8 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.common.impl.attachment.KcAttachmentDataDaoImpl;
 import org.kuali.kra.infrastructure.Constants;
 import org.kuali.rice.coreservice.framework.parameter.ParameterService;
@@ -31,7 +31,7 @@ import java.util.Objects;
 public class KcAttachmentDataDaoS3Impl extends KcAttachmentDataDaoImpl {
 
     private static final String INSERT_RECORD_ID_ONLY = "insert into file_data (id) values (?)";
-    private static Log LOG = LogFactory.getLog(KcAttachmentDataDaoS3Impl.class);
+    private static Logger LOG = LogManager.getLogger(KcAttachmentDataDaoS3Impl.class);
 
     private S3FileService kcS3FileService;
     private ParameterService parameterService;

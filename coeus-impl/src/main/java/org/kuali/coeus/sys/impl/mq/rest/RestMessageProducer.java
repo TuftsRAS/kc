@@ -10,8 +10,8 @@
 package org.kuali.coeus.sys.impl.mq.rest;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.sys.framework.mq.MessageFactory;
 import org.kuali.coeus.sys.framework.mq.Producer;
 import org.kuali.coeus.sys.framework.mq.rest.RestRequest;
@@ -26,7 +26,7 @@ import org.springframework.stereotype.Component;
 @Component("restMessageProducer")
 public class RestMessageProducer implements Producer<RestRequest> {
 
-    private static Log LOG = LogFactory.getLog(RestMessageProducer.class);
+    private static Logger LOG = LogManager.getLogger(RestMessageProducer.class);
 
     @Autowired
     @Qualifier("restJmsOperations")

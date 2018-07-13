@@ -36,7 +36,7 @@ import static org.kuali.coeus.propdev.impl.datavalidation.ProposalDevelopmentDat
 import static org.kuali.kra.infrastructure.KeyConstants.*;
 
 public class KeyPersonnelAuditRule extends KcTransactionalDocumentRuleBase implements DocumentAuditRule {
-    private static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(KeyPersonnelAuditRule.class);
+    private static final org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger(KeyPersonnelAuditRule.class);
     public static final String SPONSOR_GROUPS = "Sponsor Groups";
 
     private SponsorHierarchyService sponsorHierarchyService;

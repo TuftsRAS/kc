@@ -7,8 +7,8 @@
  */
 package org.kuali.kra.printing.util;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.common.framework.print.AttachmentDataSource;
 
 import java.io.File;
@@ -17,7 +17,7 @@ import java.text.SimpleDateFormat;
 
 public class PrintingTestUtils {
 
-    private static final Log LOG = LogFactory.getLog(PrintingTestUtils.class);
+    private static final Logger LOG = LogManager.getLogger(PrintingTestUtils.class);
 
 	public static String FILE_DIR = System.getProperty("java.io.tmpdir");
 

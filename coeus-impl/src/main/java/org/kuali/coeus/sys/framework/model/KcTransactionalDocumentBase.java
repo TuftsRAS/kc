@@ -8,8 +8,8 @@
 package org.kuali.coeus.sys.framework.model;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.PersistenceBrokerAware;
 import org.apache.ojb.broker.PersistenceBrokerException;
@@ -51,7 +51,7 @@ public abstract class KcTransactionalDocumentBase extends TransactionalDocumentB
 
     private static final long serialVersionUID = -1879382692835231633L;
 
-    private static final Log LOG = LogFactory.getLog(KcTransactionalDocumentBase.class);
+    private static final Logger LOG = LogManager.getLogger(KcTransactionalDocumentBase.class);
     
     @Column(name = "UPDATE_USER")
     private String updateUser;

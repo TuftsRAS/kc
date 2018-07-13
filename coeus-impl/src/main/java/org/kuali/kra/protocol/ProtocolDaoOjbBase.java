@@ -8,8 +8,8 @@
 package org.kuali.kra.protocol;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.apache.ojb.broker.query.*;
 import org.kuali.kra.protocol.actions.ProtocolActionBase;
 import org.kuali.kra.protocol.actions.submit.ProtocolSubmissionBase;
@@ -35,7 +35,7 @@ import java.util.Map.Entry;
  */
 public abstract class ProtocolDaoOjbBase<GenericProtocol extends ProtocolBase> extends PlatformAwareDaoBaseOjb implements OjbCollectionAware, ProtocolDao<GenericProtocol> {
 
-    private static final Log LOG = LogFactory.getLog(ProtocolDaoOjbBase.class);
+    private static final Logger LOG = LogManager.getLogger(ProtocolDaoOjbBase.class);
     
     private static final String LEAD_UNIT = "leadUnit";
     private static final String PROTOCOL_NUMBER = "protocolNumber";

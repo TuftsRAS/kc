@@ -9,8 +9,8 @@ package org.kuali.coeus.propdev.impl.person;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.common.framework.person.KcPerson;
 import org.kuali.coeus.common.framework.person.PropAwardPersonRole;
 import org.kuali.coeus.common.framework.person.PropAwardPersonRoleService;
@@ -50,7 +50,7 @@ import static org.kuali.kra.infrastructure.Constants.PROPOSAL_PERSON_INVESTIGATO
 @Component("keyPersonnelService")
 public class KeyPersonnelServiceImpl implements KeyPersonnelService {
 
-    private static final Log LOG = LogFactory.getLog(KeyPersonnelServiceImpl.class);
+    private static final Logger LOG = LogManager.getLogger(KeyPersonnelServiceImpl.class);
 
     public static final String INVESTIGATOR = "investigator";
     public static final String UNIT = "unit";

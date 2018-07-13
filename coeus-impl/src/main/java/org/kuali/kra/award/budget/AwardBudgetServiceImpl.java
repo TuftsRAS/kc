@@ -9,8 +9,8 @@ package org.kuali.kra.award.budget;
 
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.common.budget.api.rate.RateClassType;
 import org.kuali.coeus.common.budget.framework.core.Budget;
 import org.kuali.coeus.common.budget.framework.core.BudgetConstants;
@@ -76,7 +76,7 @@ import java.util.*;
 public class AwardBudgetServiceImpl extends AbstractBudgetService<Award> implements AwardBudgetService {
     private static final String HIERARCHY_PROPOSAL_NUMBER = "hierarchyProposalNumber";
 	private static final String HIERARCHY_PROPOSAL = "hierarchyProposal";
-	private static final Log LOG = LogFactory.getLog(AwardBudgetServiceImpl.class);
+	private static final Logger LOG = LogManager.getLogger(AwardBudgetServiceImpl.class);
     private final static String BUDGET_VERSION_ERROR_PREFIX = "document.parentDocument.budgetDocumentVersion";
     private static final String INST_PROPOSAL_ID = "instProposalId";
     public static final String AWARD_BUDGET_STATUS_CODE = "awardBudgetStatusCode";

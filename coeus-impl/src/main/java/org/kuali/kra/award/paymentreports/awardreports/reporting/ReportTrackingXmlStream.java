@@ -8,8 +8,8 @@
 
 package org.kuali.kra.award.paymentreports.awardreports.reporting;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.apache.xmlbeans.XmlObject;
 import org.kuali.coeus.common.framework.print.stream.xml.XmlStream;
 import org.kuali.coeus.sys.framework.model.KcPersistableBusinessObjectBase;
@@ -32,7 +32,7 @@ public class ReportTrackingXmlStream implements XmlStream {
 
     private DateTimeService dateTimeService;
     private DocumentService documentService;
-    private static final Log LOG = LogFactory.getLog(ReportTrackingXmlStream.class);
+    private static final Logger LOG = LogManager.getLogger(ReportTrackingXmlStream.class);
     /**
      * This method generates XML committee report. It uses data passed in
      * {@link KcPersistableBusinessObjectBase} for populating the XML nodes. The XMl once

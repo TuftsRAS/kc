@@ -1,0 +1,26 @@
+{
+ "configuration": {
+  "name": "coeus-db-client",
+  "ThresholdFilter": {
+   "level": "debug"
+  },
+  "appenders": {
+   "Console": {
+    "name": "STDOUT",
+    "JSONLayout": {
+     "eventEol": true,
+     "properties": true,
+     "locationInfo": false
+    }
+   }
+  },
+  "loggers": {
+   "root": {
+    "level": "info",
+    "AppenderRef": {
+     "ref": "STDOUT"
+    }
+   }
+  }
+ }
+}

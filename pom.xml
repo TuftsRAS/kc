@@ -97,7 +97,7 @@
         <jstl.impl.version>1.2.4</jstl.impl.version>
         <junit.version>4.12</junit.version>
         <kuali-cm.version>1.2.8</kuali-cm.version>
-        <log4j.version>1.2.17</log4j.version>
+        <log4j.version>2.11.0</log4j.version>
         <mockito.version>2.12.0</mockito.version>
         <moo-mvel.version>2.0</moo-mvel.version>
         <mysql.groupId>mysql</mysql.groupId>
@@ -114,7 +114,7 @@
         <powermock.version>2.0.0-beta.5</powermock.version>
         <quartz.version>2.3.0</quartz.version>
         <schemaspy.version>1710.0002</schemaspy.version>
-        <rice.version>2.5.3.1807.0004-kualico</rice.version>
+        <rice.version>2.5.3.1807.0007-kualico</rice.version>
         <servlet.version>3.0.1</servlet.version>
         <slf4j.version>1.7.25</slf4j.version>
         <spring.version>4.3.10.RELEASE</spring.version>
@@ -161,7 +161,7 @@
         <surefire.failIfNoTests>false</surefire.failIfNoTests>
         <surefire.forkCount>1</surefire.forkCount>
         <surefire.reuseForks>true</surefire.reuseForks>
-        <surefire.argLine />
+        <surefire.argLine></surefire.argLine>
         <surefire.aggregate>true</surefire.aggregate>
         <surefire.skipTests>false</surefire.skipTests>
 
@@ -685,11 +685,11 @@
                 <exclusions>
                     <exclusion>
                         <groupId>org.slf4j</groupId>
-                        <artifactId>slf4j-api</artifactId>
+                        <artifactId>jcl104-over-slf4j</artifactId>
                     </exclusion>
                     <exclusion>
                         <groupId>org.slf4j</groupId>
-                        <artifactId>jcl104-over-slf4j</artifactId>
+                        <artifactId>slf4j-log4j12</artifactId>
                     </exclusion>
                     <exclusion>
                         <groupId>javax.servlet</groupId>
@@ -778,12 +778,6 @@
                 <artifactId>junit</artifactId>
                 <version>${junit.version}</version>
                 <scope>test</scope>
-            </dependency>
-
-            <dependency>
-                <groupId>log4j</groupId>
-                <artifactId>log4j</artifactId>
-                <version>${log4j.version}</version>
             </dependency>
 
             <dependency>
@@ -920,6 +914,49 @@
                         <artifactId>commons-logging</artifactId>
                     </exclusion>
                 </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-api</artifactId>
+                <version>${log4j.version}</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-core</artifactId>
+                <version>${log4j.version}</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-web</artifactId>
+                <version>${log4j.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-1.2-api</artifactId>
+                <version>${log4j.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-jcl</artifactId>
+                <version>${log4j.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-slf4j-impl</artifactId>
+                <version>${log4j.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-jul</artifactId>
+                <version>${log4j.version}</version>
+                <scope>runtime</scope>
             </dependency>
 
             <dependency>
@@ -1101,6 +1138,10 @@
                 <version>${esapi.version}</version>
                 <!-- exclude as much as we can from esapi transitive dependencies so we don't get a bunch of junk -->
                 <exclusions>
+                    <exclusion>
+                        <groupId>log4j</groupId>
+                        <artifactId>log4j</artifactId>
+                    </exclusion>
                     <exclusion>
                         <groupId>commons-digester</groupId>
                         <artifactId>commons-digester</artifactId>
@@ -1331,6 +1372,12 @@
                 <artifactId>coeus-s2sgen-impl</artifactId>
                 <version>${coeus-s2sgen.version}</version>
                 <scope>runtime</scope>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>jcl-over-slf4j</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
 
 
@@ -1339,6 +1386,10 @@
                 <artifactId>db-ojb</artifactId>
                 <version>${db-ojb.version}</version>
                 <exclusions>
+                    <exclusion>
+                        <artifactId>log4j</artifactId>
+                        <groupId>log4j</groupId>
+                    </exclusion>
                     <exclusion>
                         <artifactId>xml-apis</artifactId>
                         <groupId>xml-apis</groupId>
@@ -1626,39 +1677,11 @@
                 <groupId>org.quartz-scheduler</groupId>
                 <artifactId>quartz</artifactId>
                 <version>${quartz.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>org.slf4j</groupId>
-                        <artifactId>slf4j-api</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-
-            <!-- commons-logging implementation, commons-logging calls will go to slf4j -->
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>jcl-over-slf4j</artifactId>
-                <version>${slf4j.version}</version>
-            </dependency>
-
-            <!-- jul bridge, jul calls will go to slf4j -->
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>jul-to-slf4j</artifactId>
-                <version>${slf4j.version}</version>
-                <scope>runtime</scope>
             </dependency>
 
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-api</artifactId>
-                <version>${slf4j.version}</version>
-            </dependency>
-
-            <!-- binding forwards slf4j calls to log4j (should only contain a single binder) -->
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-log4j12</artifactId>
                 <version>${slf4j.version}</version>
                 <scope>runtime</scope>
             </dependency>
@@ -1763,6 +1786,10 @@
                 <version>${spring-modules-ojb.version}</version>
                 <exclusions>
                     <exclusion>
+                        <groupId>log4j</groupId>
+                        <artifactId>log4j</artifactId>
+                    </exclusion>
+                    <exclusion>
                         <groupId>org.springframework</groupId>
                         <artifactId>spring</artifactId>
                     </exclusion>
@@ -1850,6 +1877,10 @@
                             <exclusion>
                                 <groupId>commons-logging</groupId>
                                 <artifactId>commons-logging</artifactId>
+                            </exclusion>
+                            <exclusion>
+                                <groupId>org.slf4j</groupId>
+                                <artifactId>jcl-over-slf4j</artifactId>
                             </exclusion>
                         </exclusions>
                     </dependency>
@@ -2082,13 +2113,6 @@
                                                     <exclude>avalon-framework</exclude>
                                                     <exclude>hsqldb</exclude>
 
-                                                    <!-- jcl-over-slf4j is an alternate implementation of commons-logging - excluding commons-logging -->
-                                                    <exclude>commons-logging</exclude>
-                                                    <!-- already including a different jcl-over-slf4j -->
-                                                    <exclude>org.slf4j:jcl104-over-slf4j</exclude>
-                                                    <!-- excluding all slf4j -->
-                                                    <exclude>org.slf4j</exclude>
-
                                                     <!-- excluding old jstl implementations which can cause hard-to-detect errors -->
                                                     <exclude>taglibs:standard</exclude>
                                                     <exclude>javax.servlet:jstl</exclude>
@@ -2202,13 +2226,21 @@
                                                     <exclude>xerces:xercesImpl</exclude>
                                                     <exclude>org.codehaus.jackson</exclude>
                                                     <exclude>org.opensaml:opensaml</exclude>
+
+                                                    <exclude>log4j:log4j</exclude>
+                                                    <exclude>commons-logging:commons-logging</exclude>
+                                                    <exclude>org.slf4j:*</exclude>
                                                 </excludes>
 
                                                 <includes>
                                                     <include>org.bouncycastle:bcprov-jdk15on:${bouncycastle.version}</include>
                                                     <include>org.bouncycastle:bcmail-jdk15on:${bouncycastle.version}</include>
                                                     <include>org.bouncycastle:bcpkix-jdk15on:${bouncycastle.version}</include>
-                                                    <include>org.slf4j:*:${slf4j.version}</include>
+
+                                                    <!-- log4j2 brings in commons-logging for it's jcl dependency and slf4j-api for it's slf4j dependency, make sure it stays runtime scope and cannot be used directly-->
+                                                    <include>org.slf4j:slf4j-api:*:jar:runtime</include>
+                                                    <include>commons-logging:commons-logging:*:jar:runtime</include>
+
                                                     <include>net.sf.ehcache:*:${ehcache.version}:jar:runtime</include>
                                                     <include>com.sun.xml.bind:jaxb-core:${jaxb.version}</include>
                                                     <include>com.sun.xml.bind:jaxb-impl:${jaxb.version}</include>

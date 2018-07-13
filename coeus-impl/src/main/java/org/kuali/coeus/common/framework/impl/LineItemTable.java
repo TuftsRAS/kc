@@ -9,8 +9,8 @@
 package org.kuali.coeus.common.framework.impl;
 
 import org.apache.commons.beanutils.PropertyUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.sys.api.model.ScaleTwoDecimal;
 import org.kuali.rice.krad.datadictionary.parse.BeanTag;
 import org.kuali.rice.krad.datadictionary.parse.BeanTagAttribute;
@@ -37,7 +37,7 @@ import java.util.List;
 public class LineItemTable extends GroupBase implements DataBinding {
 
     private static final long serialVersionUID = 1677312513807050571L;
-    private static final Log LOG = LogFactory.getLog(LineItemTable.class);
+    private static final Logger LOG = LogManager.getLogger(LineItemTable.class);
 
     private String propertyName;
     private BindingInfo bindingInfo;

@@ -7,15 +7,15 @@
  */
 package org.kuali.kra.coi.notesandattachments;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.sys.framework.rule.KcDocumentEventBase;
 import org.kuali.kra.coi.notesandattachments.attachments.CoiDisclosureAttachment;
 import org.kuali.rice.krad.document.Document;
 import org.kuali.rice.krad.rules.rule.BusinessRule;
 
 public class AddCoiDisclosureAttachmentEvent extends KcDocumentEventBase {
-    private static final Log LOG = LogFactory.getLog(AddCoiDisclosureAttachmentEvent.class);
+    private static final Logger LOG = LogManager.getLogger(AddCoiDisclosureAttachmentEvent.class);
     private final CoiDisclosureAttachment newCoiDisclosureAttachment;
 
     public AddCoiDisclosureAttachmentEvent(Document document, CoiDisclosureAttachment newCoiDisclosureAttachment) {

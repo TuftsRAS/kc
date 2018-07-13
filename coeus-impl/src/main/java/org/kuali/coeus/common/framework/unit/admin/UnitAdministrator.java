@@ -27,7 +27,7 @@ import java.io.Serializable;
 @IdClass(UnitAdministrator.UnitAdministratorId.class)
 public class UnitAdministrator extends KcPersistableBusinessObjectBase implements AbstractUnitAdministrator, Comparable<UnitAdministrator>, UnitAdministratorContract {
 
-    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(UnitAdministrator.class);
+    private static final org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger(UnitAdministrator.class);
 
     @Id
     @Column(name = "PERSON_ID")

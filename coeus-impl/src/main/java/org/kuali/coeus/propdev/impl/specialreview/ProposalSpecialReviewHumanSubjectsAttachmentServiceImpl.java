@@ -9,8 +9,8 @@ package org.kuali.coeus.propdev.impl.specialreview;
 
 import com.lowagie.text.pdf.PdfReader;
 import com.lowagie.text.pdf.XfaForm;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.propdev.impl.s2s.FormUtilityService;
 import org.kuali.coeus.s2sgen.api.core.S2SException;
 import org.kuali.coeus.sys.api.model.KcFile;
@@ -45,7 +45,7 @@ public class ProposalSpecialReviewHumanSubjectsAttachmentServiceImpl implements 
     private static final String UPLOADED_FILE_IS_EMPTY = "Uploaded file is empty";
     private static final String XFA_NS = "http://www.xfa.org/schema/xfa-data/1.0/";
 
-    private static Log LOG = LogFactory.getLog(ProposalSpecialReviewHumanSubjectsAttachmentServiceImpl.class);
+    private static Logger LOG = LogManager.getLogger(ProposalSpecialReviewHumanSubjectsAttachmentServiceImpl.class);
 
     @Autowired
     @Qualifier("formUtilityService")

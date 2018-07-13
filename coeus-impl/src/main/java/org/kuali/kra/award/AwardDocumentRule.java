@@ -104,7 +104,7 @@ public class AwardDocumentRule extends KcTransactionalDocumentRuleBase implement
     public static final String AWARD_ERROR_PATH = "awardList[0]";
     private static final String AWARD_ERROR_PATH_PREFIX = "document.awardList[0].";
     
-    private static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(AwardDocumentRule.class);
+    private static final org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger(AwardDocumentRule.class);
     public static final String TYPE_CODE = ".typeCode";
 
     private ParameterService parameterService;

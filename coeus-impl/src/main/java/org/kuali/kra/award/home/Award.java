@@ -130,7 +130,7 @@ public class Award extends KcPersistableBusinessObjectBase implements KeywordsMa
 
 
     private static final long serialVersionUID = 3797220122448310165L;
-    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(Award.class);
+    private static final org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger(Award.class);
     private static final String AWARD_DOCUMENT = "awardDocument";
     private static final String AWARD_STATUS = "awardStatus";
     private static final String SPONSOR = "sponsor";

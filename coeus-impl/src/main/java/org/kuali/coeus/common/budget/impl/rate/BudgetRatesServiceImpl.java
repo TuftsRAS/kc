@@ -9,8 +9,8 @@ package org.kuali.coeus.common.budget.impl.rate;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.common.budget.framework.calculator.ValidCalcType;
 import org.kuali.coeus.common.budget.framework.query.operator.*;
 import org.kuali.coeus.common.budget.framework.rate.*;
@@ -48,7 +48,7 @@ public abstract class BudgetRatesServiceImpl implements BudgetRatesService {
     private static final String RATE_CLASS_TYPE = "rateClassType";
     private static final String DEPENDENT_RATE_CLASS_TYPE = "dependentRateClassType";
 
-    private static final Log LOG = LogFactory.getLog(BudgetRatesServiceImpl.class);
+    private static final Logger LOG = LogManager.getLogger(BudgetRatesServiceImpl.class);
 
     @Autowired
     @Qualifier("businessObjectService")

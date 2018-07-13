@@ -8,8 +8,8 @@
 package org.kuali.coeus.common.framework.auth;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.common.framework.auth.perm.Permissionable;
 import org.kuali.coeus.sys.framework.service.KcServiceLocator;
 import org.kuali.kra.kim.bo.KcKimAttributes;
@@ -27,7 +27,7 @@ import java.util.Map;
 
 public abstract class KcWorkflowDocumentAuthorizerBase extends KimDocumentTypeAuthorizer {
     
-    protected static final Log LOG = LogFactory.getLog(KcWorkflowDocumentAuthorizerBase.class);
+    protected static final Logger LOG = LogManager.getLogger(KcWorkflowDocumentAuthorizerBase.class);
     
     private transient DocumentService documentService;
     private transient BusinessObjectService businessObjectService;

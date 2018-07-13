@@ -9,8 +9,8 @@ package org.kuali.coeus.common.impl.krms;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.common.framework.sponsor.Sponsor;
 import org.kuali.coeus.common.framework.sponsor.Sponsorable;
 import org.kuali.coeus.common.framework.version.VersionStatus;
@@ -35,7 +35,7 @@ import java.util.Objects;
 
 public abstract class KcKrmsJavaFunctionTermServiceBase {
 
-    protected final Log LOG = LogFactory.getLog(KcKrmsJavaFunctionTermServiceBase.class);
+    protected final Logger LOG = LogManager.getLogger(KcKrmsJavaFunctionTermServiceBase.class);
 
     public static final String TRUE = "true";
     public static final String FALSE = "false";

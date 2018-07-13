@@ -9,8 +9,8 @@ package org.kuali.coeus.propdev.impl.hierarchy;
 
 import org.apache.commons.collections4.ListUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.common.budget.framework.core.Budget;
 import org.kuali.coeus.common.budget.framework.period.BudgetPeriod;
 import org.kuali.coeus.common.budget.framework.personnel.HierarchyPersonnelSummary;
@@ -82,7 +82,7 @@ import static org.kuali.coeus.propdev.impl.hierarchy.ProposalHierarchyKeyConstan
 @Transactional
 public class ProposalHierarchyServiceImpl implements ProposalHierarchyService {
 
-    private static final Log LOG = LogFactory.getLog(ProposalHierarchyServiceImpl.class);
+    private static final Logger LOG = LogManager.getLogger(ProposalHierarchyServiceImpl.class);
 
     private static final String HIERARCHY_REJECTED_APPSTATUS="message.proposalDevelopment.workflow.applicationStatus.rejected";
     private static final String HIERARCHY_ENROUTE_APPSTATUS="message.proposalDevelopment.workflow.applicationStatus.enroute";

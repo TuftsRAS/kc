@@ -7,8 +7,8 @@
  */
 package org.kuali.kra.protocol.drools.util;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kie.api.KieServices;
 import org.kie.api.builder.KieBuilder;
 import org.kie.api.builder.KieFileSystem;
@@ -30,7 +30,7 @@ import java.io.IOException;
  */
 public class DroolsRuleHandler {
 
-    private static final Log LOG = LogFactory.getLog(DroolsRuleHandler.class);
+    private static final Logger LOG = LogManager.getLogger(DroolsRuleHandler.class);
 
     private KieContainer rules;
     

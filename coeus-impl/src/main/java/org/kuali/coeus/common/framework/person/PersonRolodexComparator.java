@@ -14,7 +14,7 @@ import org.kuali.coeus.common.framework.rolodex.PersonRolodex;
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 public class PersonRolodexComparator implements Comparator<PersonRolodex> {
-    private static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(PersonRolodexComparator.class);
+    private static final org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger(PersonRolodexComparator.class);
 
     public static final Comparator<PersonRolodex> INSTANCE = new PersonRolodexComparator();
 

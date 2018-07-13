@@ -7,7 +7,8 @@
  */
 package org.kuali.coeus.sys.impl.workflow.action;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.kuali.coeus.propdev.impl.core.ProposalDevelopmentConstants;
 import org.kuali.coeus.sys.framework.service.KcServiceLocator;
 import org.kuali.kra.infrastructure.Constants;
@@ -31,7 +32,7 @@ import java.util.List;
 
 public class KcRecallAction extends RecallAction {
     //use the name of the rice logger to keep a similar logging approach as KcReturnToPreviousNodeAction
-    private static final Logger LOG = Logger.getLogger(RecallAction.class);
+    private static final Logger LOG = LogManager.getLogger(RecallAction.class);
 
     public KcRecallAction(DocumentRouteHeaderValue routeHeader, PrincipalContract principal, String annotation, boolean cancel) {
         super(routeHeader, principal, annotation, cancel);

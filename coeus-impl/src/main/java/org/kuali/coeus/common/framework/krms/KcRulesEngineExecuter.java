@@ -7,8 +7,8 @@
  */
 package org.kuali.coeus.common.framework.krms;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.sys.framework.service.KcServiceLocator;
 import org.kuali.rice.core.api.exception.RiceRuntimeException;
 import org.kuali.rice.core.api.util.xml.XmlHelper;
@@ -25,7 +25,7 @@ import java.io.ByteArrayInputStream;
 
 public abstract class KcRulesEngineExecuter implements RulesEngineExecutor {
 	
-    protected final Log LOG = LogFactory.getLog(KcRulesEngineExecuter.class);
+    protected final Logger LOG = LogManager.getLogger(KcRulesEngineExecuter.class);
     @Override
     public EngineResults execute(RouteContext routeContext, Engine engine) {
         KcServiceLocator.getService(KcKrmsCacheManager.class).clearCache();

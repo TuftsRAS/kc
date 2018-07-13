@@ -8,8 +8,8 @@
 package org.kuali.coeus.propdev.impl.auth.perm;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.common.api.sponsor.hierarchy.SponsorHierarchyService;
 import org.kuali.coeus.common.framework.person.KcPerson;
 import org.kuali.coeus.common.framework.person.KcPersonService;
@@ -38,7 +38,7 @@ import java.util.*;
 @Component("proposalDevelopmentPermissionsService")
 public class ProposalDevelopmentPermissionsServiceImpl implements ProposalDevelopmentPermissionsService {
 
-    private static final Log LOG = LogFactory.getLog(ProposalDevelopmentPermissionsServiceImpl.class);
+    private static final Logger LOG = LogManager.getLogger(ProposalDevelopmentPermissionsServiceImpl.class);
 
     public static final String COI_REQUIREMENT = "COI_REQUIREMENT";
     public static final String PRINCIPAL_COI_KEY_PERSON = "PCK";

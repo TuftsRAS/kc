@@ -9,8 +9,8 @@ package org.kuali.coeus.common.questionnaire.impl.answer;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.common.framework.module.CoeusModule;
 import org.kuali.coeus.common.framework.module.CoeusSubModule;
 import org.kuali.coeus.common.questionnaire.framework.answer.Answer;
@@ -49,7 +49,7 @@ import java.util.stream.Collectors;
 @Component("questionnaireAnswerService")
 public class QuestionnaireAnswerServiceImpl implements QuestionnaireAnswerService {
 
-    private static final Log LOG = LogFactory.getLog(QuestionnaireAnswerServiceImpl.class);
+    private static final Logger LOG = LogManager.getLogger(QuestionnaireAnswerServiceImpl.class);
     private static final String MODULE_ITEM_CODE = "moduleItemCode";
     private static final String MODULE_SUB_ITEM_CODE = "moduleSubItemCode";
     private static final String MODULE_ITEM_KEY = "moduleItemKey";

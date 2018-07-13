@@ -8,8 +8,8 @@
 package org.kuali.coeus.common.impl.sponsor;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.common.framework.sponsor.hierarchy.SponsorHierarchy;
 import org.kuali.coeus.common.impl.sponsor.hierarchy.SponsorHierarchyDao;
 import org.kuali.coeus.common.impl.sponsor.hierarchy.SponsorHierarchyForm;
@@ -29,7 +29,7 @@ import java.util.*;
 @SuppressWarnings({"deprecation","unchecked"})
 public class SponsorHierarchyMaintenanceServiceImpl implements SponsorHierarchyMaintenanceService, Constants {
 	
-    private static final Log LOG = LogFactory.getLog(SponsorHierarchyMaintenanceServiceImpl.class);
+    private static final Logger LOG = LogManager.getLogger(SponsorHierarchyMaintenanceServiceImpl.class);
     private static final String SESSION_KEY = SponsorHierarchyMaintenanceServiceImpl.class.getName() + ".actionList";
     private static final Integer HIERARCHY_MAX_HEIGHT = 10;
 	

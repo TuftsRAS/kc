@@ -7,8 +7,8 @@
  */
 package org.kuali.kra.award.contacts;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.common.framework.type.InvestigatorCreditType;
 import org.kuali.coeus.propdev.impl.person.creditsplit.CreditSplit;
 import org.kuali.coeus.sys.api.model.ScaleTwoDecimal;
@@ -33,7 +33,7 @@ public class AwardCreditSplitBean implements Serializable {
     static final String PERSON_TOTALS_KEY = "personTotalsKey";
     
     private static final long serialVersionUID = 1330497293834315534L;
-    private static Log LOGGER = LogFactory.getLog(AwardCreditSplitBean.class);
+    private static Logger LOGGER = LogManager.getLogger(AwardCreditSplitBean.class);
     private static final String YES = "Y";
     private static final String AWARD_CREDIT_SPLIT_PARM_NAME = "award.creditsplit.enabled";
     private static final ScaleTwoDecimal ZERO_VALUE = new ScaleTwoDecimal(0);

@@ -8,8 +8,8 @@
 package org.kuali.kra.award.awardhierarchy.sync.service;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.common.framework.version.VersionStatus;
 import org.kuali.coeus.common.framework.version.history.VersionHistory;
 import org.kuali.coeus.common.framework.version.history.VersionHistoryService;
@@ -63,7 +63,7 @@ public class AwardSyncServiceImpl implements AwardSyncService {
     protected static final String CHANGE_LOG_SUCCESS = "Success";
     
     protected static final String IGNORED_MESSAGE_KEYS = "error.award.person.credit.split.,error.award.person.unit.credit.split.,error.awardProjectPerson.uncertified";
-    protected final Log LOG = LogFactory.getLog(AwardSyncServiceImpl.class);
+    protected final Logger LOG = LogManager.getLogger(AwardSyncServiceImpl.class);
     
     private AwardSyncHelpersService awardSyncHelpersService;
     private AwardSyncCreationService awardSyncCreationService;

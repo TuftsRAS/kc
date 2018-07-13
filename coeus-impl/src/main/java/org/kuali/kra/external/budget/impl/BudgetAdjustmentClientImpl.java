@@ -7,8 +7,8 @@
  */
 package org.kuali.kra.external.budget.impl;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.kfs.module.external.kc.service.BudgetAdjustmentService;
 import org.kuali.kfs.module.external.kc.service.BudgetAdjustmentServiceSOAP;
 import org.kuali.kra.infrastructure.Constants;
@@ -30,7 +30,7 @@ public class BudgetAdjustmentClientImpl extends BudgetAdjustmentClientBase {
     
     private static BudgetAdjustmentClientImpl client;
 
-    private static final Log LOG = LogFactory.getLog(BudgetAdjustmentClientImpl.class);
+    private static final Logger LOG = LogManager.getLogger(BudgetAdjustmentClientImpl.class);
 
     
     private BudgetAdjustmentClientImpl() {

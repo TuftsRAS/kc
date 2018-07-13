@@ -9,7 +9,8 @@ package org.kuali.coeus.common.impl;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.validator.routines.UrlValidator;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.kuali.coeus.propdev.impl.core.ProposalDevelopmentDocument;
 import org.kuali.coeus.sys.framework.gv.GlobalVariableService;
 import org.kuali.coeus.sys.impl.validation.DataValidationItem;
@@ -30,7 +31,7 @@ import java.util.Map;
 public abstract class KcViewHelperServiceImpl extends ViewHelperServiceImpl {
 
     private static final long serialVersionUID = 3335951799627228900L;
-    private static final Logger LOG = Logger.getLogger(KcViewHelperServiceImpl.class);
+    private static final Logger LOG = LogManager.getLogger(KcViewHelperServiceImpl.class);
     private static final String FEEDBACK_LINK_PARAMETER_NAME = "feedback.link.url";
 
     @Autowired

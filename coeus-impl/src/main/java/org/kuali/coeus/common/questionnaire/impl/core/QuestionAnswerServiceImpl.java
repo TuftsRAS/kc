@@ -7,8 +7,8 @@
  */
 package org.kuali.coeus.common.questionnaire.impl.core;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.common.questionnaire.api.core.QuestionAnswerService;
 import org.kuali.coeus.common.questionnaire.api.question.QuestionContract;
 import org.kuali.coeus.common.questionnaire.api.core.QuestionnaireContract;
@@ -26,7 +26,7 @@ import java.util.*;
 @Service("questionAnswerService")
 public class QuestionAnswerServiceImpl implements QuestionAnswerService {
 
-    private static final Log LOG = LogFactory.getLog(QuestionAnswerServiceImpl.class);
+    private static final Logger LOG = LogManager.getLogger(QuestionAnswerServiceImpl.class);
     private static final String SUPPORTED_LOOKUP_CLASS = ArgValueLookup.class.getName();
 
     @Autowired

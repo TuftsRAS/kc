@@ -13,8 +13,8 @@ import gov.grants.apply.services.applicantwebservices_v2.GetOpportunitiesRespons
 import gov.grants.apply.services.applicantwebservices_v2.SubmitApplicationResponse;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.instprop.api.admin.ProposalAdminDetailsContract;
 import org.kuali.coeus.instprop.api.admin.ProposalAdminDetailsService;
 import org.kuali.coeus.instprop.api.sponsor.InstPropSponsorService;
@@ -59,7 +59,7 @@ import static org.kuali.rice.core.api.criteria.PredicateFactory.*;
 @Component("s2sSubmissionService")
 public class S2sSubmissionServiceImpl implements S2sSubmissionService {
 
-    private static final Log LOG = LogFactory.getLog(S2sSubmissionServiceImpl.class);
+    private static final Logger LOG = LogManager.getLogger(S2sSubmissionServiceImpl.class);
     private static final String GRANTS_GOV_STATUS_ERROR = "ERROR";
     private static final String ERROR_MESSAGE = "Exception Occurred";
     private static final String PREVENT_MULTIPLE_S2S_SUBMISSIONS = "PREVENT_MULTIPLE_S2S_SUBMISSIONS";

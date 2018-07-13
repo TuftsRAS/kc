@@ -8,8 +8,8 @@
 package org.kuali.kra.award;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.sys.framework.service.KcServiceLocator;
 import org.kuali.kra.award.home.Award;
 import org.kuali.kra.infrastructure.Constants;
@@ -29,7 +29,7 @@ import java.util.List;
 
 public class AwardInquirable extends KualiInquirableImpl {
     
-    private static final Log LOG = LogFactory.getLog(AwardInquirable.class);
+    private static final Logger LOG = LogManager.getLogger(AwardInquirable.class);
 
     @Override
     public List<Section> getSections(BusinessObject bo) {

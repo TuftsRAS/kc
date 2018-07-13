@@ -9,8 +9,8 @@
 package org.kuali.kra.iacuc;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.coi.framework.ProjectRetrievalService;
 import org.kuali.coeus.common.framework.custom.DocumentCustomData;
 import org.kuali.coeus.common.framework.krms.KcKrmsFactBuilderService;
@@ -73,7 +73,7 @@ public class IacucProtocolDocument extends ProtocolDocumentBase {
 
     private static final long serialVersionUID = -1014286912251147390L;
 
-    private static final Log LOG = LogFactory.getLog(IacucProtocolDocument.class);
+    private static final Logger LOG = LogManager.getLogger(IacucProtocolDocument.class);
     public static final String DOCUMENT_TYPE_CODE = "ICPR";
     
     private static final String DISAPPROVED_CONTEXT_NAME = "Disapproved";

@@ -9,8 +9,8 @@ package org.kuali.coeus.sys.impl.dd;
 
 import org.apache.commons.collections4.KeyValue;
 import org.apache.commons.collections4.keyvalue.DefaultKeyValue;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.junit.Assert;
 import org.junit.Test;
 import org.kuali.coeus.sys.framework.service.KcServiceLocator;
@@ -30,7 +30,7 @@ import java.util.stream.Stream;
 
 public class DataDictionarySpringBeanConfigurationTest extends KcIntegrationTestBase {
 
-    private static final Log LOG = LogFactory.getLog(DataDictionarySpringBeanConfigurationTest.class);
+    private static final Logger LOG = LogManager.getLogger(DataDictionarySpringBeanConfigurationTest.class);
 
     private static final Collection<String> IGNORE_PATTERN = Stream.<String>empty().collect(Collectors.toList());
 

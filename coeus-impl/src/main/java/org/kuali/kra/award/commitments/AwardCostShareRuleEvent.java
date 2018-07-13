@@ -7,15 +7,15 @@
  */
 package org.kuali.kra.award.commitments;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.sys.framework.rule.KcDocumentEventBase;
 import org.kuali.kra.award.document.AwardDocument;
 import org.kuali.rice.krad.rules.rule.BusinessRule;
 
 
 public class AwardCostShareRuleEvent extends KcDocumentEventBase {
-    private static final Log LOG = LogFactory.getLog(AwardCostShareRuleEvent.class);
+    private static final Logger LOG = LogManager.getLogger(AwardCostShareRuleEvent.class);
     
     private AwardCostShare awardCostShare;
     private String fieldName;

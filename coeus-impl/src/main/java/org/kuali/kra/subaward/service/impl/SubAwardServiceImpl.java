@@ -9,8 +9,8 @@ package org.kuali.kra.subaward.service.impl;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.common.framework.version.VersionException;
 import org.kuali.coeus.common.framework.version.VersionStatus;
 import org.kuali.coeus.common.framework.version.VersioningService;
@@ -38,7 +38,7 @@ import java.util.*;
 
 public class SubAwardServiceImpl implements SubAwardService {
 
-    private static final Log LOG = LogFactory.getLog(SubAwardServiceImpl.class);
+    private static final Logger LOG = LogManager.getLogger(SubAwardServiceImpl.class);
     public static final String SUB_AWARD_CODE = "subAwardCode";
     public static final String SUB_AWARD_SEQUENCE_STATUS = "subAwardSequenceStatus";
     public static final String SUBAWARD_FOLLOW_UP = "Subaward Follow Up";

@@ -36,8 +36,8 @@ import gov.nih.era.projectmgmt.sbir.cgap.researchandrelatedNamespace.*;
 import gov.nih.era.projectmgmt.sbir.cgap.researchandrelatedNamespace.KeyPersonType.KeyPersonFlag;
 import gov.nih.era.projectmgmt.sbir.cgap.researchandrelatedNamespace.OtherDirectCostsDocument.OtherDirectCosts;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.apache.xmlbeans.XmlObject;
 import org.apache.xmlbeans.XmlToken;
 import org.kuali.coeus.common.api.org.OrganizationRepositoryService;
@@ -107,8 +107,8 @@ import java.util.stream.Collectors;
 public class NIHResearchAndRelatedXmlStream extends
         AbstractResearchAndRelatedStream {
 
-    private static final Log LOG = LogFactory
-            .getLog(NIHResearchAndRelatedXmlStream.class);
+    private static final Logger LOG = LogManager
+            .getLogger(NIHResearchAndRelatedXmlStream.class);
 
     private static final String ORGANIZATION_QUESTION_ID_H5 = "H5";
     private static final String ORGANIZATION_QUESTION_ID_I8 = "I8";

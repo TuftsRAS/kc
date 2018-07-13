@@ -8,8 +8,8 @@
 package org.kuali.coeus.propdev.impl.person;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.common.framework.person.KcPersonService;
 import org.kuali.coeus.common.framework.person.PersonRolodexComparator;
 import org.kuali.coeus.common.framework.unit.Unit;
@@ -37,7 +37,7 @@ import static org.kuali.kra.infrastructure.KeyConstants.*;
 
 public class ProposalDevelopmentKeyPersonsRule extends KcTransactionalDocumentRuleBase implements AddKeyPersonRule, ChangeKeyPersonRule,CalculateCreditSplitRule  {
 
-    private static final Log LOG = LogFactory.getLog(ProposalDevelopmentKeyPersonsRule.class);
+    private static final Logger LOG = LogManager.getLogger(ProposalDevelopmentKeyPersonsRule.class);
 
     private static final String ADD_KEY_PERSON_HELPER_PARAMETER_MAP_KEY_PERSON_PROJECT_ROLE = "addKeyPersonHelper.parameterMap['keyPersonProjectRole']";
     private static final String ADD_KEY_PERSON_HELPER_PARAMETER_MAP_PERSON_ROLE = "addKeyPersonHelper.parameterMap['personRole']";

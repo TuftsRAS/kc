@@ -8,7 +8,7 @@
 package org.kuali.kra.protocol.actions.followup;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
+import org.apache.logging.log4j.Logger;
 import org.kuali.kra.protocol.ProtocolBase;
 import org.kuali.kra.protocol.actions.submit.ValidProtocolActionActionBase;
 import org.kuali.rice.krad.service.BusinessObjectService;
@@ -117,7 +117,7 @@ public abstract class FollowupActionServiceImplBase<T extends ValidProtocolActio
         return result;
     }
     
-    protected abstract Log getLogHook();
+    protected abstract Logger getLogHook();
 
 
     /**

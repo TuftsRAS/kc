@@ -9,8 +9,8 @@ package org.kuali.kra.award.web.struts.action;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -135,7 +135,7 @@ public class AwardAction extends BudgetParentActionBase {
     private static final String QUESTION_VERIFY_SYNC="VerifySync";
     private static final String QUESTION_VERIFY_EMPTY_SYNC="VerifyEmptySync";
 
-    private static final Log LOG = LogFactory.getLog( AwardAction.class );
+    private static final Logger LOG = LogManager.getLogger( AwardAction.class );
     private transient SponsorHierarchyService sponsorHierarchyService;
     private TimeAndMoneyService timeAndMoneyService;
     private TimeAndMoneyExistenceService timeAndMoneyExistenceService;

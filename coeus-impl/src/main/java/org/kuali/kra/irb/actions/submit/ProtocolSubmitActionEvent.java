@@ -7,7 +7,7 @@
  */
 package org.kuali.kra.irb.actions.submit;
 
-import org.apache.commons.logging.Log;
+import org.apache.logging.log4j.Logger;
 import org.kuali.kra.protocol.ProtocolDocumentBase;
 import org.kuali.kra.protocol.actions.submit.ProtocolSubmitAction;
 import org.kuali.kra.protocol.actions.submit.ProtocolSubmitActionEventBase;
@@ -18,10 +18,10 @@ public class ProtocolSubmitActionEvent extends ProtocolSubmitActionEventBase {
         super(document, submitAction);
     }
 
-    private static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(ProtocolSubmitActionEvent.class);
+    private static final org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger(ProtocolSubmitActionEvent.class);
 
     @Override
-    protected Log getLOGHook() {
+    protected Logger getLOGHook() {
         return LOG;
     }
     

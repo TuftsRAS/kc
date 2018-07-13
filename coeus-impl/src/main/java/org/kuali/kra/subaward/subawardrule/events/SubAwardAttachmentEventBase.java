@@ -11,7 +11,6 @@ package org.kuali.kra.subaward.subawardrule.events;
 
 import org.kuali.coeus.sys.framework.rule.KcDocumentEventBase;
 import org.kuali.kra.subaward.subawardrule.AddSubAwardAttachmentRule;
-import org.kuali.kra.subaward.subawardrule.events.SubAwardAttachmentEvent;
 import org.kuali.kra.subaward.bo.SubAwardAttachments;
 import org.kuali.kra.subaward.document.SubAwardDocument;
 import org.kuali.rice.krad.rules.rule.BusinessRule;
@@ -19,8 +18,8 @@ import org.kuali.rice.krad.rules.rule.BusinessRule;
 public class SubAwardAttachmentEventBase extends KcDocumentEventBase implements SubAwardAttachmentEvent {
     
     private SubAwardAttachments attachment;
-    private static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory
-    .getLog(SubAwardAttachmentEventBase.class);
+    private static final org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager
+    .getLogger(SubAwardAttachmentEventBase.class);
     
     protected SubAwardAttachmentEventBase(String description, String errorPathPrefix, SubAwardDocument document, SubAwardAttachments attachment) {
         super(description, errorPathPrefix, document);

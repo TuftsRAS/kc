@@ -32,7 +32,7 @@ import java.util.ArrayList;
 
 public class NegotiationAction extends KcTransactionalDocumentActionBase {
     @SuppressWarnings("unused")
-    private static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(NegotiationAction.class);
+    private static final org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger(NegotiationAction.class);
 
     private NegotiationService negotiationService;
     private SequenceAccessorService sequenceAccessorService;

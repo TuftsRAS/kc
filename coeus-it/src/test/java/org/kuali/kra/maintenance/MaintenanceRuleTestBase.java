@@ -7,8 +7,6 @@
  */
 package org.kuali.kra.maintenance;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.kuali.coeus.sys.framework.service.KcServiceLocator;
 import org.kuali.kra.test.infrastructure.KcIntegrationTestBase;
 import org.kuali.rice.kew.api.exception.WorkflowException;
@@ -30,7 +28,6 @@ import static org.junit.Assert.assertTrue;
  *  Base class for testing <code>{@link MaintenanceDocument}</code> instances
  */
 public abstract class MaintenanceRuleTestBase extends KcIntegrationTestBase {
-    private static final Log LOG = LogFactory.getLog(MaintenanceRuleTestBase.class); 
     private static final String DOCUMENT_ERRORS = "document.document*,document.explanation*,document.reversal*,document.selected*,document.header*";
         
     /**

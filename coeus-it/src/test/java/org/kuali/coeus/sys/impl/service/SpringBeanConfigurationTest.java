@@ -10,8 +10,8 @@ package org.kuali.coeus.sys.impl.service;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.KeyValue;
 import org.apache.commons.collections4.keyvalue.DefaultKeyValue;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -38,7 +38,7 @@ import java.util.stream.Stream;
 
 public class SpringBeanConfigurationTest extends KcIntegrationTestBase {
 
-    private static final Log LOG = LogFactory.getLog(SpringBeanConfigurationTest.class);
+    private static final Logger LOG = LogManager.getLogger(SpringBeanConfigurationTest.class);
 
     private static final Collection<String> IGNORE_PATTERN = Stream.of(
             "^org.springframework.aop.*", "viewResolver", "enWorkflowDocumentService"

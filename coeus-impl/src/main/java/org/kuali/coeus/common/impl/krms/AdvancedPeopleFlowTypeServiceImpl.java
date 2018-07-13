@@ -7,8 +7,8 @@
  */
 package org.kuali.coeus.common.impl.krms;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.common.impl.workflow.KcPeopleFlowTypeServiceImpl;
 import org.kuali.coeus.sys.framework.model.KcTransactionalDocumentBase;
 import org.kuali.kra.kim.bo.KcKimAttributes;
@@ -25,7 +25,7 @@ import java.util.Map;
 
 @Service("advancedPeopleFlowTypeService")
 public class AdvancedPeopleFlowTypeServiceImpl extends KcPeopleFlowTypeServiceImpl {
-    private static final Log LOG = LogFactory.getLog(AdvancedPeopleFlowTypeServiceImpl.class);
+    private static final Logger LOG = LogManager.getLogger(AdvancedPeopleFlowTypeServiceImpl.class);
 
     @Autowired
     @Qualifier("documentService")

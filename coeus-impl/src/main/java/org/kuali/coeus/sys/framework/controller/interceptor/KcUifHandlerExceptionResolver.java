@@ -7,7 +7,8 @@
  */
 package org.kuali.coeus.sys.framework.controller.interceptor;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.kuali.rice.krad.UserSession;
 import org.kuali.rice.krad.util.GlobalVariables;
 import org.kuali.rice.krad.util.KRADConstants;
@@ -23,7 +24,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 //not exactly sure how to do this with autowiring since exception handlers are special
 public class KcUifHandlerExceptionResolver implements org.springframework.web.servlet.HandlerExceptionResolver, Ordered {
-	private static final Logger LOG = Logger.getLogger(KcUifHandlerExceptionResolver.class);
+	private static final Logger LOG = LogManager.getLogger(KcUifHandlerExceptionResolver.class);
 	HandlerExceptionResolver innerHandler;
 
     @Override

@@ -49,7 +49,7 @@ import static org.kuali.rice.krad.util.KRADConstants.METHOD_TO_CALL_ATTRIBUTE;
 public abstract class CommitteeMembershipActionBase extends CommitteeActionBase {
     
     @SuppressWarnings("unused")
-    private static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(CommitteeMembershipActionBase.class);
+    private static final org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger(CommitteeMembershipActionBase.class);
 
     
     @Override

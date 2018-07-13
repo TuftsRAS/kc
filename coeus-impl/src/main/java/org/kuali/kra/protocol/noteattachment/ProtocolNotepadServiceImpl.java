@@ -8,8 +8,8 @@
 package org.kuali.kra.protocol.noteattachment;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.rice.kim.api.identity.Person;
 import org.kuali.rice.kim.api.identity.PersonService;
 
@@ -19,7 +19,7 @@ public class ProtocolNotepadServiceImpl implements ProtocolNotepadService {
 
     private PersonService personService;
     
-    protected final Log LOG = LogFactory.getLog(getClass()); 
+    protected final Logger LOG = LogManager.getLogger(getClass());
     private static final String PERSON_NOT_FOUND_FORMAT_STRING = "%s (not found)";
    
     @Override

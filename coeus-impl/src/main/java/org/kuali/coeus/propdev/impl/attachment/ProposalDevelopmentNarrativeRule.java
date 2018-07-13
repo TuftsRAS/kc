@@ -37,7 +37,7 @@ public class ProposalDevelopmentNarrativeRule extends KcTransactionalDocumentRul
     private static final String MODULE_STATUS_CODE_COMPLETED = "C";
     private static final String ERROR_PREFIX_FOR_ATTACHMENTS = "multipartFile";
 
-    private static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(ProposalDevelopmentNarrativeRule.class);
+    private static final org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger(ProposalDevelopmentNarrativeRule.class);
     private static final String NARRATIVE_TYPE = "narrativeType";
     private static final String MODULE_STATUS_CODE = "moduleStatusCode";
     private static final String NARRATIVE_TYPE_CODE = "narrativeTypeCode";

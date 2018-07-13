@@ -10,8 +10,8 @@
 package org.kuali.coeus.propdev.impl.s2s.override;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.common.framework.attachment.KcAttachmentDataDao;
 import org.kuali.coeus.common.framework.attachment.KcAttachmentService;
 import org.kuali.coeus.common.framework.print.KcAttachmentDataSource;
@@ -44,7 +44,7 @@ import java.util.Date;
 @Table(name = "S2S_OVERRIDE_ATT")
 public class S2sOverrideAttachment extends KcAttachmentDataSource implements S2sOverrideAttachmentContract, FileMeta {
 
-    private static final Log LOG = LogFactory.getLog(S2sOverrideAttachment.class);
+    private static final Logger LOG = LogManager.getLogger(S2sOverrideAttachment.class);
 
     /*
       This cannot be named id because FileMeta has an id but KRAD sets it to a value that is not valid for this database column.

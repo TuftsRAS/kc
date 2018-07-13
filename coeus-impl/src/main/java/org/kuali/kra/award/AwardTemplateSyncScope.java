@@ -9,8 +9,8 @@ package org.kuali.kra.award;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.sys.framework.service.KcServiceLocator;
 import org.kuali.kra.award.contacts.AwardSponsorContact;
 import org.kuali.kra.award.document.AwardDocument;
@@ -49,7 +49,7 @@ public enum AwardTemplateSyncScope {
     
     
     
-    private static final Log LOG = LogFactory.getLog(AwardTemplateSyncScope.class);
+    private static final Logger LOG = LogManager.getLogger(AwardTemplateSyncScope.class);
     private String displayPropertyName;
     
     

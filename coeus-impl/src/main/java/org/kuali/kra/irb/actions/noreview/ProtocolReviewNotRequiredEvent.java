@@ -15,7 +15,7 @@ import org.kuali.rice.krad.rules.rule.BusinessRule;
 
 public class ProtocolReviewNotRequiredEvent extends KcDocumentEventBase {
     
-    private static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(ProtocolReviewNotRequiredEvent.class);
+    private static final org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger(ProtocolReviewNotRequiredEvent.class);
     
     private ProtocolReviewNotRequiredBean actionBean;
     

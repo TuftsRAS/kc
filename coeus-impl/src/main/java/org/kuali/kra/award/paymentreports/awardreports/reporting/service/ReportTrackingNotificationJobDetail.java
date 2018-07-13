@@ -8,8 +8,8 @@
 package org.kuali.kra.award.paymentreports.awardreports.reporting.service;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.common.notification.impl.service.KcNotificationService;
 import org.kuali.kra.award.document.AwardDocument;
 import org.kuali.kra.infrastructure.Constants;
@@ -17,7 +17,6 @@ import org.kuali.rice.coreservice.framework.parameter.ParameterService;
 import org.kuali.rice.krad.UserSession;
 import org.kuali.rice.krad.util.GlobalVariables;
 import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,7 +33,7 @@ public class ReportTrackingNotificationJobDetail extends QuartzJobBean {
     private static final String CONTEXT_NAME = "Report Tracking Notification Job";
     private static final String SUBJECT = "Report Tracking Notification batch job result";
     
-    private static final Log LOG = LogFactory.getLog(ReportTrackingNotificationJobDetail.class);
+    private static final Logger LOG = LogManager.getLogger(ReportTrackingNotificationJobDetail.class);
     
     private String user;
 

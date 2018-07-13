@@ -8,8 +8,8 @@
 package org.kuali.coeus.common.impl.version;
 
 import org.apache.commons.beanutils.PropertyUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.common.framework.version.sequence.Sequenceable;
 import org.kuali.coeus.common.framework.version.sequence.associate.SeparatelySequenceableAssociate;
 import org.kuali.coeus.common.framework.version.sequence.associate.SequenceAssociate;
@@ -34,7 +34,7 @@ import java.util.*;
 public class SequenceUtils {
     private static final String SEQUENCING_ERR_MSG = "An error occurred sequencing";
 
-    private static final Log LOG = LogFactory.getLog(SequenceUtils.class);
+    private static final Logger LOG = LogManager.getLogger(SequenceUtils.class);
 
     /**
      * Using an identity set to store already sequenced references.  In Java 6 and above the following can be used

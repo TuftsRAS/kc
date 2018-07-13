@@ -7,7 +7,7 @@
  */
 package org.kuali.kra.irb.actions.submit;
 
-import org.apache.commons.logging.Log;
+import org.apache.logging.log4j.Logger;
 import org.kuali.coeus.common.framework.module.CoeusModule;
 import org.kuali.coeus.common.framework.module.CoeusSubModule;
 import org.kuali.kra.infrastructure.PermissionConstants;
@@ -36,7 +36,7 @@ import java.util.Map;
 public class ProtocolActionServiceImpl extends ProtocolActionServiceImplBase implements ProtocolActionService {
 
     
-    static private final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(ProtocolActionServiceImpl.class);
+    static private final org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger(ProtocolActionServiceImpl.class);
 
     
     private static final int PERMISSIONS_LEADUNIT_RULE = 0;
@@ -148,7 +148,7 @@ public class ProtocolActionServiceImpl extends ProtocolActionServiceImplBase imp
     }
 
     @Override
-    protected Log getLOGHook() {
+    protected Logger getLOGHook() {
         return LOG;
     }
 

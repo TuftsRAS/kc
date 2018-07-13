@@ -12,13 +12,13 @@ import java.util.*;
 import java.util.concurrent.Executor;
 
 import org.apache.commons.lang3.SystemUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 /** this class is to be used for diagnostic purposes in regards to tracking currently opened and closed connections. */
 public class TrackingConnection implements Connection {
 
-    private static final Log LOG = LogFactory.getLog(TrackingConnection.class);
+    private static final Logger LOG = LogManager.getLogger(TrackingConnection.class);
     
     private final Connection connection;
 
@@ -324,7 +324,7 @@ public class TrackingConnection implements Connection {
      */
     private static final class ConnectionTracker {
 
-        private static final Log LOG = LogFactory.getLog(ConnectionTracker.class);
+        private static final Logger LOG = LogManager.getLogger(ConnectionTracker.class);
 
         /**
          * data structure format:

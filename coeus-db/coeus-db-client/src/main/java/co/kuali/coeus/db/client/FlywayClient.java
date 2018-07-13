@@ -21,7 +21,6 @@ import javax.sql.DataSource;
 
 import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
@@ -71,7 +70,7 @@ public class FlywayClient {
     private static final String JAVA_MIGRATION_PATH = "javaMigrationPath";
     private static final String INIT_VERSION = "initVersion";
     
-    private static final Logger LOG = Logger.getLogger(FlywayClient.class.getName()); 
+    private static final Logger LOG = Logger.getLogger(FlywayClient.class.getName());
     
     @SuppressWarnings("unchecked")
     public static void main(String[] args) throws JsonParseException, JsonMappingException, IOException {

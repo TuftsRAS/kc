@@ -7,8 +7,8 @@
  */
 package org.kuali.kra.infrastructure;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import static org.junit.Assert.assertEquals;
 
 public class DateUtilsTest {
-    private static final Log LOG = LogFactory.getLog(DateUtilsTest.class);
+    private static final Logger LOG = LogManager.getLogger(DateUtilsTest.class);
     private static final ArrayList<String> TIME_LIST = new ArrayList<String>();
     
     private static String[][] valueChecks = { { "11:59 AM", "11:59 AM" }, { "01:59 AM", "1:59 AM" }, { "1:59 AM", "1:59 AM" },

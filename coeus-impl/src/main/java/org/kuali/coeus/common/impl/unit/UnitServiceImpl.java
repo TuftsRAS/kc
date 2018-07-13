@@ -12,7 +12,8 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.IterableUtils;
 import org.apache.commons.collections4.ListUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.kuali.coeus.common.framework.unit.Unit;
 import org.kuali.coeus.common.framework.unit.UnitService;
 import org.kuali.coeus.common.framework.unit.admin.UnitAdministrator;
@@ -33,7 +34,7 @@ import java.util.stream.Collectors;
 @Component("unitService")
 public class UnitServiceImpl implements UnitService {
 
-    private static final Logger LOGGER = Logger.getLogger(UnitServiceImpl.class);
+    private static final Logger LOGGER = LogManager.getLogger(UnitServiceImpl.class);
     private static final String COLUMN = ":";
     private static final String SEPARATOR = ";1;";
     private static final String DASH = "$-$";

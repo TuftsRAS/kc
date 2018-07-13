@@ -8,8 +8,8 @@
 package org.kuali.coeus.propdev.impl.auth;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.common.framework.auth.KcKradTransactionalDocumentAuthorizerBase;
 import org.kuali.coeus.common.framework.auth.UnitAuthorizationService;
 import org.kuali.coeus.propdev.impl.attachment.NarrativeRight;
@@ -57,7 +57,7 @@ import java.util.Set;
  */
 public class ProposalDevelopmentDocumentAuthorizer extends KcKradTransactionalDocumentAuthorizerBase {
 
-    private static final Log LOG = LogFactory.getLog(ProposalDevelopmentDocumentAuthorizer.class);
+    private static final Logger LOG = LogManager.getLogger(ProposalDevelopmentDocumentAuthorizer.class);
     private static final String MODIFY_BUDGET = "ModifyBudget";
     private static final String SAVE_CERTIFICATION = "SaveCertification";
     private static final String IS_AUTHORIZED_TO_MODIFY = "IsAuthorizedToModify";

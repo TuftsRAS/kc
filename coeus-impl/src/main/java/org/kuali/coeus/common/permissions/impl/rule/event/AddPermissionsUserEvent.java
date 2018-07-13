@@ -25,7 +25,7 @@ import java.util.List;
  */
 public class AddPermissionsUserEvent extends KcDocumentEventBase {
     
-    private static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(AddPermissionsUserEvent.class);
+    private static final org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger(AddPermissionsUserEvent.class);
     
     private PermissionsUser newUser;
     private List<User> users;

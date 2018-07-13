@@ -8,8 +8,8 @@
 package org.kuali.kra.award.document;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.coi.framework.Project;
 import org.kuali.coeus.coi.framework.ProjectPublisher;
 import org.kuali.coeus.coi.framework.ProjectRetrievalService;
@@ -87,7 +87,7 @@ import java.util.*;
 @NAMESPACE(namespace=Constants.PARAMETER_MODULE_AWARD)
 @COMPONENT(component=ParameterConstants.DOCUMENT_COMPONENT)
 public class AwardDocument extends BudgetParentDocument<Award> implements  Copyable, SessionDocument, KrmsRulesContext {
-    private static final Log LOG = LogFactory.getLog(AwardDocument.class);
+    private static final Logger LOG = LogManager.getLogger(AwardDocument.class);
     
     public static final String PLACEHOLDER_DOC_DESCRIPTION = "*****PLACEHOLDER*****";
 

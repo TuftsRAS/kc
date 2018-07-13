@@ -7,7 +7,7 @@
  */
 package org.kuali.kra.protocol.onlinereview;
 
-import org.apache.commons.logging.Log;
+import org.apache.logging.log4j.Logger;
 import org.apache.struts.action.ActionMapping;
 import org.kuali.coeus.common.framework.custom.CustomDataHelperBase;
 import org.kuali.coeus.common.permissions.impl.web.struts.form.PermissionsForm;
@@ -165,7 +165,7 @@ public abstract class ProtocolOnlineReviewFormBase extends KcTransactionalDocume
         return nodes;
     }
 
-    protected abstract Log getLogHook();
+    protected abstract Logger getLogHook();
 
     public String getApproveImageName() {
         //we take the first route node the document is on.

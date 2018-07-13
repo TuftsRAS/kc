@@ -8,8 +8,8 @@
 package org.kuali.kra.external.customercreation;
 
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.kfs.module.external.kc.service.CustomerCreationService;
 import org.kuali.kfs.module.external.kc.service.CustomerCreationServiceSOAP;
 import org.kuali.kfs.module.external.kc.service.DunningCampaignServiceSOAP;
@@ -26,7 +26,7 @@ public final class CustomerCreationClientImpl extends CustomerCreationClientBase
     
     private static CustomerCreationClientImpl client;
     
-    private static final Log LOG = LogFactory.getLog(CustomerCreationClientImpl.class);
+    private static final Logger LOG = LogManager.getLogger(CustomerCreationClientImpl.class);
     
     private CustomerCreationClientImpl() {
     }

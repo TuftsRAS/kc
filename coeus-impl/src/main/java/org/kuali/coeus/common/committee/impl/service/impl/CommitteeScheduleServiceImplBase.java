@@ -49,7 +49,7 @@ public abstract class CommitteeScheduleServiceImplBase<CS extends CommitteeSched
                                                    implements CommitteeScheduleServiceBase<CS, CMT, CSM> {
     
     @SuppressWarnings("unused")
-    private static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(CommitteeScheduleServiceImplBase.class);
+    private static final org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger(CommitteeScheduleServiceImplBase.class);
     
     private static final String COLON = ":";
     

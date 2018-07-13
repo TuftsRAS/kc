@@ -10,8 +10,8 @@
 package org.kuali.coeus.propdev.impl.s2s.override;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.common.framework.attachment.KcAttachmentService;
 import org.kuali.coeus.propdev.api.s2s.override.S2sOverrideApplicationDataContract;
 import org.kuali.coeus.propdev.impl.s2s.FormUtilityService;
@@ -44,7 +44,7 @@ import java.util.List;
 @Table(name = "S2S_OVERRIDE_APPL_DATA")
 public class S2sOverrideApplicationData extends KcPersistableBusinessObjectBase implements S2sOverrideApplicationDataContract, FileMeta, org.kuali.rice.core.api.mo.common.Identifiable {
 
-    private static final Log LOG = LogFactory.getLog(S2sOverrideApplicationData.class);
+    private static final Logger LOG = LogManager.getLogger(S2sOverrideApplicationData.class);
 
     @PortableSequenceGenerator(name = "SEQ_S2S_OVERRIDE_APPL_DATA_ID")
     @GeneratedValue(generator = "SEQ_S2S_OVERRIDE_APPL_DATA_ID")

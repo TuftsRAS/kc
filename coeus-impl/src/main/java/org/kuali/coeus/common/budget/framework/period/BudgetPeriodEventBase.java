@@ -12,9 +12,6 @@ import org.kuali.coeus.common.budget.framework.core.BudgetEventBase;
 
 public abstract class BudgetPeriodEventBase extends BudgetEventBase {
 
-    private static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory
-    .getLog(BudgetPeriodEventBase.class);
-
     private BudgetPeriod budgetPeriod;
     private int budgetPeriodNumber;
 

@@ -12,8 +12,8 @@ import java.lang.ref.SoftReference;
 import java.sql.Timestamp;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.apache.struts.upload.FormFile;
 import org.kuali.coeus.common.framework.attachment.KcAttachmentDataDao;
 import org.kuali.coeus.sys.api.model.KcFile;
@@ -23,7 +23,7 @@ import org.kuali.rice.kim.api.identity.PersonService;
 
 public class SubAwardAttachments extends SubAwardAssociate implements Comparable<SubAwardAttachments>,KcFile {
 
-    private static final Log LOG = LogFactory.getLog(SubAwardAttachments.class);
+    private static final Logger LOG = LogManager.getLogger(SubAwardAttachments.class);
 
      private String  subAwardCode;
      private Integer sequenceNumber;

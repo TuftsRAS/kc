@@ -8,8 +8,8 @@
 package org.kuali.coeus.propdev.impl.person;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.common.framework.person.PropAwardPersonRole;
 import org.kuali.coeus.propdev.impl.attachment.ProposalDevelopmentProposalAttachmentsAuditRule;
 import org.kuali.coeus.propdev.impl.auth.perm.ProposalDevelopmentPermissionsService;
@@ -44,7 +44,7 @@ public class KeyPersonnelCertificationRule extends KcTransactionalDocumentRuleBa
 
     public static final String KEY_PERSONNEL_AUDIT_CLUSTER_KEY = "keyPersonnelAuditErrors";
     
-    private static final Log LOG = LogFactory.getLog(ProposalDevelopmentProposalAttachmentsAuditRule.class);
+    private static final Logger LOG = LogManager.getLogger(ProposalDevelopmentProposalAttachmentsAuditRule.class);
     private QuestionnaireAnswerService questionnaireAnswerService;
     private ProposalDevelopmentPermissionsService permissionsService;
     private ParameterService parameterService;

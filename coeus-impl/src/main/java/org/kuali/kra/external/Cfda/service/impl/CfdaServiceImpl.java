@@ -10,8 +10,8 @@ package org.kuali.kra.external.Cfda.service.impl;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.kra.award.home.CFDA;
 import org.kuali.kra.external.Cfda.CfdaService;
 import org.kuali.kra.external.Cfda.CfdaUpdateResults;
@@ -40,7 +40,7 @@ import static org.kuali.coeus.sys.framework.util.CollectionUtils.entry;
 public class CfdaServiceImpl implements CfdaService {
 
     private static final Pattern CFDA_NUMBER_PATTERN = Pattern.compile("^[0-9]{2}\\.[0-9]{3}$");
-    private static final Log LOG = LogFactory.getLog(CfdaServiceImpl.class);
+    private static final Logger LOG = LogManager.getLogger(CfdaServiceImpl.class);
 
     private ParameterService parameterService;
     private BusinessObjectService businessObjectService;

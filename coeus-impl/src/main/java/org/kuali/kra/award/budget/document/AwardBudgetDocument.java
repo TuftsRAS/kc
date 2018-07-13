@@ -60,7 +60,7 @@ import org.kuali.rice.krms.api.engine.Facts.Builder;
 public class AwardBudgetDocument extends KcTransactionalDocumentBase implements Copyable, SessionDocument, Permissionable, KrmsRulesContext {
 	
     private static final String AWARD_BUDGET_DOCUMENT_TYPE_CODE = "ABGT";
-    private static org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(AwardBudgetDocument.class);
+    private static org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger(AwardBudgetDocument.class);
     
     private ScaleTwoDecimal obligatedTotal;
 

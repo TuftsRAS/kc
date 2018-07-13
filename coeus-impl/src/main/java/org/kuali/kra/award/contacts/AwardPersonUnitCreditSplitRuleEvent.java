@@ -7,8 +7,8 @@
  */
 package org.kuali.kra.award.contacts;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.sys.framework.rule.KcDocumentEventBase;
 import org.kuali.coeus.sys.api.model.ScaleTwoDecimal;
 import org.kuali.rice.krad.document.Document;
@@ -20,7 +20,7 @@ import java.util.Map;
  * This class is used by AwardPersonCreditSplitRule implementers
  */
 public class AwardPersonUnitCreditSplitRuleEvent extends KcDocumentEventBase {
-    private static final Log LOG = LogFactory.getLog(AwardPersonUnitCreditSplitRuleEvent.class);
+    private static final Logger LOG = LogManager.getLogger(AwardPersonUnitCreditSplitRuleEvent.class);
     
     private AwardPerson projectPerson;
     private Map<String, ScaleTwoDecimal> totalsByCreditSplitType;

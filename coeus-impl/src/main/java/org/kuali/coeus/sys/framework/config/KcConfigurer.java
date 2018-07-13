@@ -8,8 +8,8 @@
 package org.kuali.coeus.sys.framework.config;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.rice.core.api.config.ConfigurationException;
 import org.kuali.rice.core.api.config.module.RunMode;
 import org.kuali.rice.core.api.config.property.ConfigContext;
@@ -36,7 +36,7 @@ public class KcConfigurer extends ModuleConfigurer {
 	private static final String SPRING_SECURITY_FILTER_PROXY = ".springSecurityFilterProxy";
 	private static final String SPRING_SECURITY_FILTER_CHAIN = "springSecurityFilterChain";
 
-	protected final Log LOG = LogFactory.getLog(KcConfigurer.class);
+	protected final Logger LOG = LogManager.getLogger(KcConfigurer.class);
     
     private String bootstrapSpringFile;
     private String dispatchServletName;

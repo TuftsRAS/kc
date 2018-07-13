@@ -7,8 +7,8 @@
  */
 package org.kuali.kra.external.Cfda.service.impl;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.kra.award.home.Award;
 import org.kuali.kra.award.home.CFDA;
 import org.kuali.kra.external.Cfda.CfdaDTO;
@@ -27,7 +27,7 @@ import java.util.List;
 public class CfdaNumberServiceImpl implements CfdaNumberService {
 
     private BusinessObjectService businessObjectService;
-    private static final Log LOG = LogFactory.getLog(CfdaNumberServiceImpl.class);
+    private static final Logger LOG = LogManager.getLogger(CfdaNumberServiceImpl.class);
     
     /**
      * This method is used to return the cfda number of an award.

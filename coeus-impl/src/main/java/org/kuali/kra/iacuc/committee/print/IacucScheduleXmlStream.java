@@ -10,8 +10,8 @@ package org.kuali.kra.iacuc.committee.print;
 import edu.mit.coeus.xml.iacuc.*;
 import edu.mit.coeus.xml.iacuc.ScheduleType.Attendents;
 import edu.mit.coeus.xml.iacuc.ScheduleType.OtherBusiness;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.apache.xmlbeans.XmlObject;
 import org.kuali.coeus.common.committee.impl.bo.CommitteeMembershipBase;
 import org.kuali.coeus.common.committee.impl.bo.CommitteeScheduleBase;
@@ -46,7 +46,7 @@ public class IacucScheduleXmlStream extends PrintBaseXmlStream {
     private static final String EXEMPT_ACTION_TYPE_CODE = "206";
     private static final String FOLLOW_UP_ACTION_CODE = "109";
 
-    private static final Log LOG = LogFactory.getLog(IacucScheduleXmlStream.class);
+    private static final Logger LOG = LogManager.getLogger(IacucScheduleXmlStream.class);
     private static final String SCHEDULE = "Schedule";
     private static final String PROTOCOL_SUBMISSIONS = "protocolSubmissions";
     private static final String COMMITTEE_ID_FK = "committeeIdFk";

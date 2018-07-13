@@ -8,8 +8,8 @@
 package org.kuali.kra.irb.actions;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.common.notification.impl.bo.NotificationTypeRecipient;
 import org.kuali.coeus.common.questionnaire.framework.answer.AnswerHeader;
 import org.kuali.coeus.common.questionnaire.framework.answer.ModuleQuestionnaireBean;
@@ -94,7 +94,7 @@ import java.sql.Timestamp;
 import java.util.*;
 
 public class IrbProtocolActionRequestServiceImpl extends ProtocolActionRequestServiceImpl implements IrbProtocolActionRequestService {
-    private static final Log LOG = LogFactory.getLog(IrbProtocolActionRequestServiceImpl.class);
+    private static final Logger LOG = LogManager.getLogger(IrbProtocolActionRequestServiceImpl.class);
 
     private ProtocolAssignToAgendaService protocolAssignToAgendaService;
     private ProtocolAssignCmtSchedService protocolAssignCmtSchedService;

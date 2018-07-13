@@ -7,7 +7,8 @@
  */
 package org.kuali.coeus.sys.impl.lock;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.kuali.rice.kim.api.identity.Person;
 import org.kuali.rice.krad.document.authorization.PessimisticLock;
 import org.kuali.rice.krad.service.impl.PessimisticLockServiceImpl;
@@ -25,7 +26,7 @@ import java.util.List;
 @Transactional
 public class KcRicePessimisticLockServiceImpl extends PessimisticLockServiceImpl {
 
-    private static final Logger LOG = Logger.getLogger(KcRicePessimisticLockServiceImpl.class);
+    private static final Logger LOG = LogManager.getLogger(KcRicePessimisticLockServiceImpl.class);
 
     @Override
     public void releaseAllLocksForUser(List<PessimisticLock> locks, Person user) {

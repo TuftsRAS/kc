@@ -7,8 +7,8 @@
  */
 package org.kuali.kra.irb.noteattachment;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.sys.framework.rule.KcDocumentEventBase;
 import org.kuali.kra.irb.ProtocolDocument;
 import org.kuali.rice.krad.rules.rule.BusinessRule;
@@ -18,7 +18,7 @@ import org.kuali.rice.krad.rules.rule.BusinessRule;
  */
 public class AddProtocolNotepadEvent extends KcDocumentEventBase {
 
-    private static final Log LOG = LogFactory.getLog(AddProtocolNotepadEvent.class);
+    private static final Logger LOG = LogManager.getLogger(AddProtocolNotepadEvent.class);
     private final ProtocolNotepad newProtocolNotepad;
     
     /**

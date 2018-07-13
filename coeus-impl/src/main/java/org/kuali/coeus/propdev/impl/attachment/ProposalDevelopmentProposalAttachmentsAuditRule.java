@@ -8,8 +8,8 @@
 package org.kuali.coeus.propdev.impl.attachment;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.propdev.impl.core.ProposalDevelopmentDocument;
 import org.kuali.coeus.propdev.impl.core.ProposalDevelopmentUtils;
 import org.kuali.coeus.sys.framework.rule.KcTransactionalDocumentRuleBase;
@@ -44,7 +44,7 @@ public class ProposalDevelopmentProposalAttachmentsAuditRule extends KcTransacti
     private static final String AUDIT_PARAMETER_VALUE_YES = "Y";
     private static final String MODULE_STATUS_CODE_INCOMPLETE = "I";
 
-    private static final Log LOG = LogFactory.getLog(ProposalDevelopmentProposalAttachmentsAuditRule.class);
+    private static final Logger LOG = LogManager.getLogger(ProposalDevelopmentProposalAttachmentsAuditRule.class);
     
     private SponsorHierarchyService sponsorHierarchyService;
     private ParameterService parameterService;

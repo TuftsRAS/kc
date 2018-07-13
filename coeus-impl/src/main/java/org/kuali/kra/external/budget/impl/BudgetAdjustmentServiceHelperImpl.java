@@ -9,8 +9,8 @@ package org.kuali.kra.external.budget.impl;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.sys.api.model.ScaleTwoDecimal;
 import org.kuali.kra.award.budget.AwardBudgetExt;
 import org.kuali.coeus.common.budget.framework.query.QueryList;
@@ -42,7 +42,7 @@ public class BudgetAdjustmentServiceHelperImpl implements BudgetAdjustmentServic
     @Qualifier("dataObjectService")
     private DataObjectService dataObjectService;
 
-    private static final Log LOG = LogFactory.getLog(BudgetAdjustmentServiceHelperImpl.class);
+    private static final Logger LOG = LogManager.getLogger(BudgetAdjustmentServiceHelperImpl.class);
 
   
     /**

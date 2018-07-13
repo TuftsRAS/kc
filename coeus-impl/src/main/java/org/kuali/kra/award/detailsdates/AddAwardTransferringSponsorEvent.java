@@ -21,8 +21,8 @@ import org.kuali.rice.krad.rules.rule.BusinessRule;
  */
 public class AddAwardTransferringSponsorEvent extends KcDocumentEventBase {
     
-    private static final org.apache.commons.logging.Log LOG = 
-        org.apache.commons.logging.LogFactory.getLog(AddAwardTransferringSponsorEvent.class);
+    private static final org.apache.logging.log4j.Logger LOG =
+        org.apache.logging.log4j.LogManager.getLogger(AddAwardTransferringSponsorEvent.class);
     
     private Sponsor sponsorToBecomeAwardTransferringSponsor;
     private Award award;

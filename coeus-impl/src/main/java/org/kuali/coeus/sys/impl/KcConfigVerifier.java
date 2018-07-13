@@ -7,8 +7,8 @@
  */
 package org.kuali.coeus.sys.impl;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.rice.core.api.config.property.ConfigurationService;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ import java.lang.reflect.Method;
 @Component("kcConfigVerifier")
 public class KcConfigVerifier implements InitializingBean {
 
-    private static final Log LOG = LogFactory.getLog(KcConfigVerifier.class);
+    private static final Logger LOG = LogManager.getLogger(KcConfigVerifier.class);
 
     private static final String ORACLE_PLATFORM_NM = "Oracle";
     private static final String ORACLE_CLASS_NAME = "org.eclipse.persistence.platform.database.oracle.Oracle11Platform";
@@ -40,15 +40,36 @@ public class KcConfigVerifier implements InitializingBean {
     private static final String TOMCAT_8_VERSION_PREFIX = "8.0";
     private static final String TOMCAT_85_VERSION_PREFIX = "8.5";
     private static final String INTEGRATION_TEST_CLASS = "org.kuali.kra.test.infrastructure.ApplicationServer";
+    private static final String JAVA_UTIL_LOGGING_MANAGER = "java.util.logging.manager";
+    private static final String ORG_APACHE_LOGGING_LOG4J_JUL_LOG_MANAGER = "org.apache.logging.log4j.jul.LogManager";
+    private static final String JUL_MSG = "org.apache.logging.log4j:log4j-jul is included but not configured to send jul logging to Log4j.";
+    private static final String LOG4J_HELP = "See https://logging.apache.org/log4j/2.0/log4j-jul/index.html";
 
     @Autowired
     @Qualifier("kualiConfigurationService")
     private ConfigurationService configurationService;
 
     @Override
-    public void afterPropertiesSet() throws Exception {
+    public void afterPropertiesSet() {
         verifyOracleConfiguration();
         verifyInstrumentationConfiguration();
+        verifyJulLogging();
+    }
+
+    protected void verifyJulLogging() {
+        final String logManagerClass = System.getProperty(JAVA_UTIL_LOGGING_MANAGER);
+        final java.util.logging.LogManager julLogManager = java.util.logging.LogManager.getLogManager();
+
+        final String julLogManagerName = julLogManager.getClass().getName();
+        if (!julLogManagerName.equals(ORG_APACHE_LOGGING_LOG4J_JUL_LOG_MANAGER)) {
+            if (ORG_APACHE_LOGGING_LOG4J_JUL_LOG_MANAGER.equals(logManagerClass)) {
+                LOG.error(JUL_MSG + " The jul log manager is using " + julLogManagerName + ". The system property " + JAVA_UTIL_LOGGING_MANAGER + " was set to " + logManagerClass + " but was likely set too late or not available on the Application Server classpath. " + LOG4J_HELP);
+            } else if (logManagerClass != null) {
+                LOG.error(JUL_MSG + " The jul log manager is using " + julLogManagerName + ". The system property " + JAVA_UTIL_LOGGING_MANAGER + " was set to " + logManagerClass + ". " + LOG4J_HELP);
+            } else {
+                LOG.error(JUL_MSG + " The jul log manager is using " + julLogManagerName + ". The system property " + JAVA_UTIL_LOGGING_MANAGER + " was not set. " + LOG4J_HELP);
+            }
+        }
     }
 
     protected void verifyOracleConfiguration() {

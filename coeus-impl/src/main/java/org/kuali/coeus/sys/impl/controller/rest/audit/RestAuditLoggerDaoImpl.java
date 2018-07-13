@@ -17,8 +17,8 @@ import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.sys.framework.controller.rest.audit.RestAuditLog;
 import org.kuali.coeus.sys.framework.controller.rest.audit.RestAuditLoggerDao;
 import org.kuali.rice.core.api.criteria.QueryByCriteria;
@@ -30,7 +30,7 @@ import org.springframework.stereotype.Component;
 @Component("restAuditLoggerDao")
 public class RestAuditLoggerDaoImpl implements RestAuditLoggerDao {
 	
-	private static final Log LOG = LogFactory.getLog(RestAuditLoggerDaoImpl.class);
+	private static final Logger LOG = LogManager.getLogger(RestAuditLoggerDaoImpl.class);
 
 	@Autowired
 	@Qualifier("dataObjectService")

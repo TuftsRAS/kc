@@ -7,8 +7,8 @@
  */
 package org.kuali.kra.proposaldevelopment.service;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -37,7 +37,7 @@ import static org.kuali.kra.infrastructure.Constants.PRINCIPAL_INVESTIGATOR_ROLE
  */
 public class KeyPersonnelServiceTest extends KcIntegrationTestBase {
 
-    private static final Log LOG = LogFactory.getLog(KeyPersonnelServiceTest.class);
+    private static final Logger LOG = LogManager.getLogger(KeyPersonnelServiceTest.class);
 
     private ProposalDevelopmentDocument document;
     private ProposalDevelopmentDocument blankDocument;

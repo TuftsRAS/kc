@@ -7,7 +7,7 @@
  */
 package org.kuali.kra.iacuc.actions.submit;
 
-import org.apache.commons.logging.Log;
+import org.apache.logging.log4j.Logger;
 import org.kuali.coeus.common.framework.module.CoeusModule;
 import org.kuali.coeus.common.framework.module.CoeusSubModule;
 import org.kuali.kra.iacuc.actions.IacucProtocolAction;
@@ -35,7 +35,7 @@ import java.util.Map;
  */
 public class IacucProtocolActionServiceImpl extends ProtocolActionServiceImplBase implements IacucProtocolActionService {
 
-    static private final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(IacucProtocolActionServiceImpl.class);
+    static private final org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger(IacucProtocolActionServiceImpl.class);
 
     // for now, only action rule and update rule files are being used. Thus, we override them here.
     protected static final int PERFORMACTION_RULE = 0;
@@ -162,7 +162,7 @@ public class IacucProtocolActionServiceImpl extends ProtocolActionServiceImplBas
     
 
     @Override
-    protected Log getLOGHook() {
+    protected Logger getLOGHook() {
         return LOG;
     }
 

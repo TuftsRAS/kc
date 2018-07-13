@@ -8,8 +8,8 @@
 package org.kuali.kra.timeandmoney.service.impl;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.award.finance.timeAndMoney.TimeAndMoneyPosts;
 import org.kuali.coeus.sys.api.model.ScaleTwoDecimal;
 import org.kuali.kra.award.AwardAmountInfoService;
@@ -77,7 +77,7 @@ public class TimeAndMoneyServiceImpl implements TimeAndMoneyService {
     @Qualifier("sequenceAccessorService")
     private SequenceAccessorService sequenceAccessorService;
 
-    private static Log LOG = LogFactory.getLog(TimeAndMoneyServiceImpl.class);
+    private static Logger LOG = LogManager.getLogger(TimeAndMoneyServiceImpl.class);
 
     private static final String TIMEANDMONEY_DOCUMENT = "timeandmoney document";
     private static final String ROOT_AWARD = "000000-00000";

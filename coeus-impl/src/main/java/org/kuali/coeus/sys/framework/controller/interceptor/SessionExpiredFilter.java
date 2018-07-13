@@ -7,8 +7,8 @@
  */
 package org.kuali.coeus.sys.framework.controller.interceptor;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.kra.infrastructure.KeyConstants;
 
 import javax.servlet.*;
@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 public class SessionExpiredFilter implements Filter {
-    private static final Log LOG = LogFactory.getLog(SessionExpiredFilter.class);
+    private static final Logger LOG = LogManager.getLogger(SessionExpiredFilter.class);
     
     @Override
     public void destroy() {

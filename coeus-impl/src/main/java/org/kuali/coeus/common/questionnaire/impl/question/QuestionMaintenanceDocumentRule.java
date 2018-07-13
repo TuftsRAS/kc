@@ -11,8 +11,8 @@ import org.apache.commons.collections4.CollectionUtils;
 
 import java.util.Objects;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.common.framework.custom.attr.CustomAttributeService;
 import org.kuali.coeus.common.questionnaire.framework.question.Question;
 import org.kuali.coeus.common.questionnaire.framework.question.QuestionExplanation;
@@ -38,7 +38,7 @@ import java.util.stream.Stream;
  */
 public class QuestionMaintenanceDocumentRule extends KcMaintenanceDocumentRuleBase {
 
-    private static final Log LOG = LogFactory.getLog(QuestionMaintenanceDocumentRule.class);
+    private static final Logger LOG = LogManager.getLogger(QuestionMaintenanceDocumentRule.class);
 
 
     public QuestionMaintenanceDocumentRule() {

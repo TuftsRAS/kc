@@ -9,8 +9,8 @@ package org.kuali.coeus.sys.impl.rest;
 
 import java.io.IOException;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.springframework.http.HttpRequest;
 import org.springframework.http.client.ClientHttpRequestExecution;
 import org.springframework.http.client.ClientHttpRequestInterceptor;
@@ -18,7 +18,7 @@ import org.springframework.http.client.ClientHttpResponse;
 
 public class LoggingRequestInterceptor implements ClientHttpRequestInterceptor {
 
-	private Log LOG = LogFactory.getLog(LoggingRequestInterceptor.class);
+	private Logger LOG = LogManager.getLogger(LoggingRequestInterceptor.class);
 	
 	@Override
 	public ClientHttpResponse intercept(HttpRequest request, byte[] body,

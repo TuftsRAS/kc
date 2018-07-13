@@ -7,8 +7,8 @@
  */
 package org.kuali.kra.external.budget.impl;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.sys.api.model.ScaleTwoDecimal;
 import org.kuali.kfs.integration.cg.dto.BudgetAdjustmentCreationStatusDTO;
 import org.kuali.kfs.integration.cg.dto.BudgetAdjustmentParametersDTO;
@@ -53,7 +53,7 @@ public abstract class BudgetAdjustmentClientBase implements BudgetAdjustmentClie
     protected static final String SOAP_SERVICE_NAME = "budgetAdjustmentServiceSOAP";
     protected static final QName SERVICE_NAME = new QName(Constants.FINANCIAL_SYSTEM_SERVICE_NAMESPACE, SOAP_SERVICE_NAME);
    
-    private static final Log LOG = LogFactory.getLog(BudgetAdjustmentClientBase.class);
+    private static final Logger LOG = LogManager.getLogger(BudgetAdjustmentClientBase.class);
 
     private DocumentService documentService;
     private ParameterService parameterService;

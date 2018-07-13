@@ -10,8 +10,8 @@ package org.kuali.coeus.sys.impl.persistence;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.apache.ojb.broker.metadata.ClassNotPersistenceCapableException;
 import org.kuali.coeus.sys.framework.persistence.KcPersistenceStructureService;
 import org.kuali.coeus.sys.framework.persistence.PersistenceVerificationService;
@@ -46,7 +46,7 @@ import static org.kuali.coeus.sys.framework.util.CollectionUtils.nullSafeEntries
 @Component("persistenceVerificationService")
 public class PersistenceVerificationServiceImpl implements PersistenceVerificationService {
 
-    private static final Log LOG = LogFactory.getLog(PersistenceVerificationServiceImpl.class);
+    private static final Logger LOG = LogManager.getLogger(PersistenceVerificationServiceImpl.class);
 
     @Autowired
     @Qualifier("businessObjectService")

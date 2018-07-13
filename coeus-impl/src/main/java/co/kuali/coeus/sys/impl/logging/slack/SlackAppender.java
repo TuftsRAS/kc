@@ -17,32 +17,49 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.log4j.AppenderSkeleton;
-import org.apache.log4j.Level;
-import org.apache.log4j.helpers.LogLog;
-import org.apache.log4j.spi.LoggingEvent;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.core.*;
+import org.apache.logging.log4j.core.appender.AbstractAppender;
+import org.apache.logging.log4j.core.config.plugins.Plugin;
+import org.apache.logging.log4j.core.config.plugins.PluginBuilderAttribute;
+import org.apache.logging.log4j.core.config.plugins.PluginBuilderFactory;
+import org.apache.logging.log4j.core.config.plugins.validation.constraints.Required;
+import org.apache.logging.log4j.status.StatusLogger;
 import org.kuali.kra.infrastructure.Constants;
 
 import java.awt.*;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
+import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 
-public class SlackAppender extends AppenderSkeleton {
+@Plugin(name = "Slack", category = Core.CATEGORY_NAME, elementType = Appender.ELEMENT_TYPE, printObject = true)
+public class SlackAppender extends AbstractAppender {
 
-    private String url;
-    private String userName;
-    private String channel;
-    private String iconEmoji;
+    private final String webhookUrl;
+    private final String userName;
+    private final String channel;
+    private final String iconEmoji;
+
+    public SlackAppender(String name, Filter filter, Layout<? extends Serializable> layout, boolean ignoreExceptions, String webhookUrl, String userName, String channel, String iconEmoji) {
+        super(name, filter, layout, ignoreExceptions);
+        this.webhookUrl = webhookUrl;
+        this.userName = userName;
+        this.channel = channel;
+        this.iconEmoji = iconEmoji;
+    }
+
+    @PluginBuilderFactory
+    public static SlackAppenderBuilder createAppender() {
+        return new SlackAppenderBuilder();
+    }
 
     @Override
-    protected void append(LoggingEvent event) {
+    public void append(LogEvent event) {
 
-        if (StringUtils.isNotBlank(url)) {
+        if (StringUtils.isNotBlank(webhookUrl)) {
             final HttpClient instance = HttpClientBuilder.create().build();
-            final HttpPost post = new HttpPost(url);
+            final HttpPost post = new HttpPost(webhookUrl);
             post.setHeader(Constants.CONTENT_TYPE, Constants.APPLICATION_JSON);
             final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -51,25 +68,25 @@ public class SlackAppender extends AppenderSkeleton {
                 post.setEntity(new StringEntity(objectMapper.writeValueAsString(payloadDto)));
                 logResponse(instance.execute(post), payloadDto);
             } catch (IOException e) {
-                LogLog.error("Unable to to send serialized payload " + payloadDto + " to url " + url);
+                StatusLogger.getLogger().error("Unable to to send serialized payload " + payloadDto + " to url " + webhookUrl);
             }
         } else {
-            LogLog.error(SlackAppender.class.getName() + " is not configured with a url");
+            StatusLogger.getLogger().error(SlackAppender.class.getName() + " is not configured with a url");
         }
     }
 
     private void logResponse(HttpResponse response, SlackPayloadDto payloadDto) throws IOException {
         final int responseStatus = response.getStatusLine().getStatusCode();
         final String resposeString = IOUtils.toString(response.getEntity().getContent(), StandardCharsets.UTF_8);
-        final String responseMessage = "Response received. Payload " + payloadDto + " url " + url + " response status " + responseStatus + " response " + resposeString;
+        final String responseMessage = "Response received. Payload " + payloadDto + " url " + webhookUrl + " response status " + responseStatus + " response " + resposeString;
         if (responseStatus < 400) {
-            LogLog.debug(responseMessage);
+            StatusLogger.getLogger().debug(responseMessage);
         } else {
-            LogLog.error(responseMessage);
+            StatusLogger.getLogger().error(responseMessage);
         }
     }
 
-    private SlackPayloadDto createPayloadDto(LoggingEvent event) {
+    private SlackPayloadDto createPayloadDto(LogEvent event) {
         final SlackPayloadDto payloadDto = new SlackPayloadDto();
 
         if (StringUtils.isNotBlank(userName)) {
@@ -104,7 +121,7 @@ public class SlackAppender extends AppenderSkeleton {
         return payloadDto;
     }
 
-    private String createFallback(LoggingEvent event) {
+    private String createFallback(LogEvent event) {
         final StringBuilder fallback = new StringBuilder();
         fallback.append(event.getLevel().toString());
         fallback.append(" ");
@@ -112,76 +129,31 @@ public class SlackAppender extends AppenderSkeleton {
         return fallback.toString();
     }
 
-    private String createThrowableString(LoggingEvent event) {
-        if (layout != null && !layout.ignoresThrowable() && event.getThrowableInformation() != null && event.getThrowableInformation().getThrowable() != null) {
-            final StringWriter stackTrace = new StringWriter();
-            try (PrintWriter writer = new PrintWriter(stackTrace)) {
-                event.getThrowableInformation().getThrowable().printStackTrace(writer);
-                return stackTrace.toString();
-            }
+    private String createThrowableString(LogEvent event) {
+        if (event.getThrownProxy() != null && !ignoreExceptions()) {
+            return event.getThrownProxy().getExtendedStackTraceAsString();
         }
 
         return null;
     }
 
-    private Color getColor(LoggingEvent event) {
-        switch (event.getLevel().toInt()) {
-            case Level.FATAL_INT:
-            case Level.ERROR_INT:
-                return Color.RED;
-            case Level.WARN_INT:
-                return Color.ORANGE;
-            case Level.INFO_INT:
-                return Color.BLACK;
-            case Level.DEBUG_INT:
-                return Color.BLUE;
-            case Level.TRACE_INT:
-                return Color.GREEN;
-            default:
-                return Color.GRAY;
+    private Color getColor(LogEvent event) {
+        final Level level = event.getLevel();
+        if (Level.FATAL.equals(level)) {
+            return Color.RED;
+        } else if (Level.ERROR.equals(level)) {
+            return Color.RED;
+        } else if (Level.WARN.equals(level)) {
+            return Color.ORANGE;
+        } else if (Level.INFO.equals(level)) {
+            return Color.BLACK;
+        } else if (Level.DEBUG.equals(level)) {
+            return Color.BLUE;
+        } else if (Level.TRACE.equals(level)) {
+            return Color.GREEN;
+        } else {
+            return Color.GRAY;
         }
-    }
-
-    @Override
-    public void close() {
-        //no op
-    }
-
-    @Override
-    public boolean requiresLayout() {
-        return false;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getChannel() {
-        return channel;
-    }
-
-    public void setChannel(String channel) {
-        this.channel = channel;
-    }
-
-    public String getIconEmoji() {
-        return iconEmoji;
-    }
-
-    public void setIconEmoji(String iconEmoji) {
-        this.iconEmoji = iconEmoji;
     }
 
     /**
@@ -197,5 +169,48 @@ public class SlackAppender extends AppenderSkeleton {
         }
 
         return text.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+    }
+
+    public static class SlackAppenderBuilder<B extends Builder<B>> extends AbstractAppender.Builder<B> implements org.apache.logging.log4j.core.util.Builder<SlackAppender> {
+
+        @PluginBuilderAttribute
+        @Required(message = "Slack Webhook URL required")
+        private String webhookUrl;
+
+        @PluginBuilderAttribute
+        @Required(message = "Slack channel required")
+        private String channel;
+
+        @PluginBuilderAttribute
+        @Required(message = "Slack username/bot-name required")
+        private String username;
+
+        @PluginBuilderAttribute
+        private String iconEmoji;
+
+        public SlackAppenderBuilder withWebhookUrl(String webhookUrl) {
+            this.webhookUrl = webhookUrl;
+            return this;
+        }
+
+        public SlackAppenderBuilder withChannel(String channel) {
+            this.channel = channel;
+            return this;
+        }
+
+        public SlackAppenderBuilder withUsername(String username) {
+            this.username = username;
+            return this;
+        }
+
+        public SlackAppenderBuilder withIconEmoji(String iconEmoji) {
+            this.iconEmoji = iconEmoji;
+            return this;
+        }
+
+        @Override
+        public SlackAppender build() {
+            return new SlackAppender(getName(), getFilter(), getLayout(), isIgnoreExceptions(), webhookUrl, channel, username, iconEmoji);
+        }
     }
 }

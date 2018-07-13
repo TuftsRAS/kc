@@ -8,8 +8,8 @@
 package org.kuali.kra.irb.actions;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -115,7 +115,7 @@ import java.util.Map;
 @SuppressWarnings("deprecation")
 public class ProtocolProtocolActionsAction extends ProtocolAction implements AuditModeAction {
 
-    private static final Log LOG = LogFactory.getLog(ProtocolProtocolActionsAction.class);
+    private static final Logger LOG = LogManager.getLogger(ProtocolProtocolActionsAction.class);
     private static final String CONFIRM_NO_ACTION = "";
     private static final String CONFIRM_DELETE_ACTION_ATT = "confirmDeleteActionAttachment";
     private static final String CONFIRM_FOLLOWUP_ACTION = "confirmAddFollowupAction";

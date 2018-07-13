@@ -21,7 +21,7 @@ import org.kuali.rice.krad.util.ObjectUtils;
  * @version $Revision: 1.6 $
  */
 public abstract class KeyPersonEventBase extends KcDocumentEventBase implements KeyPersonEvent {
-    private static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(KeyPersonEventBase.class);
+    private static final org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger(KeyPersonEventBase.class);
     
     private ProposalPerson person;
     

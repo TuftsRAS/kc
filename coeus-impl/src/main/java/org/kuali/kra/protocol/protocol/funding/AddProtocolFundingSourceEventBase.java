@@ -19,8 +19,8 @@ import java.util.List;
  */
 public abstract class AddProtocolFundingSourceEventBase extends ProtocolEventBase<ProtocolFundingSourceRuleBase> {
     
-    private static final org.apache.commons.logging.Log LOG = 
-        org.apache.commons.logging.LogFactory.getLog(AddProtocolFundingSourceEventBase.class);
+    private static final org.apache.logging.log4j.Logger LOG =
+        org.apache.logging.log4j.LogManager.getLogger(AddProtocolFundingSourceEventBase.class);
     
     private static final String MSG = "adding a funding source to a ProtocolBase document ";
     private ProtocolFundingSourceBase fundingSource;

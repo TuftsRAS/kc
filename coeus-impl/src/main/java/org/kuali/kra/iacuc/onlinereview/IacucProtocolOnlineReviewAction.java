@@ -8,8 +8,8 @@
 package org.kuali.kra.iacuc.onlinereview;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -65,7 +65,7 @@ import java.util.List;
 
 public class IacucProtocolOnlineReviewAction extends IacucProtocolAction {
     private static final String PROTOCOL_DOCUMENT_NUMBER="protocolDocumentNumber";
-    private static final Log LOG = LogFactory.getLog(IacucProtocolOnlineReviewAction.class);
+    private static final Logger LOG = LogManager.getLogger(IacucProtocolOnlineReviewAction.class);
 
     private static final String NOT_FOUND_SELECTION = "the attachment was not found for selection ";
     private static final ActionForward RESPONSE_ALREADY_HANDLED = null;

@@ -9,8 +9,8 @@
 package org.kuali.kra.irb;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.coi.framework.ProjectRetrievalService;
 import org.kuali.coeus.common.framework.custom.DocumentCustomData;
 import org.kuali.coeus.common.framework.custom.attr.CustomAttributeDocValue;
@@ -73,7 +73,7 @@ public class ProtocolDocument extends ProtocolDocumentBase {
 
     private static final long serialVersionUID = 803158468103165087L;
 
-    private static final Log LOG = LogFactory.getLog(ProtocolDocument.class);
+    private static final Logger LOG = LogManager.getLogger(ProtocolDocument.class);
     public static final String DOCUMENT_TYPE_CODE = "PROT";
     private static final String listOfStatiiEligibleForMerging = ProtocolStatus.SUBMITTED_TO_IRB + " " + ProtocolStatus.SPECIFIC_MINOR_REVISIONS_REQUIRED + " " + 
                                                                  ProtocolStatus.DEFERRED + " " + ProtocolStatus.SUBSTANTIVE_REVISIONS_REQUIRED + " " +  
