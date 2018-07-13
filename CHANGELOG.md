@@ -1,6 +1,11 @@
 
 
 ## CURRENT
+* RESKC-2977: Sponsor code fix (#2970)
+
+  * Gayathri Athreya on Fri, 13 Jul 2018 10:47:23 -0700 [View Commit](../../commit/63c9b037408efaabb588bdc99e4a029435f4763f)
+
+## coeus-1807.0009
 * fixOracle (#2968)
 
   * Gayathri Athreya on Fri, 13 Jul 2018 09:26:42 -0700 [View Commit](../../commit/44520d93f9bcb8cc3aa9ff626f4aa276173026aa)
