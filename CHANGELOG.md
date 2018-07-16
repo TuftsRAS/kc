@@ -1,6 +1,11 @@
 
 
 ## CURRENT
+* RESKC-3012: Add environment banner on non-production instances. (#2973)
+
+  * Omar Soto Fortuño on Mon, 16 Jul 2018 08:38:55 -0400 [View Commit](../../commit/b67539665d25f7ffbeaa9d42aacf9288b224270f)
+
+## coeus-1807.0012
 * RESKC-3015:Error invoking permission API
   * Fix permission and set generic permission readonly
   * Rajeev Mancheril on Fri, 13 Jul 2018 15:31:23 -0400 [View Commit](../../commit/6aafd2423bb2182ca5186fae959c9a42a1ca3c67)
