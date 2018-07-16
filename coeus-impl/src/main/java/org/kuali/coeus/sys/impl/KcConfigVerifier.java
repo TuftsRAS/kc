@@ -24,7 +24,7 @@ public class KcConfigVerifier implements InitializingBean {
     private static final Logger LOG = LogManager.getLogger(KcConfigVerifier.class);
 
     private static final String ORACLE_PLATFORM_NM = "Oracle";
-    private static final String ORACLE_CLASS_NAME = "org.eclipse.persistence.platform.database.oracle.Oracle11Platform";
+    private static final String ORACLE_CLASS_NAME = "org.eclipse.persistence.platform.database.oracle.Oracle12Platform";
     private static final String KC_CONFIG_VERIFIER_HARD_ERROR_CFG_NM = "kc.config.verifier.hard.error";
     private static final String SERVER_DATASOURCE_PLATFORM_CFG_NM = "server.datasource.platform";
     private static final String DATASOURCE_PLATFORM_CFG_NM = "datasource.platform";
