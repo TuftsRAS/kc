@@ -1,6 +1,11 @@
 
 
 ## CURRENT
+* RESKC-3012: Modify regex to work with greendale test. (#2974)
+
+  * Omar Soto Fortuño on Mon, 16 Jul 2018 16:08:21 -0400 [View Commit](../../commit/9c7b2ca406c6f7556dce1aee5c1a120806f32191)
+
+## coeus-1807.0013
 * RESKC-3012: Add environment banner on non-production instances. (#2973)
 
   * Omar Soto Fortuño on Mon, 16 Jul 2018 08:38:55 -0400 [View Commit](../../commit/b67539665d25f7ffbeaa9d42aacf9288b224270f)
