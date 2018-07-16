@@ -33,5 +33,13 @@
         <function-signature>boolean hasAffiliation()</function-signature>
         <example>${! prtlfunc:hasAffiliation()}</example>
     </function>
+
+    <function>
+        <description>Get the Environment Text (if there is one). Used to identify sandbox, staging, testing and demo instances.</description>
+        <name>getEnvironmentText</name>
+        <function-class>co.kuali.coeus.web.jstl.PortalFunctions</function-class>
+        <function-signature>String getEnvironmentText()</function-signature>
+        <example>${prtlfunc:getEnvironmentText()}</example>
+    </function>
     
 </taglib>

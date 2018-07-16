@@ -14,5 +14,6 @@ public interface FeatureFlagConstants {
     String SHOW_FULL_NAME_IN_HEADER_FIELDS = "Show_Full_Name_In_Header_Fields";
     String SHOW_FULL_NAME_IN_PESSIMISTIC_LOCK = "Show_Full_Name_In_Pessimistic_Lock";
     String STANDALONE_BUDGET_ENABLED_FLAG = "Standalone_Budget_Enabled";
+    String ENVIRONMENT_BANNER_ENABLED = "Environment_Banner_Enabled";
 
 }

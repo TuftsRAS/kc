@@ -10,6 +10,14 @@
 	background-image:   url("../static/images/logo-kra.gif");
 }
 
+.testingEnvironment {
+	background: #f7bd1b;
+	text-align: center;
+	font-weight: bold;
+	text-transform: uppercase;
+	padding: 4px;
+}
+
 /* These override styles exist to get the new look. Eventually this may need to be cleaned up. */
 
 .navbar .nav a.brand {

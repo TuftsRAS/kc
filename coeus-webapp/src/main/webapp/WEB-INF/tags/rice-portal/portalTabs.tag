@@ -12,7 +12,9 @@
 
 <script src="${ConfigProperties.application.url}/scripts/common/header.js"></script>
 <script>Kc.Global.onKnsHeaderLoad();</script>
-
+<c:if test="${not empty prtlfunc:getEnvironmentText()}">
+  <div class="testingEnvironment">${prtlfunc:getEnvironmentText()}</div>
+</c:if>
 <div class="navbar main-navbar navbar-static-top">
   <div class="navbar-inner">
     <div class="container-fluid">

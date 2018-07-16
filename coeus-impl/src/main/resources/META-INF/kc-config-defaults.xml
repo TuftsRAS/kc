@@ -383,4 +383,10 @@
 	<param name="rice.s3.encryption.key.file">${s3.encryption.key.file}</param>
 
 	<param name="drools.dialect.java.compiler.lnglevel" system="true">1.7</param>
+
+	<!-- Environment by Application URL regex -->
+	<param name="application.environment.sbx.regex">.*-sbx(-res)?\.kuali\.co.*</param>
+	<param name="application.environment.stg.regex">.*-stg(-res)?\.kuali\.co.*</param>
+	<param name="application.environment.tst.regex">.*res-tst[0-9]*?\.kuali\.co.*</param>
+	<param name="application.environment.demo.regex">.*res-demo[0-9]*?\.kuali\.co.*</param>
 </config>

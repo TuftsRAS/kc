@@ -15,7 +15,9 @@
 <#macro uif_navigationBar element>
 
     <div class="${view.contentContainerClassesAsString}">
-
+		<#if element.environmentText?? && element.environmentText != "">
+			<div class="testingEnvironment">${element.environmentText}</div>
+		</#if>
         <nav id="${element.id!}" ${krad.attrBuild(element)} ${element.simpleDataAttributes} role="navigation">
 
             <div class="navbar-header">

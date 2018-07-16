@@ -12,6 +12,17 @@
 	padding-top: 5px;
 	height: 45px;
 	padding-left: 9px;
+    display: block;
+}
+
+.testingEnvironment {
+    background: #f7bd1b;
+    text-align: center;
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: 4px;
+    width: 100vw;
+    margin-left: -15px;
 }
 
 #DummyLoginView #u1rttg5q > div:first-child {
