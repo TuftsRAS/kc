@@ -1,6 +1,13 @@
 
 
 ## CURRENT
+* RESKC-2806: Fix doc controller when superuser approves document. (#2975)
+
+  * Gayathri Athreya on Tue, 17 Jul 2018 08:45:56 -0700 [View Commit](../../commit/e6f8fcddda4d1987e87f8e1684ca624dbdea15f2)
+* RESKC-3014: switching to log4j2 to support better integration with logging tools, fixing jsp precompilation
+  * Travis Schneeberger on Tue, 17 Jul 2018 11:29:32 -0400 [View Commit](../../commit/334ef8db8449e5b2fd54f20fd12bc5bac4df7057)
+
+## coeus-1807.0017
 * RESKC-2339: supporting multiple cfda numbers in S2S Opportunity, Proposal, IP, and Award
   * Travis Schneeberger on Tue, 17 Jul 2018 09:06:01 -0400 [View Commit](../../commit/a573d010a9b681a6a3f9eeb85d3720b9c894694f)
 * RESKC-2339: supporting multiple cfda numbers in S2S Opportunity, Proposal, IP, and Award
