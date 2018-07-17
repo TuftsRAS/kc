@@ -1,6 +1,11 @@
 
 
 ## CURRENT
+* RESKC-2582: Fix approving issue when a Proposal Development Document was recalled and a user was going to approve. (#2978)
+
+  * Omar Soto Fortuño on Tue, 17 Jul 2018 12:47:18 -0400 [View Commit](../../commit/70c427b3809e3c4589a6a22e88da94ff0b4f78f7)
+
+## coeus-1807.0018
 * RESKC-2806: Fix doc controller when superuser approves document. (#2975)
 
   * Gayathri Athreya on Tue, 17 Jul 2018 08:45:56 -0700 [View Commit](../../commit/e6f8fcddda4d1987e87f8e1684ca624dbdea15f2)
