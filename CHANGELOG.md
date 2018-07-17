@@ -1,6 +1,12 @@
 
 
 ## CURRENT
+* updating eclipselink to a version that natively supports oracle 12c
+  * Travis Schneeberger on Mon, 16 Jul 2018 17:38:21 -0400 [View Commit](../../commit/36c8aab2fdeab8ffed992664a8411548dc8d9c0e)
+* RESKC-3014: switching to log4j2 to support better integration with logging tools
+  * Travis Schneeberger on Fri, 13 Jul 2018 12:51:26 -0400 [View Commit](../../commit/74eaf661a40fe3f6cfa4688e2468911054c1bdc2)
+
+## coeus-1807.0014
 * RESKC-3012: Modify regex to work with greendale test. (#2974)
 
   * Omar Soto Fortuño on Mon, 16 Jul 2018 16:08:21 -0400 [View Commit](../../commit/9c7b2ca406c6f7556dce1aee5c1a120806f32191)
