@@ -105,6 +105,7 @@
                 <value>classpath:org/kuali/kra/datadictionary/AwardCentralAdminContact.xml</value>
                 <value>classpath:org/kuali/kra/datadictionary/AwardCloseout.xml</value>
                 <value>classpath:org/kuali/kra/datadictionary/AwardComment.xml</value>
+                <value>classpath:org/kuali/kra/datadictionary/AwardCfda.xml</value>
                 <value>classpath:org/kuali/kra/datadictionary/AwardContact.xml</value>
                 <value>classpath:org/kuali/kra/datadictionary/AwardCostShare.xml</value>
                 <value>classpath:org/kuali/kra/datadictionary/AwardCustomData.xml</value>
@@ -251,6 +252,7 @@
                 <value>classpath:org/kuali/coeus/common/impl/type/DeadlineType.xml</value>
                 <value>classpath:org/kuali/coeus/common/impl/person/attr/DegreeType.xml</value>
                 <value>classpath:org/kuali/coeus/propdev/impl/core/DevelopmentProposal.xml</value>
+                <value>classpath:org/kuali/coeus/propdev/impl/sponsor/ProposalCfda.xml</value>
                 <value>classpath:org/kuali/kra/datadictionary/DisclosurePerson.xml</value>
                 <value>classpath:org/kuali/kra/datadictionary/DisclosurePersonUnit.xml</value>
                 <value>classpath:org/kuali/kra/datadictionary/Distribution.xml</value>
@@ -379,6 +381,7 @@
                 <value>classpath:org/kuali/kra/datadictionary/InstitutionalProposalAttachment.xml</value>
                 <value>classpath:org/kuali/kra/datadictionary/InstitutionalProposalAttachmentType.xml</value>
                 <value>classpath:org/kuali/kra/datadictionary/InstitutionalProposalComment.xml</value>
+                <value>classpath:org/kuali/kra/datadictionary/InstitutionalProposalCfda.xml</value>
                 <value>classpath:org/kuali/kra/datadictionary/InstitutionalProposalContact.xml</value>
                 <value>classpath:org/kuali/kra/datadictionary/InstitutionalProposalCostShare.xml</value>
                 <value>classpath:org/kuali/kra/datadictionary/InstitutionalProposalCustomData.xml</value>
@@ -611,6 +614,7 @@
                 <value>classpath:org/kuali/coeus/propdev/impl/s2s/question/S2sOppFormQuestionnaire.xml</value>
                 <value>classpath:org/kuali/coeus/propdev/impl/s2s/S2sOppForms.xml</value>
                 <value>classpath:org/kuali/coeus/propdev/impl/s2s/S2sOpportunity.xml</value>
+                <value>classpath:org/kuali/coeus/propdev/impl/s2s/S2sOpportunityCfda.xml</value>
                 <value>classpath:org/kuali/coeus/propdev/impl/s2s/S2sProvider.xml</value>
                 <value>classpath:org/kuali/coeus/propdev/impl/s2s/S2sRevisionType.xml</value>
                 <value>classpath:org/kuali/coeus/propdev/impl/s2s/S2sSubmissionType.xml</value>

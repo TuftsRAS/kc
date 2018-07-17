@@ -56,6 +56,7 @@
                 <ref bean="Award-accountNumber"/>
                 <ref bean="Award-sponsorAwardNumber"/>
                 <ref bean="Award-modificationNumber"/>
+                <!--cfdaNumber deprecated. Included here for REST api compatibility.  Do not use. -->
                 <ref bean="Award-cfdaNumber"/>
                 <ref bean="Award-beginDate"/>
                 <ref bean="Award-awardEffectiveDate"/>
@@ -736,25 +737,9 @@
         <property name="description" value="Modification ID"/>
     </bean>
 
+    <!--cfdaNumber deprecated. Included here for REST api compatibility.  Do not use. -->
     <bean id="Award-cfdaNumber" parent="Award-cfdaNumber-parentBean"/>
-
-    <bean id="Award-cfdaNumber-parentBean" abstract="true" parent="AttributeDefinition">
-        <property name="name" value="cfdaNumber"/>
-        <property name="forceUppercase" value="false"/>
-        <property name="label" value="CFDA Number"/>
-        <property name="shortLabel" value="CFDA Number"/>
-        <property name="maxLength" value="7"/>
-        <property name="required" value="false"/>
-        <property name="control">
-            <bean parent="TextControlDefinition" p:size="20"/>
-        </property>
-        <property name="controlField">
-            <bean p:size="20" parent="Uif-TextControl"/>
-        </property>
-        <property name="summary" value="The CFDA Number for this Award."/>
-        <property name="description"
-                  value="A unique identifier for the sponsor and the funding opportunity announcement.  AKA &quot;Catalogue of Federal Domestic Assistance Number.&quot; The format for this CFDA Number is XX.XXX"/>
-    </bean>
+    <bean id="Award-cfdaNumber-parentBean" abstract="true" parent="CFDA-cfdaNumber" />
 
     <bean id="Award-beginDate" parent="Award-beginDate-parentBean"/>
     <bean id="Award-beginDate-parentBean" abstract="true" parent="KraAttributeReferenceDummy-genericDate">

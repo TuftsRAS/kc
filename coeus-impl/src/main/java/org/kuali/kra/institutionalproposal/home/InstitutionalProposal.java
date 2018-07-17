@@ -134,7 +134,6 @@ public class InstitutionalProposal extends KcPersistableBusinessObjectBase imple
     private String initialContractAdmin;
     private String ipReviewActivityIndicator;
     private String currentAwardNumber;
-    private String cfdaNumber;
     private String opportunity;
     private Integer awardTypeCode;
     private String newDescription;
@@ -157,6 +156,7 @@ public class InstitutionalProposal extends KcPersistableBusinessObjectBase imple
     private InstitutionalProposalPersonCreditSplit proposalPerCreditSplit;
     private ProposalUnitCreditSplit proposalUnitCreditSplit;
     private List<InstitutionalProposalComment> proposalComments;
+    private List<InstitutionalProposalCfda> proposalCfdas;
     private IntellectualPropertyReview intellectualPropertyReview;
 
     private static final String DEFAULT_VALUE = "0";
@@ -245,6 +245,7 @@ public class InstitutionalProposal extends KcPersistableBusinessObjectBase imple
         institutionalProposalUnitContacts = new ArrayList<>();
         institutionalProposalFandAs = new ArrayList<>();
         proposalComments = new ArrayList<>();
+        proposalCfdas = new ArrayList<>();
     }
 
     public void setDefaultInitialContractAdmin() {
@@ -824,12 +825,44 @@ public class InstitutionalProposal extends KcPersistableBusinessObjectBase imple
         this.currentAwardNumber = currentAwardNumber;
     }
 
+    /**
+     * @deprecated Included here for REST api compatibility.  Do not use.
+     */
+    @Deprecated
     public String getCfdaNumber() {
-        return cfdaNumber;
+        return findFirstCfda().map(InstitutionalProposalCfda::getCfdaNumber).orElse(null);
     }
 
+    /**
+     * @deprecated Included here for REST api compatibility.  Do not use.
+     */
+    @Deprecated
     public void setCfdaNumber(String cfdaNumber) {
-        this.cfdaNumber = cfdaNumber;
+        if (proposalCfdas == null) {
+            proposalCfdas = new ArrayList<>();
+        }
+
+        final InstitutionalProposalCfda cfda = findFirstCfda().orElseGet(InstitutionalProposalCfda::new);
+        proposalCfdas.clear();
+        cfda.setCfdaNumber(cfdaNumber);
+        cfda.setProposalId(this.getProposalId());
+        cfda.setInstitutionalProposal(this);
+        cfda.setProposalNumber(this.getProposalNumber());
+        cfda.setSequenceNumber(this.getSequenceNumber());
+
+        proposalCfdas.add(cfda);
+    }
+
+    /**
+     * @deprecated Included here for REST api compatibility.  Do not use.
+     */
+    @Deprecated
+    private Optional<InstitutionalProposalCfda> findFirstCfda() {
+        if (proposalCfdas != null) {
+            return proposalCfdas.stream().findFirst();
+        }
+
+        return Optional.empty();
     }
 
     public String getOpportunity() {
@@ -1698,4 +1731,11 @@ public class InstitutionalProposal extends KcPersistableBusinessObjectBase imple
         return getInstitutionalProposalPersonService().getPersonsSelectedForCreditSplit(projectPersons);
     }
 
+    public List<InstitutionalProposalCfda> getProposalCfdas() {
+        return proposalCfdas;
+    }
+
+    public void setProposalCfdas(List<InstitutionalProposalCfda> proposalCfdas) {
+        this.proposalCfdas = proposalCfdas;
+    }
 }

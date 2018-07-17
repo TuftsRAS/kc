@@ -1,127 +1,101 @@
-<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://era.nih.gov/svs" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns2="http://schemas.xmlsoap.org/soap/http" xmlns:ns1="http://era.nih.gov/svs/types" name="SubmissionValidationService" targetNamespace="http://era.nih.gov/svs">
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="SubmissionValidationService" targetNamespace="http://era.nih.gov/external" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://era.nih.gov/external" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns2="http://schemas.xmlsoap.org/soap/http" xmlns:ns1="http://era.nih.gov/svs/types">
   <wsdl:types>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://era.nih.gov/svs/types" elementFormDefault="qualified" targetNamespace="http://era.nih.gov/svs/types" version="1.0">
-
-  <xs:element name="ValidateApplicationAgencyRequest">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element name="GrantApplicationXML" type="xs:string"/>
-        <xs:element maxOccurs="unbounded" minOccurs="0" name="AttachmentMetaData" type="tns:AttachmentMetaData"/>
-        <xs:element minOccurs="0" name="AgencyAbbreviation" type="xs:string"/>
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-
-  <xs:element name="ValidateApplicationError">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element name="ErrorMessage" type="xs:string"/>
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-
-  <xs:element name="ValidateApplicationRequest">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element name="GrantApplicationXML" type="xs:string"/>
-        <xs:element maxOccurs="unbounded" minOccurs="0" name="AttachmentMetaData" type="tns:AttachmentMetaData"/>
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-
-  <xs:element name="ValidateApplicationResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element ref="tns:ValidationMessageList"/>
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-
-  <xs:element name="ValidateComponentRequest">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element name="componentXML" type="xs:string"/>
-        <xs:element maxOccurs="unbounded" minOccurs="0" name="AttachmentMetaData" type="tns:AttachmentMetaData"/>
-        <xs:element name="OpportunityID" type="xs:string"/>
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-
-  <xs:element name="ValidationMessage" type="tns:ValidationMessage"/>
-
-  <xs:element name="ValidationMessageList">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element maxOccurs="unbounded" minOccurs="0" name="ValidationMessage" type="tns:ValidationMessage"/>
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-
-  <xs:complexType name="AttachmentMetaData">
-    <xs:sequence>
-      <xs:element name="FileName" type="xs:string"/>
-      <xs:element name="MimeType" type="xs:string"/>
-      <xs:element name="FileLocation" type="xs:string"/>
-      <xs:element name="SizeInBytes" type="xs:long"/>
-      <xs:element name="PageCount" type="xs:int"/>
-      <xs:element name="isResizingRequired" type="xs:boolean"/>
-      <xs:element name="isEncryptedAttachment" type="xs:boolean"/>
-      <xs:element name="ispasswordProtectedAttachment" type="xs:boolean"/>
-      <xs:element name="isSecure" type="xs:boolean"/>
-      <xs:element name="pdfError" type="xs:boolean"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="ValidationMessage">
-    <xs:sequence>
-      <xs:element name="ValidationSubApplicationGroupID" type="xs:string"/>
-      <xs:element name="ValidationSubApplicationID" type="xs:string"/>
-      <xs:element name="ValidationRuleNumber" type="xs:string"/>
-      <xs:element name="ValidationSeverityCode" type="xs:string"/>
-      <xs:element name="ValidationMessageText" type="xs:string"/>
-      <xs:element name="ValidationMessageId" type="xs:int"/>
-      <xs:element name="formName" type="xs:string"/>
-    </xs:sequence>
-  </xs:complexType>
-
-</xs:schema>
+    <xs:schema elementFormDefault="qualified" targetNamespace="http://era.nih.gov/svs/types" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://era.nih.gov/svs/types">
+      <xs:element name="ValidateApplicationError">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="ErrorMessage" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="ValidateApplicationRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="GrantApplicationXML" type="xs:string"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="AttachmentMetaData" type="tns:AttachmentMetaData"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="ValidateApplicationResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element ref="tns:ValidationMessageList"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="ValidateComponentRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="componentXML" type="xs:string"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="AttachmentMetaData" type="tns:AttachmentMetaData"/>
+            <xs:element name="OpportunityID" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="ValidationMessage" type="tns:ValidationMessage"/>
+      <xs:element name="ValidationMessageList">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="ValidationMessage" type="tns:ValidationMessage"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:complexType name="AttachmentMetaData">
+        <xs:sequence>
+          <xs:element name="FileName" type="xs:string"/>
+          <xs:element name="MimeType" type="xs:string"/>
+          <xs:element name="FileLocation" type="xs:string"/>
+          <xs:element name="SizeInBytes" type="xs:long"/>
+          <xs:element name="PageCount" type="xs:int"/>
+          <xs:element name="numberofLines" type="xs:int"/>
+          <xs:element name="isResizingRequired" type="xs:boolean"/>
+          <xs:element name="isEncryptedAttachment" type="xs:boolean"/>
+          <xs:element name="ispasswordProtectedAttachment" type="xs:boolean"/>
+          <xs:element name="isSecure" type="xs:boolean"/>
+          <xs:element name="pdfError" type="xs:boolean"/>
+          <xs:element name="isXfaPdf" type="xs:boolean"/>
+          <xs:element name="hyperlinkExist" type="xs:boolean"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ValidationMessage">
+        <xs:sequence>
+          <xs:element name="ValidationSubApplicationGroupID" type="xs:string"/>
+          <xs:element name="ValidationSubApplicationID" type="xs:string"/>
+          <xs:element name="ValidationRuleNumber" type="xs:string"/>
+          <xs:element name="ValidationSeverityCode" type="xs:string"/>
+          <xs:element name="ValidationMessageText" type="xs:string"/>
+          <xs:element name="ValidationMessageId" type="xs:int"/>
+          <xs:element name="formName" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
   </wsdl:types>
-  <wsdl:message name="ValidateApplicationError">
-    <wsdl:part element="ns1:ValidateApplicationError" name="ValidateApplicationError">
-    </wsdl:part>
+  <wsdl:message name="ValidateComponent">
+    <wsdl:part element="ns1:ValidateComponentRequest" name="parameters"/>
   </wsdl:message>
   <wsdl:message name="ValidateComponentResponse">
-    <wsdl:part element="ns1:ValidateApplicationResponse" name="parameters">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="ValidateComponent">
-    <wsdl:part element="ns1:ValidateComponentRequest" name="parameters">
-    </wsdl:part>
+    <wsdl:part element="ns1:ValidateApplicationResponse" name="parameters"/>
   </wsdl:message>
   <wsdl:message name="ValidateApplication">
-    <wsdl:part element="ns1:ValidateApplicationRequest" name="parameters">
-    </wsdl:part>
+    <wsdl:part element="ns1:ValidateApplicationRequest" name="parameters"/>
   </wsdl:message>
   <wsdl:message name="ValidateApplicationResponse">
-    <wsdl:part element="ns1:ValidateApplicationResponse" name="parameters">
-    </wsdl:part>
+    <wsdl:part element="ns1:ValidateApplicationResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="ValidateApplicationError">
+    <wsdl:part element="ns1:ValidateApplicationError" name="ValidateApplicationError"/>
   </wsdl:message>
   <wsdl:portType name="SubmissionValidationServiceStub">
     <wsdl:operation name="ValidateComponent">
-      <wsdl:input message="tns:ValidateComponent" name="ValidateComponent">
-    </wsdl:input>
-      <wsdl:output message="tns:ValidateComponentResponse" name="ValidateComponentResponse">
-    </wsdl:output>
-      <wsdl:fault message="tns:ValidateApplicationError" name="ValidateApplicationError">
-    </wsdl:fault>
+      <wsdl:input message="tns:ValidateComponent" name="ValidateComponent"/>
+      <wsdl:output message="tns:ValidateComponentResponse" name="ValidateComponentResponse"/>
+      <wsdl:fault message="tns:ValidateApplicationError" name="ValidateApplicationError"/>
     </wsdl:operation>
     <wsdl:operation name="ValidateApplication">
-      <wsdl:input message="tns:ValidateApplication" name="ValidateApplication">
-    </wsdl:input>
-      <wsdl:output message="tns:ValidateApplicationResponse" name="ValidateApplicationResponse">
-    </wsdl:output>
-      <wsdl:fault message="tns:ValidateApplicationError" name="ValidateApplicationError">
-    </wsdl:fault>
+      <wsdl:input message="tns:ValidateApplication" name="ValidateApplication"/>
+      <wsdl:output message="tns:ValidateApplicationResponse" name="ValidateApplicationResponse"/>
+      <wsdl:fault message="tns:ValidateApplicationError" name="ValidateApplicationError"/>
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="SubmissionValidationServiceSoapBinding" type="tns:SubmissionValidationServiceStub">
@@ -153,7 +127,7 @@
   </wsdl:binding>
   <wsdl:service name="SubmissionValidationService">
     <wsdl:port binding="tns:SubmissionValidationServiceSoapBinding" name="HttpSoap11Endpoint">
-      <soap:address location="http://services.external.uat.era.nih.gov/svs/services/SubmissionValidationService"/>
+      <soap:address location="http://services.external.era.nih.gov/svs/services/SubmissionValidationService"/>
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

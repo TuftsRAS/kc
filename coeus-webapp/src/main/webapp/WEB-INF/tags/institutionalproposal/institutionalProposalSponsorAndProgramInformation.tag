@@ -13,13 +13,13 @@
 <c:set var="canViewCfdaLookup" value="${KualiForm.cfdaLookupRequired}" scope="request" />
 
 <kul:tab tabTitle="Sponsor & Program Information" defaultOpen="true"
-	tabErrorKey="document.institutionalProposal.noticeOfOpportunityCode,document.institutionalProposalList[0].cfdaNumber, document.institutionalProposal.programAnnouncementNumber,
-	        document.institutionalProposal.sponsorProposalNumber,document.institutionalProposal.nsfSequenceNumber,document.institutionalProposal.cfdaNumber,
+	tabErrorKey="document.institutionalProposal.noticeOfOpportunityCode,document.institutionalProposalList[0].proposalCfdas*, document.institutionalProposal.programAnnouncementNumber,
+	        document.institutionalProposal.sponsorProposalNumber,document.institutionalProposal.nsfSequenceNumber,document.institutionalProposal.proposalCfdas*,
 	        document.institutionalProposal.sponsorCode,document.institutionalProposalList[0].sponsorCode,document.institutionalProposal.deadlineTime,
 	        document.institutionalProposalList[0].deadlineTime,document.institutionalProposal.primeSponsorCode,document.institutionalProposalList[0].opportunity,
 	        document.institutionalProposalList[0].primeSponsorCode"
 	auditCluster="sponsorProgramInformationAuditErrors,sponsorWarnings,programInfoWarnings"
-	tabAuditKey="document.institutionalProposal.cfdaNumber,document.institutionalProposalList[0].sponsorCode,document.institutionalProposalList[0].primeSponsorCode"
+	tabAuditKey="document.institutionalProposal.proposalCfdas*,document.institutionalProposalList[0].sponsorCode,document.institutionalProposalList[0].primeSponsorCode"
     useRiceAuditMode="true">
 
 	<div class="tab-container" align="center">
@@ -105,23 +105,13 @@
            		</td>
      		</tr>
         	<tr>
-				<th><div align="right"><kul:htmlAttributeLabel attributeEntry="${institutionalProposalAttributes.cfdaNumber}" /></div></th>
-                <td>
-                	<kul:htmlControlAttribute property="document.institutionalProposal.cfdaNumber" readOnly="${readOnly}" attributeEntry="${institutionalProposalAttributes.cfdaNumber}" styleClass="fixed-size-200-select"/>
-            	<c:if test="${canViewCfdaLookup}"> 
-            		<c:if test="${!readOnly}">
-    					<kul:lookup boClassName="org.kuali.kra.award.home.CFDA" fieldConversions="cfdaNumber:document.institutionalProposal.cfdaNumber" anchor="${tabKey}" />
-    				</c:if>
-    				<c:if test="${!readOnly or !empty KualiForm.document.institutionalProposalList[0].cfdaNumber}">
-    					<kul:directInquiry boClassName="org.kuali.kra.award.home.CFDA" inquiryParameters="document.institutionalProposal.cfdaNumber:cfdaNumber" anchor="${tabKey}" />
-    				</c:if>
-    			</c:if>
-                </td>
            		<th><div align="right"><kul:htmlAttributeLabel attributeEntry="${institutionalProposalAttributes.opportunity}" /></div></th>
            		<td>
            			<kul:htmlControlAttribute property="document.institutionalProposalList[0].opportunity" attributeEntry="${institutionalProposalAttributes.opportunity}" />
            		</td>
      		</tr>
         </table>
+		<kra-ip:institutionalProposalCfdas />
     </div>
+
 </kul:tab>

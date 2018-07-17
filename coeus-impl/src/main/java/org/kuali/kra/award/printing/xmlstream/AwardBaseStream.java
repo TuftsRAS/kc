@@ -7,6 +7,7 @@
  */
 package org.kuali.kra.award.printing.xmlstream;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
@@ -72,6 +73,7 @@ import org.kuali.rice.location.api.state.StateService;
 
 import java.math.BigDecimal;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * This class will contain all common methods that can be used across all XML
@@ -169,7 +171,7 @@ public abstract class AwardBaseStream implements XmlStream {
 	 * This method will set the values to school info attributes and finally
 	 * returns SchoolInfoType XmlObject
 	 * </p>
-	 * 
+	 *
 	 * @return returns SchoolInfoType XmlObject
 	 */
 	protected SchoolInfoType2 getSchoolInfoType() {
@@ -184,7 +186,7 @@ public abstract class AwardBaseStream implements XmlStream {
 				schoolInfoType.setAcronym(schoolAcronym);
 			}
 		} catch (Exception e) {
-			// LOg e
+			LOG.error(e.getMessage(), e);
 		}
 		return schoolInfoType;
 	}
@@ -443,8 +445,7 @@ public abstract class AwardBaseStream implements XmlStream {
 			String prevAwardStatus) {
 		String awardStatusMod = null;
 		if (CurrAwardStatus != null) {
-			if (prevAwardStatus == null
-					|| !CurrAwardStatus.equals(prevAwardStatus)) {
+			if (!CurrAwardStatus.equals(prevAwardStatus)) {
 				awardStatusMod = new StringBuilder(CurrAwardStatus).append(
 						END_ASTERISK_SPACE_INDICATOR).toString();
 				} else {
@@ -2442,10 +2443,8 @@ public abstract class AwardBaseStream implements XmlStream {
 				otherHeaderDetails
 						.setPreAwardEffectiveDateModifeid(awardEffectiveDate);
 			}
-			if (award.getCfdaNumber() != null
-					&& (prevAward.getCfdaNumber() == null || !award
-							.getCfdaNumber().equals(prevAward.getCfdaNumber()))) {
-				otherHeaderDetails.setCFDANumber(award.getCfdaNumber());
+			if (!CollectionUtils.isEqualCollection(award.getAwardCfdas().stream().map(AwardCfda::getCfdaNumber).collect(Collectors.toList()), prevAward.getAwardCfdas().stream().map(AwardCfda::getCfdaNumber).collect(Collectors.toList()))) {
+				otherHeaderDetails.setCFDANumber(award.getAwardCfdas().stream().map(AwardCfda::getCfdaNumber).collect(Collectors.joining(",")));
 			}
 			if (award.getSubPlanFlag() != null	&& 
 			        (prevAward.getSubPlanFlag() != null || !award.getSubPlanFlag().equals(prevAward.getSubPlanFlag()))) {
@@ -2459,9 +2458,8 @@ public abstract class AwardBaseStream implements XmlStream {
 						.getPrimeSponsorCode());
 			}
 		} else {
-			if (award.getCfdaNumber() != null) {
-				otherHeaderDetails.setCFDANumber(award.getCfdaNumber());
-			}
+			otherHeaderDetails.setCFDANumber(award.getAwardCfdas().stream().map(AwardCfda::getCfdaNumber).collect(Collectors.joining(",")));
+
 			if (award.getSubPlanFlag() != null) {
 				otherHeaderDetails.setSubPlan(award.getSubPlanFlag());
 			}
@@ -2695,8 +2693,7 @@ public abstract class AwardBaseStream implements XmlStream {
 			String prevAwardTypeDescription) {
 		String awardTypeDesc = null;
 		if (awardTypeDescription != null) {
-			if (prevAwardTypeDescription == null
-					|| !awardTypeDescription.equals(prevAwardTypeDescription)) {
+			if (!awardTypeDescription.equals(prevAwardTypeDescription)) {
 				awardTypeDesc = new StringBuilder(awardTypeDescription).append(
 						END_ASTERISK_SPACE_INDICATOR).toString();
 

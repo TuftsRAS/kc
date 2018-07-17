@@ -12,7 +12,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.kuali.coeus.award.dto.AwardBudgetExtDto;
 import org.kuali.coeus.award.dto.AwardDto;
 import org.kuali.coeus.award.dto.AwardPersonDto;
-import org.kuali.coeus.common.api.document.service.CommonApiService;
 import org.kuali.coeus.common.framework.version.VersionStatus;
 import org.kuali.coeus.common.framework.version.VersioningService;
 import org.kuali.coeus.common.framework.version.history.VersionHistory;
@@ -21,7 +20,6 @@ import org.kuali.coeus.sys.framework.controller.rest.audit.RestAuditLogger;
 import org.kuali.coeus.sys.framework.controller.rest.audit.RestAuditLoggerFactory;
 import org.kuali.coeus.sys.framework.rest.NotImplementedException;
 import org.kuali.coeus.sys.framework.rest.ResourceNotFoundException;
-import org.kuali.coeus.sys.framework.rest.UnauthorizedAccessException;
 import org.kuali.coeus.sys.framework.rest.UnprocessableEntityException;
 import org.kuali.kra.award.awardhierarchy.AwardHierarchyBean;
 import org.kuali.kra.award.contacts.AwardPerson;
@@ -29,6 +27,7 @@ import org.kuali.kra.award.dao.AwardDao;
 import org.kuali.kra.award.document.AwardDocument;
 import org.kuali.kra.award.home.Award;
 import org.kuali.kra.award.home.AwardAmountInfo;
+import org.kuali.kra.award.home.AwardCfda;
 import org.kuali.kra.award.home.AwardService;
 import org.kuali.kra.award.home.fundingproposal.AwardFundingProposalBean;
 import org.kuali.kra.infrastructure.Constants;
@@ -40,9 +39,7 @@ import org.kuali.rice.kew.api.exception.InvalidActionTakenException;
 import org.kuali.rice.kew.api.exception.WorkflowException;
 import org.kuali.rice.kew.routeheader.DocumentRouteHeaderValue;
 import org.kuali.rice.kew.routeheader.service.RouteHeaderService;
-import org.kuali.rice.kim.api.permission.PermissionService;
 import org.kuali.rice.krad.document.Document;
-import org.kuali.rice.krad.service.BusinessObjectService;
 import org.kuali.rice.krad.service.DocumentService;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,7 +52,6 @@ import org.springframework.web.bind.annotation.*;
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -118,7 +114,7 @@ public class AwardController extends AwardControllerBase implements Initializing
         AwardDocument awardDocument = (AwardDocument) commonApiService.getDocumentFromDocId(Long.parseLong(award.getAwardDocument().getDocumentNumber()));
 
 
-        AwardDto awardDto = commonApiService.convertAwardToDto(award);
+        AwardDto awardDto = getAwardApiService().convertAwardToDto(award);
         if (!includeBudgets) {
             awardDto.setBudgets(new ArrayList<>());
         }
@@ -192,7 +188,7 @@ public class AwardController extends AwardControllerBase implements Initializing
                 awardService.updateAwardSequenceStatus(newAwardDocument.getAward(), VersionStatus.PENDING);
                 versionHistoryService.updateVersionHistory(newAwardDocument.getAward(), VersionStatus.PENDING,
                         globalVariableService.getUserSession().getPrincipalId());
-                return commonApiService.convertAwardToDto(newAwardDocument.getAward());
+                return getAwardApiService().convertAwardToDto(newAwardDocument.getAward());
 
            }
         } else {
@@ -204,7 +200,7 @@ public class AwardController extends AwardControllerBase implements Initializing
             consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseStatus(value = HttpStatus.CREATED)
     @ResponseBody
-    public AwardDto createAward(@RequestBody AwardDto awardDto) throws WorkflowException, InvocationTargetException, IllegalAccessException {
+    public AwardDto createAward(@RequestBody AwardDto awardDto) throws WorkflowException {
         assertUserHasWriteAccess();
         commonApiService.clearErrors();
         Award award = commonApiService.convertObject(awardDto, Award.class);
@@ -214,11 +210,12 @@ public class AwardController extends AwardControllerBase implements Initializing
         translateCollections(awardDto, awardDocument);
         changeDates(award, awardDto);
         addFundingProposals(awardDto, award);
+        addCfdas(awardDto, award);
 
         awardService.checkAwardNumber(award);
         awardService.updateCurrentAwardAmountInfo(award);
         AwardDocument newDocument = (AwardDocument) commonApiService.saveDocument(awardDocument);
-        AwardDto newAwardDto = commonApiService.convertAwardToDto(newDocument.getAward());
+        AwardDto newAwardDto = getAwardApiService().convertAwardToDto(newDocument.getAward());
         newAwardDto.setDocNbr(newDocument.getDocumentNumber());
         newAwardDto.setDocStatus(newDocument.getDocumentHeader().getWorkflowDocument().getStatus().getLabel());
         versionHistoryService.updateVersionHistory(award, VersionStatus.PENDING, globalVariableService.getUserSession().getPrincipalName());
@@ -259,7 +256,7 @@ public class AwardController extends AwardControllerBase implements Initializing
             consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
-    void submitDocument(@PathVariable Long awardId) throws WorkflowException {
+    void submitDocument(@PathVariable Long awardId) {
         assertUserHasWriteAccess();
         commonApiService.clearErrors();
         AwardDocument awardDocument = getAwardDocumentById(awardId);
@@ -301,7 +298,7 @@ public class AwardController extends AwardControllerBase implements Initializing
             produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
-    List<AwardPersonDto> getAwardPersons(@PathVariable Long awardId) throws WorkflowException {
+    List<AwardPersonDto> getAwardPersons(@PathVariable Long awardId) {
         assertUserHasAwardPersonReadAccess();
         commonApiService.clearErrors();
         AwardDocument awardDocument = getAwardDocumentById(awardId);
@@ -370,7 +367,7 @@ public class AwardController extends AwardControllerBase implements Initializing
     public void addFundingProposals(AwardDto awardDto, Award award) {
         award.setFundingProposals(new ArrayList<>());
         if(CollectionUtils.isNotEmpty(awardDto.getFundingProposals())) {
-            awardDto.getFundingProposals().stream().forEach(awardFundingProposalDto -> {
+            awardDto.getFundingProposals().forEach(awardFundingProposalDto -> {
                 AwardFundingProposalBean fundingProposalBean = new AwardFundingProposalBean();
                 fundingProposalBean.setMergeTypeCode(awardFundingProposalDto.getMergeTypeCode());
                 InstitutionalProposal institutionalProposal = institutionalProposalService.getInstitutionalProposal(awardFundingProposalDto.getProposalId().toString());
@@ -380,6 +377,18 @@ public class AwardController extends AwardControllerBase implements Initializing
                 fundingProposalBean.setNewFundingProposal(institutionalProposal);
                 fundingProposalBean.validateAndPerformFeed(new ArrayList<>(), award);
             });
+        }
+    }
+
+    public void addCfdas(AwardDto awardDto, Award award) {
+        if (StringUtils.isNotBlank(awardDto.getCfdaNumber())) {
+            AwardCfda cfda = new AwardCfda();
+            cfda.setAward(award);
+            cfda.setAwardNumber(award.getAwardNumber());
+            cfda.setAwardId(award.getAwardId());
+            cfda.setSequenceNumber(award.getSequenceNumber());
+            cfda.setCfdaNumber(awardDto.getCfdaNumber());
+            award.getAwardCfdas().add(cfda);
         }
     }
 
@@ -395,16 +404,8 @@ public class AwardController extends AwardControllerBase implements Initializing
         this.restAuditLoggerFactory = restAuditLoggerFactory;
     }
 
-    public void setCommonApiService(CommonApiService commonApiService) {
-        this.commonApiService = commonApiService;
-    }
-
-    public void setBusinessObjectService(BusinessObjectService businessObjectService) {
-        this.businessObjectService = businessObjectService;
-    }
-
     protected List<String> getDtoProperties(Class dtoClass) throws IntrospectionException {
-        return Arrays.asList(Introspector.getBeanInfo(dtoClass).getPropertyDescriptors()).stream()
+        return Arrays.stream(Introspector.getBeanInfo(dtoClass).getPropertyDescriptors())
                 .map(PropertyDescriptor::getName)
                 .filter(prop -> !"class".equals(prop))
                 .collect(Collectors.toList());
@@ -442,6 +443,7 @@ public class AwardController extends AwardControllerBase implements Initializing
         if(award.getAwardAttachments() == null) award.setAttachments(new ArrayList<>());
         if(award.getAwardBudgetLimits() == null) award.setAwardBudgetLimits(new ArrayList<>());
         if(award.getAwardCustomDataList() == null) award.setAwardCustomDataList(new ArrayList<>());
+        if(award.getAwardCfdas() == null) award.setAwardCfdas(new ArrayList<>());
 
         award.setProjectEndDate(awardDto.getProjectEndDate());
         if(award.getAwardNumber() == null) award.setAwardNumber(Award.DEFAULT_AWARD_NUMBER);
@@ -462,7 +464,7 @@ public class AwardController extends AwardControllerBase implements Initializing
 
     protected List<AwardDto> translateAwards(boolean includeBudgets, List<Award> awards) {
         List<AwardDto> awardDtos = awards.stream().map(award -> {
-                AwardDto awardDto = commonApiService.convertAwardToDto(award);
+                AwardDto awardDto = getAwardApiService().convertAwardToDto(award);
                 if (!includeBudgets) {
                     awardDto.setBudgets(new ArrayList<>());
                 }

@@ -26,10 +26,7 @@ import org.kuali.kra.institutionalproposal.contacts.InstitutionalProposalProject
 import org.kuali.kra.institutionalproposal.contacts.InstitutionalProposalUnitContactsBean;
 import org.kuali.kra.institutionalproposal.customdata.InstitutionalProposalCustomDataFormHelper;
 import org.kuali.kra.institutionalproposal.document.InstitutionalProposalDocument;
-import org.kuali.kra.institutionalproposal.home.InstitutionalProposalCostShareBean;
-import org.kuali.kra.institutionalproposal.home.InstitutionalProposalFandABean;
-import org.kuali.kra.institutionalproposal.home.InstitutionalProposalNotepadBean;
-import org.kuali.kra.institutionalproposal.home.InstitutionalProposalUnrecoveredFandABean;
+import org.kuali.kra.institutionalproposal.home.*;
 import org.kuali.kra.institutionalproposal.notification.InstitutionalProposalNotificationContext;
 import org.kuali.kra.institutionalproposal.printing.service.InstitutionalProposalPersonService;
 import org.kuali.kra.institutionalproposal.specialreview.SpecialReviewHelper;
@@ -76,6 +73,7 @@ public class InstitutionalProposalForm extends KcTransactionalDocumentFormBase i
     private boolean cfdaLookupRequired;
     private MedusaBean medusaBean;
     private ReportHelperBean reportHelperBean;
+    private InstitutionalProposalCfda newProposalCfda;
     
     /* Populated from Proposal Log lookup for Proposal creation */
     private String proposalNumber;
@@ -106,7 +104,7 @@ public class InstitutionalProposalForm extends KcTransactionalDocumentFormBase i
     public void initialize() {
         specialReviewHelper = new SpecialReviewHelper(this);
         institutionalProposalCustomDataFormHelper = new InstitutionalProposalCustomDataFormHelper(this);
-        notificationHelper = new NotificationHelper<InstitutionalProposalNotificationContext>();
+        notificationHelper = new NotificationHelper<>();
         institutionalProposalNotepadBean = new InstitutionalProposalNotepadBean(this);
         institutionalProposalCostShareBean = new InstitutionalProposalCostShareBean(this);
         institutionalProposalUnrecoveredFandABean = new InstitutionalProposalUnrecoveredFandABean(this);
@@ -121,17 +119,11 @@ public class InstitutionalProposalForm extends KcTransactionalDocumentFormBase i
         docOpenedFromIPSearch = false;
     }
     
-    /**
-     * 
-     * This method returns the AwardDocument object.
-     */
+
     public InstitutionalProposalDocument getInstitutionalProposalDocument() {
         return (InstitutionalProposalDocument) super.getDocument();
     }
-    
-    /**
-     * This method returns a string representation of the document type
-     */
+
     public String getDocumentTypeName() {
         return "InstitutionalProposalDocument";
     }
@@ -298,7 +290,15 @@ public class InstitutionalProposalForm extends KcTransactionalDocumentFormBase i
     public void setMedusaBean(MedusaBean medusaBean) {
         this.medusaBean = medusaBean;
     }
-    
+
+    public InstitutionalProposalCfda getNewProposalCfda() {
+        return newProposalCfda;
+    }
+
+    public void setNewProposalCfda(InstitutionalProposalCfda newProposalCfda) {
+        this.newProposalCfda = newProposalCfda;
+    }
+
     public String getValueFinderResultDoNotCache(){
         if (this.getActionFormUtilMap() instanceof ActionFormUtilMap) {
             ((ActionFormUtilMap) this.getActionFormUtilMap()).setCacheValueFinderResults(false);
@@ -335,7 +335,7 @@ public class InstitutionalProposalForm extends KcTransactionalDocumentFormBase i
     public boolean isCfdaLookupRequired() {
         String integration = getParameterService().getParameterValueAsString(Constants.MODULE_NAMESPACE_AWARD, 
                 Constants.PARAMETER_COMPONENT_DOCUMENT, Constants.FIN_SYSTEM_INTEGRATION_ON_OFF_PARAMETER);
-        cfdaLookupRequired = StringUtils.equals(integration, Constants.FIN_SYSTEM_INTEGRATION_ON) ? true : false;
+        cfdaLookupRequired = StringUtils.equals(integration, Constants.FIN_SYSTEM_INTEGRATION_ON);
         return cfdaLookupRequired;
     }
 

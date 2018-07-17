@@ -16,6 +16,7 @@ import org.kuali.coeus.common.framework.sponsor.Sponsor;
 import org.kuali.coeus.sys.api.model.ScaleTwoDecimal;
 import org.kuali.coeus.sys.framework.service.KcServiceLocator;
 import org.kuali.kra.award.home.Award;
+import org.kuali.kra.award.home.AwardCfda;
 import org.kuali.kra.subaward.bo.*;
 import org.kuali.kra.subaward.reporting.printing.service.SubAwardPrintingService;
 import org.kuali.kra.test.infrastructure.KcIntegrationTestBase;
@@ -142,7 +143,14 @@ public class SubAwardPrintingServiceImplTest extends KcIntegrationTestBase {
         award.setTitle("A title");
         award.setSponsorAwardNumber("4567");
         award.setSponsor(sponsor);
-        award.setCfdaNumber("cfda1234");
+
+        AwardCfda cfda = new AwardCfda();
+        cfda.setCfdaNumber("cfda1234");
+        cfda.setAwardId(award.getAwardId());
+        cfda.setAward(award);
+        cfda.setAwardNumber(award.getAwardNumber());
+
+        award.getAwardCfdas().add(cfda);
         award.setFainId("A fain Id");
         award.setNoticeDate(new Date(1));
         award.setPrimeSponsor(sponsor);

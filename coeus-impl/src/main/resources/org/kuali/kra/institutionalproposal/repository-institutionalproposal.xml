@@ -138,7 +138,6 @@
 		<field-descriptor name="initialContractAdmin" column="INITIAL_CONTRACT_ADMIN" jdbc-type="VARCHAR" />
 		<field-descriptor name="ipReviewActivityIndicator" column="IP_REVIEW_ACTIVITY_INDICATOR" jdbc-type="VARCHAR" />
 		<field-descriptor name="currentAwardNumber" column="CURRENT_AWARD_NUMBER" jdbc-type="VARCHAR" />
-		<field-descriptor name="cfdaNumber" column="CFDA_NUMBER" jdbc-type="VARCHAR" />
 		<field-descriptor name="opportunity" column="OPPORTUNITY" jdbc-type="VARCHAR" />
 		<field-descriptor name="proposalSequenceStatus" column="PROPOSAL_SEQUENCE_STATUS" jdbc-type="VARCHAR" />
 		<field-descriptor name="createTimestamp" column="CREATE_TIMESTAMP" jdbc-type="DATE" />
@@ -224,7 +223,24 @@
 			<inverse-foreignkey field-ref="proposalId"/>
 			<orderby name="proposalAttachmentId" sort="ASC" />
 		</collection-descriptor>
+		<collection-descriptor name="proposalCfdas" proxy="true" element-class-ref="org.kuali.kra.institutionalproposal.home.InstitutionalProposalCfda" collection-class="org.apache.ojb.broker.util.collections.ManageableArrayList" auto-retrieve="true" auto-update="object" auto-delete="object">
+			<inverse-foreignkey field-ref="proposalId"/>
+		</collection-descriptor>
 	</class-descriptor>
+
+	<class-descriptor class="org.kuali.kra.institutionalproposal.home.InstitutionalProposalCfda" table="PROPOSAL_CFDA">
+		<field-descriptor name="proposalCfdaId" column="PROPOSAL_CFDA_ID" jdbc-type="BIGINT" primarykey="true" autoincrement="true" sequence-name="SEQ_PROPOSAL_CFDA_ID" />
+		<field-descriptor name="proposalId" column="PROPOSAL_ID" jdbc-type="BIGINT" />
+		<field-descriptor name="proposalNumber" column="PROPOSAL_NUMBER" jdbc-type="VARCHAR" />
+		<field-descriptor name="sequenceNumber" column="SEQUENCE_NUMBER" jdbc-type="INTEGER" />
+		<field-descriptor name="cfdaNumber" column="CFDA_NUMBER" jdbc-type="VARCHAR"/>
+        <field-descriptor name="cfdaDescription" column="CFDA_DESCRIPTION" jdbc-type="VARCHAR"/>
+		<field-descriptor name="updateTimestamp" column="UPDATE_TIMESTAMP" jdbc-type="TIMESTAMP"/>
+		<field-descriptor name="updateUser" column="UPDATE_USER" jdbc-type="VARCHAR"/>
+		<field-descriptor name="objectId" column="OBJ_ID" jdbc-type="VARCHAR" />
+		<field-descriptor name="versionNumber" column="VER_NBR" jdbc-type="BIGINT" locking="false" />
+	</class-descriptor>
+
 	<class-descriptor class="org.kuali.kra.institutionalproposal.home.InstitutionalProposalBoLite" table="PROPOSAL">
 		<field-descriptor name="proposalId" column="PROPOSAL_ID" jdbc-type="BIGINT" primarykey="true" autoincrement="true" sequence-name="SEQ_PROPOSAL_PROPOSAL_ID"/>
 		<field-descriptor name="proposalNumber" column="PROPOSAL_NUMBER" jdbc-type="VARCHAR" />

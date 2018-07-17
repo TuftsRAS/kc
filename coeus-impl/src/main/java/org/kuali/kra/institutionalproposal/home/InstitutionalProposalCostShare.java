@@ -11,13 +11,12 @@ import org.apache.commons.lang3.StringUtils;
 import org.kuali.coeus.common.budget.framework.core.CostShare;
 import org.kuali.coeus.common.framework.unit.Unit;
 import org.kuali.coeus.common.framework.version.sequence.associate.SequenceAssociate;
-import org.kuali.coeus.common.framework.version.sequence.owner.SequenceOwner;
 import org.kuali.kra.award.home.ValuableItem;
 import org.kuali.kra.bo.CostShareType;
 import org.kuali.kra.institutionalproposal.InstitutionalProposalAssociate;
 import org.kuali.coeus.sys.api.model.ScaleTwoDecimal;
 
-public class InstitutionalProposalCostShare extends InstitutionalProposalAssociate implements ValuableItem, SequenceAssociate, CostShare {
+public class InstitutionalProposalCostShare extends InstitutionalProposalAssociate implements ValuableItem, SequenceAssociate<InstitutionalProposal>, CostShare {
 
     private static final long serialVersionUID = 1L;
 
@@ -128,13 +127,13 @@ public class InstitutionalProposalCostShare extends InstitutionalProposalAssocia
     }
 
     @Override
-    public SequenceOwner getSequenceOwner() {
+    public InstitutionalProposal getSequenceOwner() {
         return getInstitutionalProposal();
     }
 
     @Override
-    public void setSequenceOwner(SequenceOwner newlyVersionedOwner) {
-        setInstitutionalProposal((InstitutionalProposal) newlyVersionedOwner);
+    public void setSequenceOwner(InstitutionalProposal newlyVersionedOwner) {
+        setInstitutionalProposal(newlyVersionedOwner);
     }
 
     @Override

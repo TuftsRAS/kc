@@ -22,6 +22,7 @@ import org.kuali.coeus.propdev.impl.s2s.connect.S2sCommunicationException;
 import org.kuali.coeus.propdev.impl.s2s.override.S2sOverride;
 import org.kuali.coeus.propdev.impl.s2s.override.S2sOverrideApplicationData;
 import org.kuali.coeus.propdev.impl.s2s.override.S2sOverrideAttachment;
+import org.kuali.coeus.propdev.impl.sponsor.ProposalCfda;
 import org.kuali.coeus.s2sgen.api.core.S2SException;
 import org.kuali.coeus.s2sgen.api.generate.FormGenerationResult;
 import org.kuali.coeus.s2sgen.api.generate.FormGeneratorService;
@@ -129,7 +130,18 @@ public class ProposalDevelopmentS2SController extends ProposalDevelopmentControl
            String trimmedTitle= StringUtils.substring(opportunityTitle, 0, ProposalDevelopmentConstants.S2sConstants.OPP_TITLE_MAX_LENGTH);
            //Set Opportunity Title and Opportunity ID in the Sponsor & Program Information section
            proposal.setProgramAnnouncementTitle(trimmedTitle);
-           proposal.setCfdaNumber(form.getNewS2sOpportunity().getCfdaNumber());
+           proposal.setProposalCfdas(new ArrayList<>());
+           if (form.getNewS2sOpportunity().getS2sOpportunityCfdas() != null) {
+               proposal.setProposalCfdas(form.getNewS2sOpportunity().getS2sOpportunityCfdas().stream().map(cfda -> {
+                   cfda.setProposalNumber(proposal.getProposalNumber());
+                   final ProposalCfda proposalCfda = new ProposalCfda();
+                   proposalCfda.setCfdaNumber(cfda.getCfdaNumber());
+                   proposalCfda.setCfdaDescription(cfda.getCfdaDescription());
+                   proposalCfda.setProposalNumber(proposal.getProposalNumber());
+                   return proposalCfda;
+               }).collect(Collectors.toList()));
+           }
+
            proposal.setProgramAnnouncementNumber(form.getNewS2sOpportunity().getOpportunityId());
            form.setNewS2sOpportunity(new S2sOpportunity());
        }

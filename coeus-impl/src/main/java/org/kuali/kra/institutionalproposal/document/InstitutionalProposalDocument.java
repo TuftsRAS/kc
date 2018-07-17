@@ -125,6 +125,7 @@ public class InstitutionalProposalDocument extends KcTransactionalDocumentBase i
         managedLists.add(units);
         managedLists.add(creditSplits);
         managedLists.add(institutionalProposal.getProjectPersons());
+        managedLists.add(institutionalProposal.getProposalCfdas());
 
         return managedLists;
     }

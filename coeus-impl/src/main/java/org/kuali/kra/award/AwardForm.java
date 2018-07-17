@@ -47,6 +47,7 @@ import org.kuali.kra.award.customdata.CustomDataHelper;
 import org.kuali.kra.award.detailsdates.DetailsAndDatesFormHelper;
 import org.kuali.kra.award.document.AwardDocument;
 import org.kuali.kra.award.home.Award;
+import org.kuali.kra.award.home.AwardCfda;
 import org.kuali.kra.award.home.AwardComment;
 import org.kuali.kra.award.home.AwardService;
 import org.kuali.kra.award.home.approvedsubawards.ApprovedSubawardFormHelper;
@@ -136,7 +137,7 @@ public class AwardForm extends BudgetVersionFormBase implements MultiLookupForm,
     private String prevRootAwardNumber;
 
     private AwardComment newAwardCostShareComment;
-    
+    private AwardCfda newAwardCfda;
     private AwardFandaRate newAwardFandaRate;    
     private List<ConcreteKeyValue> reportClasses;
     private String directIndirectViewEnabled;
@@ -198,7 +199,7 @@ public class AwardForm extends BudgetVersionFormBase implements MultiLookupForm,
     private String currentAwardNumber;
     private String currentSeqNumber;
     
-    private List<ReportTracking> reportTrackingsToDelete = new ArrayList<ReportTracking>();
+    private List<ReportTracking> reportTrackingsToDelete = new ArrayList<>();
     
     private boolean viewFundingSource;
 
@@ -265,7 +266,7 @@ public class AwardForm extends BudgetVersionFormBase implements MultiLookupForm,
         awardAttachmentFormBean = new AwardAttachmentFormBean(this);
         setPermissionsHelper(new PermissionsHelper(this));
         setSpecialReviewHelper(new SpecialReviewHelper(this));
-        setNotificationHelper(new NotificationHelper());
+        setNotificationHelper(new NotificationHelper<>());
         awardCreditSplitBean = new AwardCreditSplitBean(this);
         awardCommentBean = new AwardCommentBean(this);
         awardCloseoutBean = new AwardCloseoutBean(this);
@@ -308,11 +309,7 @@ public class AwardForm extends BudgetVersionFormBase implements MultiLookupForm,
     public boolean isCreditSplitOptInEnabled() {
         return getAwardService().isCreditSplitOptInEnabled();
     }
-    /**
-     * 
-     * This method returns the AwardDocument object.
-     * @return
-     */
+
     public AwardDocument getAwardDocument() {
         return (AwardDocument) super.getDocument();
     }
@@ -361,15 +358,18 @@ public class AwardForm extends BudgetVersionFormBase implements MultiLookupForm,
         this.newAwardCostShareComment = newAwardCostShareComment;
     }
 
+    public AwardCfda getNewAwardCfda() {
+        return newAwardCfda;
+    }
+
+    public void setNewAwardCfda(AwardCfda newAwardCfda) {
+        this.newAwardCfda = newAwardCfda;
+    }
 
     public AwardFandaRate getNewAwardFandaRate() {
         return newAwardFandaRate;
     }
 
-    /**
-     *
-     * @param newAwardFandaRate
-     */
     public void setNewAwardFandaRate(AwardFandaRate newAwardFandaRate) {
         this.newAwardFandaRate = newAwardFandaRate;
     }
@@ -384,61 +384,34 @@ public class AwardForm extends BudgetVersionFormBase implements MultiLookupForm,
         return KraAuthorizationConstants.LOCK_DESCRIPTOR_AWARD;
     }
 
-    /**
-     * Gets the lookupResultsBOClassName attribute. 
-     * @return Returns the lookupResultsBOClassName.
-     */
     @Override
     public String getLookupResultsBOClassName() {
         return lookupResultsBOClassName;
     }
 
-    /**
-     * Sets the lookupResultsBOClassName attribute value.
-     * @param lookupResultsBOClassName The lookupResultsBOClassName to set.
-     */
     @Override
     public void setLookupResultsBOClassName(String lookupResultsBOClassName) {
         this.lookupResultsBOClassName = lookupResultsBOClassName;
     }
 
-    /**
-     * Gets the lookupResultsSequenceNumber attribute. 
-     * @return Returns the lookupResultsSequenceNumber.
-     */
     @Override
     public String getLookupResultsSequenceNumber() {
         return lookupResultsSequenceNumber;
     }
 
-    /**
-     * Sets the lookupResultsSequenceNumber attribute value.
-     * @param lookupResultsSequenceNumber The lookupResultsSequenceNumber to set.
-     */
     @Override
     public void setLookupResultsSequenceNumber(String lookupResultsSequenceNumber) {
         this.lookupResultsSequenceNumber = lookupResultsSequenceNumber;
     }
 
-    /**
-     * Gets the awardCommentHistoryByType attribute. 
-     * @return Returns the awardCommentHistoryByType.
-     */
     public List<AwardComment> getAwardCommentHistoryByType() {
         return awardCommentHistoryByType;
     }
 
-    /**
-     * Sets the awardCommentHistoryByType attribute value.
-     * @param awardCommentHistoryByType The awardCommentHistoryByType to set.
-     */
     public void setAwardCommentHistoryByType(List<AwardComment> awardCommentHistoryByType) {
         this.awardCommentHistoryByType = awardCommentHistoryByType;
     }
 
-    /**
-     * @return The selected lead unit
-     */
     public String getSelectedLeadUnit() {
         return projectPersonnelBean.getSelectedLeadUnit();
     }
@@ -484,7 +457,7 @@ public class AwardForm extends BudgetVersionFormBase implements MultiLookupForm,
     }
 
     protected boolean accountExistsInQueue() {
-        Map<String, String> accountsMap = new HashMap<String, String>();
+        Map<String, String> accountsMap = new HashMap<>();
         accountsMap.put(ACCOUNT_NUMBER, getAwardDocument().getAward().getAccountNumber());
         int count = getDataObjectService().findMatching(AwardPosts.class,
                 QueryByCriteria.Builder.andAttributes(accountsMap).setCountFlag(CountFlag.ONLY).build()).getTotalRowCount();
@@ -509,7 +482,7 @@ public class AwardForm extends BudgetVersionFormBase implements MultiLookupForm,
     }
 
     protected AwardAccount getAccountFromQueue() {
-        Map<String, String> accountsMap = new HashMap<String, String>();
+        Map<String, String> accountsMap = new HashMap<>();
         accountsMap.put(ACCOUNT_NUMBER, getAwardDocument().getAward().getAccountNumber());
         List<AwardAccount> accounts = getDataObjectService().findMatching(AwardAccount.class,
                 QueryByCriteria.Builder.andAttributes(accountsMap).build()).getResults();
@@ -543,18 +516,11 @@ public class AwardForm extends BudgetVersionFormBase implements MultiLookupForm,
         this.reportClasses = reportClasses;
     }
 
-    /**
-     * Gets the approvedSubawardFormHelper attribute. 
-     * @return Returns the approvedSubawardFormHelper.
-     */
+
     public ApprovedSubawardFormHelper getApprovedSubawardFormHelper() {
         return approvedSubawardFormHelper;
     }
 
-    /**
-     * Sets the approvedSubawardFormHelper attribute value.
-     * @param approvedSubawardFormHelper The approvedSubawardFormHelper to set.
-     */
     public void setApprovedSubawardFormHelper(ApprovedSubawardFormHelper approvedSubawardFormHelper) {
         this.approvedSubawardFormHelper = approvedSubawardFormHelper;
     }
@@ -569,44 +535,22 @@ public class AwardForm extends BudgetVersionFormBase implements MultiLookupForm,
         this.reportClassForPaymentsAndInvoices = reportClassForPaymentsAndInvoices;
     }    
 
-
-    /**
-     * Gets the sponsorTermFormHelper attribute. 
-     * @return Returns the sponsorTermFormHelper.
-     */
     public SponsorTermFormHelper getSponsorTermFormHelper() {
         return sponsorTermFormHelper;
     }
 
-
-
-    /**
-     * @param unitName
-     */
     public void setSelectedLeadUnit(String unitNumber) {
         projectPersonnelBean.setSelectedLeadUnit(unitNumber);
     }
-    
-    /**
-     * Sets the sponsorTermFormHelper attribute value.
-     * @param sponsorTermFormHelper The sponsorTermFormHelper to set.
-     */
+
     public void setSponsorTermFormHelper(SponsorTermFormHelper sponsorTermFormHelper) {
         this.sponsorTermFormHelper = sponsorTermFormHelper;
     }
 
-    /**
-     * Gets the paymentScheduleBean attribute. 
-     * @return Returns the paymentScheduleBean.
-     */
     public PaymentScheduleBean getPaymentScheduleBean() {
         return paymentScheduleBean;
     }
 
-    /**
-     * Sets the paymentScheduleBean attribute value.
-     * @param paymentScheduleBean The paymentScheduleBean to set.
-     */
     public void setPaymentScheduleBean(PaymentScheduleBean paymentScheduleBean) {
         this.paymentScheduleBean = paymentScheduleBean;
     }
@@ -620,31 +564,16 @@ public class AwardForm extends BudgetVersionFormBase implements MultiLookupForm,
     public void setAuditActivated(boolean auditActivated) {
         this.auditActivated = auditActivated;
     }
-    
-    
 
-    /**
-     * Gets the awardInMultipleNodeHierarchy attribute. 
-     * @return Returns the awardInMultipleNodeHierarchy.
-     */
     public boolean isAwardInMultipleNodeHierarchy() {
         return getAwardDocument().getAward().isAwardInMultipleNodeHierarchy();
     }
-    
-    /**
-     * Gets the awardInMultipleNodeHierarchy attribute. 
-     * @return Returns the awardInMultipleNodeHierarchy.
-     */
+
     public boolean isAwardHasAssociatedTandMOrIsVersioned() {
         return getAwardDocument().getAward().isAwardHasAssociatedTandMOrIsVersioned();
     }
 
-    /**
-     * Gets the indexOfAwardAmountInfoWithHighestTransactionId attribute. 
-     * @return Returns the indexOfAwardAmountInfoWithHighestTransactionId.
-     * @throws WorkflowException 
-     */
-    public int getIndexOfAwardAmountInfoForDisplay() throws WorkflowException {
+    public int getIndexOfAwardAmountInfoForDisplay() {
         return getAwardDocument().getAward().getIndexOfAwardAmountInfoForDisplay();
     }
 
@@ -655,59 +584,32 @@ public class AwardForm extends BudgetVersionFormBase implements MultiLookupForm,
     public void setDetailsAndDatesFormHelper(DetailsAndDatesFormHelper detailsAndDatesFormHelper) {
         this.detailsAndDatesFormHelper = detailsAndDatesFormHelper;
     }
-    
-    /**
-     * Gets the Special Review Helper.
-     * @return the Special Review Helper
-     */
+
     public SpecialReviewHelper getSpecialReviewHelper() {
         return specialReviewHelper;
     }
-    
-    /**
-     * Sets the Special Review Helper.
-     * @param specialReviewHelper the Special Review Helper
-     */
+
     public void setSpecialReviewHelper(SpecialReviewHelper specialReviewHelper) {
         this.specialReviewHelper = specialReviewHelper;
     }
-    
-    /**
-     * Gets the Notification Helper.
-     * @return the Notification Helper
-     */
+
     public NotificationHelper<AwardNotificationContext> getNotificationHelper() {
         return notificationHelper;
     }
-    
-    /**
-     * Sets the Notification Helper.
-     * @param notificationHelper the Notification Helper
-     */
+
     public void setNotificationHelper(NotificationHelper<AwardNotificationContext> notificationHelper) {
         this.notificationHelper = notificationHelper;
     }
 
-    /**
-     * Gets the permissionsHelper attribute. 
-     * @return Returns the awardPermissionsHelper.
-     */
     @Override
     public PermissionsHelper getPermissionsHelper() {
         return permissionsHelper;
     }
 
-    /**
-     * Sets the awardPermissionsHelper attribute value.
-     */
     public void setPermissionsHelper(PermissionsHelper awardPermissionsHelper) {
         this.permissionsHelper = awardPermissionsHelper;
     }
-    
-    /**
-     * This method returns a string representation of the document type
-     * @return
-     */
+
     public String getDocumentTypeName() {
         return "AwardDocument";
     }
@@ -722,18 +624,10 @@ public class AwardForm extends BudgetVersionFormBase implements MultiLookupForm,
         return customDataHelper;
     }
 
-    /**
-     * This method sets the custom data helper
-     * @param customDataHelper
-     */
     public void setCustomDataHelper(CustomDataHelper customDataHelper) {
         this.customDataHelper = customDataHelper;
     }
 
-    /**
-     * Sets the awardAuditActivated attribute value.
-     * @param awardAuditActivated The awardAuditActivated to set.
-     */
     public void setAwardAuditActivated(boolean awardAuditActivated) {
         this.auditActivated = awardAuditActivated;
     }
@@ -743,84 +637,42 @@ public class AwardForm extends BudgetVersionFormBase implements MultiLookupForm,
         return awardCreditSplitBean;
     }
 
-    /**
-     * @param awardCreditSplitBean
-     */
     public void setAwardCreditSplitBean(AwardCreditSplitBean awardCreditSplitBean) {
         this.awardCreditSplitBean = awardCreditSplitBean;
     }
-    
-    /**
-     * @param projectPersonnelBean
-     */
+
     public void setAwardProjectPersonnelBean(AwardProjectPersonnelBean projectPersonnelBean) {
         this.projectPersonnelBean = projectPersonnelBean;
     }
-    
-    /**
-     * Gets the awardReportsBean attribute. 
-     * @return Returns the awardReportsBean.
-     */
+
     public AwardReportsBean getAwardReportsBean() {
         return awardReportsBean;
     }
 
-    /**
-     * Sets the awardReportsBean attribute value.
-     * @param awardReportsBean The awardReportsBean to set.
-     */
     public void setAwardReportsBean(AwardReportsBean awardReportsBean) {
         this.awardReportsBean = awardReportsBean;
     }
 
-    /**
-     * Gets the awardCloseoutBean attribute. 
-     * @return Returns the awardCloseoutBean.
-     */
     public AwardCloseoutBean getAwardCloseoutBean() {
         return awardCloseoutBean;
     }
 
-    /**
-     * Sets the awardCloseoutBean attribute value.
-     * @param awardCloseoutBean The awardCloseoutBean to set.
-     */
     public void setAwardCloseoutBean(AwardCloseoutBean awardCloseoutBean) {
         this.awardCloseoutBean = awardCloseoutBean;
     }
-    
-    
-    
-    /**
-     * Gets the awardNotepadBean attribute. 
-     * @return Returns the awardNotepadBean.
-     */
+
     public AwardNotepadBean getAwardNotepadBean() {
         return awardNotepadBean;
     }
 
-    /**
-     * Sets the awardNotepadBean attribute value.
-     * @param awardNotepadBean The awardNotepadBean to set.
-     */
     public void setAwardNotepadBean(AwardNotepadBean awardNotepadBean) {
         this.awardNotepadBean = awardNotepadBean;
     }
-    
 
-
-    /**
-     * Gets the awardAttachmentFormBean attribute. 
-     * @return Returns the awardAttachmentFormBean.
-     */
     public AwardAttachmentFormBean getAwardAttachmentFormBean() {
         return awardAttachmentFormBean;
     }
 
-    /**
-     * Sets the awardAttachmentFormBean attribute value.
-     * @param awardAttachmentFormBean The awardAttachmentFormBean to set.
-     */
     public void setAwardAttachmentFormBean(AwardAttachmentFormBean awardAttachmentFormBean) {
         this.awardAttachmentFormBean = awardAttachmentFormBean;
     }
@@ -829,70 +681,38 @@ public class AwardForm extends BudgetVersionFormBase implements MultiLookupForm,
     public AwardFundingProposalBean getFundingProposalBean() {
         return fundingProposalBean;
     }
-    
-    /**
-     * Gets the awardHierarchyNodes attribute. 
-     * @return Returns the awardHierarchyNodes.
-     */
+
     public Map<String, AwardHierarchy> getAwardHierarchyNodes() {
         if(awardHierarchyNodes == null || awardHierarchyNodes.size()==0){
-            awardHierarchyNodes = getAwardHierarchyBean().getAwardHierarchy(getAwardHierarchyBean().getRootNode(), new ArrayList<String>());
+            awardHierarchyNodes = getAwardHierarchyBean().getAwardHierarchy(getAwardHierarchyBean().getRootNode(), new ArrayList<>());
         }
         return awardHierarchyNodes;
     }
 
-    /**
-     * Sets the awardHierarchyNodes attribute value.
-     * @param awardHierarchyNodes The awardHierarchyNodes to set.
-     */
     public void setAwardHierarchyNodes(Map<String, AwardHierarchy> awardHierarchyNodes) {
         this.awardHierarchyNodes = awardHierarchyNodes;
     }
 
-    /**
-     * Gets the prevAwardNumber attribute. 
-     * @return Returns the prevAwardNumber.
-     */
     public String getPrevAwardNumber() {
         return prevAwardNumber;
     }
 
-    /**
-     * Sets the prevAwardNumber attribute value.
-     * @param prevAwardNumber The prevAwardNumber to set.
-     */
     public void setPrevAwardNumber(String prevAwardNumber) {
         this.prevAwardNumber = prevAwardNumber;
     }
 
-    /**
-     * Gets the prevRootAwardNumber attribute. 
-     * @return Returns the prevRootAwardNumber.
-     */
     public String getPrevRootAwardNumber() {
         return prevRootAwardNumber;
     }
 
-    /**
-     * Sets the prevRootAwardNumber attribute value.
-     * @param prevRootAwardNumber The prevRootAwardNumber to set.
-     */
     public void setPrevRootAwardNumber(String prevRootAwardNumber) {
         this.prevRootAwardNumber = prevRootAwardNumber;
     }
 
-    /**
-     * Gets the awardNumberInputTemp attribute. 
-     * @return Returns the awardNumberInputTemp.
-     */
     public String getAwardNumberInputTemp() {
         return awardNumberInputTemp;
     }
 
-    /**
-     * Sets the awardNumberInputTemp attribute value.
-     * @param awardNumberInputTemp The awardNumberInputTemp to set.
-     */
     public void setAwardNumberInputTemp(String awardNumberInputTemp) {
         this.awardNumberInputTemp = awardNumberInputTemp;
     }
@@ -921,50 +741,26 @@ public class AwardForm extends BudgetVersionFormBase implements MultiLookupForm,
         this.awardHierarchy = awardHierarchy;
     }
 
-    /**
-     * Gets the awardNumber attribute. 
-     * @return Returns the awardNumber.
-     */
     public String getAwardNumber() {
         return awardNumber;
     }
 
-    /**
-     * Sets the awardNumber attribute value.
-     * @param awardNumber The awardNumber to set.
-     */
     public void setAwardNumber(String awardNumber) {
         this.awardNumber = awardNumber;
     }
 
-    /**
-     * Gets the addRA attribute. 
-     * @return Returns the addRA.
-     */
     public String getAddRA() {
         return addRA;
     }
 
-    /**
-     * Sets the addRA attribute value.
-     * @param addRA The addRA to set.
-     */
     public void setAddRA(String addRA) {
         this.addRA = addRA;
     }
 
-    /**
-     * Gets the deletedRas attribute. 
-     * @return Returns the deletedRas.
-     */
     public String getDeletedRas() {
         return deletedRas;
     }
 
-    /**
-     * Sets the deletedRas attribute value.
-     * @param deletedRas The deletedRas to set.
-     */
     public void setDeletedRas(String deletedRas) {
         this.deletedRas = deletedRas;
     }
@@ -982,43 +778,23 @@ public class AwardForm extends BudgetVersionFormBase implements MultiLookupForm,
         }
         return reportTrackingService;
     }
-    
-    /**
-     * 
-     * This method calls ReportTrackingService.autoRegenerateReports if that is true, this returns false.
-     * @return
-     */
+
     public boolean getDisplayRegenerateButton() {
         return !this.getReportTrackingService().autoRegenerateReports(this.getAwardDocument().getAward());
     }
 
-    /**
-     * Gets the rootAwardNumber attribute. 
-     * @return Returns the rootAwardNumber.
-     */
     public String getRootAwardNumber() {
         return rootAwardNumber;
     }
 
-    /**
-     * Sets the rootAwardNumber attribute value.
-     * @param rootAwardNumber The rootAwardNumber to set.
-     */
     public void setRootAwardNumber(String rootAwardNumber) {
         this.rootAwardNumber = rootAwardNumber;
     }
 
-    /**
-     * @return the AwardPrintNotice object
-     */
     public AwardPrintNotice getAwardPrintNotice() {
         return awardPrintNotice;
     }
 
-    /**
-     * Set the AwardPrintNotice object - responsible for passing Award Notice choices for printing.
-     * @param awardPrintNotice
-     */
     public void setAwardPrintNotice(AwardPrintNotice awardPrintNotice) {
         this.awardPrintNotice = awardPrintNotice;
     }
@@ -1030,11 +806,7 @@ public class AwardForm extends BudgetVersionFormBase implements MultiLookupForm,
     public void setAwardPrintChangeReport(AwardTransactionSelectorBean awardPrintChangeReport) {
         this.awardPrintChangeReport = awardPrintChangeReport;
     }
-    
-    /**
-     * Gets the hiddenObject attribute.
-     * @return Returns the hiddenObject.
-     */
+
     public List<AwardHierarchyTempObject> getAwardHierarchyTempObjects() {
         if(getAwardDocument().getAward().getAwardHierarchyTempObjects() == null) {
             getAwardDocument().getAward().initializeAwardHierarchyTempObjects(); 
@@ -1081,15 +853,7 @@ public class AwardForm extends BudgetVersionFormBase implements MultiLookupForm,
     private ConfigurationService lookupKualiConfigurationService() {
         return CoreApiServiceLocator.getKualiConfigurationService();
     }
-    
-    /**
-     * This is a utility method to add a new button to the extra buttons
-     * collection.
-     *   
-     * @param property
-     * @param source
-     * @param altText
-     */ 
+
     @Override
     protected void addExtraButton(String property, String source, String altText){
         
@@ -1102,18 +866,10 @@ public class AwardForm extends BudgetVersionFormBase implements MultiLookupForm,
         extraButtons.add(newButton);
     }
 
-    /**
-     * Gets the medusaBean attribute. 
-     * @return Returns the medusaBean.
-     */
     public MedusaBean getMedusaBean() {
         return medusaBean;
     }
 
-    /**
-     * Sets the medusaBean attribute value.
-     * @param medusaBean The medusaBean to set.
-     */
     public void setMedusaBean(MedusaBean medusaBean) {
         this.medusaBean = medusaBean;
     }
@@ -1122,7 +878,6 @@ public class AwardForm extends BudgetVersionFormBase implements MultiLookupForm,
      * This is a hack to fix a problem with Award Hierarchy. The way the AH UI was implemented was in JavaScript. For some reason, the awardHierarchyTempObject
      * form field data doesn't get set on the temp objects by Rice's property setting mechanism. Time is short, so I just do it manually here. jack frosch
      *
-     * @param requestParameters
      */
     @Override
     public void postprocessRequestParameters(Map requestParameters) {
@@ -1166,7 +921,6 @@ public class AwardForm extends BudgetVersionFormBase implements MultiLookupForm,
      * 
      * @return The current scopes remaining to be synchronized.  The action is responsible for maintaining this field.
      */
-    
     public Map<AwardTemplateSyncScope, Boolean> getSyncRequiresConfirmationMap() {
         return syncRequiresConfirmationMap;
     }
@@ -1233,7 +987,7 @@ public class AwardForm extends BudgetVersionFormBase implements MultiLookupForm,
     }
     
     public List<Long> getLinkedProposals() {
-        List<Long> linkedProposals = new ArrayList<Long>();
+        List<Long> linkedProposals = new ArrayList<>();
         if (this.getAwardDocument() != null && this.getAwardDocument().getAward() != null) {
             for (AwardFundingProposal fundingProposal : this.getAwardDocument().getAward().getAllFundingProposals()) {
                 linkedProposals.add(fundingProposal.getProposalId());
@@ -1287,18 +1041,10 @@ public class AwardForm extends BudgetVersionFormBase implements MultiLookupForm,
 
     }
 
-    /**
-     * Gets the newProposalBudgetPeriods attribute. 
-     * @return Returns the newProposalBudgetPeriods.
-     */
     public String getNewProposalBudgetPeriods() {
         return newProposalBudgetPeriods;
     }
 
-    /**
-     * Sets the newProposalBudgetPeriods attribute value.
-     * @param newProposalBudgetPeriods The newProposalBudgetPeriods to set.
-     */
     public void setNewProposalBudgetPeriods(String newProposalBudgetPeriods) {
         this.newProposalBudgetPeriods = newProposalBudgetPeriods;
     }
@@ -1388,11 +1134,7 @@ public class AwardForm extends BudgetVersionFormBase implements MultiLookupForm,
     public void setAwardSyncBean(AwardSyncBean awardSyncBean) {
         this.awardSyncBean = awardSyncBean;
     }     
-    
-    /**
-     * Sets the directIndirectViewEnabled attribute value.
-     * @param directIndirectViewEnabled The directIndirectViewEnabled to set.
-     */
+
     public void setDirectIndirectViewEnabled(String directIndirectViewEnabled) {
         this.directIndirectViewEnabled = directIndirectViewEnabled;
     }
@@ -1402,7 +1144,7 @@ public class AwardForm extends BudgetVersionFormBase implements MultiLookupForm,
         
         HeaderNavigation[] navigation = super.getHeaderNavigationTabs();
         
-        List<HeaderNavigation> resultList = new ArrayList<HeaderNavigation>();
+        List<HeaderNavigation> resultList = new ArrayList<>();
             //We have to copy the HeaderNavigation elements into a new collection as the 
             //List returned by DD is it's cached copy of the header navigation list.
         for (HeaderNavigation nav : navigation) {
@@ -1556,14 +1298,13 @@ public class AwardForm extends BudgetVersionFormBase implements MultiLookupForm,
     /**
      * 
      * This method returns true if the AwardPaymentScheduleActiveLinks equals "Y" otherwise returns false.
-     * @return
      */
     public boolean getDisplayAwardPaymentScheduleActiveLinkFields() {
         if (displayAwardPaymentScheduleActiveLinkFields == null) {
             String parmVal = getParameter(Constants.PARAMETER_MODULE_AWARD, Constants.PARAMETER_COMPONENT_DOCUMENT, PAYMENT_SCHEDULE_ACTIVE_LINKS_PARAMETER);
             displayAwardPaymentScheduleActiveLinkFields = StringUtils.equalsIgnoreCase("Y", parmVal);
         }
-        return displayAwardPaymentScheduleActiveLinkFields.booleanValue();
+        return displayAwardPaymentScheduleActiveLinkFields;
     }
 
     public void setReportTrackingService(ReportTrackingService reportTrackingService) {

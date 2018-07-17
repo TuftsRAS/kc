@@ -25,16 +25,24 @@ public class AwardCfdaRuleImpl implements AwardCfdaRule {
     @Override
     public boolean processAddCfdaRules(AwardAddCfdaEvent awardAddCfdaEvent) {
         AwardDocument awardDocument = (AwardDocument) awardAddCfdaEvent.getDocument();
-        if (!isValidCfda(awardDocument.getAward().getCfdaNumber()) &&
-                getGlobalVariableService().getMessageMap().getMessages(Constants.DOCUMENT_DEVELOPMENT_PROPOSAL_CFDA_NUMBER) == null) {
-            getGlobalVariableService().getMessageMap().putWarning(Constants.DOCUMENT_AWARD_CFDA_NUMBER, KeyConstants.CFDA_INVALID,
-                    awardDocument.getAward().getCfdaNumber());
+
+        boolean valid = true;
+
+        for (int i = 0; i < awardDocument.getAward().getAwardCfdas().size(); i ++) {
+            final String cfdaNumber = awardDocument.getAward().getAwardCfdas().get(i).getCfdaNumber();
+            if (StringUtils.isBlank(cfdaNumber)) {
+                getGlobalVariableService().getMessageMap().putError(String.format(Constants.DOCUMENT_AWARD_CFDA_NUMBER, i), KeyConstants.CFDA_REQUIRED);
+                valid = false;
+            } else if (!isValidCfda(cfdaNumber) &&
+                    getGlobalVariableService().getMessageMap().getMessages(String.format(Constants.DOCUMENT_DEVELOPMENT_PROPOSAL_CFDA_NUMBER, i)) == null) {
+                getGlobalVariableService().getMessageMap().putWarning(String.format(Constants.DOCUMENT_AWARD_CFDA_NUMBER, i), KeyConstants.CFDA_INVALID, cfdaNumber);
+            }
         }
-        return Boolean.TRUE;
+        return valid;
     }
 
     public boolean isValidCfda(String cfdaNumber) {
-        return StringUtils.isBlank(cfdaNumber) || cfdaNumber.matches(Constants.CFDA_REGEX);
+        return cfdaNumber.matches(Constants.CFDA_REGEX);
     }
 
     public GlobalVariableService getGlobalVariableService() {

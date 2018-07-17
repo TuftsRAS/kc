@@ -48,6 +48,7 @@ import org.kuali.coeus.propdev.impl.person.attachment.ProposalPersonBiography;
 import org.kuali.coeus.propdev.impl.person.attachment.ProposalPersonBiographyService;
 import org.kuali.coeus.propdev.impl.person.creditsplit.CreditSplitConstants;
 import org.kuali.coeus.propdev.impl.s2s.override.S2sOverride;
+import org.kuali.coeus.propdev.impl.sponsor.ProposalCfda;
 import org.kuali.coeus.propdev.impl.state.ProposalState;
 import org.kuali.coeus.propdev.impl.ynq.ProposalYnq;
 import org.kuali.coeus.sys.framework.model.KcPersistableBusinessObjectBase;
@@ -158,9 +159,6 @@ public class DevelopmentProposal extends KcPersistableBusinessObjectBase impleme
 
     @Column(name = "ANTICIPATED_AWARD_TYPE_CODE")
     private Integer anticipatedAwardTypeCode;
-
-    @Column(name = "CFDA_NUMBER")
-    private String cfdaNumber;
 
     @Column(name = "PROGRAM_ANNOUNCEMENT_NUMBER")
     private String programAnnouncementNumber;
@@ -367,6 +365,10 @@ public class DevelopmentProposal extends KcPersistableBusinessObjectBase impleme
     @JoinColumn(name = "NSF_SEQUENCE_NUMBER", referencedColumnName = "NSF_SEQUENCE_NUMBER", insertable = false, updatable = false)
     private NsfCode nsfCodeBo;
 
+    @OneToMany(orphanRemoval = true, cascade = { CascadeType.ALL })
+    @JoinColumn(name = PROPOSAL_NUMBER, referencedColumnName = PROPOSAL_NUMBER)
+    private List<ProposalCfda> proposalCfdas;
+
     @Transient
     private String newScienceKeywordCode;
 
@@ -536,6 +538,7 @@ public class DevelopmentProposal extends KcPersistableBusinessObjectBase impleme
         hierarchyStatus = HierarchyStatusConstants.None.code();
         hierarchyStatusName = HierarchyStatusConstants.None.description();
         budgets = new ArrayList<>();
+        proposalCfdas = new ArrayList<>();
         initProposalSites();
     }
 
@@ -709,13 +712,41 @@ public class DevelopmentProposal extends KcPersistableBusinessObjectBase impleme
         this.agencyProgramCode = agencyProgramCode;
     }
 
-    @Override
+    /**
+     * @deprecated Included here for REST api compatibility.  Do not use.
+     */
+    @Deprecated
     public String getCfdaNumber() {
-        return cfdaNumber;
+        return findFirstCfda().map(ProposalCfda::getCfdaNumber).orElse(null);
     }
 
+    /**
+     * @deprecated Included here for REST api compatibility.  Do not use.
+     */
+    @Deprecated
     public void setCfdaNumber(String cfdaNumber) {
-        this.cfdaNumber = cfdaNumber;
+        if (proposalCfdas == null) {
+            proposalCfdas = new ArrayList<>();
+        }
+
+        final ProposalCfda cfda = findFirstCfda().orElseGet(ProposalCfda::new);
+        proposalCfdas.clear();
+        cfda.setCfdaNumber(cfdaNumber);
+        cfda.setProposalNumber(this.getProposalNumber());
+
+        proposalCfdas.add(cfda);
+    }
+
+    /**
+     * @deprecated Included here for REST api compatibility.  Do not use.
+     */
+    @Deprecated
+    private Optional<ProposalCfda> findFirstCfda() {
+        if (proposalCfdas != null) {
+            return proposalCfdas.stream().findFirst();
+        }
+
+        return Optional.empty();
     }
 
     @Override
@@ -1454,9 +1485,9 @@ public class DevelopmentProposal extends KcPersistableBusinessObjectBase impleme
     }
 
     public String getBudgetStatusDescription() {
-        if (getFinalBudget() != null) {
+        if (getFinalBudget() != null && getFinalBudget().getBudgetStatusDo() != null) {
             return getFinalBudget().getBudgetStatusDo().getDescription();
-        } else if (getLatestBudget() != null) {
+        } else if (getLatestBudget() != null && getLatestBudget().getBudgetStatusDo() != null) {
             return getLatestBudget().getBudgetStatusDo().getDescription();
         }
         return "";
@@ -1662,6 +1693,15 @@ public class DevelopmentProposal extends KcPersistableBusinessObjectBase impleme
 
     public void setProposalState(ProposalState proposalState) {
         this.proposalState = proposalState;
+    }
+
+    @Override
+    public List<ProposalCfda> getProposalCfdas() {
+        return proposalCfdas;
+    }
+
+    public void setProposalCfdas(List<ProposalCfda> proposalCfdas) {
+        this.proposalCfdas = proposalCfdas;
     }
 
     /**
@@ -1943,7 +1983,7 @@ public class DevelopmentProposal extends KcPersistableBusinessObjectBase impleme
         private static final String NARRATIVES = "narratives";
 
         @Override
-        public void customize(ClassDescriptor descriptor) throws Exception {
+        public void customize(ClassDescriptor descriptor) {
             final String value = getParameterService().getParameterValueAsString(Constants.MODULE_NAMESPACE_PROPOSAL_DEVELOPMENT,Constants.PARAMETER_COMPONENT_DOCUMENT, Constants.PROPOSAL_NARRATIVE_TYPE_GROUP);
             ForeignReferenceMapping frMapping = (ForeignReferenceMapping) descriptor.getMappingForAttributeName(NARRATIVES);
 
@@ -1963,7 +2003,7 @@ public class DevelopmentProposal extends KcPersistableBusinessObjectBase impleme
         private static final String INSTITUTE_ATTACHMENTS = "instituteAttachments";
 
         @Override
-        public void customize(ClassDescriptor descriptor) throws Exception {
+        public void customize(ClassDescriptor descriptor) {
             final String value = getParameterService().getParameterValueAsString(Constants.MODULE_NAMESPACE_PROPOSAL_DEVELOPMENT,Constants.PARAMETER_COMPONENT_DOCUMENT, Constants.INSTITUTE_NARRATIVE_TYPE_GROUP);
             ForeignReferenceMapping frMapping = (ForeignReferenceMapping) descriptor.getMappingForAttributeName(INSTITUTE_ATTACHMENTS);
 

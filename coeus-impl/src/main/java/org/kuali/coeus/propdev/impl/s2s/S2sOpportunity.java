@@ -7,14 +7,21 @@
  */
 package org.kuali.coeus.propdev.impl.s2s;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.commons.lang.StringEscapeUtils;
 import org.kuali.coeus.sys.framework.model.KcPersistableBusinessObjectBase;
 import org.kuali.coeus.propdev.impl.core.DevelopmentProposal;
 import org.kuali.coeus.propdev.api.s2s.S2sOpportunityContract;
 import org.kuali.rice.krad.data.jpa.converters.BooleanYNConverter;
 
 import javax.persistence.*;
-import java.util.Calendar;
-import java.util.List;
+import java.io.IOException;
+import java.util.*;
+import java.util.stream.Collectors;
+
+import static org.kuali.coeus.sys.framework.util.CollectionUtils.entry;
 
 @Entity
 @Table(name = "S2S_OPPORTUNITY")
@@ -24,9 +31,6 @@ public class S2sOpportunity extends KcPersistableBusinessObjectBase implements S
 	@OneToOne(cascade = { CascadeType.REFRESH })
 	@JoinColumn(name = "PROPOSAL_NUMBER", referencedColumnName = "PROPOSAL_NUMBER", insertable = true, updatable = true)
 	private DevelopmentProposal developmentProposal;
-
-    @Column(name = "CFDA_NUMBER")
-    private String cfdaNumber;
 
     @Column(name = "CLOSING_DATE")
     @Temporal(TemporalType.TIMESTAMP)
@@ -46,11 +50,9 @@ public class S2sOpportunity extends KcPersistableBusinessObjectBase implements S
     @Lob
     private String opportunity;
 
-    // opportunityId was changed to fundingOpportunityNumber in V2 
     @Column(name = "OPPORTUNITY_ID")
     private String opportunityId;
 
-    // this is fundingOpportunityTitle in V2 
     @Column(name = "OPPORTUNITY_TITLE")
     private String opportunityTitle;
 
@@ -72,15 +74,16 @@ public class S2sOpportunity extends KcPersistableBusinessObjectBase implements S
     @Column(name = "AGENCY_CONTACT_INFO")
     private String agencyContactInfo;
 
-    @Column(name = "CFDA_DESCRIPTION")
-    private String cfdaDescription;
-
     @Column(name = "MULTI_PROJECT")
     @Convert(converter = BooleanYNConverter.class)
     private boolean multiProject;
 
     @Column(name = "PROVIDER")
     private String providerCode;
+
+    @OneToMany(orphanRemoval = true, cascade = { CascadeType.ALL })
+    @JoinColumn(name = "PROPOSAL_NUMBER", referencedColumnName = "PROPOSAL_NUMBER")
+    private List<S2sOpportunityCfda> s2sOpportunityCfdas = new ArrayList<>();
 
     @OneToMany(orphanRemoval = true, cascade = { CascadeType.ALL })
     @JoinColumn(name = "PROPOSAL_NUMBER", referencedColumnName = "PROPOSAL_NUMBER")
@@ -98,14 +101,70 @@ public class S2sOpportunity extends KcPersistableBusinessObjectBase implements S
     @JoinColumn(name = "PROVIDER", referencedColumnName = "CODE", insertable = false, updatable = false)
     private S2sProvider s2sProvider;
 
-    @Override
-    @OneToOne(cascade = { CascadeType.REFRESH })
+    /**
+     * @deprecated Included here for REST api compatibility.  Do not use.
+     */
+    @Deprecated
     public String getCfdaNumber() {
-        return cfdaNumber;
+        return findFirstCfda().map(S2sOpportunityCfda::getCfdaNumber).orElse(null);
     }
 
+    /**
+     * @deprecated Included here for REST api compatibility.  Do not use.
+     */
+    @Deprecated
     public void setCfdaNumber(String cfdaNumber) {
-        this.cfdaNumber = cfdaNumber;
+        if (s2sOpportunityCfdas == null) {
+            s2sOpportunityCfdas = new ArrayList<>();
+        }
+
+        final S2sOpportunityCfda cfda = findFirstCfda().orElseGet(S2sOpportunityCfda::new);
+        s2sOpportunityCfdas.clear();
+        cfda.setCfdaNumber(cfdaNumber);
+        if (this.getDevelopmentProposal() != null) {
+            cfda.setProposalNumber(this.getProposalNumber());
+        }
+
+        s2sOpportunityCfdas.add(cfda);
+    }
+
+    /**
+     * @deprecated Included here for REST api compatibility.  Do not use.
+     */
+    @Deprecated
+    public String getCfdaDescription() {
+        return findFirstCfda().map(S2sOpportunityCfda::getCfdaDescription).orElse(null);
+    }
+
+    /**
+     * @deprecated Included here for REST api compatibility.  Do not use.
+     */
+    @Deprecated
+    public void setCfdaDescription(String cfdaDescription) {
+        if (s2sOpportunityCfdas == null) {
+            s2sOpportunityCfdas = new ArrayList<>();
+        }
+
+        final S2sOpportunityCfda cfda = findFirstCfda().orElseGet(S2sOpportunityCfda::new);
+        s2sOpportunityCfdas.clear();
+        cfda.setCfdaDescription(cfdaDescription);
+        if (this.getDevelopmentProposal() != null) {
+            cfda.setProposalNumber(this.getProposalNumber());
+        }
+
+        s2sOpportunityCfdas.add(cfda);
+    }
+
+    /**
+     * @deprecated Included here for REST api compatibility.  Do not use.
+     */
+    @Deprecated
+    private Optional<S2sOpportunityCfda> findFirstCfda() {
+        if (s2sOpportunityCfdas != null) {
+            return s2sOpportunityCfdas.stream().findFirst();
+        }
+
+        return Optional.empty();
     }
 
     @Override
@@ -277,15 +336,6 @@ public class S2sOpportunity extends KcPersistableBusinessObjectBase implements S
     }
 
     @Override
-    public String getCfdaDescription() {
-        return cfdaDescription;
-    }
-
-    public void setCfdaDescription(String cfdaDescription) {
-        this.cfdaDescription = cfdaDescription;
-    }
-
-    @Override
     public boolean isMultiProject() {
         return multiProject;
     }
@@ -304,6 +354,47 @@ public class S2sOpportunity extends KcPersistableBusinessObjectBase implements S
     
     @Override
     public String getProposalNumber() {
-    	return this.getDevelopmentProposal().getProposalNumber();
+    	return this.getDevelopmentProposal() != null ? this.getDevelopmentProposal().getProposalNumber() : null;
+    }
+
+    @Override
+    public List<S2sOpportunityCfda> getS2sOpportunityCfdas() {
+        return s2sOpportunityCfdas;
+    }
+
+    public void setS2sOpportunityCfdas(List<S2sOpportunityCfda> s2sOpportunityCfdas) {
+        this.s2sOpportunityCfdas = s2sOpportunityCfdas;
+    }
+
+    /**
+     *
+     * Used to return one-to-many cfda lookup results.
+     */
+    public String getS2sOpportunityCfdasSerialized() {
+        try {
+            return StringEscapeUtils.escapeHtml(new ObjectMapper().writeValueAsString(getS2sOpportunityCfdas()
+                    .stream()
+                    .map(cfda -> entry(cfda.getCfdaNumber(), cfda.getCfdaDescription()))
+                    .collect(Collectors.toList())));
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Used to return one-to-many cfda lookup results.
+     */
+    public void setS2sOpportunityCfdasSerialized(String s2sOpportunityCfdasSerialized) {
+        try {
+            final List<Map.Entry<String, String>> cfdas = new ObjectMapper().readValue(StringEscapeUtils.unescapeHtml(s2sOpportunityCfdasSerialized), new TypeReference<List<Map.Entry<String, String>>>() {});
+            setS2sOpportunityCfdas(cfdas.stream().map(e -> {
+                final S2sOpportunityCfda cfda = new S2sOpportunityCfda();
+                cfda.setCfdaNumber(e.getKey());
+                cfda.setCfdaDescription(e.getValue());
+                return cfda;
+            }).collect(Collectors.toList()));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

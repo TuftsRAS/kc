@@ -14,7 +14,6 @@ import org.kuali.rice.core.api.datetime.DateTimeService;
 import org.kuali.rice.core.api.util.RiceKeyConstants;
 import org.kuali.rice.kew.api.KewApiConstants;
 import org.kuali.rice.kew.api.doctype.DocumentTypeService;
-import org.kuali.rice.kew.api.exception.WorkflowException;
 import org.kuali.rice.krad.lookup.LookupForm;
 import org.kuali.rice.krad.lookup.LookupableImpl;
 import org.kuali.rice.krad.uif.UifConstants;
@@ -31,6 +30,7 @@ import org.springframework.util.CollectionUtils;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.stream.Collectors;
 
 @Component("s2sOpportunityLookupable")
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
@@ -67,12 +67,12 @@ public class S2sOpportunityLookupable extends LookupableImpl {
         return opportunities;
     }
 
-    public String buildCreatePropActionHref(S2sOpportunity opportunity) throws WorkflowException {
+    public String buildCreatePropActionHref(S2sOpportunity opportunity) {
 
         Properties parameters = new Properties();
         parameters.put(KRADConstants.PARAMETER_COMMAND, KewApiConstants.INITIATE_COMMAND);
         parameters.put(UifConstants.UrlParams.VIEW_ID, ProposalDevelopmentConstants.KradConstants.PROP_DEV_INITIATE_VIEW);
-        parameters.put(ProposalDevelopmentConstants.S2sConstants.CFDA_NUMBER, opportunity.getCfdaNumber() != null ? opportunity.getCfdaNumber() : "");
+        parameters.put(ProposalDevelopmentConstants.S2sConstants.S2S_OPPORTUNITY_CFDAS_SERIALIZED, opportunity.getS2sOpportunityCfdasSerialized());
         parameters.put(ProposalDevelopmentConstants.S2sConstants.OPPORTUNITY_ID, opportunity.getOpportunityId() != null ? opportunity.getOpportunityId() : "");
         parameters.put(ProposalDevelopmentConstants.S2sConstants.OPPORTUNITY_TITLE, opportunity.getOpportunityTitle() != null ? opportunity.getOpportunityTitle() : "");
         parameters.put(ProposalDevelopmentConstants.S2sConstants.OPENING_DATE, opportunity.getOpeningDate() != null ? getDateTimeService().toDateTimeString(opportunity.getOpeningDate().getTime()) : "");

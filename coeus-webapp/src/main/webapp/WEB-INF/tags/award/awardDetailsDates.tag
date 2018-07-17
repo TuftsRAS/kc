@@ -17,10 +17,10 @@
 	document.awardList[0].activityTypeCode,document.awardList[0].awardTypeCode,document.awardList[0].financialChartOfAccountsCode,
 	document.awardList[0].title,document.awardList[0].beginDate,document.awardList[0].awardExecutionDate,document.awardList[0].sponsorCode,
 	document.awardList[0].unitNumber, detailsAndDatesFormHelper*,document.awardList[0].awardAmountInfos[${KualiForm.document.award.indexOfLastAwardAmountInfo}].*,
-	document.awardList[0].modificationNumber,document.awardList[0].cfdaNumber,document.awardList[0].primeSponsorCode,document.awardList[0].fainId,
+	document.awardList[0].modificationNumber,document.awardList[0].awardCfdas*,document.awardList[0].primeSponsorCode,document.awardList[0].fainId,
 	document.awardList[0].fedAwardYear,document.awardList[0].fedAwardDate"
 
-	tabAuditKey="document.awardList[0].awardEffectiveDate,document.awardList[0].cfdaNumber, document.awardList[0].sponsorCode,document.awardList[0].primeSponsorCode,document.awardList[0].fainId,document.awardList[0].fedAwardYear,document.awardList[0].fedAwardDate"
+	tabAuditKey="document.awardList[0].awardEffectiveDate,document.awardList[0].awardCfdas*, document.awardList[0].sponsorCode,document.awardList[0].primeSponsorCode,document.awardList[0].fainId,document.awardList[0].fedAwardYear,document.awardList[0].fedAwardDate"
 	auditCluster="homePageAuditWarnings,homePageAuditErrors" useRiceAuditMode="true">
 <c:set var="awardObligatedAndAnticipatedAmountsEditable" value="${!readOnly && KualiForm.awardObligatedAndAnticipatedAmountsEditable}" />
 <!-- Institution -->
@@ -136,8 +136,7 @@
     		<kul:htmlControlAttribute property="document.awardList[0].awardTypeCode" attributeEntry="${awardAttributes.awardTypeCode}" readOnlyAlternateDisplay="${KualiForm.awardDocument.award.awardType.description}" />
       	</td>
   	</tr>
-  	
-  	<!-- Char of Accounts code element viewable only when the fin integration param is on -->
+
     <kra:section permission="viewChartOfAccountsElement">
     <tr>
     	<th>
@@ -237,21 +236,6 @@
         <td>
         	<kul:htmlControlAttribute property="document.awardList[0].sponsorAwardNumber" attributeEntry="${awardAttributes.sponsorAwardNumber}" />
         </td>
-        <th>
-            <div align="right"><kul:htmlAttributeLabel attributeEntry="${awardAttributes.cfdaNumber}" /></div>
-        </th>
-        <td>
-            <kul:htmlControlAttribute property="document.awardList[0].cfdaNumber" attributeEntry="${awardAttributes.cfdaNumber}" />
-            <!-- Char of Accounts code element viewable only when the fin integration param is on -->
-    		<kra:section permission="viewChartOfAccountsElement">
-            <c:if test="${!readOnly}">
-    			<kul:lookup boClassName="org.kuali.kra.award.home.CFDA" fieldConversions="cfdaNumber:document.awardList[0].cfdaNumber" anchor="${tabKey}" />
-    		</c:if>
-    		<c:if test="${!readOnly or !empty KualiForm.document.awardList[0].cfdaNumber}">
-    			<kul:directInquiry boClassName="org.kuali.kra.award.home.CFDA" inquiryParameters="document.awardList[0].cfdaNumber:cfdaNumber" anchor="${tabKey}" />
-    		</c:if>
-    		</kra:section>
-		</td>
     </tr>
     <tr>
         <th align="right">
@@ -289,6 +273,7 @@
 		</td>
 	</tr>
 </table>
+<kra-a:awardCfdas />
 </kul:innerTab>	
 
 <!-- Sponsor Funding Transferred -->

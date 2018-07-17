@@ -58,7 +58,7 @@ public class ProposalDevelopmentConstants {
         public static final String OPPORTUNITY_TITLE = "opportunityTitle";
         public static final String SCHEMA_URL = "schemaUrl";
         public static final String INSTRUCTION_URL = "instructionUrl";
-        public static final String CFDA_NUMBER = "cfdaNumber";
+        public static final String S2S_OPPORTUNITY_CFDAS_SERIALIZED = "s2sOpportunityCfdasSerialized";
         public static final String PROVIDER_CODE = "providerCode" ;
         public static final int OPP_TITLE_MAX_LENGTH = 119;
     }

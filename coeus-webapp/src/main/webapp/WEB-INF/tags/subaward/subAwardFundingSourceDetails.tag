@@ -12,6 +12,8 @@
 <%@ attribute name="index" required="true" type="java.lang.Integer" %>
 
 <c:set var="fundingSourceAttributes" value="${DataDictionary.Award.attributes}" />
+<c:set var="awardCfdaAttributes" value="${DataDictionary.AwardCfda.attributes}" />
+
 
 <div class="innerTab-head" style="margin-left:60px;">
     <span class="subhead-left">Funding Source Details</span>
@@ -95,14 +97,18 @@
                 </div>
             </td>
         </tr>
-        <tr>
-            <th class="infoline">
-                <div align="right"><kul:htmlAttributeLabel attributeEntry="${fundingSourceAttributes.cfdaNumber}"  skipHelpUrl="true" /></div>
-            </th>
-            <td>
-                <c:out value="${subAwardFundingSource.activeAward.cfdaNumber}" />
-            </td>
-        </tr>
+
+        <c:forEach var="awardCfda" items="${subAwardFundingSource.activeAward.awardCfdas}" varStatus="status">
+            <tr>
+                <th class="infoline">
+                    <div align="right"><kul:htmlAttributeLabel attributeEntry="${awardCfdaAttributes.cfdaNumber}" skipHelpUrl="true" /></div>
+                </th>
+                <td>
+                    <c:out value="${awardCfda.cfdaNumber}" />
+                </td>
+            </tr>
+        </c:forEach>
+
         <tr>
             <th class="infoline">
                 <div align="right">Activity Type:</div>

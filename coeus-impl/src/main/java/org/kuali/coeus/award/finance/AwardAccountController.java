@@ -9,6 +9,7 @@ package org.kuali.coeus.award.finance;
 
 import com.codiform.moo.curry.Translate;
 
+import org.kuali.coeus.award.api.AwardApiService;
 import org.kuali.coeus.award.dto.AwardDto;
 import org.kuali.coeus.award.finance.dao.AccountDao;
 import org.kuali.coeus.common.api.document.service.CommonApiService;
@@ -35,7 +36,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -64,6 +64,10 @@ public class AwardAccountController extends RestController {
     private CommonApiService commonApiService;
 
     @Autowired
+    @Qualifier("awardApiService")
+    private AwardApiService awardApiService;
+
+    @Autowired
     @Qualifier("permissionService")
     private PermissionService permissionService;
 
@@ -86,7 +90,7 @@ public class AwardAccountController extends RestController {
     @RequestMapping(method=RequestMethod.PUT, value="v1/accounts/{accountNumber}", consumes = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseStatus(value = HttpStatus.OK)
     public
-    void updateAccount(@Valid @RequestBody AccountDto account, @PathVariable String accountNumber) throws Exception {
+    void updateAccount(@Valid @RequestBody AccountDto account, @PathVariable String accountNumber) {
         assertUserHasAccountWriteAccess();
         AwardAccount currentAccount = accountDao.getAccount(accountNumber);
         if(Objects.isNull(currentAccount)) {
@@ -106,7 +110,7 @@ public class AwardAccountController extends RestController {
 
     @RequestMapping(method=RequestMethod.GET, value="v1/accounts/{accountNumber}")
     public @ResponseBody
-    AccountResults getAccount(@PathVariable String accountNumber) throws Exception {
+    AccountResults getAccount(@PathVariable String accountNumber) {
         assertUserHasAccountReadAccess();
         AwardAccount account = accountDao.getAccount(accountNumber);
         ArrayList<AwardAccount> accounts = new ArrayList<>();
@@ -125,14 +129,14 @@ public class AwardAccountController extends RestController {
         assertUserHasPostReadAccess();
         List<AwardPosts> awardPostsList = getAccountDao().getActiveAwardPosts(accountNumber);
         return awardPostsList.stream()
-                .map(awardPost -> translateAwardPosts(awardPost))
+                .map(this::translateAwardPosts)
                 .collect(Collectors.toList());
     }
 
     protected AwardPostsDto translateAwardPosts(AwardPosts awardPosts) {
         AwardPostsDto awardPostsDto = commonApiService.convertObject(awardPosts, AwardPostsDto.class);
         Award award = awardDao.getAward(awardPosts.getAwardId());
-        AwardDto awardDto = commonApiService.convertAwardToDto(award);
+        AwardDto awardDto = awardApiService.convertAwardToDto(award);
         awardPostsDto.setAwardDto(awardDto);
         return awardPostsDto;
     }
@@ -152,8 +156,8 @@ public class AwardAccountController extends RestController {
         return commonApiService.convertObject(awardPost, AwardPostsDto.class);
     }
 
-    SearchResults transformSearchResults(List<AwardAccount> accounts) {
-        SearchResults result = new SearchResults();
+    SearchResults<AwardAccount> transformSearchResults(List<AwardAccount> accounts) {
+        SearchResults<AwardAccount> result = new SearchResults<>();
         result.setResults(accounts);
         result.setTotalResults(accounts.size());
         return result;
@@ -208,7 +212,7 @@ public class AwardAccountController extends RestController {
         }
     }
 
-    protected void sendErrorResponse(String msg) throws IOException {
+    protected void sendErrorResponse(String msg) {
         throw new ResourceNotFoundException(msg);
     }
 
@@ -220,4 +224,59 @@ public class AwardAccountController extends RestController {
         this.accountDao = accountDao;
     }
 
+    public DataObjectService getDataObjectService() {
+        return dataObjectService;
+    }
+
+    public void setDataObjectService(DataObjectService dataObjectService) {
+        this.dataObjectService = dataObjectService;
+    }
+
+    public AwardDao getAwardDao() {
+        return awardDao;
+    }
+
+    public void setAwardDao(AwardDao awardDao) {
+        this.awardDao = awardDao;
+    }
+
+    public CommonApiService getCommonApiService() {
+        return commonApiService;
+    }
+
+    public void setCommonApiService(CommonApiService commonApiService) {
+        this.commonApiService = commonApiService;
+    }
+
+    public AwardApiService getAwardApiService() {
+        return awardApiService;
+    }
+
+    public void setAwardApiService(AwardApiService awardApiService) {
+        this.awardApiService = awardApiService;
+    }
+
+    public PermissionService getPermissionService() {
+        return permissionService;
+    }
+
+    public void setPermissionService(PermissionService permissionService) {
+        this.permissionService = permissionService;
+    }
+
+    public GlobalVariableService getGlobalVariableService() {
+        return globalVariableService;
+    }
+
+    public void setGlobalVariableService(GlobalVariableService globalVariableService) {
+        this.globalVariableService = globalVariableService;
+    }
+
+    public ParameterService getParameterService() {
+        return parameterService;
+    }
+
+    public void setParameterService(ParameterService parameterService) {
+        this.parameterService = parameterService;
+    }
 }

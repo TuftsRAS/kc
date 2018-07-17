@@ -68,7 +68,7 @@ public class UnitHierarchyRoleTypeServiceImpl extends RoleTypeServiceBase {
     
     @Override
     public List<RemotableAttributeError> validateAttributes(String kimTypeId, Map<String, String> attributes) { 
-        List<RemotableAttributeError> validationErrors = new ArrayList<RemotableAttributeError>();
+        List<RemotableAttributeError> validationErrors = new ArrayList<>();
         if(roleQualifiedByUnitHierarchy(attributes) && attributes.containsKey(KcKimAttributes.UNIT_NUMBER)) {
             validationErrors = super.validateAttributes(kimTypeId, attributes);
         }
@@ -111,7 +111,8 @@ public class UnitHierarchyRoleTypeServiceImpl extends RoleTypeServiceBase {
     }
     
     protected boolean performWildCardMatching(Map<String,String> qualification, Map<String,String> roleQualifier) {
-        if(qualification.get(KcKimAttributes.UNIT_NUMBER).equalsIgnoreCase(UNIT_NUMBER_WILDCARD)) {
+        final String unitNumber = qualification.get(KcKimAttributes.UNIT_NUMBER);
+        if (UNIT_NUMBER_WILDCARD.equalsIgnoreCase(unitNumber)) {
             return true;
         }
         //If necessary, we can include logic for other pattern matching later.
@@ -121,7 +122,7 @@ public class UnitHierarchyRoleTypeServiceImpl extends RoleTypeServiceBase {
     
     @Override
     public List<String> getUniqueAttributes(String kimTypeId){
-        return new ArrayList<String>();
+        return new ArrayList<>();
     }    
     
     @Override
@@ -130,7 +131,7 @@ public class UnitHierarchyRoleTypeServiceImpl extends RoleTypeServiceBase {
             throw new RiceIllegalArgumentException("kimTypeId was null or blank");
         }
 
-        List<KimAttributeField> attributeList = new ArrayList<KimAttributeField>(super.getAttributeDefinitions(kimTypeId));
+        List<KimAttributeField> attributeList = new ArrayList<>(super.getAttributeDefinitions(kimTypeId));
 
         for (int i = 0; i < attributeList.size(); i++) {
             final KimAttributeField definition = attributeList.get(i);
@@ -138,7 +139,7 @@ public class UnitHierarchyRoleTypeServiceImpl extends RoleTypeServiceBase {
                 KimAttributeField.Builder b = KimAttributeField.Builder.create(definition);
 
                 String baseUrl = getKualiConfigurationService().getPropertyValueAsString("application.lookup.url");
-                Collection<RemotableAbstractWidget.Builder> widgetsCopy = new ArrayList<RemotableAbstractWidget.Builder>();
+                Collection<RemotableAbstractWidget.Builder> widgetsCopy = new ArrayList<>();
                 for (RemotableAbstractWidget.Builder widget : b.getAttributeField().getWidgets()) {
                     if(widget instanceof RemotableQuickFinder.Builder) {
                         RemotableQuickFinder.Builder orig = (RemotableQuickFinder.Builder) widget;

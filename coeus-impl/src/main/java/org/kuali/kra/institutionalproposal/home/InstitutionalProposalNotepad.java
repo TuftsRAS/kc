@@ -9,7 +9,6 @@ package org.kuali.kra.institutionalproposal.home;
 
 import org.apache.commons.lang3.StringUtils;
 import org.kuali.coeus.common.framework.version.sequence.associate.SequenceAssociate;
-import org.kuali.coeus.common.framework.version.sequence.owner.SequenceOwner;
 import org.kuali.coeus.sys.framework.gv.GlobalVariableService;
 import org.kuali.coeus.sys.framework.service.KcServiceLocator;
 import org.kuali.kra.institutionalproposal.InstitutionalProposalAssociate;
@@ -24,7 +23,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class InstitutionalProposalNotepad extends InstitutionalProposalAssociate implements SequenceAssociate {
+public class InstitutionalProposalNotepad extends InstitutionalProposalAssociate implements SequenceAssociate<InstitutionalProposal> {
 
     private static final long serialVersionUID = 1L;
 
@@ -127,13 +126,13 @@ public class InstitutionalProposalNotepad extends InstitutionalProposalAssociate
     }
 
     @Override
-    public SequenceOwner getSequenceOwner() {
+    public InstitutionalProposal getSequenceOwner() {
         return getInstitutionalProposal();
     }
 
     @Override
-    public void setSequenceOwner(SequenceOwner newlyVersionedOwner) {
-        setInstitutionalProposal((InstitutionalProposal) newlyVersionedOwner);
+    public void setSequenceOwner(InstitutionalProposal newlyVersionedOwner) {
+        setInstitutionalProposal(newlyVersionedOwner);
     }
 
     @Override

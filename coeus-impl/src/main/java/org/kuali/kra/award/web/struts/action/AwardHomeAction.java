@@ -23,17 +23,16 @@ import org.kuali.kra.award.AwardForm;
 import org.kuali.kra.award.document.AwardDocument;
 import org.kuali.kra.award.home.Award;
 import org.kuali.kra.award.home.AwardAmountInfo;
+import org.kuali.kra.award.home.AwardCfda;
 import org.kuali.kra.award.home.keywords.AwardScienceKeyword;
 import org.kuali.kra.award.home.rules.AwardAddCfdaEvent;
 import org.kuali.kra.award.specialreview.AwardSpecialReview;
 import org.kuali.kra.bo.FundingSourceType;
 import org.kuali.kra.infrastructure.Constants;
 import org.kuali.kra.infrastructure.KeyConstants;
-import org.kuali.rice.coreservice.framework.parameter.ParameterService;
 import org.kuali.rice.kew.api.exception.WorkflowException;
 import org.kuali.rice.kns.question.ConfirmationQuestion;
 import org.kuali.rice.kns.util.KNSGlobalVariables;
-import org.kuali.rice.krad.service.BusinessObjectService;
 import org.kuali.rice.krad.util.GlobalVariables;
 import org.kuali.rice.krad.util.KRADConstants;
 
@@ -54,7 +53,6 @@ public class AwardHomeAction extends AwardAction {
     private static final String AWARD_VERSION_EDITPENDING_PROMPT_KEY = "message.award.version.editpending.prompt";
 
     private ApprovedSubawardActionHelper approvedSubawardActionHelper;
-    private ParameterService parameterService;
     private GlobalVariableService globalVariableService;
 
     private static final String AWARD_LIST = "awardList";
@@ -93,6 +91,39 @@ public class AwardHomeAction extends AwardAction {
         
         return mapping.findForward(Constants.MAPPING_BASIC);
      
+    }
+
+    public ActionForward addAwardCfda(ActionMapping mapping, ActionForm form,
+                                             HttpServletRequest request,
+                                             HttpServletResponse response) throws Exception {
+
+        final AwardForm awardForm = (AwardForm) form;
+        final AwardDocument awardDocument = awardForm.getAwardDocument();
+        final AwardCfda newAwardCfda = awardForm.getNewAwardCfda();
+        final Award award = awardDocument.getAward();
+
+        newAwardCfda.setAwardId(award.getAwardId());
+        newAwardCfda.setAward(award);
+        newAwardCfda.setAwardNumber(award.getAwardNumber());
+        newAwardCfda.setSequenceNumber(award.getSequenceNumber());
+        award.getAwardCfdas().add(newAwardCfda);
+
+        awardForm.setNewAwardCfda(new AwardCfda());
+
+        getKualiRuleService().applyRules(new AwardAddCfdaEvent(awardDocument));
+
+        return mapping.findForward(Constants.MAPPING_BASIC);
+    }
+
+    public ActionForward deleteAwardCfda(ActionMapping mapping, ActionForm form,
+                                                HttpServletRequest request,
+                                                HttpServletResponse response) throws Exception {
+        final AwardForm awardForm = (AwardForm) form;
+        final AwardDocument awardDocument = awardForm.getAwardDocument();
+        final int delAwardCfda = getLineToDelete(request);
+        awardDocument.getAward().getAwardCfdas().remove(delAwardCfda);
+
+        return mapping.findForward(Constants.MAPPING_BASIC);
     }
     
     /**
@@ -249,18 +280,6 @@ public class AwardHomeAction extends AwardAction {
         }
     }
     
-    /**
-     * Looks up and returns the ParameterService.
-     * @return the parameter service. 
-     */
-    @Override
-    protected ParameterService getParameterService() {
-        if (this.parameterService == null) {
-            this.parameterService = KcServiceLocator.getService(ParameterService.class);
-        }
-        return this.parameterService;
-    }
-    
     @Override
     public ActionForward close(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
         // The user is prompted to save when the document is closed.  If they say yes, it will save the document but won't call back to the Action.save.
@@ -404,11 +423,6 @@ public class AwardHomeAction extends AwardAction {
     public ActionForward deleteAwardFundingProposal(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
         ((AwardForm) form).getFundingProposalBean().deleteAwardFundingProposal(getLineToDelete(request));
         return mapping.findForward(Constants.MAPPING_BASIC);
-    }
-    
-    @Override
-    protected BusinessObjectService getBusinessObjectService() {
-        return KcServiceLocator.getService(BusinessObjectService.class);
     }
     
     /**

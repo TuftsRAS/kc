@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright © 2005-2018 Kuali, Inc. - All Rights Reserved
+  ~ You may use and modify this code under the terms of the Kuali, Inc.
+  ~ Pre-Release License Agreement. You may not distribute it.
+  ~
+  ~ You should have received a copy of the Kuali, Inc. Pre-Release License
+  ~ Agreement with this file. If not, please write to license@kuali.co.
+  -->
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p" xsi:schemaLocation="http://www.springframework.org/schema/beans         http://www.springframework.org/schema/beans/spring-beans.xsd">
+  <bean id="AwardCfda" parent="AwardCfda-parentBean" />
+  <bean id="AwardCfda-parentBean" abstract="true" parent="BusinessObjectEntry">
+    <property name="businessObjectClass" value="org.kuali.kra.award.home.AwardCfda" />
+		<property name="objectLabel" value="Award CFDA" />
+    <property name="titleAttribute" value="cfdaNumber" />
+    <property name="attributes" >
+      <list>
+        <ref bean="AwardCfda-awardCfdaId" />
+        <ref bean="AwardCfda-awardNumber" />
+        <ref bean="AwardCfda-awardId" />
+        <ref bean="AwardCfda-sequenceNumber" />
+        <ref bean="AwardCfda-cfdaNumber" />
+        <ref bean="AwardCfda-cfdaDescription" />
+      </list>
+    </property>
+  </bean>
+
+<!-- Attribute Definitions -->
+
+
+  <bean id="AwardCfda-awardCfdaId" parent="AwardCfda-awardCfdaId-parentBean" />
+
+  <bean id="AwardCfda-awardCfdaId-parentBean" abstract="true" parent="AttributeDefinition">
+    <property name="name" value="awardCfdaId" />
+    <property name="forceUppercase" value="false" />
+    <property name="label" value="Award CFDA ID" />
+    <property name="shortLabel" value="Award CFDA ID" />
+    <property name="maxLength" value="8" />
+    <property name="validationPattern" >
+      <bean parent="NumericValidationPattern" />
+    </property>
+    <property name="validCharactersConstraint">
+      <bean parent="NumericPatternConstraint"/>
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition" p:size="8"/>
+    </property>
+    <property name="controlField">
+      <bean p:size="8" parent="Uif-TextControl"/>
+    </property>
+    <property name="summary" value="Award CFDA ID" />
+    <property name="description" value="Award CFDA ID" />
+  </bean>
+  
+  <bean id="AwardCfda-awardNumber" parent="AwardCfda-awardNumber-parentBean" />
+  <bean id="AwardCfda-awardNumber-parentBean" abstract="true" parent="Award-awardNumber"/>
+  <bean id="AwardCfda-awardId" parent="AwardCfda-awardId-parentBean" />
+  <bean id="AwardCfda-awardId-parentBean" abstract="true" parent="Award-awardId"/>
+  <bean id="AwardCfda-sequenceNumber" parent="AwardCfda-sequenceNumber-parentBean" />
+  <bean id="AwardCfda-sequenceNumber-parentBean" abstract="true" parent="AttributeDefinition">
+    <property name="name" value="sequenceNumber" />
+    <property name="forceUppercase" value="false" />
+    <property name="label" value="Sequence Number" />
+    <property name="shortLabel" value="Sequence Number" />
+    <property name="maxLength" value="4" />
+    <property name="validationPattern" >
+      <bean parent="NumericValidationPattern" />
+    </property>
+    <property name="validCharactersConstraint">
+      <bean parent="NumericPatternConstraint"/>
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition" p:size="4"/>
+    </property>
+    <property name="controlField">
+      <bean p:size="4" parent="Uif-TextControl"/>
+    </property>
+    <property name="summary" value="Sequence Number" />
+    <property name="description" value="Sequence Number" />
+  </bean>
+
+  <bean id="AwardCfda-cfdaNumber" parent="AwardCfda-cfdaNumber-parentBean"/>
+  <bean id="AwardCfda-cfdaNumber-parentBean" abstract="true" parent="CFDA-cfdaNumber"/>
+
+  <bean id="AwardCfda-cfdaDescription" parent="AwardCfda-cfdaDescription-parentBean"/>
+  <bean id="AwardCfda-cfdaDescription-parentBean" abstract="true" parent="CFDA-cfdaProgramTitleName">
+    <property name="name" value="cfdaDescription" />
+  </bean>
+</beans>

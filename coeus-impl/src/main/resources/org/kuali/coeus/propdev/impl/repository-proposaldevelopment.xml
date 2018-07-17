@@ -27,7 +27,6 @@
         <field-descriptor name="deadlineTime" column="DEADLINE_TIME" jdbc-type="VARCHAR" />
         <field-descriptor name="noticeOfOpportunityCode" column="NOTICE_OF_OPPORTUNITY_CODE" jdbc-type="VARCHAR" />
         <field-descriptor name="deadlineType" column="DEADLINE_TYPE" jdbc-type="VARCHAR" />
-        <field-descriptor name="cfdaNumber" column="CFDA_NUMBER" jdbc-type="VARCHAR" />
         <field-descriptor name="programAnnouncementNumber" column="PROGRAM_ANNOUNCEMENT_NUMBER" jdbc-type="VARCHAR" />
         <field-descriptor name="primeSponsorCode" column="PRIME_SPONSOR_CODE" jdbc-type="VARCHAR" />
         <field-descriptor name="sponsorProposalNumber" column="SPONSOR_PROPOSAL_NUMBER" jdbc-type="VARCHAR" />
@@ -172,6 +171,10 @@
             <inverse-foreignkey field-ref="proposalNumber"/>
         </collection-descriptor>
 
+        <collection-descriptor name="proposalCfdas" proxy="true" element-class-ref="org.kuali.coeus.propdev.impl.sponsor.ProposalCfda" collection-class="org.apache.ojb.broker.util.collections.ManageableArrayList" auto-retrieve="true" auto-update="object" auto-delete="object">
+            <inverse-foreignkey field-ref="proposalNumber"/>
+        </collection-descriptor>
+
 	<collection-descriptor name="budgetChangedDataList"
 		proxy="true" element-class-ref="org.kuali.coeus.propdev.impl.budget.editable.BudgetChangedData"
 		collection-class="org.apache.ojb.broker.util.collections.ManageableArrayList"
@@ -205,6 +208,17 @@
                                collection-class="org.apache.ojb.broker.util.collections.ManageableArrayList" auto-retrieve="true" auto-update="object" auto-delete="object">
             <inverse-foreignkey field-ref="proposalNumber"/>
         </collection-descriptor>
+    </class-descriptor>
+
+    <class-descriptor class="org.kuali.coeus.propdev.impl.sponsor.ProposalCfda" table="EPS_PROP_CFDA">
+        <field-descriptor name="id" column="EPS_PROP_CFDA_ID" jdbc-type="BIGINT" primarykey="true" sequence-name="SEQ_EPS_PROP_CFDA_ID" autoincrement="true"/>
+        <field-descriptor name="proposalNumber" column="PROPOSAL_NUMBER" jdbc-type="VARCHAR" primarykey="true"/>
+        <field-descriptor name="cfdaNumber" column="CFDA_NUMBER" jdbc-type="VARCHAR"/>
+        <field-descriptor name="cfdaDescription" column="CFDA_DESCRIPTION" jdbc-type="VARCHAR"/>
+        <field-descriptor name="updateTimestamp" column="UPDATE_TIMESTAMP" jdbc-type="TIMESTAMP"/>
+        <field-descriptor name="updateUser" column="UPDATE_USER" jdbc-type="VARCHAR"/>
+        <field-descriptor name="objectId" column="OBJ_ID" jdbc-type="VARCHAR" />
+        <field-descriptor name="versionNumber" column="VER_NBR" jdbc-type="BIGINT" locking="false" />
     </class-descriptor>
     
     <class-descriptor class="org.kuali.coeus.propdev.impl.abstrct.ProposalAbstract" table="EPS_PROP_ABSTRACT">

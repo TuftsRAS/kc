@@ -8,7 +8,6 @@
 
 package org.kuali.coeus.propdev.impl.sponsor;
 
-import org.apache.commons.lang3.StringUtils;
 import org.kuali.coeus.propdev.impl.core.ProposalDevelopmentDocument;
 import org.kuali.coeus.sys.framework.gv.GlobalVariableService;
 import org.kuali.coeus.sys.framework.service.KcServiceLocator;
@@ -24,12 +23,16 @@ public class AddProposalSponsorAndProgramInformationRuleImpl implements AddPropo
     @Override
     public boolean processAddProposalSponsorAndProgramInformationRules(ProposalDevelopmentDocument proposalDevelopmentDocument) {
         boolean valid = Boolean.TRUE;
-        if (StringUtils.isNotBlank(proposalDevelopmentDocument.getDevelopmentProposal().getCfdaNumber())
-                && !(proposalDevelopmentDocument.getDevelopmentProposal().getCfdaNumber().matches(Constants.CFDA_REGEX))
-                && getGlobalVariableService().getMessageMap().getMessages(Constants.DOCUMENT_DEVELOPMENT_PROPOSAL_CFDA_NUMBER) == null) {
-            getErrorReporter().reportWarning(Constants.DEVELOPMENT_PROPOSAL_CFDA_NUMBER, KeyConstants.CFDA_INVALID,
-                    proposalDevelopmentDocument.getDevelopmentProposal().getCfdaNumber());
+
+        for (int i = 0; i < proposalDevelopmentDocument.getDevelopmentProposal().getProposalCfdas().size(); i ++) {
+            final String cfdaNumber = proposalDevelopmentDocument.getDevelopmentProposal().getProposalCfdas().get(i).getCfdaNumber();
+
+            if (!(cfdaNumber.matches(Constants.CFDA_REGEX))
+                    && getGlobalVariableService().getMessageMap().getMessages(String.format(Constants.DOCUMENT_DEVELOPMENT_PROPOSAL_CFDA_NUMBER, i)) == null) {
+                getErrorReporter().reportWarning(Constants.DEVELOPMENT_PROPOSAL_CFDA_NUMBER, KeyConstants.CFDA_INVALID, cfdaNumber);
+            }
         }
+
         return valid;
     }
 

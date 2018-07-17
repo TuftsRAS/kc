@@ -15,6 +15,7 @@ import org.kuali.coeus.sys.framework.model.KcPersistableBusinessObjectBase;
 import org.kuali.kra.award.awardhierarchy.AwardHierarchy;
 import org.kuali.kra.award.awardhierarchy.AwardHierarchyService;
 import org.kuali.kra.award.home.Award;
+import org.kuali.kra.award.home.AwardCfda;
 import org.kuali.kra.award.version.service.AwardVersionService;
 import org.kuali.kra.infrastructure.Constants;
 import org.kuali.coeus.common.framework.print.AttachmentDataSource;
@@ -30,6 +31,7 @@ import org.kuali.rice.coreservice.framework.parameter.ParameterService;
 import org.kuali.rice.krad.service.BusinessObjectService;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static org.kuali.coeus.sys.framework.util.CollectionUtils.entriesToMap;
 import static org.kuali.coeus.sys.framework.util.CollectionUtils.entry;
@@ -179,7 +181,7 @@ public class SubAwardPrintingServiceImpl implements SubAwardPrintingService {
                     if (award.getSponsor() != null) {
                         reportParameters.put("sponsorName", award.getSponsor().getSponsorName());
                     }
-                    reportParameters.put("cfdaNumber",award.getCfdaNumber());
+                    reportParameters.put("cfdaNumber",award.getAwardCfdas().stream().map(AwardCfda::getCfdaNumber).collect(Collectors.joining(",")));
                     reportParameters.put("awardID",award.getAwardId());
 
                     if (getParameterService().getParameterValueAsBoolean(Constants.MODULE_NAMESPACE_SUBAWARD, Constants.KC_ALL_PARAMETER_DETAIL_TYPE_CODE, FDP_FROM_PARENT_AWARD)) {

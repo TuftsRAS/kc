@@ -39,10 +39,12 @@ import org.kuali.coeus.propdev.impl.person.attachment.ProposalPersonBiography;
 import org.kuali.coeus.propdev.impl.person.attachment.ProposalPersonBiographyService;
 import org.kuali.coeus.propdev.impl.questionnaire.ProposalDevelopmentQuestionnaireHelper;
 import org.kuali.coeus.propdev.impl.s2s.S2sOpportunity;
+import org.kuali.coeus.propdev.impl.s2s.S2sOpportunityCfda;
 import org.kuali.coeus.propdev.impl.specialreview.ProposalSpecialReview;
 import org.kuali.coeus.propdev.impl.specialreview.ProposalSpecialReviewAttachment;
 import org.kuali.coeus.propdev.impl.specialreview.ProposalSpecialReviewExemption;
 import org.kuali.coeus.propdev.impl.sponsor.AddProposalSponsorAndProgramInformationEvent;
+import org.kuali.coeus.propdev.impl.sponsor.ProposalCfda;
 import org.kuali.coeus.sys.framework.controller.KcCommonControllerService;
 import org.kuali.coeus.sys.framework.gv.GlobalVariableService;
 import org.kuali.coeus.sys.framework.service.KcServiceLocator;
@@ -278,14 +280,16 @@ public abstract class ProposalDevelopmentControllerBase {
                      .map(S2sFormConfigurationContract::getFormName)
                      .collect(Collectors.toSet());
 
-             s2sOpportunity.getS2sOppForms().stream()
-                     .filter(oppForm -> oppForm.getAvailable() && (oppForm.getUserAttachedForm() == null || !oppForm.getUserAttachedForm()))
-                     .filter(oppForm -> disabledForms.contains(oppForm.getFormName()))
-                     .forEach(oppForm -> oppForm.setAvailable(false));
+             if (s2sOpportunity.getS2sOppForms() != null) {
+                 s2sOpportunity.getS2sOppForms().stream()
+                         .filter(oppForm -> oppForm.getAvailable() && (oppForm.getUserAttachedForm() == null || !oppForm.getUserAttachedForm()))
+                         .filter(oppForm -> disabledForms.contains(oppForm.getFormName()))
+                         .forEach(oppForm -> oppForm.setAvailable(false));
 
-             s2sOpportunity.getS2sOppForms().stream()
-                     .filter(oppForm -> !oppForm.getAvailable() && oppForm.getInclude())
-                     .forEach(oppForm -> oppForm.setInclude(false));
+                 s2sOpportunity.getS2sOppForms().stream()
+                         .filter(oppForm -> !oppForm.getAvailable() && oppForm.getInclude())
+                         .forEach(oppForm -> oppForm.setInclude(false));
+             }
          }
 
          if (StringUtils.equalsIgnoreCase(form.getPageId(), Constants.PROP_DEV_PERMISSIONS_PAGE)) {
@@ -330,7 +334,11 @@ public abstract class ProposalDevelopmentControllerBase {
 
          saveAnswerHeaderIfNotLocked(form, proposalDevelopmentDocument);
 
-         getTransactionalDocumentControllerService().save(form);
+         if (form.getDevelopmentProposal().getProposalNumber() == null) {
+             createFromOpportunitySave(form);
+         } else {
+             getTransactionalDocumentControllerService().save(form);
+         }
 
          if (form.isAuditActivated()){
              getAuditHelper().auditConditionally(form);
@@ -366,7 +374,37 @@ public abstract class ProposalDevelopmentControllerBase {
          return view;
      }
 
-     protected void prepareSpecialReviewAttachmentForSave(ProposalSpecialReview specialReview) {
+    protected void createFromOpportunitySave(ProposalDevelopmentDocumentForm form) {
+        final List<S2sOpportunityCfda> s2sOpportunityCfdas;
+        if (form.getDevelopmentProposal().getS2sOpportunity() != null && form.getDevelopmentProposal().getS2sOpportunity().getS2sOpportunityCfdas() != null) {
+            s2sOpportunityCfdas = form.getDevelopmentProposal().getS2sOpportunity().getS2sOpportunityCfdas();
+            form.getDevelopmentProposal().getS2sOpportunity().setS2sOpportunityCfdas(new ArrayList<>());
+        } else {
+            s2sOpportunityCfdas = new ArrayList<>();
+        }
+
+        final List<ProposalCfda> proposalCfdas;
+        if (form.getDevelopmentProposal().getProposalCfdas() != null) {
+            proposalCfdas = form.getDevelopmentProposal().getProposalCfdas();
+            form.getDevelopmentProposal().setProposalCfdas(new ArrayList<>());
+        } else {
+            proposalCfdas = new ArrayList<>();
+        }
+
+        getTransactionalDocumentControllerService().save(form);
+
+        if (form.getDevelopmentProposal().getS2sOpportunity() != null) {
+            s2sOpportunityCfdas.forEach(cfda -> cfda.setProposalNumber(form.getDevelopmentProposal().getProposalNumber()));
+            form.getDevelopmentProposal().getS2sOpportunity().setS2sOpportunityCfdas(s2sOpportunityCfdas);
+        }
+
+        proposalCfdas.forEach(cfda -> cfda.setProposalNumber(form.getDevelopmentProposal().getProposalNumber()));
+        form.getDevelopmentProposal().setProposalCfdas(proposalCfdas);
+
+        getTransactionalDocumentControllerService().save(form);
+    }
+
+    protected void prepareSpecialReviewAttachmentForSave(ProposalSpecialReview specialReview) {
           ProposalSpecialReviewAttachment specialReviewAttachment = specialReview.getSpecialReviewAttachment();
           if (specialReviewAttachment.getMultipartFile() != null) {
               try {

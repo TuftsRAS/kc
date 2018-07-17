@@ -26,6 +26,8 @@ import org.kuali.rice.krad.util.ObjectUtils;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class AwardInquirable extends KualiInquirableImpl {
     
@@ -33,10 +35,10 @@ public class AwardInquirable extends KualiInquirableImpl {
 
     @Override
     public List<Section> getSections(BusinessObject bo) {
-        List<Section> sections = new ArrayList<Section>();
+        List<Section> sections = new ArrayList<>();
         Section section = new Section();
         
-        section.setRows(new ArrayList<Row>());
+        section.setRows(new ArrayList<>());
         section.setDefaultOpen(true);
         section.setNumberOfColumns(2);
         
@@ -76,7 +78,7 @@ public class AwardInquirable extends KualiInquirableImpl {
         section.setSectionTitle(sectionTitle);
 
         //Adding the rows to the sections
-        section.setRows(new ArrayList<Row>());
+        section.setRows(new ArrayList<>());
         Row row1 = new Row();
         addField(awardNode.getProjectStartDate() + "", row1, "projectStartDate", "Project Start Date");
         addField(awardNode.getCurrentFundEffectiveDate() + "", row1, "obligationStartDate", "Obligation Start Date");
@@ -107,9 +109,15 @@ public class AwardInquirable extends KualiInquirableImpl {
         addField(award.getCloseoutDate() + "", row6, "closeoutDate", "Closeout Date");
         section.getRows().add(row6);
 
-        Row row7 = new Row();
-        addField(award.getCfdaNumber(), row7, "cfdaNumber", "CFDA Number");
-        section.getRows().add(row7);
+        section.getRows().addAll(IntStream.range(0, award.getAwardCfdas().size())
+                .mapToObj(i -> {
+                    final Row row = new Row();
+                    addField(award.getAwardCfdas().get(i).getCfdaNumber(), row, String.format("awardCfdas[%s].cfdaNumber", i), "CFDA Number " + i + 1);
+                    addField(award.getAwardCfdas().get(i).getCfdaNumber(), row, String.format("awardCfdas[%s].cfdaDescription", i), "CFDA Program Title Name " + i + 1);
+
+                    return row;
+                }).collect(Collectors.toList()));
+
         sections.add(section);
         return sections;
     }

@@ -50,6 +50,9 @@ public class AwardControllerBase extends RestController {
     @Qualifier("commonApiService")
     protected CommonApiService commonApiService;
     @Autowired
+    @Qualifier("awardApiService")
+    private AwardApiService awardApiService;
+    @Autowired
     @Qualifier("businessObjectService")
     protected BusinessObjectService businessObjectService;
     @Autowired
@@ -123,7 +126,7 @@ public class AwardControllerBase extends RestController {
         List<AwardCustomDataDto> awardCustomDataList = awardDto.getAwardCustomDataList();
         award.setAwardCustomDataList(new ArrayList<>());
         if (awardDto.getAwardCustomDataList() != null) {
-            awardCustomDataList.stream().forEach(customDataDto -> {
+            awardCustomDataList.forEach(customDataDto -> {
                 String customAttributeId = customDataDto.getCustomAttributeId().toString();
                 String customDataValue = customDataDto.getValue();
                 Map<String, CustomAttributeDocument> customAttributeDocuments = awardDocument.getCustomAttributeDocuments();
@@ -256,5 +259,69 @@ public class AwardControllerBase extends RestController {
                 throw new UnauthorizedAccessException();
             }
         }
+    }
+
+    public CommonApiService getCommonApiService() {
+        return commonApiService;
+    }
+
+    public void setCommonApiService(CommonApiService commonApiService) {
+        this.commonApiService = commonApiService;
+    }
+
+    public AwardApiService getAwardApiService() {
+        return awardApiService;
+    }
+
+    public void setAwardApiService(AwardApiService awardApiService) {
+        this.awardApiService = awardApiService;
+    }
+
+    public BusinessObjectService getBusinessObjectService() {
+        return businessObjectService;
+    }
+
+    public void setBusinessObjectService(BusinessObjectService businessObjectService) {
+        this.businessObjectService = businessObjectService;
+    }
+
+    public GlobalVariableService getGlobalVariableService() {
+        return globalVariableService;
+    }
+
+    public void setGlobalVariableService(GlobalVariableService globalVariableService) {
+        this.globalVariableService = globalVariableService;
+    }
+
+    public IdentityService getIdentityService() {
+        return identityService;
+    }
+
+    public void setIdentityService(IdentityService identityService) {
+        this.identityService = identityService;
+    }
+
+    public RolodexService getRolodexService() {
+        return rolodexService;
+    }
+
+    public void setRolodexService(RolodexService rolodexService) {
+        this.rolodexService = rolodexService;
+    }
+
+    public PermissionService getPermissionService() {
+        return permissionService;
+    }
+
+    public void setPermissionService(PermissionService permissionService) {
+        this.permissionService = permissionService;
+    }
+
+    public ParameterService getParameterService() {
+        return parameterService;
+    }
+
+    public void setParameterService(ParameterService parameterService) {
+        this.parameterService = parameterService;
     }
 }

@@ -15,13 +15,17 @@ import org.kuali.coeus.common.framework.sponsor.Sponsor;
 import org.kuali.coeus.common.framework.type.ActivityType;
 import org.kuali.kra.award.customdata.AwardCustomData;
 import org.kuali.kra.award.home.Award;
+import org.kuali.kra.award.home.AwardCfda;
 import org.kuali.kra.award.home.AwardService;
 import org.kuali.kra.award.home.AwardServiceImpl;
 import org.kuali.kra.bo.NsfCode;
 import org.kuali.kra.institutionalproposal.home.InstitutionalProposal;
+import org.kuali.kra.institutionalproposal.home.InstitutionalProposalCfda;
 import org.kuali.kra.test.infrastructure.KcIntegrationTestBase;
 
 import java.util.*;
+import java.util.stream.Collectors;
+
 import static org.junit.Assert.*;
 public class AwardFundingProposalBeanTest extends KcIntegrationTestBase {
     private AwardFundingProposalBean bean;
@@ -48,7 +52,15 @@ public class AwardFundingProposalBeanTest extends KcIntegrationTestBase {
         instProp.setProposalNumber(InstitutionalProposal.PROPOSAL_NUMBER_TEST_DEFAULT_STRING);
         instProp.setTitle("Test Title");
         instProp.setActivityTypeCode("RES");
-        instProp.setCfdaNumber("11.111a");
+
+        InstitutionalProposalCfda proposalCfda = new InstitutionalProposalCfda();
+        proposalCfda.setCfdaNumber("11.111a");
+        proposalCfda.setProposalNumber(instProp.getProposalNumber());
+        proposalCfda.setProposalId(instProp.getProposalId());
+        proposalCfda.setSequenceNumber(instProp.getSequenceNumber());
+
+        instProp.getProposalCfdas().add(proposalCfda);
+
         instProp.setNsfSequenceNumber(2);
         instProp.setActivityType(new ActivityType());
         instProp.setSponsor(testSponsor);
@@ -111,7 +123,7 @@ public class AwardFundingProposalBeanTest extends KcIntegrationTestBase {
         assertEquals(instProp.getActivityTypeCode(), award3.getActivityTypeCode());
         assertEquals(instProp.getSponsorCode(), award3.getSponsorCode());
         assertEquals(instProp.getPrimeSponsorCode(), award3.getPrimeSponsorCode());
-        assertEquals(instProp.getCfdaNumber(), award3.getCfdaNumber());
+        assertEquals(instProp.getProposalCfdas().stream().map(InstitutionalProposalCfda::getCfdaNumber).collect(Collectors.toList()), award3.getAwardCfdas().stream().map(AwardCfda::getCfdaNumber).collect(Collectors.toList()));
         assertEquals(instProp.getNsfSequenceNumber(), award3.getNsfSequenceNumber());
     }
     
@@ -125,7 +137,7 @@ public class AwardFundingProposalBeanTest extends KcIntegrationTestBase {
         assertNotEquals(instProp.getActivityTypeCode(), award3.getActivityTypeCode());
         assertNotEquals(instProp.getSponsorCode(), award3.getSponsorCode());
         assertNotEquals(instProp.getPrimeSponsorCode(), award3.getPrimeSponsorCode());
-        assertNotEquals(instProp.getCfdaNumber(), award3.getCfdaNumber());
+        assertNotEquals(instProp.getProposalCfdas().stream().map(InstitutionalProposalCfda::getCfdaNumber).collect(Collectors.toList()), award3.getAwardCfdas().stream().map(AwardCfda::getCfdaNumber).collect(Collectors.toList()));
         assertNotEquals(instProp.getNsfSequenceNumber(), award3.getNsfSequenceNumber());
     }
     

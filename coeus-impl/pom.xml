@@ -60,7 +60,7 @@
                                 <wsdlOption>
                                     <noAddressBinding>true</noAddressBinding>
                                     <wsdl>${gg.wsdl.location}/ApplicantWebServices-V2_0.wsdl</wsdl>
-                                    <catalog>${gg.wsdl.location}/schemas/gg-catalog.xml</catalog>
+                                    <catalog>${gg.wsdl.location}/gg-catalog.xml</catalog>
                                     <extraargs>
                                         <extraarg>-verbose</extraarg>
                                         <extraarg>-validate</extraarg>
@@ -82,7 +82,29 @@
                                 <wsdlOption>
                                     <noAddressBinding>true</noAddressBinding>
                                     <wsdl>${gg.wsdl.location}/SubmissionValidationService.wsdl</wsdl>
-                                    <catalog>${gg.wsdl.location}/schemas/gg-catalog.xml</catalog>
+                                    <catalog>${gg.wsdl.location}/gg-catalog.xml</catalog>
+                                    <extraargs>
+                                        <extraarg>-verbose</extraarg>
+                                        <extraarg>-validate</extraarg>
+                                    </extraargs>
+                                </wsdlOption>
+                            </wsdlOptions>
+                        </configuration>
+                        <goals>
+                            <goal>wsdl2java</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>generate-nih-submission-agency-data-service</id>
+                        <phase>generate-sources</phase>
+                        <inherited>false</inherited>
+                        <configuration>
+                            <disableDirectoryScan>true</disableDirectoryScan>
+                            <wsdlOptions>
+                                <wsdlOption>
+                                    <noAddressBinding>true</noAddressBinding>
+                                    <wsdl>${gg.wsdl.location}/SubmissionAgencyDataService.wsdl</wsdl>
+                                    <catalog>${gg.wsdl.location}/gg-catalog.xml</catalog>
                                     <extraargs>
                                         <extraarg>-verbose</extraarg>
                                         <extraarg>-validate</extraarg>

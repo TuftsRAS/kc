@@ -22,7 +22,10 @@
     <property name="attributes" >
       <list>
         <ref bean="S2sOpportunity-proposalNumber" />
+        <!--cfdaNumber deprecated. Included here for REST api compatibility.  Do not use. -->
         <ref bean="S2sOpportunity-cfdaNumber" />
+        <!--cfdaDescription deprecated. Included here for REST api compatibility.  Do not use. -->
+        <ref bean="S2sOpportunity-cfdaDescription" />
         <ref bean="S2sOpportunity-closingDate" />
         <ref bean="S2sOpportunity-competetionId" />
         <ref bean="S2sOpportunity-instructionUrl" />
@@ -37,6 +40,7 @@
         <ref bean="S2sOpportunity-providerCode" />
         <ref bean="S2sOpportunity-multiProject" />
         <ref bean="S2sOpportunity-versionNumber" />
+        <ref bean="S2sOpportunity-s2sOpportunityCfdasSerialized" />
       </list>
     </property>
   </bean>
@@ -69,27 +73,11 @@
   </bean>
 
   <bean id="S2sOpportunity-cfdaNumber" parent="S2sOpportunity-cfdaNumber-parentBean"/>
-  <bean id="S2sOpportunity-cfdaNumber-parentBean" abstract="true" parent="AttributeDefinition">
-    <property name="name" value="cfdaNumber" />
-    <property name="forceUppercase" value="false" />
-    <property name="label" value="CFDA Number" />
-    <property name="shortLabel" value="CFDA Number" />
-    <property name="maxLength" value="6" />
-    <property name="validationPattern" >
-      <bean parent="AnyCharacterValidationPattern" />
-    </property>
-    <property name="validCharactersConstraint">
-      <bean parent="AnyCharacterPatternConstraint"/>
-    </property>
-    <property name="required" value="false" />
-    <property name="control" >
-      <bean parent="TextControlDefinition" p:size="20"/>
-    </property>
-    <property name="controlField">
-      <bean p:size="20" parent="Uif-TextControl"/>
-    </property>
-    <property name="summary" value="The CFDA Number for this Proposal." />
-    <property name="description" value="A unique identifier for the sponsor and the funding opportunity announcement.  AKA &quot;Catalogue of Federal Domestic Assistance Number&quot;" />
+  <bean id="S2sOpportunity-cfdaNumber-parentBean" abstract="true" parent="CFDA-cfdaNumber" />
+
+  <bean id="S2sOpportunity-cfdaDescription" parent="S2sOpportunity-cfdaDescription-parentBean"/>
+  <bean id="S2sOpportunity-cfdaDescription-parentBean" abstract="true" parent="CFDA-cfdaProgramTitleName">
+    <property name="name" value="cfdaDescription" />
   </bean>
 
   <bean id="S2sOpportunity-competetionId" parent="S2sOpportunity-competetionId-parentBean"/>
@@ -350,6 +338,13 @@
   
   <bean id="S2sOpportunity-versionNumber" parent="S2sOpportunity-versionNumber-parentBean" />
   <bean id="S2sOpportunity-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber"/>
+
+  <!-- Used to return one-to-many cfda lookup results. -->
+  <bean id="S2sOpportunity-s2sOpportunityCfdasSerialized" parent="S2sOpportunity-s2sOpportunityCfdasSerialized-parentBean"/>
+  <bean id="S2sOpportunity-s2sOpportunityCfdasSerialized-parentBean" abstract="true" parent="AttributeDefinition">
+    <property name="name" value="s2sOpportunityCfdasSerialized" />
+  </bean>
+
 <!-- Business Object Inquiry Definition -->
   <bean id="S2sOpportunity-inquiryDefinition" parent="S2sOpportunity-inquiryDefinition-parentBean" />
   <bean id="S2sOpportunity-InquiryView" parent="S2sOpportunity-InquiryView-parentBean"/>
@@ -363,7 +358,24 @@
           <property name="inquiryFields" >
             <list>
               <bean parent="FieldDefinition" p:attributeName="proposalNumber" p:forceInquiry="true"/>
-              <bean parent="FieldDefinition" p:attributeName="cfdaNumber"/>
+              <bean parent="InquiryCollectionDefinition">
+                <property name="attributeName" value="s2sOpportunityCfdas"/>
+                <property name="businessObjectClass" value="org.kuali.coeus.propdev.impl.s2s.S2sOpportunityCfda"/>
+                <property name="numberOfColumns" value="2"/>
+                <property name="summaryTitle" value="CFDA"/>
+                <property name="summaryFields">
+                  <list>
+                    <bean parent="FieldDefinition" p:attributeName="cfdaNumber"/>
+                    <bean parent="FieldDefinition" p:attributeName="cfdaDescription"/>
+                  </list>
+                </property>
+                <property name="inquiryFields">
+                  <list>
+                    <bean parent="FieldDefinition" p:attributeName="cfdaNumber"/>
+                    <bean parent="FieldDefinition" p:attributeName="cfdaDescription"/>
+                  </list>
+                </property>
+              </bean>
               <bean parent="FieldDefinition" p:attributeName="closingDate"/>
               <bean parent="FieldDefinition" p:attributeName="competetionId"/>
               <bean parent="FieldDefinition" p:attributeName="instructionUrl"/>
@@ -393,7 +405,22 @@
           <property name="items">
             <list>
               <bean p:propertyName="proposalNumber" parent="Uif-DataField"/>
-              <bean p:propertyName="cfdaNumber" parent="Uif-DataField"/>
+              <bean parent="Uif-StackedCollectionSection">
+                <property name="headerText" value="CFDA"/>
+                <property name="layoutManager.lineGroupPrototype.layoutManager.numberOfColumns" value="2"/>
+                <property name="propertyName" value="s2sOpportunityCfdas"/>
+                <property name="collectionObjectClass" value="org.kuali.coeus.propdev.impl.s2s.S2sOpportunityCfda"/>
+                <property name="items">
+                  <list>
+                    <bean p:propertyName="cfdaNumber" parent="Uif-DataField"/>
+                  </list>
+                </property>
+                <property name="layoutManager.summaryFields">
+                  <list>
+                    <value>cfdaNumber</value>
+                  </list>
+                </property>
+              </bean>
               <bean p:propertyName="closingDate" parent="Uif-DataField"/>
               <bean p:propertyName="competetionId" parent="Uif-DataField"/>
               <bean p:propertyName="instructionUrl" parent="Uif-DataField"/>

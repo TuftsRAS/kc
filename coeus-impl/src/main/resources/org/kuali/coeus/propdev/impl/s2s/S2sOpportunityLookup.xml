@@ -14,11 +14,13 @@
                     http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
 
+	<!-- Must disabled richTable capabilities to avoid javascript/datable errors related to conflict with s2sOpportunityCfdas subCollection -->
     <bean id="S2sOpportunity-LookupView" parent="S2sOpportunity-LookupView-parentBean" p:viewName="S2sOpportunity-LookupViewName"/>
 	<bean id="S2sOpportunity-LookupView-parentBean" abstract="true"
 		parent="Uif-LookupView" p:header.headerText="Opportunity Search"
 		p:dataObjectClassName="org.kuali.coeus.propdev.impl.s2s.S2sOpportunity"
-		p:viewHelperService="#{#getService('s2sOpportunityLookupable')}">
+		p:viewHelperService="#{#getService('s2sOpportunityLookupable')}"
+	    p:resultsGroup.renderAddLine="false" p:resultsGroup.renderLineActions="true" p:resultsGroup.layoutManager.richTable.render="false" p:resultsGroup.layoutManager.renderSequenceField="false">
 
 		<property name="criteriaFields">
 			<list>
@@ -53,25 +55,51 @@
 		</property>
 		<property name="resultFields">
 			<list>
-				<bean parent="Uif-DataField" p:propertyName="cfdaNumber"
-					p:order="10" />
 				<bean parent="Uif-DataField" p:propertyName="openingDate"
-					p:order="20" />
+					p:order="10" />
 				<bean parent="Uif-DataField" p:propertyName="closingDate"
-					p:order="30" />
+					p:order="20" />
 				<bean parent="Uif-DataField" p:propertyName="competetionId"
-					p:order="40" />
+					p:order="30" />
 				<bean parent="Uif-DataField" p:propertyName="opportunityId"
-					p:order="50" />
+					p:order="40" />
 				<bean parent="Uif-DataField" p:propertyName="opportunityTitle"
-					p:order="60" />	
+					p:order="50" />
 				<bean parent="Uif-DataField" p:propertyName="schemaUrl"
-					p:order="70" />
+					p:order="60" />
 				<bean parent="Uif-DataField" p:propertyName="instructionUrl"
-					p:order="80" />		
+					p:order="70" />
 			</list>
 		</property>
-
+		<property name="resultsGroup.subCollections">
+			<list>
+				<bean parent="Uif-TableSubCollection-WithinSubSection" p:order="10" p:renderAddLine="false" p:renderLineActions="false" p:layoutManager.richTable.render="false" p:layoutManager.renderSequenceField="false">
+					<property name="propertyName" value="s2sOpportunityCfdas"/>
+					<property name="collectionObjectClass" value="org.kuali.coeus.propdev.impl.s2s.S2sOpportunityCfda"/>
+					<property name="items">
+						<list>
+							<bean p:propertyName="cfdaNumber" parent="Uif-DataField"/>
+							<bean p:propertyName="cfdaDescription" parent="Uif-DataField"/>
+						</list>
+					</property>
+				</bean>
+			</list>
+		</property>
+		<property name="criteriaGroup">
+			<bean parent="Uif-LookupCriteriaGroup">
+				<property name="footer">
+					<bean parent="Uif-LookupCriteriaFooter">
+						<property name="items">
+							<list merge="true">
+								<!-- close button failed to work unless it is redefined here for some unknown reason -->
+								<bean parent="Uif-SecondaryActionButton" p:actionLabel="Close" p:render="@{#form.renderedInDialog}"
+									  p:onClickScript="e.preventDefault();closeLightbox();return false;" p:order="200"/>
+							</list>
+						</property>
+					</bean>
+				</property>
+			</bean>
+		</property>
 	</bean>
 
     <bean id="S2sOpportunity-CreateProposalLookupView" parent="S2sOpportunity-CreateProposalLookupView-parentBean" p:viewName="S2sOpportunity-CreateProposalLookupViewName" />

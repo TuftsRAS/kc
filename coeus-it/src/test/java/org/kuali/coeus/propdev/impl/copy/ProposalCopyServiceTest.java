@@ -55,20 +55,20 @@ public class ProposalCopyServiceTest extends ProposalDevelopmentRuleTestBase {
 	ProposalCopyService proposalCopyService;
 	ProposalDevelopmentDocument proposalDocument;
 
-    String SPONSOR_CODE = "000162";
-    String ACTIVITY_TYPE_CODE = "1";
-    String PROPOSAL_TYPE_CODE = "1";
-    String PRIME_SPONSOR_CODE = "000120";
-    String ORIGINAL_LEAD_UNIT = "000001";
-    String NEW_LEAD_UNIT = "BL-IIDC";
-    String OPP_ID = "PA-C-R03";
-    String COMP_ID = "FORMS-C";
-    String INS_URL = "insUrl";
-    String SCHEMA_URL = "http://at07apply.grants.gov/apply/opportunities/schemas/applicant/oppPA-C-R03-cfda93.838-cidFORMS-C.xsd";
-    String CFDA = "93.838";
-    String PROVIDER_CODE = "1";
-    String SUB_TYPE_CODE = "2";
-    String AGENCY_CONTACT_INFO= "contactInfo";
+    private static final String SPONSOR_CODE = "000162";
+    private static final String ACTIVITY_TYPE_CODE = "1";
+    private static final String PROPOSAL_TYPE_CODE = "1";
+    private static final String PRIME_SPONSOR_CODE = "000120";
+    private static final String ORIGINAL_LEAD_UNIT = "000001";
+    private static final String NEW_LEAD_UNIT = "BL-IIDC";
+    private static final String OPP_ID = "PA-C-R03";
+    private static final String COMP_ID = "FORMS-C";
+    private static final String INS_URL = "insUrl";
+    private static final String SCHEMA_URL = "http://at07apply.grants.gov/apply/opportunities/schemas/applicant/oppPA-C-R03-cfda93.838-cidFORMS-C.xsd";
+    private static final String CFDA = "93.838";
+    private static final String PROVIDER_CODE = "1";
+    private static final String SUB_TYPE_CODE = "2";
+    private static final String AGENCY_CONTACT_INFO= "contactInfo";
 
     private ProposalDevelopmentDocument oldDocument;
 
@@ -174,7 +174,12 @@ public class ProposalCopyServiceTest extends ProposalDevelopmentRuleTestBase {
         opportunity.setInstructionUrl(INS_URL);
         opportunity.setOpportunityId(OPP_ID);
         opportunity.setOpportunity("bogus opportunity character data");
-        opportunity.setCfdaNumber(CFDA);
+
+        S2sOpportunityCfda s2sCfda = new S2sOpportunityCfda();
+        s2sCfda.setCfdaNumber(CFDA);
+        s2sCfda.setProposalNumber(proposal.getProposalNumber());
+        opportunity.getS2sOpportunityCfdas().add(s2sCfda);
+
         opportunity.setS2sSubmissionTypeCode(SUB_TYPE_CODE);
         opportunity.setProviderCode(PROVIDER_CODE);
         opportunity.setMultiProject(false);

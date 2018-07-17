@@ -10,9 +10,8 @@ package org.kuali.kra.institutionalproposal.home;
 import org.kuali.coeus.common.framework.keyword.AbstractScienceKeyword;
 import org.kuali.coeus.common.framework.keyword.ScienceKeyword;
 import org.kuali.coeus.common.framework.version.sequence.associate.SequenceAssociate;
-import org.kuali.coeus.common.framework.version.sequence.owner.SequenceOwner;
 
-public class InstitutionalProposalScienceKeyword extends AbstractScienceKeyword implements SequenceAssociate {
+public class InstitutionalProposalScienceKeyword extends AbstractScienceKeyword implements SequenceAssociate<InstitutionalProposal> {
 
     private static final long serialVersionUID = 1L;
 
@@ -124,13 +123,13 @@ public class InstitutionalProposalScienceKeyword extends AbstractScienceKeyword 
     }
 
     @Override
-    public SequenceOwner getSequenceOwner() {
+    public InstitutionalProposal getSequenceOwner() {
         return getInstitutionalProposal();
     }
 
     @Override
-    public void setSequenceOwner(SequenceOwner newlyVersionedOwner) {
-        setInstitutionalProposal((InstitutionalProposal) newlyVersionedOwner);
+    public void setSequenceOwner(InstitutionalProposal newlyVersionedOwner) {
+        setInstitutionalProposal( newlyVersionedOwner);
     }
 
     @Override

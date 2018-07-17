@@ -60,6 +60,7 @@ import org.kuali.coeus.propdev.impl.s2s.S2sRevisionTypeConstants;
 import org.kuali.coeus.propdev.impl.s2s.override.S2sOverride;
 import org.kuali.coeus.propdev.impl.s2s.question.ProposalDevelopmentS2sQuestionnaireHelper;
 import org.kuali.coeus.propdev.impl.specialreview.ProposalSpecialReview;
+import org.kuali.coeus.propdev.impl.sponsor.ProposalCfda;
 import org.kuali.coeus.propdev.impl.state.ProposalState;
 import org.kuali.coeus.sys.framework.controller.KcFileService;
 import org.kuali.coeus.sys.framework.model.KcPersistableBusinessObjectBase;
@@ -313,6 +314,8 @@ public class ProposalDevelopmentViewHelperServiceImpl extends KcViewHelperServic
             note.setAuthorUniversalIdentifier(getGlobalVariableService().getUserSession().getPrincipalId());
             note.setNotePostedTimestampToCurrent();
             note.setNoteTypeCode("BO");
+        } else if (addLine instanceof ProposalCfda) {
+           ((ProposalCfda) addLine).setProposalNumber(proposal.getProposalNumber());
         }
 
         if (addLine instanceof KcPersistableBusinessObjectBase) {
@@ -1265,7 +1268,7 @@ public class ProposalDevelopmentViewHelperServiceImpl extends KcViewHelperServic
         //Reset Opportunity Title and Opportunity ID in the Sponsor & Program Information section
         proposal.setProgramAnnouncementTitle("");
         proposal.setProgramAnnouncementNumber("");
-        proposal.setCfdaNumber("");
+        proposal.setProposalCfdas(new ArrayList<>());
         proposal.setOpportunityIdForGG("");
     }
 

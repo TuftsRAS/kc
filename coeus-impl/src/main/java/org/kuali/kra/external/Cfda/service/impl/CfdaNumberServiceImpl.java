@@ -17,9 +17,8 @@ import org.kuali.kra.external.HashMapElement;
 import org.kuali.rice.krad.service.BusinessObjectService;
 import org.kuali.rice.krad.util.ObjectUtils;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * This class is used for querying CFDA data from KC.
@@ -31,27 +30,21 @@ public class CfdaNumberServiceImpl implements CfdaNumberService {
     
     /**
      * This method is used to return the cfda number of an award.
-     * @see org.kuali.kra.external.Cfda.service.CfdaNumberService#getCfdaNumber(java.lang.String)
      */
     @Override
     public List<CfdaDTO> getCfdaNumber(String financialAccountNumber, String financialChartOfAccounts) {
-        
-        List<Award> awards = getAwards(financialAccountNumber, financialChartOfAccounts);
-        List<CfdaDTO> cfdaNumbers = new ArrayList<CfdaDTO>();
-        if (ObjectUtils.isNotNull(awards)) {           
-            for (Award award : awards) {
-                HashMap<String, String> searchCriteria =  new HashMap<String, String>();
-                searchCriteria.put("cfdaNumber", award.getCfdaNumber());
-                if (ObjectUtils.isNotNull(award.getCfdaNumber())) {
-                    CFDA cfda = (CFDA) businessObjectService.findByPrimaryKey(CFDA.class, searchCriteria);
+        final List<Award> awards = getAwards(financialAccountNumber, financialChartOfAccounts);
+        if (ObjectUtils.isNotNull(awards)) {
+            return awards.stream().flatMap(award -> award.getAwardCfdas().stream()).map(awardCfda -> {
+                    final CFDA cfda = businessObjectService.findByPrimaryKey(CFDA.class, Collections.singletonMap("cfdaNumber", awardCfda.getCfdaNumber()));
                     if (ObjectUtils.isNotNull(cfda)) {
-                        CfdaDTO cfdaDTO = boToDTO(cfda);
-                        cfdaDTO.setAwardId(award.getAwardId() + "");
-                        cfdaNumbers.add(cfdaDTO);
+                        final CfdaDTO cfdaDTO = boToDTO(cfda);
+                        cfdaDTO.setAwardId(awardCfda.getAwardId() + "");
+                        return cfdaDTO;
                     }
-                }
-            }
-            return cfdaNumbers;
+                    return null;
+            }).filter(Objects::nonNull)
+                    .collect(Collectors.toList());
         } else {
             return null;
         }
@@ -60,33 +53,27 @@ public class CfdaNumberServiceImpl implements CfdaNumberService {
 
     @Override
     public List<CfdaDTO> lookupCfda(List<HashMapElement> criteria) {
-        HashMap<String, String> searchCriteria =  new HashMap<String, String>();
-        List<CFDA> cfdaNumbers = new ArrayList<CFDA>();
+        HashMap<String, String> searchCriteria =  new HashMap<>();
+        final List<CFDA> cfdaNumbers;
         // if the criteria passed is null, then return all units.
         if (ObjectUtils.isNull(criteria)) {
-            cfdaNumbers =  new ArrayList<CFDA>(businessObjectService.findAll(CFDA.class));
+            cfdaNumbers =  new ArrayList<>(businessObjectService.findAll(CFDA.class));
         } else {
             // Reconstruct Hashmap from object list
             for (HashMapElement element : criteria) {
                 searchCriteria.put(element.getKey(), element.getValue());  
             }
-            cfdaNumbers =  new ArrayList<CFDA>(businessObjectService.findMatching(CFDA.class, searchCriteria));
+            cfdaNumbers =  new ArrayList<>(businessObjectService.findMatching(CFDA.class, searchCriteria));
         }
         
-        List<CfdaDTO> cfdaDTOs = new ArrayList<CfdaDTO>();
+        List<CfdaDTO> cfdaDTOs = new ArrayList<>();
         for (CFDA cfda : cfdaNumbers) {
             cfdaDTOs.add(boToDTO(cfda));
         }
         
         return cfdaDTOs;
     }
-    
-    /**
-     * This method converts the BO to a DTO.
-     * @param cfda
-     * @param award
-     * @return
-     */
+
     protected CfdaDTO boToDTO(CFDA cfda) {
         CfdaDTO cfdaDTO = new CfdaDTO();
         cfdaDTO.setCfdaMaintenanceTypeId(cfda.getCfdaMaintenanceTypeId());
@@ -98,16 +85,13 @@ public class CfdaNumberServiceImpl implements CfdaNumberService {
     
     /**
      * This method returns awards based on the account number and chart of account.
-     * @param financialAccountNumber
-     * @param chartOfAccounts
-     * @return
      */
     protected List<Award> getAwards(String financialAccountNumber, String chartOfAccounts) {
         List<Award> awards;
-        HashMap<String, String> searchCriteria =  new HashMap<String, String>();
+        HashMap<String, String> searchCriteria =  new HashMap<>();
         searchCriteria.put("accountNumber", financialAccountNumber);  
         searchCriteria.put("financialChartOfAccountsCode", chartOfAccounts);
-        awards = new ArrayList<Award>(businessObjectService.findMatching(Award.class, searchCriteria));
+        awards = new ArrayList<>(businessObjectService.findMatching(Award.class, searchCriteria));
         if (ObjectUtils.isNotNull(awards) && !awards.isEmpty()) {
             return awards;
         } else {
@@ -116,11 +100,6 @@ public class CfdaNumberServiceImpl implements CfdaNumberService {
         }   
     }
 
-    /**
-     * Sets the businessObjectService attribute value. Injected by Spring.
-     * 
-     * @param businessObjectService The businessObjectService to set.
-     */
     public void setBusinessObjectService(BusinessObjectService businessObjectService) {
         this.businessObjectService = businessObjectService;
     }

@@ -17,6 +17,7 @@ import org.kuali.coeus.propdev.impl.core.ProposalDevelopmentService;
 import org.kuali.coeus.propdev.impl.docperm.ProposalUserRoles;
 import org.kuali.coeus.propdev.impl.editable.ProposalChangedData;
 import org.kuali.coeus.propdev.impl.person.ProposalPerson;
+import org.kuali.coeus.propdev.impl.sponsor.ProposalCfda;
 import org.kuali.coeus.sys.framework.gv.GlobalVariableService;
 import org.kuali.kra.infrastructure.RoleConstants;
 import org.kuali.kra.institutionalproposal.home.InstitutionalProposal;
@@ -91,7 +92,7 @@ public class ProposalDevelopmentNotificationRenderer extends NotificationRendere
         result.put("{END_DATE}", developmentProposal.getRequestedEndDateInitial().toString());
         result.put("{PROGRAM_ANNOUNCEMENT_NUMBER}", developmentProposal.getProgramAnnouncementNumber() == null ? StringUtils.EMPTY : developmentProposal.getProgramAnnouncementNumber());
         result.put("{PROGRAM_ANNOUNCEMENT_TITLE}", developmentProposal.getProgramAnnouncementTitle() == null ? StringUtils.EMPTY : developmentProposal.getProgramAnnouncementTitle());
-        result.put("{CFDA_NUMBER}", developmentProposal.getCfdaNumber());
+        result.put("{CFDA_NUMBER}", developmentProposal.getProposalCfdas().stream().map(ProposalCfda::getCfdaNumber).collect(Collectors.joining(",")));
         if (developmentProposal.getDeadlineDate() != null) {
             result.put("{DEADLINE_DATE}", dateFormatter.format(developmentProposal.getDeadlineDate()));
         } else {

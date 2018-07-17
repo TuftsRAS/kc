@@ -2364,7 +2364,7 @@
 				<xs:element name="CFDA_NUMBER" nillable="true" minOccurs="0">
 					<xs:simpleType>
 						<xs:restriction base="xs:string">
-							<xs:maxLength value="6"/>
+
 						</xs:restriction>
 					</xs:simpleType>
 				</xs:element>
