@@ -1,6 +1,14 @@
 
 
 ## CURRENT
+* RESKC-2339: supporting multiple cfda numbers in S2S Opportunity, Proposal, IP, and Award
+  * Travis Schneeberger on Tue, 17 Jul 2018 09:06:01 -0400 [View Commit](../../commit/a573d010a9b681a6a3f9eeb85d3720b9c894694f)
+* RESKC-2339: supporting multiple cfda numbers in S2S Opportunity, Proposal, IP, and Award
+  * Travis Schneeberger on Tue, 26 Jun 2018 17:35:09 -0400 [View Commit](../../commit/572d52281cbfffcedd9128f4e554f615aa1fdd60)
+* RESKC-3014: switching to log4j2 to support better integration with logging tools
+  * Travis Schneeberger on Tue, 17 Jul 2018 09:07:38 -0400 [View Commit](../../commit/9ff78fc2749eaa7198abc62725d7c14b8d6ae7e6)
+
+## coeus-1807.0015
 * updating eclipselink to a version that natively supports oracle 12c
   * Travis Schneeberger on Mon, 16 Jul 2018 17:38:21 -0400 [View Commit](../../commit/36c8aab2fdeab8ffed992664a8411548dc8d9c0e)
 * RESKC-3014: switching to log4j2 to support better integration with logging tools

@@ -22,4 +22,5 @@ set sqlblanklines on
 
 spool 1807_oracle_kc_upgrade.sql.log
 @./kc/bootstrap/V1807_001__SponsorCodeLength.sql
+@./kc/bootstrap/V1807_003__multi_cfda.sql
 commit;
