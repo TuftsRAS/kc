@@ -9,8 +9,8 @@ package org.kuali.kra.protocol.actions.print;
 
 import com.lowagie.text.Image;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.common.framework.print.watermark.Font;
 import org.kuali.coeus.common.framework.print.watermark.Watermark;
 import org.kuali.coeus.common.framework.print.watermark.WatermarkBean;
@@ -35,7 +35,7 @@ import java.util.Map;
 public abstract class ProtocolPrintWatermarkBase implements Watermarkable {
 
     private KcPersistableBusinessObjectBase persistableBusinessObject;
-    private static final Log LOG = LogFactory.getLog(ProtocolPrintWatermarkBase.class);
+    private static final Logger LOG = LogManager.getLogger(ProtocolPrintWatermarkBase.class);
     private static final String INVALID_WATERMARK_CODE = "-1";
     private WatermarkBean watermarkBean;
 

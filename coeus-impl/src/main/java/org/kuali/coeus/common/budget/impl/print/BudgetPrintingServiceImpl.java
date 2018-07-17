@@ -7,8 +7,8 @@
  */
 package org.kuali.coeus.common.budget.impl.print;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.common.budget.framework.print.BudgetPrintType;
 import org.kuali.coeus.common.framework.print.AbstractPrint;
 import org.kuali.coeus.common.framework.print.Printable;
@@ -38,7 +38,7 @@ import java.util.List;
 @Component("budgetPrintService")
 public class BudgetPrintingServiceImpl implements BudgetPrintService {
 
-    private static final Log LOG = LogFactory.getLog(BudgetPrintingServiceImpl.class);
+    private static final Logger LOG = LogManager.getLogger(BudgetPrintingServiceImpl.class);
 
     @Autowired
     @Qualifier("budgetSummaryPrint")

@@ -8,8 +8,8 @@
 package org.kuali.kra.external.dunningcampaign;
 
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.kfs.module.external.kc.service.DunningCampaignService;
 import org.kuali.kfs.module.external.kc.service.DunningCampaignServiceSOAP;
 import org.kuali.kra.infrastructure.Constants;
@@ -33,7 +33,7 @@ public final class DunningCampaignClientImpl extends DunningCampaignClientBase {
     
     private static DunningCampaignClientImpl client;
     
-    private static final Log LOG = LogFactory.getLog(DunningCampaignClientImpl.class);
+    private static final Logger LOG = LogManager.getLogger(DunningCampaignClientImpl.class);
     
     private DunningCampaignClientImpl() {
     }

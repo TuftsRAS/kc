@@ -14,8 +14,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.kuali.coeus.common.framework.unit.Unit;
@@ -41,10 +41,9 @@ public class UnitAdministratorRoleAttribute extends GenericRoleAttribute {
 	 */
 	private static final long serialVersionUID = 2187135270043141363L;
 
-	private static final Log LOG = LogFactory.getLog(UnitAdministratorRoleAttribute.class);
+	private static final Logger LOG = LogManager.getLogger(UnitAdministratorRoleAttribute.class);
 	private static final String HOMEUNIT = "homeUnit";
-	//private static final String UNITS = "units";
-	
+
 	// Default Values 
 	private boolean getUnits = true;
 	private String roleName = "Department Head";

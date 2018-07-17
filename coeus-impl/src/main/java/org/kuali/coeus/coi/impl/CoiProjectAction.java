@@ -7,8 +7,8 @@
  */
 package org.kuali.coeus.coi.impl;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -26,7 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Collection;
 
 public class CoiProjectAction extends KualiAction {
-    private static final Log LOG = LogFactory.getLog(CoiProjectAction.class);
+    private static final Logger LOG = LogManager.getLogger(CoiProjectAction.class);
     private static final String PUSH_MESSAGE_KEY = "info.project.push.started";
     private static final String PROJECT_PUSH = "ProjectPush";
 

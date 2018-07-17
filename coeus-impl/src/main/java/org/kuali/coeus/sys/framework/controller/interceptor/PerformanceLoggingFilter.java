@@ -7,8 +7,8 @@
  */
 package org.kuali.coeus.sys.framework.controller.interceptor;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.sys.framework.service.KcServiceLocator;
 import org.kuali.rice.core.api.config.property.ConfigurationService;
 
@@ -30,7 +30,7 @@ import java.util.regex.Pattern;
  * </ul>
  */
 public class PerformanceLoggingFilter implements Filter {
-    private static final Log LOG = LogFactory.getLog(PerformanceLoggingFilter.class);
+    private static final Logger LOG = LogManager.getLogger(PerformanceLoggingFilter.class);
     
     private static final String IGNORED_URLS_PARAM = "kc.monitoring.exclude.pattern";
 

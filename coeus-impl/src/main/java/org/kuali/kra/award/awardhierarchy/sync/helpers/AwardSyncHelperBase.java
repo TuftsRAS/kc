@@ -9,8 +9,8 @@ package org.kuali.kra.award.awardhierarchy.sync.helpers;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.kra.award.awardhierarchy.sync.*;
 import org.kuali.kra.award.awardhierarchy.sync.service.AwardSyncServiceImpl;
 import org.kuali.kra.award.awardhierarchy.sync.service.AwardSyncUtilityService;
@@ -29,7 +29,7 @@ import java.util.*;
  */
 public abstract class AwardSyncHelperBase implements AwardSyncHelper {
     
-    protected final Log LOG = LogFactory.getLog(AwardSyncServiceImpl.class);
+    protected final Logger LOG = LogManager.getLogger(AwardSyncServiceImpl.class);
     /**
      * Delimiter used between fields for the object data description
      */

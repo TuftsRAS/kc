@@ -17,7 +17,7 @@ import org.kuali.rice.krad.service.DocumentService;
 
 public class ModifyIacucProtocolOnlineReviewAuthorizer extends IacucProtocolOnlineReviewAuthorizer {
 
-    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(ModifyIacucProtocolOnlineReviewAuthorizer.class);
+    private static final org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger(ModifyIacucProtocolOnlineReviewAuthorizer.class);
 
     private KcWorkflowService kraWorkflowService;
 

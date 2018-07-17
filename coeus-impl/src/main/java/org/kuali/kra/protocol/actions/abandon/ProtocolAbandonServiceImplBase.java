@@ -7,8 +7,6 @@
  */
 package org.kuali.kra.protocol.actions.abandon;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.kuali.coeus.common.framework.print.PrintingException;
 import org.kuali.kra.protocol.ProtocolBase;
 import org.kuali.kra.protocol.actions.ProtocolActionBase;
@@ -21,7 +19,6 @@ import org.kuali.rice.krad.service.DocumentService;
 
 public abstract class ProtocolAbandonServiceImplBase implements ProtocolAbandonService {
 
-    private static final Log LOG = LogFactory.getLog(ProtocolAbandonServiceImplBase.class);
     private DocumentService documentService;
     private ProtocolActionService protocolActionService;
     private ProtocolActionCorrespondenceGenerationService protocolActionCorrespondenceGenerationService;

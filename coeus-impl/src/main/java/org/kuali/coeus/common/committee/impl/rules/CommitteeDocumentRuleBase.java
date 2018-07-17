@@ -9,8 +9,8 @@ package org.kuali.coeus.common.committee.impl.rules;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.common.committee.impl.bo.*;
 import org.kuali.coeus.common.committee.impl.document.CommitteeDocumentBase;
 import org.kuali.coeus.common.committee.impl.lookup.keyvalue.CommitteeIdValuesFinderBase;
@@ -60,7 +60,7 @@ public abstract class CommitteeDocumentRuleBase extends KcTransactionalDocumentR
     private static final String PROPERTY_NAME_ROLE_START_DATE = "document.committeeList[0].committeeMemberships[%1$s].membershipRoles[%2$s].startDate";
     private static final String PROPERTY_NAME_ROLE_END_DATE = "document.committeeList[0].committeeMemberships[%1$s].membershipRoles[%2$s].endDate";
     private static final String PROPERTY_NAME_RESEARCH_AREA_CODE = "committeeHelper.newCommitteeMembershipExpertise[%1$s].researchAreaCode";
-    private static final Log LOG = LogFactory.getLog(CommitteeDocumentRuleBase.class);
+    private static final Logger LOG = LogManager.getLogger(CommitteeDocumentRuleBase.class);
 
     private static final String SEPERATOR = ".";
     private static final String PROPERTY_NAME_INACTIVE_AREAS_OF_EXPERTISE_PREFIX = "document.committeeList[0].committeeMemberships[%1$s].areasOfExpertise.inactive";

@@ -8,8 +8,8 @@
 package org.kuali.kra.irb.actions.request;
 
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.common.framework.module.CoeusModule;
 import org.kuali.kra.irb.Protocol;
 import org.kuali.kra.irb.actions.ProtocolAction;
@@ -33,7 +33,7 @@ import java.util.Map;
  */
 public class ProtocolRequestServiceImpl implements ProtocolRequestService {
     
-    private static final Log LOG = LogFactory.getLog(ProtocolRequestServiceImpl.class);
+    private static final Logger LOG = LogManager.getLogger(ProtocolRequestServiceImpl.class);
     private static final String MODULE_ITEM_CODE = "moduleItemCode";
     private static final String MODULE_ITEM_KEY = "moduleItemKey";
     private BusinessObjectService businessObjectService;

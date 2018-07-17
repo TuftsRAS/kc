@@ -16,8 +16,8 @@ package org.kuali.coeus.common.framework.print.watermark;
 
 
 import com.lowagie.text.pdf.BaseFont;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import java.awt.*;
 import java.lang.reflect.Field;
@@ -28,7 +28,7 @@ import java.lang.reflect.Field;
  */
 public class Font {
     
-    private static final Log LOG = LogFactory.getLog(Font.class);
+    private static final Logger LOG = LogManager.getLogger(Font.class);
     public static String BOLD;
     /**
      * fontName name

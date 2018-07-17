@@ -8,8 +8,8 @@
 package org.kuali.kra.coi.service.impl;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.kra.coi.CoiDisclosure;
 import org.kuali.kra.coi.CoiDisclosureEventType;
 import org.kuali.kra.coi.service.CoiMessagesService;
@@ -27,7 +27,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class CoiMessagesServiceImpl implements CoiMessagesService {
-    private static final Log LOG = LogFactory.getLog(CoiMessagesServiceImpl.class);
+    private static final Logger LOG = LogManager.getLogger(CoiMessagesServiceImpl.class);
 
     private transient BusinessObjectService businessObjectService;
     private transient ParameterService parameterService;

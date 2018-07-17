@@ -7,8 +7,8 @@
  */
 package org.kuali.coeus.common.budget.impl.struts;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -33,7 +33,7 @@ import static org.kuali.coeus.sys.framework.service.KcServiceLocator.getService;
 import static org.kuali.kra.infrastructure.Constants.MAPPING_BASIC;
 
 public class BudgetDistributionAndIncomeAction extends BudgetAction {
-    private static final Log LOG = LogFactory.getLog(BudgetDistributionAndIncomeAction.class);
+    private static final Logger LOG = LogManager.getLogger(BudgetDistributionAndIncomeAction.class);
    
     private BudgetDistributionService bdiService;
     

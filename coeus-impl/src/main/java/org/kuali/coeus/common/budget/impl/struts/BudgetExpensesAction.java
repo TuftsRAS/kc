@@ -8,8 +8,8 @@
 package org.kuali.coeus.common.budget.impl.struts;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -35,7 +35,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 
 public class BudgetExpensesAction extends BudgetAction {
-    private static final Log LOG = LogFactory.getLog(BudgetExpensesAction.class);
+    private static final Logger LOG = LogManager.getLogger(BudgetExpensesAction.class);
     
     private BudgetExpenseService budgetExpenseService;
     private AwardBudgetPeriodCalculationService awardBudgetPeriodCalculationService;

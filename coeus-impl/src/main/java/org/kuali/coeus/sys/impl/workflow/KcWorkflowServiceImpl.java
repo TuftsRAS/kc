@@ -8,8 +8,8 @@
 package org.kuali.coeus.sys.impl.workflow;
 
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.sys.framework.workflow.KcWorkflowService;
 import org.kuali.rice.kew.api.KewApiConstants;
 import org.kuali.rice.kew.api.WorkflowDocument;
@@ -31,7 +31,7 @@ import java.util.*;
  */
 @Component("kcWorkflowService")
 public class KcWorkflowServiceImpl implements KcWorkflowService {
-    private static final Log LOG = LogFactory.getLog(KcWorkflowService.class);
+    private static final Logger LOG = LogManager.getLogger(KcWorkflowService.class);
 
     @Autowired
     @Qualifier("workflowDocumentActionsService")

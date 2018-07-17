@@ -11,8 +11,8 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.apache.commons.lang3.time.DurationFormatUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.common.api.person.KcPersonContract;
 import org.kuali.coeus.common.framework.contact.Contactable;
 import org.kuali.coeus.common.framework.person.attr.KcPersonExtendedAttributes;
@@ -69,7 +69,7 @@ public class KcPerson extends TransientBusinessObjectBase implements Contactable
     
     private transient CountryService countryService;
     
-    private static final Log LOG = LogFactory.getLog(KcPerson.class);
+    private static final Logger LOG = LogManager.getLogger(KcPerson.class);
 
     /**
      * When using this ctor {@link #setPersonId(String)} must be call else this call is in an invalid state.

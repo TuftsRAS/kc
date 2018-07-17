@@ -9,8 +9,8 @@ package org.kuali.coeus.propdev.impl.s2s;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.propdev.impl.core.DevelopmentProposal;
 import org.kuali.coeus.propdev.impl.core.ProposalDevelopmentDocument;
 import org.kuali.coeus.propdev.impl.s2s.connect.S2sCommunicationException;
@@ -43,7 +43,7 @@ import static org.kuali.coeus.propdev.impl.datavalidation.ProposalDevelopmentDat
 
 public class ProposalDevelopmentGrantsGovAuditRule  implements DocumentAuditRule{
 
-    private static final Log LOG = LogFactory.getLog(ProposalDevelopmentGrantsGovAuditRule.class);
+    private static final Logger LOG = LogManager.getLogger(ProposalDevelopmentGrantsGovAuditRule.class);
     private static final String VALIDATION_SERVICE = "Validation Service";
     private static final String ERROR = "Error";
     private static final String WARNINGS = "Warnings";

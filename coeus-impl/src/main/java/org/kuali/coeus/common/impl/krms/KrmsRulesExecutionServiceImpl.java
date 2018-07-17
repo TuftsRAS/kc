@@ -8,8 +8,8 @@
 package org.kuali.coeus.common.impl.krms;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.common.framework.krms.KcKrmsCacheManager;
 import org.kuali.kra.krms.KcKrmsConstants;
 import org.kuali.coeus.common.framework.krms.KrmsRulesContext;
@@ -29,7 +29,7 @@ import java.util.*;
 @Component("krmsRulesExecutionService")
 public class KrmsRulesExecutionServiceImpl implements KrmsRulesExecutionService {
     
-    protected final Log LOG = LogFactory.getLog(KrmsRulesExecutionServiceImpl.class);
+    protected final Logger LOG = LogManager.getLogger(KrmsRulesExecutionServiceImpl.class);
 
     @Autowired
     @Qualifier("kcKrmsCacheManager")

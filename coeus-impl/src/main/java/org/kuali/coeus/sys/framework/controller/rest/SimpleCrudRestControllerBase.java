@@ -22,8 +22,8 @@ import com.google.common.base.CaseFormat;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.text.WordUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.kuali.coeus.sys.framework.config.KcConfigurer;
 import org.kuali.coeus.sys.framework.controller.rest.audit.RestAuditLogger;
@@ -70,7 +70,7 @@ public abstract class SimpleCrudRestControllerBase<T, R> extends RestController 
 	private static final String SCHEMA_PARM = "_schema";
 	private static final String BLUEPRINT_PARM = "_blueprint";
 	protected static final String SYNTHETIC_FIELD_PK = "_primaryKey";
-	private static final Log LOG = LogFactory.getLog(SimpleCrudRestControllerBase.class);
+	private static final Logger LOG = LogManager.getLogger(SimpleCrudRestControllerBase.class);
 
 	@Autowired
 	@Qualifier("legacyDataAdapter")

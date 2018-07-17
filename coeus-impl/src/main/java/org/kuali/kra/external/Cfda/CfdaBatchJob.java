@@ -8,8 +8,8 @@
 package org.kuali.kra.external.Cfda;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.common.notification.impl.service.KcNotificationService;
 import org.kuali.kra.infrastructure.Constants;
 import org.kuali.rice.coreservice.framework.parameter.ParameterService;
@@ -33,7 +33,7 @@ public class CfdaBatchJob extends QuartzJobBean {
     private static final String CONTEXT_NAME = "CFDA Batch Job";
     private static final String SUBJECT = "CFDA batch job result";
     
-    private static final Log LOG = LogFactory.getLog(CfdaBatchJob.class);
+    private static final Logger LOG = LogManager.getLogger(CfdaBatchJob.class);
     
     private String user;
 

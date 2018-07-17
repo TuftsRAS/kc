@@ -35,7 +35,7 @@ import java.util.List;
 public abstract class CommitteeScheduleActionBase extends CommitteeActionBase {
     
     @SuppressWarnings("unused")
-    private static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(CommitteeScheduleActionBase.class);
+    private static final org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger(CommitteeScheduleActionBase.class);
     
     private static final String DELETE_QUESTION = "Are you sure you want to delete?";
     

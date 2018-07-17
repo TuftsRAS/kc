@@ -14,8 +14,8 @@ import gov.nih.era.svs.SubmissionValidationServiceStub;
 import gov.nih.era.svs.ValidateApplicationError;
 import gov.nih.era.svs.types.*;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.apache.cxf.configuration.jsse.TLSClientParameters;
 import org.apache.cxf.endpoint.Client;
 import org.apache.cxf.frontend.ClientProxy;
@@ -67,7 +67,7 @@ public class NihSubmissionValidationServiceImpl implements NihSubmissionValidati
     private static final String ENABLE_NIH_VALIDATION_SERVICE_CACHING = "Enable_NIH_Validation_Service_Caching";
     private static final String APPLICATION_PDF = "application/pdf";
 
-    private static final Log LOG = LogFactory.getLog(NihSubmissionValidationServiceImpl.class);
+    private static final Logger LOG = LogManager.getLogger(NihSubmissionValidationServiceImpl.class);
     private static final String ERROR_NIH_VALIDATION_SERVICE_UNKNOWN = "error.nih.validation.service.unknown";
 
     private static final Cache<Integer, ValidateApplicationResponse> REQUEST_CACHE = CacheBuilder.newBuilder()

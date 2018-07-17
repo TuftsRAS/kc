@@ -8,8 +8,8 @@
 
 package org.kuali.kra.award.paymentreports.awardreports.reporting.service;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.sys.framework.gv.GlobalVariableService;
 import org.kuali.rice.krad.UserSession;
 import org.quartz.JobExecutionContext;
@@ -19,7 +19,7 @@ import java.util.Collections;
 
 public class ReportTrackingDigestNotificationJobDetail extends ReportTrackingNotificationJobDetail {
 
-    private static final Log LOG = LogFactory.getLog(ReportTrackingNotificationJobDetail.class);
+    private static final Logger LOG = LogManager.getLogger(ReportTrackingNotificationJobDetail.class);
 
     private static final String ACTION_CODE_JOB_MAP_KEY = "actionCode";
     private static final String NOTIFICATION_NAME_JOB_MAP_KEY = "notificationName";

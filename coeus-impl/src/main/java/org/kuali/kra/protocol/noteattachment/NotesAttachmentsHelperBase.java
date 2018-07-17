@@ -8,8 +8,8 @@
 package org.kuali.kra.protocol.noteattachment;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.common.framework.attachment.AttachmentFile;
 import org.kuali.coeus.common.framework.attachment.KcAttachmentService;
 import org.kuali.coeus.common.framework.auth.SystemAuthorizationService;
@@ -32,7 +32,7 @@ import java.util.*;
  */
 public abstract class NotesAttachmentsHelperBase {
 
-    private static final Log LOG = LogFactory.getLog(NotesAttachmentsHelperBase.class);
+    private static final Logger LOG = LogManager.getLogger(NotesAttachmentsHelperBase.class);
 
     protected static final String NAMESPACE = "KC-UNT";
 

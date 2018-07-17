@@ -23,7 +23,7 @@ import java.util.List;
 
 
 public class CollectionToggleMenu extends ToggleMenu {
-    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(CollectionToggleMenu.class);
+    private static final org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger(CollectionToggleMenu.class);
 
     private Class<?> collectionObjectClass;
     private BindingInfo bindingInfo;

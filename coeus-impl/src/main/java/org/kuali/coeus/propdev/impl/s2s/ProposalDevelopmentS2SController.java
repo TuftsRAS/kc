@@ -72,7 +72,7 @@ public class ProposalDevelopmentS2SController extends ProposalDevelopmentControl
     private static final String CONTENT_TYPE_XML = "text/xml";
     private static final String CONTENT_TYPE_PDF = "application/pdf";
 
-    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(ProposalDevelopmentS2SController.class);
+    private static final org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger(ProposalDevelopmentS2SController.class);
     private static final String GRANTS_GOV_FORM_VALIDATION_ERRORS = "grantsGovFormValidationErrors";
     private static final String CURRENT_GRANT_APPLICATION_XML = "Current Grant Application.xml";
     private static final String OVERRRIDDEN_GRANT_APPLICATION_XML = "Overridden Grant Application.xml";

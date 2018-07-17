@@ -7,20 +7,20 @@
  */
 package org.kuali.kra.iacuc.actions.submit;
 
-import org.apache.commons.logging.Log;
+import org.apache.logging.log4j.Logger;
 import org.kuali.kra.iacuc.IacucProtocolDocument;
 import org.kuali.kra.protocol.actions.submit.ProtocolSubmitActionEventBase;
 
 public class IacucProtocolSubmitActionEvent extends ProtocolSubmitActionEventBase {
     
-    private static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(IacucProtocolSubmitActionEvent.class);
+    private static final org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger(IacucProtocolSubmitActionEvent.class);
 
     public IacucProtocolSubmitActionEvent(IacucProtocolDocument document, IacucProtocolSubmitAction submitAction) {
         super(document, submitAction);
     }
 
     @Override
-    protected Log getLOGHook() {
+    protected Logger getLOGHook() {
         return LOG;
     }
     

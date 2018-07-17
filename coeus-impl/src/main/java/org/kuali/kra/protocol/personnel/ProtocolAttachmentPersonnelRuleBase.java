@@ -8,8 +8,8 @@
 package org.kuali.kra.protocol.personnel;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.apache.struts.upload.FormFile;
 import org.kuali.kra.infrastructure.KeyConstants;
 import org.kuali.kra.protocol.ProtocolDocumentBase;
@@ -24,7 +24,7 @@ import java.io.IOException;
 
 public abstract class ProtocolAttachmentPersonnelRuleBase extends KcTransactionalDocumentRuleBase implements AddProtocolAttachmentPersonnelRule {
 
-    private static final Log LOG = LogFactory.getLog(ProtocolAttachmentPersonnelRuleBase.class);
+    private static final Logger LOG = LogManager.getLogger(ProtocolAttachmentPersonnelRuleBase.class);
 
     protected static final String PROPERTY_NAME_NEW_ATTACHMENT_TYPE = "personnelHelper.newProtocolAttachmentPersonnels[%1$s].typeCode";
     protected static final String PROPERTY_NAME_NEW_ATTACHMENT_DESCRIPTION = "personnelHelper.newProtocolAttachmentPersonnels[%1$s].description";

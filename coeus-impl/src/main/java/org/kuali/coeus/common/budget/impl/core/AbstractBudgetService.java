@@ -31,7 +31,7 @@ import java.util.*;
 
 public abstract class AbstractBudgetService<T extends BudgetParent> implements BudgetService<T> {
 
-    private static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(AbstractBudgetService.class);
+    private static final org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger(AbstractBudgetService.class);
     public static final String BUDGET_ID = "budgetId";
     public static final String VALID_CE_RATE_TYPES = "validCeRateTypes";
     public static final String RATE_CLASS_TYPE = "rateClassType";

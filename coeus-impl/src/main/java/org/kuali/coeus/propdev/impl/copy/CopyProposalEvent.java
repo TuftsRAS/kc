@@ -21,7 +21,7 @@ import org.kuali.rice.krad.util.ObjectUtils;
  * @author Kuali Research Administration Team (kualidev@oncourse.iu.edu)
  */
 public class CopyProposalEvent extends KcDocumentEventBase {
-    private static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(NarrativeEventBase.class);
+    private static final org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger(NarrativeEventBase.class);
     
     private ProposalCopyCriteria criteria;
     

@@ -48,7 +48,7 @@ public abstract class CommitteeFormBase extends KcTransactionalDocumentFormBase 
     private CommitteeHelperBase committeeHelper;
     
     @SuppressWarnings("unused")
-    private static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(CommitteeFormBase.class);
+    private static final org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger(CommitteeFormBase.class);
     
     // KNS Lookup hooks
     private String lookupResultsSequenceNumber;

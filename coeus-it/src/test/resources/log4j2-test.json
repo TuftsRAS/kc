@@ -1,0 +1,60 @@
+{
+  "configuration": {
+    "name": "coeus-it",
+    "ThresholdFilter": {
+      "level": "debug"
+    },
+    "appenders": {
+      "Console": {
+        "name": "STDOUT",
+        "JSONLayout": {
+          "eventEol": true,
+          "properties": true,
+          "locationInfo": false
+        }
+      }
+    },
+    "loggers": {
+      "logger": [
+        {
+          "name": "org.kuali.rice",
+          "level": "info",
+          "additivity": "false",
+          "AppenderRef": {
+            "ref": "STDOUT"
+          }
+        },
+        {
+          "name": "org.kuali.kra",
+          "level": "info",
+          "additivity": "false",
+          "AppenderRef": {
+            "ref": "STDOUT"
+          }
+        },
+        {
+          "name": "org.kuali.coeus",
+          "level": "info",
+          "additivity": "false",
+          "AppenderRef": {
+            "ref": "STDOUT"
+          }
+        },
+        {
+          "name": "org.kuali.rice.krad.uif.lifecycle",
+          "level": "error",
+          "additivity": "false",
+          "AppenderRef": {
+            "ref": "STDOUT"
+          }
+        }
+      ],
+      "root": {
+        "level": "warn",
+        "AppenderRef": {
+          "ref": "STDOUT"
+        }
+      }
+    }
+  }
+}

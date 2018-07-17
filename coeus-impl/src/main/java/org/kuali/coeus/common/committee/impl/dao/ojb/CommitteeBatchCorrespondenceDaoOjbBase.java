@@ -7,8 +7,8 @@
  */
 package org.kuali.coeus.common.committee.impl.dao.ojb;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.apache.ojb.broker.query.Criteria;
 import org.apache.ojb.broker.query.Query;
 import org.apache.ojb.broker.query.QueryFactory;
@@ -27,7 +27,7 @@ import java.util.List;
  */
 public abstract class CommitteeBatchCorrespondenceDaoOjbBase<CBC extends CommitteeBatchCorrespondenceBase> extends PlatformAwareDaoBaseOjb implements OjbCollectionAware, CommitteeBatchCorrespondenceDao<CBC> {
 
-    private static final Log LOG = LogFactory.getLog(CommitteeBatchCorrespondenceDaoOjbBase.class);
+    private static final Logger LOG = LogManager.getLogger(CommitteeBatchCorrespondenceDaoOjbBase.class);
 
     private static final String BATCH_CORRESPONDENCE_TYPE_CODE = "batchCorrespondenceTypeCode";
     private static final String BATCH_RUN_DATE = "batchRunDate";

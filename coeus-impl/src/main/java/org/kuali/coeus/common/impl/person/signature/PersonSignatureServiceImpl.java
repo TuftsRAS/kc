@@ -7,8 +7,8 @@
  */
 package org.kuali.coeus.common.impl.person.signature;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
@@ -37,7 +37,7 @@ public abstract class PersonSignatureServiceImpl implements PersonSignatureServi
     private static final String DEFAULT_SIGNATURE = "defaultSignature";
     protected static final String MODULE_CODE = "moduleCode";
     
-    private static final Log LOG = LogFactory.getLog(PersonSignatureServiceImpl.class);
+    private static final Logger LOG = LogManager.getLogger(PersonSignatureServiceImpl.class);
 
     private BusinessObjectService businessObjectService;
     private ParameterService parameterService;

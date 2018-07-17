@@ -8,8 +8,8 @@
 package org.kuali.kra.iacuc.actions;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.common.framework.module.CoeusModule;
 import org.kuali.coeus.common.framework.module.CoeusSubModule;
 import org.kuali.coeus.common.notification.impl.bo.NotificationTypeRecipient;
@@ -92,7 +92,7 @@ import java.sql.Timestamp;
 import java.util.*;
 
 public class IacucProtocolActionRequestServiceImpl extends ProtocolActionRequestServiceImpl implements IacucProtocolActionRequestService {
-    private static final Log LOG = LogFactory.getLog(IacucProtocolActionRequestServiceImpl.class);
+    private static final Logger LOG = LogManager.getLogger(IacucProtocolActionRequestServiceImpl.class);
 
     // map to decide the followup action page to open.  "value" part is the action tab "title"
     private static Map<String, String> motionTypeMap = new HashMap<String, String>() {

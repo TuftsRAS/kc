@@ -9,8 +9,8 @@ package org.kuali.kra.protocol.onlinereview;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.common.committee.impl.bo.CommitteeMembershipBase;
 import org.kuali.coeus.common.committee.impl.meeting.CommitteeScheduleMinuteBase;
 import org.kuali.coeus.common.committee.impl.service.CommitteeServiceBase;
@@ -48,7 +48,7 @@ import java.util.Map;
 
 public abstract class ProtocolOnlineReviewServiceImplBase implements ProtocolOnlineReviewService {
 
-    private static final Log LOG = LogFactory.getLog(ProtocolOnlineReviewServiceImplBase.class);
+    private static final Logger LOG = LogManager.getLogger(ProtocolOnlineReviewServiceImplBase.class);
     
     protected BusinessObjectService businessObjectService;
     protected DocumentService documentService;

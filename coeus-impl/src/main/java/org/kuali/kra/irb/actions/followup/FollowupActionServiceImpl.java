@@ -7,8 +7,8 @@
  */
 package org.kuali.kra.irb.actions.followup;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.kra.irb.actions.ProtocolActionType;
 import org.kuali.kra.irb.actions.submit.ValidProtocolActionAction;
 import org.kuali.kra.protocol.actions.followup.FollowupActionServiceImplBase;
@@ -16,7 +16,7 @@ import org.kuali.kra.protocol.actions.followup.FollowupActionServiceImplBase;
 
 public class FollowupActionServiceImpl extends FollowupActionServiceImplBase<ValidProtocolActionAction> implements FollowupActionService {
     
-    private static final Log LOG = LogFactory.getLog(FollowupActionServiceImpl.class);
+    private static final Logger LOG = LogManager.getLogger(FollowupActionServiceImpl.class);
 
     @Override
     protected Class<ValidProtocolActionAction> getValidProtocolActionActionClassHook() {
@@ -29,7 +29,7 @@ public class FollowupActionServiceImpl extends FollowupActionServiceImplBase<Val
     }
 
     @Override
-    protected Log getLogHook() {
+    protected Logger getLogHook() {
         return FollowupActionServiceImpl.LOG;
     }
 }

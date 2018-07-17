@@ -24,7 +24,7 @@ import java.util.List;
  */
 public class SimpleBooleanSplitNode implements SplitNode {
 
-    private static org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(SimpleBooleanSplitNode.class);
+    private static org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger(SimpleBooleanSplitNode.class);
 
     /**
      * This method will look up the document being routed, if it is an instance of ResearchDocumentBase

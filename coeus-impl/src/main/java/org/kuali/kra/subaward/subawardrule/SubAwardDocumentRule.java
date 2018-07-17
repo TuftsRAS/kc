@@ -8,8 +8,8 @@
 package org.kuali.kra.subaward.subawardrule;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.common.framework.custom.KcDocumentBaseAuditRule;
 import org.kuali.coeus.common.framework.unit.Unit;
 import org.kuali.coeus.sys.framework.rule.KcDocumentEventBaseExtension;
@@ -77,7 +77,7 @@ SubAwardFfataReportingRule {
     private static final String EMAIL_DIFF = "document.subAwardList[0].subAwardTemplateInfo[0].invoiceEmailDifferent";
     private static final String MPI_LEADERSHIP_PLAN = "document.subAwardList[0].subAwardTemplateInfo[0].mpiLeadershipPlan";
 
-    private static final Log LOG = LogFactory.getLog(SubAwardDocumentRule.class);
+    private static final Logger LOG = LogManager.getLogger(SubAwardDocumentRule.class);
     public static final String ANIMAL_PTE_SEND_CD = "document.subAwardList[0].subAwardTemplateInfo[0].animalPteSendCd";
     public static final String ERROR_REQUIRED_ANIMAL_PTE_SEND_CD = "error.required.subaward.templateinfo.animalPteSendCd";
     public static final String ANIMAL_PTE_NR_CD = "document.subAwardList[0].subAwardTemplateInfo[0].animalPteNrCd";

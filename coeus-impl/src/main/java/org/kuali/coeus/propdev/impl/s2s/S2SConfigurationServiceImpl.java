@@ -8,8 +8,8 @@
 package org.kuali.coeus.propdev.impl.s2s;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.propdev.api.s2s.S2SConfigurationService;
 import org.kuali.kra.infrastructure.Constants;
 import org.kuali.rice.core.api.config.property.ConfigurationService;
@@ -28,7 +28,7 @@ import java.util.regex.Pattern;
 @Service("s2SConfigurationService")
 public class S2SConfigurationServiceImpl implements S2SConfigurationService {
 
-    private static final Log LOG = LogFactory.getLog(S2SConfigurationServiceImpl.class);
+    private static final Logger LOG = LogManager.getLogger(S2SConfigurationServiceImpl.class);
 
     private static final Pattern PLACEHOLDER = Pattern.compile("@\\{#param\\((.*?)\\)\\}");
 

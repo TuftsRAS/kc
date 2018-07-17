@@ -12,8 +12,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.coi.framework.Project;
 import org.kuali.coeus.coi.framework.ProjectPublisher;
 import org.kuali.coeus.coi.framework.ProjectRetrievalService;
@@ -53,7 +53,7 @@ public class InstitutionalProposalDocument extends KcTransactionalDocumentBase i
     private static final long serialVersionUID = 5101782927161970631L;
     private static final String NAMESPACE_CODE = "namespaceCode";
     private static final String NAME = "name";
-    private static final Log LOG = LogFactory.getLog(InstitutionalProposalDocument.class);
+    private static final Logger LOG = LogManager.getLogger(InstitutionalProposalDocument.class);
 
 
     private List<InstitutionalProposal> institutionalProposalList;

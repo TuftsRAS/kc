@@ -10,7 +10,8 @@ package org.kuali.coeus.common.impl.sponsor;
 import java.util.*;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.kuali.coeus.common.framework.rolodex.Rolodex;
 import org.kuali.coeus.common.framework.sponsor.Sponsor;
 import org.kuali.coeus.sys.framework.gv.GlobalVariableService;
@@ -35,7 +36,7 @@ import org.springframework.jdbc.support.incrementer.DataFieldMaxValueIncrementer
 
 public class SponsorMaintainableImpl extends KraMaintainableImpl {
 
-    private static final Logger LOG = Logger.getLogger(SponsorMaintainableImpl.class);
+    private static final Logger LOG = LogManager.getLogger(SponsorMaintainableImpl.class);
     private static final long serialVersionUID = 3366318004175290243L;
 
     public static final String AUTO_GEN_SPONSOR_CODE_PARM = "AUTO_GENERATE_SPONSOR_CODE";

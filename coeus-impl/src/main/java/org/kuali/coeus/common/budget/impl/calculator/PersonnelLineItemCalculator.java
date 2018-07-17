@@ -9,8 +9,6 @@ package org.kuali.coeus.common.budget.impl.calculator;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.kuali.coeus.common.budget.framework.rate.BudgetLaRate;
 import org.kuali.coeus.common.budget.framework.rate.BudgetRate;
 import org.kuali.coeus.sys.api.model.ScaleTwoDecimal;
@@ -29,8 +27,6 @@ import java.util.Map;
  * This class is for calculating personnel line items.
  */
 public class PersonnelLineItemCalculator extends AbstractBudgetCalculator {
-
-    private static final Log LOG = LogFactory.getLog(PersonnelLineItemCalculator.class);
 
     private BudgetPersonnelDetails budgetPersonnelLineItem;
     private Budget budget;

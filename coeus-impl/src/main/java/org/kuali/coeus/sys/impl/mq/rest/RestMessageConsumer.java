@@ -10,8 +10,8 @@
 package org.kuali.coeus.sys.impl.mq.rest;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.sys.framework.auth.JwtService;
 import org.kuali.coeus.sys.framework.mq.rest.RestRequest;
 import org.kuali.rice.core.api.config.property.ConfigurationService;
@@ -40,7 +40,7 @@ import java.util.Map;
 @Component("restMessageConsumer")
 public class RestMessageConsumer implements MessageListener {
 
-    private static Log LOG = LogFactory.getLog(RestMessageConsumer.class);
+    private static Logger LOG = LogManager.getLogger(RestMessageConsumer.class);
 
     @Autowired
     @Qualifier("restDestinationRegistry")

@@ -9,8 +9,8 @@ package org.kuali.coeus.common.budget.impl.calculator;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.common.budget.api.rate.RateClassType;
 import org.kuali.coeus.common.budget.framework.calculator.*;
 import org.kuali.coeus.common.budget.framework.query.*;
@@ -55,7 +55,7 @@ public abstract class AbstractBudgetCalculator {
     public static final String ACTIVITY_TYPE_CODE = "activityTypeCode";
     public static final String VALID_CE_RATE_TYPES = "validCeRateTypes";
     public static final String CALCULATED_COST = "calculatedCost";
-    private static final Log LOG = LogFactory.getLog(AbstractBudgetCalculator.class);
+    private static final Logger LOG = LogManager.getLogger(AbstractBudgetCalculator.class);
 
     private LegacyDataAdapter legacyDataAdapter;
     private DateTimeService dateTimeService;

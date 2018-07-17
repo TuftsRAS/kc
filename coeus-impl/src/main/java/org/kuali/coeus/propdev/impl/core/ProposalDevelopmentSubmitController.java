@@ -8,7 +8,8 @@
 package org.kuali.coeus.propdev.impl.core;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.kuali.coeus.common.budget.framework.core.Budget;
 import org.kuali.coeus.common.framework.compliance.core.SaveSpecialReviewLinkEvent;
 import org.kuali.coeus.common.framework.compliance.core.SpecialReviewService;
@@ -98,7 +99,7 @@ public class ProposalDevelopmentSubmitController extends ProposalDevelopmentCont
     private static final String PROP_DEV_OPPORTUNITY_PAGE = "PropDev-OpportunityPage";
     private static final String PROP_DEV_RESUMBIT_OPTIONS_SECTION = "PropDev-Resumbit-OptionsSection";
 
-    private final Logger LOGGER = Logger.getLogger(ProposalDevelopmentSubmitController.class);
+    private final Logger LOGGER = LogManager.getLogger(ProposalDevelopmentSubmitController.class);
 
     private static final String AUTO_SUBMIT_TO_SPONSOR_ON_FINAL_APPROVAL = "autoSubmitToSponsorOnFinalApproval";
 	private static final String SUBMIT_TO_SPONSOR = "submitToSponsor";

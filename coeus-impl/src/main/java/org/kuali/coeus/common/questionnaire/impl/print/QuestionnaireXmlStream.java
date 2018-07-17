@@ -8,8 +8,8 @@
 package org.kuali.coeus.common.questionnaire.impl.print;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.apache.xmlbeans.XmlObject;
 import org.kuali.coeus.common.framework.module.CoeusModule;
 import org.kuali.coeus.common.framework.module.CoeusSubModule;
@@ -71,7 +71,7 @@ public class QuestionnaireXmlStream implements XmlStream {
     public static final String COEUS_MODULE_SUB_ITEM_CODE = "coeusModuleSubItemCode";
     public static final String QUESTION = "question";
     public static final String PERSON_ID = "personId";
-    private static final Log LOG = LogFactory.getLog(QuestionnaireXmlStream.class);
+    private static final Logger LOG = LogManager.getLogger(QuestionnaireXmlStream.class);
     private static final int QUESTION_TYPE_INT = 3;
 
     List<QuestionnaireQuestion> sortedQuestionnaireQuestions;

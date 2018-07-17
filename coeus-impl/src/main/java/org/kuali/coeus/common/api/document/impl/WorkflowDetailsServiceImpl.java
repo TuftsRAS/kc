@@ -1,8 +1,8 @@
 package org.kuali.coeus.common.api.document.impl;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.common.api.document.DocumentWorkflowUserDetails;
 import org.kuali.coeus.common.api.document.DocumentWorkloadDetails;
 import org.kuali.coeus.common.api.document.service.DocumentActionListService;
@@ -65,7 +65,7 @@ public class WorkflowDetailsServiceImpl implements WorkflowDetailsService {
     @Qualifier("globalVariableService")
     private GlobalVariableService globalVariableService;
 
-    private static final Log LOG = LogFactory.getLog(WorkflowDetailsServiceImpl.class);
+    private static final Logger LOG = LogManager.getLogger(WorkflowDetailsServiceImpl.class);
 
     public void simulateWorkflowOnAllDocuments() {
         String principalId = globalVariableService.getUserSession().getPrincipalId();

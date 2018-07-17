@@ -8,7 +8,6 @@
 package org.kuali.coeus.common.impl.attachment;
 
 
-import org.apache.log4j.Logger;
 import org.kuali.coeus.sys.api.model.KcFile;
 import org.kuali.rice.krad.file.FileMeta;
 import org.kuali.rice.krad.util.KRADUtils;
@@ -23,7 +22,6 @@ import java.util.List;
 
 @Component("kcFileControllerService")
 public class KcFileControllerServiceImpl extends FileControllerServiceImpl {
-    private static final Logger LOG = Logger.getLogger(KcFileControllerServiceImpl.class);
 
     @Override
     protected void sendFileFromLineResponse(UifFormBase form, HttpServletResponse response, List<FileMeta> collection,

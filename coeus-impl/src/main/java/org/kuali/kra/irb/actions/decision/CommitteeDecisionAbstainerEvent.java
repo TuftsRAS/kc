@@ -7,7 +7,7 @@
  */
 package org.kuali.kra.irb.actions.decision;
 
-import org.apache.commons.logging.Log;
+import org.apache.logging.log4j.Logger;
 import org.kuali.kra.irb.ProtocolDocument;
 import org.kuali.kra.protocol.actions.decision.CommitteeDecisionAbstainerEventBase;
 
@@ -15,7 +15,7 @@ import org.kuali.kra.protocol.actions.decision.CommitteeDecisionAbstainerEventBa
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class CommitteeDecisionAbstainerEvent extends CommitteeDecisionAbstainerEventBase {
     
-    private static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(CommitteeDecisionAbstainerEvent.class);
+    private static final org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger(CommitteeDecisionAbstainerEvent.class);
     
     public CommitteeDecisionAbstainerEvent(ProtocolDocument document, CommitteeDecision decision) {
         super(document, decision);
@@ -23,7 +23,7 @@ public class CommitteeDecisionAbstainerEvent extends CommitteeDecisionAbstainerE
 
 
     @Override
-    protected Log getLOGHook() {
+    protected Logger getLOGHook() {
         return LOG;
     }
 }

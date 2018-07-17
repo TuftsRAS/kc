@@ -8,8 +8,8 @@
 package org.kuali.coeus.common.impl.sponsor.hierarchy;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.apache.struts.action.ActionMapping;
 import org.kuali.coeus.common.framework.sponsor.hierarchy.SponsorHierarchy;
 import org.kuali.coeus.sys.framework.service.KcServiceLocator;
@@ -46,7 +46,7 @@ public class SponsorHierarchyForm extends KualiForm {
     private String sqlScripts;
     private String timestamp;
     private int numberPerGroup;
-    private static final Log LOG = LogFactory.getLog(SponsorHierarchyForm.class);
+    private static final Logger LOG = LogManager.getLogger(SponsorHierarchyForm.class);
     private transient ParameterService parameterService;
 
     /**

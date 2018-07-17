@@ -7,8 +7,8 @@
  */
 package org.kuali.coeus.common.budget.impl.period;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.common.budget.framework.period.BudgetPeriod;
 import org.kuali.coeus.sys.framework.service.KcServiceLocator;
 import org.kuali.kra.award.budget.AwardBudgetService;
@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BudgetExpensePeriodValuesFinder extends BudgetPeriodValuesFinder {
-    protected Log LOG = LogFactory.getLog(BudgetExpensePeriodValuesFinder.class);
+    protected Logger LOG = LogManager.getLogger(BudgetExpensePeriodValuesFinder.class);
 
     protected AwardBudgetService awardBudgetService = KcServiceLocator.getService(AwardBudgetService.class);
     protected DocumentService documentService = KcServiceLocator.getService(DocumentService.class);

@@ -9,8 +9,8 @@ package org.kuali.coeus.propdev.impl.s2s;
 
 import com.lowagie.text.pdf.*;
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.s2sgen.api.core.InfastructureConstants;
 import org.kuali.coeus.s2sgen.api.hash.GrantApplicationHashService;
 import org.kuali.coeus.sys.api.model.KcFile;
@@ -44,7 +44,7 @@ import static org.kuali.coeus.propdev.impl.s2s.S2SXmlConstants.*;
 @Component("formUtilityService")
 public class FormUtilityServiceImpl implements FormUtilityService {
 
-    private static final Log LOG = LogFactory.getLog(FormUtilityServiceImpl.class);
+    private static final Logger LOG = LogManager.getLogger(FormUtilityServiceImpl.class);
 
     @Autowired
     @Qualifier("businessObjectService")

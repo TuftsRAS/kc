@@ -8,8 +8,8 @@
 package org.kuali.coeus.common.budget.impl.print;
 
 import org.apache.commons.lang3.time.DateFormatUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.apache.xmlbeans.XmlObject;
 import org.kuali.coeus.sys.api.model.ScaleTwoDecimal;
 import org.kuali.coeus.sys.framework.model.KcPersistableBusinessObjectBase;
@@ -44,8 +44,8 @@ import java.util.*;
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class IndustrialBudgetXmlStream extends BudgetBaseStream {
 
-	private static final Log LOG = LogFactory
-			.getLog(IndustrialBudgetXmlStream.class);
+	private static final Logger LOG = LogManager
+			.getLogger(IndustrialBudgetXmlStream.class);
 
     /**
 	 * This method generates XML for Award Delta Report. It uses data passed in

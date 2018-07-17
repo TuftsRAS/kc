@@ -8,8 +8,8 @@
 package org.kuali.coeus.propdev.impl.core;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.coi.framework.Project;
 import org.kuali.coeus.coi.framework.ProjectPublisher;
 import org.kuali.coeus.coi.framework.ProjectRetrievalService;
@@ -92,7 +92,7 @@ public class ProposalDevelopmentDocument extends BudgetParentDocument<Developmen
     private static final String BATCH_JOB_USER_NAME = "batchJobUserName";
     private static final String KC_GEN = "KC-GEN";
     private static final String SAVE_WORKFLOW_SIMULATION_RESULT_ON_WORKFLOW_ACTION = "SAVE_WORKFLOW_SIMULATION_RESULT_ON_WORKFLOW_ACTION";
-    private static Log LOG = LogFactory.getLog(ProposalDevelopmentDocument.class);
+    private static Logger LOG = LogManager.getLogger(ProposalDevelopmentDocument.class);
 
     public static final String DOCUMENT_TYPE_CODE = "PRDV";
 

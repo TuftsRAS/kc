@@ -10,8 +10,8 @@ package org.kuali.coeus.common.budget.framework.query;
 
 
 import org.apache.commons.beanutils.PropertyUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.common.budget.framework.query.operator.Operator;
 
 import java.lang.reflect.InvocationTargetException;
@@ -30,7 +30,7 @@ import java.util.Map;
  */
 public class QueryEngine {
 
-    private static final Log LOG = LogFactory.getLog(QueryEngine.class);
+    private static final Logger LOG = LogManager.getLogger(QueryEngine.class);
 
     private Map dataCollection;
     

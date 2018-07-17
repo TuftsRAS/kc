@@ -7,8 +7,8 @@
  */
 package org.kuali.kra.protocol.onlinereview.event;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.common.committee.impl.meeting.CommitteeScheduleMinuteBase;
 import org.kuali.coeus.sys.framework.rule.KcDocumentEventBase;
 import org.kuali.kra.protocol.ProtocolOnlineReviewDocumentBase;
@@ -19,7 +19,7 @@ public class AddProtocolOnlineReviewCommentEvent extends KcDocumentEventBase {
 
     
     
-    private static final Log LOG = LogFactory.getLog(AddProtocolOnlineReviewCommentEvent.class);
+    private static final Logger LOG = LogManager.getLogger(AddProtocolOnlineReviewCommentEvent.class);
     private final CommitteeScheduleMinuteBase committeeScheduleMinute;
     private final long onlineReviewIndex;
   

@@ -19,8 +19,8 @@ import java.util.List;
  * 
  */
 public abstract class NarrativeEventBase extends KcDocumentEventBase implements NarrativeEvent {
-    private static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory
-            .getLog(NarrativeEventBase.class);
+    private static final org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager
+            .getLogger(NarrativeEventBase.class);
 
     private Narrative narrative;
     private List<Narrative> narratives;

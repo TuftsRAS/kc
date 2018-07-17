@@ -7,8 +7,8 @@
  */
 package org.kuali.coeus.sys.framework.controller.interceptor;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -44,7 +44,7 @@ public class PerformanceMeasurementFilter implements Filter {
         try {
             processResponse(request, filterResponse, startTime);
         } catch(Throwable t) {
-            Log logger = LogFactory.getLog(PerformanceMeasurementFilter.class);
+            Logger logger = LogManager.getLogger(PerformanceMeasurementFilter.class);
             logger.error(t.getMessage(), t);
         }
     }
@@ -93,7 +93,7 @@ public class PerformanceMeasurementFilter implements Filter {
             insertLine(file, sample);
                        
         } catch(Exception e) {
-            Log logger = LogFactory.getLog(PerformanceMeasurementFilter.class);
+            Logger logger = LogManager.getLogger(PerformanceMeasurementFilter.class);
             logger.warn(e.getMessage(), e);
         }
     }

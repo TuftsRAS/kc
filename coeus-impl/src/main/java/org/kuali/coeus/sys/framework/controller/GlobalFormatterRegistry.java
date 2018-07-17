@@ -8,8 +8,8 @@
 package org.kuali.coeus.sys.framework.controller;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.apache.struts.action.ActionServlet;
 import org.apache.struts.action.PlugIn;
 import org.apache.struts.config.ModuleConfig;
@@ -117,7 +117,7 @@ public class GlobalFormatterRegistry implements PlugIn {
      */
     public static class ScaleTwoDecimalFormatter extends BigDecimalFormatter {
         private static final long serialVersionUID = 8395988033199649377L;
-        private static Log LOG = LogFactory.getLog(ScaleTwoDecimalFormatter.class);
+        private static Logger LOG = LogManager.getLogger(ScaleTwoDecimalFormatter.class);
 
         public ScaleTwoDecimalFormatter() {
             super();

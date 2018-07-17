@@ -11,8 +11,8 @@ import com.lowagie.text.*;
 import com.lowagie.text.Image;
 import com.lowagie.text.Rectangle;
 import com.lowagie.text.pdf.*;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.common.framework.print.watermark.WatermarkBean;
 import org.kuali.coeus.common.framework.print.watermark.WatermarkConstants;
 import org.kuali.coeus.common.framework.print.watermark.WatermarkService;
@@ -31,7 +31,7 @@ import java.io.IOException;
 public class WatermarkServiceImpl implements WatermarkService {
 
 
-    private static final Log LOG = LogFactory.getLog(WatermarkServiceImpl.class);
+    private static final Logger LOG = LogManager.getLogger(WatermarkServiceImpl.class);
 
     /**
      * This method for applying watermark to the pdf

@@ -1,7 +1,7 @@
 package org.kuali.coeus.common.impl.document;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.common.api.document.service.WorkflowDetailsService;
 import org.kuali.rice.krad.UserSession;
 import org.kuali.rice.krad.util.GlobalVariables;
@@ -10,7 +10,7 @@ import org.quartz.JobExecutionException;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 
 public class WorkflowSimulatorJob extends QuartzJobBean  {
-    private static final Log LOG = LogFactory.getLog(WorkflowSimulatorJob.class);
+    private static final Logger LOG = LogManager.getLogger(WorkflowSimulatorJob.class);
     private WorkflowDetailsService workflowDetailsService;
     private String user;
 

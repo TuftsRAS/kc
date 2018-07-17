@@ -8,8 +8,8 @@
 package org.kuali.coeus.sys.impl.validation;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.sys.framework.validation.ErrorReporter;
 import org.kuali.coeus.sys.framework.validation.SoftError;
 import org.kuali.kra.infrastructure.KeyConstants;
@@ -24,7 +24,7 @@ import java.util.*;
 @Component("errorReporter")
 public class ErrorReporterImpl implements ErrorReporter {
 
-    private static final Log LOG = LogFactory.getLog(ErrorReporterImpl.class);
+    private static final Logger LOG = LogManager.getLogger(ErrorReporterImpl.class);
 
     @Override
     public void reportError(String propertyName, String errorKey, String... errorParams) {

@@ -8,8 +8,8 @@
 package org.kuali.kra.iacuc.actions.request;
 
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.common.framework.module.CoeusModule;
 import org.kuali.coeus.common.notification.impl.service.KcNotificationService;
 import org.kuali.kra.iacuc.IacucProtocol;
@@ -30,7 +30,7 @@ import java.util.Map;
  */
 public class IacucProtocolRequestServiceImpl implements IacucProtocolRequestService {
     
-    private static final Log LOG = LogFactory.getLog(IacucProtocolRequestServiceImpl.class);
+    private static final Logger LOG = LogManager.getLogger(IacucProtocolRequestServiceImpl.class);
     private static final String MODULE_ITEM_CODE = "moduleItemCode";
     private static final String MODULE_ITEM_KEY = "moduleItemKey";
     private BusinessObjectService businessObjectService;

@@ -11,8 +11,8 @@ import net.sourceforge.schemaspy.Config;
 import net.sourceforge.schemaspy.SchemaAnalyzer;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.sys.framework.gv.GlobalVariableService;
 import org.kuali.coeus.sys.framework.util.HttpUtils;
 import org.kuali.rice.kim.api.KimConstants;
@@ -45,7 +45,7 @@ import java.util.stream.Collectors;
  */
 public class SchemaSpyFilter implements Filter {
 
-    private static final Log LOG = LogFactory.getLog(SchemaSpyFilter.class);
+    private static final Logger LOG = LogManager.getLogger(SchemaSpyFilter.class);
 
     private static final String DB_TYPE_FLAG = "-t";
     private static final String MYSQL_DB_TYPE = "mysql";

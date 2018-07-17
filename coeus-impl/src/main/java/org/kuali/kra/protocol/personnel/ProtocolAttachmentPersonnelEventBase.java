@@ -14,8 +14,8 @@ import org.kuali.rice.krad.document.Document;
 
 public abstract class ProtocolAttachmentPersonnelEventBase  extends KcDocumentEventBase implements ProtocolAttachmentPersonnelEvent {
     
-    private static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory
-    .getLog(ProtocolAttachmentPersonnelEventBase.class);
+    private static final org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager
+    .getLogger(ProtocolAttachmentPersonnelEventBase.class);
 
     private ProtocolAttachmentPersonnelBase protocolAttachmentPersonnel;
     private int personIndex;

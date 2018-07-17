@@ -7,8 +7,8 @@
  */
 package org.kuali.kra.irb.noteattachment;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -48,7 +48,7 @@ public class ProtocolNoteAndAttachmentAction extends ProtocolAction {
     private static final String INVALID_ATTACHMENT = "this attachment version is invalid ";
     
     
-    private static final Log LOG = LogFactory.getLog(ProtocolNoteAndAttachmentAction.class);
+    private static final Logger LOG = LogManager.getLogger(ProtocolNoteAndAttachmentAction.class);
     
     /** signifies that a response has already be handled therefore forwarding to obtain a response is not needed. */
     private static final ActionForward RESPONSE_ALREADY_HANDLED = null;

@@ -9,8 +9,8 @@ package org.kuali.kra.award.awardhierarchy;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.apache.ojb.broker.core.proxy.ProxyHelper;
 import org.kuali.coeus.common.framework.version.VersionException;
 import org.kuali.coeus.common.framework.version.VersionStatus;
@@ -66,7 +66,7 @@ import java.util.stream.Collectors;
 
 @Transactional
 public class AwardHierarchyServiceImpl implements AwardHierarchyService {
-    private static final Log LOG = LogFactory.getLog(AwardHierarchyServiceImpl.class);
+    private static final Logger LOG = LogManager.getLogger(AwardHierarchyServiceImpl.class);
 
     private static final String DOCUMENT_DESCRIPTION_FIELD_NAME = "documentDescription";
     

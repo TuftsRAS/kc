@@ -7,8 +7,8 @@
  */
 package org.kuali.coeus.propdev.impl.location;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.rice.location.api.country.CountryService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
 @Component("proposalCountryService")
 public class ProposalCountryServiceImpl implements ProposalCountryService {
 
-    private static final Log LOG = LogFactory.getLog(ProposalCountryServiceImpl.class);
+    private static final Logger LOG = LogManager.getLogger(ProposalCountryServiceImpl.class);
 
     @Autowired
     @Qualifier("countryService")

@@ -8,8 +8,8 @@
 package org.kuali.kra.coi.lookup.dao.ojb;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.apache.ojb.broker.query.Criteria;
 import org.apache.ojb.broker.query.QueryByCriteria;
 import org.apache.ojb.broker.query.QueryFactory;
@@ -35,7 +35,7 @@ import java.util.Map;
 
 public class CoiDisclosureUndisclosedEventsDaoOjb extends PlatformAwareDaoBaseOjb implements OjbCollectionAware, CoiDisclosureUndisclosedEventsDao {
 
-    private static final Log LOG = LogFactory.getLog(CoiDisclosureUndisclosedEventsDaoOjb.class);
+    private static final Logger LOG = LogManager.getLogger(CoiDisclosureUndisclosedEventsDaoOjb.class);
 
     private static final String PERSON_ID = "personId";
     private static final String DEV_PROPOSAL_SAVE_DATE = "developmentProposal.updateTimestamp";

@@ -9,8 +9,8 @@ package org.kuali.kra.award;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.award.AccountInformationBean;
 import org.kuali.coeus.award.finance.AwardAccount;
 import org.kuali.coeus.award.finance.AwardPostHistoryBean;
@@ -113,7 +113,7 @@ public class AwardForm extends BudgetVersionFormBase implements MultiLookupForm,
     public static final String COLUMN = ":";
     public static final String UPDATE_TIMESTAMP_DD_NAME = "DataDictionary.Award.attributes.updateTimestamp";
     public static final String SPONSOR_DD_NAME = "DataDictionary.Sponsor.attributes.sponsorName";
-    private static final Log LOG = LogFactory.getLog(AwardForm.class);
+    private static final Logger LOG = LogManager.getLogger(AwardForm.class);
     public static final String ACCOUNT_NUMBER = "accountNumber";
     public static final String METHOD_TO_CALL_POST_AWARD = "methodToCall.postAward";
     public static final String POST_AWARD_ALT_TEXT = "Post Award";

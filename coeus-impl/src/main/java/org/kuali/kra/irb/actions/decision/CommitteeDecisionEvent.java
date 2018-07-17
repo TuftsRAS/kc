@@ -7,7 +7,7 @@
  */
 package org.kuali.kra.irb.actions.decision;
 
-import org.apache.commons.logging.Log;
+import org.apache.logging.log4j.Logger;
 import org.kuali.kra.irb.ProtocolDocument;
 import org.kuali.kra.protocol.actions.decision.CommitteeDecisionEventBase;
 
@@ -15,14 +15,14 @@ import org.kuali.kra.protocol.actions.decision.CommitteeDecisionEventBase;
 @SuppressWarnings("unchecked")
 public class CommitteeDecisionEvent extends CommitteeDecisionEventBase {
     
-    private static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(CommitteeDecisionEvent.class);
+    private static final org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger(CommitteeDecisionEvent.class);
     
     public CommitteeDecisionEvent(ProtocolDocument document, CommitteeDecision decision) {
         super(document, decision);
     }
 
     @Override
-    protected Log getLOGHook() {
+    protected Logger getLOGHook() {
         return LOG;
     }
 }

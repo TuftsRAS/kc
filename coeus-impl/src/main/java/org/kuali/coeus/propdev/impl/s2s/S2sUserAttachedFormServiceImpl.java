@@ -10,8 +10,8 @@ package org.kuali.coeus.propdev.impl.s2s;
 
 import com.lowagie.text.pdf.*;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.propdev.api.s2s.S2sFormConfigurationService;
 import org.kuali.coeus.propdev.impl.core.ProposalDevelopmentDocument;
 import org.kuali.coeus.propdev.impl.specialreview.ProposalSpecialReviewHumanSubjectsAttachmentService;
@@ -45,7 +45,7 @@ import static org.kuali.coeus.propdev.impl.s2s.S2SXmlConstants.*;
 @Component("s2sUserAttachedFormService")
 public class S2sUserAttachedFormServiceImpl implements S2sUserAttachedFormService {
 
-    private static final Log LOG = LogFactory.getLog(S2sUserAttachedFormServiceImpl.class);
+    private static final Logger LOG = LogManager.getLogger(S2sUserAttachedFormServiceImpl.class);
     private static final String XFA_NS = "http://www.xfa.org/schema/xfa-data/1.0/";
     private static final String USER_ATTACHED_FORMS_ERRORS = "userAttachedFormsErrors";
     private static final String UPLOADED_FILE_IS_EMPTY = "Uploaded file is empty";

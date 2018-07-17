@@ -8,8 +8,8 @@
 
 package org.kuali.coeus.coi.impl;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.coi.framework.DisclosureProjectStatus;
 import org.kuali.coeus.coi.framework.DisclosureStatusRetrievalService;
 import org.kuali.coeus.sys.framework.auth.AuthConstants;
@@ -31,7 +31,7 @@ import java.util.List;
 
 @Component("disclosureStatusRetrievalService")
 public class DisclosureStatusRetrievalServiceImpl implements DisclosureStatusRetrievalService {
-    private static Log LOG = LogFactory.getLog(DisclosureStatusRetrievalServiceImpl.class);
+    private static Logger LOG = LogManager.getLogger(DisclosureStatusRetrievalServiceImpl.class);
 
     @Autowired
     @Qualifier("restOperations")

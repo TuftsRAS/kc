@@ -7,8 +7,8 @@
  */
 package org.kuali.kra.protocol.actions.genericactions;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.kra.infrastructure.Constants;
 import org.kuali.kra.protocol.ProtocolBase;
 import org.kuali.kra.protocol.ProtocolDocumentBase;
@@ -32,7 +32,7 @@ import java.sql.Timestamp;
  * state change.
  */
 public abstract class ProtocolGenericActionServiceImplBase implements ProtocolGenericActionService {
-    private static final Log LOG = LogFactory.getLog(ProtocolGenericActionServiceImplBase.class);
+    private static final Logger LOG = LogManager.getLogger(ProtocolGenericActionServiceImplBase.class);
     
     private static final String PROTOCOL_SUBMISSION = "protocolSubmission";
     private ProtocolActionService protocolActionService;

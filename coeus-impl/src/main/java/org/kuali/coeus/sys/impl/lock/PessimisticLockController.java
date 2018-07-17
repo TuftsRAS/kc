@@ -9,8 +9,8 @@ package org.kuali.coeus.sys.impl.lock;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.rice.core.api.criteria.QueryByCriteria;
 import org.kuali.rice.coreservice.framework.parameter.ParameterService;
 import org.kuali.rice.krad.data.DataObjectService;
@@ -31,7 +31,7 @@ import java.util.Collections;
 @Controller
 public class PessimisticLockController {
 
-    private static final Log LOG = LogFactory.getLog(PessimisticLockController.class);
+    private static final Logger LOG = LogManager.getLogger(PessimisticLockController.class);
 
     @Autowired
     @Qualifier("dataObjectService")

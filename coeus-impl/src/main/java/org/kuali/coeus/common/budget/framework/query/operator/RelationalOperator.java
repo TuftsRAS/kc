@@ -7,8 +7,8 @@
  */
 package org.kuali.coeus.common.budget.framework.query.operator;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -17,7 +17,7 @@ import java.lang.reflect.Method;
 
 public abstract class RelationalOperator implements Operator {
 
-    private static final Log LOG = LogFactory.getLog(RelationalOperator.class);
+    private static final Logger LOG = LogManager.getLogger(RelationalOperator.class);
 
     protected String fieldName;
     protected Comparable fixedData;

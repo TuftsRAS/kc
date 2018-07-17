@@ -25,8 +25,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.common.framework.core.groups.GroupsPushService;
 import org.kuali.coeus.common.framework.core.groups.GroupsPushStatus;
 import org.kuali.coeus.common.framework.unit.Unit;
@@ -60,7 +60,7 @@ public class GroupsPushServiceImpl implements GroupsPushService {
 	private static final String UNIT_NUMBER_FIELD_DESCRIPTION = "Unit Number";
 	private static final String CHECKBOX_FIELD_TYPE = "checkbox";
 	private static final String TEXT_FIELD_TYPE = "text";
-	private static final Log LOG = LogFactory.getLog(GroupsPushServiceImpl.class);
+	private static final Logger LOG = LogManager.getLogger(GroupsPushServiceImpl.class);
 	private static final Integer NUMBER_OF_USERS_LIMIT = 100000;
 	private static final String LIMIT_PARAM = "limit";
 	private static final String[] PREDEFINED_ROLE_IDS = { "IRB Admin", "IACUC Admin", "IRB User", "IACUC User", "IRB Viewer", "IACUC Viewer" };

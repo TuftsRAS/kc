@@ -17,7 +17,7 @@ import org.kuali.rice.krad.rules.rule.BusinessRule;
  */
 public class ProtocolAdminCorrectionEvent extends KcDocumentEventBase {
     
-    private static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(ProtocolAdminCorrectionEvent.class);
+    private static final org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger(ProtocolAdminCorrectionEvent.class);
     
     private AdminCorrectionBean actionBean;
     

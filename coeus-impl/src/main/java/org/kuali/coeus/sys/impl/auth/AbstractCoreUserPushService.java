@@ -18,8 +18,8 @@ import java.util.stream.Collectors;
 
 import org.kuali.coeus.sys.framework.auth.CoreUserPushService;
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.sys.framework.auth.CoreUsersPushStatus;
 import org.kuali.coeus.sys.framework.auth.AuthUser;
 import org.kuali.coeus.sys.framework.auth.CoreGroupsService;
@@ -55,7 +55,7 @@ public abstract class AbstractCoreUserPushService<T> implements CoreUserPushServ
 
 	protected abstract boolean validUserToPush(T person);
 
-	private static final Log LOG = LogFactory.getLog(AbstractCoreUserPushService.class);
+	private static final Logger LOG = LogManager.getLogger(AbstractCoreUserPushService.class);
 	private static final String LIMIT_PARAM = "limit";
 	private static final String AUTH_USER_PUSH_USE_DEV_PASSWORD = "auth.user.push.use.dev.password";
 	private static final String AUTH_USER_PUSH_DEV_PASSWORD = "auth.user.push.dev.password";

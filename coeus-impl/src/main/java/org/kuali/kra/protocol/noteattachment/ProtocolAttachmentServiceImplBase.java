@@ -7,8 +7,8 @@
  */
 package org.kuali.kra.protocol.noteattachment;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.kra.protocol.ProtocolBase;
 import org.kuali.kra.protocol.ProtocolDao;
 import org.kuali.kra.protocol.ProtocolSpecialVersion;
@@ -28,7 +28,7 @@ public abstract class ProtocolAttachmentServiceImplBase implements ProtocolAttac
     protected final ProtocolDao protocolDao;
     protected PersonService personService;
     
-    protected final Log LOG = LogFactory.getLog(getClass()); 
+    protected final Logger LOG = LogManager.getLogger(getClass());
     private static final String PERSON_NOT_FOUND_FORMAT_STRING = "%s (not found)";
     
     

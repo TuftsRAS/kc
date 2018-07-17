@@ -9,8 +9,8 @@ package org.kuali.kra.institutionalproposal.service.impl;
 
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.coi.framework.Project;
 import org.kuali.coeus.coi.framework.ProjectPublisher;
 import org.kuali.coeus.coi.framework.ProjectRetrievalService;
@@ -75,7 +75,7 @@ import java.util.stream.Collectors;
 
 @Transactional
 public class InstitutionalProposalServiceImpl implements InstitutionalProposalService {
-    private static final Log LOG = LogFactory.getLog(InstitutionalProposalServiceImpl.class);
+    private static final Logger LOG = LogManager.getLogger(InstitutionalProposalServiceImpl.class);
 
     private static final String WORKFLOW_EXCEPTION_MESSAGE = "Caught workflow exception creating new Institutional Proposal";
     private static final String VERSION_EXCEPTION_MESSAGE = "Caught version exception creating new Institutional Proposal";

@@ -9,8 +9,8 @@ package org.kuali.coeus.common.impl.krms;
 
 
 import org.apache.commons.beanutils.PropertyUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.sys.framework.service.KcServiceLocator;
 import org.kuali.coeus.sys.api.model.ScaleTwoDecimal;
 import org.kuali.kra.krms.KcKrmsConstants;
@@ -38,7 +38,7 @@ import java.util.List;
  */
 public abstract class KcKrmsFactBuilderServiceHelper implements KcKrmsFactBuilderService {
     
-    protected final Log LOG = LogFactory.getLog(KcKrmsFactBuilderServiceHelper.class);
+    protected final Logger LOG = LogManager.getLogger(KcKrmsFactBuilderServiceHelper.class);
     
     protected String getElementValue(String docContent, String xpathExpression) {
         try {

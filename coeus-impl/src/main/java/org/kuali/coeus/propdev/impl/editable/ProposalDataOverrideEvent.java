@@ -14,7 +14,7 @@ import org.kuali.coeus.sys.framework.rule.KcDocumentEventBase;
 import org.kuali.rice.krad.rules.rule.BusinessRule;
 
 public class ProposalDataOverrideEvent extends KcDocumentEventBase {
-    private static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(ProposalDataOverrideEvent.class);
+    private static final org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger(ProposalDataOverrideEvent.class);
     
     private ProposalChangedData proposalChangedData;
     private DevelopmentProposal developmentProposal;

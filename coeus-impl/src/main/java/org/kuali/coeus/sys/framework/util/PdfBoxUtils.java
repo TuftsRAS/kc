@@ -10,8 +10,8 @@ package org.kuali.coeus.sys.framework.util;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSDictionary;
 import org.apache.pdfbox.cos.COSName;
@@ -32,7 +32,7 @@ import java.util.stream.Collectors;
 
 public final class PdfBoxUtils {
 
-    private static final Log LOG = LogFactory.getLog(PdfBoxUtils.class);
+    private static final Logger LOG = LogManager.getLogger(PdfBoxUtils.class);
     private static final String SEPARATOR = ".";
     private static final String TOP_LEVEL = "|--";
     private static final String CHILD_LEVEL = "|  ";

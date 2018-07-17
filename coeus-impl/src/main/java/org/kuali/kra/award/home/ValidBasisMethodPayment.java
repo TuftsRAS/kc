@@ -7,13 +7,13 @@
  */
 package org.kuali.kra.award.home;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.sys.framework.model.KcPersistableBusinessObjectBase;
 
 public class ValidBasisMethodPayment extends KcPersistableBusinessObjectBase {
 
-    private static final Log LOG = LogFactory.getLog(ValidBasisMethodPayment.class);
+    private static final Logger LOG = LogManager.getLogger(ValidBasisMethodPayment.class);
 
     private static final long serialVersionUID = 1L;
 

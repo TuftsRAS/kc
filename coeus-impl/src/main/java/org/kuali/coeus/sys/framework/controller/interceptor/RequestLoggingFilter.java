@@ -7,9 +7,9 @@
  */
 package org.kuali.coeus.sys.framework.controller.interceptor;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.apache.log4j.MDC;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.ThreadContext;
 import org.kuali.coeus.sys.framework.sensitive.SensitiveFieldMatcher;
 import org.kuali.coeus.sys.framework.service.KcServiceLocator;
 
@@ -46,7 +46,7 @@ import java.util.Enumeration;
  */
 public class RequestLoggingFilter implements Filter {
     
-    private static final Log LOG = LogFactory.getLog(RequestLoggingFilter.class);
+    private static final Logger LOG = LogManager.getLogger(RequestLoggingFilter.class);
     
     //(Partial parameter names can also be used, Note: NO wildcard characters)
     private static final String [] paramsToLogInfoByDefault = {"methodToCall"}; 
@@ -98,7 +98,7 @@ public class RequestLoggingFilter implements Filter {
     private void doFilter(HttpServletRequest request, 
                           HttpServletResponse response) throws IOException, ServletException {
 
-        MDC.put("clientIp", request.getRemoteAddr());
+        ThreadContext.put("clientIp", request.getRemoteAddr());
         if (LOG.isInfoEnabled()) {
             final String logMessage = "Current User: " + request.getRemoteUser()
                     + ", RequestURI: " + request.getRequestURI()

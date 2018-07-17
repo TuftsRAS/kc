@@ -55,7 +55,7 @@ import java.util.Map;
 
 public class ReportTrackingLookupAction extends KualiLookupAction {
     
-    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(ReportTrackingLookupForm.class);
+    private static final org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger(ReportTrackingLookupForm.class);
     private static final ActionForward RESPONSE_ALREADY_HANDLED = null;
     private ReportTrackingDao reportTrackingDao;
     private DateTimeService dateTimeService;

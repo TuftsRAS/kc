@@ -8,8 +8,8 @@
 package org.kuali.kra.irb;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -77,7 +77,7 @@ public abstract class ProtocolAction extends ProtocolActionBase {
     public static final String PROTOCOL_MEDUSA = "medusa";
     public static final String PROTOCOL_HISTORY_HOOK = "protocolHistory";
 
-    private static final Log LOG = LogFactory.getLog(ProtocolAction.class);
+    private static final Logger LOG = LogManager.getLogger(ProtocolAction.class);
     private static final String PROTOCOL_NUMBER = "protocolNumber";
     private static final String SUBMISSION_NUMBER = "submissionNumber";
     private static final String SUFFIX_T = "T";

@@ -7,8 +7,8 @@
  */
 package org.kuali.coeus.propdev.impl.s2s.schedule;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.quartz.CronExpression;
 import org.quartz.CronTrigger;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
@@ -24,7 +24,7 @@ import java.util.List;
  * fire ever again.
  */
 public class S2SSchedulerFactoryBean extends SchedulerFactoryBean {
-    private static final Log LOG = LogFactory.getLog(S2SSchedulerFactoryBean.class);
+    private static final Logger LOG = LogManager.getLogger(S2SSchedulerFactoryBean.class);
     private List<CronTrigger> triggers;
 
     /**

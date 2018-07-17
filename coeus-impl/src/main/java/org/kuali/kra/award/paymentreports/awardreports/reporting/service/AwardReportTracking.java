@@ -7,8 +7,8 @@
  */
 package org.kuali.kra.award.paymentreports.awardreports.reporting.service;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.apache.xmlbeans.XmlObject;
 import org.kuali.coeus.common.framework.print.Printable;
 import org.kuali.coeus.common.framework.print.PrintingException;
@@ -35,7 +35,7 @@ public class AwardReportTracking implements Printable,Cloneable {
     private KcPersistableBusinessObjectBase printableBusinessObject;
     private Map<String, Object> reportParameters;
     private Map<String, byte[]> attachments;
-    private static final Log LOG = LogFactory.getLog(AwardReportTracking.class);
+    private static final Logger LOG = LogManager.getLogger(AwardReportTracking.class);
     /**
      * @return the xmlStream
      */

@@ -7,8 +7,8 @@
  */
 package org.kuali.coeus.sys.impl.session.ser;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -18,7 +18,7 @@ import java.util.stream.Stream;
 @Component("serializableLogger")
 public class SerializableLoggerImpl implements SerializableLogger {
 
-    private Log LOG = LogFactory.getLog(SerializableLoggerImpl.class);
+    private Logger LOG = LogManager.getLogger(SerializableLoggerImpl.class);
 
     @Autowired
     @Qualifier("serializableKradFormService")

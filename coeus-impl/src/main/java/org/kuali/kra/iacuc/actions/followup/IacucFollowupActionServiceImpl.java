@@ -7,8 +7,8 @@
  */
 package org.kuali.kra.iacuc.actions.followup;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.kra.iacuc.actions.IacucProtocolActionType;
 import org.kuali.kra.iacuc.actions.submit.IacucValidProtocolActionAction;
 import org.kuali.kra.protocol.actions.followup.FollowupActionServiceImplBase;
@@ -17,7 +17,7 @@ import org.kuali.kra.protocol.actions.followup.FollowupActionServiceImplBase;
 public class IacucFollowupActionServiceImpl extends FollowupActionServiceImplBase<IacucValidProtocolActionAction> implements IacucFollowupActionService {
  
     
-    private static final Log LOG = LogFactory.getLog(IacucFollowupActionServiceImpl.class);
+    private static final Logger LOG = LogManager.getLogger(IacucFollowupActionServiceImpl.class);
 
     @Override
     protected Class<IacucValidProtocolActionAction> getValidProtocolActionActionClassHook() {
@@ -30,7 +30,7 @@ public class IacucFollowupActionServiceImpl extends FollowupActionServiceImplBas
     }
 
     @Override
-    protected Log getLogHook() {
+    protected Logger getLogHook() {
         return IacucFollowupActionServiceImpl.LOG;
     }
     

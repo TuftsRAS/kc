@@ -7,15 +7,15 @@
  */
 package co.kuali.coeus.data.migration;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 public final class MigrationUtils {
 	
-	private static final Logger LOG = LoggerFactory.getLogger(MigrationUtils.class);
+	private static final Logger LOG = LogManager.getLogger(MigrationUtils.class);
 
 	public static final String MYSQL_PRODUCT = "MySQL";
 	public static final String ORACLE_PRODUCT = "ORACLE";

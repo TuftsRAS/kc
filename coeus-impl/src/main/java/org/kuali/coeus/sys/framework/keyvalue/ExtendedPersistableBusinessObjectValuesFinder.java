@@ -7,8 +7,8 @@
  */
 package org.kuali.coeus.sys.framework.keyvalue;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.rice.core.api.util.ConcreteKeyValue;
 import org.kuali.rice.core.api.util.KeyValue;
 import org.kuali.rice.krad.keyvalues.PersistableBusinessObjectValuesFinder;
@@ -30,7 +30,7 @@ public class ExtendedPersistableBusinessObjectValuesFinder extends PersistableBu
 
     private static final Comparator<KeyValue> PBO_COMPARATOR = new PBOComparator();
     private static final ConcreteKeyValue SELECT_PREFIX = new ConcreteKeyValue(PrefixValuesFinder.getPrefixKey(), PrefixValuesFinder.getDefaultPrefixValue());
-    private static final Log LOG = LogFactory.getLog(ExtendedPersistableBusinessObjectValuesFinder.class);
+    private static final Logger LOG = LogManager.getLogger(ExtendedPersistableBusinessObjectValuesFinder.class);
 
     private static class PBOComparator implements Comparator<KeyValue>
     {    

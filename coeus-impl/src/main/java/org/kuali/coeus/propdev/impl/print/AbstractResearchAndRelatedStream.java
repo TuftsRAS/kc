@@ -18,8 +18,8 @@ import gov.nih.era.projectmgmt.sbir.cgap.researchandrelatedNamespace.Participant
 import gov.nih.era.projectmgmt.sbir.cgap.researchandrelatedNamespace.ProjectSurveyDocument.ProjectSurvey;
 import gov.nih.era.projectmgmt.sbir.cgap.researchandrelatedNamespace.TravelCostsDocument.TravelCosts;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.common.budget.framework.personnel.*;
 import org.kuali.coeus.common.framework.org.Organization;
 import org.kuali.coeus.common.framework.org.OrganizationYnq;
@@ -50,7 +50,7 @@ import java.sql.Date;
 import java.util.*;
 
 public abstract class AbstractResearchAndRelatedStream extends ProposalBaseStream {
-    private static final Log LOG = LogFactory.getLog(AbstractResearchAndRelatedStream.class);
+    private static final Logger LOG = LogManager.getLogger(AbstractResearchAndRelatedStream.class);
 
     protected static final String EMPTY_STRING = " ";
     protected static final String REPORT_NAME = "Research and Related";

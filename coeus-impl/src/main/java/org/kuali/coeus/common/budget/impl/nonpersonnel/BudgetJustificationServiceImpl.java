@@ -8,8 +8,8 @@
 package org.kuali.coeus.common.budget.impl.nonpersonnel;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.common.budget.framework.nonpersonnel.BudgetJustificationService;
 import org.kuali.coeus.common.budget.framework.nonpersonnel.BudgetJustificationWrapper;
 import org.kuali.coeus.common.budget.framework.nonpersonnel.BudgetLineItem;
@@ -31,7 +31,7 @@ import java.util.TreeMap;
 @Component("budgetJustificationService")
 public class BudgetJustificationServiceImpl implements BudgetJustificationService {
 
-    protected final Log LOG = LogFactory.getLog(BudgetJustificationServiceImpl.class);
+    protected final Logger LOG = LogManager.getLogger(BudgetJustificationServiceImpl.class);
 
     @Autowired
     @Qualifier("businessObjectService")

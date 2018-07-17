@@ -17,8 +17,8 @@ import org.kuali.rice.krad.util.ObjectUtils;
  * This is the base event class for <code>AwardFandaRate</code> business object.
  */
 public abstract class AwardFandaRateEvent extends KcDocumentEventBase {
-    private static final org.apache.commons.logging.Log LOG = 
-        org.apache.commons.logging.LogFactory.getLog(AwardFandaRateEvent.class);
+    private static final org.apache.logging.log4j.Logger LOG =
+        org.apache.logging.log4j.LogManager.getLogger(AwardFandaRateEvent.class);
 
     private AwardFandaRate awardFandaRate;
 

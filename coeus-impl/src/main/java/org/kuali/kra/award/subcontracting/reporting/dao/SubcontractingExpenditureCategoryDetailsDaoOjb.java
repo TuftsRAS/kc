@@ -7,8 +7,8 @@
  */
 package org.kuali.kra.award.subcontracting.reporting.dao;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.apache.ojb.broker.query.Criteria;
 import org.apache.ojb.broker.query.Query;
 import org.apache.ojb.broker.query.QueryFactory;
@@ -22,7 +22,7 @@ import java.util.List;
 public class SubcontractingExpenditureCategoryDetailsDaoOjb extends PlatformAwareDaoBaseOjb implements OjbCollectionAware, SubcontractingExpenditureCategoryDetailsDao {
 
     private static final Object FISCAL_PERIOD = "fiscalPeriod";
-    private static final Log LOG = LogFactory.getLog(SubcontractingExpenditureCategoryDetailsDaoOjb.class);
+    private static final Logger LOG = LogManager.getLogger(SubcontractingExpenditureCategoryDetailsDaoOjb.class);
 
     @SuppressWarnings("unchecked")
     @Override

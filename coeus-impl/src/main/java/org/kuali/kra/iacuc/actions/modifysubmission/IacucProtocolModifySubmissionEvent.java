@@ -14,7 +14,7 @@ import org.kuali.rice.krad.rules.rule.BusinessRule;
 
 public class IacucProtocolModifySubmissionEvent extends KcDocumentEventBase {
     private  IacucProtocolModifySubmissionBean actionBean;
-    private static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(IacucProtocolModifySubmissionEvent.class);
+    private static final org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger(IacucProtocolModifySubmissionEvent.class);
 
     public IacucProtocolModifySubmissionEvent(ProtocolDocumentBase document, IacucProtocolModifySubmissionBean actionBean) {
         super("Modifying submission " + getDocumentId(document), "", document);

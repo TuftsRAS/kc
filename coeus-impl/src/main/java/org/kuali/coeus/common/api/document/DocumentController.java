@@ -9,8 +9,8 @@
 package org.kuali.coeus.common.api.document;
 
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.common.api.document.dto.DevelopmentProposalSummaryDto;
 import org.kuali.coeus.common.api.document.dto.DocumentDetailsDto;
 import org.kuali.coeus.common.api.document.service.KewDocHeaderDao;
@@ -72,7 +72,7 @@ public class DocumentController {
     @Qualifier("actionRequestService")
     private ActionRequestService actionRequestService;
 
-    private static final Log LOG = LogFactory.getLog(DocumentController.class);
+    private static final Logger LOG = LogManager.getLogger(DocumentController.class);
 
     @RequestMapping(method= RequestMethod.GET, value="/enroute-documents", consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseStatus(value = HttpStatus.OK)

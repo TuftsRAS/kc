@@ -35,7 +35,7 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class SalaryCalculator {
-    private static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(SalaryCalculator.class);
+    private static final org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger(SalaryCalculator.class);
     private static final String STRING_1 = "1";
     private static final ScaleTwoDecimal DEFAULT_WORKING_MONTHS = new ScaleTwoDecimal(12);
     private static final String APPOINTMENT_TYPE = "appointmentType";

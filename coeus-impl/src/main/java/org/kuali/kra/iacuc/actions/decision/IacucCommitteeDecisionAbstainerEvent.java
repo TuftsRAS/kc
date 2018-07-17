@@ -7,21 +7,21 @@
  */
 package org.kuali.kra.iacuc.actions.decision;
 
-import org.apache.commons.logging.Log;
+import org.apache.logging.log4j.Logger;
 import org.kuali.kra.iacuc.IacucProtocolDocument;
 import org.kuali.kra.protocol.actions.decision.CommitteeDecisionAbstainerEventBase;
 
 
 public class IacucCommitteeDecisionAbstainerEvent extends CommitteeDecisionAbstainerEventBase<IacucCommitteeDecision> {
     
-    private static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(IacucCommitteeDecisionAbstainerEvent.class);
+    private static final org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger(IacucCommitteeDecisionAbstainerEvent.class);
 
     public IacucCommitteeDecisionAbstainerEvent(IacucProtocolDocument document, IacucCommitteeDecision decision) {
         super(document, decision);
     }
     
     @Override
-    protected Log getLOGHook() {
+    protected Logger getLOGHook() {
         return LOG;
     }
     

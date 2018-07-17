@@ -7,8 +7,8 @@
  */
 package org.kuali.coeus.common.impl.person.citi;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.common.framework.person.citi.CitiDataLoadingService;
 import org.kuali.coeus.common.framework.person.citi.CitiDataProcessingService;
 import org.kuali.coeus.common.framework.person.citi.CitiJob;
@@ -16,16 +16,13 @@ import org.kuali.coeus.sys.framework.gv.GlobalVariableService;
 import org.kuali.rice.krad.UserSession;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 @Component("citiJob")
 public class CitiJobImpl extends QuartzJobBean implements CitiJob  {
 
-    private static final Log LOG = LogFactory.getLog(CitiJobImpl.class);
+    private static final Logger LOG = LogManager.getLogger(CitiJobImpl.class);
     private static final String KC_SYSTEM_PRINCIPAL_NM = "kc";
 
     private CitiDataProcessingService citiDataProcessingService;

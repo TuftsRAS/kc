@@ -12,8 +12,8 @@ import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.beanutils.converters.SqlDateConverter;
 import org.apache.commons.beanutils.converters.SqlTimestampConverter;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.common.budget.framework.personnel.*;
 import org.kuali.coeus.propdev.impl.core.ProposalDevelopmentDocument;
 import org.kuali.coeus.sys.api.model.ScaleTwoDecimal;
@@ -46,7 +46,7 @@ import java.util.List;
 @Component("budgetPersonnelBudgetService")
 public class BudgetPersonnelBudgetServiceImpl implements BudgetPersonnelBudgetService {
 
-    private static final Log LOG = LogFactory.getLog(BudgetPersonnelBudgetServiceImpl.class);
+    private static final Logger LOG = LogManager.getLogger(BudgetPersonnelBudgetServiceImpl.class);
     public static final int BUDGET_PERIOD_1 = 1;
 
     @Autowired

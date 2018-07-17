@@ -7,8 +7,8 @@
  */
 package org.kuali.kra.institutionalproposal.rules;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.rice.krad.util.AuditCluster;
 import org.kuali.rice.krad.util.AuditError;
 import org.kuali.rice.krad.util.GlobalVariables;
@@ -22,7 +22,7 @@ import static org.kuali.kra.institutionalproposal.contacts.InstitutionalProposal
 
 public class InstitutionalProposalCreditSplitAuditError extends AuditError {
 
-    private static final Log LOG = LogFactory.getLog(InstitutionalProposalCreditSplitAuditError.class);
+    private static final Logger LOG = LogManager.getLogger(InstitutionalProposalCreditSplitAuditError.class);
 
     /**
      * 

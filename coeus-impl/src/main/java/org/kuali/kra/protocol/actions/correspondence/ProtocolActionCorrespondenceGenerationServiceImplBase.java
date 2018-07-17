@@ -7,8 +7,8 @@
  */
 package org.kuali.kra.protocol.actions.correspondence;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.common.framework.person.signature.PersonSignatureService;
 import org.kuali.coeus.common.framework.print.PrintableAttachment;
 import org.kuali.coeus.common.framework.print.PrintingException;
@@ -34,7 +34,7 @@ public abstract class ProtocolActionCorrespondenceGenerationServiceImplBase impl
     private PrintingService printingService;
     private DateTimeService dateTimeService;
 
-    private static final Log LOG = LogFactory.getLog(ProtocolActionCorrespondenceGenerationServiceImplBase.class);
+    private static final Logger LOG = LogManager.getLogger(ProtocolActionCorrespondenceGenerationServiceImplBase.class);
     
     public void setBusinessObjectService(BusinessObjectService businessObjectService) {
         this.businessObjectService = businessObjectService;

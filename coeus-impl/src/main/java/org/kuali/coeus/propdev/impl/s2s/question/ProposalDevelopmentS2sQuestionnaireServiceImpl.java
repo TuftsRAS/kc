@@ -28,7 +28,7 @@ import org.springframework.stereotype.Component;
 @Component("proposalDevelopmentS2sQuestionnaireService")
 public class ProposalDevelopmentS2sQuestionnaireServiceImpl implements ProposalDevelopmentS2sQuestionnaireService {
 
-	private static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(ProposalDevelopmentS2sQuestionnaireServiceImpl.class);
+	private static final org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger(ProposalDevelopmentS2sQuestionnaireServiceImpl.class);
 
 	@Autowired
 	@Qualifier("businessObjectService")

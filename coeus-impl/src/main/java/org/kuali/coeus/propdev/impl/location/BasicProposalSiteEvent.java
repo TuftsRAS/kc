@@ -19,7 +19,7 @@ import java.util.List;
  * Superclass for rule events related to Proposal Sites.
  */
 public class BasicProposalSiteEvent extends KcDocumentEventBase {
-    private static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(AddProposalCongressionalDistrictEvent.class);
+    private static final org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger(AddProposalCongressionalDistrictEvent.class);
     private List<ProposalSite> proposalSites;
     private String siteIndex;
     private List<CongressionalDistrict> congressionalDistricts;

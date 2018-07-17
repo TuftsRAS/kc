@@ -7,8 +7,8 @@
  */
 package org.kuali.coeus.common.budget.framework.query;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import java.io.*;
 
@@ -19,7 +19,7 @@ import java.io.*;
  */
 
 public class ObjectCloner {
-    private static final Log LOG = LogFactory.getLog(ObjectCloner.class);
+    private static final Logger LOG = LogManager.getLogger(ObjectCloner.class);
 
     // so that nobody can accidentally create an ObjectCloner object
     private ObjectCloner() {

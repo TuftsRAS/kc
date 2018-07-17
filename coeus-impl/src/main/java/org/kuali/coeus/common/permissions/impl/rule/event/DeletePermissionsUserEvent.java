@@ -24,7 +24,7 @@ import java.util.List;
  */
 public class DeletePermissionsUserEvent extends KcDocumentEventBase {
     
-    private static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(DeletePermissionsUserEvent.class);
+    private static final org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger(DeletePermissionsUserEvent.class);
     
     private int index;
     private List<User> users;

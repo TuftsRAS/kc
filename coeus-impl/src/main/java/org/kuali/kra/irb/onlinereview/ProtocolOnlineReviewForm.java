@@ -7,7 +7,7 @@
  */
 package org.kuali.kra.irb.onlinereview;
 
-import org.apache.commons.logging.Log;
+import org.apache.logging.log4j.Logger;
 import org.kuali.coeus.common.framework.auth.perm.KcAuthorizationService;
 import org.kuali.coeus.common.framework.auth.task.TaskAuthorizationService;
 import org.kuali.coeus.sys.framework.service.KcServiceLocator;
@@ -27,7 +27,7 @@ import java.util.Map;
 
 public class ProtocolOnlineReviewForm extends ProtocolOnlineReviewFormBase {
     
-    private static org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(ProtocolOnlineReviewForm.class);
+    private static org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger(ProtocolOnlineReviewForm.class);
     private static final Map<String,String> ONLINE_REVIEW_APPROVE_BUTTON_MAP;
     
     static {
@@ -79,7 +79,7 @@ public class ProtocolOnlineReviewForm extends ProtocolOnlineReviewFormBase {
     }
 
     @Override
-    protected Log getLogHook() {
+    protected Logger getLogHook() {
         return LOG;
     }
 

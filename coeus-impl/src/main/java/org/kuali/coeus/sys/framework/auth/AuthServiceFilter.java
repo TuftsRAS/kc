@@ -30,8 +30,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.sys.framework.rest.AuthServiceRestUtilService;
 import org.kuali.coeus.sys.framework.rest.RestServiceConstants;
 import org.kuali.coeus.sys.framework.service.KcServiceLocator;
@@ -67,7 +67,7 @@ public class AuthServiceFilter implements Filter {
 	private static final String AUTH_ADMIN_PROXY_USER = "auth.filter.proxy.username";
     private static final String SERVICE_USER = "auth.filter.service2service.username";
 	private static final String AUTH_IMPERSONATION_LOGGING = "auth.impersonation.logging";
-	private static final Log LOG = LogFactory.getLog(AuthServiceFilter.class);
+	private static final Logger LOG = LogManager.getLogger(AuthServiceFilter.class);
 	
 	private String authServiceUrl;
 	private String authWithReturnTo;

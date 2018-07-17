@@ -40,7 +40,7 @@ import java.util.Collections;
  * KraTransactionalDocumentActionBase.
  */
 public abstract class MeetingActionBase extends KualiAction {
-    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(MeetingActionBase.class);
+    private static final org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger(MeetingActionBase.class);
 
     private static final String CLOSE_QUESTION = "Would you like to save meeting data before close it ?";
 

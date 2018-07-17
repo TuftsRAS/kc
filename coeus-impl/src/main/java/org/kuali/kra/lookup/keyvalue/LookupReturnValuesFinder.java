@@ -7,8 +7,8 @@
  */
 package org.kuali.kra.lookup.keyvalue;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.common.framework.custom.arg.ArgValueLookup;
 import org.kuali.coeus.common.framework.custom.attr.CustomAttributeService;
 import org.kuali.coeus.sys.framework.service.KcServiceLocator;
@@ -28,7 +28,7 @@ import java.util.List;
  * This class get a list of lookup fileds for the selected lookup class
  */
 public class LookupReturnValuesFinder extends UifKeyValuesFinderBase {
-    private static final Log LOG = LogFactory.getLog(LookupReturnValuesFinder.class);
+    private static final Logger LOG = LogManager.getLogger(LookupReturnValuesFinder.class);
     private static final String ARGVALUELOOKUPE_CLASS = ArgValueLookup.class.getName();
 
     @Override

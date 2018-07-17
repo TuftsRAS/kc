@@ -44,7 +44,7 @@ public class AwardTemplateMaintainableImpl extends KraMaintainableImpl {
     
     private static final String ERROR_KEY_PREFIX = "document.newMaintainableObject.add.templateReportTerms[";
     
-    private static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(AwardTemplateMaintainableImpl.class);
+    private static final org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger(AwardTemplateMaintainableImpl.class);
     
     private int columnNumber = 0;
 

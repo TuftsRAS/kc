@@ -21,7 +21,7 @@ import java.util.*;
 public final class QueryList<E> implements List<E>, RandomAccess, Cloneable, Serializable {
 
     private static final long serialVersionUID = -3215265492607686197L;
-    private static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(QueryList.class);
+    private static final org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger(QueryList.class);
     //using delegation to make it easier to swap out underlying implementation
     //also helps with possible inheritance bugs...
     //cannot make final because of clone otherwise this should always assumed to be non-null upon construction

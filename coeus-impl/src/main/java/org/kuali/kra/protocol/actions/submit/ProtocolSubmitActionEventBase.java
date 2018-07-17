@@ -38,7 +38,7 @@ public abstract class ProtocolSubmitActionEventBase  extends KcDocumentEventBase
         getLOGHook().debug(logMessage);
     }
 
-    protected abstract org.apache.commons.logging.Log getLOGHook();
+    protected abstract org.apache.logging.log4j.Logger getLOGHook();
 
     
     

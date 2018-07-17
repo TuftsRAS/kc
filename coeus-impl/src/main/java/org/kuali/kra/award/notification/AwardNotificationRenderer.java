@@ -8,8 +8,6 @@
 package org.kuali.kra.award.notification;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.kuali.coeus.common.notification.impl.NotificationRendererBase;
 import org.kuali.kra.award.home.Award;
 import org.kuali.kra.award.home.AwardAmountInfo;
@@ -27,8 +25,7 @@ public class AwardNotificationRenderer extends NotificationRendererBase {
     private static final String AWARD_TYPE = "awardType";
     private static final String ZERO = "0.00";
     private static final String ACTIVITY_TYPE = "activityType";
-    private static Log LOG = LogFactory.getLog(AwardNotificationRenderer.class);
-    
+
     private Award award;
     
     public AwardNotificationRenderer() {

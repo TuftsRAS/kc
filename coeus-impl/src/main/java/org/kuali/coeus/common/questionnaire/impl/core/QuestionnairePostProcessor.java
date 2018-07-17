@@ -25,7 +25,7 @@ import org.kuali.rice.kew.routeheader.service.RouteHeaderService;
  * it is blanket by a user who is not initiator.  If this is not done, then the doc status is 'processed'.
  */
 public class QuestionnairePostProcessor extends KcPostProcessor {
-    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(QuestionnairePostProcessor.class);
+    private static final org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger(QuestionnairePostProcessor.class);
 
     @Override
     public ProcessDocReport doRouteStatusChange(DocumentRouteStatusChange statusChangeEvent) throws Exception {

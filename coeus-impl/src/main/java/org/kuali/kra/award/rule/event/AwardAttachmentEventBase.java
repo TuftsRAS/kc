@@ -17,8 +17,8 @@ import org.kuali.rice.krad.rules.rule.BusinessRule;
 public class AwardAttachmentEventBase extends KcDocumentEventBase implements AwardAttachmentEvent  {
 
     private AwardAttachment attachment;
-    private static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory
-    .getLog(AwardAttachmentEventBase.class);
+    private static final org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager
+    .getLogger(AwardAttachmentEventBase.class);
     
     protected AwardAttachmentEventBase(String description, String errorPathPrefix, AwardDocument document, AwardAttachment attachment) {
         super(description, errorPathPrefix, document);

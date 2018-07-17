@@ -13,8 +13,8 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.common.budget.framework.calculator.BudgetCalculationService;
 import org.kuali.coeus.common.budget.framework.core.Budget;
 import org.kuali.coeus.common.budget.framework.core.CostElement;
@@ -52,7 +52,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class ProposalBudgetHierarchyServiceImpl implements ProposalBudgetHierarchyService {
 	
-	private static final Log LOG = LogFactory.getLog(ProposalBudgetHierarchyServiceImpl.class);
+	private static final Logger LOG = LogManager.getLogger(ProposalBudgetHierarchyServiceImpl.class);
 	
 	@Autowired
 	@Qualifier("dataObjectService")

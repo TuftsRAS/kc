@@ -7,8 +7,8 @@
  */
 package org.kuali.kra.test.infrastructure;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.rice.core.api.config.property.Config;
 import org.kuali.rice.core.api.config.property.ConfigContext;
 import org.kuali.rice.core.api.lifecycle.Lifecycle;
@@ -21,7 +21,7 @@ import java.util.Collection;
  * A lifecycle for running a Application web server.
  */
 public class ApplicationServerLifecycle implements Lifecycle {
-    private static final Log LOG = LogFactory.getLog(ApplicationServerLifecycle.class);
+    private static final Logger LOG = LogManager.getLogger(ApplicationServerLifecycle.class);
 
     private boolean started;
 	private final ApplicationServer server;

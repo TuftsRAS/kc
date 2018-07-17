@@ -8,8 +8,8 @@
 package org.kuali.kra.iacuc.actions.submit;
 
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.apache.struts.upload.FormFile;
 import org.kuali.coeus.common.committee.impl.bo.CommitteeBase;
 import org.kuali.coeus.common.committee.impl.bo.CommitteeScheduleBase;
@@ -36,7 +36,7 @@ import java.util.List;
  */
 public class IacucProtocolSubmissionBuilder {
 
-    private static final Log LOG = LogFactory.getLog(IacucProtocolSubmissionBuilder.class);
+    private static final Logger LOG = LogManager.getLogger(IacucProtocolSubmissionBuilder.class);
     private static final String NEXT_SUBMISSION_NUMBER_KEY = "submissionNumber";
     private static final String NEXT_SUBMISSION_DOCUMENT_ID_KEY = "submissionDocId";
     

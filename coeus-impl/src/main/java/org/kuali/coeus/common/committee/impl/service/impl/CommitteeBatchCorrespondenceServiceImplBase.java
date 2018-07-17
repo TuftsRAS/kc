@@ -8,8 +8,8 @@
 package org.kuali.coeus.common.committee.impl.service.impl;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.common.committee.impl.bo.CommitteeBatchCorrespondenceBase;
 import org.kuali.coeus.common.committee.impl.bo.CommitteeBatchCorrespondenceDetailBase;
 import org.kuali.coeus.common.committee.impl.print.CommitteeReportType;
@@ -48,7 +48,7 @@ import java.util.Map;
  */
 public abstract class CommitteeBatchCorrespondenceServiceImplBase implements CommitteeBatchCorrespondenceServiceBase {
 
-    protected static final Log LOG = LogFactory.getLog(CommitteeBatchCorrespondenceServiceImplBase.class);
+    protected static final Logger LOG = LogManager.getLogger(CommitteeBatchCorrespondenceServiceImplBase.class);
     private static final String COMMITTEE_ID = "committeeId";
     private static final String PROTOCOL_NUMBER = "protocolNumber";
     private static final String SEQUENCE_NUMBER = "sequenceNumber";

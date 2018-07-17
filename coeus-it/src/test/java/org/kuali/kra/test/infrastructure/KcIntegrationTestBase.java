@@ -7,8 +7,9 @@
  */
 package org.kuali.kra.test.infrastructure;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.ThreadContext;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -19,7 +20,6 @@ import org.kuali.kra.test.infrastructure.lifecycle.KcIntegrationTestMainLifecycl
 import org.kuali.rice.coreservice.api.parameter.Parameter;
 import org.kuali.rice.coreservice.framework.CoreFrameworkServiceLocator;
 import org.kuali.rice.coreservice.framework.parameter.ParameterService;
-import org.kuali.rice.krad.util.AuditCluster;
 import org.kuali.rice.krad.util.GlobalVariables;
 import org.kuali.rice.krad.UserSession;
 import org.kuali.rice.krad.util.MessageMap;
@@ -34,7 +34,7 @@ import java.util.UUID;
 @RunWith(KcIntegrationTestRunner.class)
 public class KcIntegrationTestBase implements KcIntegrationTestMethodAware {
     // non static Log to allow it to be named after the runtime class
-    protected final Log LOG = LogFactory.getLog(this.getClass());
+    protected final Logger LOG = LogManager.getLogger(this.getClass());
 
     private static final KcIntegrationTestMainLifecycle LIFECYCLE = new KcIntegrationTestMainLifecycle();
     private static final RunListener RUN_LISTENER = new KcIntegrationTestRunListener(LIFECYCLE);
@@ -109,6 +109,7 @@ public class KcIntegrationTestBase implements KcIntegrationTestMethodAware {
     }
     
     private void logBeforeRun() {
+        ThreadContext.put("testName", getFullTestName());
         if (LOG.isInfoEnabled()) {
             statsBegin();
             LOG.info("##############################################################");
@@ -126,6 +127,7 @@ public class KcIntegrationTestBase implements KcIntegrationTestMethodAware {
             }
             LOG.info("##############################################################");
         }
+        ThreadContext.remove("testName");
     }
     
     private void statsBegin() {

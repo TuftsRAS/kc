@@ -8,8 +8,8 @@
 package org.kuali.kra.web.struts.action;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -28,7 +28,7 @@ import javax.servlet.http.HttpServletResponse;
 
 public abstract class ResearchAreasActionBase extends KualiAction {
 
-    private static final Log LOG = LogFactory.getLog(ResearchAreasActionBase.class);
+    private static final Logger LOG = LogManager.getLogger(ResearchAreasActionBase.class);
 
     /**
      * 

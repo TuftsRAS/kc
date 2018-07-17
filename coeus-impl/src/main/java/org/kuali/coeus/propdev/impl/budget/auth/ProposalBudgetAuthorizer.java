@@ -8,8 +8,8 @@
 package org.kuali.coeus.propdev.impl.budget.auth;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.common.budget.framework.core.Budget;
 import org.kuali.coeus.common.budget.framework.core.BudgetParentDocument;
 import org.kuali.coeus.common.framework.auth.perm.KcAuthorizationService;
@@ -46,7 +46,7 @@ import java.util.Set;
 @Component("proposalBudgetAuthorizer")
 public class ProposalBudgetAuthorizer extends ViewAuthorizerBase {
 
-    private static final Log LOG = LogFactory.getLog(ProposalBudgetAuthorizer.class);
+    private static final Logger LOG = LogManager.getLogger(ProposalBudgetAuthorizer.class);
 
     @Autowired
 	@Qualifier("parameterService")

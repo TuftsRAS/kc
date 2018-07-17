@@ -8,8 +8,8 @@
 package org.kuali.coeus.sys.impl.keyvalue;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.sys.framework.keyvalue.KeyValueFinderService;
 import org.kuali.coeus.sys.framework.util.ValuesFinderUtils;
 import org.kuali.rice.core.api.util.ConcreteKeyValue;
@@ -27,7 +27,7 @@ import java.util.*;
 @Component("keyValueFinderService")
 public class KeyValueFinderServiceImpl implements KeyValueFinderService {
 
-    private static final Log LOG = LogFactory.getLog(KeyValueFinderServiceImpl.class);
+    private static final Logger LOG = LogManager.getLogger(KeyValueFinderServiceImpl.class);
 
     @Autowired
     @Qualifier("businessObjectService")

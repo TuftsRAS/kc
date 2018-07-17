@@ -8,8 +8,8 @@
 package org.kuali.kra.iacuc.onlinereview;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.common.committee.impl.meeting.CommitteeScheduleMinuteBase;
 import org.kuali.coeus.sys.framework.workflow.KcWorkflowService;
 import org.kuali.kra.iacuc.IacucProtocolOnlineReviewDocument;
@@ -37,7 +37,7 @@ import java.util.List;
 
 public class IacucProtocolOnlineReviewServiceImpl extends ProtocolOnlineReviewServiceImplBase implements IacucProtocolOnlineReviewService {
     
-    private static final Log LOG = LogFactory.getLog(IacucProtocolOnlineReviewServiceImpl.class);
+    private static final Logger LOG = LogManager.getLogger(IacucProtocolOnlineReviewServiceImpl.class);
     private KcWorkflowService kraWorkflowService;
   
     @Override

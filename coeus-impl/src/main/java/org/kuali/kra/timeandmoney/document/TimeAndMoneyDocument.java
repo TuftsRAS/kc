@@ -8,8 +8,8 @@
 package org.kuali.kra.timeandmoney.document;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.award.finance.timeAndMoney.dao.TimeAndMoneyPostsDao;
 import org.kuali.coeus.common.framework.auth.perm.Permissionable;
 import org.kuali.coeus.common.framework.custom.DocumentCustomData;
@@ -54,7 +54,7 @@ public class TimeAndMoneyDocument extends KcTransactionalDocumentBase implements
     
 
     private static final long serialVersionUID = -2554022334215932544L;
-    private static final Log LOG = LogFactory.getLog(TimeAndMoneyDocument.class);
+    private static final Logger LOG = LogManager.getLogger(TimeAndMoneyDocument.class);
 
     public static final String DOCUMENT_TYPE_CODE = "TAMD";
     

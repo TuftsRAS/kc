@@ -17,7 +17,7 @@ import org.kuali.kra.protocol.ProtocolDocumentBase;
  */
 public abstract class ProtocolAdminCorrectionEventBase extends KcDocumentEventBaseExtension {
     
-    private static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(ProtocolAdminCorrectionEventBase.class);
+    private static final org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger(ProtocolAdminCorrectionEventBase.class);
     
     private AdminCorrectionBean actionBean;
     private String propertyName;

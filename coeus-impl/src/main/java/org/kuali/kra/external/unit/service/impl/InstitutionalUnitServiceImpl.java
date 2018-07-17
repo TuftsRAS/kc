@@ -7,8 +7,8 @@
  */
 package org.kuali.kra.external.unit.service.impl;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.common.framework.unit.Unit;
 import org.kuali.coeus.common.framework.unit.UnitService;
 import org.kuali.coeus.common.framework.unit.admin.UnitAdministrator;
@@ -44,7 +44,7 @@ public class InstitutionalUnitServiceImpl implements InstitutionalUnitService {
     @Autowired
     @Qualifier("businessObjectService")
     private BusinessObjectService businessObjectService;
-    private static final Log LOG = LogFactory.getLog(InstitutionalUnitServiceImpl.class);
+    private static final Logger LOG = LogManager.getLogger(InstitutionalUnitServiceImpl.class);
 
     @Override
     public UnitDTO getUnit(String unitNumber) {

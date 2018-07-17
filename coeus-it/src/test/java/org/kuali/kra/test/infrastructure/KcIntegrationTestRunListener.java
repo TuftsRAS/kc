@@ -7,8 +7,8 @@
  */
 package org.kuali.kra.test.infrastructure;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.junit.runner.Description;
 import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
@@ -22,7 +22,7 @@ import java.util.List;
  * This class provides the mechanism to shut down the persistent portions of lifecycles at the end of a full test run.
  */
 public class KcIntegrationTestRunListener extends RunListener {
-    private static final Log LOG = LogFactory.getLog(KcIntegrationTestRunListener.class);
+    private static final Logger LOG = LogManager.getLogger(KcIntegrationTestRunListener.class);
     
     KcIntegrationTestLifecycle lifecycle;
     List<Failure> assumptionFailures = new ArrayList<>();

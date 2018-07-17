@@ -23,8 +23,8 @@ import edu.mit.irb.irbnamespace.SubmissionDetailsDocument.SubmissionDetails;
 import edu.mit.irb.irbnamespace.SubmissionDetailsDocument.SubmissionDetails.ActionType;
 import edu.mit.irb.irbnamespace.SubmissionDetailsDocument.SubmissionDetails.SubmissionChecklistInfo;
 import edu.mit.irb.irbnamespace.SubmissionDetailsDocument.SubmissionDetails.SubmissionChecklistInfo.Checklists;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.apache.xmlbeans.XmlObject;
 import org.kuali.coeus.common.committee.impl.bo.CommitteeMembershipBase;
 import org.kuali.coeus.common.committee.impl.meeting.CommScheduleActItemBase;
@@ -56,7 +56,7 @@ import java.util.*;
 
 public class ScheduleXmlStream extends PrintBaseXmlStream {
 
-    private static final Log LOG = LogFactory.getLog(ScheduleXmlStream.class);
+    private static final Logger LOG = LogManager.getLogger(ScheduleXmlStream.class);
     private static final String SCHEDULE = "Schedule";
     private static final String PROTOCOL_SUBMISSIONS = "protocolSubmissions";
     private static final String SUBMISSION_ID_FK = "submissionIdFk";

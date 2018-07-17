@@ -8,8 +8,8 @@
 package org.kuali.coeus.propdev.impl.s2s.connect;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.apache.cxf.configuration.jsse.TLSClientParameters;
 import org.apache.cxf.configuration.security.FiltersType;
 import org.apache.cxf.endpoint.Client;
@@ -60,7 +60,7 @@ public class S2SConnectorServiceBase implements S2SConnectorService {
     private static final String KEY_OPPORTUNITY_ID = "OpportunityID";
     private static final String KEY_CFDA_NUMBER = "CFDANumber";
     private static final String KEY_SUBMISSION_TITLE = "SubmissionTitle";
-    protected static final Log LOG = LogFactory.getLog(S2SConnectorServiceBase.class);
+    protected static final Logger LOG = LogManager.getLogger(S2SConnectorServiceBase.class);
 
     @Autowired
     @Qualifier("dataObjectService")

@@ -8,8 +8,8 @@
 package org.kuali.coeus.common.committee.impl.rule.event;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.common.committee.impl.bo.CommitteeBase;
 import org.kuali.coeus.common.committee.impl.bo.CommitteeMembershipBase;
 import org.kuali.coeus.common.committee.impl.document.CommitteeDocumentBase;
@@ -23,7 +23,7 @@ import org.kuali.coeus.sys.framework.rule.KcDocumentEventBase;
  */
 public abstract class CommitteeMembershipEventBase extends KcDocumentEventBase
                                                    implements CommitteeMembershipEvent {
-    private static final Log LOG = LogFactory.getLog(CommitteeMembershipEventBase.class);
+    private static final Logger LOG = LogManager.getLogger(CommitteeMembershipEventBase.class);
     
     private CommitteeMembershipBase committeeMembership;
     

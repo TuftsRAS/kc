@@ -10,8 +10,8 @@ package org.kuali.coeus.propdev.impl.krms;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.common.budget.framework.core.Budget;
 import org.kuali.coeus.common.budget.framework.nonpersonnel.BudgetLineItem;
 import org.kuali.coeus.common.budget.framework.period.BudgetPeriod;
@@ -63,7 +63,7 @@ public class PropDevJavaFunctionKrmsTermServiceImpl extends KcKrmsJavaFunctionTe
     private static final int INT_PERMANENT_RESIDENT_OF_U_S = 2;
     private static final int INT_NON_U_S_CITIZEN_WITH_TEMPORARY_VISA = 3;
     private static final int INT_PERMANENT_RESIDENT_OF_U_S_PENDING = 4;
-    private static final Log LOG = LogFactory.getLog(PropDevJavaFunctionKrmsTermServiceImpl.class);
+    private static final Logger LOG = LogManager.getLogger(PropDevJavaFunctionKrmsTermServiceImpl.class);
 
     @Autowired
     @Qualifier("dateTimeService")

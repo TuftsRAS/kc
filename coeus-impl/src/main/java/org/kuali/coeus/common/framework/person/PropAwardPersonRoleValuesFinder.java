@@ -8,8 +8,6 @@
 package org.kuali.coeus.common.framework.person;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.kuali.coeus.sys.framework.service.KcServiceLocator;
 import org.kuali.rice.core.api.util.ConcreteKeyValue;
 import org.kuali.rice.core.api.util.KeyValue;
@@ -23,7 +21,6 @@ import java.util.List;
 
 public abstract class PropAwardPersonRoleValuesFinder extends UifKeyValuesFinderBase {
 
-    private static final Log LOG = LogFactory.getLog(PropAwardPersonRoleValuesFinder.class);
     private PropAwardPersonRoleService propAwardPersonRoleService;
     
     public PropAwardPersonRoleValuesFinder() {

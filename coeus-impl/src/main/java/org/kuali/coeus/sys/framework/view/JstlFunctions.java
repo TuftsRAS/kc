@@ -32,7 +32,7 @@ public final class JstlFunctions {
     private static final String SETTING_PARAMS_PROLOG = "Setting params ";
     private static final String PROPERTY_SETTING_EXC_PROLOG = "Could not set property ";
     private static final String VALUES_FINDER_CLASS_EXC_PROLOG = "Could not find valuesFinder class ";
-    private static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(JstlFunctions.class);
+    private static final org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger(JstlFunctions.class);
 
     private static KcAttachmentService KC_ATTACHMENT_SERVICE;
     private static ConfigurationService CONFIGURATION_SERVICE;

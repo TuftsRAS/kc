@@ -10,8 +10,8 @@ package co.kuali.coeus.common.impl.attachment;
 import co.kuali.rice.coreservice.api.attachment.S3FileService;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.kra.infrastructure.Constants;
 import org.kuali.rice.core.api.config.property.ConfigurationService;
 import org.kuali.rice.coreservice.framework.parameter.ParameterService;
@@ -36,7 +36,7 @@ import java.util.Objects;
 @DisallowConcurrentExecution
 public class KcAttachmentDataToS3ConversionImpl extends QuartzJobBean implements KcAttachmentDataToS3Conversion {
 
-    private static final Log LOG = LogFactory.getLog(KcAttachmentDataToS3ConversionImpl.class);
+    private static final Logger LOG = LogManager.getLogger(KcAttachmentDataToS3ConversionImpl.class);
     private static final String QUERY_SQL_MYSQL = "select id, data from file_data where data is not null LIMIT ? OFFSET ?";
     private static final String QUERY_SQL_ORACLE = "select id, data from file_data where data is not null";
     private static final String UPDATE_SQL = "update file_data set data = null where id = ?";

@@ -9,8 +9,8 @@ package org.kuali.coeus.propdev.impl.core;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.coi.framework.Project;
 import org.kuali.coeus.coi.framework.ProjectPublisher;
 import org.kuali.coeus.coi.framework.ProjectRetrievalService;
@@ -48,7 +48,7 @@ import java.util.*;
 public class ProposalDevelopmentServiceImpl implements ProposalDevelopmentService {
 
     public static final String PROPOSAL_NUMBER = "proposalNumber";
-    protected final Log LOG = LogFactory.getLog(ProposalDevelopmentServiceImpl.class);
+    protected final Logger LOG = LogManager.getLogger(ProposalDevelopmentServiceImpl.class);
 
     @Autowired
     @Qualifier("businessObjectService")

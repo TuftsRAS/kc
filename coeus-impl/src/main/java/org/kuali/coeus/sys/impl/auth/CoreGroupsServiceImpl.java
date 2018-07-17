@@ -12,8 +12,8 @@ package org.kuali.coeus.sys.impl.auth;
 import java.util.List;
 
 import org.apache.commons.codec.binary.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.sys.framework.auth.CoreGroupsService;
 import org.kuali.coeus.sys.framework.auth.GroupDto;
 import org.kuali.coeus.sys.framework.rest.AuthServiceRestUtilService;
@@ -32,7 +32,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 @Service("coreGroupsService")
 public class CoreGroupsServiceImpl implements CoreGroupsService {
 
-	private static final Log LOG = LogFactory.getLog(CoreGroupsServiceImpl.class);
+	private static final Logger LOG = LogManager.getLogger(CoreGroupsServiceImpl.class);
 	private static final Integer NUMBER_OF_GROUPS_LIMIT = 100000;
 	private static final String LIMIT_PARAM = "limit";
 

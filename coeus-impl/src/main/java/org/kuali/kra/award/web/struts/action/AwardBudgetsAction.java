@@ -9,8 +9,8 @@ package org.kuali.kra.award.web.struts.action;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -53,7 +53,7 @@ import java.util.List;
  */
 public class AwardBudgetsAction extends AwardAction implements AuditModeAction {
 
-	private static final Log LOG = LogFactory.getLog(AwardBudgetsAction.class);
+	private static final Logger LOG = LogManager.getLogger(AwardBudgetsAction.class);
 
     private static final String CONFIRM_SYNCH_BUDGET_RATE = "confirmSynchBudgetRate";
     private static final String NO_SYNCH_BUDGET_RATE = "noSynchBudgetRate";

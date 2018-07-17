@@ -22,7 +22,7 @@ import java.util.Map;
  */
 public class ScheduleData implements Serializable {
     
-    private static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(ScheduleData.class);
+    private static final org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger(ScheduleData.class);
     
     public static final String NONE = "display: none; background:#f4f4f4; border:solid; border-color:#CCCCCC; border-width:1px; padding:5px";
     

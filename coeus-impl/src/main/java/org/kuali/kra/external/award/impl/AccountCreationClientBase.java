@@ -9,8 +9,8 @@ package org.kuali.kra.external.award.impl;
 
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.common.framework.person.KcPerson;
 import org.kuali.coeus.common.framework.unit.admin.UnitAdministratorType;
 import org.kuali.kfs.integration.cg.dto.AccountCreationStatusDTO;
@@ -56,7 +56,7 @@ public abstract class AccountCreationClientBase implements AccountCreationClient
 	protected static final QName SERVICE_NAME = new QName(Constants.FINANCIAL_SYSTEM_SERVICE_NAMESPACE, "accountCreationServiceSOAP");
     private static final String ERROR_MESSAGE = "Cannot connect to the service. The service may be down, please try again later.";
 
-    private static final Log LOG = LogFactory.getLog(AccountCreationClientBase.class);
+    private static final Logger LOG = LogManager.getLogger(AccountCreationClientBase.class);
 
     private DocumentService documentService;
     private BusinessObjectService businessObjectService;

@@ -9,8 +9,8 @@ package org.kuali.kra.institutionalproposal.home;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.common.framework.custom.CustomDataContainer;
 import org.kuali.coeus.common.framework.custom.DocumentCustomData;
 import org.kuali.coeus.common.framework.fiscalyear.FiscalYearMonthService;
@@ -85,7 +85,7 @@ public class InstitutionalProposal extends KcPersistableBusinessObjectBase imple
     public static final String ACTIVITY_TYPE = "activityType";
     public static final String ACTIVITY_CODE = "code";
     public static final String SELECT = "(select)";
-    private static final Log LOG = LogFactory.getLog(InstitutionalProposal.class);
+    private static final Logger LOG = LogManager.getLogger(InstitutionalProposal.class);
 
     private InstitutionalProposalDocument institutionalProposalDocument;
     private Long proposalId;

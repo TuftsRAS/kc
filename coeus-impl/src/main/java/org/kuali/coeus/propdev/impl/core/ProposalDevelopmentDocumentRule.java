@@ -103,7 +103,7 @@ public class ProposalDevelopmentDocumentRule extends KcTransactionalDocumentRule
                                                                                                 ResubmissionPromptRule, BudgetDataOverrideRule, AddProposalSponsorAndProgramInformationRule,
                                                                                                 DocumentAuditRule {
 
-    private static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(ProposalDevelopmentDocumentRule.class);
+    private static final org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger(ProposalDevelopmentDocumentRule.class);
     private static final String PROPOSAL_QUESTIONS_KEY="proposalYnq[%d].%s";
     private static final String PROPOSAL_QUESTIONS_KEY_PROPERTY_ANSWER="answer";
     private static final String PROPOSAL_QUESTIONS_KEY_PROPERTY_REVIEW_DATE="reviewDate";

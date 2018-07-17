@@ -21,7 +21,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 public class KcServiceLocatorListener implements ServletContextListener {
-    private static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(KcServiceLocatorListener.class);
+    private static final org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger(KcServiceLocatorListener.class);
     private static final String DEFAULT_SPRING_BEANS_REPLACEMENT_VALUE = "${bootstrap.spring.file}";
     private static final String WEB_BOOTSTRAP_SPRING_FILE = "web.bootstrap.spring.file";
 

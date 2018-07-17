@@ -7,8 +7,8 @@
  */
 package org.kuali.kra.award.awardhierarchy;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.sys.framework.service.KcServiceLocator;
 import org.kuali.kra.award.AwardForm;
 import org.kuali.kra.award.home.Award;
@@ -46,7 +46,7 @@ import java.util.*;
  *  Bean has been updated to null check the transient awardHierarchyService field before use.
  */
 public class AwardHierarchyBean implements Serializable {
-    private static final Log LOG = LogFactory.getLog(AwardHierarchyBean.class);
+    private static final Logger LOG = LogManager.getLogger(AwardHierarchyBean.class);
     
     private AwardForm awardForm;
     private transient AwardHierarchyService awardHierarchyService;

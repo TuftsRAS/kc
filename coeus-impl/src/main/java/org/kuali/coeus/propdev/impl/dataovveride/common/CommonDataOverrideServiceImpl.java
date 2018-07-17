@@ -33,7 +33,7 @@ import java.util.Date;
 @Component("commonDataOverrideService")
 public class CommonDataOverrideServiceImpl implements CommonDataOverrideService {
 
-    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(CommonDataOverrideServiceImpl.class);
+    private static final org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger(CommonDataOverrideServiceImpl.class);
 
     private static final String ON = "on";
     private static final String YES = "Yes";

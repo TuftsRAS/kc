@@ -7,13 +7,9 @@
  */
 package org.kuali.coeus.common.budget.framework.version;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.kuali.coeus.common.budget.framework.core.BudgetParent;
 
 public class AddBudgetVersionEvent {
-
-    private static final Log LOG = LogFactory.getLog(AddBudgetVersionEvent.class);
 
     private String versionName;
     private BudgetParent budgetParent;

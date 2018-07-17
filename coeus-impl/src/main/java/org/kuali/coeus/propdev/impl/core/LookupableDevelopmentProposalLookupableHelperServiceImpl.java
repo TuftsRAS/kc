@@ -15,8 +15,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.propdev.impl.person.ProposalPerson;
 import org.kuali.coeus.propdev.impl.auth.ProposalDevelopmentDocumentAuthorizer;
 import org.kuali.coeus.propdev.impl.person.ProposalPersonService;
@@ -38,7 +38,7 @@ public class LookupableDevelopmentProposalLookupableHelperServiceImpl extends Kc
 
     private static final List <String> VALID_LOOKUP_FIELDS = Arrays.asList("proposalNumber","title","sponsorCode","ownedByUnitNumber","ownedByUnitName","proposalTypeCode");
 
-    private static final Log LOG = LogFactory.getLog(LookupableDevelopmentProposalLookupableHelperServiceImpl.class);
+    private static final Logger LOG = LogManager.getLogger(LookupableDevelopmentProposalLookupableHelperServiceImpl.class);
 
     @Autowired
     @Qualifier("proposalPersonService")

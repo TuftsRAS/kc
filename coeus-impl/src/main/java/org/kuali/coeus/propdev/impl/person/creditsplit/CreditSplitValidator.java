@@ -25,7 +25,7 @@ import static org.kuali.kra.infrastructure.KeyConstants.ERROR_CREDIT_SPLIT_UPBOU
 import static org.kuali.kra.infrastructure.KeyConstants.ERROR_TOTAL_CREDIT_SPLIT_UPBOUND;
 
 public class CreditSplitValidator {
-    private static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(CreditSplitValidator.class);
+    private static final org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger(CreditSplitValidator.class);
     private static final ScaleTwoDecimal CREDIT_UPBOUND = new ScaleTwoDecimal(100.00);
     private static final ScaleTwoDecimal CREDIT_LOWBOUND = ScaleTwoDecimal.ZERO;
     

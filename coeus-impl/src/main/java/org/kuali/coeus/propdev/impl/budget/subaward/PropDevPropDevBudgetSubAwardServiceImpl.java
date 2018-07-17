@@ -12,8 +12,8 @@ import com.lowagie.text.pdf.*;
 
 import java.util.Objects;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.propdev.impl.budget.ProposalDevelopmentBudgetExt;
 import org.kuali.coeus.propdev.impl.s2s.FormUtilityService;
 import org.kuali.coeus.s2sgen.api.core.InfastructureConstants;
@@ -55,7 +55,7 @@ import java.util.stream.Stream;
 @Component("propDevBudgetSubAwardService")
 public class PropDevPropDevBudgetSubAwardServiceImpl implements PropDevBudgetSubAwardService {
     private static final String XFA_NS = "http://www.xfa.org/schema/xfa-data/1.0/";
-    private static final Log LOG = LogFactory.getLog(PropDevPropDevBudgetSubAwardServiceImpl.class);
+    private static final Logger LOG = LogManager.getLogger(PropDevPropDevBudgetSubAwardServiceImpl.class);
     private static final String YYYY_MM_DD = "yyyy-MM-dd";
     private static final String BUDGET_YEAR_XPATH = "//*[local-name(.) = 'BudgetYear']";
     private static final String RR_FED_NON_FED_BUDGET = "RR_FedNonFedBudget";

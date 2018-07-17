@@ -13,7 +13,7 @@ import org.kuali.coeus.sys.framework.rule.KcDocumentEventBase;
 import org.kuali.rice.krad.rules.rule.BusinessRule;
 
 public class SaveProposalSitesEvent extends KcDocumentEventBase {
-    private static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(SaveProposalSitesEvent.class);
+    private static final org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger(SaveProposalSitesEvent.class);
 
     public SaveProposalSitesEvent(String errorPathPrefix, ProposalDevelopmentDocument document) {
         super("Saving Proposal Sites of document " + getDocumentId(document), errorPathPrefix, document);

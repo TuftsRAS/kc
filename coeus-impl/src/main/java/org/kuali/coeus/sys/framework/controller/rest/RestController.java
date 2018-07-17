@@ -8,8 +8,8 @@
 package org.kuali.coeus.sys.framework.controller.rest;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.sys.framework.rest.*;
 import org.kuali.coeus.sys.framework.validation.ErrorMessage;
 import org.kuali.coeus.sys.framework.validation.ErrorMessageMap;
@@ -40,7 +40,7 @@ import java.util.Map;
  */
 public abstract class RestController implements HandlerExceptionResolver, Ordered {
 
-	private static Log LOG = LogFactory.getLog(RestController.class);
+	private static Logger LOG = LogManager.getLogger(RestController.class);
 
 	private int order = 0;
 

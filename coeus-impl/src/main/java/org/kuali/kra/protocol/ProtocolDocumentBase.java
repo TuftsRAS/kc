@@ -8,8 +8,8 @@
 package org.kuali.kra.protocol;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.coi.framework.Project;
 import org.kuali.coeus.coi.framework.ProjectPublisher;
 import org.kuali.coeus.coi.framework.ProjectRetrievalService;
@@ -46,7 +46,7 @@ import java.util.*;
 
 public abstract class ProtocolDocumentBase extends KcTransactionalDocumentBase implements Copyable, SessionDocument, KrmsRulesContext {
 
-    private static final Log LOG = LogFactory.getLog(ProtocolDocumentBase.class);
+    private static final Logger LOG = LogManager.getLogger(ProtocolDocumentBase.class);
     private static final long serialVersionUID = 6493566444038807312L;
     
     private List<ProtocolBase> protocolList;
