@@ -114,7 +114,7 @@ public class DocumentController {
         List<DevelopmentProposalSummaryDto> documentList;
         try {
             List<Document> documents =  getAllDocuments(documentDetails.stream().map(DocumentWorkloadDetails::getDocumentNumber).collect(Collectors.toList()));
-            documentList = documents.stream().map(document -> getDocumentSummary(document, documentDetails)).collect(Collectors.toList());
+            documentList = documents.stream().map(document -> getDocumentSummary(document, documentDetails)).filter(Objects::nonNull).collect(Collectors.toList());
         } catch (WorkflowException e) {
             LOG.error("An error occurred" + e);
             throw new UnprocessableEntityException("An error occurred " + e.getMessage());
@@ -128,6 +128,10 @@ public class DocumentController {
     }
 
     private DevelopmentProposalSummaryDto getDocumentSummary(Document document, List<DocumentWorkloadDetails> documentDetails) {
+        final List<ActionRequestValue> allPendingRequests = actionRequestService.findAllPendingRequests(document.getDocumentNumber());
+        if (CollectionUtils.isEmpty(allPendingRequests)) {
+            return null;
+        }
         final ProposalDevelopmentDocument proposalDevelopmentDocument = (ProposalDevelopmentDocument) document;
         DevelopmentProposal proposal = proposalDevelopmentDocument.getDevelopmentProposal();
         DevelopmentProposalSummaryDto developmentProposalSummaryDto = new DevelopmentProposalSummaryDto();
@@ -144,12 +148,11 @@ public class DocumentController {
                 documentWorkflowDetails.getDocumentNumber().equalsIgnoreCase(document.getDocumentNumber())).findFirst().get();
         developmentProposalSummaryDto.setStopNumber(workloadDetails.getCurrentPeopleFlowStop());
         developmentProposalSummaryDto.setLastActionTime(workloadDetails.getLastActionTime().getTime());
-        setApprovers(document, developmentProposalSummaryDto);
+        setApprovers(allPendingRequests, developmentProposalSummaryDto);
         return developmentProposalSummaryDto;
     }
 
-    private void setApprovers(Document document, DevelopmentProposalSummaryDto developmentProposalSummaryDto) {
-        final List<ActionRequestValue> allPendingRequests = actionRequestService.findAllPendingRequests(document.getDocumentNumber());
+    private void setApprovers(List<ActionRequestValue> allPendingRequests, DevelopmentProposalSummaryDto developmentProposalSummaryDto) {
         developmentProposalSummaryDto.setAllApprovers(
                 allPendingRequests.stream().
                         filter(request -> !request.isRoleRequest()).
