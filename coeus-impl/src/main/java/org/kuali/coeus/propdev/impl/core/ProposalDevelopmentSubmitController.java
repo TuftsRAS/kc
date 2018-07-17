@@ -677,8 +677,15 @@ public class ProposalDevelopmentSubmitController extends ProposalDevelopmentCont
 
     @Transactional @RequestMapping(value = "/proposalDevelopment", params="methodToCall=approve")
     public ModelAndView approve(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm form) throws Exception{
+        Document document = form.getProposalDevelopmentDocument();
+        WorkflowDocument workflowDoc = document.getDocumentHeader().getWorkflowDocument();
 
-        WorkflowDocument workflowDoc = form.getProposalDevelopmentDocument().getDocumentHeader().getWorkflowDocument();
+        if (!canApproveDocument(document)) {
+            getGlobalVariableService().getMessageMap().putError(KRADConstants.GLOBAL_ERRORS, KeyConstants.ERROR_UNAUTHORIZED_APPROVE_PROPOSAL);
+
+            return getTransactionalDocumentControllerService().reload(form);
+        }
+
         if (canGenerateRequestsInFuture(workflowDoc, getGlobalVariableService().getUserSession().getPrincipalId())) {
             DialogResponse frDialogResponse = form.getDialogResponse("PropDev-SubmitPage-ReceiveFutureRequests");
             if(frDialogResponse == null) {
@@ -857,6 +864,10 @@ public class ProposalDevelopmentSubmitController extends ProposalDevelopmentCont
 
     public boolean canOpenDocument(Document document) {
         return getDocumentDictionaryService().getDocumentAuthorizer(document).canOpen(document, getGlobalVariableService().getUserSession().getPerson());
+    }
+
+    public boolean canApproveDocument(Document document) {
+        return getDocumentDictionaryService().getDocumentAuthorizer(document).canApprove(document, getGlobalVariableService().getUserSession().getPerson());
     }
 
     protected void sendRejectNotification(ProposalDevelopmentDocumentForm form, List<NotificationTypeRecipient> recipients) {

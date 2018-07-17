@@ -306,6 +306,9 @@ public final class KeyConstants {
     // delete proposal
     public static final String ERROR_DELETE_PROPOSAL_IN_HIERARCHY="error.proposalDevelopment.deleteproposal.inhierarchy";
 
+    // Approve proposal
+    public static final String ERROR_UNAUTHORIZED_APPROVE_PROPOSAL = "error.proposalDevelopment.approve.unauthorized";
+
     // parameter name to allow/disallow PD notes deletion
     public static final String ALLOW_PROPOSAL_DEVELOPMENT_NOTES_DELETION="allowProposalDevelopmentNotesDeletion";
     
