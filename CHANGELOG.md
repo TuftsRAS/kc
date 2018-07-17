@@ -1,6 +1,10 @@
 
 
 ## CURRENT
+* No Changes
+
+
+## coeus-1807.0019
 * RESKC-2582: Fix approving issue when a Proposal Development Document was recalled and a user was going to approve. (#2978)
 
   * Omar Soto Fortuño on Tue, 17 Jul 2018 12:47:18 -0400 [View Commit](../../commit/70c427b3809e3c4589a6a22e88da94ff0b4f78f7)
