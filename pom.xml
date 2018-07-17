@@ -13,7 +13,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.kuali.coeus</groupId>
     <artifactId>coeus</artifactId>
-    <version>1807.0015-SNAPSHOT</version>
+    <version>1807.0015</version>
     <packaging>pom</packaging>
     <name>Kuali Coeus</name>
     <description>
@@ -160,7 +160,7 @@
         <surefire.failIfNoTests>false</surefire.failIfNoTests>
         <surefire.forkCount>1</surefire.forkCount>
         <surefire.reuseForks>true</surefire.reuseForks>
-        <surefire.argLine></surefire.argLine>
+        <surefire.argLine />
         <surefire.aggregate>true</surefire.aggregate>
         <surefire.skipTests>false</surefire.skipTests>
 
@@ -2491,7 +2491,7 @@
         <connection>${scm.connection}</connection>
         <developerConnection>${scm.developerConnection}</developerConnection>
         <url>${scm.url}</url>
-        <tag>coeus-1603.25</tag>
+        <tag>coeus-1807.0015</tag>
     </scm>
 
     <distributionManagement>
