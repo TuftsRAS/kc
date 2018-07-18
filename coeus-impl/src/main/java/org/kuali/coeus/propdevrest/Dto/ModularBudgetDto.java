@@ -27,6 +27,10 @@ public class ModularBudgetDto {
     private List<BudgetPeriodDto> budgetPeriods;
     @Property(source = "mvel:?developmentProposal.?proposalNumber")
     private String proposalNumber;
+    @Property(source = "mvel:?developmentProposal.?principalInvestigatorName")
+    private String principalInvestigatorName;
+    @Property(source = "mvel:?developmentProposal.?principalInvestigator.?personId")
+    private String principalInvestigatorId;
 
     public Long getBudgetId() {
         return budgetId;
@@ -66,5 +70,21 @@ public class ModularBudgetDto {
 
     public void setProposalNumber(String proposalNumber) {
         this.proposalNumber = proposalNumber;
+    }
+
+    public String getPrincipalInvestigatorName() {
+        return principalInvestigatorName;
+    }
+
+    public void setPrincipalInvestigatorName(String principalInvestigatorName) {
+        this.principalInvestigatorName = principalInvestigatorName;
+    }
+
+    public String getPrincipalInvestigatorId() {
+        return principalInvestigatorId;
+    }
+
+    public void setPrincipalInvestigatorId(String principalInvestigatorId) {
+        this.principalInvestigatorId = principalInvestigatorId;
     }
 }
