@@ -1,6 +1,11 @@
 
 
 ## CURRENT
+* RESKC-2806: Endpoint to add approvers. (#2981)
+
+  * Gayathri Athreya on Thu, 19 Jul 2018 09:40:45 -0700 [View Commit](../../commit/139986195ce408288cab81f33336fe05c1d5c772)
+
+## coeus-1807.0022
 * No Changes
 
 

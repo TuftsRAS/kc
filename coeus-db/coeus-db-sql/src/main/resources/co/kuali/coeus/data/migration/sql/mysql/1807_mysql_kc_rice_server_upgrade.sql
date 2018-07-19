@@ -19,4 +19,5 @@
 
 
 \. ./rice/bootstrap/V1807_002__environment_banner_enabled_feature_flag.sql
+\. ./rice/bootstrap/V1807_004__assignApproverPermission.sql
 commit;

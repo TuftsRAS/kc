@@ -20,4 +20,5 @@
 
 \. ./kc/bootstrap/V1807_001__SponsorCodeLength.sql
 \. ./kc/bootstrap/V1807_003__multi_cfda.sql
+\. ./kc/bootstrap/V1807_005__assignApprover.sql
 commit;
