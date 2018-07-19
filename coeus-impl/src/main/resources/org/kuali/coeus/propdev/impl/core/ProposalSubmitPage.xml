@@ -33,7 +33,12 @@
                      <entry key="#{T(org.kuali.rice.kew.api.document.DocumentStatus).FINAL.name()}" value="Approved"/>
                      </map>
               </property>
-       </bean>				
+
+       </bean>
+                <bean parent="Uif-MessageField" p:cssClasses="workloadMessage"
+                      p:messageText="@{#ViewHelper.getWorkloadApproverMessageText(document.developmentProposal)}"
+                      p:render="@{#ViewHelper.workloadApproverAssigned(document.developmentProposal)}"
+                      p:order="15"/>
                 <bean parent="PropDev-SubmitPage-SummaryTabGroup"  p:order="20"/>
                 <bean parent="Uif-MessageField" p:messageText="@{#ViewHelper.getDisclaimerText()}" p:order="30"
                       p:render="@{#actionFlags[#Constants.KUALI_ACTION_CAN_APPROVE]}"/>

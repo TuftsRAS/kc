@@ -34,6 +34,8 @@ public class KewDocHeaderDaoImpl extends LookupDaoOjb implements KewDocHeaderDao
 
     private static final String PRINCIPAL_ID = "principalId";
     private static final String DOCUMENT_NUMBER = "documentNumber";
+    private static final String STEPS = "steps";
+
     private static final String AWARD_DOCUMENT = "AwardDocument";
     private static final String NEGOTIATION_DOCUMENT = "NegotiationDocument";
     private static final String SUBAWARD_DOCUMENT = "SubawardDocument";
@@ -91,26 +93,30 @@ public class KewDocHeaderDaoImpl extends LookupDaoOjb implements KewDocHeaderDao
     public List<DocumentWorkflowUserDetails> getWorkflowDetailsOfEnrouteProposalsForUser(String user, Integer limit, Integer skip) {
         Map<String,String> queryMap = new HashMap<>();
         queryMap.put(PRINCIPAL_ID, user);
-        return getDocumentWorkflowUserDetails(limit, skip, queryMap);
+        QueryByCriteria.Builder query = QueryByCriteria.Builder.andAttributes(queryMap);
+        List<OrderByField> orderByFields = new ArrayList<>();
+        orderByFields.add(OrderByField.Builder.create(STEPS, OrderDirection.ASCENDING).build());
+        query.setOrderByFields(orderByFields);
+        return getDocumentWorkflowUserDetails(limit, skip, query);
     }
 
     public List<DocumentWorkloadDetails> getProposalsInWorkloadStop(String stopNumber, Integer limit, Integer skip) {
         Map<String,String> queryMap = new HashMap<>();
         queryMap.put(CURRENT_PEOPLE_FLOW_STOP, stopNumber);
-        QueryByCriteria.Builder query = addOrderByAndPagingFields(limit, skip, queryMap);
-        return dataObjectService.findMatching(DocumentWorkloadDetails.class, query.build()).getResults();
-    }
-
-    public List<DocumentWorkflowUserDetails> getDocumentWorkflowUserDetails(Integer limit, Integer skip, Map<String, String> queryMap) {
-        QueryByCriteria.Builder query = addOrderByAndPagingFields(limit, skip, queryMap);
-        return dataObjectService.findMatching(DocumentWorkflowUserDetails.class, query.build()).getResults();
-    }
-
-    public QueryByCriteria.Builder addOrderByAndPagingFields(Integer limit, Integer skip, Map<String, String> queryMap) {
         QueryByCriteria.Builder query = QueryByCriteria.Builder.andAttributes(queryMap);
         List<OrderByField> orderByFields = new ArrayList<>();
         orderByFields.add(OrderByField.Builder.create(DOCUMENT_NUMBER, OrderDirection.DESCENDING ).build());
         query.setOrderByFields(orderByFields);
+        query = addOrderByAndPagingFields(limit, skip, query);
+        return dataObjectService.findMatching(DocumentWorkloadDetails.class, query.build()).getResults();
+    }
+
+    public List<DocumentWorkflowUserDetails> getDocumentWorkflowUserDetails(Integer limit, Integer skip, QueryByCriteria.Builder  query) {
+        query = addOrderByAndPagingFields(limit, skip, query);
+        return dataObjectService.findMatching(DocumentWorkflowUserDetails.class, query.build()).getResults();
+    }
+
+    public QueryByCriteria.Builder addOrderByAndPagingFields(Integer limit, Integer skip, QueryByCriteria.Builder  query) {
         if (limit != null) {
             query.setMaxResults(limit);
         }

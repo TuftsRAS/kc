@@ -246,6 +246,12 @@ public class DevelopmentProposal extends KcPersistableBusinessObjectBase impleme
     @Column(name = "CREATE_USER")
     private String createUser;
 
+    @Column(name = "ASSIGNER_ID")
+    private String assignerId;
+
+    @Column(name = "APPROVER_ID")
+    private String approverId;
+
     @ManyToOne(targetEntity = DeadlineType.class, cascade = { CascadeType.REFRESH })
     @JoinColumn(name = "DEADLINE_TYPE", referencedColumnName = "DEADLINE_TYPE_CODE", insertable = false, updatable = false)
     private DeadlineType deadlineTypeRef;
@@ -2235,5 +2241,21 @@ public class DevelopmentProposal extends KcPersistableBusinessObjectBase impleme
             this.sponsorHierarchyService = KcServiceLocator.getService(SponsorHierarchyService.class);
         }
         return this.sponsorHierarchyService;
+    }
+
+    public String getAssignerId() {
+        return assignerId;
+    }
+
+    public void setAssignerId(String assignerId) {
+        this.assignerId = assignerId;
+    }
+
+    public String getApproverId() {
+        return approverId;
+    }
+
+    public void setApproverId(String approverId) {
+        this.approverId = approverId;
     }
 }

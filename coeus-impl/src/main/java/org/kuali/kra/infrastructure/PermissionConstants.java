@@ -265,4 +265,5 @@ public interface PermissionConstants {
 
     String WRITE_CLASS = "Write Class";
     String READ_CLASS = "Read Class";
+    String ASSIGN_PROPOSAL_DEVELOPMENT_WORKLOAD_APPROVER = "Assign Proposal Development Workload Approver";
 }

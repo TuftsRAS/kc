@@ -519,9 +519,9 @@ public class ProposalCopyServiceImpl implements ProposalCopyService {
      */
     protected void modifyNewProposal(ProposalDevelopmentDocument srcDoc, ProposalDevelopmentDocument newDoc, ProposalCopyCriteria criteria) {
 
-         // Fixing the title
         newDoc.setDefaultDocumentDescription();
-
+        newDoc.getDevelopmentProposal().setApproverId(null);
+        newDoc.getDevelopmentProposal().setApproverId(null);
         cleanupHierarchy(newDoc);
 
         changeKeyPersonnelUnits(newDoc, srcDoc.getDevelopmentProposal().getOwnedByUnitNumber(), criteria.getLeadUnitNumber());

@@ -9,8 +9,9 @@
 package org.kuali.coeus.common.api.document;
 
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.kuali.coeus.common.api.document.dto.ApproverDto;
 import org.kuali.coeus.common.api.document.dto.DevelopmentProposalSummaryDto;
 import org.kuali.coeus.common.api.document.dto.DocumentDetailsDto;
 import org.kuali.coeus.common.api.document.service.KewDocHeaderDao;
@@ -18,9 +19,11 @@ import org.kuali.coeus.propdev.impl.core.DevelopmentProposal;
 import org.kuali.coeus.propdev.impl.core.ProposalDevelopmentConstants;
 import org.kuali.coeus.propdev.impl.core.ProposalDevelopmentDocument;
 import org.kuali.coeus.sys.framework.gv.GlobalVariableService;
+import org.kuali.coeus.sys.framework.rest.NotImplementedException;
 import org.kuali.coeus.sys.framework.rest.UnauthorizedAccessException;
 import org.kuali.coeus.sys.framework.rest.UnprocessableEntityException;
 import org.kuali.kra.infrastructure.Constants;
+import org.kuali.kra.infrastructure.PermissionConstants;
 import org.kuali.rice.coreservice.framework.parameter.ParameterConstants;
 import org.kuali.rice.coreservice.framework.parameter.ParameterService;
 import org.kuali.rice.kew.actionrequest.ActionRequestValue;
@@ -30,6 +33,8 @@ import org.kuali.rice.kew.api.document.search.DocumentSearchResult;
 import org.kuali.rice.kew.api.exception.WorkflowException;
 import org.kuali.rice.kim.api.identity.Person;
 import org.kuali.rice.kim.api.identity.PersonService;
+import org.kuali.rice.kim.api.permission.PermissionService;
+import org.kuali.rice.krad.data.DataObjectService;
 import org.kuali.rice.krad.document.Document;
 import org.kuali.rice.krad.service.DocumentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +44,9 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @RequestMapping(value="/api/v1")
@@ -67,6 +74,14 @@ public class DocumentController {
     @Autowired
     @Qualifier("parameterService")
     private ParameterService parameterService;
+
+    @Autowired
+    @Qualifier("permissionService")
+    private PermissionService permissionService;
+
+    @Autowired
+    @Qualifier("dataObjectService")
+    private DataObjectService dataObjectService;
 
     @Autowired
     @Qualifier("actionRequestService")
@@ -109,6 +124,64 @@ public class DocumentController {
         return documentsInProgressForUser(user, limit, skip);
     }
 
+    @RequestMapping(method= RequestMethod.POST, value="/documents/{documentId}/approver",
+            consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ResponseStatus(value = HttpStatus.OK)
+    @ResponseBody
+    ApproverDto assignApprover(@RequestBody ApproverDto approverDto, @PathVariable String documentId) throws Exception {
+        Document document = documentService.getByDocumentHeaderId(documentId);
+        checkDocAndPerms(document);
+        Person approver = getPerson(approverDto.getApproverId());
+        final DevelopmentProposal developmentProposal = ((ProposalDevelopmentDocument) document).getDevelopmentProposal();
+        developmentProposal.setAssignerId(globalVariableService.getUserSession().getPrincipalId());
+        developmentProposal.setApproverId(approverDto.getApproverId());
+        dataObjectService.save(developmentProposal);
+        approverDto.setProposalNumber(developmentProposal.getProposalNumber());
+        approverDto.setApproverName(approver.getName());
+        return approverDto;
+    }
+
+    @RequestMapping(method= RequestMethod.DELETE, value="/documents/{documentId}/approver",
+            consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ResponseStatus(value = HttpStatus.OK)
+    @ResponseBody
+    void deleteApprover(@PathVariable String documentId) throws Exception {
+        Document document = documentService.getByDocumentHeaderId(documentId);
+        checkDocAndPerms(document);
+        final DevelopmentProposal developmentProposal = ((ProposalDevelopmentDocument) document).getDevelopmentProposal();
+        developmentProposal.setApproverId(null);
+        developmentProposal.setAssignerId(globalVariableService.getUserSession().getPrincipalId());
+        dataObjectService.save(developmentProposal);
+    }
+
+    @RequestMapping(method= RequestMethod.GET, value="/documents/{documentId}/approver",
+            consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ResponseStatus(value = HttpStatus.OK)
+    @ResponseBody
+    ApproverDto getApprover(@PathVariable String documentId) throws Exception {
+        Document document = documentService.getByDocumentHeaderId(documentId);
+        checkDocAndPerms(document);
+        final DevelopmentProposal developmentProposal = ((ProposalDevelopmentDocument) document).getDevelopmentProposal();
+        ApproverDto approverDto = new ApproverDto();
+        Person approver = personService.getPerson(developmentProposal.getApproverId());
+        if (approver != null) {
+            approverDto.setApproverName(approver != null ? approver.getName() : "");
+            approverDto.setApproverId(approver.getPrincipalId());
+        }
+        approverDto.setProposalNumber(developmentProposal.getProposalNumber());
+        return approverDto;
+    }
+
+    protected void checkDocAndPerms(Document document) throws WorkflowException {
+        checkIfPersonHasPerms(Constants.MODULE_NAMESPACE_PROPOSAL_DEVELOPMENT, PermissionConstants.ASSIGN_PROPOSAL_DEVELOPMENT_WORKLOAD_APPROVER);
+
+        if (Objects.isNull(document) ||
+                !document.getDocumentHeader().getWorkflowDocument().
+                        getDocumentTypeName().equalsIgnoreCase("ProposalDevelopmentDocument")) {
+            throw new NotImplementedException("Approvers can only be assigned to Proposal Development Documents.");
+        }
+    }
+
     protected List<DevelopmentProposalSummaryDto> getDocumentsAtWorkloadBalancingStop(Integer limit, Integer skip) {
         List<DocumentWorkloadDetails> documentDetails = kewDocHeaderDao.getProposalsInWorkloadStop(getWorkloadBalancingStop(), limit, skip);
         List<DevelopmentProposalSummaryDto> documentList;
@@ -137,6 +210,10 @@ public class DocumentController {
         DevelopmentProposalSummaryDto developmentProposalSummaryDto = new DevelopmentProposalSummaryDto();
         developmentProposalSummaryDto.setProposalNumber(proposal.getProposalNumber());
         developmentProposalSummaryDto.setTitle(proposal.getTitle());
+        if (proposal.getApproverId() != null) {
+            Person approver = personService.getPerson(proposal.getApproverId());
+            developmentProposalSummaryDto.setAssignedApprover(createApprover(approver));
+        }
         final String piName = Objects.isNull(proposal.getPrincipalInvestigator()) ? "" :
                 proposal.getPrincipalInvestigator().getLastName() + SEPARATOR + proposal.getPrincipalInvestigator().getFirstName();
         developmentProposalSummaryDto.setPiName(piName);
@@ -156,15 +233,24 @@ public class DocumentController {
         developmentProposalSummaryDto.setAllApprovers(
                 allPendingRequests.stream().
                         filter(request -> !request.isRoleRequest()).
-                        map(request -> Objects.isNull(request.getPerson()) ? "" : request.getPerson().getName()).
+                        map(request -> Objects.isNull(request.getPerson()) ? null : createApprover(request.getPerson())).
+                        filter(Objects::nonNull).
                         collect(Collectors.toSet()));
+
         String primaryApprover = allPendingRequests.stream()
                 .filter(actionRequestValue -> actionRequestValue.isRoleRequest())
                 .findFirst()
                 .map(ActionRequestValue::getQualifiedRoleNameLabel)
                 .orElseGet(() -> getPersonName(allPendingRequests.stream().findFirst().get().getPerson()));
 
-        developmentProposalSummaryDto.setPrimaryApprover(primaryApprover);
+        developmentProposalSummaryDto.setPrimaryApproverName(primaryApprover);
+    }
+
+    protected ApproverDto createApprover(Person approver) {
+        ApproverDto approverDto = new ApproverDto();
+        approverDto.setApproverId(approver.getPrincipalId());
+        approverDto.setApproverName(approver.getName());
+        return approverDto;
     }
 
     private String getPersonName(Person person) {
@@ -209,14 +295,26 @@ public class DocumentController {
                 .collect(Collectors.toList()) :  new ArrayList<>();
     }
 
-    protected Person checkAndRetrievePerson(String user) {
-        Person person = personService.getPerson(user);
+    protected void checkIfPersonHasPerms(String namespaceCode, String permissionName) {
         final String currentUser = globalVariableService.getUserSession().getPrincipalId();
-        if (person == null) {
-            throw new UnprocessableEntityException("Person with id " + user + " not found.");
+        if (!permissionService.hasPermission(currentUser, namespaceCode,permissionName)) {
+            throw new UnauthorizedAccessException("User " + currentUser + " is not authorized to assign approvers");
         }
+    }
+
+    protected Person checkAndRetrievePerson(String user) {
+        Person person = getPerson(user);
+        final String currentUser = globalVariableService.getUserSession().getPrincipalId();
         if (!currentUser.equalsIgnoreCase(user)) {
             throw new UnauthorizedAccessException("User " + currentUser + " cannot view the documents of user " + user);
+        }
+        return person;
+    }
+
+    private Person getPerson(String user) {
+        Person person = personService.getPerson(user);
+        if (person == null) {
+            throw new UnprocessableEntityException("Person with id " + user + " not found.");
         }
         return person;
     }

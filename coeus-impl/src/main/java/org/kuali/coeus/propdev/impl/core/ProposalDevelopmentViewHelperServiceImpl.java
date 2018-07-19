@@ -22,6 +22,7 @@ import org.kuali.coeus.common.framework.custom.attr.CustomAttribute;
 import org.kuali.coeus.common.framework.custom.attr.CustomAttributeDocValue;
 import org.kuali.coeus.common.framework.custom.attr.CustomAttributeService;
 import org.kuali.coeus.common.framework.medusa.MedusaService;
+import org.kuali.coeus.common.framework.person.KcPerson;
 import org.kuali.coeus.common.framework.person.KcPersonService;
 import org.kuali.coeus.common.framework.print.KcAttachmentDataSource;
 import org.kuali.coeus.common.framework.sponsor.Sponsor;
@@ -1133,6 +1134,21 @@ public class ProposalDevelopmentViewHelperServiceImpl extends KcViewHelperServic
 
     public boolean displayDirectIndierctCosts() {
         return StringUtils.equals(getParameterService().getParameter(Constants.PARAMETER_MODULE_AWARD, ParameterConstants.DOCUMENT_COMPONENT, "ENABLE_AWD_ANT_OBL_DIRECT_INDIRECT_COST").getValue(), "1");
+    }
+
+    public String getWorkloadApproverMessageText(DevelopmentProposal developmentProposal) {
+        Person assigner = developmentProposal.getAssignerId() == null ? null : personService.getPerson(developmentProposal.getAssignerId());
+        Person approver = developmentProposal.getApproverId() == null ? null : personService.getPerson(developmentProposal.getApproverId());
+        if (approver == null || assigner == null) {
+            return "";
+        }
+        String approverEmail = Objects.nonNull(approver.getEmailAddress()) ? " (" + approver.getEmailAddress() + ") " : " ";
+        return "Assigned approver " + approver.getName() + approverEmail + "added by " + assigner.getName();
+
+    }
+
+    public Boolean workloadApproverAssigned(DevelopmentProposal developmentProposal) {
+        return developmentProposal.getAssignerId() != null && developmentProposal.getApproverId() != null;
     }
 
     public String getDisclaimerText() {

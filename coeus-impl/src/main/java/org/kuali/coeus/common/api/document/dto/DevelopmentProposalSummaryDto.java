@@ -10,17 +10,26 @@ public class DevelopmentProposalSummaryDto {
     private String sponsorName;
     private String title;
     private Long lastActionTime;
-    private String primaryApprover;
+    private String primaryApproverName;
     private Integer stopNumber;
     private Long dueDate;
     private String documentNumber;
-    private Set<String> allApprovers;
+    private Set<ApproverDto> allApprovers;
+    private ApproverDto assignedApprover;
 
-    public Set<String> getAllApprovers() {
+    public ApproverDto getAssignedApprover() {
+        return assignedApprover;
+    }
+
+    public void setAssignedApprover(ApproverDto assignedApprover) {
+        this.assignedApprover = assignedApprover;
+    }
+
+    public Set<ApproverDto> getAllApprovers() {
         return allApprovers;
     }
 
-    public void setAllApprovers(Set<String> allApprovers) {
+    public void setAllApprovers(Set<ApproverDto> allApprovers) {
         this.allApprovers = allApprovers;
     }
 
@@ -96,11 +105,11 @@ public class DevelopmentProposalSummaryDto {
         this.lastActionTime = lastActionTime;
     }
 
-    public String getPrimaryApprover() {
-        return primaryApprover;
+    public String getPrimaryApproverName() {
+        return primaryApproverName;
     }
 
-    public void setPrimaryApprover(String primaryApprover) {
-        this.primaryApprover = primaryApprover;
+    public void setPrimaryApproverName(String primaryApproverName) {
+        this.primaryApproverName = primaryApproverName;
     }
 }
