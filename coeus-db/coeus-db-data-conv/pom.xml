@@ -13,7 +13,7 @@
     <parent>
         <groupId>org.kuali.coeus</groupId>
         <artifactId>coeus-db</artifactId>
-        <version>1807.0023</version>
+        <version>1807.0024-SNAPSHOT</version>
     </parent>
 
     <artifactId>coeus-db-data-conv</artifactId>
