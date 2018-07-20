@@ -604,7 +604,7 @@ public class ProposalDevelopmentS2SController extends ProposalDevelopmentControl
 
     private void updateHashApp(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm form) {
         final S2sOverride s2sOverride = form.getDevelopmentProposal().getS2sOverride();
-        if (s2sOverride != null && s2sOverride.getApplicationOverride() != null) {
+        if (s2sOverride != null && s2sOverride.getApplicationOverride() != null && s2sOverride.getApplicationOverride().isHeaderVersion1Form()) {
             final boolean updated = s2sOverride.getApplicationOverride().updateSha1HashInXml();
 
             if (updated) {

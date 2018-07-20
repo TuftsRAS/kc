@@ -1310,7 +1310,7 @@ public class PropDevJavaFunctionKrmsTermServiceImplTest {
 		oppForms.add(s2sOppForms);
 		S2sOpportunity s2sOpportunity = new S2sOpportunity();
 		s2sOpportunity.setS2sOppForms(oppForms);
-		s2sOpportunity.setCompetetionId("101");
+		s2sOpportunity.setCompetitionId("101");
 		return s2sOpportunity;
 	}
 

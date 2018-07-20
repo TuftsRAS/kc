@@ -37,15 +37,29 @@
 							p:keyAttributeName="code" p:labelAttributeName="description" />
 					</property>
 				</bean>
+				<bean parent="Uif-LookupCriteriaInputField" p:propertyName="packageId"
+					  p:fieldLabel.renderColon="false" p:order="20" >
+					<property name="validCharactersConstraint">
+						<bean class="org.kuali.rice.krad.datadictionary.validation.constraint.ConfigurationBasedRegexPatternConstraint"
+							  p:messageKey="validation.lookup.packageId" p:patternTypeKey="validationPatternRegex.packageId"/>
+					</property>
+				</bean>
 				<bean parent="Uif-LookupCriteriaInputField" p:propertyName="opportunityId"
-					p:fieldLabel.renderColon="false" p:order="20" >
+					p:fieldLabel.renderColon="false" p:order="30" >
                     <property name="validCharactersConstraint">
                         <bean class="org.kuali.rice.krad.datadictionary.validation.constraint.ConfigurationBasedRegexPatternConstraint"
                               p:messageKey="validation.lookup.opportunityId" p:patternTypeKey="validationPatternRegex.opportunityId"/>
                     </property>
                 </bean>
+				<bean parent="Uif-LookupCriteriaInputField" p:propertyName="competitionId"
+					  p:fieldLabel.renderColon="false" p:order="40" >
+					<property name="validCharactersConstraint">
+						<bean class="org.kuali.rice.krad.datadictionary.validation.constraint.ConfigurationBasedRegexPatternConstraint"
+							  p:messageKey="validation.lookup.competitionId" p:patternTypeKey="validationPatternRegex.competitionId"/>
+					</property>
+				</bean>
 				<bean parent="Uif-LookupCriteriaInputField" p:propertyName="cfdaNumber"
-					p:fieldLabel.renderColon="false" p:order="30" >
+					p:fieldLabel.renderColon="false" p:order="50" >
                     <property name="validCharactersConstraint">
                         <bean class="org.kuali.rice.krad.datadictionary.validation.constraint.ConfigurationBasedRegexPatternConstraint"
                               p:messageKey="validation.lookup.cfdaNumber" p:patternTypeKey="validationPatternRegex.cfdaNumber"/>
@@ -56,19 +70,23 @@
 		<property name="resultFields">
 			<list>
 				<bean parent="Uif-DataField" p:propertyName="openingDate"
-					p:order="10" />
+					  p:order="10" />
 				<bean parent="Uif-DataField" p:propertyName="closingDate"
-					p:order="20" />
-				<bean parent="Uif-DataField" p:propertyName="competetionId"
-					p:order="30" />
+					  p:order="20" />
+				<bean parent="Uif-DataField" p:propertyName="packageId"
+					  p:order="30" />
 				<bean parent="Uif-DataField" p:propertyName="opportunityId"
-					p:order="40" />
+					  p:order="40" />
 				<bean parent="Uif-DataField" p:propertyName="opportunityTitle"
-					p:order="50" />
+					  p:order="50" />
+				<bean parent="Uif-DataField" p:propertyName="competitionId"
+					  p:order="60" />
+				<bean parent="Uif-DataField" p:propertyName="competitionTitle"
+					  p:order="70" />
 				<bean parent="Uif-DataField" p:propertyName="schemaUrl"
-					p:order="60" />
+					  p:order="80" />
 				<bean parent="Uif-DataField" p:propertyName="instructionUrl"
-					p:order="70" />
+					  p:order="90" />
 			</list>
 		</property>
 		<property name="resultsGroup.subCollections">

@@ -170,7 +170,7 @@ public class ProposalCopyServiceTest extends ProposalDevelopmentRuleTestBase {
         S2sOpportunity opportunity = new S2sOpportunity();
         opportunity.setAgencyContactInfo(AGENCY_CONTACT_INFO);
         opportunity.setSchemaUrl(SCHEMA_URL);
-        opportunity.setCompetetionId(COMP_ID);
+        opportunity.setCompetitionId(COMP_ID);
         opportunity.setInstructionUrl(INS_URL);
         opportunity.setOpportunityId(OPP_ID);
         opportunity.setOpportunity("bogus opportunity character data");

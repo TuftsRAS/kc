@@ -18,7 +18,7 @@ public final class ProposalDevelopmentDataValidationConstants {
 
     public static final String REVISION_CODE_KEY = "document.developmentProposal.s2sOpportunity.revisionCode";
     public static final String S2S_SUBMISSIONTYPE_CODE_KEY="document.developmentProposal.s2sOpportunity.s2sSubmissionTypeCode";
-    public static final String COMPETITION_ID = "document.developmentProposal.s2sOpportunity.competetionId";
+    public static final String COMPETITION_ID = "document.developmentProposal.s2sOpportunity.competitionId";
 
     public static final String SPONSOR_PROGRAM_INFO_PAGE_ID = "PropDev-SponsorProgramInfoPage";
     public static final String SPONSOR_PROGRAM_INFO_PAGE_NAME = "Sponsor & Program Info";

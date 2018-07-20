@@ -827,7 +827,9 @@
 	<class-descriptor class="org.kuali.coeus.propdev.impl.s2s.S2sOpportunity" table="S2S_OPPORTUNITY">
 		<field-descriptor name="proposalNumber" column="PROPOSAL_NUMBER" jdbc-type="VARCHAR" primarykey="true"/>
 		<field-descriptor name="closingDate" column="CLOSING_DATE" jdbc-type="TIMESTAMP" conversion="org.kuali.coeus.sys.framework.persistence.OjbCalendarSqlTimestampConversion"/>
-		<field-descriptor name="competetionId" column="COMPETETION_ID" jdbc-type="VARCHAR"/>
+		<field-descriptor name="competitionId" column="COMPETETION_ID" jdbc-type="VARCHAR"/>
+		<field-descriptor name="competitionTitle" column="COMPETITION_TITLE" jdbc-type="VARCHAR"/>
+		<field-descriptor name="packageId" column="PACKAGE_ID" jdbc-type="VARCHAR"/>
 		<field-descriptor name="instructionUrl" column="INSTRUCTION_URL" jdbc-type="VARCHAR"/>
 		<field-descriptor name="openingDate" column="OPENING_DATE" jdbc-type="TIMESTAMP" conversion="org.kuali.coeus.sys.framework.persistence.OjbCalendarSqlTimestampConversion"/>
 		<field-descriptor name="opportunity" column="OPPORTUNITY" jdbc-type="CLOB"/>

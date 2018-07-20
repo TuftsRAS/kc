@@ -1104,7 +1104,7 @@ public class PropDevJavaFunctionKrmsTermServiceImpl extends KcKrmsJavaFunctionTe
      */
     @Override
     public String competitionIdRule(DevelopmentProposal developmentProposal, String competitionId) {
-        if(developmentProposal.getS2sOpportunity().getCompetetionId().equals(competitionId)) {
+        if(developmentProposal.getS2sOpportunity().getCompetitionId().equals(competitionId)) {
             return TRUE;
         }
         return FALSE;

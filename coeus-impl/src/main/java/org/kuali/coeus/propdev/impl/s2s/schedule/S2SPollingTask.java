@@ -7,8 +7,8 @@
  */
 package org.kuali.coeus.propdev.impl.s2s.schedule;
 
-import gov.grants.apply.services.applicantwebservices_v2.GetApplicationListResponse;
-import gov.grants.apply.services.applicantwebservices_v2.GetApplicationListResponse.ApplicationInfo;
+import gov.grants.apply.services.applicantwebservices_v2.GetSubmissionListResponse;
+import gov.grants.apply.system.applicantcommonelements_v1.SubmissionDetails;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 import org.kuali.coeus.propdev.impl.core.ProposalDevelopmentDocument;
@@ -168,15 +168,15 @@ public class S2SPollingTask {
             boolean statusChanged = false;
 
             try {
-                final GetApplicationListResponse applicationListResponse = s2sSubmissionService.fetchApplicationListResponse(appSubmission.getProposalNumber());
-                if (applicationListResponse == null || applicationListResponse.getApplicationInfo() == null || applicationListResponse.getApplicationInfo().isEmpty()) {
+                final GetSubmissionListResponse submissionListResponse = s2sSubmissionService.fetchSubmissionList(appSubmission);
+                if (submissionListResponse == null || submissionListResponse.getSubmissionDetails() == null || submissionListResponse.getSubmissionDetails().isEmpty()) {
                     statusChanged = s2sSubmissionService.checkForSubmissionStatusChange(pdDoc, appSubmission);
                     if (!statusChanged && appSubmission.getComments().equals(S2sAppSubmissionConstants.STATUS_NO_RESPONSE_FROM_GRANTS_GOV)) {
                         localSubInfo.setSortId(SORT_ID_F);
                         sendEmailFlag = true;
                     }
                 } else {
-                    final ApplicationInfo ggApplication = applicationListResponse.getApplicationInfo().get(0);
+                    final SubmissionDetails ggApplication = submissionListResponse.getSubmissionDetails().get(0);
                     if (ggApplication != null) {
                         localSubInfo.setAcType('U');
                         statusChanged = !appSubmission.getStatus().equalsIgnoreCase(ggApplication.getGrantsGovApplicationStatus().value());

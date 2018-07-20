@@ -27,7 +27,9 @@
         <!--cfdaDescription deprecated. Included here for REST api compatibility.  Do not use. -->
         <ref bean="S2sOpportunity-cfdaDescription" />
         <ref bean="S2sOpportunity-closingDate" />
-        <ref bean="S2sOpportunity-competetionId" />
+        <ref bean="S2sOpportunity-competitionId" />
+        <ref bean="S2sOpportunity-competitionTitle" />
+        <ref bean="S2sOpportunity-packageId" />
         <ref bean="S2sOpportunity-instructionUrl" />
         <ref bean="S2sOpportunity-opportunity" />
         <ref bean="S2sOpportunity-openingDate" />
@@ -80,12 +82,12 @@
     <property name="name" value="cfdaDescription" />
   </bean>
 
-  <bean id="S2sOpportunity-competetionId" parent="S2sOpportunity-competetionId-parentBean"/>
-  <bean id="S2sOpportunity-competetionId-parentBean" abstract="true" parent="AttributeDefinition">
-    <property name="name" value="competetionId" />
+  <bean id="S2sOpportunity-competitionId" parent="S2sOpportunity-competitionId-parentBean"/>
+  <bean id="S2sOpportunity-competitionId-parentBean" abstract="true" parent="AttributeDefinition">
+    <property name="name" value="competitionId" />
     <property name="forceUppercase" value="false" />
-    <property name="label" value="Competition Id" />
-    <property name="shortLabel" value="Competition Id" />
+    <property name="label" value="Competition ID" />
+    <property name="shortLabel" value="Competition ID" />
     <property name="maxLength" value="50" />
     <property name="validationPattern" >
       <bean parent="AnyCharacterValidationPattern" />
@@ -99,8 +101,59 @@
     <property name="controlField">
       <bean p:size="20" parent="Uif-TextControl"/>
     </property>
-    <property name="summary" value="Competition Id" />
-    <property name="description" value="Competition Id" />
+    <property name="summary" value="Competition ID" />
+    <property name="description" value="Competition ID" />
+  </bean>
+
+  <bean id="S2sOpportunity-competitionTitle" parent="S2sOpportunity-competitionTitle-parentBean"/>
+  <bean id="S2sOpportunity-competitionTitle-parentBean" abstract="true" parent="AttributeDefinition">
+    <property name="name" value="competitionTitle" />
+    <property name="forceUppercase" value="false" />
+    <property name="label" value="Competition Title" />
+    <property name="shortLabel" value="Competition Title" />
+    <property name="maxLength" value="255" />
+    <property name="validationPattern" >
+      <bean parent="UTF8AnyCharacterValidationPattern" p:allowWhitespace="true"/>
+    </property>
+    <property name="validCharactersConstraint">
+      <bean parent="UTF8AnyCharacterPatternConstraint">
+        <property name="allowWhitespace" value="true"/>
+      </bean>
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition" p:size="260"/>
+    </property>
+    <property name="controlField">
+      <bean p:size="260" parent="Uif-TextControl"/>
+    </property>
+    <property name="summary" value="Competition Title" />
+    <property name="description" value="Competition Title" />
+  </bean>
+
+  <bean id="S2sOpportunity-packageId" parent="S2sOpportunity-packageId-parentBean"/>
+  <bean id="S2sOpportunity-packageId-parentBean" abstract="true" parent="AttributeDefinition">
+    <property name="name" value="packageId" />
+    <property name="forceUppercase" value="false" />
+    <property name="label" value="Package ID" />
+    <property name="shortLabel" value="Package ID" />
+    <property name="maxLength" value="11" />
+    <property name="validationPattern">
+      <bean p:pattern="^PKG[0-9]{8}$" p:validationErrorMessageKey="s2s.opportunity.package.id.format" parent="RegexValidationPattern"/>
+    </property>
+    <property name="validCharactersConstraint">
+      <bean parent="ValidCharactersConstraint">
+        <property name="value" value="^PKG[0-9]{8}$"/>
+        <property name="messageKey" value="s2s.opportunity.package.id.format"/>
+      </bean>
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition" p:size="15"/>
+    </property>
+    <property name="controlField">
+      <bean p:size="15" parent="Uif-TextControl"/>
+    </property>
+    <property name="summary" value="Package ID" />
+    <property name="description" value="Package ID" />
   </bean>
 
   <bean id="S2sOpportunity-instructionUrl" parent="S2sOpportunity-instructionUrl-parentBean"/>
@@ -377,12 +430,14 @@
                 </property>
               </bean>
               <bean parent="FieldDefinition" p:attributeName="closingDate"/>
-              <bean parent="FieldDefinition" p:attributeName="competetionId"/>
+              <bean parent="FieldDefinition" p:attributeName="packageId"/>
+              <bean parent="FieldDefinition" p:attributeName="opportunityId"/>
+              <bean parent="FieldDefinition" p:attributeName="opportunityTitle"/>
+              <bean parent="FieldDefinition" p:attributeName="competitionId"/>
+              <bean parent="FieldDefinition" p:attributeName="competitionTitle"/>
               <bean parent="FieldDefinition" p:attributeName="instructionUrl"/>
               <bean parent="FieldDefinition" p:attributeName="openingDate"/>
               <bean parent="FieldDefinition" p:attributeName="opportunity"/>
-              <bean parent="FieldDefinition" p:attributeName="opportunityId"/>
-              <bean parent="FieldDefinition" p:attributeName="opportunityTitle"/>
               <bean parent="FieldDefinition" p:attributeName="revisionCode"/>
               <bean parent="FieldDefinition" p:attributeName="revisionOtherDescription"/>
               <bean parent="FieldDefinition" p:attributeName="s2sSubmissionTypeCode"/>
@@ -422,12 +477,14 @@
                 </property>
               </bean>
               <bean p:propertyName="closingDate" parent="Uif-DataField"/>
-              <bean p:propertyName="competetionId" parent="Uif-DataField"/>
+              <bean p:propertyName="packageId" parent="Uif-DataField"/>
+              <bean p:propertyName="opportunityId" parent="Uif-DataField"/>
+              <bean p:propertyName="opportunityTitle" parent="Uif-DataField"/>
+              <bean p:propertyName="competitionId" parent="Uif-DataField"/>
+              <bean p:propertyName="competitionTitle" parent="Uif-DataField"/>
               <bean p:propertyName="instructionUrl" parent="Uif-DataField"/>
               <bean p:propertyName="openingDate" parent="Uif-DataField"/>
               <bean p:propertyName="opportunity" parent="Uif-DataField"/>
-              <bean p:propertyName="opportunityId" parent="Uif-DataField"/>
-              <bean p:propertyName="opportunityTitle" parent="Uif-DataField"/>
               <bean p:propertyName="revisionCode" parent="Uif-DataField"/>
               <bean p:propertyName="revisionOtherDescription" parent="Uif-DataField"/>
               <bean p:propertyName="s2sSubmissionTypeCode" parent="Uif-DataField"/>

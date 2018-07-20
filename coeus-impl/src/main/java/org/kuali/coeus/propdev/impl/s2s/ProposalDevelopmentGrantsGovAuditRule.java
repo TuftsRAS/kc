@@ -20,6 +20,7 @@ import org.kuali.coeus.propdev.impl.s2s.nih.NihValidationServiceUtils;
 import org.kuali.coeus.propdev.impl.s2s.nih.ValidationMessageDto;
 import org.kuali.coeus.s2sgen.api.core.S2SException;
 import org.kuali.coeus.s2sgen.api.generate.AttachmentData;
+import org.kuali.coeus.s2sgen.api.generate.SubmissionHeaderCompatibilityService;
 import org.kuali.coeus.sys.framework.gv.GlobalVariableService;
 import org.kuali.coeus.sys.framework.service.KcServiceLocator;
 import org.kuali.kra.infrastructure.Constants;
@@ -61,6 +62,7 @@ public class ProposalDevelopmentGrantsGovAuditRule  implements DocumentAuditRule
     private NihSubmissionValidationService nihSubmissionValidationService;
     private SponsorHierarchyService sponsorHierarchyService;
     private FormGeneratorService formGeneratorService;
+    private SubmissionHeaderCompatibilityService submissionHeaderCompatibilityService;
 
     @Override
     public boolean processRunAuditBusinessRules(Document document) {
@@ -79,8 +81,8 @@ public class ProposalDevelopmentGrantsGovAuditRule  implements DocumentAuditRule
         if((getSponsorHierarchyService().isSponsorNihOsc(proposalDevelopmentDocument.getDevelopmentProposal().getSponsorCode())||
                     getSponsorHierarchyService().isSponsorNihMultiplePi(proposalDevelopmentDocument.getDevelopmentProposal().getSponsorCode()))&&
                     proposalDevelopmentDocument.getDevelopmentProposal().getS2sOpportunity()!=null &&
-                    proposalDevelopmentDocument.getDevelopmentProposal().getS2sOpportunity().getCompetetionId()!=null &&
-                    proposalDevelopmentDocument.getDevelopmentProposal().getS2sOpportunity().getCompetetionId().equals("ADOBE-FORMS-A")){
+                    proposalDevelopmentDocument.getDevelopmentProposal().getS2sOpportunity().getCompetitionId()!=null &&
+                    proposalDevelopmentDocument.getDevelopmentProposal().getS2sOpportunity().getCompetitionId().equals("ADOBE-FORMS-A")){
         	getAuditErrors(Constants.S2S_PAGE_NAME, Constants.S2S_OPPORTUNITY_SECTION_NAME,"", ERROR).add(new org.kuali.rice.krad.util.AuditError(COMPETITION_ID, KeyConstants.ERROR_IF_COMPETITION_ID_IS_INVALID, Constants.S2S_PAGE_ID+ PAGE_SECTION_DELIMETER + Constants.S2S_OPPORTUNITY_SECTION_ID));
         	valid= false;
         }
@@ -92,7 +94,7 @@ public class ProposalDevelopmentGrantsGovAuditRule  implements DocumentAuditRule
                 valid &= result.isValid();
                 //the NIH Validation Service detects multiple submissions, so calling this after a S2S Submission will cause an error.
                 if (result.isValid() && CollectionUtils.isEmpty(proposalDevelopmentDocument.getDevelopmentProposal().getS2sAppSubmission())) {
-                    valid &= nihValidation(proposalDevelopmentDocument.getDevelopmentProposal().getApplicantOrganization().getOrganization().getDunsNumber(), result.getApplicationXml(), result.getAttachments());
+                    valid &= nihValidation(proposalDevelopmentDocument.getDevelopmentProposal().getApplicantOrganization().getOrganization().getDunsNumber(), getSubmissionHeaderCompatibilityService().forceHeaderVersion1(proposalDevelopmentDocument, result.getApplicationXml()), result.getAttachments());
                 }
                 setValidationErrorMessage(result.getErrors(), provider);
             } catch (S2SException e) {
@@ -318,5 +320,12 @@ public class ProposalDevelopmentGrantsGovAuditRule  implements DocumentAuditRule
             this.businessObjectService = KcServiceLocator.getService(BusinessObjectService.class);
         }
         return this.businessObjectService;
+    }
+
+    protected SubmissionHeaderCompatibilityService getSubmissionHeaderCompatibilityService() {
+        if (this.submissionHeaderCompatibilityService == null) {
+            this.submissionHeaderCompatibilityService = KcServiceLocator.getService(SubmissionHeaderCompatibilityService.class);
+        }
+        return this.submissionHeaderCompatibilityService;
     }
 }

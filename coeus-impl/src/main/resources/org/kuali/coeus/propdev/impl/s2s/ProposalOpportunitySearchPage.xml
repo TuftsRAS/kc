@@ -84,7 +84,7 @@
 			<bean parent="Uif-QuickFinder" p:dataObjectClassName="org.kuali.coeus.propdev.impl.s2s.S2sOpportunity"
 				p:hideCriteriaOnSearch="true"
                 p:viewName="S2sOpportunity-LookupViewName"
-				p:fieldConversions='opportunityId:newS2sOpportunity.opportunityId,cfdaNumber:newS2sOpportunity.cfdaNumber,opportunityTitle:newS2sOpportunity.opportunityTitle,s2sSubmissionTypeCode:newS2sOpportunity.s2sSubmissionTypeCode,revisionCode:newS2sOpportunity.revisionCode,competetionId:newS2sOpportunity.competetionId,openingDate:newS2sOpportunity.openingDate,closingDate:newS2sOpportunity.closingDate,instructionUrl:newS2sOpportunity.instructionUrl,schemaUrl:newS2sOpportunity.schemaUrl,providerCode:newS2sOpportunity.providerCode,s2sOpportunityCfdasSerialized:newS2sOpportunity.s2sOpportunityCfdasSerialized'>
+				p:fieldConversions='opportunityId:newS2sOpportunity.opportunityId,cfdaNumber:newS2sOpportunity.cfdaNumber,opportunityTitle:newS2sOpportunity.opportunityTitle,s2sSubmissionTypeCode:newS2sOpportunity.s2sSubmissionTypeCode,revisionCode:newS2sOpportunity.revisionCode,competitionId:newS2sOpportunity.competitionId,competitionTitle:newS2sOpportunity.competitionTitle,packageId:newS2sOpportunity.packageId,openingDate:newS2sOpportunity.openingDate,closingDate:newS2sOpportunity.closingDate,instructionUrl:newS2sOpportunity.instructionUrl,schemaUrl:newS2sOpportunity.schemaUrl,providerCode:newS2sOpportunity.providerCode,s2sOpportunityCfdasSerialized:newS2sOpportunity.s2sOpportunityCfdasSerialized'>
 
                 <property name="quickfinderAction">
 					<bean parent="Uif-SecondaryActionButton-Small" p:methodToCall="performLookup"
@@ -104,13 +104,15 @@
         p:render="@{#ViewHelper.containsOpportunity(document)}">
 		<property name="items">
 			<list>
+                <bean parent="Uif-DataField" p:propertyName="packageId"
+                      p:fieldLabel.renderColon="false" p:order="10" />
 				<bean parent="Uif-DataField" p:propertyName="opportunityId"
-					p:fieldLabel.renderColon="false" p:order="10" />
-				<bean parent="Uif-DataField" p:propertyName="opportunityTitle"
 					p:fieldLabel.renderColon="false" p:order="20" />
+				<bean parent="Uif-DataField" p:propertyName="opportunityTitle"
+					p:fieldLabel.renderColon="false" p:order="30" />
 				<bean parent="PropDev-OpportunityPage-S2sSubmissionTypeCode"
- 					p:enableAutoQuickfinder="false" p:propertyName="s2sSubmissionTypeCode" p:order="30" />
-				<bean parent="Uif-FieldGroupBase" p:fieldLabel.labelText="S2S Revision Type" p:order="40">
+ 					p:enableAutoQuickfinder="false" p:propertyName="s2sSubmissionTypeCode" p:order="40" />
+				<bean parent="Uif-FieldGroupBase" p:fieldLabel.labelText="S2S Revision Type" p:order="50">
                     <property name="group">
                         <bean parent="Uif-VerticalBoxGroup">
                             <property name="items">
@@ -125,21 +127,23 @@
                         </bean>
                     </property>
 				</bean>
-				<bean parent="Uif-DataField" p:propertyName="competetionId"
-					p:fieldLabel.renderColon="false" p:order="50" />
-				<bean parent="Uif-DataField" p:propertyName="openingDate"
+				<bean parent="Uif-DataField" p:propertyName="competitionId"
 					p:fieldLabel.renderColon="false" p:order="60" />
+                <bean parent="Uif-DataField" p:propertyName="competitionTitle"
+                      p:fieldLabel.renderColon="false" p:order="70" />
+				<bean parent="Uif-DataField" p:propertyName="openingDate"
+					p:fieldLabel.renderColon="false" p:order="80" />
 				<bean parent="Uif-DataField" p:propertyName="closingDate"
-					p:fieldLabel.renderColon="false" p:order="70" />
+					p:fieldLabel.renderColon="false" p:order="90" />
 				<bean parent="Uif-LinkField" p:fieldLabel.labelText="Instruction Page"
 					p:href="@{document.developmentProposal.s2sOpportunity?.instructionUrl}"
-					p:linkText="Download Instructions" p:order="80" />
+					p:linkText="Download Instructions" p:order="100" />
 				<bean parent="Uif-LinkField" p:fieldLabel.labelText="Schema URL"
 					p:href="@{document.developmentProposal.s2sOpportunity?.schemaUrl}"
-					p:linkText="View schema" p:order="90" />
+					p:linkText="View schema" p:order="110" />
 				<bean parent="Uif-DataField" p:propertyName="s2sProvider.description"
-					p:label ="S2S Provider" p:fieldLabel.renderColon="false" p:order="100" />
-                <bean parent="PropDev-OpportunityPage-General-Cfda" p:order="110" p:colSpan="2"/>
+					p:label ="S2S Provider" p:fieldLabel.renderColon="false" p:order="120" />
+                <bean parent="PropDev-OpportunityPage-General-Cfda" p:order="130" p:colSpan="2"/>
 			</list>
 		</property>
 	</bean>
@@ -431,12 +435,13 @@
                       p:readOnly="true" p:label="Current Application" p:link.linkText="@{document.developmentProposal?.s2sOverride?.application?.name}"
                       p:link.href="?methodToCall=retrieveApplicationXml&amp;formKey=@{formKey}&amp;propertyPath=document.developmentProposal.s2sOverride.application"
                       p:order="20"/>
+
                 <bean parent="Uif-DataField" p:label="SHA-1 Hash" p:readOnly="true" p:propertyName="document.developmentProposal.s2sOverride.application.sha1Hash"
-                      p:render="@{#ViewHelper.containsOverride(document) and document.developmentProposal.s2sOverride.application != null and document.developmentProposal.s2sOverride.application.application != null}"
+                      p:render="@{#ViewHelper.containsOverride(document) and document.developmentProposal.s2sOverride.application != null and document.developmentProposal.s2sOverride.application.application != null and document.developmentProposal.s2sOverride.application.headerVersion1Form}"
                       p:order="30"/>
 
                 <bean parent="Uif-DataField" p:label="SHA-1 Hash In XML" p:readOnly="true" p:propertyName="document.developmentProposal.s2sOverride.application.sha1HashInXml"
-                      p:render="@{#ViewHelper.containsOverride(document) and document.developmentProposal.s2sOverride.application != null and document.developmentProposal.s2sOverride.application.application != null}"
+                      p:render="@{#ViewHelper.containsOverride(document) and document.developmentProposal.s2sOverride.application != null and document.developmentProposal.s2sOverride.application.application != null and document.developmentProposal.s2sOverride.application.headerVersion1Form}"
                       p:order="40"/>
 
                 <bean parent="PropDev-OpportunityPage-Override-Previous-AttachmentSection" p:render="@{#ViewHelper.containsOverride(document) and document.developmentProposal.s2sOverride.application != null}"
@@ -518,10 +523,11 @@
                         <bean parent="Uif-SecondaryActionButton-Mini" />
                     </property>
                 </bean>
+
                 <bean id="updateAppHash" parent="Uif-ActionField" p:order="40" p:actionLabel="Update Hash" p:cssClasses="s2sOverrideApplicationCurrentHash,pull-left"
                       p:methodToCall="updateHashS2sOverrideApplication"
                       p:render="@{#editModes[#proposalAuthConsts.MODIFY_S2S_OVERRIDE] and #ViewHelper.containsOverride(document) and document.developmentProposal.s2sOverride.applicationOverride != null}"
-                      p:hidden="@{#ViewHelper.containsOverride(document) and document.developmentProposal.s2sOverride.applicationOverride != null and document.developmentProposal.s2sOverride.applicationOverride.sha1Hash eq document.developmentProposal.s2sOverride.applicationOverride.sha1HashInXml}">
+                      p:hidden="@{#ViewHelper.containsOverride(document) and document.developmentProposal.s2sOverride.applicationOverride != null and (!document.developmentProposal.s2sOverride.applicationOverride.headerVersion1Form or document.developmentProposal.s2sOverride.applicationOverride.sha1Hash eq document.developmentProposal.s2sOverride.applicationOverride.sha1HashInXml)}">
                     <property name="action">
                         <bean parent="Uif-SecondaryActionButton-Mini" />
                     </property>
@@ -546,11 +552,11 @@
                 </bean>
 
                 <bean id="appOverrideHash" parent="Uif-DataField" p:label="SHA-1 Hash" p:readOnly="true" p:propertyName="document.developmentProposal.s2sOverride.applicationOverride.sha1Hash"
-                      p:render="@{#ViewHelper.containsOverride(document) and document.developmentProposal.s2sOverride.applicationOverride != null and document.developmentProposal.s2sOverride.applicationOverride.application != null}"
+                      p:render="@{#ViewHelper.containsOverride(document) and document.developmentProposal.s2sOverride.applicationOverride != null and document.developmentProposal.s2sOverride.applicationOverride.application != null and document.developmentProposal.s2sOverride.applicationOverride.headerVersion1Form}"
                       p:order="70"/>
 
                 <bean id="appOverrideHashXml" parent="Uif-DataField" p:label="SHA-1 Hash In XML" p:readOnly="true" p:propertyName="document.developmentProposal.s2sOverride.applicationOverride.sha1HashInXml"
-                      p:render="@{#ViewHelper.containsOverride(document) and document.developmentProposal.s2sOverride.applicationOverride != null and document.developmentProposal.s2sOverride.applicationOverride.application != null}"
+                      p:render="@{#ViewHelper.containsOverride(document) and document.developmentProposal.s2sOverride.applicationOverride != null and document.developmentProposal.s2sOverride.applicationOverride.application != null and document.developmentProposal.s2sOverride.applicationOverride.headerVersion1Form}"
                       p:order="80"/>
 
                 <bean parent="PropDev-OpportunityPage-Override-Override-AttachmentSection" p:order="90" />

@@ -1499,7 +1499,9 @@
 		  </property>
 		</bean>
 		<bean p:propertyName="programAnnouncementTitle" parent="Uif-DataField"/>
-		<bean p:propertyName="s2sOpportunity.competetionId" parent="Uif-DataField"/>
+        <bean p:propertyName="s2sOpportunity.packageId" parent="Uif-DataField"/>
+		<bean p:propertyName="s2sOpportunity.competitionId" parent="Uif-DataField"/>
+		<bean p:propertyName="s2sOpportunity.competitionTitle" parent="Uif-DataField"/>
 		<bean p:propertyName="principalInvestigatorName" parent="Uif-DataField"/>
 		<bean p:propertyName="title" parent="Uif-DataField"/>
         <bean p:propertyName="ownedByUnitNumber" parent="Uif-DataField">

@@ -1,6 +1,7 @@
 package org.kuali.coeus.propdev.impl.s2s;
 
 import gov.grants.apply.services.applicantwebservices_v2.GetApplicationListResponse;
+import gov.grants.apply.system.applicantcommonelements_v1.SubmissionDetails;
 import org.junit.Assert;
 import org.junit.Test;
 import org.kuali.coeus.propdev.impl.core.DevelopmentProposal;
@@ -57,7 +58,7 @@ public class S2sSubmissionServiceImplTest extends ProposalDevelopmentRuleTestBas
         ProposalDevelopmentDocument proposalDevelopmentDocument = (ProposalDevelopmentDocument)getDocumentService().saveDocument(createProposal());
 
         S2sAppSubmission appSubmission = new S2sAppSubmission();
-        GetApplicationListResponse.ApplicationInfo ggApplication = getGgApplication(true);
+        SubmissionDetails ggApplication = getGgApplication(true);
         S2sSubmissionService s2sSubmissionService = getS2sSubmissionService();
 
         s2sSubmissionService.populateAppSubmission(proposalDevelopmentDocument, appSubmission, ggApplication);
@@ -73,7 +74,7 @@ public class S2sSubmissionServiceImplTest extends ProposalDevelopmentRuleTestBas
         ProposalDevelopmentDocument proposalDevelopmentDocument = (ProposalDevelopmentDocument)getDocumentService().saveDocument(createProposal());
 
         S2sAppSubmission appSubmission = new S2sAppSubmission();
-        GetApplicationListResponse.ApplicationInfo ggApplication = getGgApplication(false);
+        SubmissionDetails ggApplication = getGgApplication(false);
         S2sSubmissionService s2sSubmissionService = getS2sSubmissionService();
 
         s2sSubmissionService.populateAppSubmission(proposalDevelopmentDocument, appSubmission, ggApplication);
@@ -112,8 +113,8 @@ public class S2sSubmissionServiceImplTest extends ProposalDevelopmentRuleTestBas
         return document;
     }
 
-    private GetApplicationListResponse.ApplicationInfo getGgApplication(boolean withAgencyTrackingNumber) throws Exception {
-        GetApplicationListResponse.ApplicationInfo ggApplication = new GetApplicationListResponse.ApplicationInfo();
+    private SubmissionDetails getGgApplication(boolean withAgencyTrackingNumber) throws Exception {
+        SubmissionDetails ggApplication = new SubmissionDetails();
 
         ggApplication.setGrantsGovTrackingNumber("9999");
         ggApplication.setReceivedDateTime(DatatypeFactory.newInstance().newXMLGregorianCalendar());
