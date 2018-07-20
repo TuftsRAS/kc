@@ -9,7 +9,6 @@ package org.kuali.coeus.propdev.impl.s2s;
 
 import org.kuali.coeus.propdev.impl.core.ProposalDevelopmentConstants;
 import org.kuali.coeus.sys.framework.gv.GlobalVariableService;
-import org.kuali.kra.infrastructure.Constants;
 import org.kuali.rice.core.api.datetime.DateTimeService;
 import org.kuali.rice.core.api.util.RiceKeyConstants;
 import org.kuali.rice.kew.api.KewApiConstants;
@@ -30,7 +29,6 @@ import org.springframework.util.CollectionUtils;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import java.util.stream.Collectors;
 
 @Component("s2sOpportunityLookupable")
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)

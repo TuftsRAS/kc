@@ -170,7 +170,7 @@ public class PropDevJavaFunctionKrmsTermServiceImplTest {
 		final DevelopmentProposal developmentProposal = createDevelopmentProposal();
 		String narativeTypes = "Performance_sites";
 		developmentProposal.setProposalNumber("11");
-		List<Narrative> narratives = new ArrayList<Narrative>();
+		List<Narrative> narratives = new ArrayList<>();
 		NarrativeType narrativeType = new NarrativeType();
 		narrativeType.setCode("40");
 		narrativeType.setDescription(narativeTypes);
@@ -191,7 +191,7 @@ public class PropDevJavaFunctionKrmsTermServiceImplTest {
 		S2sOppForms s2sOppForms = new S2sOppForms();
 		s2sOppForms.setFormName("RR Budget V1-1");
 		s2sOppForms.setInclude(true);
-		List<S2sOppForms> oppForms = new ArrayList<S2sOppForms>();
+		List<S2sOppForms> oppForms = new ArrayList<>();
 		oppForms.add(s2sOppForms);
 		S2sOpportunity s2sOpportunity = new S2sOpportunity();
 		s2sOpportunity.setS2sOppForms(oppForms);
@@ -203,7 +203,7 @@ public class PropDevJavaFunctionKrmsTermServiceImplTest {
 	@Test
 	public void test_biosketchFileNameRule() {
 		final DevelopmentProposal developmentProposal = createDevelopmentProposal();
-		List<ProposalPersonBiography> proposalPersonBiographies = new ArrayList<ProposalPersonBiography>();
+		List<ProposalPersonBiography> proposalPersonBiographies = new ArrayList<>();
 		PropPerDocType propPerDocType = new PropPerDocType();
 		propPerDocType.setCode("1");
 		propPerDocType.setDescription("Biosketch");
@@ -220,7 +220,7 @@ public class PropDevJavaFunctionKrmsTermServiceImplTest {
 	@Test
 	public void test_ospAdminPropPersonRule() {
 		final DevelopmentProposal developmentProposal = createDevelopmentProposal();
-		List<UnitAdministrator> unitAdministrators = new ArrayList<UnitAdministrator>();
+		List<UnitAdministrator> unitAdministrators = new ArrayList<>();
 		UnitAdministrator unitAdministrator = new UnitAdministrator();
 		unitAdministrator.setPersonId("10000000018");
 		unitAdministrators.add(unitAdministrator);
@@ -234,7 +234,7 @@ public class PropDevJavaFunctionKrmsTermServiceImplTest {
 	@Test
 	public void test_costElementVersionLimit() {
 		ProposalDevelopmentBudgetExt budget = (ProposalDevelopmentBudgetExt) getBudget();
-		List<ProposalDevelopmentBudgetExt> budgets = new ArrayList<ProposalDevelopmentBudgetExt>();
+		List<ProposalDevelopmentBudgetExt> budgets = new ArrayList<>();
 		budgets.add(budget);
 		final DevelopmentProposal developmentProposal = createDevelopmentProposal();
 		developmentProposal.setBudgets(budgets);
@@ -294,7 +294,7 @@ public class PropDevJavaFunctionKrmsTermServiceImplTest {
 		S2sOppForms s2sOppForms2 = new S2sOppForms();
 		s2sOppForms2.setFormName("PHS398 Modular Budget V1-2");
 		s2sOppForms2.setInclude(true);
-		List<S2sOppForms> oppForms = new ArrayList<S2sOppForms>();
+		List<S2sOppForms> oppForms = new ArrayList<>();
 		oppForms.add(s2sOppForms);
 		oppForms.add(s2sOppForms2);
 		S2sOpportunity s2sOpportunity = new S2sOpportunity();
@@ -316,7 +316,7 @@ public class PropDevJavaFunctionKrmsTermServiceImplTest {
 	@Test
 	public void test_narrativeTypeRule() {
 		final DevelopmentProposal developmentProposal = createDevelopmentProposal();
-		List<Narrative> narratives = new ArrayList<Narrative>();
+		List<Narrative> narratives = new ArrayList<>();
 		Narrative narrative = new Narrative();
 		narrative.setModuleNumber(6);
 		narrative.setNarrativeTypeCode("40");
@@ -330,7 +330,7 @@ public class PropDevJavaFunctionKrmsTermServiceImplTest {
 	@Test
 	public void test_s2s398CoverRule() {
 		final DevelopmentProposal developmentProposal = createDevelopmentProposal();
-		List<Narrative> narratives = new ArrayList<Narrative>();
+		List<Narrative> narratives = new ArrayList<>();
 		Narrative narrative = new Narrative();
 		narrative.setModuleNumber(6);
 		narrative.setNarrativeTypeCode("40");
@@ -338,13 +338,13 @@ public class PropDevJavaFunctionKrmsTermServiceImplTest {
 		narratives.add(narrative);
 		developmentProposal.setNarratives(narratives);
 		S2sAppSubmission s2sAppSubmission = new S2sAppSubmission();
-		List<S2sAppSubmission> appSubmission = new ArrayList<S2sAppSubmission>();
+		List<S2sAppSubmission> appSubmission = new ArrayList<>();
 		appSubmission.add(s2sAppSubmission);
 		developmentProposal.setS2sAppSubmission(appSubmission);
 		S2sOppForms s2sOppForms = new S2sOppForms();
 		s2sOppForms.setFormName("PHS398_CoverPageSupplement_2_0-V2.0");
 		s2sOppForms.setInclude(true);
-		List<S2sOppForms> oppForms = new ArrayList<S2sOppForms>();
+		List<S2sOppForms> oppForms = new ArrayList<>();
 		oppForms.add(s2sOppForms);
 		S2sOpportunity s2sOpportunity = new S2sOpportunity();
 		s2sOpportunity.setS2sOppForms(oppForms);
@@ -362,7 +362,7 @@ public class PropDevJavaFunctionKrmsTermServiceImplTest {
 	@Test
 	public void test_costElementInVersion() {
 		ProposalDevelopmentBudgetExt budget = (ProposalDevelopmentBudgetExt) getBudget();
-		List<ProposalDevelopmentBudgetExt> budgets = new ArrayList<ProposalDevelopmentBudgetExt>();
+		List<ProposalDevelopmentBudgetExt> budgets = new ArrayList<>();
 		budgets.add(budget);
 		final DevelopmentProposal developmentProposal = createDevelopmentProposal();
 		developmentProposal.setBudgets(budgets);
@@ -376,7 +376,7 @@ public class PropDevJavaFunctionKrmsTermServiceImplTest {
 		proposalPerson.setDevelopmentProposal(developmentProposal);
 		final Questionnaire questionnaire = new Questionnaire();
 		questionnaire.setQuestionnaireSeqId("10001");
-		final List<AnswerHeader> answerHeaders = new ArrayList<AnswerHeader>();
+		final List<AnswerHeader> answerHeaders = new ArrayList<>();
 		AnswerHeader answerHeader = new AnswerHeader();
 		answerHeader.setModuleItemCode("3");
 		answerHeader.setModuleItemKey("5");
@@ -405,7 +405,7 @@ public class PropDevJavaFunctionKrmsTermServiceImplTest {
 		S2sOppForms s2sOppForms = new S2sOppForms();
 		s2sOppForms.setFormName("PHS398 Modular Budget V1-2");
 		s2sOppForms.setInclude(true);
-		List<S2sOppForms> oppForms = new ArrayList<S2sOppForms>();
+		List<S2sOppForms> oppForms = new ArrayList<>();
 		oppForms.add(s2sOppForms);
 		S2sOpportunity s2sOpportunity = new S2sOpportunity();
 		s2sOpportunity.setS2sOppForms(oppForms);
@@ -426,7 +426,7 @@ public class PropDevJavaFunctionKrmsTermServiceImplTest {
 		final Map<String, Object> values = new HashMap<>();
 		values.put("hierarchyName", "Routing");
 		values.put("sponsorCode", developmentProposal.getSponsorCode());
-		final List<SponsorHierarchy> hierarchies = new ArrayList<SponsorHierarchy>();
+		final List<SponsorHierarchy> hierarchies = new ArrayList<>();
 		SponsorHierarchy sponsorHierarchy = new SponsorHierarchy();
 		sponsorHierarchy.setHierarchyName("Administering Activity");
 		sponsorHierarchy.setLevel1("NIH");
@@ -474,7 +474,7 @@ public class PropDevJavaFunctionKrmsTermServiceImplTest {
 	@Test
 	public void test_leadUnitBelowRule() {
 		final DevelopmentProposal developmentProposal = createDevelopmentProposal();
-		final List<Unit> units = new ArrayList<Unit>();
+		final List<Unit> units = new ArrayList<>();
 		Unit unit = new Unit();
 		unit.setUnitNumber("000005");
 		units.add(unit);
@@ -499,7 +499,7 @@ public class PropDevJavaFunctionKrmsTermServiceImplTest {
 	@Test
 	public void test_proposalUnitRule() {
 		final DevelopmentProposal developmentProposal = createDevelopmentProposal();
-		List<ProposalPersonUnit> proposalPersonUnits = new ArrayList<ProposalPersonUnit>();
+		List<ProposalPersonUnit> proposalPersonUnits = new ArrayList<>();
 		ProposalPersonUnit proposalPersonUnit = new ProposalPersonUnit() {
 			@Override
 			public void refreshReferenceObject(String referenceObjectName) {
@@ -534,7 +534,7 @@ public class PropDevJavaFunctionKrmsTermServiceImplTest {
 		developmentProposal.setS2sOpportunity(createS2sOpportunity());
 		developmentProposal.getNarratives().add(createNarrative());
 		assertEquals(FALSE, propDevJavaFunctionKrmsTermService.s2sAttachmentNarrativeRule(developmentProposal));
-		developmentProposal.setNarratives(new ArrayList<Narrative>());
+		developmentProposal.setNarratives(new ArrayList<>());
 		assertEquals(TRUE, propDevJavaFunctionKrmsTermService.s2sAttachmentNarrativeRule(developmentProposal));
 		developmentProposal.setS2sOpportunity(null);
 		assertEquals(TRUE, propDevJavaFunctionKrmsTermService.s2sAttachmentNarrativeRule(developmentProposal));
@@ -587,8 +587,7 @@ public class PropDevJavaFunctionKrmsTermServiceImplTest {
 
 			}
 		});
-		String result = null;
-		result = propDevJavaFunctionKrmsTermService.s2sFederalIdRule(developmentProposal);
+		String result = propDevJavaFunctionKrmsTermService.s2sFederalIdRule(developmentProposal);
 		assertNotNull(result);
 		assertEquals(FALSE, result);
 		result = propDevJavaFunctionKrmsTermService.s2sFederalIdRule(developmentProposal);
@@ -635,7 +634,7 @@ public class PropDevJavaFunctionKrmsTermServiceImplTest {
 		});
 		assertEquals(TRUE, propDevJavaFunctionKrmsTermService.s2sExemptionRule(developmentProposal));
 		assertEquals(FALSE, propDevJavaFunctionKrmsTermService.s2sExemptionRule(developmentProposal));
-		developmentProposal.setPropSpecialReviews(new ArrayList<ProposalSpecialReview>());
+		developmentProposal.setPropSpecialReviews(new ArrayList<>());
 		assertEquals(TRUE, propDevJavaFunctionKrmsTermService.s2sExemptionRule(developmentProposal));
 	}
 
@@ -646,7 +645,7 @@ public class PropDevJavaFunctionKrmsTermServiceImplTest {
 		budgetExt.setBudgetId(1L);
 		developmentProposal.getBudgets().add(budgetExt);
 		final String costElement = "1";
-		final Map<String, Object> values = new HashMap<String, Object>();
+		final Map<String, Object> values = new HashMap<>();
 		values.put("costElement", costElement);
 		values.put("budgetId", budgetExt.getBudgetId());
 		final List<BudgetLineItem> lineItems1 = budgetExt.getBudgetLineItems();
@@ -663,7 +662,7 @@ public class PropDevJavaFunctionKrmsTermServiceImplTest {
 		});
 		assertEquals(TRUE, propDevJavaFunctionKrmsTermService.costElement(developmentProposal, costElement));
 		assertEquals(FALSE, propDevJavaFunctionKrmsTermService.costElement(developmentProposal, costElement));
-		developmentProposal.setBudgets(new ArrayList<ProposalDevelopmentBudgetExt>());
+		developmentProposal.setBudgets(new ArrayList<>());
 		assertEquals(FALSE, propDevJavaFunctionKrmsTermService.costElement(developmentProposal, costElement));
 	}
 
@@ -706,7 +705,7 @@ public class PropDevJavaFunctionKrmsTermServiceImplTest {
 		developmentProposal.getBudgets().add(budgetExt);
 		assertEquals(TRUE, propDevJavaFunctionKrmsTermService.mtdcDeviationInVersion(developmentProposal, "1"));
 		assertEquals(FALSE, propDevJavaFunctionKrmsTermService.mtdcDeviationInVersion(developmentProposal, "2"));
-		developmentProposal.setBudgets(new ArrayList<ProposalDevelopmentBudgetExt>());
+		developmentProposal.setBudgets(new ArrayList<>());
 		assertEquals(FALSE, propDevJavaFunctionKrmsTermService.mtdcDeviationInVersion(developmentProposal, "1"));
 	}
 
@@ -730,9 +729,9 @@ public class PropDevJavaFunctionKrmsTermServiceImplTest {
 	@Test
 	public void test_investigatorCitizenshipTypeRule() {
 		final DevelopmentProposal developmentProposal = createDevelopmentProposal();
-		final Collection<String> citizenshipTypeParams1 = new ArrayList<String>();
+		final Collection<String> citizenshipTypeParams1 = new ArrayList<>();
 		citizenshipTypeParams1.add("X");
-		final Collection<String> citizenshipTypeParams2 = new ArrayList<String>();
+		final Collection<String> citizenshipTypeParams2 = new ArrayList<>();
 		citizenshipTypeParams2.add("Y");
 		context.checking(new Expectations() {
 			{
@@ -759,22 +758,22 @@ public class PropDevJavaFunctionKrmsTermServiceImplTest {
 	public void test_piAppointmentTypeRule() {
 		final DevelopmentProposal developmentProposal1 = createDevelopmentProposal();
 		final DevelopmentProposal developmentProposal2 = createDevelopmentProposal();
-		final List<AppointmentType> appointmentTypes1 = new ArrayList<AppointmentType>();
-		final List<AppointmentType> appointmentTypes2 = new ArrayList<AppointmentType>();
+		final List<AppointmentType> appointmentTypes1 = new ArrayList<>();
+		final List<AppointmentType> appointmentTypes2 = new ArrayList<>();
 		final AppointmentType appointmentType = new AppointmentType();
 		appointmentType.setDescription("Researcher");
 		appointmentTypes1.add(appointmentType);
 		final KcPersonService kcPersonService = context.mock(KcPersonService.class);
 		developmentProposal1.getProposalPerson(0).setKcPersonService(kcPersonService);
-		developmentProposal2.setProposalPersons(new ArrayList<ProposalPerson>());
+		developmentProposal2.setProposalPersons(new ArrayList<>());
 		final KcPerson kcPerson1 = new KcPerson();
 		final KcPerson kcPerson2 = new KcPerson();
-		final List<PersonAppointment> personAppointments = new ArrayList<PersonAppointment>();
+		final List<PersonAppointment> personAppointments = new ArrayList<>();
 		final PersonAppointment personAppointment = new PersonAppointment();
 		personAppointment.setJobTitle("Researcher");
 		personAppointments.add(personAppointment);
 		kcPerson1.getExtendedAttributes().setPersonAppointments(personAppointments);
-		kcPerson2.getExtendedAttributes().setPersonAppointments(new ArrayList<PersonAppointment>());
+		kcPerson2.getExtendedAttributes().setPersonAppointments(new ArrayList<>());
 		context.checking(new Expectations() {
 			{
 				oneOf(businessObjectService).findAll(AppointmentType.class);
@@ -802,14 +801,14 @@ public class PropDevJavaFunctionKrmsTermServiceImplTest {
 	@Test
 	public void test_proposalCampusRule() {
 		final DevelopmentProposal developmentProposal = createDevelopmentProposal();
-		final List<ProposalPersonUnit> units = new ArrayList<ProposalPersonUnit>();
+		final List<ProposalPersonUnit> units = new ArrayList<>();
 		units.add(createProposalPersonUnit("000001"));
 		developmentProposal.getProposalPerson(0).setUnits(units);
 		assertEquals(TRUE, propDevJavaFunctionKrmsTermService.proposalCampusRule(developmentProposal, "00"));
 		assertEquals(FALSE, propDevJavaFunctionKrmsTermService.proposalCampusRule(developmentProposal, "11"));
-		developmentProposal.getProposalPerson(0).setUnits(new ArrayList<ProposalPersonUnit>());
+		developmentProposal.getProposalPerson(0).setUnits(new ArrayList<>());
 		assertEquals(FALSE, propDevJavaFunctionKrmsTermService.proposalCampusRule(developmentProposal, "00"));
-		developmentProposal.setProposalPersons(new ArrayList<ProposalPerson>());
+		developmentProposal.setProposalPersons(new ArrayList<>());
 		assertEquals(FALSE, propDevJavaFunctionKrmsTermService.proposalCampusRule(developmentProposal, "00"));
 	}
 
@@ -838,16 +837,16 @@ public class PropDevJavaFunctionKrmsTermServiceImplTest {
 	@Test
 	public void test_proposalUnitBelow() {
 		final DevelopmentProposal developmentProposal = createDevelopmentProposal();
-		final List<ProposalPersonUnit> personUnits = new ArrayList<ProposalPersonUnit>();
+		final List<ProposalPersonUnit> personUnits = new ArrayList<>();
 		personUnits.add(createProposalPersonUnit("000001"));
 		developmentProposal.getProposalPerson(0).setUnits(personUnits);
-		final Map<String, Object> fieldValues = new HashMap<String, Object>();
+		final Map<String, Object> fieldValues = new HashMap<>();
 		fieldValues.put("parentUnitNumber", "000001");
-		final List<Unit> units1 = new ArrayList<Unit>();
+		final List<Unit> units1 = new ArrayList<>();
 		units1.add(createUnit("000001"));
-		final List<Unit> units2 = new ArrayList<Unit>();
+		final List<Unit> units2 = new ArrayList<>();
 		units2.add(createUnit("100001"));
-		final List<Unit> units3 = new ArrayList<Unit>();
+		final List<Unit> units3 = new ArrayList<>();
 		context.checking(new Expectations() {
 			{
 				oneOf(unitService).getAllSubUnits("000001");
@@ -870,7 +869,7 @@ public class PropDevJavaFunctionKrmsTermServiceImplTest {
 		});
 		assertEquals(TRUE, propDevJavaFunctionKrmsTermService.proposalUnitBelow(developmentProposal, "000001"));
 		assertEquals(FALSE, propDevJavaFunctionKrmsTermService.proposalUnitBelow(developmentProposal, "100001"));
-		developmentProposal.getProposalPerson(0).setUnits(new ArrayList<ProposalPersonUnit>());
+		developmentProposal.getProposalPerson(0).setUnits(new ArrayList<>());
 		assertEquals(FALSE, propDevJavaFunctionKrmsTermService.proposalUnitBelow(developmentProposal, "100001"));
 		assertEquals(FALSE, propDevJavaFunctionKrmsTermService.proposalUnitBelow(developmentProposal, "100001"));
 	}
@@ -961,7 +960,7 @@ public class PropDevJavaFunctionKrmsTermServiceImplTest {
         Assert.assertTrue(propDevJavaFunctionKrmsTermService.costShareUnitRule(developmentProposal, "000001,IN-IN,BL-BL"));
         Assert.assertFalse(propDevJavaFunctionKrmsTermService.costShareUnitRule(developmentProposal, "000001;IN-IN;BL-BL"));
 
-        developmentProposal.getFinalBudget().getBudgetCostShares().stream().forEach(budgetCostShare -> budgetCostShare.setUnitNumber(null));
+        developmentProposal.getFinalBudget().getBudgetCostShares().forEach(budgetCostShare -> budgetCostShare.setUnitNumber(null));
         Assert.assertFalse(propDevJavaFunctionKrmsTermService.costShareUnitRule(developmentProposal, "000001, IN-IN, BL-BL"));
     }
 
@@ -1002,7 +1001,7 @@ public class PropDevJavaFunctionKrmsTermServiceImplTest {
         Assert.assertTrue(propDevJavaFunctionKrmsTermService.costShareTypeInBudgetCostShareRule(developmentProposal, "3,4,5"));
         Assert.assertFalse(propDevJavaFunctionKrmsTermService.costShareTypeInBudgetCostShareRule(developmentProposal, "3;4;5"));
 
-        developmentProposal.getFinalBudget().getBudgetCostShares().stream().forEach(budgetCostShare -> budgetCostShare.setCostShareTypeCode(null));
+        developmentProposal.getFinalBudget().getBudgetCostShares().forEach(budgetCostShare -> budgetCostShare.setCostShareTypeCode(null));
         Assert.assertFalse(propDevJavaFunctionKrmsTermService.costShareTypeInBudgetCostShareRule(developmentProposal, "3, 4, 5"));
 
     }
@@ -1044,7 +1043,7 @@ public class PropDevJavaFunctionKrmsTermServiceImplTest {
         Assert.assertTrue(propDevJavaFunctionKrmsTermService.costShareSourceAccountRule(developmentProposal, "23456,3456,6589"));
         Assert.assertFalse(propDevJavaFunctionKrmsTermService.costShareSourceAccountRule(developmentProposal, "23456; 3456; 6589"));
 
-        developmentProposal.getFinalBudget().getBudgetCostShares().stream().forEach(budgetCostShare -> budgetCostShare.setSourceAccount(null));
+        developmentProposal.getFinalBudget().getBudgetCostShares().forEach(budgetCostShare -> budgetCostShare.setSourceAccount(null));
         Assert.assertFalse(propDevJavaFunctionKrmsTermService.costShareSourceAccountRule(developmentProposal, "23456, 3456, 6589"));
 
     }
@@ -1162,7 +1161,7 @@ public class PropDevJavaFunctionKrmsTermServiceImplTest {
 		String projectRole = "PI";
 		setProposalPersonUnit(developmentProposal, personUnitNumber);
 		
-		final List<Unit> units = new ArrayList<Unit>();
+		final List<Unit> units = new ArrayList<>();
 		Unit unit = new Unit();
 		unit.setUnitNumber(subUnitNumber);
 		units.add(unit);
@@ -1189,7 +1188,7 @@ public class PropDevJavaFunctionKrmsTermServiceImplTest {
 	}
 	
 	protected void setProposalPersonUnit(DevelopmentProposal developmentProposal, String personUnitNumber) {
-		List<ProposalPersonUnit> proposalPersonUnits = new ArrayList<ProposalPersonUnit>();
+		List<ProposalPersonUnit> proposalPersonUnits = new ArrayList<>();
 		proposalPersonUnits.add(createProposalPersonUnit(personUnitNumber));
 		developmentProposal.getProposalPerson(0).setUnits(proposalPersonUnits);
 	}
@@ -1215,7 +1214,7 @@ public class PropDevJavaFunctionKrmsTermServiceImplTest {
 		developmentProposal.setOwnedByUnitNumber("000001");
 		developmentProposal.setRequestedStartDateInitial(new Date(Calendar.getInstance().getTime().getTime()));
 		developmentProposal.setRequestedEndDateInitial(new Date(Calendar.getInstance().getTime().getTime()));
-		List<ProposalPerson> persons = new ArrayList<ProposalPerson>();
+		List<ProposalPerson> persons = new ArrayList<>();
 		ProposalPerson proposalPerson = new ProposalPerson();
 		proposalPerson.setFirstName("ALAN");
 		proposalPerson.setLastName("MCAFEE");
@@ -1235,7 +1234,7 @@ public class PropDevJavaFunctionKrmsTermServiceImplTest {
 	}
 
 	private Budget getBudget() {
-		final  List<BudgetLineItem> lineItems = new ArrayList<BudgetLineItem>();
+		final  List<BudgetLineItem> lineItems = new ArrayList<>();
 		ProposalDevelopmentBudgetExt budget = new ProposalDevelopmentBudgetExt() {
 			@Override
 			public List<BudgetLineItem> getBudgetLineItems() {
@@ -1243,14 +1242,14 @@ public class PropDevJavaFunctionKrmsTermServiceImplTest {
 			}
 		};
 
-		List<BudgetPeriod> periods = new ArrayList<BudgetPeriod>();
+		List<BudgetPeriod> periods = new ArrayList<>();
 		BudgetPeriod period = new BudgetPeriod();
 
 
 		BudgetLineItem lineItem = budget.getNewBudgetLineItem();
 		lineItem.setLineItemSequence(1);
 
-		List<BudgetPersonnelDetails> lineItemDetails = new ArrayList<BudgetPersonnelDetails>();
+		List<BudgetPersonnelDetails> lineItemDetails = new ArrayList<>();
 		BudgetPersonnelDetails details = lineItem.getNewBudgetPersonnelLineItem();
 		details.setLineItemSequence(1);
 		details.setPersonSequenceNumber(1);
@@ -1269,7 +1268,7 @@ public class PropDevJavaFunctionKrmsTermServiceImplTest {
 		period.setBudgetLineItems(lineItems);
 		periods.add(period);
 
-		List<BudgetPerson> persons = new ArrayList<BudgetPerson>();
+		List<BudgetPerson> persons = new ArrayList<>();
 		BudgetPerson person = new BudgetPerson() {
 			private String jc;
 
@@ -1306,7 +1305,7 @@ public class PropDevJavaFunctionKrmsTermServiceImplTest {
 		S2sOppForms s2sOppForms = new S2sOppForms();
 		s2sOppForms.setFormName("PHS398 Modular Budget V1-2");
 		s2sOppForms.setInclude(true);
-		List<S2sOppForms> oppForms = new ArrayList<S2sOppForms>();
+		List<S2sOppForms> oppForms = new ArrayList<>();
 		oppForms.add(s2sOppForms);
 		S2sOpportunity s2sOpportunity = new S2sOpportunity();
 		s2sOpportunity.setS2sOppForms(oppForms);
