@@ -412,12 +412,13 @@ public class S2sSubmissionServiceImpl implements S2sSubmissionService {
 
         s2Opportunity.setMultiProject(oppInfo.isIsMultiProject());
 
-        final S2sOpportunityCfda cfda = new S2sOpportunityCfda();
-        cfda.setCfdaDescription(oppInfo.getCFDADescription());
-        cfda.setCfdaNumber(oppInfo.getCFDANumber());
+        if (StringUtils.isNotBlank(oppInfo.getCFDANumber())) {
+            final S2sOpportunityCfda cfda = new S2sOpportunityCfda();
+            cfda.setCfdaDescription(oppInfo.getCFDADescription());
+            cfda.setCfdaNumber(oppInfo.getCFDANumber());
 
-        s2Opportunity.setS2sOpportunityCfdas(Stream.of(cfda).collect(Collectors.toList()));
-
+            s2Opportunity.setS2sOpportunityCfdas(Stream.of(cfda).collect(Collectors.toList()));
+        }
         return s2Opportunity;
     }
 
