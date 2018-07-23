@@ -1,6 +1,11 @@
 
 
 ## CURRENT
+* RESKC-2582: Add approval validation on confirmApproval. Validation now happens before the dialog opens and after. (#2984)
+
+  * Omar Soto Fortuño on Mon, 23 Jul 2018 13:59:34 -0400 [View Commit](../../commit/acf4c96be0d14db2a71c88ea025a2e268aaa5e84)
+
+## coeus-1807.0024
 * RESKC-2339: making cfda number not null in S2S Opportunity
   * Travis Schneeberger on Sat, 21 Jul 2018 13:37:06 -0400 [View Commit](../../commit/7629afe1f643bb6787f06cadb2a3795b3dfc90e1)
 
