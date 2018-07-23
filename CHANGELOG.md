@@ -1,6 +1,10 @@
 
 
 ## CURRENT
+* RESKC-2339: making cfda number not null in S2S Opportunity
+  * Travis Schneeberger on Sat, 21 Jul 2018 13:37:06 -0400 [View Commit](../../commit/7629afe1f643bb6787f06cadb2a3795b3dfc90e1)
+
+## coeus-1807.0023
 * RESKC-2806: Endpoint to add approvers. (#2981)
 
   * Gayathri Athreya on Thu, 19 Jul 2018 09:40:45 -0700 [View Commit](../../commit/139986195ce408288cab81f33336fe05c1d5c772)
