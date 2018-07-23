@@ -677,7 +677,8 @@ public class ProposalDevelopmentSubmitController extends ProposalDevelopmentCont
 
     @Transactional @RequestMapping(value = "/proposalDevelopment", params="methodToCall=approve")
     public ModelAndView approve(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm form) throws Exception{
-        Document document = form.getProposalDevelopmentDocument();
+        // Load document state before approval to verify if the user can approve.
+        Document document = getDocumentService().getByDocumentHeaderId(form.getDocId());
         WorkflowDocument workflowDoc = document.getDocumentHeader().getWorkflowDocument();
 
         if (!canApproveDocument(document)) {
@@ -739,14 +740,15 @@ public class ProposalDevelopmentSubmitController extends ProposalDevelopmentCont
         form.setEvaluateFlagsAndModes(true);
         return updateProposalState(form);
     }
-    
-    @Transactional @RequestMapping(value = "/proposalDevelopment", params = "methodToCall=confirmApproval")
-	public ModelAndView confirmApproval(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm form) throws Exception {
-		if (form.getProposalDevelopmentApprovalBean().getActionReason() != null) {
-			form.setAnnotation(StringUtils.defaultString(form.getProposalDevelopmentApprovalBean().getActionReason()));
-		}
-		return approve(form);
-	}
+
+    @Transactional
+    @RequestMapping(value = "/proposalDevelopment", params = "methodToCall=confirmApproval")
+    public ModelAndView confirmApproval(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm form) throws Exception {
+        if (form.getProposalDevelopmentApprovalBean().getActionReason() != null) {
+            form.setAnnotation(StringUtils.defaultString(form.getProposalDevelopmentApprovalBean().getActionReason()));
+        }
+        return approve(form);
+    }
 
     protected void sendAnotherUserApprovedNotification(ProposalDevelopmentDocumentForm form, List<NotificationTypeRecipient> recipients) {
         prepareNotification(form.getDevelopmentProposal());
