@@ -1,6 +1,10 @@
 
 
 ## CURRENT
+* RESKC-2339: support grants.gov Header v2
+  * Travis Schneeberger on Fri, 20 Jul 2018 12:18:28 -0400 [View Commit](../../commit/49483fdb039436027404f8c335e39f1cd7727b94)
+
+## coeus-1807.0026
 * RESKC-2732: Enable parameter Enable_Lock_On_Document_Version, as preparation for facing it out. (#2986)
 
   * Omar Soto Fortuño on Tue, 24 Jul 2018 10:57:45 -0400 [View Commit](../../commit/94e39347768e4a2d882320952945e7b632cb5038)

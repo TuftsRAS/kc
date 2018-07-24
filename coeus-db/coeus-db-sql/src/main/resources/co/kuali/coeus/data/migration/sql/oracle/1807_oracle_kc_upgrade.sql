@@ -25,4 +25,5 @@ spool 1807_oracle_kc_upgrade.sql.log
 @./kc/bootstrap/V1807_003__multi_cfda.sql
 @./kc/bootstrap/V1807_005__assignApprover.sql
 @./kc/bootstrap/V1807_006__multi_cfda.sql
+@./kc/bootstrap/V1807_008__add_s2s_opp_fields.sql
 commit;
