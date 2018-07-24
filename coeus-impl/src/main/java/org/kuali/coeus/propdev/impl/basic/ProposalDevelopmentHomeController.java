@@ -457,7 +457,9 @@ public class ProposalDevelopmentHomeController extends ProposalDevelopmentContro
 
             }
             opportunity.setOpeningDate(openingDate);
-            opportunity.setCompetetionId(form.getRequest().getParameter(ProposalDevelopmentConstants.S2sConstants.COMPETETION_ID));
+            opportunity.setPackageId(form.getRequest().getParameter(ProposalDevelopmentConstants.S2sConstants.PACKAGE_ID));
+            opportunity.setCompetitionId(form.getRequest().getParameter(ProposalDevelopmentConstants.S2sConstants.COMPETITION_ID));
+            opportunity.setCompetitionTitle(form.getRequest().getParameter(ProposalDevelopmentConstants.S2sConstants.COMPETITION_TITLE));
             opportunity.setInstructionUrl(form.getRequest().getParameter(ProposalDevelopmentConstants.S2sConstants.INSTRUCTION_URL));
             opportunity.setS2sOpportunityCfdasSerialized(form.getRequest().getParameter(ProposalDevelopmentConstants.S2sConstants.S2S_OPPORTUNITY_CFDAS_SERIALIZED));
             opportunity.getS2sOpportunityCfdas().forEach(cfda -> cfda.setProposalNumber(developmentProposal.getProposalNumber()));

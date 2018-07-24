@@ -39,6 +39,7 @@ import java.nio.charset.StandardCharsets;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
+import java.util.function.BiFunction;
 
 @Entity
 @Table(name = "S2S_OVERRIDE_APPL_DATA")
@@ -197,24 +198,39 @@ public class S2sOverrideApplicationData extends KcPersistableBusinessObjectBase 
         this.url = url;
     }
 
-    @Override
-    public String getSha1Hash() {
-        if (StringUtils.isNotBlank(application)) {
+    private <R> R doToHeaderVersion1(BiFunction<Document, NodeList, R> headerFunction, String applicationXml) {
+        if (StringUtils.isNotBlank(applicationXml)) {
             try (ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(application.getBytes(StandardCharsets.UTF_8.name()))) {
                 final Document appDoc = getFormUtilityService().createDomBuilder().parse(byteArrayInputStream);
                 final NodeList headers = appDoc.getElementsByTagNameNS(S2SXmlConstants.HEADER_NS, S2SXmlConstants.GRANT_SUBMISSION_HEADER);
-                for (int i = 0; i < headers.getLength(); i++) {
-                    final Node header = headers.item(i);
-                    header.getParentNode().removeChild(header);
-                }
-                return getGrantApplicationHashService().computeGrantFormsHash(getFormUtilityService().docToString(appDoc));
-            } catch (RuntimeException | ParserConfigurationException | IOException | SAXException | TransformerException e) {
+                return headerFunction.apply(appDoc, headers);
+            } catch (RuntimeException | ParserConfigurationException | IOException | SAXException e) {
                 if (LOG.isInfoEnabled()) {
                     LOG.info(e.getMessage(), e);
                 }
             }
         }
         return null;
+    }
+
+    public boolean isHeaderVersion1Form() {
+        final Boolean exists = doToHeaderVersion1((appDoc, headers) -> headers != null && headers.getLength() > 0, application);
+        return exists != null ? exists : false;
+    }
+
+    @Override
+    public String getSha1Hash() {
+        return doToHeaderVersion1((appDoc, headers) -> {
+            for (int i = 0; i < headers.getLength(); i++) {
+                final Node header = headers.item(i);
+                header.getParentNode().removeChild(header);
+            }
+            try {
+                return getGrantApplicationHashService().computeGrantFormsHash(getFormUtilityService().docToString(appDoc));
+            } catch (TransformerException e) {
+                throw new RuntimeException(e);
+            }
+        }, application);
     }
 
     public String getSha1HashInXml() {
@@ -228,24 +244,16 @@ public class S2sOverrideApplicationData extends KcPersistableBusinessObjectBase 
     }
 
     public Node getSha1HashInXmlNode() {
-        if (StringUtils.isNotBlank(application)) {
-            try (ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(application.getBytes(StandardCharsets.UTF_8.name()))) {
-                final Document appDoc = getFormUtilityService().createDomBuilder().parse(byteArrayInputStream);
-                final NodeList headers = appDoc.getElementsByTagNameNS(S2SXmlConstants.HEADER_NS, S2SXmlConstants.GRANT_SUBMISSION_HEADER);
-                for (int i = 0; i < headers.getLength(); i++) {
-                    final Node header = headers.item(i);
-                    final Node hashValueNode = getFormUtilityService().getHashValueFromParent(header);
-                    if (hashValueNode != null) {
-                        return hashValueNode;
-                    }
-                }
-            } catch (RuntimeException | ParserConfigurationException | IOException | SAXException e) {
-                if (LOG.isInfoEnabled()) {
-                    LOG.info(e.getMessage(), e);
+        return doToHeaderVersion1((appDoc, headers) -> {
+            for (int i = 0; i < headers.getLength(); i++) {
+                final Node header = headers.item(i);
+                final Node hashValueNode = getFormUtilityService().getHashValueFromParent(header);
+                if (hashValueNode != null) {
+                    return hashValueNode;
                 }
             }
-        }
-        return null;
+            return null;
+        }, application);
     }
 
     public boolean updateSha1HashInXml() {

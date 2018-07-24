@@ -16,7 +16,7 @@
 
     + Body
     
-            {"cfdaNumber": "(val)","closingDate": "(val)","competetionId": "(val)","instructionUrl": "(val)","openingDate": "(val)","opportunity": "(val)","opportunityId": "(val)","opportunityTitle": "(val)","revisionCode": "(val)","revisionOtherDescription": "(val)","s2sSubmissionTypeCode": "(val)","schemaUrl": "(val)","offeringAgency": "(val)","agencyContactInfo": "(val)","cfdaDescription": "(val)","multiProject": "(val)","providerCode": "(val)","_primaryKey": "(val)"}
+            {"cfdaNumber": "(val)","closingDate": "(val)","competitionId": "(val)","instructionUrl": "(val)","openingDate": "(val)","opportunity": "(val)","opportunityId": "(val)","opportunityTitle": "(val)","revisionCode": "(val)","revisionOtherDescription": "(val)","s2sSubmissionTypeCode": "(val)","schemaUrl": "(val)","offeringAgency": "(val)","agencyContactInfo": "(val)","cfdaDescription": "(val)","multiProject": "(val)","providerCode": "(val)","_primaryKey": "(val)"}
 
 ### Get All S2s Opportunities [GET /propdev/api/v1/s2s-opportunities/]
 	 
@@ -35,8 +35,8 @@
     + Body
     
             [
-              {"cfdaNumber": "(val)","closingDate": "(val)","competetionId": "(val)","instructionUrl": "(val)","openingDate": "(val)","opportunity": "(val)","opportunityId": "(val)","opportunityTitle": "(val)","revisionCode": "(val)","revisionOtherDescription": "(val)","s2sSubmissionTypeCode": "(val)","schemaUrl": "(val)","offeringAgency": "(val)","agencyContactInfo": "(val)","cfdaDescription": "(val)","multiProject": "(val)","providerCode": "(val)","_primaryKey": "(val)"},
-              {"cfdaNumber": "(val)","closingDate": "(val)","competetionId": "(val)","instructionUrl": "(val)","openingDate": "(val)","opportunity": "(val)","opportunityId": "(val)","opportunityTitle": "(val)","revisionCode": "(val)","revisionOtherDescription": "(val)","s2sSubmissionTypeCode": "(val)","schemaUrl": "(val)","offeringAgency": "(val)","agencyContactInfo": "(val)","cfdaDescription": "(val)","multiProject": "(val)","providerCode": "(val)","_primaryKey": "(val)"}
+              {"cfdaNumber": "(val)","closingDate": "(val)","competitionId": "(val)","instructionUrl": "(val)","openingDate": "(val)","opportunity": "(val)","opportunityId": "(val)","opportunityTitle": "(val)","revisionCode": "(val)","revisionOtherDescription": "(val)","s2sSubmissionTypeCode": "(val)","schemaUrl": "(val)","offeringAgency": "(val)","agencyContactInfo": "(val)","cfdaDescription": "(val)","multiProject": "(val)","providerCode": "(val)","_primaryKey": "(val)"},
+              {"cfdaNumber": "(val)","closingDate": "(val)","competitionId": "(val)","instructionUrl": "(val)","openingDate": "(val)","opportunity": "(val)","opportunityId": "(val)","opportunityTitle": "(val)","revisionCode": "(val)","revisionOtherDescription": "(val)","s2sSubmissionTypeCode": "(val)","schemaUrl": "(val)","offeringAgency": "(val)","agencyContactInfo": "(val)","cfdaDescription": "(val)","multiProject": "(val)","providerCode": "(val)","_primaryKey": "(val)"}
             ]
 
 ### Get All S2s Opportunities with Filtering [GET /propdev/api/v1/s2s-opportunities/]
@@ -45,7 +45,7 @@
 
     + cfdaNumber (optional) - A unique identifier for the sponsor and the funding opportunity announcement.  AKA "Catalogue of Federal Domestic Assistance Number". Maximum length is 6.
     + closingDate (optional) - Closing Date. Maximum length is 21.
-    + competetionId (optional) - Competition Id. Maximum length is 50.
+    + competitionId (optional) - Competition Id. Maximum length is 50.
     + instructionUrl (optional) - Instruction Page. Maximum length is 300.
     + openingDate (optional) - Opening Date. Maximum length is 21.
     + opportunity (optional) - Opportunity. Maximum length is 40000000.
@@ -77,8 +77,8 @@
     + Body
     
             [
-              {"cfdaNumber": "(val)","closingDate": "(val)","competetionId": "(val)","instructionUrl": "(val)","openingDate": "(val)","opportunity": "(val)","opportunityId": "(val)","opportunityTitle": "(val)","revisionCode": "(val)","revisionOtherDescription": "(val)","s2sSubmissionTypeCode": "(val)","schemaUrl": "(val)","offeringAgency": "(val)","agencyContactInfo": "(val)","cfdaDescription": "(val)","multiProject": "(val)","providerCode": "(val)","_primaryKey": "(val)"},
-              {"cfdaNumber": "(val)","closingDate": "(val)","competetionId": "(val)","instructionUrl": "(val)","openingDate": "(val)","opportunity": "(val)","opportunityId": "(val)","opportunityTitle": "(val)","revisionCode": "(val)","revisionOtherDescription": "(val)","s2sSubmissionTypeCode": "(val)","schemaUrl": "(val)","offeringAgency": "(val)","agencyContactInfo": "(val)","cfdaDescription": "(val)","multiProject": "(val)","providerCode": "(val)","_primaryKey": "(val)"}
+              {"cfdaNumber": "(val)","closingDate": "(val)","competitionId": "(val)","instructionUrl": "(val)","openingDate": "(val)","opportunity": "(val)","opportunityId": "(val)","opportunityTitle": "(val)","revisionCode": "(val)","revisionOtherDescription": "(val)","s2sSubmissionTypeCode": "(val)","schemaUrl": "(val)","offeringAgency": "(val)","agencyContactInfo": "(val)","cfdaDescription": "(val)","multiProject": "(val)","providerCode": "(val)","_primaryKey": "(val)"},
+              {"cfdaNumber": "(val)","closingDate": "(val)","competitionId": "(val)","instructionUrl": "(val)","openingDate": "(val)","opportunity": "(val)","opportunityId": "(val)","opportunityTitle": "(val)","revisionCode": "(val)","revisionOtherDescription": "(val)","s2sSubmissionTypeCode": "(val)","schemaUrl": "(val)","offeringAgency": "(val)","agencyContactInfo": "(val)","cfdaDescription": "(val)","multiProject": "(val)","providerCode": "(val)","_primaryKey": "(val)"}
             ]
 			
 ### Get Schema for S2s Opportunities [GET /propdev/api/v1/s2s-opportunities/]
@@ -101,7 +101,7 @@
 
     + Body
     
-            {"columns":["cfdaNumber","closingDate","competetionId","instructionUrl","openingDate","opportunity","opportunityId","opportunityTitle","revisionCode","revisionOtherDescription","s2sSubmissionTypeCode","schemaUrl","offeringAgency","agencyContactInfo","cfdaDescription","multiProject","providerCode"],"primaryKey":"developmentProposal"}
+            {"columns":["cfdaNumber","closingDate","competitionId","instructionUrl","openingDate","opportunity","opportunityId","opportunityTitle","revisionCode","revisionOtherDescription","s2sSubmissionTypeCode","schemaUrl","offeringAgency","agencyContactInfo","cfdaDescription","multiProject","providerCode"],"primaryKey":"developmentProposal"}
 		
 ### Get Blueprint API specification for S2s Opportunities [GET /propdev/api/v1/s2s-opportunities/]
 	 
@@ -133,7 +133,7 @@
 
     + Body
     
-            {"cfdaNumber": "(val)","closingDate": "(val)","competetionId": "(val)","instructionUrl": "(val)","openingDate": "(val)","opportunity": "(val)","opportunityId": "(val)","opportunityTitle": "(val)","revisionCode": "(val)","revisionOtherDescription": "(val)","s2sSubmissionTypeCode": "(val)","schemaUrl": "(val)","offeringAgency": "(val)","agencyContactInfo": "(val)","cfdaDescription": "(val)","multiProject": "(val)","providerCode": "(val)","_primaryKey": "(val)"}
+            {"cfdaNumber": "(val)","closingDate": "(val)","competitionId": "(val)","instructionUrl": "(val)","openingDate": "(val)","opportunity": "(val)","opportunityId": "(val)","opportunityTitle": "(val)","revisionCode": "(val)","revisionOtherDescription": "(val)","s2sSubmissionTypeCode": "(val)","schemaUrl": "(val)","offeringAgency": "(val)","agencyContactInfo": "(val)","cfdaDescription": "(val)","multiProject": "(val)","providerCode": "(val)","_primaryKey": "(val)"}
 			
 + Response 204
 
@@ -149,8 +149,8 @@
     + Body
     
             [
-              {"cfdaNumber": "(val)","closingDate": "(val)","competetionId": "(val)","instructionUrl": "(val)","openingDate": "(val)","opportunity": "(val)","opportunityId": "(val)","opportunityTitle": "(val)","revisionCode": "(val)","revisionOtherDescription": "(val)","s2sSubmissionTypeCode": "(val)","schemaUrl": "(val)","offeringAgency": "(val)","agencyContactInfo": "(val)","cfdaDescription": "(val)","multiProject": "(val)","providerCode": "(val)","_primaryKey": "(val)"},
-              {"cfdaNumber": "(val)","closingDate": "(val)","competetionId": "(val)","instructionUrl": "(val)","openingDate": "(val)","opportunity": "(val)","opportunityId": "(val)","opportunityTitle": "(val)","revisionCode": "(val)","revisionOtherDescription": "(val)","s2sSubmissionTypeCode": "(val)","schemaUrl": "(val)","offeringAgency": "(val)","agencyContactInfo": "(val)","cfdaDescription": "(val)","multiProject": "(val)","providerCode": "(val)","_primaryKey": "(val)"}
+              {"cfdaNumber": "(val)","closingDate": "(val)","competitionId": "(val)","instructionUrl": "(val)","openingDate": "(val)","opportunity": "(val)","opportunityId": "(val)","opportunityTitle": "(val)","revisionCode": "(val)","revisionOtherDescription": "(val)","s2sSubmissionTypeCode": "(val)","schemaUrl": "(val)","offeringAgency": "(val)","agencyContactInfo": "(val)","cfdaDescription": "(val)","multiProject": "(val)","providerCode": "(val)","_primaryKey": "(val)"},
+              {"cfdaNumber": "(val)","closingDate": "(val)","competitionId": "(val)","instructionUrl": "(val)","openingDate": "(val)","opportunity": "(val)","opportunityId": "(val)","opportunityTitle": "(val)","revisionCode": "(val)","revisionOtherDescription": "(val)","s2sSubmissionTypeCode": "(val)","schemaUrl": "(val)","offeringAgency": "(val)","agencyContactInfo": "(val)","cfdaDescription": "(val)","multiProject": "(val)","providerCode": "(val)","_primaryKey": "(val)"}
             ]
 			
 + Response 204
@@ -165,13 +165,13 @@
 
     + Body
     
-            {"cfdaNumber": "(val)","closingDate": "(val)","competetionId": "(val)","instructionUrl": "(val)","openingDate": "(val)","opportunity": "(val)","opportunityId": "(val)","opportunityTitle": "(val)","revisionCode": "(val)","revisionOtherDescription": "(val)","s2sSubmissionTypeCode": "(val)","schemaUrl": "(val)","offeringAgency": "(val)","agencyContactInfo": "(val)","cfdaDescription": "(val)","multiProject": "(val)","providerCode": "(val)","_primaryKey": "(val)"}
+            {"cfdaNumber": "(val)","closingDate": "(val)","competitionId": "(val)","instructionUrl": "(val)","openingDate": "(val)","opportunity": "(val)","opportunityId": "(val)","opportunityTitle": "(val)","revisionCode": "(val)","revisionOtherDescription": "(val)","s2sSubmissionTypeCode": "(val)","schemaUrl": "(val)","offeringAgency": "(val)","agencyContactInfo": "(val)","cfdaDescription": "(val)","multiProject": "(val)","providerCode": "(val)","_primaryKey": "(val)"}
 			
 + Response 204
     
     + Body
             
-            {"cfdaNumber": "(val)","closingDate": "(val)","competetionId": "(val)","instructionUrl": "(val)","openingDate": "(val)","opportunity": "(val)","opportunityId": "(val)","opportunityTitle": "(val)","revisionCode": "(val)","revisionOtherDescription": "(val)","s2sSubmissionTypeCode": "(val)","schemaUrl": "(val)","offeringAgency": "(val)","agencyContactInfo": "(val)","cfdaDescription": "(val)","multiProject": "(val)","providerCode": "(val)","_primaryKey": "(val)"}
+            {"cfdaNumber": "(val)","closingDate": "(val)","competitionId": "(val)","instructionUrl": "(val)","openingDate": "(val)","opportunity": "(val)","opportunityId": "(val)","opportunityTitle": "(val)","revisionCode": "(val)","revisionOtherDescription": "(val)","s2sSubmissionTypeCode": "(val)","schemaUrl": "(val)","offeringAgency": "(val)","agencyContactInfo": "(val)","cfdaDescription": "(val)","multiProject": "(val)","providerCode": "(val)","_primaryKey": "(val)"}
 ### Insert S2s Opportunities [POST /propdev/api/v1/s2s-opportunities/]
 
 + Request
@@ -183,13 +183,13 @@
 
     + Body
     
-            {"cfdaNumber": "(val)","closingDate": "(val)","competetionId": "(val)","instructionUrl": "(val)","openingDate": "(val)","opportunity": "(val)","opportunityId": "(val)","opportunityTitle": "(val)","revisionCode": "(val)","revisionOtherDescription": "(val)","s2sSubmissionTypeCode": "(val)","schemaUrl": "(val)","offeringAgency": "(val)","agencyContactInfo": "(val)","cfdaDescription": "(val)","multiProject": "(val)","providerCode": "(val)","_primaryKey": "(val)"}
+            {"cfdaNumber": "(val)","closingDate": "(val)","competitionId": "(val)","instructionUrl": "(val)","openingDate": "(val)","opportunity": "(val)","opportunityId": "(val)","opportunityTitle": "(val)","revisionCode": "(val)","revisionOtherDescription": "(val)","s2sSubmissionTypeCode": "(val)","schemaUrl": "(val)","offeringAgency": "(val)","agencyContactInfo": "(val)","cfdaDescription": "(val)","multiProject": "(val)","providerCode": "(val)","_primaryKey": "(val)"}
 			
 + Response 201
     
     + Body
             
-            {"cfdaNumber": "(val)","closingDate": "(val)","competetionId": "(val)","instructionUrl": "(val)","openingDate": "(val)","opportunity": "(val)","opportunityId": "(val)","opportunityTitle": "(val)","revisionCode": "(val)","revisionOtherDescription": "(val)","s2sSubmissionTypeCode": "(val)","schemaUrl": "(val)","offeringAgency": "(val)","agencyContactInfo": "(val)","cfdaDescription": "(val)","multiProject": "(val)","providerCode": "(val)","_primaryKey": "(val)"}
+            {"cfdaNumber": "(val)","closingDate": "(val)","competitionId": "(val)","instructionUrl": "(val)","openingDate": "(val)","opportunity": "(val)","opportunityId": "(val)","opportunityTitle": "(val)","revisionCode": "(val)","revisionOtherDescription": "(val)","s2sSubmissionTypeCode": "(val)","schemaUrl": "(val)","offeringAgency": "(val)","agencyContactInfo": "(val)","cfdaDescription": "(val)","multiProject": "(val)","providerCode": "(val)","_primaryKey": "(val)"}
             
 ### Insert Multiple S2s Opportunities [POST /propdev/api/v1/s2s-opportunities/]
 
@@ -203,8 +203,8 @@
     + Body
     
             [
-              {"cfdaNumber": "(val)","closingDate": "(val)","competetionId": "(val)","instructionUrl": "(val)","openingDate": "(val)","opportunity": "(val)","opportunityId": "(val)","opportunityTitle": "(val)","revisionCode": "(val)","revisionOtherDescription": "(val)","s2sSubmissionTypeCode": "(val)","schemaUrl": "(val)","offeringAgency": "(val)","agencyContactInfo": "(val)","cfdaDescription": "(val)","multiProject": "(val)","providerCode": "(val)","_primaryKey": "(val)"},
-              {"cfdaNumber": "(val)","closingDate": "(val)","competetionId": "(val)","instructionUrl": "(val)","openingDate": "(val)","opportunity": "(val)","opportunityId": "(val)","opportunityTitle": "(val)","revisionCode": "(val)","revisionOtherDescription": "(val)","s2sSubmissionTypeCode": "(val)","schemaUrl": "(val)","offeringAgency": "(val)","agencyContactInfo": "(val)","cfdaDescription": "(val)","multiProject": "(val)","providerCode": "(val)","_primaryKey": "(val)"}
+              {"cfdaNumber": "(val)","closingDate": "(val)","competitionId": "(val)","instructionUrl": "(val)","openingDate": "(val)","opportunity": "(val)","opportunityId": "(val)","opportunityTitle": "(val)","revisionCode": "(val)","revisionOtherDescription": "(val)","s2sSubmissionTypeCode": "(val)","schemaUrl": "(val)","offeringAgency": "(val)","agencyContactInfo": "(val)","cfdaDescription": "(val)","multiProject": "(val)","providerCode": "(val)","_primaryKey": "(val)"},
+              {"cfdaNumber": "(val)","closingDate": "(val)","competitionId": "(val)","instructionUrl": "(val)","openingDate": "(val)","opportunity": "(val)","opportunityId": "(val)","opportunityTitle": "(val)","revisionCode": "(val)","revisionOtherDescription": "(val)","s2sSubmissionTypeCode": "(val)","schemaUrl": "(val)","offeringAgency": "(val)","agencyContactInfo": "(val)","cfdaDescription": "(val)","multiProject": "(val)","providerCode": "(val)","_primaryKey": "(val)"}
             ]
 			
 + Response 201
@@ -212,8 +212,8 @@
     + Body
             
             [
-              {"cfdaNumber": "(val)","closingDate": "(val)","competetionId": "(val)","instructionUrl": "(val)","openingDate": "(val)","opportunity": "(val)","opportunityId": "(val)","opportunityTitle": "(val)","revisionCode": "(val)","revisionOtherDescription": "(val)","s2sSubmissionTypeCode": "(val)","schemaUrl": "(val)","offeringAgency": "(val)","agencyContactInfo": "(val)","cfdaDescription": "(val)","multiProject": "(val)","providerCode": "(val)","_primaryKey": "(val)"},
-              {"cfdaNumber": "(val)","closingDate": "(val)","competetionId": "(val)","instructionUrl": "(val)","openingDate": "(val)","opportunity": "(val)","opportunityId": "(val)","opportunityTitle": "(val)","revisionCode": "(val)","revisionOtherDescription": "(val)","s2sSubmissionTypeCode": "(val)","schemaUrl": "(val)","offeringAgency": "(val)","agencyContactInfo": "(val)","cfdaDescription": "(val)","multiProject": "(val)","providerCode": "(val)","_primaryKey": "(val)"}
+              {"cfdaNumber": "(val)","closingDate": "(val)","competitionId": "(val)","instructionUrl": "(val)","openingDate": "(val)","opportunity": "(val)","opportunityId": "(val)","opportunityTitle": "(val)","revisionCode": "(val)","revisionOtherDescription": "(val)","s2sSubmissionTypeCode": "(val)","schemaUrl": "(val)","offeringAgency": "(val)","agencyContactInfo": "(val)","cfdaDescription": "(val)","multiProject": "(val)","providerCode": "(val)","_primaryKey": "(val)"},
+              {"cfdaNumber": "(val)","closingDate": "(val)","competitionId": "(val)","instructionUrl": "(val)","openingDate": "(val)","opportunity": "(val)","opportunityId": "(val)","opportunityTitle": "(val)","revisionCode": "(val)","revisionOtherDescription": "(val)","s2sSubmissionTypeCode": "(val)","schemaUrl": "(val)","offeringAgency": "(val)","agencyContactInfo": "(val)","cfdaDescription": "(val)","multiProject": "(val)","providerCode": "(val)","_primaryKey": "(val)"}
             ]
 ### Delete S2s Opportunities by Key [DELETE /propdev/api/v1/s2s-opportunities/(key)]
 	 
@@ -248,7 +248,7 @@
     + _allowMulti (boolean, required) - flag to allow multiple resources to be deleted in one operation
     + cfdaNumber (optional) - A unique identifier for the sponsor and the funding opportunity announcement.  AKA "Catalogue of Federal Domestic Assistance Number". Maximum length is 6.
     + closingDate (optional) - Closing Date. Maximum length is 21.
-    + competetionId (optional) - Competition Id. Maximum length is 50.
+    + competitionId (optional) - Competition Id. Maximum length is 50.
     + instructionUrl (optional) - Instruction Page. Maximum length is 300.
     + openingDate (optional) - Opening Date. Maximum length is 21.
     + opportunity (optional) - Opportunity. Maximum length is 40000000.

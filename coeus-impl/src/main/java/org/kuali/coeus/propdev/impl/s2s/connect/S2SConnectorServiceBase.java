@@ -7,6 +7,10 @@
  */
 package org.kuali.coeus.propdev.impl.s2s.connect;
 
+import gov.grants.apply.services.applicantwebservices_v2.*;
+import gov.grants.apply.system.applicantcommonelements_v1.OpportunityFilter;
+import gov.grants.apply.system.applicantcommonelements_v1.SubmissionFilter;
+import gov.grants.apply.system.applicantcommonelements_v1.SubmissionFilterType;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
@@ -25,17 +29,8 @@ import org.kuali.coeus.propdev.impl.core.DevelopmentProposal;
 import org.kuali.coeus.s2sgen.api.core.ConfigurationConstants;
 import org.kuali.rice.krad.data.DataObjectService;
 
-import gov.grants.apply.services.applicantwebservices_v2.GetApplicationListRequest;
-import gov.grants.apply.services.applicantwebservices_v2.GetApplicationListResponse;
-import gov.grants.apply.services.applicantwebservices_v2.GetApplicationStatusDetailRequest;
-import gov.grants.apply.services.applicantwebservices_v2.GetApplicationStatusDetailResponse;
-import gov.grants.apply.services.applicantwebservices_v2.GetOpportunitiesRequest;
-import gov.grants.apply.services.applicantwebservices_v2.GetOpportunitiesResponse;
-import gov.grants.apply.services.applicantwebservices_v2.SubmitApplicationRequest;
-import gov.grants.apply.services.applicantwebservices_v2.SubmitApplicationResponse;
 import gov.grants.apply.services.applicantwebservices_v2_0.ApplicantWebServicesPortType;
 import gov.grants.apply.services.applicantwebservices_v2_0.ErrorMessage;
-import gov.grants.apply.system.grantscommonelements_v1.ApplicationFilter;
 import gov.grants.apply.system.grantscommonelements_v1.Attachment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -57,9 +52,6 @@ import java.util.*;
  */
 public class S2SConnectorServiceBase implements S2SConnectorService {
 
-    private static final String KEY_OPPORTUNITY_ID = "OpportunityID";
-    private static final String KEY_CFDA_NUMBER = "CFDANumber";
-    private static final String KEY_SUBMISSION_TITLE = "SubmissionTitle";
     protected static final Logger LOG = LogManager.getLogger(S2SConnectorServiceBase.class);
 
     @Autowired
@@ -72,34 +64,27 @@ public class S2SConnectorServiceBase implements S2SConnectorService {
 
     protected S2SConfigurationReader s2SConfigurationReader;
 
-    /**
-     * This method is to get Opportunity List for the given cfda number,opportunity Id and competition Id from the grants gov. It
-     * sets the given parameters on {@link GetOpportunitiesRequest} object and passes it to the web service.
-     * 
-     * @param cfdaNumber of the opportunity.
-     * @param opportunityId parameter for the opportunity.
-     * @param competitionId parameter for the opportunity.
-     * @return GetOpportunityListResponse available list of opportunities applicable for the given cfda number,opportunity Id and
-     *         competition Id.
-     * @throws S2sCommunicationException
-     * @see org.kuali.coeus.propdev.impl.s2s.connect.S2SConnectorService#getOpportunityList(java.lang.String, java.lang.String,
-     *      java.lang.String)
-     */
     @Override
-    public GetOpportunitiesResponse getOpportunityList(String cfdaNumber, String opportunityId, String competitionId)
+    public GetOpportunityListResponse getOpportunityList(String cfdaNumber, String opportunityId, String competitionId, String packageId)
             throws S2sCommunicationException {
-        ApplicantWebServicesPortType port = configureApplicantIntegrationSoapPort(null,false);
-        GetOpportunitiesRequest getOpportunityListRequest = new GetOpportunitiesRequest();
-        
-        getOpportunityListRequest.setCFDANumber(cfdaNumber);
-        getOpportunityListRequest.setCompetitionID(competitionId);
-        getOpportunityListRequest.setFundingOpportunityNumber(opportunityId);
+        final ApplicantWebServicesPortType port = configureApplicantIntegrationSoapPort(null,false);
+        final GetOpportunityListRequest request = new GetOpportunityListRequest();
+        request.setPackageID(packageId);
+
+        if (StringUtils.isBlank(packageId) && (StringUtils.isNotBlank(cfdaNumber) || StringUtils.isNotBlank(competitionId) || StringUtils.isNotBlank(opportunityId))) {
+            final OpportunityFilter filter = new OpportunityFilter();
+            filter.setCFDANumber(cfdaNumber);
+            filter.setCompetitionID(competitionId);
+            filter.setFundingOpportunityNumber(opportunityId);
+            request.setOpportunityFilter(filter);
+        }
+
         try {
-            debugLogJaxbObject(GetOpportunitiesRequest.class, getOpportunityListRequest);
-            final GetOpportunitiesResponse response = port.getOpportunities(getOpportunityListRequest);
-            debugLogJaxbObject(GetOpportunitiesResponse.class, response);
+            debugLogJaxbObject(GetOpportunityListRequest.class, request);
+            final GetOpportunityListResponse response = port.getOpportunityList(request);
+            debugLogJaxbObject(GetOpportunityListResponse.class, response);
             return response;
-        }catch(SOAPFaultException soapFault){
+        } catch(SOAPFaultException soapFault){
             LOG.error("Error while getting list of opportunities", soapFault);
             if(soapFault.getMessage().contains("Connection refused")){
                 throw new S2sCommunicationException(KeyConstants.ERROR_GRANTSGOV_OPP_SER_UNAVAILABLE,soapFault.getMessage());
@@ -112,25 +97,16 @@ public class S2SConnectorServiceBase implements S2SConnectorService {
         }
     }
 
-    /**
-     * This method is to get status of the submitted application.
-     * 
-     * @param ggTrackingId grants gov tracking id for the proposal.
-     * @param proposalNumber Proposal number.
-     * @return GetApplicationStatusDetailResponse status of the submitted application.
-     * @throws S2sCommunicationException
-     * @see org.kuali.coeus.propdev.impl.s2s.connect.S2SConnectorService#getApplicationStatusDetail(java.lang.String, java.lang.String)
-     */
     @Override
-    public GetApplicationStatusDetailResponse getApplicationStatusDetail(String ggTrackingId, String proposalNumber)
+    public GetApplicationInfoResponse getApplicationInfo(String ggTrackingId, String proposalNumber)
             throws S2sCommunicationException {
         ApplicantWebServicesPortType port = getApplicantIntegrationSoapPort(proposalNumber);
-        GetApplicationStatusDetailRequest applicationStatusDetailRequest = new GetApplicationStatusDetailRequest();
-        applicationStatusDetailRequest.setGrantsGovTrackingNumber(ggTrackingId);
+        GetApplicationInfoRequest request = new GetApplicationInfoRequest();
+        request.setGrantsGovTrackingNumber(ggTrackingId);
         try {
-            debugLogJaxbObject(GetApplicationStatusDetailRequest.class, applicationStatusDetailRequest);
-            final GetApplicationStatusDetailResponse response = port.getApplicationStatusDetail(applicationStatusDetailRequest);
-            debugLogJaxbObject(GetApplicationStatusDetailResponse.class, response);
+            debugLogJaxbObject(GetApplicationInfoRequest.class, request);
+            final GetApplicationInfoResponse response = port.getApplicationInfo(request);
+            debugLogJaxbObject(GetApplicationInfoResponse.class, response);
             return response;
         } catch (ErrorMessage|WebServiceException e) {
             LOG.error("Error while getting proposal submission status details", e);
@@ -138,39 +114,52 @@ public class S2SConnectorServiceBase implements S2SConnectorService {
         }
     }
 
-    /**
-     * This method is to get Application List from grants.gov for opportunityId, cfdaNumber and proposalNumber
-     * 
-     * @param opportunityId of the opportunity.
-     * @param cfdaNumber of the opportunity.
-     * @param proposalNumber proposal number.
-     * @return GetApplicationListResponse application list.
-     * @throws S2sCommunicationException
-     */
     @Override
-    public GetApplicationListResponse getApplicationList(String opportunityId, String cfdaNumber, String proposalNumber)
+    public GetSubmissionListResponse getSubmissionList(String opportunityId, String ggTrackingId, String packageId, String submissionTitle, String status, String proposalNumber)
             throws S2sCommunicationException {
-        GetApplicationListRequest applicationListRequest = new GetApplicationListRequest();
-        List<ApplicationFilter> filterList = applicationListRequest.getApplicationFilter();
-        ApplicationFilter applicationFilter = new ApplicationFilter();
-        applicationFilter.setFilter(KEY_OPPORTUNITY_ID);
-        applicationFilter.setFilterValue(opportunityId);
-        filterList.add(applicationFilter);
-        if (cfdaNumber != null) {
-            applicationFilter = new ApplicationFilter();
-            applicationFilter.setFilter(KEY_CFDA_NUMBER);
-            applicationFilter.setFilterValue(cfdaNumber);
-            filterList.add(applicationFilter);
-        }        
-        applicationFilter = new ApplicationFilter();
-        applicationFilter.setFilter(KEY_SUBMISSION_TITLE);
-        applicationFilter.setFilterValue(proposalNumber);
-        filterList.add(applicationFilter);
+        GetSubmissionListRequest request = new GetSubmissionListRequest();
+        List<SubmissionFilter> filterList = request.getSubmissionFilter();
+
+        if (StringUtils.isNotBlank(opportunityId)) {
+            SubmissionFilter submissionFilter = new SubmissionFilter();
+            submissionFilter.setType(SubmissionFilterType.FUNDING_OPPORTUNITY_NUMBER);
+            submissionFilter.setValue(opportunityId);
+            filterList.add(submissionFilter);
+        }
+
+        if (StringUtils.isNotBlank(ggTrackingId)) {
+            SubmissionFilter submissionFilter = new SubmissionFilter();
+            submissionFilter.setType(SubmissionFilterType.GRANTS_GOV_TRACKING_NUMBER);
+            submissionFilter.setValue(ggTrackingId);
+            filterList.add(submissionFilter);
+        }
+
+        if (StringUtils.isNotBlank(packageId)) {
+            SubmissionFilter submissionFilter = new SubmissionFilter();
+            submissionFilter.setType(SubmissionFilterType.PACKAGE_ID);
+            submissionFilter.setValue(packageId);
+            filterList.add(submissionFilter);
+        }
+
+        if (StringUtils.isNotBlank(submissionTitle)) {
+            SubmissionFilter submissionFilter = new SubmissionFilter();
+            submissionFilter.setType(SubmissionFilterType.SUBMISSION_TITLE);
+            submissionFilter.setValue(submissionTitle);
+            filterList.add(submissionFilter);
+        }
+
+        if (StringUtils.isNotBlank(status)) {
+            SubmissionFilter submissionFilter = new SubmissionFilter();
+            submissionFilter.setType(SubmissionFilterType.STATUS);
+            submissionFilter.setValue(status);
+            filterList.add(submissionFilter);
+        }
+
         ApplicantWebServicesPortType port = getApplicantIntegrationSoapPort(proposalNumber);
         try {
-            debugLogJaxbObject(GetApplicationListRequest.class, applicationListRequest);
-            final GetApplicationListResponse response = port.getApplicationList(applicationListRequest);
-            debugLogJaxbObject(GetApplicationListResponse.class, response);
+            debugLogJaxbObject(GetSubmissionListRequest.class, request);
+            final GetSubmissionListResponse response = port.getSubmissionList(request);
+            debugLogJaxbObject(GetSubmissionListResponse.class, response);
             return response;
         }
         catch (ErrorMessage|WebServiceException e) {
@@ -190,8 +179,7 @@ public class S2SConnectorServiceBase implements S2SConnectorService {
      * @see org.kuali.coeus.propdev.impl.s2s.connect.S2SConnectorService#submitApplication(java.lang.String, java.util.Map, java.lang.String)
      */
     @Override
-    public SubmitApplicationResponse submitApplication(String xmlText,
-                                                       Map<String, DataHandler> attachments, String proposalNumber)
+    public SubmitApplicationResponse submitApplication(String xmlText, Map<String, DataHandler> attachments, String proposalNumber)
             throws S2sCommunicationException {
         ApplicantWebServicesPortType port = getApplicantIntegrationSoapPort(proposalNumber);
         SubmitApplicationRequest request = new SubmitApplicationRequest();

@@ -7,7 +7,8 @@
  */
 package org.kuali.coeus.propdev.impl.s2s;
 
-import gov.grants.apply.services.applicantwebservices_v2.GetApplicationListResponse;
+import gov.grants.apply.services.applicantwebservices_v2.GetSubmissionListResponse;
+import gov.grants.apply.system.applicantcommonelements_v1.SubmissionDetails;
 import org.kuali.coeus.propdev.impl.core.DevelopmentProposal;
 import org.kuali.coeus.propdev.impl.core.ProposalDevelopmentDocument;
 import org.kuali.coeus.propdev.impl.s2s.connect.S2sCommunicationException;
@@ -65,8 +66,7 @@ public interface S2sSubmissionService {
      * @return List&lt;S2sOpportunity&gt; a list containing the available
      *         opportunities for the corresponding parameters.
      */
-    List<S2sOpportunity> searchOpportunity(String providerCode, String cfdaNumber,
-                                                  String opportunityId, String competitionId) throws S2sCommunicationException;
+    List<S2sOpportunity> searchOpportunity(String providerCode, String cfdaNumber, String opportunityId, String competitionId, String packageId) throws S2sCommunicationException;
 
     /**
      * Return the file saved to the local filesystem.
@@ -74,11 +74,9 @@ public interface S2sSubmissionService {
     File getGrantsGovSavedFile(ProposalDevelopmentDocument pdDoc)
             throws IOException;
 
-    GetApplicationListResponse fetchApplicationListResponse(
-            String proposalNumber) throws S2sCommunicationException;
+    GetSubmissionListResponse fetchSubmissionList(S2sAppSubmission submission) throws S2sCommunicationException;
 
-    void populateAppSubmission(ProposalDevelopmentDocument pdDoc, S2sAppSubmission appSubmission,
-                          GetApplicationListResponse.ApplicationInfo ggApplication);
+    void populateAppSubmission(ProposalDevelopmentDocument pdDoc, S2sAppSubmission appSubmission, SubmissionDetails submissionDetails);
 
     void setOpportunityContent(S2sOpportunity opportunity);
 

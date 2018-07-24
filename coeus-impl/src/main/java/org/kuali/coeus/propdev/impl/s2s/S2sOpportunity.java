@@ -37,7 +37,13 @@ public class S2sOpportunity extends KcPersistableBusinessObjectBase implements S
     private Calendar closingDate;
 
     @Column(name = "COMPETETION_ID")
-    private String competetionId;
+    private String competitionId;
+
+    @Column(name = "COMPETITION_TITLE")
+    private String competitionTitle;
+
+    @Column(name = "PACKAGE_ID")
+    private String packageId;
 
     @Column(name = "INSTRUCTION_URL")
     private String instructionUrl;
@@ -177,12 +183,12 @@ public class S2sOpportunity extends KcPersistableBusinessObjectBase implements S
     }
 
     @Override
-    public String getCompetetionId() {
-        return competetionId;
+    public String getCompetitionId() {
+        return competitionId;
     }
 
-    public void setCompetetionId(String competetionId) {
-        this.competetionId = competetionId;
+    public void setCompetitionId(String competitionId) {
+        this.competitionId = competitionId;
     }
 
     @Override
@@ -342,6 +348,24 @@ public class S2sOpportunity extends KcPersistableBusinessObjectBase implements S
 
     public void setMultiProject(boolean multiProject) {
         this.multiProject = multiProject;
+    }
+
+    @Override
+    public String getCompetitionTitle() {
+        return competitionTitle;
+    }
+
+    public void setCompetitionTitle(String competitionTitle) {
+        this.competitionTitle = competitionTitle;
+    }
+
+    @Override
+    public String getPackageId() {
+        return packageId;
+    }
+
+    public void setPackageId(String packageId) {
+        this.packageId = packageId;
     }
 
     public DevelopmentProposal getDevelopmentProposal() {

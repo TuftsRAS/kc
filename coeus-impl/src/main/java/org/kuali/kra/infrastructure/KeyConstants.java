@@ -216,7 +216,7 @@ public final class KeyConstants {
     public static final String ERROR_S2S_PROVIDER_INVALID = "error.s2sopportunity.invalidProvider";
     public static final String ERROR_IF_REVISIONTYPE_IS_OTHER = "error.s2sopportunity.revisionTypeOther";
     public static final String ERROR_REQUIRED_REVISIONTYPE = "error.required.s2sopportunity.revisionType";
-    public static final String ERROR_IF_CFDANUMBER_IS_INVALID = "error.s2sopportunity.cfdaNumberInvalid";
+    public static final String ERROR_IF_S2SOPP_CRITERIA_IS_INVALID = "error.s2sopportunity.lookup.criteria";
     public static final String CFDA_INVALID = "error.format.cfda";
     public static final String CFDA_REQUIRED = "cfda.required";
     public static final String ERROR_IF_OPPORTUNITY_ID_IS_INVALID = "error.s2sopportunity.opportunityIdInvalid";

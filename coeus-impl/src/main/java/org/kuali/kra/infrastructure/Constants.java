@@ -282,9 +282,6 @@ public interface Constants {
     String GRANTS_GOV_PAGE = "grantsGov";
     String SPONSOR_PROPOSAL_KEY = "document.developmentProposalList[0].sponsorProposalNumber";
     String ORIGINAL_PROPOSAL_ID_KEY = "document.developmentProposalList[0].continuedFrom";
-    String CFDA_NUMBER = "cfdaNumber";
-    String OPPORTUNITY_ID= "opportunityId";
-    String PROVIDER_CODE = "providerCode";
     String NO_FIELD= "noField";
     String GRANTS_GOV_LINK="message.grantsgov.link";
     String GRANTS_GOV_GENERIC_ERROR_KEY= "error.grantsgov.schemavalidation.generic.errorkey";

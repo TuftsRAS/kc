@@ -52,7 +52,10 @@ public class ProposalDevelopmentConstants {
     public static class S2sConstants {
 
         public static final String OPPORTUNITY_ID = "opportunityId";
-        public static final String COMPETETION_ID = "competetionId";
+        public static final String COMPETITION_ID = "competitionId";
+        public static final String COMPETITION_TITLE = "competitionTitle";
+        public static final String PACKAGE_ID = "packageId";
+        public static final String CFDA_NUMBER = "cfdaNumber";
         public static final String CLOSING_DATE = "closingDate";
         public static final String OPENING_DATE = "openingDate";
         public static final String OPPORTUNITY_TITLE = "opportunityTitle";

@@ -9,7 +9,6 @@ package org.kuali.coeus.propdev.impl.s2s;
 
 import org.kuali.coeus.propdev.impl.core.ProposalDevelopmentConstants;
 import org.kuali.coeus.sys.framework.gv.GlobalVariableService;
-import org.kuali.kra.infrastructure.Constants;
 import org.kuali.rice.core.api.datetime.DateTimeService;
 import org.kuali.rice.core.api.util.RiceKeyConstants;
 import org.kuali.rice.kew.api.KewApiConstants;
@@ -30,7 +29,6 @@ import org.springframework.util.CollectionUtils;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import java.util.stream.Collectors;
 
 @Component("s2sOpportunityLookupable")
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
@@ -55,11 +53,13 @@ public class S2sOpportunityLookupable extends LookupableImpl {
     @Override
     public List<?> performSearch(LookupForm form, Map<String, String> searchCriteria, boolean unbounded) {
 
-        final String providerCode = searchCriteria.get(Constants.PROVIDER_CODE);
-        final String cfdaNumber = searchCriteria.get(Constants.CFDA_NUMBER);
-        final String opportunityId = searchCriteria.get(Constants.OPPORTUNITY_ID);
+        final String providerCode = searchCriteria.get(ProposalDevelopmentConstants.S2sConstants.PROVIDER_CODE);
+        final String cfdaNumber = searchCriteria.get(ProposalDevelopmentConstants.S2sConstants.CFDA_NUMBER);
+        final String opportunityId = searchCriteria.get(ProposalDevelopmentConstants.S2sConstants.OPPORTUNITY_ID);
+        final String packageId = searchCriteria.get(ProposalDevelopmentConstants.S2sConstants.PACKAGE_ID);
+        final String competitionId = searchCriteria.get(ProposalDevelopmentConstants.S2sConstants.COMPETITION_ID);
 
-        List<?> opportunities = s2sOpportunityLookupKradKnsHelperService.performSearch(providerCode, cfdaNumber, opportunityId);
+        List<S2sOpportunity> opportunities = s2sOpportunityLookupKradKnsHelperService.performSearch(providerCode, cfdaNumber, competitionId, opportunityId, packageId);
         if (CollectionUtils.isEmpty(opportunities)) {
             addNotFoundMessage();
         }
@@ -77,7 +77,8 @@ public class S2sOpportunityLookupable extends LookupableImpl {
         parameters.put(ProposalDevelopmentConstants.S2sConstants.OPPORTUNITY_TITLE, opportunity.getOpportunityTitle() != null ? opportunity.getOpportunityTitle() : "");
         parameters.put(ProposalDevelopmentConstants.S2sConstants.OPENING_DATE, opportunity.getOpeningDate() != null ? getDateTimeService().toDateTimeString(opportunity.getOpeningDate().getTime()) : "");
         parameters.put(ProposalDevelopmentConstants.S2sConstants.INSTRUCTION_URL, opportunity.getInstructionUrl() != null ? opportunity.getInstructionUrl() : "");
-        parameters.put(ProposalDevelopmentConstants.S2sConstants.COMPETETION_ID, opportunity.getCompetetionId() != null ? opportunity.getCompetetionId() : "");
+        parameters.put(ProposalDevelopmentConstants.S2sConstants.COMPETITION_ID, opportunity.getCompetitionId() != null ? opportunity.getCompetitionId() : "");
+        parameters.put(ProposalDevelopmentConstants.S2sConstants.PACKAGE_ID, opportunity.getPackageId() != null ? opportunity.getPackageId() : "");
         parameters.put(ProposalDevelopmentConstants.S2sConstants.SCHEMA_URL, opportunity.getSchemaUrl() != null ? opportunity.getSchemaUrl() : "");
         parameters.put(ProposalDevelopmentConstants.S2sConstants.PROVIDER_CODE, opportunity.getProviderCode());
         return UrlFactory.parameterizeUrl(getDocumentTypeService().getDocumentTypeByName("ProposalDevelopmentDocument").getResolvedDocumentHandlerUrl(), parameters);

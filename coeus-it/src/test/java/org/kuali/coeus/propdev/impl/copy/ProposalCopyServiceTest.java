@@ -170,7 +170,7 @@ public class ProposalCopyServiceTest extends ProposalDevelopmentRuleTestBase {
         S2sOpportunity opportunity = new S2sOpportunity();
         opportunity.setAgencyContactInfo(AGENCY_CONTACT_INFO);
         opportunity.setSchemaUrl(SCHEMA_URL);
-        opportunity.setCompetetionId(COMP_ID);
+        opportunity.setCompetitionId(COMP_ID);
         opportunity.setInstructionUrl(INS_URL);
         opportunity.setOpportunityId(OPP_ID);
         opportunity.setOpportunity("bogus opportunity character data");
@@ -204,7 +204,7 @@ public class ProposalCopyServiceTest extends ProposalDevelopmentRuleTestBase {
             }
         }
         if(!mandatoryFormNotAvailable) {
-            Collections.sort(s2sOppForms, (arg0, arg1) -> {
+            s2sOppForms.sort((arg0, arg1) -> {
                 int result = arg0.getMandatory().compareTo(arg1.getMandatory()) * -1;
                 if (result == 0) {
                     result = arg0.getFormName().compareTo(arg1.getFormName());
@@ -314,7 +314,7 @@ public class ProposalCopyServiceTest extends ProposalDevelopmentRuleTestBase {
     }
 
 	@Test
-	public void testCopySameUnitNoAttachment() throws Exception {
+	public void testCopySameUnitNoAttachment() {
 
         ProposalCopyCriteria criteria = new ProposalCopyCriteria();
         criteria.setLeadUnitNumber(ORIGINAL_LEAD_UNIT);
@@ -335,11 +335,11 @@ public class ProposalCopyServiceTest extends ProposalDevelopmentRuleTestBase {
 
         // test cong district
         assertEquals(copiedSites.get(0).getDefaultCongressionalDistrict().getCongressionalDistrict(), organization.getCongressionalDistrict());
-        assertTrue(copiedDocument.getDevelopmentProposal().getNarratives().size() == 0);
+        assertEquals(0, copiedDocument.getDevelopmentProposal().getNarratives().size());
 
-        assertTrue(copiedDocument.getDevelopmentProposal().getS2sOpportunity() != null);
+        assertNotNull(copiedDocument.getDevelopmentProposal().getS2sOpportunity());
         assertEquals(copiedDocument.getDevelopmentProposal().getS2sOpportunity().getOpportunityId(), OPP_ID);
-        assertTrue(copiedDocument.getDevelopmentProposal().getS2sOpportunity().getS2sOppForms().size() == 2);
+        assertEquals(2, copiedDocument.getDevelopmentProposal().getS2sOpportunity().getS2sOppForms().size());
 
         assertFalse(copiedDocument.getDevelopmentProposal().getS2sUserAttachedForms().isEmpty());
         assertFalse(copiedDocument.getDevelopmentProposal().getS2sUserAttachedForms().get(0).getS2sUserAttachedFormFileList().isEmpty());
@@ -350,7 +350,7 @@ public class ProposalCopyServiceTest extends ProposalDevelopmentRuleTestBase {
     }
 
     @Test
-    public void testCopyDifferentUnit() throws Exception {
+    public void testCopyDifferentUnit() {
         ProposalCopyCriteria criteria = new ProposalCopyCriteria();
         criteria.setLeadUnitNumber(NEW_LEAD_UNIT);
         ProposalDevelopmentDocument copiedDocument = getProposalCopyService().copyProposal(oldDocument, criteria);
@@ -364,12 +364,12 @@ public class ProposalCopyServiceTest extends ProposalDevelopmentRuleTestBase {
     }
 
     @Test
-    public void testCopyNarrative() throws Exception {
+    public void testCopyNarrative() {
         ProposalCopyCriteria criteria = new ProposalCopyCriteria();
         criteria.setLeadUnitNumber(ORIGINAL_LEAD_UNIT);
         criteria.setIncludeAttachments(true);
         ProposalDevelopmentDocument copiedDocument = getProposalCopyService().copyProposal(oldDocument, criteria);
-        assertTrue(copiedDocument.getDevelopmentProposal().getNarratives().size() == 1);
+        assertEquals(1, copiedDocument.getDevelopmentProposal().getNarratives().size());
 
     }
 
@@ -381,8 +381,8 @@ public class ProposalCopyServiceTest extends ProposalDevelopmentRuleTestBase {
         ProposalDevelopmentDocument copiedDocument = getProposalCopyService().copyProposal(oldDocument, criteria);
         copiedDocument.getDevelopmentProposal().setNarratives(new ArrayList<>());
         getDocumentService().saveDocument(copiedDocument);
-        assertTrue(copiedDocument.getDevelopmentProposal().getNarratives().size() == 0);
-        assertTrue(oldDocument.getDevelopmentProposal().getNarratives().size() == 1);
+        assertEquals(0, copiedDocument.getDevelopmentProposal().getNarratives().size());
+        assertEquals(1, oldDocument.getDevelopmentProposal().getNarratives().size());
     }
 
     protected Narrative getNewNarrative(DevelopmentProposal proposal) throws Exception {

@@ -7,10 +7,7 @@
  */
 package org.kuali.coeus.propdev.impl.s2s.connect;
 
-import gov.grants.apply.services.applicantwebservices_v2.GetApplicationListResponse;
-import gov.grants.apply.services.applicantwebservices_v2.GetApplicationStatusDetailResponse;
-import gov.grants.apply.services.applicantwebservices_v2.GetOpportunitiesResponse;
-import gov.grants.apply.services.applicantwebservices_v2.SubmitApplicationResponse;
+import gov.grants.apply.services.applicantwebservices_v2.*;
 
 import javax.activation.DataHandler;
 import java.util.Map;
@@ -20,20 +17,8 @@ import java.util.Map;
  * This class will be used to call web services.
  */
 public interface S2SConnectorService {
-    /**
-     * 
-     * This method is to get Opportunity List for the given cfda number,opportunity Id and competition Id from the grants guv.
-     * 
-     * @param cfdaNumber of the opportunity.
-     * @param opportunityId parameter for the opportunity.
-     * @param competitionId parameter for the opportunity.
-     * @return GetOpportunityListResponse available list of opportunities applicable for the given cfda number,opportunity Id and
-     *         competition Id.
-     * @throws S2sCommunicationException
-     */
-    public GetOpportunitiesResponse getOpportunityList(String cfdaNumber, String opportunityId, String competitionId)
-            throws S2sCommunicationException;
 
+    GetOpportunityListResponse getOpportunityList(String cfdaNumber, String opportunityId, String competitionId, String packageId) throws S2sCommunicationException;
     /**
      * 
      * This method is to get status of the submitted application.
@@ -43,21 +28,13 @@ public interface S2SConnectorService {
      * @return GetApplicationStatusDetailResponse status of the submitted application.
      * @throws S2sCommunicationException
      */
-    public GetApplicationStatusDetailResponse getApplicationStatusDetail(String ggTrackingId, String proposalNumber)
-            throws S2sCommunicationException;
+    GetApplicationInfoResponse getApplicationInfo(String ggTrackingId, String proposalNumber) throws S2sCommunicationException;
 
     /**
      * 
-     * This method is to get Application List from grants.gov for opportunityId, cfdaNumber and proposalNumber
-     * 
-     * @param opportunityId of the opportunity.
-     * @param cfdaNumber of the opportunity.
-     * @param proposalNumber proposal number.
-     * @return GetApplicationListResponse application list.
-     * @throws S2sCommunicationException
+     * This method is to get Application List from grants.gov.
      */
-    public GetApplicationListResponse getApplicationList(String opportunityId, String cfdaNumber, String proposalNumber)
-            throws S2sCommunicationException;
+    GetSubmissionListResponse getSubmissionList(String opportunityId, String ggTrackingId, String packageId, String submissionTitle, String status, String proposalNumber) throws S2sCommunicationException;
 
     /**
      * 
@@ -69,7 +46,6 @@ public interface S2SConnectorService {
      * @return SubmitApplicationResponse corresponding to the input parameters passed.
      * @throws S2sCommunicationException
      */
-    public SubmitApplicationResponse submitApplication(String xmlText, Map<String, DataHandler> attachments, String proposalNumber)
-            throws S2sCommunicationException;
+    SubmitApplicationResponse submitApplication(String xmlText, Map<String, DataHandler> attachments, String proposalNumber) throws S2sCommunicationException;
 
 }

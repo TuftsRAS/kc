@@ -11,6 +11,7 @@ package org.kuali.coeus.propdev.impl.s2s;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
+import org.kuali.coeus.propdev.impl.core.ProposalDevelopmentConstants;
 import org.kuali.coeus.propdev.impl.s2s.connect.S2sCommunicationException;
 import org.kuali.coeus.sys.framework.gv.GlobalVariableService;
 import org.kuali.kra.infrastructure.Constants;
@@ -19,7 +20,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -37,51 +37,18 @@ public class S2sOpportunityLookupKradKnsHelperServiceImpl implements S2sOpportun
     private GlobalVariableService globalVariableService;
 
     @Override
-    public List<S2sOpportunity> performSearch(String providerCode, String cfdaNumber, String opportunityId) {
+    public List<S2sOpportunity> performSearch(String providerCode, String cfdaNumber, String competitionId, String opportunityId, String packageId) {
         if (StringUtils.isBlank(providerCode)) {
-            globalVariableService.getMessageMap().putError(Constants.PROVIDER_CODE, KeyConstants.ERROR_S2S_PROVIDER_INVALID);
+            globalVariableService.getMessageMap().putError(ProposalDevelopmentConstants.S2sConstants.PROVIDER_CODE, KeyConstants.ERROR_S2S_PROVIDER_INVALID);
         }
 
-        if (StringUtils.isBlank(cfdaNumber) && StringUtils.isBlank(opportunityId)) {
-            globalVariableService.getMessageMap().putError(Constants.NO_FIELD, KeyConstants.ERROR_IF_CFDANUMBER_AND_OPPORTUNITY_ID_IS_NULL);
-        }
-
-        if (globalVariableService.getMessageMap().hasNoErrors()) {
-            List<S2sOpportunity> s2sOpportunity = new ArrayList<S2sOpportunity>();
-            try {
-                s2sOpportunity = getS2sSubmissionService().searchOpportunity(providerCode, cfdaNumber, opportunityId, "");
-            }catch (S2sCommunicationException e) {
-                LOG.error(e.getMessage(), e);
-                getGlobalVariableService().getMessageMap().putError(Constants.NO_FIELD, e.getErrorKey(),e.getMessage());
-                return Collections.emptyList();
-            }
-            if (s2sOpportunity != null && !s2sOpportunity.isEmpty()) {
-                return s2sOpportunity;
-            } else if (StringUtils.isNotBlank(cfdaNumber) && StringUtils.isNotBlank(opportunityId)) {
-                try{
-                    s2sOpportunity = getS2sSubmissionService().searchOpportunity(providerCode, cfdaNumber, "", "");
-                }catch (S2sCommunicationException e) {
-                    LOG.error(e.getMessage(), e);
-                    getGlobalVariableService().getMessageMap().putError(Constants.NO_FIELD, e.getErrorKey(),e.getMessage());
-                    return Collections.emptyList();
-                }
-                if (s2sOpportunity != null) {
-                    return s2sOpportunity;
-                } else{
-                    if (StringUtils.isNotBlank(cfdaNumber)) {
-                        getGlobalVariableService().getMessageMap().putError(Constants.CFDA_NUMBER, KeyConstants.ERROR_IF_CFDANUMBER_IS_INVALID);
-                    }
-                    if (StringUtils.isNotBlank(opportunityId)) {
-                        getGlobalVariableService().getMessageMap().putError(Constants.OPPORTUNITY_ID,
-                                KeyConstants.ERROR_IF_OPPORTUNITY_ID_IS_INVALID);
-                    }
-                }
-                return Collections.emptyList();
-            }
+        try {
+            return getS2sSubmissionService().searchOpportunity(providerCode, cfdaNumber, opportunityId, competitionId, packageId);
+        } catch (S2sCommunicationException e) {
+            LOG.error(e.getMessage(), e);
+            getGlobalVariableService().getMessageMap().putError(Constants.NO_FIELD, e.getErrorKey(), e.getMessage());
             return Collections.emptyList();
         }
-
-        return Collections.emptyList();
     }
 
     protected S2sSubmissionService getS2sSubmissionService() {
