@@ -1,6 +1,11 @@
 
 
 ## CURRENT
+* RESKC-2732: Enable parameter Enable_Lock_On_Document_Version, as preparation for facing it out. (#2986)
+
+  * Omar Soto Fortuño on Tue, 24 Jul 2018 10:57:45 -0400 [View Commit](../../commit/94e39347768e4a2d882320952945e7b632cb5038)
+
+## coeus-1807.0025
 * RESKC-2582: Add approval validation on confirmApproval. Validation now happens before the dialog opens and after. (#2984)
 
   * Omar Soto Fortuño on Mon, 23 Jul 2018 13:59:34 -0400 [View Commit](../../commit/acf4c96be0d14db2a71c88ea025a2e268aaa5e84)
