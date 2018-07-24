@@ -277,14 +277,15 @@ public class ResearchAndRelatedXmlStream extends AbstractResearchAndRelatedStrea
 	 */
 	private AuthorizedOrganizationalRepresentativeType getAuthorizedOrganizationalRepresentative(
 			DevelopmentProposal developmentProposal) {
-		Organization authorisedOrg = getAuthorisedOrganization(developmentProposal);
-		Rolodex rolodex = authorisedOrg.getRolodex();
+		ProposalSite proposalSite = developmentProposal.getApplicantOrganization();
+		Organization authorizedOrg = proposalSite.getOrganization();
+		Rolodex rolodex = authorizedOrg.getRolodex();
 		AuthorizedOrganizationalRepresentativeType authOrgRepType = AuthorizedOrganizationalRepresentativeType.Factory
 				.newInstance();
-		if (authorisedOrg != null) {
+		if (authorizedOrg != null) {
 			authOrgRepType.setPositionTitle(rolodex.getTitle());
 			authOrgRepType
-					.setContactInformation(getPersonContactInformation(rolodex));
+					.setContactInformation(getPersonContactInformation(proposalSite));
 			authOrgRepType.setName(getContactPersonFullName(rolodex
 					.getLastName(), rolodex.getFirstName(), rolodex
 					.getMiddleName()));
@@ -297,21 +298,6 @@ public class ResearchAndRelatedXmlStream extends AbstractResearchAndRelatedStrea
 					.setContactInformation(getOrganizationPersonContactInformationWithDefaultValues());
 		}
 		return authOrgRepType;
-	}
-
-	/*
-	 * This method gets Authorized Organization from proposalSites by checking
-	 * locationTypeCode value 1 from list of proposalSites
-	 */
-	private Organization getAuthorisedOrganization(
-			DevelopmentProposal developmentProposal) {
-		Organization authorisedOrg = null;
-		for (ProposalSite proposalSite : developmentProposal.getProposalSites()) {
-			if (proposalSite.getLocationTypeCode() == 1) {
-				authorisedOrg = proposalSite.getOrganization();
-			}
-		}
-		return authorisedOrg;
 	}
 
 	/*
@@ -361,14 +347,13 @@ public class ResearchAndRelatedXmlStream extends AbstractResearchAndRelatedStrea
 	 */
 	private ApplicantOrganizationType getApplicantOrganizationForResearchCoverPage(
 			DevelopmentProposal developmentProposal) {
-		Organization organization = developmentProposal
-				.getApplicantOrganization().getOrganization();
+		ProposalSite applicantOrganization = developmentProposal.getApplicantOrganization();
+		Organization organization = applicantOrganization.getOrganization();
 		OrganizationType organizationType = organization.getOrganizationType(0);
 		ApplicantOrganizationType applicantOrganizationType = ApplicantOrganizationType.Factory
 				.newInstance();
-		applicantOrganizationType.setOrganizationName(organization
-				.getOrganizationName() == null ? DEFAULT_VALUE_UNKNOWN
-				: organization.getOrganizationName());
+		applicantOrganizationType.setOrganizationName(applicantOrganization.getLocationName() == null ? DEFAULT_VALUE_UNKNOWN
+				: applicantOrganization.getLocationName());
 		applicantOrganizationType.setOrganizationDUNS(organization
 				.getDunsNumber() == null ? DEFAULT_VALUE_UNKNOWN : organization
 				.getDunsNumber());
@@ -387,15 +372,13 @@ public class ResearchAndRelatedXmlStream extends AbstractResearchAndRelatedStrea
 						: organizationType.getOrganizationTypeList()
 								.getDescription());
 		applicantOrganizationType
-				.setOrganizationCongressionalDistrict(organization
-						.getCongressionalDistrict() == null ? DEFAULT_VALUE_UNKNOWN
-						: organization.getCongressionalDistrict());
+				.setOrganizationCongressionalDistrict(applicantOrganization.getFirstCongressionalDistrictName() == null ? DEFAULT_VALUE_UNKNOWN
+						: applicantOrganization.getFirstCongressionalDistrictName());
 		applicantOrganizationType
-				.setOrganizationAddress(getOrganizationAddress(organization
-						.getRolodex()));
+				.setOrganizationAddress(getOrganizationAddress(applicantOrganization));
 		applicantOrganizationType
 				.setOrganizationContactPerson(getOrganizationContactPerson(developmentProposal
-						.getApplicantOrganization().getRolodex()));
+						.getApplicantOrganization()));
 		String cageNumber = organization.getCageNumber();
 		if (cageNumber != null) {
 			applicantOrganizationType.setCageNumber(cageNumber);
@@ -451,8 +434,7 @@ public class ResearchAndRelatedXmlStream extends AbstractResearchAndRelatedStrea
 		if (unitName != null) {
 			keyPersonType.setOrganizationDepartment(unitName);
 		}
-		Organization organization = getOrganizationFromDevelopmentProposal(developmentProposal);
-		keyPersonType.setOrganizationName(organization.getOrganizationName());
+		keyPersonType.setOrganizationName(developmentProposal.getApplicantOrganization().getLocationName());
 
 		if (proposalPerson.getPrimaryTitle() != null) {
 			keyPersonType.setPositionTitle(proposalPerson.getPrimaryTitle());

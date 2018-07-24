@@ -265,23 +265,20 @@ public class PrintCertificationXmlStream extends ProposalBaseStream {
 				.newInstance();
 		Rolodex rolodex = proposalSite.getRolodex();
 		String organizationId = proposalSite.getOrganizationId();
-		Organization organization = proposalSite.getOrganization();
 		if (organizationId != null) {
 			organizationType.setOrganizationID(organizationId);
-			if (organization.getOrganizationName() != null) {
-				organizationType.setOrganizationName(organization
-						.getOrganizationName());
+			if (proposalSite.getLocationName() != null) {
+				organizationType.setOrganizationName(proposalSite.getLocationName());
 			}
 			if (rolodex != null) {
 				String contactName = rolodex.getOrganization();
 				if (contactName != null
-						&& !contactName.equalsIgnoreCase(organization
-								.getOrganizationName())) {
+						&& !contactName.equalsIgnoreCase(proposalSite.getLocationName())) {
 					organizationType.setContactName(contactName);
 				}
 			}
 		}
-		setRolodexDetailsToOrganizationType(organizationType, rolodex);
+		setRolodexDetailsToOrganizationType(organizationType, proposalSite);
 		return organizationType;
 	}
 
@@ -289,34 +286,34 @@ public class PrintCertificationXmlStream extends ProposalBaseStream {
 	 * This method sets Rolodex Contact details to OrganizationType XMLObject
 	 */
 	private void setRolodexDetailsToOrganizationType(
-			OrganizationType organizationType, Rolodex rolodox) {
-		if (rolodox != null) {
-			organizationType.setContactName(rolodox.getOrganization());
-			String addressLine1 = rolodox.getAddressLine1();
+			OrganizationType organizationType, ProposalSite proposalSite) {
+		if (proposalSite != null) {
+			organizationType.setContactName(proposalSite.getLocationName());
+			String addressLine1 = proposalSite.getAddressLine1();
 			if (addressLine1 != null) {
 				organizationType.setAddress1(addressLine1);
 			}
-			String addressLine2 = rolodox.getAddressLine2();
+			String addressLine2 = proposalSite.getAddressLine2();
 			if (addressLine2 != null) {
 				organizationType.setAddress2(addressLine2);
 			}
-			String addressLine3 = rolodox.getAddressLine3();
+			String addressLine3 = proposalSite.getAddressLine3();
 			if (addressLine3 != null) {
 				organizationType.setAddress3(addressLine3);
 			}
-			String city = rolodox.getCity();
+			String city = proposalSite.getCity();
 			if (city != null) {
 				organizationType.setCity(city);
 			}
-			String state = rolodox.getState();
+			String state = proposalSite.getState();
 			if (state != null) {
 				organizationType.setState(state);
 			}
-			String postalCode = rolodox.getPostalCode();
+			String postalCode = proposalSite.getPostalCode();
 			if (postalCode != null) {
 				organizationType.setPostCode(postalCode);
 			}
-			String county = rolodox.getCounty();
+			String county = proposalSite.getCounty();
 			if (county != null) {
 				organizationType.setCountry(county);
 			}

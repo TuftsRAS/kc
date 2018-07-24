@@ -11,6 +11,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.kuali.coeus.common.budget.framework.core.Budget;
 import org.kuali.coeus.common.budget.framework.period.BudgetPeriod;
+import org.kuali.coeus.common.framework.auth.perm.KcAuthorizationService;
 import org.kuali.coeus.common.framework.custom.attr.CustomAttributeDocValue;
 import org.kuali.coeus.common.framework.custom.attr.CustomAttributeDocument;
 import org.kuali.coeus.common.framework.org.Organization;
@@ -18,22 +19,26 @@ import org.kuali.coeus.common.framework.person.PropAwardPersonRole;
 import org.kuali.coeus.common.framework.unit.Unit;
 import org.kuali.coeus.common.framework.unit.UnitService;
 import org.kuali.coeus.common.questionnaire.framework.answer.ModuleQuestionnaireBean;
+import org.kuali.coeus.common.questionnaire.framework.answer.QuestionnaireAnswerService;
+import org.kuali.coeus.propdev.impl.abstrct.ProposalAbstract;
 import org.kuali.coeus.propdev.impl.attachment.Narrative;
 import org.kuali.coeus.propdev.impl.attachment.NarrativeAttachment;
 import org.kuali.coeus.propdev.impl.attachment.NarrativeUserRights;
-import org.kuali.coeus.propdev.impl.abstrct.ProposalAbstract;
+import org.kuali.coeus.propdev.impl.budget.ProposalBudgetService;
+import org.kuali.coeus.propdev.impl.budget.ProposalDevelopmentBudgetExt;
 import org.kuali.coeus.propdev.impl.core.DevelopmentProposal;
 import org.kuali.coeus.propdev.impl.core.ProposalDevelopmentDocument;
 import org.kuali.coeus.propdev.impl.core.ProposalTypeService;
 import org.kuali.coeus.propdev.impl.docperm.ProposalRoleTemplateService;
+import org.kuali.coeus.propdev.impl.hierarchy.HierarchyStatusConstants;
 import org.kuali.coeus.propdev.impl.location.ProposalSite;
+import org.kuali.coeus.propdev.impl.person.KeyPersonnelService;
 import org.kuali.coeus.propdev.impl.person.ProposalPerson;
 import org.kuali.coeus.propdev.impl.person.ProposalPersonUnit;
 import org.kuali.coeus.propdev.impl.person.ProposalPersonYnq;
 import org.kuali.coeus.propdev.impl.person.attachment.ProposalPersonBiography;
 import org.kuali.coeus.propdev.impl.person.attachment.ProposalPersonBiographyAttachment;
 import org.kuali.coeus.propdev.impl.person.creditsplit.ProposalUnitCreditSplit;
-import org.kuali.coeus.common.framework.auth.perm.KcAuthorizationService;
 import org.kuali.coeus.propdev.impl.questionnaire.ProposalDevelopmentModuleQuestionnaireBean;
 import org.kuali.coeus.propdev.impl.s2s.*;
 import org.kuali.coeus.propdev.impl.s2s.override.S2sOverride;
@@ -41,18 +46,14 @@ import org.kuali.coeus.propdev.impl.s2s.override.S2sOverrideApplicationData;
 import org.kuali.coeus.propdev.impl.s2s.question.ProposalDevelopmentS2sModuleQuestionnaireBean;
 import org.kuali.coeus.propdev.impl.state.ProposalState;
 import org.kuali.coeus.sys.framework.gv.GlobalVariableService;
-import org.kuali.kra.bo.*;
+import org.kuali.kra.bo.DocumentNextvalue;
 import org.kuali.kra.infrastructure.Constants;
 import org.kuali.kra.infrastructure.RoleConstants;
-import org.kuali.coeus.propdev.impl.budget.ProposalBudgetService;
-import org.kuali.coeus.propdev.impl.budget.ProposalDevelopmentBudgetExt;
-import org.kuali.coeus.propdev.impl.hierarchy.HierarchyStatusConstants;
-import org.kuali.coeus.propdev.impl.person.KeyPersonnelService;
-import org.kuali.coeus.common.questionnaire.framework.answer.QuestionnaireAnswerService;
 import org.kuali.rice.core.api.criteria.QueryByCriteria;
 import org.kuali.rice.coreservice.framework.parameter.ParameterService;
 import org.kuali.rice.kew.api.exception.WorkflowException;
-import org.kuali.rice.krad.bo.*;
+import org.kuali.rice.krad.bo.DocumentHeader;
+import org.kuali.rice.krad.bo.Note;
 import org.kuali.rice.krad.data.CopyOption;
 import org.kuali.rice.krad.data.DataObjectService;
 import org.kuali.rice.krad.document.Document;
@@ -103,6 +104,7 @@ import java.util.*;
  * The <b>ProposalCopyCriteria</b> contains the user specified criteria, e.g. whether 
  * or not to copy attachments, etc.
  *
+
  * @author Kuali Research Administration Team (kualidev@oncourse.iu.edu)
  */
 @Component("proposalCopyService")
@@ -110,9 +112,6 @@ public class ProposalCopyServiceImpl implements ProposalCopyService {
     
     private static final org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger(ProposalCopyServiceImpl.class);
     private static final String PROPOSAL_NUMBER = "proposalNumber";
-    private static final String ORGANIZATION = "organization";
-    private static final String ROLODEX = "rolodex";
-
     @Autowired
     @Qualifier("questionnaireAnswerService")
     private QuestionnaireAnswerService questionnaireAnswerService;
@@ -748,24 +747,8 @@ public class ProposalCopyServiceImpl implements ProposalCopyService {
                 if (proposalSite.getLocationTypeCode().equals(ProposalSite.PROPOSAL_SITE_APPLICANT_ORGANIZATION) ||
                         proposalSite.getLocationTypeCode().equals(ProposalSite.PROPOSAL_SITE_PERFORMING_ORGANIZATION)) {
                     proposalSite.setOrganizationId(unitOrganizationId);
-                    proposalSite.refreshReferenceObject(ORGANIZATION);
-                    proposalSite.setLocationName(proposalSite.getOrganization().getOrganizationName());
-                    proposalSite.setRolodexId(proposalSite.getOrganization().getContactAddressId());
-                    proposalSite.refreshReferenceObject(ROLODEX);
-                    initializeCongressionalDistrict(proposalSite.getOrganizationId(), proposalSite);
+                    proposalSite.initializeDefaultCongressionalDistrict();
                 }
-            }
-        }
-    }
-
-    protected void initializeCongressionalDistrict(String organizationId, ProposalSite proposalSite) {
-        Organization organization = getDataObjectService().find(Organization.class, organizationId);
-        if (organization != null) {
-            String defaultDistrict = organization.getCongressionalDistrict();
-            if (!StringUtils.isEmpty(defaultDistrict)) {
-                proposalSite.setDefaultCongressionalDistrictIdentifier(defaultDistrict);
-            } else {
-                proposalSite.getCongressionalDistricts().clear();
             }
         }
     }

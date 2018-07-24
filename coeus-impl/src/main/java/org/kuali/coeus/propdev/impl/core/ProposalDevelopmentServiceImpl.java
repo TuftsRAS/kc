@@ -129,8 +129,6 @@ public class ProposalDevelopmentServiceImpl implements ProposalDevelopmentServic
     protected ProposalSite createProposalSite(String organizationId) {
         ProposalSite proposalSite = new ProposalSite();
         proposalSite.setOrganizationId(organizationId);
-        proposalSite.refreshReferenceObject("organization");
-        proposalSite.setLocationName(proposalSite.getOrganization().getOrganizationName());
         proposalSite.initializeDefaultCongressionalDistrict();
         return proposalSite;
     }

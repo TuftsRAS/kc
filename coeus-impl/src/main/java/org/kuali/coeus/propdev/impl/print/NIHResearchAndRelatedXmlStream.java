@@ -528,8 +528,7 @@ public class NIHResearchAndRelatedXmlStream extends
             if (unitName != null) {
                 keyPersonType.setOrganizationDepartment(unitName);
             }
-            Organization organization = getOrganizationFromDevelopmentProposal(developmentProposal);
-            keyPersonType.setOrganizationName(organization.getOrganizationName());
+            keyPersonType.setOrganizationName(developmentProposal.getApplicantOrganization().getLocationName());
             if (proposalPerson.getPrimaryTitle() != null) {
                 keyPersonType
                 .setPositionTitle(proposalPerson.getPrimaryTitle());
@@ -603,8 +602,7 @@ public class NIHResearchAndRelatedXmlStream extends
             if (unitName != null) {
                 keyPersonType.setOrganizationDepartment(unitName);
             }
-            Organization organization = getOrganizationFromDevelopmentProposal(developmentProposal);
-            keyPersonType.setOrganizationName(organization.getOrganizationName());
+            keyPersonType.setOrganizationName(developmentProposal.getApplicantOrganization().getLocationName());
             keyPersonType.setOrganizationDivision(getMajorSubDivision(getLeadUnit(developmentProposal)));
             if (proposalPerson.getPrimaryTitle() != null) {
                 keyPersonType
@@ -1260,12 +1258,8 @@ public class NIHResearchAndRelatedXmlStream extends
     private void setPerformanceSites(ResearchCoverPage researchCoverPage, List<ProposalSite> proposalSites) {
         for (ProposalSite proposalSite : proposalSites) {
             ProjectSiteType projectSiteType= researchCoverPage.addNewAlternateProjectSites();
-            Rolodex rolodexBean = proposalSite.getRolodex();
-            if(rolodexBean==null){
-                rolodexBean = proposalSite.getOrganization().getRolodex();
-            }
-            projectSiteType.setOrganizationName(rolodexBean.getOrganization());
-            setPostalAddressInfo(rolodexBean,projectSiteType);
+            projectSiteType.setOrganizationName(proposalSite.getLocationName());
+            setPostalAddressInfo(proposalSite,projectSiteType);
             List<CongressionalDistrict> congressionalDistricts = proposalSite.getCongressionalDistricts();
             String congrDistName = null;
             for (CongressionalDistrict congressionalDistrict : congressionalDistricts) {
@@ -1276,30 +1270,30 @@ public class NIHResearchAndRelatedXmlStream extends
         }
     }
 
-    private void setPostalAddressInfo(Rolodex rolodexBean,ProjectSiteType projectSiteType) {
+    private void setPostalAddressInfo(ProposalSite proposalSite,ProjectSiteType projectSiteType) {
         PostalAddressType postalAddressType = projectSiteType.addNewPostalAddress();
         postalAddressType
-        .setCity((rolodexBean.getCity() == null || rolodexBean.getCity().trim().equals("")) ? "Unknown"
-                : rolodexBean.getCity());
-        postalAddressType.setPostalCode((rolodexBean.getPostalCode() == null || rolodexBean.getPostalCode()
-                .trim().equals("")) ? "Unknown" : rolodexBean.getPostalCode());
-        postalAddressType.setCountry((rolodexBean.getCountryCode() == null || rolodexBean.getCountryCode()
-                .trim().equals("")) ? "Unknown" : rolodexBean.getCountryCode());
+        .setCity((proposalSite.getCity() == null || proposalSite.getCity().trim().equals("")) ? "Unknown"
+                : proposalSite.getCity());
+        postalAddressType.setPostalCode((proposalSite.getPostalCode() == null || proposalSite.getPostalCode()
+                .trim().equals("")) ? "Unknown" : proposalSite.getPostalCode());
+        postalAddressType.setCountry((proposalSite.getCountryCode() == null || proposalSite.getCountryCode()
+                .trim().equals("")) ? "Unknown" : proposalSite.getCountryCode());
 
-        if (rolodexBean.getState() != null)
-            postalAddressType.setState(rolodexBean.getState());
+        if (proposalSite.getState() != null)
+            postalAddressType.setState(proposalSite.getState());
 
-        if (rolodexBean.getAddressLine1() != null) {
+        if (proposalSite.getAddressLine1() != null) {
             XmlToken street = postalAddressType.addNewStreet();
-            street.setStringValue(rolodexBean.getAddressLine1());
+            street.setStringValue(proposalSite.getAddressLine1());
         }
-        if (rolodexBean.getAddressLine2() != null) {
+        if (proposalSite.getAddressLine2() != null) {
             XmlToken street2 = postalAddressType.addNewStreet();
-            street2.setStringValue(rolodexBean.getAddressLine2());
+            street2.setStringValue(proposalSite.getAddressLine2());
         }
-        if (rolodexBean.getAddressLine3() != null) {
+        if (proposalSite.getAddressLine3() != null) {
             XmlToken street3 = postalAddressType.addNewStreet();
-            street3.setStringValue(rolodexBean.getAddressLine3());
+            street3.setStringValue(proposalSite.getAddressLine3());
         }
     }
 
@@ -1309,14 +1303,15 @@ public class NIHResearchAndRelatedXmlStream extends
      */
     private AuthorizedOrganizationalRepresentativeType getAuthorizedOrganizationalRepresentative(
             DevelopmentProposal developmentProposal) {
-        Organization authorisedOrg = getAuthorisedOrganization(developmentProposal);
-        Rolodex rolodex = authorisedOrg.getRolodex();
+        ProposalSite proposalSite = developmentProposal.getApplicantOrganization();
+        Organization authorizedOrg = proposalSite.getOrganization();
+        Rolodex rolodex = authorizedOrg.getRolodex();
         AuthorizedOrganizationalRepresentativeType authOrgRepType = AuthorizedOrganizationalRepresentativeType.Factory
         .newInstance();
-        if (authorisedOrg != null) {
+        if (authorizedOrg != null) {
             authOrgRepType.setPositionTitle(rolodex.getTitle());
             authOrgRepType
-            .setContactInformation(getPersonContactInformation(rolodex));
+            .setContactInformation(getPersonContactInformation(proposalSite));
             authOrgRepType.setName(getContactPersonFullName(rolodex
                     .getLastName(), rolodex.getFirstName(), rolodex
                     .getMiddleName()));
@@ -1329,21 +1324,6 @@ public class NIHResearchAndRelatedXmlStream extends
             .setContactInformation(getOrganizationPersonContactInformationWithDefaultValues());
         }
         return authOrgRepType;
-    }
-
-    /*
-     * This method gets Authorized Organization from proposalSites by checking
-     * locationTypeCode value 1 from list of proposalSites
-     */
-    private Organization getAuthorisedOrganization(
-            DevelopmentProposal developmentProposal) {
-        Organization authorisedOrg = null;
-        for (ProposalSite proposalSite : developmentProposal.getProposalSites()) {
-            if (proposalSite.getLocationTypeCode() == 1) {
-                authorisedOrg = proposalSite.getOrganization();
-            }
-        }
-        return authorisedOrg;
     }
 
     /*
@@ -1418,14 +1398,13 @@ public class NIHResearchAndRelatedXmlStream extends
      */
     private ApplicantOrganizationType getApplicantOrganizationForResearchCoverPage(
             DevelopmentProposal developmentProposal) {
-        Organization organization = developmentProposal
-        .getApplicantOrganization().getOrganization();
+        ProposalSite applicantOrganization = developmentProposal.getApplicantOrganization();
+        Organization organization = applicantOrganization.getOrganization();
         OrganizationType organizationType = organization.getOrganizationType(0);
         ApplicantOrganizationType applicantOrganizationType = ApplicantOrganizationType.Factory
         .newInstance();
-        applicantOrganizationType.setOrganizationName(organization
-                .getOrganizationName() == null ? DEFAULT_VALUE_UNKNOWN
-                        : organization.getOrganizationName());
+        applicantOrganizationType.setOrganizationName(applicantOrganization.getLocationName() == null ? DEFAULT_VALUE_UNKNOWN
+                        : applicantOrganization.getLocationName());
         applicantOrganizationType.setOrganizationDUNS(organization
                 .getDunsNumber() == null ? DEFAULT_VALUE_UNKNOWN : organization
                         .getDunsNumber());
@@ -1444,15 +1423,13 @@ public class NIHResearchAndRelatedXmlStream extends
                 : organizationType.getOrganizationTypeList()
                 .getDescription());
         applicantOrganizationType
-        .setOrganizationCongressionalDistrict(organization
-                .getCongressionalDistrict() == null ? DEFAULT_VALUE_UNKNOWN
-                        : organization.getCongressionalDistrict());
+        .setOrganizationCongressionalDistrict(applicantOrganization.getFirstCongressionalDistrictName() == null ? DEFAULT_VALUE_UNKNOWN
+                        : applicantOrganization.getFirstCongressionalDistrictName());
         applicantOrganizationType
-        .setOrganizationAddress(getOrganizationAddress(organization
-                .getRolodex()));
+        .setOrganizationAddress(getOrganizationAddress(applicantOrganization));
         applicantOrganizationType
         .setOrganizationContactPerson(getOrganizationContactPerson(developmentProposal
-                .getApplicantOrganization().getRolodex()));
+                .getApplicantOrganization()));
         String cageNumber = organization.getCageNumber();
         if (cageNumber != null) {
             applicantOrganizationType.setCageNumber(cageNumber);

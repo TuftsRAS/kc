@@ -590,6 +590,14 @@
         <field-descriptor name="locationTypeCode" column="LOCATION_TYPE_CODE" jdbc-type="INTEGER" nullable="false"/>
         <field-descriptor name="organizationId" column="ORGANIZATION_ID" jdbc-type="VARCHAR" nullable="true"/>
         <field-descriptor name="rolodexId" column="ROLODEX_ID" jdbc-type="INTEGER" nullable="true"/>
+        <field-descriptor name="addressLine1" column="ADDRESS_LINE_1" jdbc-type="VARCHAR" nullable="true"/>
+        <field-descriptor name="addressLine2" column="ADDRESS_LINE_2" jdbc-type="VARCHAR" nullable="true"/>
+        <field-descriptor name="addressLine3" column="ADDRESS_LINE_3" jdbc-type="VARCHAR" nullable="true"/>
+        <field-descriptor name="city" column="CITY" jdbc-type="VARCHAR" nullable="true"/>
+        <field-descriptor name="county" column="COUNTY" jdbc-type="VARCHAR" nullable="true"/>
+        <field-descriptor name="state" column="STATE" jdbc-type="VARCHAR" nullable="true"/>
+        <field-descriptor name="postalCode" column="POSTAL_CODE" jdbc-type="VARCHAR" nullable="true"/>
+        <field-descriptor name="countryCode" column="COUNTRY_CODE" jdbc-type="CHAR" nullable="true"/>
         <field-descriptor name="updateTimestamp" column="UPDATE_TIMESTAMP" jdbc-type="TIMESTAMP" nullable="false"/>
         <field-descriptor name="updateUser" column="UPDATE_USER" jdbc-type="VARCHAR" nullable="false"/>
         <field-descriptor name="objectId" column="OBJ_ID" jdbc-type="VARCHAR" />

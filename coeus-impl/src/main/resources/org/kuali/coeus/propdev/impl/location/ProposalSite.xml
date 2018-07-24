@@ -30,6 +30,14 @@
         <ref bean="ProposalSite-locationTypeCode" />
         <ref bean="ProposalSite-organizationId" />
         <ref bean="ProposalSite-rolodexId" />
+        <ref bean="ProposalSite-addressLine1" />
+        <ref bean="ProposalSite-addressLine2" />
+        <ref bean="ProposalSite-addressLine3" />
+        <ref bean="ProposalSite-city" />
+        <ref bean="ProposalSite-county" />
+        <ref bean="ProposalSite-state" />
+        <ref bean="ProposalSite-postalCode" />
+        <ref bean="ProposalSite-countryCode" />
       </list>
     </property>
   </bean>
@@ -61,28 +69,9 @@
   </bean>
   
   <bean id="ProposalSite-locationName" parent="ProposalSite-locationName-parentBean" />
-  <bean id="ProposalSite-locationName-parentBean" abstract="true" parent="AttributeDefinition">
+  <bean id="ProposalSite-locationName-parentBean" abstract="true" parent="Organization-organizationName">
     <property name="name" value="locationName" />
-    <property name="forceUppercase" value="false" />
-    <property name="label" value="Location Name" />
-    <property name="shortLabel" value="Location" />
-    <property name="maxLength" value="60" />
-    <property name="validationPattern" >
-      <bean parent="AnyCharacterValidationPattern" p:allowWhitespace="true"/>
-    </property>
-    <property name="validCharactersConstraint">
-      <bean parent="AnyCharacterPatternConstraint">
-        <property name="allowWhitespace" value="true"/>
-      </bean>
-    </property>
     <property name="required" value="false" />
-    <property name="control" >
-      <bean parent="TextControlDefinition" p:size="60"/>
-    </property>
-    <property name="controlField">
-      <bean p:size="60" parent="Uif-TextControl"/>
-    </property>
-    <property name="summary" value="Location Name" />
     <property name="description" value="The name to display for the Proposal Site; may differ from the name in the rolodex" />
   </bean>
 
@@ -155,6 +144,15 @@
     <property name="summary" value="Rolodex Id" />
     <property name="description" value="Rolodex Id" />
   </bean>
+
+  <bean id="ProposalSite-addressLine1" parent="Rolodex-addressLine1" />
+  <bean id="ProposalSite-addressLine2" parent="Rolodex-addressLine2" />
+  <bean id="ProposalSite-addressLine3" parent="Rolodex-addressLine3" />
+  <bean id="ProposalSite-city" parent="Rolodex-city" />
+  <bean id="ProposalSite-county" parent="Rolodex-county" />
+  <bean id="ProposalSite-state" parent="Rolodex-state" />
+  <bean id="ProposalSite-postalCode" parent="Rolodex-postalCode" />
+  <bean id="ProposalSite-countryCode" parent="Rolodex-countryCode" />
   
 <!-- Business Object Inquiry Definition -->
   <bean id="ProposalSite-inquiryDefinition" parent="ProposalSite-inquiryDefinition-parentBean" />

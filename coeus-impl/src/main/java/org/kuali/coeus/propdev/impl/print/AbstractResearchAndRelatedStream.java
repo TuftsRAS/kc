@@ -348,13 +348,14 @@ public abstract class AbstractResearchAndRelatedStream extends ProposalBaseStrea
      * This method gets OrganizationContactPerson XMLObject and set data from Rolodex if Rolodex is there else it set default values
      * to it
      */
-    protected OrganizationContactPerson getOrganizationContactPerson(Rolodex rolodex) {
+    protected OrganizationContactPerson getOrganizationContactPerson(ProposalSite proposalSite) {
+        Rolodex rolodex = proposalSite.getRolodex();
         OrganizationContactPerson orgContactPerson = OrganizationContactPerson.Factory.newInstance();
         if (rolodex != null) {
             orgContactPerson.setName(getContactPersonFullName(rolodex.getLastName(), rolodex.getFirstName(), rolodex
                     .getMiddleName()));
             orgContactPerson.setPositionTitle(rolodex.getTitle());
-            orgContactPerson.setContactInformation(getPersonContactInformation(rolodex));
+            orgContactPerson.setContactInformation(getPersonContactInformation(proposalSite));
         }
         else {
             orgContactPerson.setName(getContactPersonFullName(DEFAULT_VALUE_UNKNOWN, DEFAULT_VALUE_UNKNOWN, DEFAULT_VALUE_UNKNOWN));
@@ -367,7 +368,8 @@ public abstract class AbstractResearchAndRelatedStream extends ProposalBaseStrea
     /*
      * This method gets ContactInfoType XMLObject and sets data to it from Rolodex
      */
-    protected ContactInfoType getPersonContactInformation(Rolodex rolodex) {
+    protected ContactInfoType getPersonContactInformation(ProposalSite proposalSite) {
+        Rolodex rolodex = proposalSite.getRolodex();
         ContactInfoType contactInfoType = ContactInfoType.Factory.newInstance();
         String emailAddress = rolodex.getEmailAddress();
         if (emailAddress != null) {
@@ -381,7 +383,7 @@ public abstract class AbstractResearchAndRelatedStream extends ProposalBaseStrea
         if (officePhone != null) {
             contactInfoType.setPhoneNumber(officePhone);
         }
-        contactInfoType.setPostalAddress(getOrganizationAddress(rolodex));
+        contactInfoType.setPostalAddress(getOrganizationAddress(proposalSite));
         return contactInfoType;
     }
 
@@ -400,18 +402,18 @@ public abstract class AbstractResearchAndRelatedStream extends ProposalBaseStrea
     /*
      * This method gets PostalAddressType XMLObject and setting rolodex details to it
      */
-    protected PostalAddressType getOrganizationAddress(Rolodex rolodex) {
+    protected PostalAddressType getOrganizationAddress(ProposalSite proposalSite) {
         PostalAddressType postalAddressType = PostalAddressType.Factory.newInstance();
-        postalAddressType.setStreetArray(getStreetAddress(rolodex.getAddressLine1(), rolodex.getAddressLine2(), rolodex
+        postalAddressType.setStreetArray(getStreetAddress(proposalSite.getAddressLine1(), proposalSite.getAddressLine2(), proposalSite
                 .getAddressLine3()));
-        String city = rolodex.getCity();
+        String city = proposalSite.getCity();
         postalAddressType.setCity((city == null || city.trim().equals(Constants.EMPTY_STRING)) ? DEFAULT_VALUE_UNKNOWN : city);
-        postalAddressType.setState(rolodex.getState());
-        String postalCode = rolodex.getPostalCode();
+        postalAddressType.setState(proposalSite.getState());
+        String postalCode = proposalSite.getPostalCode();
         postalAddressType
                 .setPostalCode((postalCode == null || postalCode.trim().equals(Constants.EMPTY_STRING)) ? DEFAULT_VALUE_UNKNOWN
                         : postalCode);
-        String county = rolodex.getCounty();
+        String county = proposalSite.getCounty();
         postalAddressType.setCountry((county == null || county.trim().equals(Constants.EMPTY_STRING)) ? DEFAULT_VALUE_UNKNOWN
                 : county);
         return postalAddressType;
@@ -982,10 +984,9 @@ public abstract class AbstractResearchAndRelatedStream extends ProposalBaseStrea
     protected ProjectSiteType getProjectSiteForResearchCoverPage(DevelopmentProposal developmentProposal) {
         ProposalSite performingOrg = developmentProposal.getPerformingOrganization();
         ProjectSiteType projectSiteType = ProjectSiteType.Factory.newInstance();
-        Organization organization = performingOrg.getOrganization();
-        projectSiteType.setOrganizationName(organization.getOrganizationName());
-        projectSiteType.setCongressionalDistrict(organization.getCongressionalDistrict());
-        projectSiteType.setPostalAddress(getOrganizationAddress(organization.getRolodex()));
+        projectSiteType.setOrganizationName(performingOrg.getLocationName());
+        projectSiteType.setCongressionalDistrict(performingOrg.getFirstCongressionalDistrictName());
+        projectSiteType.setPostalAddress(getOrganizationAddress(performingOrg));
         return projectSiteType;
     }
 

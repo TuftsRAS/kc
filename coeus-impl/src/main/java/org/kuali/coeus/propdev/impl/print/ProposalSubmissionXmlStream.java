@@ -38,6 +38,7 @@ import org.kuali.coeus.common.framework.unit.Unit;
 import org.kuali.coeus.propdev.impl.abstrct.ProposalAbstract;
 import org.kuali.coeus.propdev.impl.core.DevelopmentProposal;
 import org.kuali.coeus.propdev.impl.editable.ProposalChangedData;
+import org.kuali.coeus.propdev.impl.location.ProposalSite;
 import org.kuali.coeus.propdev.impl.person.ProposalPerson;
 import org.kuali.coeus.propdev.impl.person.ProposalPersonUnit;
 import org.kuali.coeus.propdev.impl.person.creditsplit.ProposalPersonCreditSplit;
@@ -490,7 +491,7 @@ public class ProposalSubmissionXmlStream extends ProposalBaseStream {
 				.getNumberOfCopies());
 		proposalMaster
 				.setMAILADDRESS(getMailingAddressXMLObject(developmentProposal
-						.getApplicantOrganization().getRolodex()));
+						.getApplicantOrganization()));
 		proposalMaster.setMAILDESCRIPTION(developmentProposal
 				.getMailDescription());
 
@@ -501,10 +502,9 @@ public class ProposalSubmissionXmlStream extends ProposalBaseStream {
 	 * This method gets mailAddress XMLObject and Rolodex, Rolodex address
 	 * details are set to it.
 	 */
-	private PROPOSALMASTER.MAILADDRESS getMailingAddressXMLObject(
-			Rolodex rolodexDetails) {
+	private PROPOSALMASTER.MAILADDRESS getMailingAddressXMLObject(ProposalSite proposalSite) {
 		ADDRESS address = ADDRESS.Factory.newInstance();
-		address.setADDRESSLINE1(getSponsorAddress(rolodexDetails));
+		address.setADDRESSLINE1(getSponsorAddress(proposalSite));
 		ROLODEX rolodex = ROLODEX.Factory.newInstance();
 		rolodex.setADDRESS(address);
 		PROPOSALMASTER.MAILADDRESS mailAddress = PROPOSALMASTER.MAILADDRESS.Factory
@@ -517,9 +517,10 @@ public class ProposalSubmissionXmlStream extends ProposalBaseStream {
 	 * This method gets sponsorAddress by concatenating Rolodex details if
 	 * rolodexPerson is there
 	 */
-	private String getSponsorAddress(Rolodex rolodex) {
+	private String getSponsorAddress(ProposalSite proposalSite) {
+		Rolodex rolodex = proposalSite.getRolodex();
 		String address = Constants.EMPTY_STRING;
-		if (rolodex != null && rolodex.getRolodexId() != null) {
+		if (proposalSite != null && proposalSite.getRolodexId() != null) {
 			address = new StringBuilder(
 					rolodex.getLastName() == null ? Constants.EMPTY_STRING
 							: rolodex.getLastName())
@@ -538,35 +539,35 @@ public class ProposalSubmissionXmlStream extends ProposalBaseStream {
 							rolodex.getPhoneNumber() == null ? Constants.EMPTY_STRING
 									: rolodex.getPhoneNumber())
 					.append(NEW_LINE)
-					.append(rolodex.getOrganization())
+					.append(proposalSite.getLocationName())
 					.append(NEW_LINE)
 					.append(
-							rolodex.getAddressLine1() == null ? Constants.EMPTY_STRING
-									: rolodex.getAddressLine1())
+							proposalSite.getAddressLine1() == null ? Constants.EMPTY_STRING
+									: proposalSite.getAddressLine1())
 					.append(NEW_LINE)
 					.append(
-							rolodex.getAddressLine2() == null ? Constants.EMPTY_STRING
-									: rolodex.getAddressLine2())
+							proposalSite.getAddressLine2() == null ? Constants.EMPTY_STRING
+									: proposalSite.getAddressLine2())
 					.append(NEW_LINE)
 					.append(
-							rolodex.getAddressLine3() == null ? Constants.EMPTY_STRING
-									: rolodex.getAddressLine3())
+							proposalSite.getAddressLine3() == null ? Constants.EMPTY_STRING
+									: proposalSite.getAddressLine3())
 					.append(NEW_LINE)
 					.append(
-							rolodex.getCity() == null ? Constants.EMPTY_STRING
-									: rolodex.getCity())
+							proposalSite.getCity() == null ? Constants.EMPTY_STRING
+									: proposalSite.getCity())
 					.append(Constants.COMMA)
 					.append(
-							rolodex.getState() == null ? Constants.EMPTY_STRING
-									: rolodex.getState())
+							proposalSite.getState() == null ? Constants.EMPTY_STRING
+									: proposalSite.getState())
 					.append(BLANK_STRING)
 					.append(
-							rolodex.getPostalCode() == null ? Constants.EMPTY_STRING
-									: rolodex.getPostalCode())
+							proposalSite.getPostalCode() == null ? Constants.EMPTY_STRING
+									: proposalSite.getPostalCode())
 					.append(BLANK_STRING)
 					.append(
-							rolodex.getCountryCode() == null ? Constants.EMPTY_STRING
-									: rolodex.getCountryCode()).toString();
+							proposalSite.getCountryCode() == null ? Constants.EMPTY_STRING
+									: proposalSite.getCountryCode()).toString();
 		}
 		return address;
 	}

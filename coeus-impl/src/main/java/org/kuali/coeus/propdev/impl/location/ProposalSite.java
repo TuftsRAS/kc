@@ -22,6 +22,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * This class represents a Proposal Site. It can either refer to an Organization, or to
@@ -34,7 +35,7 @@ public class ProposalSite extends KcPersistableBusinessObjectBase implements Pro
 
     private static final long serialVersionUID = -1657749549230077805L;
 
-    // prroposal site types, see LOCATION_TYPE table  
+    // proposal site types, see LOCATION_TYPE table
     public static final int PROPOSAL_SITE_APPLICANT_ORGANIZATION = 1;
 
     public static final int PROPOSAL_SITE_PERFORMING_ORGANIZATION = 2;
@@ -42,6 +43,9 @@ public class ProposalSite extends KcPersistableBusinessObjectBase implements Pro
     public static final int PROPOSAL_SITE_OTHER_ORGANIZATION = 3;
 
     public static final int PROPOSAL_SITE_PERFORMANCE_SITE = 4;
+
+    private static final String ORGANIZATION = "organization";
+    private static final String ROLODEX = "rolodex";
 
     @Id
     @ManyToOne(cascade = { CascadeType.REFRESH })
@@ -72,6 +76,30 @@ public class ProposalSite extends KcPersistableBusinessObjectBase implements Pro
     @JoinColumn(name = "ROLODEX_ID", referencedColumnName = "ROLODEX_ID", insertable = false, updatable = false)
     private Rolodex rolodex;
 
+    @Column(name = "ADDRESS_LINE_1")
+    private String addressLine1;
+
+    @Column(name = "ADDRESS_LINE_2")
+    private String addressLine2;
+
+    @Column(name = "ADDRESS_LINE_3")
+    private String addressLine3;
+
+    @Column(name = "CITY")
+    private String city;
+
+    @Column(name = "COUNTY")
+    private String county;
+
+    @Column(name = "STATE")
+    private String state;
+
+    @Column(name = "POSTAL_CODE")
+    private String postalCode;
+
+    @Column(name = "COUNTRY_CODE")
+    private String countryCode;
+
     @OneToMany(mappedBy = "proposalSite", orphanRemoval = true, cascade = { CascadeType.ALL })
     @OrderBy("proposalSite")
     private List<CongressionalDistrict> congressionalDistricts;
@@ -99,7 +127,14 @@ public class ProposalSite extends KcPersistableBusinessObjectBase implements Pro
     }
 
     public void setOrganizationId(String organizationId) {
-        this.organizationId = organizationId;
+        if (!Objects.equals(getOrganizationId(), organizationId)) {
+            this.organizationId = organizationId;
+            if (getOrganizationId() != null) {
+                refreshReferenceObject(ORGANIZATION);
+            }
+
+            initializeOrganizationRelatedFields();
+        }
     }
 
     public String getOrganizationId() {
@@ -110,18 +145,27 @@ public class ProposalSite extends KcPersistableBusinessObjectBase implements Pro
         this.organization = organization;
     }
 
+    private void initializeOrganizationRelatedFields() {
+        setLocationName(getOrganization() == null ? null : getOrganization().getOrganizationName());
+        setRolodexId(getOrganization() == null ? null : getOrganization().getContactAddressId());
+    }
+
     @Override
     public Organization getOrganization() {
         return organization;
     }
 
     public void setRolodexId(Integer rolodexId) {
-        // When the Rolodex entry changes, remove the congressional districts of the old Rolodex  
-        if (this.rolodexId != null && !this.rolodexId.equals(rolodexId)) {
+        if (!Objects.equals(getRolodexId(), rolodexId)) {
             congressionalDistricts.clear();
+
+            this.rolodexId = rolodexId;
+            if (getRolodexId() != null) {
+                refreshReferenceObject(ROLODEX);
+            }
+
+            initializeRolodexRelatedFields();
         }
-        this.rolodexId = rolodexId;
-        this.refreshReferenceObject("rolodex");
     }
 
     public Integer getRolodexId() {
@@ -137,8 +181,87 @@ public class ProposalSite extends KcPersistableBusinessObjectBase implements Pro
         return rolodex;
     }
 
+    private void initializeRolodexRelatedFields() {
+        if (getOrganizationId() == null) {
+            setLocationName(getRolodex() == null ? null : getRolodex().getOrganization());
+        }
+
+        setAddressLine1((getRolodex() == null) ? null : getRolodex().getAddressLine1());
+        setAddressLine2((getRolodex() == null) ? null : getRolodex().getAddressLine2());
+        setAddressLine3((getRolodex() == null) ? null : getRolodex().getAddressLine3());
+        setCity((getRolodex() == null) ? null : getRolodex().getCity());
+        setCounty((getRolodex() == null) ? null : getRolodex().getCounty());
+        setState((getRolodex() == null) ? null : getRolodex().getState());
+        setPostalCode((getRolodex() == null) ? null : getRolodex().getPostalCode());
+        setCountryCode((getRolodex() == null) ? null : getRolodex().getCountryCode());
+    }
+
     public void setCongressionalDistricts(List<CongressionalDistrict> congressionalDistricts) {
         this.congressionalDistricts = congressionalDistricts;
+    }
+
+    public String getAddressLine1() {
+        return addressLine1;
+    }
+
+    public void setAddressLine1(String addressLine1) {
+        this.addressLine1 = addressLine1;
+    }
+
+    public String getAddressLine2() {
+        return addressLine2;
+    }
+
+    public void setAddressLine2(String addressLine2) {
+        this.addressLine2 = addressLine2;
+    }
+
+    public String getAddressLine3() {
+        return addressLine3;
+    }
+
+    public void setAddressLine3(String addressLine3) {
+        this.addressLine3 = addressLine3;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getCounty() {
+        return county;
+    }
+
+    public void setCounty(String county) {
+        this.county = county;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getPostalCode() {
+        return postalCode;
+    }
+
+    public void setPostalCode(String postalCode) {
+        this.postalCode = postalCode;
+    }
+
+    public String getCountryCode() {
+        return countryCode;
+    }
+
+    public void setCountryCode(String countryCode) {
+        this.countryCode = countryCode;
     }
 
     @Override

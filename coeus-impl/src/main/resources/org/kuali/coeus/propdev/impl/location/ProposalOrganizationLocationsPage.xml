@@ -57,19 +57,19 @@
 		abstract="true" parent="Uif-GridCondensedSubSection">
 		<property name="items">
 			<list>
-			 	<bean parent="Uif-DataField-condensedTable" p:propertyName="organization.organizationName"
+			 	<bean parent="Uif-DataField-condensedTable" p:propertyName="locationName"
 					p:order="10" />
-			    <bean parent="Uif-DataField-condensedTable" p:propertyName="rolodex.addressLine1"
+			    <bean parent="Uif-DataField-condensedTable" p:propertyName="addressLine1"
 					p:order="20" />
-			    <bean parent="Uif-DataField-condensedTable" p:propertyName="rolodex.addressLine2"
+			    <bean parent="Uif-DataField-condensedTable" p:propertyName="addressLine2"
 					p:order="30" />
-				<bean parent="Uif-DataField-condensedTable" p:propertyName="rolodex.addressLine3"
+				<bean parent="Uif-DataField-condensedTable" p:propertyName="addressLine3"
 					p:order="40" />
-				<bean parent="Uif-DataField-condensedTable" p:propertyName="rolodex.city"
+				<bean parent="Uif-DataField-condensedTable" p:propertyName="city"
 					p:order="50" />
-				<bean parent="Uif-DataField-condensedTable" p:propertyName="rolodex.state"
+				<bean parent="Uif-DataField-condensedTable" p:propertyName="state"
 					p:order="60" />
-				<bean parent="Uif-DataField-condensedTable" p:propertyName="rolodex.postalCode"
+				<bean parent="Uif-DataField-condensedTable" p:propertyName="postalCode"
 					p:order="70" />
 			</list>
 		</property>
@@ -127,19 +127,19 @@
 		abstract="true" parent="Uif-GridCondensedSubSection">
 		<property name="items">
 			<list>
-			 	<bean parent="Uif-DataField-condensedTable" p:propertyName="organization.organizationName"
+			 	<bean parent="Uif-DataField-condensedTable" p:propertyName="locationName"
 					p:order="10" />
-			    <bean parent="Uif-DataField-condensedTable" p:propertyName="rolodex.addressLine1"
+			    <bean parent="Uif-DataField-condensedTable" p:propertyName="addressLine1"
 					p:order="20" />
-			    <bean parent="Uif-DataField-condensedTable" p:propertyName="rolodex.addressLine2"
+			    <bean parent="Uif-DataField-condensedTable" p:propertyName="addressLine2"
 					p:order="30" />
-				<bean parent="Uif-DataField-condensedTable" p:propertyName="rolodex.addressLine3"
+				<bean parent="Uif-DataField-condensedTable" p:propertyName="addressLine3"
 					p:order="40" />
-				<bean parent="Uif-DataField-condensedTable" p:propertyName="rolodex.city"
+				<bean parent="Uif-DataField-condensedTable" p:propertyName="city"
 					p:order="50" />
-				<bean parent="Uif-DataField-condensedTable" p:propertyName="rolodex.state"
+				<bean parent="Uif-DataField-condensedTable" p:propertyName="state"
 					p:order="60" />
-				<bean parent="Uif-DataField-condensedTable" p:propertyName="rolodex.postalCode"
+				<bean parent="Uif-DataField-condensedTable" p:propertyName="postalCode"
 					p:order="70" />
 			</list>
 		</property>
@@ -174,19 +174,19 @@
 		</property>		
 		<property name="items">
 			<list>
-                <bean parent="Uif-DataField" p:propertyName="organization.organizationName"	p:order="10">
+                <bean parent="Uif-DataField" p:propertyName="locationName"	p:order="10">
                     <property name="inquiry">
                       <bean parent="Uif-Inquiry" p:dataObjectClassName="org.kuali.coeus.common.framework.org.Organization"
                             p:inquiryParameters="organizationId:organizationId"/>
                     </property>
                 </bean>
-                <bean parent="Uif-DataField"  p:order="20" p:propertyName="organization.rolodex.addressLine1" />
-                <bean parent="Uif-DataField"  p:order="30" p:propertyName="organization.rolodex.addressLine2" />
-                <bean parent="Uif-DataField"  p:order="40" p:propertyName="organization.rolodex.addressLine3" />
-                <bean parent="Uif-DataField"  p:order="50" p:propertyName="organization.rolodex.city" />
-                <bean parent="Uif-DataField"  p:order="60" p:propertyName="organization.rolodex.state" />
-                <bean parent="Uif-DataField"  p:order="70" p:propertyName="organization.rolodex.postalCode" />
-                <bean parent="Uif-DataField"  p:order="80" p:propertyName="organization.rolodex.countryCode" />
+                <bean parent="Uif-DataField"  p:order="20" p:propertyName="addressLine1" />
+                <bean parent="Uif-DataField"  p:order="30" p:propertyName="addressLine2" />
+                <bean parent="Uif-DataField"  p:order="40" p:propertyName="addressLine3" />
+                <bean parent="Uif-DataField"  p:order="50" p:propertyName="city" />
+                <bean parent="Uif-DataField"  p:order="60" p:propertyName="state" />
+                <bean parent="Uif-DataField"  p:order="70" p:propertyName="postalCode" />
+                <bean parent="Uif-DataField"  p:order="80" p:propertyName="countryCode" />
             </list>
 		</property>
 		<property name="lineActions">
@@ -235,17 +235,17 @@
         </property>
         <property name="items">
             <list>
-                <bean parent="Uif-DataField" p:propertyName="rolodex.organization"	p:order="10">
+                <bean parent="Uif-DataField" p:propertyName="locationName"	p:order="10">
                     <property name="inquiry">
                       <bean parent="Uif-Inquiry" p:dataObjectClassName="org.kuali.coeus.common.framework.rolodex.Rolodex"
-                            p:inquiryParameters="rolodex.rolodexId:rolodexId"/>
+                            p:inquiryParameters="rolodexId:rolodexId"/>
                     </property>
                 </bean>
-                <bean parent="Uif-DataField" p:propertyName="rolodex.city"	p:order="20" />
-                <bean parent="Uif-DataField" p:propertyName="rolodex.state"	p:order="30" />
-                <bean parent="Uif-DataField" p:propertyName="rolodex.addressLine1"	p:order="40" />
-                <bean parent="Uif-DataField" p:propertyName="rolodex.addressLine2"	p:order="50" />
-                <bean parent="Uif-DataField" p:propertyName="rolodex.postalCode"	p:order="60" />
+                <bean parent="Uif-DataField" p:propertyName="city"	p:order="20" />
+                <bean parent="Uif-DataField" p:propertyName="state"	p:order="30" />
+                <bean parent="Uif-DataField" p:propertyName="addressLine1"	p:order="40" />
+                <bean parent="Uif-DataField" p:propertyName="addressLine2"	p:order="50" />
+                <bean parent="Uif-DataField" p:propertyName="postalCode"	p:order="60" />
             </list>
         </property>
         <property name="lineActions">

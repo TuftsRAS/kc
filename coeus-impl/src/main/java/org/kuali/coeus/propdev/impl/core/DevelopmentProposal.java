@@ -955,14 +955,7 @@ public class DevelopmentProposal extends KcPersistableBusinessObjectBase impleme
 
     @Override
     public ProposalSite getApplicantOrganization() {
-        ProposalSite applicant = getProposalSiteForType(ProposalSite.PROPOSAL_SITE_APPLICANT_ORGANIZATION);
-        if (applicant != null) {
-            if (applicant.getOrganization() == null && applicant.getOrganizationId() != null) {
-                applicant.refreshReferenceObject("organization");
-            }
-            applicant.setRolodex(applicant.getOrganization() == null ? null : applicant.getOrganization().getRolodex());
-        }
-            return applicant;
+        return getProposalSiteForType(ProposalSite.PROPOSAL_SITE_APPLICANT_ORGANIZATION);
     }
 
     public void setPerformingOrganization(ProposalSite performingOrganization) {
@@ -984,14 +977,7 @@ public class DevelopmentProposal extends KcPersistableBusinessObjectBase impleme
 
     @Override
     public ProposalSite getPerformingOrganization() {
-        ProposalSite performingOrganization = getProposalSiteForType(ProposalSite.PROPOSAL_SITE_PERFORMING_ORGANIZATION);
-        if (performingOrganization != null && outOfSync(performingOrganization.getRolodexId(), performingOrganization.getRolodex())) {
-            performingOrganization.refreshReferenceObject(ROLODEX);
-        }
-        if (performingOrganization != null && performingOrganization.getRolodex() == null && performingOrganization.getOrganization() != null) {
-            performingOrganization.setRolodex(performingOrganization.getOrganization().getRolodex());
-        }
-        return performingOrganization;
+        return getProposalSiteForType(ProposalSite.PROPOSAL_SITE_PERFORMING_ORGANIZATION);
     }
 
     public void addProposalSite(ProposalSite proposalSite) {
@@ -1849,16 +1835,6 @@ public class DevelopmentProposal extends KcPersistableBusinessObjectBase impleme
      */
     private static boolean outOfSync(String code, Sponsor spon) {
         return spon == null && StringUtils.isNotEmpty(code) || (spon != null && StringUtils.isNotEmpty(code) && !StringUtils.equals(spon.getSponsorCode(), code));
-    }
-
-    /**
-     * checks if a rolodex id needs refreshing.
-     * @param id the id
-     * @param rolodex the rolodex to refresh
-     * @return true if needs refreshing
-     */
-    private static boolean outOfSync(Integer id, Rolodex rolodex) {
-        return rolodex == null && id != null || (rolodex != null && id != null && !id.equals(rolodex.getRolodexId()));
     }
 
     public void setPrimeSponsor(Sponsor primeSponsor) {
