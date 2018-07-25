@@ -1,6 +1,13 @@
 
 
 ## CURRENT
+* RESKC-2339: cleaning out records with blank cfda numbers
+  * Travis Schneeberger on Wed, 25 Jul 2018 10:19:53 -0400 [View Commit](../../commit/9a68742e2c4537b65b29d6a44d57a5eeccf17a42)
+* RESKC-21: Changing the location of data for some Organization/Rolodex fields related to Proposal Sites. (#2987)
+
+  * Omar Soto Fortuño on Tue, 24 Jul 2018 17:03:16 -0400 [View Commit](../../commit/d414d4d34d4758b81bfbddf3499d8ea25e2a142b)
+
+## coeus-1807.0027
 * RESKC-2339: support grants.gov Header v2
   * Travis Schneeberger on Fri, 20 Jul 2018 12:18:28 -0400 [View Commit](../../commit/49483fdb039436027404f8c335e39f1cd7727b94)
 
