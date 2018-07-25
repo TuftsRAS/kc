@@ -21,6 +21,7 @@ import org.kuali.coeus.propdev.impl.attachment.NarrativeAttachment;
 import org.kuali.coeus.propdev.impl.core.DevelopmentProposal;
 import org.kuali.coeus.propdev.impl.core.ProposalDevelopmentDocument;
 import org.kuali.coeus.propdev.impl.core.ProposalDevelopmentService;
+import org.kuali.coeus.propdev.impl.location.ProposalSite;
 import org.kuali.coeus.propdev.impl.s2s.S2sOppForms;
 import org.kuali.coeus.propdev.impl.s2s.S2sOpportunity;
 import org.kuali.coeus.s2sgen.api.core.AuditError;
@@ -64,6 +65,8 @@ import static org.kuali.coeus.sys.framework.service.KcServiceLocator.getService;
  * This is the base class for all generator Junit test classes.
  */
 public abstract class S2STestBase extends KcIntegrationTestBase {
+    private final static String ORGANIZATION_ID = "000001";
+
     private S2SBaseFormGenerator generatorObject;
 
     @Before
@@ -267,5 +270,17 @@ public abstract class S2STestBase extends KcIntegrationTestBase {
         narrative.setObjectId("12345678890abcd");
         narrative.setName("exercise1");
         return narrative;
+    }
+
+    protected ProposalSite createProposalSite(ProposalDevelopmentDocument document, Integer siteNumber, Integer locationTypeCode) {
+        ProposalSite proposalSite = new ProposalSite();
+
+        proposalSite.setOrganizationId(ORGANIZATION_ID);
+        proposalSite.initializeDefaultCongressionalDistrict();
+        proposalSite.setSiteNumber(siteNumber);
+        proposalSite.setDevelopmentProposal(document.getDevelopmentProposal());
+        proposalSite.setLocationTypeCode(locationTypeCode);
+
+        return proposalSite;
     }
 }

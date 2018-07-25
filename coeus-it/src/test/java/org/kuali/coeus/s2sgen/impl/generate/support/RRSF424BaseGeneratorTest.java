@@ -8,7 +8,6 @@
  */
 package org.kuali.coeus.s2sgen.impl.generate.support;
 
-import org.kuali.coeus.common.framework.org.Organization;
 import org.kuali.coeus.common.framework.type.ProposalType;
 import org.kuali.coeus.common.questionnaire.framework.answer.Answer;
 import org.kuali.coeus.common.questionnaire.framework.answer.AnswerHeader;
@@ -16,7 +15,6 @@ import org.kuali.coeus.common.questionnaire.framework.answer.ModuleQuestionnaire
 import org.kuali.coeus.common.questionnaire.framework.answer.QuestionnaireAnswerService;
 import org.kuali.coeus.propdev.impl.core.DevelopmentProposal;
 import org.kuali.coeus.propdev.impl.core.ProposalDevelopmentDocument;
-import org.kuali.coeus.propdev.impl.location.CongressionalDistrict;
 import org.kuali.coeus.propdev.impl.location.ProposalSite;
 import org.kuali.coeus.propdev.impl.person.ProposalPerson;
 import org.kuali.coeus.propdev.impl.questionnaire.ProposalDevelopmentModuleQuestionnaireBean;
@@ -63,9 +61,6 @@ public abstract class RRSF424BaseGeneratorTest extends
     @Override
 	protected void prepareData(ProposalDevelopmentDocument document)
 			throws Exception {
-		BusinessObjectService businessObjectService = KcServiceLocator
-				.getService(BusinessObjectService.class);
-
 		prepareS2sData(document);
 		DevelopmentProposal developmentProposal = document
 				.getDevelopmentProposal();
@@ -76,35 +71,19 @@ public abstract class RRSF424BaseGeneratorTest extends
 		developmentProposal.setProposalType(proposalType);
 
 		saveAnswers(document);
-		Organization organization;
 		developmentProposal
 				.setProgramAnnouncementTitle("programAnnouncementTitle");
-		organization = businessObjectService.findBySinglePrimaryKey(
-				Organization.class, "000001");
-		if (organization != null) {
-			List<ProposalSite> proposalSites;
-			proposalSites = developmentProposal.getProposalSites();
-			int siteNumber = 0;
-			for (ProposalSite proposalSite : proposalSites) {
-				if (proposalSite.getLocationTypeCode() == 1) {
-					siteNumber = proposalSite.getSiteNumber();
-				}
+
+		List<ProposalSite> proposalSites;
+		proposalSites = developmentProposal.getProposalSites();
+		int siteNumber = 0;
+		for (ProposalSite proposalSite : proposalSites) {
+			if (proposalSite.getLocationTypeCode() == ProposalSite.PROPOSAL_SITE_APPLICANT_ORGANIZATION) {
+				siteNumber = proposalSite.getSiteNumber();
 			}
-			ProposalSite applicantOrganization = new ProposalSite();
-			applicantOrganization.setOrganization(organization);
-			CongressionalDistrict congressionalDistrict = new CongressionalDistrict();
-			congressionalDistrict.setCongressionalDistrict("CONDI");
-			congressionalDistrict.setProposalSite(applicantOrganization);
-			List<CongressionalDistrict> congressionalDistricts = new ArrayList<>();
-			congressionalDistricts.add(congressionalDistrict);
-			applicantOrganization
-					.setCongressionalDistricts(congressionalDistricts);
-			applicantOrganization.setObjectId(organization.getOrganizationId());
-			applicantOrganization.setLocationName(organization
-					.getOrganizationName());
-			applicantOrganization.setSiteNumber(siteNumber);
-			developmentProposal.setApplicantOrganization(applicantOrganization);
 		}
+
+		developmentProposal.setApplicantOrganization(createProposalSite(document, siteNumber, ProposalSite.PROPOSAL_SITE_APPLICANT_ORGANIZATION));
 
 		ProposalPerson person = new ProposalPerson();
 		person.setProposalPersonRoleId("PI");

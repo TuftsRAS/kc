@@ -8,62 +8,22 @@
 package org.kuali.coeus.s2sgen.impl.generate.support;
 
 
-
+import org.kuali.coeus.propdev.impl.core.ProposalDevelopmentDocument;
+import org.kuali.coeus.propdev.impl.location.ProposalSite;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.kuali.coeus.common.framework.org.Organization;
-import org.kuali.coeus.common.framework.rolodex.Rolodex;
-import org.kuali.coeus.propdev.impl.core.ProposalDevelopmentDocument;
-import org.kuali.coeus.propdev.impl.location.CongressionalDistrict;
-import org.kuali.coeus.propdev.impl.location.ProposalSite;
 
 public abstract class PerformanceSiteBaseGeneratorTest extends S2STestBase {
 
 	@Override
 	protected void prepareData(ProposalDevelopmentDocument document)
 			throws Exception {
-
 		List<ProposalSite> proposalSites = new ArrayList<>();
-		List<CongressionalDistrict> congressionalDistricts = new ArrayList<>();
-		Rolodex rolodex = new Rolodex();
-		rolodex.setRolodexId(1);
-		rolodex.setAddressLine1("addressLine1");
-		rolodex.setAddressLine2("addressLine2");
-		rolodex.setAddressLine3("addressLine3");
-		rolodex.setOwnedByUnit("000001");
-		rolodex.setOrganization("University");
-		rolodex.setSponsorAddressFlag(Boolean.FALSE);
-		rolodex.setCreateUser("admin");
-		rolodex.setCity("Camebridge");
-		rolodex.setCounty(null);
-		rolodex.setCountryCode("USA");
-		rolodex.setPostalCode("02039-4307");
-		rolodex.setState("MA");
 		int siteNumber = 0;
-		Organization organization = new Organization();
-		organization.setOrganizationName("University");
-		organization.setOrganizationId("000001");
-		organization.setContactAddressId(1);
-		organization.setRolodex(rolodex);
 
-		ProposalSite performingOrganization = new ProposalSite();
-		performingOrganization.setLocationTypeCode(2);
-		performingOrganization.setOrganization(organization);
-		performingOrganization.setSiteNumber(++siteNumber);
-		performingOrganization.setLocationName(organization.getOrganizationName());
-		performingOrganization.setDevelopmentProposal(document.getDevelopmentProposal());
-
-		CongressionalDistrict congressionalDistrict = new CongressionalDistrict();
-		congressionalDistrict.setId(1111111L);
-		congressionalDistrict.setCongressionalDistrict("MA-008");
-		congressionalDistrict.setProposalSite(performingOrganization);
-		congressionalDistricts.add(congressionalDistrict);
-		performingOrganization.setCongressionalDistricts(congressionalDistricts);
-		proposalSites.add(performingOrganization);
+		proposalSites.add(createProposalSite(document, ++siteNumber, ProposalSite.PROPOSAL_SITE_PERFORMING_ORGANIZATION));
 		document.getDevelopmentProposal().setProposalSites(proposalSites);
-
 	}
 
 }

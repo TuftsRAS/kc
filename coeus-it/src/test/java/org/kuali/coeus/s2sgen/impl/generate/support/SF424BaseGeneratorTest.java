@@ -7,15 +7,12 @@
  */
 package org.kuali.coeus.s2sgen.impl.generate.support;
 
-import org.kuali.coeus.common.framework.org.Organization;
-import org.kuali.coeus.common.framework.rolodex.Rolodex;
 import org.kuali.coeus.common.framework.type.ProposalType;
 import org.kuali.coeus.common.questionnaire.framework.answer.Answer;
 import org.kuali.coeus.common.questionnaire.framework.answer.AnswerHeader;
 import org.kuali.coeus.common.questionnaire.framework.answer.ModuleQuestionnaireBean;
 import org.kuali.coeus.common.questionnaire.framework.answer.QuestionnaireAnswerService;
 import org.kuali.coeus.propdev.impl.core.ProposalDevelopmentDocument;
-import org.kuali.coeus.propdev.impl.location.CongressionalDistrict;
 import org.kuali.coeus.propdev.impl.location.ProposalSite;
 import org.kuali.coeus.propdev.impl.person.ProposalPerson;
 import org.kuali.coeus.propdev.impl.questionnaire.ProposalDevelopmentModuleQuestionnaireBean;
@@ -105,52 +102,10 @@ public abstract class SF424BaseGeneratorTest extends S2STestBase {
 
 
         List<ProposalSite> proposalSites = new ArrayList<>();
-        List<CongressionalDistrict> congressionalDistricts = new ArrayList<>();
-        Rolodex rolodex = new Rolodex();
-        rolodex.setRolodexId(1);
-        rolodex.setAddressLine1("addressLine1");
-        rolodex.setAddressLine2("addressLine2");
-        rolodex.setAddressLine3("addressLine3");
-        rolodex.setOwnedByUnit("000001");
-        rolodex.setOrganization("University");
-        rolodex.setSponsorAddressFlag(Boolean.FALSE);
-        rolodex.setCreateUser("admin");
-        rolodex.setCity("Camebridge");
-        rolodex.setCounty(null);
-        rolodex.setCountryCode("USA");
-        rolodex.setPostalCode("02039-4307");
-        rolodex.setState("MA");
         int siteNumber = 0;
-        Organization organization = new Organization();
-        organization.setOrganizationName("University");
-        organization.setOrganizationId("000001");
-        organization.setContactAddressId(1);
-        organization.setRolodex(rolodex);
 
-        ProposalSite performingOrganization = new ProposalSite();
-        performingOrganization.setLocationTypeCode(2);
-        performingOrganization.setOrganization(organization);
-        performingOrganization.setSiteNumber(++siteNumber);
-        performingOrganization.setLocationName(organization.getOrganizationName());
-        performingOrganization.setDevelopmentProposal(document.getDevelopmentProposal());
-
-        CongressionalDistrict congressionalDistrict = new CongressionalDistrict();
-        congressionalDistrict.setId(1111111L);
-        congressionalDistrict.setCongressionalDistrict("MA-008");
-        congressionalDistrict.setProposalSite(performingOrganization);
-        congressionalDistricts.add(congressionalDistrict);
-        performingOrganization.setCongressionalDistricts(congressionalDistricts);
-
-        ProposalSite applicantOrganization = new ProposalSite();
-        applicantOrganization.setLocationTypeCode(1);
-        applicantOrganization.setOrganization(organization);
-        applicantOrganization.setSiteNumber(++siteNumber);
-        applicantOrganization.setLocationName(organization.getOrganizationName());
-        applicantOrganization.setDevelopmentProposal(document.getDevelopmentProposal());
-
-
-        proposalSites.add(performingOrganization);
-        proposalSites.add(applicantOrganization);
+        proposalSites.add(createProposalSite(document, ++siteNumber, ProposalSite.PROPOSAL_SITE_PERFORMING_ORGANIZATION));
+        proposalSites.add(createProposalSite(document, ++siteNumber, ProposalSite.PROPOSAL_SITE_APPLICANT_ORGANIZATION));
         document.getDevelopmentProposal().setProposalSites(proposalSites);
     }
 }
