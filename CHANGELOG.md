@@ -1,6 +1,10 @@
 
 
 ## CURRENT
+* No Changes
+
+
+## coeus-1807.0028
 * RESKC-2339: cleaning out records with blank cfda numbers
   * Travis Schneeberger on Wed, 25 Jul 2018 10:19:53 -0400 [View Commit](../../commit/9a68742e2c4537b65b29d6a44d57a5eeccf17a42)
 * RESKC-21: Changing the location of data for some Organization/Rolodex fields related to Proposal Sites. (#2987)
