@@ -900,15 +900,19 @@ public class Award extends KcPersistableBusinessObjectBase implements KeywordsMa
             awardCfdas = new ArrayList<>();
         }
 
-        final AwardCfda cfda = findFirstCfda().orElseGet(AwardCfda::new);
-        awardCfdas.clear();
-        cfda.setCfdaNumber(cfdaNumber);
-        cfda.setAwardId(this.getAwardId());
-        cfda.setAwardNumber(this.getAwardNumber());
-        cfda.setSequenceNumber(this.getSequenceNumber());
-        cfda.setAward(this);
+        if (StringUtils.isBlank(cfdaNumber)) {
+            awardCfdas.clear();
+        } else {
+            final AwardCfda cfda = findFirstCfda().orElseGet(AwardCfda::new);
+            awardCfdas.clear();
+            cfda.setCfdaNumber(cfdaNumber);
+            cfda.setAwardId(this.getAwardId());
+            cfda.setAwardNumber(this.getAwardNumber());
+            cfda.setSequenceNumber(this.getSequenceNumber());
+            cfda.setAward(this);
 
-        awardCfdas.add(cfda);
+            awardCfdas.add(cfda);
+        }
     }
 
     /**

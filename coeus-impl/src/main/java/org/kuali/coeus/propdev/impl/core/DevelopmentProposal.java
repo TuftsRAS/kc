@@ -735,12 +735,16 @@ public class DevelopmentProposal extends KcPersistableBusinessObjectBase impleme
             proposalCfdas = new ArrayList<>();
         }
 
-        final ProposalCfda cfda = findFirstCfda().orElseGet(ProposalCfda::new);
-        proposalCfdas.clear();
-        cfda.setCfdaNumber(cfdaNumber);
-        cfda.setProposalNumber(this.getProposalNumber());
+        if (StringUtils.isBlank(cfdaNumber)) {
+            proposalCfdas.clear();
+        } else {
+            final ProposalCfda cfda = findFirstCfda().orElseGet(ProposalCfda::new);
+            proposalCfdas.clear();
+            cfda.setCfdaNumber(cfdaNumber);
+            cfda.setProposalNumber(this.getProposalNumber());
 
-        proposalCfdas.add(cfda);
+            proposalCfdas.add(cfda);
+        }
     }
 
     /**
