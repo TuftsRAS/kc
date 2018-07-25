@@ -1,6 +1,10 @@
 
 
 ## CURRENT
+* RESKC-3043: handling blank cfda number in the compatibility setters for module's cfda number
+  * Travis Schneeberger on Wed, 25 Jul 2018 18:31:18 -0400 [View Commit](../../commit/19e26649b46eed88a6690ee732b9bce3addcc35d)
+
+## coeus-1807.0031
 * No Changes
 
 
