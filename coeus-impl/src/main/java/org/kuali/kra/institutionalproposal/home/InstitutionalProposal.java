@@ -842,15 +842,19 @@ public class InstitutionalProposal extends KcPersistableBusinessObjectBase imple
             proposalCfdas = new ArrayList<>();
         }
 
-        final InstitutionalProposalCfda cfda = findFirstCfda().orElseGet(InstitutionalProposalCfda::new);
-        proposalCfdas.clear();
-        cfda.setCfdaNumber(cfdaNumber);
-        cfda.setProposalId(this.getProposalId());
-        cfda.setInstitutionalProposal(this);
-        cfda.setProposalNumber(this.getProposalNumber());
-        cfda.setSequenceNumber(this.getSequenceNumber());
+        if (StringUtils.isBlank(cfdaNumber)) {
+            proposalCfdas.clear();
+        } else {
+            final InstitutionalProposalCfda cfda = findFirstCfda().orElseGet(InstitutionalProposalCfda::new);
+            proposalCfdas.clear();
+            cfda.setCfdaNumber(cfdaNumber);
+            cfda.setProposalId(this.getProposalId());
+            cfda.setInstitutionalProposal(this);
+            cfda.setProposalNumber(this.getProposalNumber());
+            cfda.setSequenceNumber(this.getSequenceNumber());
 
-        proposalCfdas.add(cfda);
+            proposalCfdas.add(cfda);
+        }
     }
 
     /**

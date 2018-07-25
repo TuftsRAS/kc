@@ -11,6 +11,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.kuali.coeus.sys.framework.model.KcPersistableBusinessObjectBase;
 import org.kuali.coeus.propdev.impl.core.DevelopmentProposal;
 import org.kuali.coeus.propdev.api.s2s.S2sOpportunityContract;
@@ -124,14 +125,18 @@ public class S2sOpportunity extends KcPersistableBusinessObjectBase implements S
             s2sOpportunityCfdas = new ArrayList<>();
         }
 
-        final S2sOpportunityCfda cfda = findFirstCfda().orElseGet(S2sOpportunityCfda::new);
-        s2sOpportunityCfdas.clear();
-        cfda.setCfdaNumber(cfdaNumber);
-        if (this.getDevelopmentProposal() != null) {
-            cfda.setProposalNumber(this.getProposalNumber());
-        }
+        if (StringUtils.isBlank(cfdaNumber)) {
+            s2sOpportunityCfdas.clear();
+        } else {
+            final S2sOpportunityCfda cfda = findFirstCfda().orElseGet(S2sOpportunityCfda::new);
+            s2sOpportunityCfdas.clear();
+            cfda.setCfdaNumber(cfdaNumber);
+            if (this.getDevelopmentProposal() != null) {
+                cfda.setProposalNumber(this.getProposalNumber());
+            }
 
-        s2sOpportunityCfdas.add(cfda);
+            s2sOpportunityCfdas.add(cfda);
+        }
     }
 
     /**
