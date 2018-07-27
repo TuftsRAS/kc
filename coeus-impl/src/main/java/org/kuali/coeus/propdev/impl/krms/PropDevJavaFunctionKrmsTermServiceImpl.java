@@ -1219,7 +1219,13 @@ public class PropDevJavaFunctionKrmsTermServiceImpl extends KcKrmsJavaFunctionTe
     protected boolean isMatchingProposalPersonUnit(List<ProposalPersonUnit> units, String unitNumber) {
      	return units.stream().anyMatch(unit -> unitNumber.equals(unit.getUnitNumber()));
     }
-    
+
+    @Override
+    public Boolean totalEffortExists(DevelopmentProposal developmentProposal) {
+        return developmentProposal.getProposalPersons().stream()
+                .noneMatch(person -> (person.getPercentageEffort() == null));
+    }
+
     public DateTimeService getDateTimeService() {
         return dateTimeService;
     }

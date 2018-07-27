@@ -1186,7 +1186,16 @@ public class PropDevJavaFunctionKrmsTermServiceImplTest {
 		assertTrue(propDevJavaFunctionKrmsTermService.proposalPersonUnitRule(developmentProposal, projectRole, personUnitNumber));
 		assertFalse(propDevJavaFunctionKrmsTermService.proposalPersonUnitRule(developmentProposal, projectRole, invalidUnitNumber));
 	}
-	
+
+	@Test
+	public void test_totalEffortExistsRule() {
+		final DevelopmentProposal developmentProposal = createDevelopmentProposal();
+		assertFalse(propDevJavaFunctionKrmsTermService.totalEffortExists(developmentProposal));
+		ProposalPerson proposalPerson = developmentProposal.getProposalPerson(0);
+		proposalPerson.setPercentageEffort(ScaleTwoDecimal.ONE_HUNDRED);
+		assertTrue(propDevJavaFunctionKrmsTermService.totalEffortExists(developmentProposal));
+	}
+
 	protected void setProposalPersonUnit(DevelopmentProposal developmentProposal, String personUnitNumber) {
 		List<ProposalPersonUnit> proposalPersonUnits = new ArrayList<>();
 		proposalPersonUnits.add(createProposalPersonUnit(personUnitNumber));

@@ -145,5 +145,7 @@ public interface PropDevJavaFunctionKrmsTermService extends KcKrmsJavaFunctionTe
     Boolean proposalPersonUnitBelowRule(DevelopmentProposal developmentProposal, String projectRole, String unitNumber);
     
     Boolean proposalPersonUnitRule(DevelopmentProposal developmentProposal, String projectRole, String unitNumber);
+
+    Boolean totalEffortExists(DevelopmentProposal developmentProposal);
     
 }
