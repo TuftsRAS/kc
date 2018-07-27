@@ -679,13 +679,14 @@ public class ProposalDevelopmentSubmitController extends ProposalDevelopmentCont
     public ModelAndView approve(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm form) throws Exception{
         // Load document state before approval to verify if the user can approve.
         Document document = getDocumentService().getByDocumentHeaderId(form.getDocId());
-        WorkflowDocument workflowDoc = document.getDocumentHeader().getWorkflowDocument();
 
         if (!canApproveDocument(document)) {
             getGlobalVariableService().getMessageMap().putError(KRADConstants.GLOBAL_ERRORS, KeyConstants.ERROR_UNAUTHORIZED_APPROVE_PROPOSAL);
 
             return getTransactionalDocumentControllerService().reload(form);
         }
+
+        WorkflowDocument workflowDoc = form.getProposalDevelopmentDocument().getDocumentHeader().getWorkflowDocument();
 
         if (canGenerateRequestsInFuture(workflowDoc, getGlobalVariableService().getUserSession().getPrincipalId())) {
             DialogResponse frDialogResponse = form.getDialogResponse("PropDev-SubmitPage-ReceiveFutureRequests");
