@@ -1,6 +1,10 @@
 
 
 ## CURRENT
+* Function for Total Effort in Key Personnel Section
+  * Rajeev Mancheril on Fri, 27 Jul 2018 15:18:52 -0400 [View Commit](../../commit/2a3f6e7e0804c3183d2340a99e2f298531a97a08)
+
+## coeus-1807.0034
 * RESKC-3045: Fix issue that get stuck the "Do you want to see future approval requests?" dialog in PD. (#2992)
 
   * Omar Soto Fortuño on Fri, 27 Jul 2018 13:10:49 -0400 [View Commit](../../commit/34df8a3f338e4d77e9489f58bb0eaf9f403529f1)

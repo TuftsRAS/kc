@@ -23,4 +23,5 @@ set sqlblanklines on
 spool 1807_oracle_kc_rice_server_upgrade.sql.log
 @./rice/bootstrap/V1807_002__environment_banner_enabled_feature_flag.sql
 @./rice/bootstrap/V1807_004__assignApproverPermission.sql
+@./rice/bootstrap/V1807_012__RESOPS-2487.sql
 commit;
