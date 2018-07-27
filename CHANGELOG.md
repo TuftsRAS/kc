@@ -1,6 +1,11 @@
 
 
 ## CURRENT
+* RESKC-3045: Fix issue that get stuck the "Do you want to see future approval requests?" dialog in PD. (#2992)
+
+  * Omar Soto Fortuño on Fri, 27 Jul 2018 13:10:49 -0400 [View Commit](../../commit/34df8a3f338e4d77e9489f58bb0eaf9f403529f1)
+
+## coeus-1807.0033
 * No Changes
 
 
