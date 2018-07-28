@@ -1,6 +1,10 @@
 
 
 ## CURRENT
+* No Changes
+
+
+## coeus-1807.0035
 * Function for Total Effort in Key Personnel Section
   * Rajeev Mancheril on Fri, 27 Jul 2018 15:18:52 -0400 [View Commit](../../commit/2a3f6e7e0804c3183d2340a99e2f298531a97a08)
 
