@@ -1,6 +1,10 @@
 
 
 ## CURRENT
+* RESKC-3016: unified json logging, config verification, documentation, and example tomcat configs
+  * Travis Schneeberger on Mon, 30 Jul 2018 21:37:06 -0400 [View Commit](../../commit/cfc5ffefc8daa2dc4fd7f50db10a8eb86251ef43)
+
+## coeus-1807.0036
 * No Changes
 
 
