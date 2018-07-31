@@ -207,7 +207,28 @@ For example, we currently have a dependency on a node project called drafter tha
 
 >**Note:** Application will fail to start up in spring instrumentation is not installed correctly.
 
-**Step 9: Install Graphviz**
+**Step 9: Configure Logging**
+
+[Download][11], [Download][12], [Download][13], [Download][14] and configure log4j 2 according to the following instructions.
+
+[Log4j2 JUL Instructions][18] 
+[Log4j2 App Server Instructions][19]
+
+Note: Once configured at the app server level, it is recommended to set ```rice.logging.configure=false```
+Note: This configures logging globally at the app server and Java Runtime level.  If this is not desired, then an alternative 
+configuration may be used as provided by Log4j2.
+Note: Certain Log4j2 patterns require additional runtime dependencies.  To use the JsonPattern, for example, you need to: [Download][15], [Download][16], [Download][17]
+
+Example for Tomcat 8.5 (create setenv.sh if it does not exist)
+
+```
+> cd $CATALINA_HOME/bin
+> cat setenv.sh
+CLASSPATH=$CATALINA_HOME/log4j2/lib/*:$CATALINA_HOME/log4j2/conf
+LOGGING_MANAGER="-Djava.util.logging.manager=org.apache.logging.log4j.jul.LogManager"
+```
+
+**Step 10: Install Graphviz**
 
 [Download][8] and install Graphviz.
 
@@ -248,3 +269,14 @@ This section contains some useful information about configuring the Kuali Resear
   [8]: http://www.graphviz.org/Download..php
   [9]: https://github.com/google/error-prone
   [10]: https://github.com/apiaryio/drafter/wiki/Building-on-Windows
+  [11]: https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api/2.11.1
+  [12]: https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core/2.11.1
+  [13]: https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-appserver/2.11.1
+  [14]: https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-jul/2.11.1
+  [15]: https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core/2.9.6
+  [16]: https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind/2.9.6
+  [17]: https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-annotations/2.9.6
+  [18]: https://logging.apache.org/log4j/2.0/log4j-jul/index.html
+  [19]: https://logging.apache.org/log4j/2.0/log4j-appserver/index.html
+  
+  

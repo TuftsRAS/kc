@@ -20,10 +20,6 @@
 
     <param name="mail.smtp.host">localhost</param>
 
-	<!-- log4j settings -->
-	<param name="log4j.settings.path">${user.home}/kuali/main/${environment}/rice_embedded/log4j.properties</param>
-	<param name="log4j.settings.reloadInterval">5</param>
-
 	<!-- Keystore Configuration -->
 	<param name="keystore.file">${user.home}/kuali/main/${environment}/rice_embedded/rice.keystore</param>
 	<param name="keystore.alias">rice</param>

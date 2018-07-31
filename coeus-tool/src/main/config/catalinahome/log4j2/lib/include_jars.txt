@@ -1,0 +1,7 @@
+jackson-annotations-2.9.6.jar
+jackson-core-2.9.6.jar
+jackson-databind-2.9.6.jar
+log4j-api-2.11.1.jar
+log4j-appserver-2.11.1.jar
+log4j-core-2.11.1.jar
+log4j-jul-2.11.1.jar

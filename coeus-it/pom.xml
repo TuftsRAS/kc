@@ -101,6 +101,11 @@
         </dependency>
 
         <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-appserver</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>${db.groupId}</groupId>
             <artifactId>${db.artifactId}</artifactId>
             <scope>test</scope>

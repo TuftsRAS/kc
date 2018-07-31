@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="info" name="external" monitorInterval="30">
+  <Properties>
+    <Property name="logdir">${sys:catalina.base}/logs</Property>
+    <Property name="layout">%d [%t] u:%X{user}/d:%X{docId} %-5p %c - %m%n</Property>
+  </Properties>
+  <Appenders>
+    <Console name="CONSOLE" target="SYSTEM_OUT">
+      <PatternLayout pattern="${layout}"/>
+    </Console>
+    <RollingFile name="LOG-ANALYSIS"
+        fileName="${logdir}/log-analysis.log"
+        filePattern="${logdir}/log-analysis.%d{yyyy-MM-dd}-%i.log">
+        <JsonLayout compact="false" eventEol="true" properties="true" includeStacktrace="true" stacktraceAsString="true" />
+        <Policies>
+            <TimeBasedTriggeringPolicy />
+            <SizeBasedTriggeringPolicy size="1 MB"/>
+        </Policies>
+        <DefaultRolloverStrategy max="10"/>
+    </RollingFile>
+  </Appenders>
+  <Loggers>
+    <!-- setting some loggers to error to avoid verbose logging -->
+    <Logger name="org.kuali.rice.kew.routeheader.service.impl.RouteHeaderServiceImpl" level="error" additivity="false">
+      <AppenderRef ref="CONSOLE"/>
+      <AppenderRef ref="LOG-ANALYSIS"/>
+    </Logger>
+    <Logger name="org.kuali.rice.kew.docsearch.xml.XMLSearchableAttributeContent" level="error" additivity="false">
+      <AppenderRef ref="CONSOLE"/>
+      <AppenderRef ref="LOG-ANALYSIS"/>
+    </Logger>
+    <Logger name="org.kuali.rice.krad.data.provider.impl.ProviderBasedDataObjectService" level="error" additivity="false">
+      <AppenderRef ref="CONSOLE"/>
+      <AppenderRef ref="LOG-ANALYSIS"/>
+    </Logger>
+    <Logger name="org.kuali.coeus.sys.framework.controller.rest.RestSimpleUrlHandlerMapping" level="error" additivity="false">
+      <AppenderRef ref="CONSOLE"/>
+      <AppenderRef ref="LOG-ANALYSIS"/>
+    </Logger>
+    <Logger name="org.apache.struts.util.PropertyMessageResources" level="error" additivity="false">
+        <AppenderRef ref="CONSOLE"/>
+        <AppenderRef ref="LOG-ANALYSIS"/>
+    </Logger>
+    
+    <Logger name="org.kuali.rice" level="warn" additivity="false">
+      <AppenderRef ref="CONSOLE"/>
+      <AppenderRef ref="LOG-ANALYSIS"/>
+    </Logger>
+    <Logger name="org.kuali.rice.core.impl.config.property.JAXBConfigImpl" level="info" additivity="false">
+        <AppenderRef ref="CONSOLE"/>
+        <AppenderRef ref="LOG-ANALYSIS"/>
+    </Logger>
+    <Logger name="bitronix.tm.twopc.Preparer" level="error" additivity="false">
+        <AppenderRef ref="CONSOLE"/>
+        <AppenderRef ref="LOG-ANALYSIS"/>
+    </Logger>
+    <Logger name="org.kuali.rice.krad.bo.ModuleConfiguration" level="error" additivity="false">
+        <AppenderRef ref="CONSOLE"/>
+        <AppenderRef ref="LOG-ANALYSIS"/>
+    </Logger>
+    
+    <Root level="warn">
+      <AppenderRef ref="CONSOLE"/>
+      <AppenderRef ref="LOG-ANALYSIS"/>
+    </Root>
+  </Loggers>
+</Configuration>
