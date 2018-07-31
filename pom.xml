@@ -82,7 +82,7 @@
         <httpclient.version>4.5.3</httpclient.version>
         <hibernate.validator.version>5.4.1.Final</hibernate.validator.version>
         <itext.version>2.1.7</itext.version>
-        <jackson.version>2.9.0</jackson.version>
+        <jackson.version>2.9.6</jackson.version>
         <javamelody-core.version>1.67.0</javamelody-core.version>
         <javax.mail.version>1.5.6</javax.mail.version>
         <javax.persistence.version>2.2</javax.persistence.version>
@@ -97,7 +97,7 @@
         <jstl.impl.version>1.2.4</jstl.impl.version>
         <junit.version>4.12</junit.version>
         <kuali-cm.version>1.2.8</kuali-cm.version>
-        <log4j.version>2.11.0</log4j.version>
+        <log4j.version>2.11.1</log4j.version>
         <mockito.version>2.12.0</mockito.version>
         <moo-mvel.version>2.0</moo-mvel.version>
         <mysql.groupId>mysql</mysql.groupId>
@@ -160,7 +160,7 @@
         <surefire.failIfNoTests>false</surefire.failIfNoTests>
         <surefire.forkCount>1</surefire.forkCount>
         <surefire.reuseForks>true</surefire.reuseForks>
-        <surefire.argLine />
+        <surefire.argLine>-Djava.util.logging.manager=org.apache.logging.log4j.jul.LogManager -Dlog4j2.disable.jmx=true</surefire.argLine>
         <surefire.aggregate>true</surefire.aggregate>
         <surefire.skipTests>false</surefire.skipTests>
 
@@ -172,7 +172,7 @@
         <failsafe.forkCount>1</failsafe.forkCount>
         <failsafe.reuseForks>true</failsafe.reuseForks>
         <failsafe.memOpts>-Xmx1536m</failsafe.memOpts>
-        <failsafe.argLine>${failsafe.memOpts} ${javaagent.arg}</failsafe.argLine>
+        <failsafe.argLine>${failsafe.memOpts} ${javaagent.arg} -Djava.util.logging.manager=org.apache.logging.log4j.jul.LogManager -Dlog4j2.disable.jmx=true</failsafe.argLine>
         <failsafe.aggregate>true</failsafe.aggregate>
         <failsafe.skipITs>true</failsafe.skipITs>
         <failsafe.include>**/*Test.java</failsafe.include>
@@ -929,6 +929,12 @@
             </dependency>
             <dependency>
                 <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-appserver</artifactId>
+                <version>${log4j.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
                 <artifactId>log4j-web</artifactId>
                 <version>${log4j.version}</version>
                 <scope>runtime</scope>
@@ -1197,6 +1203,13 @@
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-databind</artifactId>
+                <version>${jackson.version}</version>
+                <scope>compile</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.fasterxml.jackson.datatype</groupId>
+                <artifactId>jackson-datatype-joda</artifactId>
                 <version>${jackson.version}</version>
                 <scope>compile</scope>
             </dependency>

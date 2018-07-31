@@ -1,0 +1,26 @@
+{
+  "configuration": {
+    "name": "coeus-impl-test",
+    "ThresholdFilter": {
+      "level": "debug"
+    },
+    "appenders": {
+      "Console": {
+        "name": "STDOUT",
+        "PatternLayout": {
+          "pattern": "%d [%t] %-5p %c - %m%n"
+        }
+      }
+    },
+    "loggers": {
+      "logger": [
+      ],
+      "root": {
+        "level": "warn",
+        "AppenderRef": {
+          "ref": "STDOUT"
+        }
+      }
+    }
+  }
+}

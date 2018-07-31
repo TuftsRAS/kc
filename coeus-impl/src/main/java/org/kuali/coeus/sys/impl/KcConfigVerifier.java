@@ -40,10 +40,12 @@ public class KcConfigVerifier implements InitializingBean {
     private static final String TOMCAT_8_VERSION_PREFIX = "8.0";
     private static final String TOMCAT_85_VERSION_PREFIX = "8.5";
     private static final String INTEGRATION_TEST_CLASS = "org.kuali.kra.test.infrastructure.ApplicationServer";
-    private static final String JAVA_UTIL_LOGGING_MANAGER = "java.util.logging.manager";
-    private static final String ORG_APACHE_LOGGING_LOG4J_JUL_LOG_MANAGER = "org.apache.logging.log4j.jul.LogManager";
-    private static final String JUL_MSG = "org.apache.logging.log4j:log4j-jul is included but not configured to send jul logging to Log4j.";
-    private static final String LOG4J_HELP = "See https://logging.apache.org/log4j/2.0/log4j-jul/index.html";
+    private static final String LOG4J_TOMCAT_HELP = "Tomcat 8.5 detected but log4j 2 is not configured for Tomcat. See https://logging.apache.org/log4j/2.0/log4j-appserver/index.html";
+    private static final String LOG4J_JUL_HELP = "JUL logging is not configured with log4j 2. See https://logging.apache.org/log4j/2.0/log4j-jul/index.html";
+    private static final String TOMCAT_LOGGER = "org.apache.logging.log4j.appserver.tomcat.TomcatLogger";
+    private static final String JULI_LOG_FACTORY = "org.apache.juli.logging.LogFactory";
+    private static final String GET_LOG = "getLog";
+    private static final String JUL_LOG_MANAGER = "org.apache.logging.log4j.jul.LogManager";
 
     @Autowired
     @Qualifier("kualiConfigurationService")
@@ -53,21 +55,28 @@ public class KcConfigVerifier implements InitializingBean {
     public void afterPropertiesSet() {
         verifyOracleConfiguration();
         verifyInstrumentationConfiguration();
+        verifyTomcatLogging();
         verifyJulLogging();
     }
 
-    protected void verifyJulLogging() {
-        final String logManagerClass = System.getProperty(JAVA_UTIL_LOGGING_MANAGER);
-        final java.util.logging.LogManager julLogManager = java.util.logging.LogManager.getLogManager();
-
-        final String julLogManagerName = julLogManager.getClass().getName();
-        if (!julLogManagerName.equals(ORG_APACHE_LOGGING_LOG4J_JUL_LOG_MANAGER)) {
-            if (ORG_APACHE_LOGGING_LOG4J_JUL_LOG_MANAGER.equals(logManagerClass)) {
-                LOG.error(JUL_MSG + " The jul log manager is using " + julLogManagerName + ". The system property " + JAVA_UTIL_LOGGING_MANAGER + " was set to " + logManagerClass + " but was likely set too late or not available on the Application Server classpath. " + LOG4J_HELP);
-            } else if (logManagerClass != null) {
-                LOG.error(JUL_MSG + " The jul log manager is using " + julLogManagerName + ". The system property " + JAVA_UTIL_LOGGING_MANAGER + " was set to " + logManagerClass + ". " + LOG4J_HELP);
+    protected void verifyTomcatLogging() {
+        if (runningOnTomcat85() && !usingLog4jTomcatLogger()) {
+            if (hardError()) {
+                throw new RuntimeException(LOG4J_TOMCAT_HELP);
             } else {
-                LOG.error(JUL_MSG + " The jul log manager is using " + julLogManagerName + ". The system property " + JAVA_UTIL_LOGGING_MANAGER + " was not set. " + LOG4J_HELP);
+                LOG.fatal(LOG4J_TOMCAT_HELP);
+            }
+        }
+    }
+
+    protected void verifyJulLogging() {
+        final java.util.logging.LogManager logManager = java.util.logging.LogManager.getLogManager();
+        //only checking on Tomcat 8.5 for now but eventually should check regardless of app server
+        if (runningOnTomcat85() && logManager != null && !JUL_LOG_MANAGER.equals(logManager.getClass().getName())) {
+            if (hardError()) {
+                throw new RuntimeException(LOG4J_JUL_HELP);
+            } else {
+                LOG.fatal(LOG4J_JUL_HELP);
             }
         }
     }
@@ -154,6 +163,16 @@ public class KcConfigVerifier implements InitializingBean {
         }
     }
 
+    private boolean usingLog4jTomcatLogger() {
+        try {
+            final Class<?> logFactoryClass = Class.forName(JULI_LOG_FACTORY);
+            final Method getLog = logFactoryClass.getDeclaredMethod(GET_LOG, Class.class);
+            return TOMCAT_LOGGER.equals(getLog.invoke(logFactoryClass, KcConfigVerifier.class).getClass().getName());
+        } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+            return false;
+        }
+    }
+
     private String getTomcatServerNumber() throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         final Class<?> serverInfo = Class.forName(TOMCAT_SERVER_INFO_CLASS_NAME);
         final Method getServerNumber = serverInfo.getDeclaredMethod(TOMCAT_GET_SERVER_NUMBER_METHOD);
@@ -176,10 +195,22 @@ public class KcConfigVerifier implements InitializingBean {
      * Checks for the tomcat server class which would only be available if running on tomcat along with the version number.
      */
     protected boolean runningOnTomcat8Or85() {
+        return runningOnTomcat80() || runningOnTomcat85();
+    }
+
+    protected boolean runningOnTomcat80() {
+        return runningOnTomcatVersion(TOMCAT_8_VERSION_PREFIX);
+    }
+
+    protected boolean runningOnTomcat85() {
+        return runningOnTomcatVersion(TOMCAT_85_VERSION_PREFIX);
+    }
+
+    protected boolean runningOnTomcatVersion(String prefix) {
         try {
             Class.forName(TOMCAT_SERVER_CLASS_NAME);
             final String serverNumber = getTomcatServerNumber();
-            return serverNumber.startsWith(TOMCAT_8_VERSION_PREFIX) || serverNumber.startsWith(TOMCAT_85_VERSION_PREFIX);
+            return serverNumber.startsWith(prefix);
         } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
             return false;
         }

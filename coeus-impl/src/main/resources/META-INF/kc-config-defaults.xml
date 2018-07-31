@@ -389,4 +389,11 @@
 	<param name="application.environment.stg.regex">.*-stg(-res)?\.kuali\.co.*</param>
 	<param name="application.environment.tst.regex">.*-tst[0-9]*?\.kuali\.co.*</param>
 	<param name="application.environment.demo.regex">.*res-demo[0-9]*?\.kuali\.co.*</param>
+
+	<!-- for unified app server logging, keep these off or blank and configure at the tomcat level. These are no longer recommended -->
+	<param name="rice.logging.configure">false</param>
+	<param name="log4j.settings.path"></param>
+	<param name="log4j.settings.xml"></param>
+	<param name="log4j.settings.props"></param>
+	<param name="log4j.settings.reloadInterval"></param>
 </config>

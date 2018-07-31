@@ -156,7 +156,7 @@ public abstract class KcTransactionalDocumentBase extends TransactionalDocumentB
                 }
             }
 
-            LOG.error(String.format("ValidationException when validating event: %s. Check log entries preceding this error for details. Errors: %s", event.getName(), errors));
+            LOG.info(String.format("ValidationException when validating event: %s. Check log entries preceding this error for details. Errors: %s", event.getName(), errors));
             throw e;
         }
     }

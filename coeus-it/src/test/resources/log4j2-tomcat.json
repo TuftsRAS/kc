@@ -1,6 +1,6 @@
 {
   "configuration": {
-    "name": "coeus-it",
+    "name": "coeus-it-tomcat",
     "ThresholdFilter": {
       "level": "debug"
     },
@@ -41,6 +41,22 @@
         {
           "name": "org.kuali.rice.krad.uif.lifecycle",
           "level": "error",
+          "additivity": "false",
+          "AppenderRef": {
+            "ref": "STDOUT"
+          }
+        },
+        {
+          "name": "org.apache.catalina.core.ContainerBase.[Catalina].[localhost]",
+          "level": "info",
+          "additivity": "false",
+          "AppenderRef": {
+            "ref": "STDOUT"
+          }
+        },
+        {
+          "name": "org.apache.catalina",
+          "level": "info",
           "additivity": "false",
           "AppenderRef": {
             "ref": "STDOUT"
