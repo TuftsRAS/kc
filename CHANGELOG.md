@@ -1,6 +1,10 @@
 
 
 ## CURRENT
+* RESKC-3020: Added an auth endpoint for mod budget to check budget view and edit permissions
+  * Jeff Largent on Thu, 2 Aug 2018 15:49:38 -0400 [View Commit](../../commit/f562c9841b28b2503487d2cdc3cb0db77c802843)
+
+## coeus-1808.0003
 * RESKC-21: Make ProposalSite Rolodex/Organization related data always update when the Development Proposal is In Progress or in Revision Requested statuses. (#2996)
 
   * Omar Soto Fortuño on Thu, 2 Aug 2018 13:31:13 -0400 [View Commit](../../commit/f19d267f0db9692f87173adfb19eedfb95aef3ec)
