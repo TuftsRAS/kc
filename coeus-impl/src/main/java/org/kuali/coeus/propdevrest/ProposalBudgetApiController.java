@@ -55,10 +55,7 @@ public class ProposalBudgetApiController extends org.kuali.coeus.sys.framework.c
     @GetMapping(value = "/budgets/{id}/modular-budget/", consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ModularBudgetDto> getBudgets(@PathVariable Long id, @RequestParam(name = "lastUpdated", required = false) Long lastUpdated) {
-        ProposalDevelopmentBudgetExt budget = dataObjectService.find(ProposalDevelopmentBudgetExt.class, id);
-        if (budget == null) {
-            throw new ResourceNotFoundException("Budget with id " + id + " not found.");
-        }
+        ProposalDevelopmentBudgetExt budget = getBudget(id);
 
         if (!proposalBudgetAuthorizer.isAuthorizedToViewBudget(budget, globalVariableService.getUserSession().getPerson())) {
             throw new AuthorizationException(globalVariableService.getUserSession().getPrincipalName(), "open", "Proposal Budget");
@@ -73,4 +70,51 @@ public class ProposalBudgetApiController extends org.kuali.coeus.sys.framework.c
         }
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
+
+    @GetMapping(value = "/budgets/{id}/modular-budget/permissions", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<BudgetPermissionsDto> getBudgetPermissions(@PathVariable Long id) {
+        BudgetPermissionsDto permissions = new BudgetPermissionsDto();
+        ProposalDevelopmentBudgetExt budget = getBudget(id);
+
+        permissions.setView(proposalBudgetAuthorizer.isAuthorizedToViewBudget(budget, globalVariableService.getUserSession().getPerson()));
+        if (permissions.isView()) {
+            permissions.setEdit(proposalBudgetAuthorizer.canEditModularBudget(budget, globalVariableService.getUserSession().getPerson()));
+        }
+
+        return ResponseEntity.ok(permissions);
+    }
+
+    protected ProposalDevelopmentBudgetExt getBudget(Long id) {
+        ProposalDevelopmentBudgetExt budget = dataObjectService.find(ProposalDevelopmentBudgetExt.class, id);
+        if (budget == null) {
+            throw new ResourceNotFoundException("Budget with id " + id + " not found.");
+        }
+        return budget;
+    }
+
+    public static class BudgetPermissionsDto {
+        private boolean edit = false;
+        private boolean view = false;
+
+        public BudgetPermissionsDto() {
+
+        }
+
+        public boolean isEdit() {
+            return edit;
+        }
+
+        public void setEdit(boolean edit) {
+            this.edit = edit;
+        }
+
+        public boolean isView() {
+            return view;
+        }
+
+        public void setView(boolean view) {
+            this.view = view;
+        }
+    }
+
 }

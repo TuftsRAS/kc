@@ -168,6 +168,10 @@ public class ProposalBudgetAuthorizer extends ViewAuthorizerBase {
     public boolean canEdit(ProposalDevelopmentBudgetExt budget, Person user) {
         return isAuthorizedToModifyBudget(budget, user);
     }
+
+    public boolean canEditModularBudget(ProposalDevelopmentBudgetExt budget, Person user) {
+        return isAuthorizedToModifyBudget(budget, user, false);
+    }
     
     public boolean canSave(ProposalDevelopmentBudgetExt budget, Person user) {
         return canEdit(budget, user);
@@ -211,12 +215,16 @@ public class ProposalBudgetAuthorizer extends ViewAuthorizerBase {
     }
 
     protected boolean isAuthorizedToModifyBudget(ProposalDevelopmentBudgetExt budget, Person user) {
+        return isAuthorizedToModifyBudget(budget, user, true);
+    }
+
+    protected boolean isAuthorizedToModifyBudget(ProposalDevelopmentBudgetExt budget, Person user, boolean checkPessimisticLocks) {
         ProposalDevelopmentDocument pdDocument = (ProposalDevelopmentDocument)budget.getBudgetParent().getDocument();
         boolean rejectedDocument = getKcDocumentRejectionService().isDocumentOnInitialNode(pdDocument.getDocumentHeader().getWorkflowDocument());
 
         return (!getKcWorkflowService().isInWorkflow(pdDocument) || rejectedDocument) &&
                 getKcAuthorizationService().hasPermission(user.getPrincipalId(), pdDocument, PermissionConstants.MODIFY_BUDGET) 
-                && !pdDocument.getDevelopmentProposal().getSubmitFlag() && userHasLockOnBudget(budget,user);
+                && !pdDocument.getDevelopmentProposal().getSubmitFlag() && (!checkPessimisticLocks || userHasLockOnBudget(budget,user));
     }
 
     protected boolean userHasLockOnBudget(ProposalDevelopmentBudgetExt budget, Person user) {
