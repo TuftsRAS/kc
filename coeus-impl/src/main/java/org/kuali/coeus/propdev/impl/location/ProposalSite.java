@@ -16,6 +16,7 @@ import org.kuali.coeus.common.framework.org.Organization;
 import org.kuali.coeus.common.framework.rolodex.Rolodex;
 import org.kuali.coeus.propdev.api.location.ProposalSiteContract;
 import org.kuali.coeus.propdev.impl.core.DevelopmentProposal;
+import org.kuali.coeus.propdev.impl.state.ProposalState;
 import org.kuali.coeus.sys.framework.model.KcPersistableBusinessObjectBase;
 
 import javax.persistence.*;
@@ -127,7 +128,7 @@ public class ProposalSite extends KcPersistableBusinessObjectBase implements Pro
     }
 
     public void setOrganizationId(String organizationId) {
-        if (!Objects.equals(getOrganizationId(), organizationId)) {
+        if (!Objects.equals(getOrganizationId(), organizationId) || shouldDataBeAlwaysCopied()) {
             this.organizationId = organizationId;
             if (getOrganizationId() != null) {
                 refreshReferenceObject(ORGANIZATION);
@@ -156,7 +157,7 @@ public class ProposalSite extends KcPersistableBusinessObjectBase implements Pro
     }
 
     public void setRolodexId(Integer rolodexId) {
-        if (!Objects.equals(getRolodexId(), rolodexId)) {
+        if (!Objects.equals(getRolodexId(), rolodexId) || shouldDataBeAlwaysCopied()) {
             congressionalDistricts.clear();
 
             this.rolodexId = rolodexId;
@@ -432,5 +433,10 @@ public class ProposalSite extends KcPersistableBusinessObjectBase implements Pro
             return getDevelopmentProposal().getProposalNumber();
         }
         return null;
+    }
+
+    public Boolean shouldDataBeAlwaysCopied() {
+        String proposalStateTypeCode = getDevelopmentProposal().getProposalStateTypeCode();
+        return proposalStateTypeCode.equals(ProposalState.IN_PROGRESS) || proposalStateTypeCode.equals(ProposalState.REVISIONS_REQUESTED);
     }
 }
