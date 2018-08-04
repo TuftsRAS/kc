@@ -1,6 +1,10 @@
 
 
 ## CURRENT
+* No Changes
+
+
+## coeus-1808.0008
 * RESKC-3056: Pulling in new Rice version
   * Jeff Largent on Fri, 3 Aug 2018 18:22:05 -0400 [View Commit](../../commit/ea99e2a2dc3f32585b7443eac9542a28b6284199)
 * RESKC-3056: update tomcat for int tests
