@@ -128,7 +128,13 @@ public class ProposalSite extends KcPersistableBusinessObjectBase implements Pro
     }
 
     public void setOrganizationId(String organizationId) {
-        if (!Objects.equals(getOrganizationId(), organizationId) || shouldDataBeAlwaysCopied()) {
+        Boolean organizationIdHasChanged = !Objects.equals(getOrganizationId(), organizationId);
+
+        if (organizationIdHasChanged || shouldDataBeAlwaysCopied()) {
+            if (organizationIdHasChanged) {
+                getCongressionalDistricts().clear();
+            }
+
             this.organizationId = organizationId;
             if (getOrganizationId() != null) {
                 refreshReferenceObject(ORGANIZATION);
@@ -157,8 +163,12 @@ public class ProposalSite extends KcPersistableBusinessObjectBase implements Pro
     }
 
     public void setRolodexId(Integer rolodexId) {
-        if (!Objects.equals(getRolodexId(), rolodexId) || shouldDataBeAlwaysCopied()) {
-            congressionalDistricts.clear();
+        Boolean rolodexIdHasChanged = !Objects.equals(getRolodexId(), rolodexId);
+
+        if (rolodexIdHasChanged || shouldDataBeAlwaysCopied()) {
+            if (rolodexIdHasChanged) {
+                getCongressionalDistricts().clear();
+            }
 
             this.rolodexId = rolodexId;
             if (getRolodexId() != null) {

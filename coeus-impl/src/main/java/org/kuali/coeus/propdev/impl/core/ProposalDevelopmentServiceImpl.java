@@ -146,12 +146,9 @@ public class ProposalDevelopmentServiceImpl implements ProposalDevelopmentServic
         	if (proposalSite.getDevelopmentProposal() == null) {
         		proposalSite.setDevelopmentProposal(proposalDevelopmentDocument.getDevelopmentProposal());
         	}
-        	// Force updates of Organization/Rolodex related data.
+        	// Force updates of Organization (and Rolodex) related data.
         	if (proposalSite.getOrganizationId() != null) {
         	    proposalSite.setOrganizationId(proposalSite.getOrganizationId());
-            }
-            if (proposalSite.getRolodexId() != null) {
-                proposalSite.setRolodexId(proposalSite.getRolodexId());
             }
         }   
     }
