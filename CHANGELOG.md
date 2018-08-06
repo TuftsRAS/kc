@@ -4,6 +4,10 @@
 * No Changes
 
 
+## coeus-1808.0011
+* No Changes
+
+
 ## coeus-1808.0010
 * RESKC-21: Fix issue that was causing Congressional Districts to always clear no mater if it was needed or not. They should be cleared only if a real change is detected. (#3003)
 
