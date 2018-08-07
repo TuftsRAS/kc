@@ -38,27 +38,27 @@
         </property>
     </bean>
 
-    <bean id="Uif-GlobalApplicationHeader" parent="Kc-ApplicationHeader"/>
+    <bean id="Uif-GlobalApplicationHeader" parent="Kc-ApplicationHeader" p:hidden="@{(#getParamAsBoolean('KC-GEN','All','Dashboard_Mode_Enabled') == null ? false : #getParamAsBoolean('KC-GEN','All','Dashboard_Mode_Enabled'))}"/>
     <bean id="Kc-ApplicationHeader" parent="Kc-ApplicationHeader-parentBean"/>
     <bean id="Kc-ApplicationHeader-parentBean" abstract="true" parent="Uif-ApplicationHeaderBase">
         <property name="onDocumentReadyScript" value="Kc.Global.attachRedirectHandler(); Kc.Global.onHeaderLoad(); if (@{#ConfigProperties['web.analytics.enabled']}) analytics('@{#ConfigProperties['web.analytics.key']}');"/>
         <property name="applicationNavigation">
-            <bean parent="Kc-ApplicationHeader-NavigationBar"/>
+            <bean parent="Kc-ApplicationHeader-NavigationBar" />
         </property>
         <property name="applicationToolbar.items">
             <list>
-                <bean parent="Kc-Header-ApplicationToolbar"/>
+                <bean parent="Kc-Header-ApplicationToolbar" />
             </list>
         </property>
     </bean>
 
-    <bean id="Uif-GlobalApplicationFooter" parent="Kc-ApplicationFooter"/>
+    <bean id="Uif-GlobalApplicationFooter" parent="Kc-ApplicationFooter" p:hidden="@{(#getParamAsBoolean('KC-GEN','All','Dashboard_Mode_Enabled') == null ? false : #getParamAsBoolean('KC-GEN','All','Dashboard_Mode_Enabled'))}"/>
     <bean id="Kc-ApplicationFooter" parent="Kc-ApplicationFooter-parentBean"/>
     <bean id="Kc-ApplicationFooter-parentBean" abstract="true" parent="Uif-FooterBase" p:cssClasses="kc-applicationFooter">
         <property name="onDocumentReadyScript" value="Kc.Global.makeApplicationFooterSticky();"/>
         <property name="items">
             <list>
-                <bean parent="Uif-Image" p:source="@{#ConfigProperties['kra.externalizable.images.url']}../../css/images/KualiCo.png" p:altText="KualiCo Logo" p:cssClasses="pull-right kc-footer-img"/>
+                <bean parent="Uif-Image" p:source="@{#ConfigProperties['kra.externalizable.images.url']}../../css/images/KualiCo.png" p:altText="KualiCo Logo" p:cssClasses="pull-right kc-footer-img" />
                 <bean parent="Uif-Message" p:messageText="Copyright 2005-2018 Kuali, Inc. All rights reserved.[br]
 Portions of Kuali are copyrighted by other parties as described in the [link='@{#ConfigProperties['application.url']}/acknowledgments.jsp']Acknowledgments[/link] screen.
 [br][css='kc-applicationFooter-version']@{#ConfigProperties['version']} @{#ConfigProperties['datasource.ojb.platform']}[/css]" p:renderWrapperTag="false"/>

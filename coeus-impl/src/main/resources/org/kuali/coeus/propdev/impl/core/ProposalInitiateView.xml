@@ -22,16 +22,12 @@
 		p:viewName="initiate" p:stickyFooter="true" p:singlePageView="true">
 		<property name="additionalScriptFiles">
 			<list>
-				<value>rice-contrib/plugins/jquery.multiselect/jquery.multiselect.min.js</value>
-				<value>rice-contrib/plugins/jquery.multiselect/jquery.multiselect.filter.min.js</value>
 				<value>rice-contrib/multiselect.js</value>
 				<value>scripts/propdev/core.js</value>
 			</list>
 		</property>
 		<property name="additionalCssFiles">
 			<list>
-				<value>rice-contrib/plugins/jquery.multiselect/jquery.multiselect.css</value>
-				<value>rice-contrib/plugins/jquery.multiselect/jquery.multiselect.filter.css</value>
 				<value>rice-contrib/multiselect.css</value>
 			</list>
 		</property>
