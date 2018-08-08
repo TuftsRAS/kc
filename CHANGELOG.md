@@ -1,6 +1,10 @@
 
 
 ## CURRENT
+* RESKC-2587: allowing the monolith portal to run in "dashboard mode"
+  * Travis Schneeberger on Tue, 7 Aug 2018 16:00:27 -0400 [View Commit](../../commit/78d60456b1830ba613130325fba2480acb039e90)
+
+## coeus-1808.0012
 * No Changes
 
 
