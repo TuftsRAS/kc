@@ -19,10 +19,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
-import org.kuali.kra.negotiations.bo.NegotiationActivity;
-import org.kuali.kra.negotiations.bo.NegotiationActivityHistoryLineBean;
-import org.kuali.kra.negotiations.bo.NegotiationActivityType;
-import org.kuali.kra.negotiations.bo.NegotiationLocation;
+import org.kuali.kra.negotiations.bo.*;
 
 public class NegotiationServiceImplTest {
 
@@ -203,7 +200,33 @@ public class NegotiationServiceImplTest {
         Assert.assertTrue(StringUtils.equalsIgnoreCase(activity.getNumberOfDays(new Date(startDate1.getMillis()), new Date(endDate1.getMillis())), "6"));
 
     }
-	
+
+
+	@Test
+	public void testGetNegotiationAge() {
+		Negotiation negotiation = new Negotiation();
+		long age=0L;
+
+		negotiation.setNegotiationStartDate(new Date(2018,3,1));
+		negotiation.setNegotiationEndDate(new Date(2018,3,31));
+		age= negotiation.getNegotiationAge();
+		assertEquals(age, 30L);
+		negotiation.setNegotiationStartDate(new Date(2017,11,1));
+		negotiation.setNegotiationEndDate(new Date(2017,11,30));
+		age=negotiation.getNegotiationAge();
+		assertEquals(age, 29L);
+		negotiation.setNegotiationStartDate(new Date(2017,7,1));
+		negotiation.setNegotiationEndDate(new Date(2017,7,31));
+		age=negotiation.getNegotiationAge();
+		assertEquals(age, 30L);
+
+
+		negotiation.setNegotiationStartDate(new Date(2016,12,31));
+		negotiation.setNegotiationEndDate(new Date(2017,12,31));
+		age=negotiation.getNegotiationAge();
+		assertEquals(age, 365L);
+	}
+
 	@Test
 	public void testHistoryBeanGeneration_twoActivities_sameLocation_noFinalEndDate() {
 		int numberOfDaysAgo = 10;

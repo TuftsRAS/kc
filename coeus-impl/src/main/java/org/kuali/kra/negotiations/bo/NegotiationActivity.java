@@ -82,22 +82,10 @@ public class NegotiationActivity extends KcPersistableBusinessObjectBase {
 
     /**
      * 
-     * This method Calculates the number of days between the start date and either the end date when available or the current date.
+     * This method leverages Negotiation's static age calculation and returns string value of age.
      */
     public static String getNumberOfDays(Date startDate, Date endDate) {
-        if (startDate == null) {
-            return "";
-        } else {
-            LocalDate start = startDate.toLocalDate();
-            final LocalDate end;
-            if (endDate == null) {
-                end = LocalDate.now();
-            } else {
-                end = endDate.toLocalDate();
-            }
-            long days = ChronoUnit.DAYS.between(start, end);
-            return days + "";
-        }
+        return Objects.toString(Negotiation.getNumberOfDays(startDate, endDate), "");
     }
 
     /**

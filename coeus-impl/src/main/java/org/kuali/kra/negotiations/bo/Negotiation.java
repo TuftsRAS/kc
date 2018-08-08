@@ -24,6 +24,8 @@ import org.kuali.rice.kim.api.KimConstants;
 import org.kuali.rice.krad.bo.BusinessObject;
 
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -92,22 +94,28 @@ public class Negotiation extends KcPersistableBusinessObjectBase implements Perm
         negotiationNotifications = new ArrayList<>();
     }
 
-    public Integer getNegotiationAge() {
-        if (getNegotiationStartDate() == null) {
+    /**
+     *
+     * This method Calculates the number of days between the start date and either the end date when available or the current date.
+     */
+    public static Long getNumberOfDays(Date startDate, Date endDate) {
+        if (startDate == null) {
             return null;
+        } else {
+            LocalDate start = startDate.toLocalDate();
+            final LocalDate end;
+            if (endDate == null) {
+                end = LocalDate.now();
+            } else {
+                end = endDate.toLocalDate();
+            }
+            long days = ChronoUnit.DAYS.between(start, end);
+            return days;
         }
-        else {
-            long start = getNegotiationStartDate().getTime();
-            final long end;
-            if (getNegotiationEndDate() == null) {
-                end = Calendar.getInstance().getTimeInMillis();
-            }
-            else {
-                end = getNegotiationEndDate().getTime();
-            }
+    }
 
-            return new Long((end - start) / MILLISECS_PER_DAY).intValue();
-        }
+    public Long getNegotiationAge() {
+        return Negotiation.getNumberOfDays(getNegotiationStartDate(), getNegotiationEndDate());
     }
 
     public String getAllAttachments() {
