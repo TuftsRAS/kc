@@ -1,6 +1,11 @@
 
 
 ## CURRENT
+* RESKC-3049: CSU Contribution - This fix changes the way negotiationAge is calculated to use the same method as used for negotiationActivities. (#2962)
+
+  * chrisdenne on Wed, 8 Aug 2018 06:47:33 -0600 [View Commit](../../commit/255762ba2b3487d1f8cf954d074691eea3c4ee34)
+
+## coeus-1808.0014
 * No Changes
 
 
