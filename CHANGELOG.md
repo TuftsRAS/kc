@@ -1,6 +1,10 @@
 
 
 ## CURRENT
+* adding sample server.xml with ssl setting for development
+  * Travis Schneeberger on Wed, 8 Aug 2018 16:00:07 -0400 [View Commit](../../commit/08e1fefde0f48e879c91b52d92c1a8c014164db3)
+
+## coeus-1808.0016
 * RESKC-2587: allowing the monolith portal to run in "dashboard mode", fixing oracle script
   * Travis Schneeberger on Wed, 8 Aug 2018 11:59:53 -0400 [View Commit](../../commit/9014b6b87f2c24bc8df65e03633e6052e71b94c2)
 
