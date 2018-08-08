@@ -1,6 +1,10 @@
 
 
 ## CURRENT
+* RESKC-2587: allowing the monolith portal to run in "dashboard mode", fixing oracle script
+  * Travis Schneeberger on Wed, 8 Aug 2018 11:59:53 -0400 [View Commit](../../commit/9014b6b87f2c24bc8df65e03633e6052e71b94c2)
+
+## coeus-1808.0015
 * RESKC-3049: CSU Contribution - This fix changes the way negotiationAge is calculated to use the same method as used for negotiationActivities. (#2962)
 
   * chrisdenne on Wed, 8 Aug 2018 06:47:33 -0600 [View Commit](../../commit/255762ba2b3487d1f8cf954d074691eea3c4ee34)
