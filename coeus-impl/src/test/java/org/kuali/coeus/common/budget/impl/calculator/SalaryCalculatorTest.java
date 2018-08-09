@@ -165,7 +165,9 @@ public class SalaryCalculatorTest {
         budgetPeriod.setBudgetPeriod(budgetPeriodNumber);
         budgetPeriod.setStartDate(createDateFromString(startDate));
         budgetPeriod.setEndDate(createDateFromString(endDate));
-        budgetPeriod.setBudgetLineItems(Arrays.asList(budgetLineItems));
+        if (budgetLineItems != null) {
+            budgetPeriod.setBudgetLineItems(Arrays.asList(budgetLineItems));
+        }
         return budgetPeriod;
     }
 
@@ -352,21 +354,19 @@ public class SalaryCalculatorTest {
     }
 
     @Test
-    public void anniversay_calendarYearSplitOnInflationDate_anniversaryBegin() throws Exception {
+    public void anniversary_calendarYearSplitOnInflationDate_anniversaryBegin() throws Exception {
         isAnniversarySalaryDateEnabled = true;
         BudgetPerson budgetPerson = createBudgetPerson("1", "01/01/2017", 100000, 12, "01/01/2000");
 
-        Budget budget = createBudget("01/01/2017", "12/31/2018", budgetPerson,
+        Budget budget = createBudget("01/01/2017", "12/31/2019", budgetPerson,
                 createBudgetRate("07/01/2016", 3),
                 createBudgetRate("07/01/2017", 3),
                 createBudgetRate("07/01/2018", 3),
-                createBudgetRate("07/01/2018", 3));
-
+                createBudgetRate("07/01/2019", 3));
 
         BudgetPersonnelDetails budgetPersonnelDetails1 = createBudgetPersonnelDetails(1, budgetPerson, "01/01/2017", "12/31/2017");
         BudgetPersonnelDetails budgetPersonnelDetails2 = createBudgetPersonnelDetails(2, budgetPerson, "01/01/2018", "12/31/2018");
         BudgetPersonnelDetails budgetPersonnelDetails3 = createBudgetPersonnelDetails(3, budgetPerson, "01/01/2019", "12/31/2019");
-
 
         BudgetLineItem budgetLineItem1 = createBudgetLineItem("01/01/2017", "12/31/2017",
                 budgetPersonnelDetails1);
@@ -375,14 +375,40 @@ public class SalaryCalculatorTest {
         BudgetLineItem budgetLineItem3 = createBudgetLineItem("01/01/2019", "12/31/2019",
                 budgetPersonnelDetails3);
 
-
         budget.getBudgetPeriods().add(createBudgetPeriod(1, "01/01/2017", "12/31/2017", budgetLineItem1));
         budget.getBudgetPeriods().add(createBudgetPeriod(2, "01/01/2018", "12/31/2018", budgetLineItem2));
         budget.getBudgetPeriods().add(createBudgetPeriod(3, "01/01/2019", "12/31/2019", budgetLineItem3));
 
-        Assert.assertEquals(getCalculateSalary(budget, budgetPersonnelDetails1), new ScaleTwoDecimal(100000));
-        Assert.assertEquals(getCalculateSalary(budget, budgetPersonnelDetails2), new ScaleTwoDecimal(103000));
-        Assert.assertEquals(getCalculateSalary(budget, budgetPersonnelDetails3), new ScaleTwoDecimal(106090));
+        Assert.assertEquals(new ScaleTwoDecimal(100000), getCalculateSalary(budget, budgetPersonnelDetails1));
+        Assert.assertEquals(new ScaleTwoDecimal(103000), getCalculateSalary(budget, budgetPersonnelDetails2));
+        Assert.assertEquals(new ScaleTwoDecimal(106090), getCalculateSalary(budget, budgetPersonnelDetails3));
+    }
+
+    @Test
+    public void anniversary_calendarYearSplitOnInflationDateWithGap_anniversaryBegin() throws Exception {
+        isAnniversarySalaryDateEnabled = true;
+        BudgetPerson budgetPerson = createBudgetPerson("1", "01/01/2017", 100000, 12, "01/01/2000");
+
+        Budget budget = createBudget("01/01/2017", "12/31/2019", budgetPerson,
+                createBudgetRate("07/01/2016", 3),
+                createBudgetRate("07/01/2017", 3),
+                createBudgetRate("07/01/2018", 3),
+                createBudgetRate("07/01/2019", 3));
+
+        BudgetPersonnelDetails budgetPersonnelDetails1 = createBudgetPersonnelDetails(1, budgetPerson, "01/01/2017", "12/31/2017");
+        BudgetPersonnelDetails budgetPersonnelDetails3 = createBudgetPersonnelDetails(3, budgetPerson, "01/01/2019", "12/31/2019");
+
+        BudgetLineItem budgetLineItem1 = createBudgetLineItem("01/01/2017", "12/31/2017",
+                budgetPersonnelDetails1);
+        BudgetLineItem budgetLineItem3 = createBudgetLineItem("01/01/2019", "12/31/2019",
+                budgetPersonnelDetails3);
+
+        budget.getBudgetPeriods().add(createBudgetPeriod(1, "01/01/2017", "12/31/2017", budgetLineItem1));
+        budget.getBudgetPeriods().add(createBudgetPeriod(2, "01/01/2018", "12/31/2018", null));
+        budget.getBudgetPeriods().add(createBudgetPeriod(3, "01/01/2019", "12/31/2019", budgetLineItem3));
+
+        Assert.assertEquals(new ScaleTwoDecimal(100000), getCalculateSalary(budget, budgetPersonnelDetails1));
+        Assert.assertEquals(new ScaleTwoDecimal(106090), getCalculateSalary(budget, budgetPersonnelDetails3));
     }
 
     public void juneRateStartDateTest(BudgetPerson budgetPerson, ScaleTwoDecimal period1Expected, ScaleTwoDecimal period2Expected, ScaleTwoDecimal period3Expected) throws Exception {
@@ -669,7 +695,7 @@ public class SalaryCalculatorTest {
         budget.getBudgetPeriods().add(createBudgetPeriod(1, "01/01/2017", "12/31/2018", budgetLineItem2));
 
         SalaryCalculator salaryCalculator = new MockSalaryCalculator(budget, budgetPersonnelDetails2);
-        java.util.Date date = salaryCalculator.getPreviousPersonnelLineItemEndDate();
+        java.util.Date date = salaryCalculator.getNearestPreviousPeriodEndDate(budgetLineItem2.getStartDate());
         Assert.assertTrue(date.compareTo(createDateFromString("12/31/2016")) == 0);
     }
 }

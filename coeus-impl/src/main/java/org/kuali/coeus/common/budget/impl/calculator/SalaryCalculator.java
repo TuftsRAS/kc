@@ -602,10 +602,10 @@ public class SalaryCalculator {
         }
         QueryList<BudgetRate> qlist = new QueryList<>();
 
-        Date previousEndDate = getPreviousPersonnelLineItemEndDate();
-
         if (isAnniversarySalaryDateEnabled() && budgetPerson.getSalaryAnniversaryDate() != null) {
-            qlist.addAll(createAnnualInflationRates(budgetPerson, previousEndDate).stream()
+            Date nearestPreviousPeriodEndDate = getNearestPreviousPeriodEndDate(boundary.getStartDate());
+
+            qlist.addAll(createAnnualInflationRates(budgetPerson, nearestPreviousPeriodEndDate).stream()
                     // Filter out generated dates that are the same as the rate for the current breakup interval
                     // so that it doesn't get applied twice
                     .filter(rate -> !isSameRate(rate, currentRate))
@@ -644,28 +644,14 @@ public class SalaryCalculator {
                 Objects.equals(rate1.getInstituteRate(), rate2.getInstituteRate());
     }
 
-    protected Date getPreviousPersonnelLineItemEndDate() {
-        List<BudgetPersonnelDetails> previousPeriodsPersonnelDetails = budget.getBudgetPeriods()
-                .stream()
-                .flatMap(l -> l.getBudgetLineItems().stream())
-                .filter(l -> StringUtils.equalsIgnoreCase(l.getCostElement(), personnelLineItem.getCostElement()))
-                .flatMap(l -> l.getBudgetPersonnelDetailsList().stream())
-                .filter(budgetPersonnelDetail -> (
-                        budgetPersonnelDetail.getEndDate().compareTo(personnelLineItem.getEndDate()) < 0 &&
-                                budgetPersonnelDetail.getBudgetPerson() != null &&
-                                personnelLineItem.getBudgetPerson() != null &&
-                                StringUtils.equals(budgetPersonnelDetail.getBudgetPerson().getPersonRolodexTbnId(), personnelLineItem.getBudgetPerson().getPersonRolodexTbnId())
-                ))
-                .sorted(Comparator.comparing(BudgetPersonnelDetails::getEndDate))
-                .collect(Collectors.toList());
+    protected Date getNearestPreviousPeriodEndDate(Date boundaryStartDate) {
+        Calendar boundaryStartDateCalendar = getDateTimeService().getCalendar(boundaryStartDate);
+        Calendar currDate = getDateTimeService().getCalendar(budget.getEndDate());
+        do {
+            currDate.add(Calendar.YEAR, -1);
+        } while (currDate.after(boundaryStartDateCalendar));
 
-        Date previousEndDate = budget.getStartDate();
-
-        if (!CollectionUtils.isEmpty(previousPeriodsPersonnelDetails)) {
-            previousEndDate = previousPeriodsPersonnelDetails.get(previousPeriodsPersonnelDetails.size()-1).getEndDate();
-        }
-
-        return previousEndDate;
+        return (currDate.getTime().before(budget.getStartDate())) ? budget.getStartDate() : currDate.getTime();
     }
 
     private QueryList<BudgetRate> filterInflationRates(Date sDate, Date eDate) {
