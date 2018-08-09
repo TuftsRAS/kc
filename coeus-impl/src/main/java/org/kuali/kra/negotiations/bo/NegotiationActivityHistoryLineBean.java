@@ -29,7 +29,8 @@ public class NegotiationActivityHistoryLineBean extends ResultRow implements Com
     private Date efectiveLocationEndDate;
     private String locationDays;
     private String lineNumber;
-    
+    private String description;
+    private Boolean restricted;
 
     public NegotiationActivityHistoryLineBean() {
         super(null, "", "");
@@ -47,6 +48,9 @@ public class NegotiationActivityHistoryLineBean extends ResultRow implements Com
         this.setStartDate(negotiationActivity.getStartDate());
         this.setEndDate(negotiationActivity.getEndDate());
         this.setActivityDays(negotiationActivity.getNumberOfDays());
+        if (!negotiationActivity.getRestricted()) {
+            this.setDescription(negotiationActivity.getDescription());        	
+        }
     }
 
     public String getActivityType() {
@@ -151,6 +155,22 @@ public class NegotiationActivityHistoryLineBean extends ResultRow implements Com
         this.lineNumber = lineNumber;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {        
+        this.description = description;
+    }
+    
+    public Boolean getRestricted() {
+        return restricted;
+    }
+
+    public void setRestricted(Boolean restricted) {
+        this.restricted = restricted;
+    }
+    
     @Override
     public int compareTo(NegotiationActivityHistoryLineBean o) {
         int retVal = this.getLocation().compareTo(o.getLocation());

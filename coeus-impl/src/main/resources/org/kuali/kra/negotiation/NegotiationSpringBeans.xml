@@ -191,6 +191,7 @@
     <bean id="negotiationLookupableHelperService" class="org.kuali.kra.negotiations.lookup.NegotiationLookupableHelperServiceImpl" 
           parent="parentLookupableHelperService" scope="prototype">
         <property name="negotiationDao" ref="negotiationDao" />
+    	<property name="unitAuthorizationService" ref="unitAuthorizationService" />
     </bean>
 
     <bean id="dbPlatform" class="org.kuali.rice.core.framework.resourceloader.GlobalResourceLoaderServiceFactoryBean">

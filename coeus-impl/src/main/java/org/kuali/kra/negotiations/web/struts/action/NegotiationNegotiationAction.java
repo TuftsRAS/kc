@@ -8,13 +8,18 @@
 package org.kuali.kra.negotiations.web.struts.action;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.kuali.coeus.common.framework.attachment.AttachmentFile;
+import org.kuali.coeus.common.framework.auth.UnitAuthorizationService;
 import org.kuali.coeus.sys.framework.controller.StrutsConfirmation;
+import org.kuali.coeus.sys.framework.service.KcServiceLocator;
 import org.kuali.kra.infrastructure.Constants;
 import org.kuali.kra.infrastructure.KeyConstants;
+import org.kuali.kra.infrastructure.PermissionConstants;
 import org.kuali.kra.negotiations.bo.*;
 import org.kuali.kra.negotiations.document.NegotiationDocument;
 import org.kuali.kra.negotiations.notifications.NegotiationCloseNotificationContext;
@@ -43,6 +48,8 @@ import static org.kuali.rice.krad.util.KRADConstants.QUESTION_CLICKED_BUTTON;
  */
 public class NegotiationNegotiationAction extends NegotiationAction {
 
+	private static final Logger LOG = LogManager.getLogger(NegotiationNegotiationAction.class);
+	private UnitAuthorizationService unitAuthorizationService;
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
@@ -533,4 +540,36 @@ public class NegotiationNegotiationAction extends NegotiationAction {
     public ActionForward returnToPortal(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
         return mapping.findForward(KRADConstants.MAPPING_PORTAL);
     }
+
+    public ActionForward viewActivities(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) 
+    		throws Exception {
+
+    	if (getUnitAuthorizationService().hasPermission(getUserIdentifier(), Constants.MODULE_NAMESPACE_NEGOTIATION, PermissionConstants.NEGOTIATION_VIEW_ACTIVITIES_LOOKUP)) {
+    		
+    		NegotiationForm negotiationForm = (NegotiationForm) form;
+        	String negotiationId = request.getParameter(Constants.VIEW_NEGOTIATION_REQUEST_PARAM);
+        	
+        	Negotiation negotiation = getBusinessObjectService().findBySinglePrimaryKey(Negotiation.class, negotiationId);
+            negotiationForm.getNegotiationDocument().getNegotiationList().set(0, negotiation);
+            
+        	return mapping.findForward(Constants.MAPPING_VIEW_ACTIVITIES);
+        	
+    	} else {
+    		LOG.warn("Unauthorized attempt to view negotiation activities. user: " + getUserIdentifier());
+    		return mapping.findForward(KRADConstants.MAPPING_PORTAL);
+    	}
+
+    }
+    
+    protected UnitAuthorizationService getUnitAuthorizationService() {
+        if(this.unitAuthorizationService == null) {
+            this.unitAuthorizationService = KcServiceLocator.getService(UnitAuthorizationService.class);
+        }
+        return this.unitAuthorizationService;
+    }
+    
+    protected String getUserIdentifier() {
+        return GlobalVariables.getUserSession().getPrincipalId();
+    }
+    
 }

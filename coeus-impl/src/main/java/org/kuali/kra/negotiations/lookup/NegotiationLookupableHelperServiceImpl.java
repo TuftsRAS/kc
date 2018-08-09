@@ -8,9 +8,13 @@
 package org.kuali.kra.negotiations.lookup;
 
 import org.apache.commons.lang3.StringUtils;
+import org.kuali.coeus.common.framework.auth.UnitAuthorizationService;
 import org.kuali.coeus.common.framework.sponsor.Sponsor;
 import org.kuali.coeus.common.framework.unit.Unit;
+import org.kuali.coeus.sys.framework.service.KcServiceLocator;
 import org.kuali.kra.lookup.KraLookupableHelperServiceImpl;
+import org.kuali.kra.infrastructure.Constants;
+import org.kuali.kra.infrastructure.PermissionConstants;
 import org.kuali.kra.negotiations.bo.Negotiation;
 import org.kuali.rice.kew.api.KewApiConstants;
 import org.kuali.rice.kns.lookup.HtmlData;
@@ -24,6 +28,7 @@ import org.kuali.rice.kns.web.ui.Row;
 import org.kuali.rice.krad.bo.BusinessObject;
 import org.kuali.rice.krad.document.Document;
 import org.kuali.rice.krad.util.BeanPropertyComparator;
+import org.kuali.rice.krad.util.GlobalVariables;
 import org.kuali.rice.krad.util.KRADConstants;
 import org.kuali.rice.krad.util.UrlFactory;
 
@@ -36,9 +41,11 @@ public class NegotiationLookupableHelperServiceImpl extends KraLookupableHelperS
 
     private static final long serialVersionUID = -5559605739121335896L;
     private static final String USER_ID = "userId";
-   
+    private static final String VIEW_ACTIVITIES = "view activities";
+    
     private NegotiationDao negotiationDao;
-
+    private UnitAuthorizationService unitAuthorizationService;
+    
 
     @SuppressWarnings("unchecked")
     @Override
@@ -64,6 +71,9 @@ public class NegotiationLookupableHelperServiceImpl extends KraLookupableHelperS
     public List<HtmlData> getCustomActionUrls(BusinessObject businessObject, List pkNames) {
         List<HtmlData> htmlDataList = new ArrayList<HtmlData>();
         htmlDataList.add(getOpenLink(((Negotiation) businessObject).getDocument()));
+        if (unitAuthorizationService.hasPermission(getUserIdentifier(), Constants.MODULE_NAMESPACE_NEGOTIATION, PermissionConstants.NEGOTIATION_VIEW_ACTIVITIES_LOOKUP)) {
+        	htmlDataList.add(getViewActivitiesLink((Negotiation) businessObject));
+        } 
         htmlDataList.add(getMedusaLink(((Negotiation) businessObject).getDocument().getDocumentNumber(), false));
         return htmlDataList;
     }
@@ -83,6 +93,20 @@ public class NegotiationLookupableHelperServiceImpl extends KraLookupableHelperS
 
     }
     
+    protected AnchorHtmlData getViewActivitiesLink(Negotiation negotiation) {
+    	AnchorHtmlData htmlData = new AnchorHtmlData();
+        htmlData.setDisplayText(VIEW_ACTIVITIES);
+        Properties parameters = new Properties();
+        parameters.put(KRADConstants.DISPATCH_REQUEST_PARAMETER, Constants.MAPPING_VIEW_ACTIVITIES);        
+        parameters.put(Constants.VIEW_NEGOTIATION_REQUEST_PARAM, negotiation.getNegotiationId().toString());
+        String href  = UrlFactory.parameterizeUrl("../" + getHtmlAction(), parameters);
+        
+        htmlData.setHref(href);
+        htmlData.setId(Constants.NEGOTIATION_ID_VIEW_LIGHTBOX_ACTIVITIES);
+        htmlData.setAnchorClass(Constants.VIEW_IFRAME);
+        return htmlData;
+
+    }
 
     
     @Override
@@ -188,4 +212,16 @@ public class NegotiationLookupableHelperServiceImpl extends KraLookupableHelperS
 
     }
 
+    /**
+     * Set the Unit Authorization Service.  Injected by the Spring Framework.
+     * @param unitAuthorizationService the Unit Authorization Service
+     */
+    public final void setUnitAuthorizationService(UnitAuthorizationService unitAuthorizationService) {
+        this.unitAuthorizationService = unitAuthorizationService;
+    }
+    
+    protected String getUserIdentifier() {
+        return GlobalVariables.getUserSession().getPrincipalId();
+    }
+    
 }

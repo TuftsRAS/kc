@@ -797,7 +797,11 @@ public interface Constants {
     String NEGOTIATION_SEQUENCE_NAME = "NEGOTIATION_S";
     String NEGOTIATION_HOME_PAGE = "Negotiation";
     String NEGOTIATION_LOST_PLACE_PAGE = "lostPlaceMessagePage";
-
+    String MAPPING_VIEW_ACTIVITIES = "viewActivities";
+    String NEGOTIATION_ID_VIEW_LIGHTBOX_ACTIVITIES = "viewLightboxActivities";
+    String VIEW_IFRAME = "iframe";
+    String VIEW_NEGOTIATION_REQUEST_PARAM = "negotiationId";
+    
     // Disclosure disclosure page audit rules
     String COI_DISCLOSURE_DISCLOSURE_PAGE = "coiDisclosure";
     String COI_DISCLOSURE_DISCLOSURE_PANEL_NAME = "Disclosure";

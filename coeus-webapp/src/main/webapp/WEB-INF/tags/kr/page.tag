@@ -129,6 +129,22 @@ jQuery(function(){
       <!-- allow for custom lookup calls -->
       <script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/kr/scripts/lookup.js"></script>
 
+	  <script type="text/javascript">
+
+	  	var $n = jQuery.noConflict();
+
+  		$n(document).ready(function() {
+      		$n("a#viewLightboxActivities")
+      		.fancybox({
+      			width : 800,
+      			height: 400,
+      			type : 'iframe',
+      			autoSize : true,
+      			title : ""
+      		});
+  		})
+      	</script>
+      
     </c:when>
     <c:otherwise>
       <c:forEach items="${additionalScriptFiles}" var="scriptFile" >

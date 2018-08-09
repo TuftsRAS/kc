@@ -670,6 +670,7 @@
      	  <forward name="notificationEditor" path="/WEB-INF/jsp/negotiation/NegotiationNotificationEditor.jsp" />
      	  <forward name="portal" path="/portal.jsp" />
           <forward name="lostPlaceMessagePage" path="/WEB-INF/jsp/negotiation/NegotiationLostPlaceMessage.jsp" />
+       	  <forward name="viewActivities" path="/WEB-INF/jsp/negotiation/NegotiationActivities.jsp" />
        </action>
 
        <action path="/negotiationNotificationEditor" name="NegotiationForm" input="/WEB-INF/jsp/negotiation/NegotiationNotificationEditor.jsp" type="org.kuali.kra.negotiations.web.struts.action.NegotiationNotificationAction" scope="request" parameter="methodToCall" validate="true" attribute="KualiForm">
