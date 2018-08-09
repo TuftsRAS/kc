@@ -19,4 +19,5 @@
 
 
 \. ./rice/bootstrap/V1808_001__dashboard_mode_feature_flag.sql
+\. ./rice/bootstrap/V1808_002__RESKC-2875.sql
 commit;

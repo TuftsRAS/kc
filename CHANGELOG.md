@@ -1,6 +1,14 @@
 
 
 ## CURRENT
+* RESKC-2875: UCI Contribution - Negotiation Activities fancybox lookup. (#2995)
+
+  * Noah on Thu, 9 Aug 2018 05:31:10 -0700 [View Commit](../../commit/c9956848407bc2ece0deecc8fcc1c86ae00b1125)
+* RESKC-3001: Fix Salary Calculation issue when applying Inflation Rates and the person is not present on all periods. (#3008)
+
+  * Omar Soto Fortuño on Thu, 9 Aug 2018 07:56:07 -0400 [View Commit](../../commit/aea34d0208ff879b50d893d5aa0fc94f9d0d53c1)
+
+## coeus-1808.0019
 * No Changes
 
 
