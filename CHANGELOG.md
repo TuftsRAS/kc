@@ -1,6 +1,11 @@
 
 
 ## CURRENT
+* RESKC-3060:Update award amount info table via API
+  * Changes to use PUT
+  * Rajeev Mancheril on Wed, 8 Aug 2018 20:22:27 -0400 [View Commit](../../commit/c83de3ee0a2f9791e1542613f1cfb267fc8d8ddb)
+
+## coeus-1808.0020
 * RESKC-2875: UCI Contribution - Negotiation Activities fancybox lookup. (#2995)
 
   * Noah on Thu, 9 Aug 2018 05:31:10 -0700 [View Commit](../../commit/c9956848407bc2ece0deecc8fcc1c86ae00b1125)
