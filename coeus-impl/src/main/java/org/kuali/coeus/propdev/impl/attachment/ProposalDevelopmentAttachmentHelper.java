@@ -26,6 +26,7 @@ public class ProposalDevelopmentAttachmentHelper implements Serializable {
     private String selectedLineIndex;
     private String proposalAttachmentModuleStatusCode;
     private String internalAttachmentModuleStatusCode;
+    private String markAllBioStatus;
     private String previousNarrativeTypeValue;
     private String currentNarrativeTypeDescription;
     private String narrativeTypePropertyPath;
@@ -78,6 +79,14 @@ public class ProposalDevelopmentAttachmentHelper implements Serializable {
         this.selectedLineIndex = selectedLineIndex;
     }
 
+    public String getMarkAllBioStatus() {
+        return markAllBioStatus;
+    }
+
+    public void setMarkAllBioStatus(String markAllBioStatus) {
+        this.markAllBioStatus = markAllBioStatus;
+    }
+
     public Narrative getInstituteAttachment() {
         return instituteAttachment;
     }
@@ -110,21 +119,21 @@ public class ProposalDevelopmentAttachmentHelper implements Serializable {
         this.proposalAbstract = proposalAbstract;
     }
 
-	public String getProposalAttachmentModuleStatusCode() {
-		return proposalAttachmentModuleStatusCode;
-	}
+    public String getProposalAttachmentModuleStatusCode() {
+        return proposalAttachmentModuleStatusCode;
+    }
 
-	public void setProposalAttachmentModuleStatusCode(String proposalAttachmentModuleStatusCode) {
-		this.proposalAttachmentModuleStatusCode = proposalAttachmentModuleStatusCode;
-	}
+    public void setProposalAttachmentModuleStatusCode(String proposalAttachmentModuleStatusCode) {
+        this.proposalAttachmentModuleStatusCode = proposalAttachmentModuleStatusCode;
+    }
 
-	public String getInternalAttachmentModuleStatusCode() {
-		return internalAttachmentModuleStatusCode;
-	}
+    public String getInternalAttachmentModuleStatusCode() {
+        return internalAttachmentModuleStatusCode;
+    }
 
-	public void setInternalAttachmentModuleStatusCode(String internalAttachmentModuleStatusCode) {
-		this.internalAttachmentModuleStatusCode = internalAttachmentModuleStatusCode;
-	}
+    public void setInternalAttachmentModuleStatusCode(String internalAttachmentModuleStatusCode) {
+        this.internalAttachmentModuleStatusCode = internalAttachmentModuleStatusCode;
+    }
 
     public String getPreviousNarrativeTypeValue() {
         return previousNarrativeTypeValue;

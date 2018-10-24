@@ -46,6 +46,8 @@ import static org.kuali.kra.infrastructure.Constants.NARRATIVE_MODULE_STATUS_COM
 public class ProposalDevelopmentAttachmentController extends ProposalDevelopmentControllerBase {
 
     private static final String ATTACHMENT_FILE = "multipartFile";
+    private static final String ATTACHMENTS_INCOMPLETE = "I";
+    private static final String ATTACHMENTS_COMPLETE = "C";
 
     @Autowired
     @Qualifier("refreshControllerService")
@@ -66,6 +68,10 @@ public class ProposalDevelopmentAttachmentController extends ProposalDevelopment
     @Autowired
     @Qualifier("fileControllerService")
     private FileControllerService fileControllerService;
+
+    boolean narrativeAttachmentCompleteFlag = false;
+    boolean biographyAttachmentCompleteFlag = false;
+    boolean instituteAttachmentCompleteFlag = false;
 
     @Transactional @RequestMapping(value = "/proposalDevelopment", params="methodToCall=addFileUploadLine")
     public ModelAndView addFileUploadLine(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm form,
@@ -120,14 +126,14 @@ public class ProposalDevelopmentAttachmentController extends ProposalDevelopment
 
     @Transactional @RequestMapping(value = "/proposalDevelopment", params="methodToCall=markAllProposalAttachments")
     public ModelAndView markAllProposalAttachments(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm form) {
-    	return markAllAttachmentStatus(form, form.getProposalDevelopmentAttachmentHelper().getProposalAttachmentModuleStatusCode());
+        return markAllAttachmentStatus(form, form.getProposalDevelopmentAttachmentHelper().getProposalAttachmentModuleStatusCode());
     }
 
     @Transactional @RequestMapping(value = "/proposalDevelopment", params="methodToCall=markAllInternalAttachments")
     public ModelAndView markAllInternalAttachments(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm form) {
-    	return markAllAttachmentStatus(form, form.getProposalDevelopmentAttachmentHelper().getInternalAttachmentModuleStatusCode());
+        return markAllAttachmentStatus(form, form.getProposalDevelopmentAttachmentHelper().getInternalAttachmentModuleStatusCode());
      }
-    
+
     protected ModelAndView markAllAttachmentStatus(ProposalDevelopmentDocumentForm form, String moduleStatusCode) {
         final String collectionPath = form.getActionParamaterValue(UifParameters.SELECTED_COLLECTION_PATH);
         Collection<Object> collection = ObjectPropertyUtils.getPropertyValue(form, collectionPath);
@@ -140,7 +146,27 @@ public class ProposalDevelopmentAttachmentController extends ProposalDevelopment
                 });
         return getRefreshControllerService().refresh(form);
    }
-    
+
+    /**
+     * Tufts customization -- method to mark all personnel attachments (bios) as complete
+     */
+    @Transactional @RequestMapping(value = "/proposalDevelopment", params="methodToCall=markAllBiosComplete")
+    public ModelAndView markAllBiosComplete(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm form)
+    {
+        final String collectionPath = form.getActionParamaterValue(UifParameters.SELECTED_COLLECTION_PATH);
+        Collection<Object> collection = ObjectPropertyUtils.getPropertyValue(form, collectionPath);
+
+        collection.stream()
+            .filter(object -> object instanceof ProposalPersonBiography)
+            .map (object -> (ProposalPersonBiography) object)
+            .forEach(bio -> {
+                bio.setStatusCode(form.getProposalDevelopmentAttachmentHelper().getMarkAllBioStatus());
+                getDataObjectService().wrap(bio).fetchRelationship(ProposalDevelopmentConstants.KradConstants.NARRATIVE_STATUS);
+            });
+
+        return getRefreshControllerService().refresh(form);
+    }
+
     @Transactional @RequestMapping(value = "/proposalDevelopment", params="methodToCall=prepareNarrative")
     public ModelAndView prepareNarrative(@ModelAttribute("KualiForm") ProposalDevelopmentDocumentForm form) throws Exception{
        String selectedLine = form.getActionParamaterValue(UifParameters.SELECTED_LINE_INDEX);
@@ -151,6 +177,10 @@ public class ProposalDevelopmentAttachmentController extends ProposalDevelopment
            form.getProposalDevelopmentAttachmentHelper().setSelectedLineIndex(selectedLine);
            PropertyUtils.copyProperties(tmpNarrative,form.getDevelopmentProposal().getNarrative(Integer.parseInt(selectedLine)));
            form.getProposalDevelopmentAttachmentHelper().setNarrative(tmpNarrative);
+           if(tmpNarrative.getModuleStatusCode().equals(ATTACHMENTS_COMPLETE)){
+               narrativeAttachmentCompleteFlag=true;
+           }
+           else narrativeAttachmentCompleteFlag=false;
        }
 
         return getModelAndViewService().showDialog(ProposalDevelopmentConstants.KradConstants.PROP_DEV_ATTACHMENTS_PAGE_PROPOSAL_DETAILS, true, form);
@@ -167,6 +197,10 @@ public class ProposalDevelopmentAttachmentController extends ProposalDevelopment
             form.getProposalDevelopmentAttachmentHelper().setSelectedLineIndex(selectedLine);
             PropertyUtils.copyProperties(tmpBiography,form.getDevelopmentProposal().getPropPersonBio(Integer.parseInt(selectedLine)));
             form.getProposalDevelopmentAttachmentHelper().setBiography(tmpBiography);
+            if(tmpBiography.getStatusCode().equals(ATTACHMENTS_COMPLETE)){
+                biographyAttachmentCompleteFlag=true;
+            }
+            else biographyAttachmentCompleteFlag=false;
         }
 
         return getModelAndViewService().showDialog(ProposalDevelopmentConstants.KradConstants.PROP_DEV_ATTACHMENTS_PAGE_PERSONNEL_DETAILS, true, form);
@@ -197,6 +231,10 @@ public class ProposalDevelopmentAttachmentController extends ProposalDevelopment
             form.getProposalDevelopmentAttachmentHelper().setSelectedLineIndex(selectedLine);
             PropertyUtils.copyProperties(tmpNarrative, form.getDevelopmentProposal().getInstituteAttachment(Integer.parseInt(selectedLine)));
             form.getProposalDevelopmentAttachmentHelper().setInstituteAttachment(tmpNarrative);
+            if(tmpNarrative.getModuleStatusCode().equals(ATTACHMENTS_COMPLETE)){
+                instituteAttachmentCompleteFlag=true;
+            }
+            else instituteAttachmentCompleteFlag=false;
         }
 
         return getModelAndViewService().showDialog(ProposalDevelopmentConstants.KradConstants.PROP_DEV_ATTACHMENTS_PAGE_INTERNAL_DETAILS, true, form);
@@ -296,7 +334,7 @@ public class ProposalDevelopmentAttachmentController extends ProposalDevelopment
         biography.setUpdateTimestamp(getDateTimeService().getCurrentTimestamp());
         getDataObjectService().wrap(biography).fetchRelationship(ProposalDevelopmentConstants.KradConstants.PROP_PER_DOC_TYPE);
 
-        String errorPath = ProposalDevelopmentConstants.KradConstants.PROPOSAL_DEVELOPMENT_ATTACHMENT_HELPER_BIOGRAPHY + "." + ATTACHMENT_FILE; 
+        String errorPath = ProposalDevelopmentConstants.KradConstants.PROPOSAL_DEVELOPMENT_ATTACHMENT_HELPER_BIOGRAPHY + "." + ATTACHMENT_FILE;
         final MessageMap messages = multipartFileValidationService.validateMultipartFile(errorPath, biography.getMultipartFile());
         boolean rulePassed = true;
         if (!messages.hasMessages()) {
@@ -340,6 +378,19 @@ public class ProposalDevelopmentAttachmentController extends ProposalDevelopment
         }
 
         if(form.getProposalDevelopmentDocument().getDocumentHeader().getWorkflowDocument().isEnroute()) {
+            // RAS-852: do not send the attachment incomplete notification if it is a change / correction or if the signing official has turned off intermediate routing
+            if(narrative.getModuleStatusCode().equals(ATTACHMENTS_COMPLETE)
+                    && !narrativeAttachmentCompleteFlag
+                    && form.getDevelopmentProposal().getNumberofIncompleteAttachments()==0 // Narratives see this number "post-update"
+                    ){
+                sendAttachmentCompleteNotifications(form);
+            }
+            if(narrative.getModuleStatusCode().equals(ATTACHMENTS_INCOMPLETE)
+                    && narrativeAttachmentCompleteFlag
+                    && form.getDevelopmentProposal().getNumberofIncompleteAttachments()==1
+                    ){
+                sendAttachmentIncompleteNotifications(form);
+            }
             ProposalDevelopmentNotificationContext context = new ProposalDevelopmentNotificationContext(form.getProposalDevelopmentDocument().getDevelopmentProposal(),
                 Constants.DATA_OVERRIDE_NOTIFICATION_ACTION, Constants.DATA_OVERRIDE_CONTEXT);
             ((ProposalDevelopmentNotificationRenderer) context.getRenderer()).setModifiedNarrative(narrative);
@@ -357,16 +408,16 @@ public class ProposalDevelopmentAttachmentController extends ProposalDevelopment
     }
 
     protected boolean isAttachmentFileChanged(MultipartFile multipartFile) {
-    	boolean fileChanged = multipartFile != null;
-    	if(fileChanged) {
+        boolean fileChanged = multipartFile != null;
+        if(fileChanged) {
             final MessageMap messages = multipartFileValidationService.validateMultipartFile(ATTACHMENT_FILE, multipartFile);
             if (messages.hasMessages()) {
                 getGlobalVariableService().getMessageMap().merge(messages);
             }
-    	}
-    	return fileChanged;
+        }
+        return fileChanged;
     }
-    
+
     @Transactional @RequestMapping(value = "/proposalDevelopment", params="methodToCall=sendNarrativeChangeNotification")
     public ModelAndView sendNarrativeChangeNotification(ProposalDevelopmentDocumentForm proposalDevelopmentDocumentForm) {
         if (proposalDevelopmentDocumentForm.isSendNarrativeChangeNotification()) {
@@ -387,7 +438,7 @@ public class ProposalDevelopmentAttachmentController extends ProposalDevelopment
         getDataObjectService().wrap(biography).fetchRelationship(ProposalDevelopmentConstants.KradConstants.PROP_PER_DOC_TYPE);
 
         if(isAttachmentFileChanged(biography.getMultipartFile())) {
-        	biography.init(biography.getMultipartFile());
+            biography.init(biography.getMultipartFile());
             ((ProposalDevelopmentViewHelperServiceImpl) form.getViewHelperService()).updateAttachmentInformation(biography.getPersonnelAttachment());
         }
 
@@ -398,6 +449,23 @@ public class ProposalDevelopmentAttachmentController extends ProposalDevelopment
             form.setUpdateComponentId(ProposalDevelopmentConstants.KradConstants.PROP_DEV_ATTACHMENTS_PAGE_PERSONNEL_DETAILS);
             form.setAjaxReturnType(UifConstants.AjaxReturnTypes.UPDATECOMPONENT.getKey());
         }
+
+        if(form.getProposalDevelopmentDocument().getDocumentHeader().getWorkflowDocument().isEnroute()) {
+            // RAS-852: do not send the attachment incomplete notification if it is a change / correction or if the signing official has turned off intermediate routing
+            if(biography.getStatusCode().equals(ATTACHMENTS_COMPLETE) && !biographyAttachmentCompleteFlag
+                    && form.getDevelopmentProposal().getNumberofIncompleteAttachments()==1 // Bios see this number "pre-update", so on the final completion, the # of incompletes should be 1
+                    ){
+                sendAttachmentCompleteNotifications(form);
+            }
+            if(biography.getStatusCode().equals(ATTACHMENTS_INCOMPLETE)
+                    && biographyAttachmentCompleteFlag
+                    && form.getDevelopmentProposal().getNumberofIncompleteAttachments()==0
+                    ){
+                sendAttachmentIncompleteNotifications(form);
+            }
+
+        }
+
         return super.save(form);
     }
 
@@ -414,6 +482,21 @@ public class ProposalDevelopmentAttachmentController extends ProposalDevelopment
 
             form.getDevelopmentProposal().getInstituteAttachments().set(selectedLineIndex, narrative);
             form.getProposalDevelopmentAttachmentHelper().reset();
+
+            if(form.getProposalDevelopmentDocument().getDocumentHeader().getWorkflowDocument().isEnroute()) {
+                if(narrative.getModuleStatusCode().equals(ATTACHMENTS_COMPLETE)
+                        && !instituteAttachmentCompleteFlag
+                        && form.getDevelopmentProposal().getNumberofIncompleteAttachments()==1 // Inst. attachments see this number "pre-update"
+                        ){
+                    sendAttachmentCompleteNotifications(form);
+                }
+                // RAS-852: do not send the attachment incomplete notification if it is a change / correction or if the signing official has turned off intermediate routing
+                if(narrative.getModuleStatusCode().equals(ATTACHMENTS_INCOMPLETE)
+                        && instituteAttachmentCompleteFlag
+                        && form.getDevelopmentProposal().getNumberofIncompleteAttachments()==0
+                        ){
+                    sendAttachmentIncompleteNotifications(form);
+                }}
         } else {
             getGlobalVariableService().getMessageMap().merge(messages);
         }

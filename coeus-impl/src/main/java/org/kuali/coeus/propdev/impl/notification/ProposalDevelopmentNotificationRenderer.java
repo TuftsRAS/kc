@@ -18,6 +18,7 @@ import org.kuali.coeus.propdev.impl.docperm.ProposalUserRoles;
 import org.kuali.coeus.propdev.impl.editable.ProposalChangedData;
 import org.kuali.coeus.propdev.impl.person.ProposalPerson;
 import org.kuali.coeus.propdev.impl.sponsor.ProposalCfda;
+import org.kuali.coeus.propdev.impl.person.attachment.ProposalPersonBiography;
 import org.kuali.coeus.sys.framework.gv.GlobalVariableService;
 import org.kuali.kra.infrastructure.RoleConstants;
 import org.kuali.kra.institutionalproposal.home.InstitutionalProposal;
@@ -50,17 +51,18 @@ public class ProposalDevelopmentNotificationRenderer extends NotificationRendere
     private ProposalChangedData proposalChangedData;
     private BudgetChangedData budgetChangedData;
     private Narrative modifiedNarrative;
+    private ProposalPersonBiography modifiedPersonBiography;
     private ProposalPerson proposalPerson;
     private static final String COI_URL = "coi.standalone.base.url";
-    
+
     @Autowired
     @Qualifier("proposalDevelopmentService")
     private transient ProposalDevelopmentService proposalDevelopmentService;
-    
+
     @Autowired
     @Qualifier("parameterService")
     private transient ParameterService parameterService;
-    
+
     @Autowired
     @Qualifier("proposalDevelopmentPermissionsService")
     private ProposalDevelopmentPermissionsService proposalDevelopmentPermissionsService;
@@ -127,9 +129,9 @@ public class ProposalDevelopmentNotificationRenderer extends NotificationRendere
             }
             result.put("{AGGREGATOR}", getAggregators());
             String certificatioPage =result.get("{APP_LINK_PREFIX}") + "/kc-pd-krad/proposalDevelopment?methodToCall=viewUtility&" +
-        			"viewId=PropDev-CertificationView&docId=" + developmentProposal.getProposalDocument().getDocumentNumber() + "&userName="+proposalPerson.getUserName();
-        	result.put("{CERT_PAGE}", certificatioPage);
-        	String coiLink =   getKualiConfigurationService().getPropertyValueAsString(COI_URL);
+                    "viewId=PropDev-CertificationView&docId=" + developmentProposal.getProposalDocument().getDocumentNumber() + "&userName="+proposalPerson.getUserName();
+            result.put("{CERT_PAGE}", certificatioPage);
+            String coiLink =   getKualiConfigurationService().getPropertyValueAsString(COI_URL);
             result.put("{LINK_TO_COI}", coiLink);
         }
 
@@ -137,16 +139,16 @@ public class ProposalDevelopmentNotificationRenderer extends NotificationRendere
         if (userSession != null && userSession.getPerson() != null) {
             result.put("{PROPOSAL_INITIATOR_NAME}", userSession.getPerson().getFirstName() + StringUtils.SPACE + userSession.getPerson().getLastName());
         }
-        
+
         return result;
     }
 
     private String getAggregators() {
-    	List<ProposalUserRoles> proposalUserRoles =  getProposalDevelopmentPermissionsService().getPermissions(developmentProposal.getProposalDocument());
-    	return proposalUserRoles.stream().filter(proposalUserRole -> proposalUserRole.getRoleNames().
-    			contains(RoleConstants.AGGREGATOR_DOCUMENT_LEVEL)).map(ProposalUserRoles::getUsername).collect(Collectors.joining(DELIMITER));
+        List<ProposalUserRoles> proposalUserRoles =  getProposalDevelopmentPermissionsService().getPermissions(developmentProposal.getProposalDocument());
+        return proposalUserRoles.stream().filter(proposalUserRole -> proposalUserRole.getRoleNames().
+                contains(RoleConstants.AGGREGATOR_DOCUMENT_LEVEL)).map(ProposalUserRoles::getUsername).collect(Collectors.joining(DELIMITER));
     }
-    
+
     public DevelopmentProposal getDevelopmentProposal() {
         return developmentProposal;
     }
@@ -187,6 +189,15 @@ public class ProposalDevelopmentNotificationRenderer extends NotificationRendere
         this.modifiedNarrative = modifiedNarrative;
     }
 
+    public ProposalPersonBiography getModifiedPersonBiography() {
+        return modifiedPersonBiography;
+    }
+
+    public void setModifiedPersonBiography(
+            ProposalPersonBiography modifiedPersonBiography) {
+        this.modifiedPersonBiography = modifiedPersonBiography;
+    }
+
     public ProposalPerson getProposalPerson() {
         return proposalPerson;
     }
@@ -194,21 +205,21 @@ public class ProposalDevelopmentNotificationRenderer extends NotificationRendere
     public void setProposalPerson(ProposalPerson proposalPerson) {
         this.proposalPerson = proposalPerson;
     }
-    
+
     public ParameterService getParameterService() {
-		return parameterService;
-	}
+        return parameterService;
+    }
 
-	public void setParameterService(ParameterService parameterService) {
-		this.parameterService = parameterService;
-	}
-	
-	public ProposalDevelopmentPermissionsService getProposalDevelopmentPermissionsService() {
-		return proposalDevelopmentPermissionsService;
-	}
+    public void setParameterService(ParameterService parameterService) {
+        this.parameterService = parameterService;
+    }
 
-	public void setProposalDevelopmentPermissionsService(
-			ProposalDevelopmentPermissionsService proposalDevelopmentPermissionsService) {
-		this.proposalDevelopmentPermissionsService = proposalDevelopmentPermissionsService;
-	}
+    public ProposalDevelopmentPermissionsService getProposalDevelopmentPermissionsService() {
+        return proposalDevelopmentPermissionsService;
+    }
+
+    public void setProposalDevelopmentPermissionsService(
+            ProposalDevelopmentPermissionsService proposalDevelopmentPermissionsService) {
+        this.proposalDevelopmentPermissionsService = proposalDevelopmentPermissionsService;
+    }
 }

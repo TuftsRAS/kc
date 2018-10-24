@@ -10,6 +10,8 @@ package org.kuali.coeus.propdev.impl.core;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.eclipse.persistence.annotations.Customizer;
 import org.eclipse.persistence.config.DescriptorCustomizer;
 import org.eclipse.persistence.descriptors.ClassDescriptor;
@@ -96,9 +98,15 @@ public class DevelopmentProposal extends KcPersistableBusinessObjectBase impleme
 
     private static final long serialVersionUID = -9211313487776934111L;
 
+    private static final Logger LOG = LogManager.getLogger(DevelopmentProposal.class);
+
     private static final String ATTACHMENTS_COMPLETE = "Complete";
 
-    private static final String ATTACHMENTS_INCOMPLETE = "Inomplete";
+    private static final String ATTACHMENTS_INCOMPLETE = "Incomplete";
+
+    private static final String ATTACHMENTS_COMPLETE_CODE = "C";
+
+    private static final String ATTACHMENTS_INCOMPLETE_CODE = "I";
 
     private static final String ATTACHMENTS_NONE = "None";
     private static final String ROLODEX = "rolodex";
@@ -236,7 +244,7 @@ public class DevelopmentProposal extends KcPersistableBusinessObjectBase impleme
 
     @Column(name = "AGENCY_ROUTING_IDENTIFIER")
     private String agencyRoutingIdentifier;
-    
+
     @Column(name = "PREV_GG_TRACKID")
     private String prevGrantsGovTrackingID;
 
@@ -351,11 +359,11 @@ public class DevelopmentProposal extends KcPersistableBusinessObjectBase impleme
     @OneToMany(mappedBy="developmentProposal", orphanRemoval = true, cascade = { CascadeType.REFRESH, CascadeType.REMOVE })
     @OrderBy("budgetVersionNumber")
     private List<ProposalDevelopmentBudgetExt> budgets;
-    
+
     @OneToOne(cascade = { CascadeType.REFRESH })
     @JoinColumn(name = "FINAL_BUDGET_ID", referencedColumnName = "BUDGET_ID")
     private ProposalDevelopmentBudgetExt finalBudget;
-    
+
     @OneToOne(cascade = {CascadeType.REFRESH, CascadeType.REMOVE})
     @JoinColumn(name = "HIERARCHY_LAST_BUDGET_ID", referencedColumnName = "BUDGET_ID")
     private ProposalDevelopmentBudgetExt lastSyncedBudget;
@@ -985,7 +993,7 @@ public class DevelopmentProposal extends KcPersistableBusinessObjectBase impleme
     }
 
     public void addProposalSite(ProposalSite proposalSite) {
-    	proposalSite.setDevelopmentProposal(this);
+        proposalSite.setDevelopmentProposal(this);
         proposalSites.add(proposalSite);
     }
 
@@ -997,7 +1005,7 @@ public class DevelopmentProposal extends KcPersistableBusinessObjectBase impleme
         deleteAllProposalSitesOfType(locationType);
         proposalSite.setLocationTypeCode(locationType);
         proposalSite.setDevelopmentProposal(this);
-        // make sure the location type is set 
+        // make sure the location type is set
         addProposalSite(proposalSite);
     }
 
@@ -1053,7 +1061,7 @@ public class DevelopmentProposal extends KcPersistableBusinessObjectBase impleme
 
     public void addPerformanceSite(ProposalSite performanceSite) {
         performanceSite.setLocationTypeCode(ProposalSite.PROPOSAL_SITE_PERFORMANCE_SITE);
-        // make sure the location type is set 
+        // make sure the location type is set
         addProposalSite(performanceSite);
     }
 
@@ -1067,18 +1075,18 @@ public class DevelopmentProposal extends KcPersistableBusinessObjectBase impleme
 
     @Override
     public List<ProposalSite> getOtherOrganizations() {
-		List<ProposalSite> otherOrganizations = getProposalSitesForType(ProposalSite.PROPOSAL_SITE_OTHER_ORGANIZATION);
-		for (ProposalSite proposalSite : otherOrganizations) {
-			if(proposalSite.getOrganization().getCongressionalDistrict() != null) {
+        List<ProposalSite> otherOrganizations = getProposalSitesForType(ProposalSite.PROPOSAL_SITE_OTHER_ORGANIZATION);
+        for (ProposalSite proposalSite : otherOrganizations) {
+            if(proposalSite.getOrganization().getCongressionalDistrict() != null) {
                 proposalSite.initializeDefaultCongressionalDistrict();
             }
-		}
-		return otherOrganizations;
+        }
+        return otherOrganizations;
     }
 
     public void addOtherOrganization(ProposalSite otherOrganization) {
         otherOrganization.setLocationTypeCode(ProposalSite.PROPOSAL_SITE_OTHER_ORGANIZATION);
-        // make sure the location type is set 
+        // make sure the location type is set
         addProposalSite(otherOrganization);
     }
 
@@ -1124,14 +1132,14 @@ public class DevelopmentProposal extends KcPersistableBusinessObjectBase impleme
     }
 
     public void setPropScienceKeywords(List<PropScienceKeyword> propScienceKeywords) {
-    	if (propScienceKeywords != null) {
-    		this.propScienceKeywords = propScienceKeywords;
-    	} else {
-    		this.propScienceKeywords.clear();
-    	}
-    	for (PropScienceKeyword keyword : this.propScienceKeywords) {
-    		keyword.setDevelopmentProposal(this);
-    	}
+        if (propScienceKeywords != null) {
+            this.propScienceKeywords = propScienceKeywords;
+        } else {
+            this.propScienceKeywords.clear();
+        }
+        for (PropScienceKeyword keyword : this.propScienceKeywords) {
+            keyword.setDevelopmentProposal(this);
+        }
     }
 
     @Override
@@ -1142,13 +1150,13 @@ public class DevelopmentProposal extends KcPersistableBusinessObjectBase impleme
     public void addPropScienceKeyword(PropScienceKeyword propScienceKeyword) {
         getPropScienceKeywords().add(propScienceKeyword);
     }
-    
+
     public String getPropScienceKeywordsAsText() {
-    	if (propScienceKeywords != null) {
-    		return propScienceKeywords.stream().map(keyword -> keyword.getScienceKeyword().getDescription()).collect(Collectors.joining(", "));
-    	} else {
-    		return "";
-    	}
+        if (propScienceKeywords != null) {
+            return propScienceKeywords.stream().map(keyword -> keyword.getScienceKeyword().getDescription()).collect(Collectors.joining(", "));
+        } else {
+            return "";
+        }
     }
 
     public String getNewScienceKeywordCode() {
@@ -1255,7 +1263,7 @@ public class DevelopmentProposal extends KcPersistableBusinessObjectBase impleme
 
     /**
      * Utility method to get person in ProposalPersons with the PI role
-     * 
+     *
      * @return ProposalPerson
      */
     public ProposalPerson getPrincipalInvestigator() {
@@ -1341,7 +1349,7 @@ public class DevelopmentProposal extends KcPersistableBusinessObjectBase impleme
     }
 
     /**
-     * 
+     *
      * This method adds new personnel attachment to biography and biography attachment bo with proper set up.
      */
     public void addProposalPersonBiography(ProposalPersonBiography proposalPersonBiography) {
@@ -1349,7 +1357,7 @@ public class DevelopmentProposal extends KcPersistableBusinessObjectBase impleme
     }
 
     /**
-     * 
+     *
      * This method delete the attachment for the deleted personnel.
      */
     public void removePersonnelAttachmentForDeletedPerson(ProposalPerson proposalPerson) throws Exception {
@@ -1357,7 +1365,7 @@ public class DevelopmentProposal extends KcPersistableBusinessObjectBase impleme
     }
 
     /**
-     * 
+     *
      * Method to delete a personnel attachment from personnel attachment list
      */
     public void deleteProposalPersonBiography(int lineToDelete) {
@@ -1607,7 +1615,7 @@ public class DevelopmentProposal extends KcPersistableBusinessObjectBase impleme
                 DevelopmentProposal parent = getProposalHierarchyService().lookupParent(this);
                 retval = parent.isProposalComplete();
             } catch (ProposalHierarchyException x) {
-                // this should never happen   
+                // this should never happen
                 throw new IllegalStateException(x);
             }
         }
@@ -1622,7 +1630,7 @@ public class DevelopmentProposal extends KcPersistableBusinessObjectBase impleme
     public void setS2sAppSubmission(List<S2sAppSubmission> appSubmission) {
         s2sAppSubmission = appSubmission;
     }
-    
+
     public S2sAppSubmission getDisplayedS2sAppSubmission() {
         if (CollectionUtils.isNotEmpty(getS2sAppSubmission())){
             return getS2sAppSubmission().get(getS2sAppSubmission().size()-1);
@@ -1701,8 +1709,8 @@ public class DevelopmentProposal extends KcPersistableBusinessObjectBase impleme
     }
 
     /**
-     * 
-     * This method returns the linked ProposalDevelopmentDocument.  If there isn't a linked ProposalDevelopmentDocument, then a 
+     *
+     * This method returns the linked ProposalDevelopmentDocument.  If there isn't a linked ProposalDevelopmentDocument, then a
      * new one is created per KRACOEUS-5304.
      */
     public ProposalDevelopmentDocument getProposalDocument() {
@@ -1721,7 +1729,7 @@ public class DevelopmentProposal extends KcPersistableBusinessObjectBase impleme
 
     public void updateProposalChangeHistory() {
         proposalChangeHistory = new TreeMap<>();
-        // Arranging Proposal Change History   
+        // Arranging Proposal Change History
         if (CollectionUtils.isNotEmpty(this.getProposalChangedDataList())) {
             for (ProposalChangedData proposalChangedData : this.getProposalChangedDataList()) {
                 proposalChangeHistory.computeIfAbsent(proposalChangedData.getEditableColumn().getColumnLabel(), k -> new ArrayList<>());
@@ -1809,19 +1817,154 @@ public class DevelopmentProposal extends KcPersistableBusinessObjectBase impleme
 
     public String getAttachmentsStatus() {
         String statusString = ATTACHMENTS_COMPLETE;
-        if (!getNarratives().isEmpty()) {
-            for (Narrative aNarrative : getNarratives()) {
-                if (aNarrative.getNarrativeStatus().getDescription().equals(ATTACHMENTS_INCOMPLETE)) {
-                    statusString = ATTACHMENTS_INCOMPLETE;
+        if (!getNarratives().isEmpty() || !getPropPersonBios().isEmpty() || !getInstituteAttachments().isEmpty())
+        {
+            if (!getNarratives().isEmpty())
+            {
+                for (Narrative aNarrative : getNarratives()) {
+                    if (aNarrative.getNarrativeStatus().getDescription().equals(ATTACHMENTS_INCOMPLETE)) {
+                        statusString = ATTACHMENTS_INCOMPLETE;
+                    }
                 }
             }
-        } else {
+
+            // Tufts customization: personnel page now has attachments
+            if (!getPropPersonBios().isEmpty())
+            {
+                for (ProposalPersonBiography aBio : getPropPersonBios())
+                {
+                    if (aBio.getNarrativeStatus() == null || aBio.getNarrativeStatus().getDescription() == null || aBio.getNarrativeStatus().getDescription().equals(ATTACHMENTS_INCOMPLETE))
+                    {
+                        statusString = ATTACHMENTS_INCOMPLETE;
+                    }
+                }
+            }
+
+            if (!getInstituteAttachments().isEmpty())
+            {
+                for (Narrative instNarrative : getInstituteAttachments()) {
+                    if (instNarrative.getNarrativeStatus().getDescription().equals(ATTACHMENTS_INCOMPLETE)) {
+                        statusString = ATTACHMENTS_INCOMPLETE;
+                    }
+                }
+            }
+
+        }
+        else
+        {
             statusString = ATTACHMENTS_NONE;
         }
         return statusString;
     }
 
-    // Note: following the pattern of Sponsor, this getter indirectly calls a service.   
+    // Tufts RAS-1228
+    // Count the number of incomplete attachments. Necessary so that we know when we're
+    // in the process of completing the final attachment.
+    //
+    // Important to note: The value returned is very dependent on *when* the method is called
+    // during the save process.
+    public int getNumberofIncompleteAttachments()
+    {
+        int numIncomplete = 0;
+
+        if (!getNarratives().isEmpty())
+        {
+            for (Narrative aNarrative : getNarratives())
+            {
+                if (aNarrative.getNarrativeStatus().getDescription().equals(ATTACHMENTS_INCOMPLETE))
+                {
+                    numIncomplete++;
+                }
+            }
+        }
+        if (!getPropPersonBios().isEmpty())
+        {
+            for (ProposalPersonBiography aBio : getPropPersonBios())
+            {
+                if (aBio.getNarrativeStatus() == null || aBio.getNarrativeStatus().getDescription() == null
+                        || aBio.getNarrativeStatus().getDescription().equals(ATTACHMENTS_INCOMPLETE))
+                {
+                    numIncomplete++;
+                }
+            }
+        }
+        if (!getInstituteAttachments().isEmpty())
+        {
+            for (Narrative instNarrative : getInstituteAttachments())
+            {
+                if (instNarrative.getNarrativeStatus().getDescription().equals(ATTACHMENTS_INCOMPLETE))
+                {
+                    numIncomplete++;
+                }
+            }
+        }
+        LOG.info("Number of incomplete attachments on proposal " + this.getProposalNumber() + " is " + numIncomplete);
+        return numIncomplete;
+    }
+
+    // RAS-1228 -- Determine if the overall attachment status after a save action has moved from complete to incomplete
+    public boolean isOverallAttachmentsStatusIncomplete() {
+        boolean overallStatusNewlyIncomplete = false;
+
+        boolean allAttachmentsWerePreviouslyComplete = true;
+        boolean foundAttachmentNewlyIncomplete = false;
+
+        if (!getNarratives().isEmpty())
+        {
+            for (Narrative aNarrative : getNarratives()) {
+                // If this narrative was NOT previously complete, we know that the overall completion status hasn't changed
+                if (aNarrative.getPreviousNarrativeStatus()!=null
+                        && !aNarrative.getPreviousNarrativeStatus().equals(ATTACHMENTS_COMPLETE_CODE))
+                {
+                    allAttachmentsWerePreviouslyComplete = false;
+                    break;
+                }
+                if (aNarrative.getPreviousNarrativeStatus()!=null
+                        && aNarrative.getPreviousNarrativeStatus().equals(ATTACHMENTS_COMPLETE_CODE)
+                        && aNarrative.getModuleStatusCode().equals(ATTACHMENTS_INCOMPLETE_CODE)) {
+                    foundAttachmentNewlyIncomplete = true;
+                    break;
+                }
+            }
+        }
+
+        if (!getInstituteAttachments().isEmpty())
+        {
+            for (Narrative instNarrative : getInstituteAttachments()) {
+                // If this narrative was NOT previously complete, we know that the overall completion status hasn't changed
+                if (instNarrative.getPreviousNarrativeStatus()!=null
+                        && !instNarrative.getPreviousNarrativeStatus().equals(ATTACHMENTS_COMPLETE_CODE))
+                {
+                    allAttachmentsWerePreviouslyComplete = false;
+                    break;
+                }
+                if (instNarrative.getPreviousNarrativeStatus()!=null
+                        && instNarrative.getPreviousNarrativeStatus().equals(ATTACHMENTS_COMPLETE_CODE)
+                        && instNarrative.getModuleStatusCode().equals(ATTACHMENTS_INCOMPLETE_CODE)) {
+                    foundAttachmentNewlyIncomplete = true;
+                    break;
+                }
+            }
+        }
+
+        // Note that personnel attachments aren't handled here. This method is only applicable on a general
+        // proposal save, and personnel attachments can't have their status changed directly on the proposal;
+        // it has to be done through the attachment's "Details" page, and that save is handled by the
+        // ProposalDevelopmentAttachmentController class.
+
+        // If we didn't find any "previously incomplete" attachments, and we did find an attachment that moved
+        // from complete to incomplete, then the overall status has changed to incomplete
+        overallStatusNewlyIncomplete = (allAttachmentsWerePreviouslyComplete && foundAttachmentNewlyIncomplete);
+
+        LOG.info("Attachment incomplete status for proposal " + this.getProposalNumber() + ": "
+                + "allAttachmentsWerePreviouslyComplete=" + allAttachmentsWerePreviouslyComplete + "; "
+                + "foundAttachmentNewlyIncomplete=" + foundAttachmentNewlyIncomplete + "; "
+                + "overallStatusNewlyIncomplete=" + overallStatusNewlyIncomplete + "; ");
+
+        return overallStatusNewlyIncomplete;
+    }
+
+    // Note: following the pattern of Sponsor, this getter indirectly calls a service.
     // Is there a better way?
     @Override
     public Sponsor getPrimeSponsor() {
@@ -2029,43 +2172,43 @@ public class DevelopmentProposal extends KcPersistableBusinessObjectBase impleme
         this.s2sUserAttachedForms = s2sUserAttachedForms;
     }
 
-	@Override
-	public boolean isProposalBudget() {
-		return true;
-	}
-
-	@Override
-	public BudgetParentDocument<DevelopmentProposal> getDocument() {
-		return getProposalDocument();
-	}
-
-	@Override
-	public Budget getNewBudget() {
-		return new ProposalDevelopmentBudgetExt();
-	}
-
-	@Override
-	public Integer getNextBudgetVersionNumber() {
-		return getDocument().getNextBudgetVersionNumber();
-	}
-
-	public List<ProposalDevelopmentBudgetExt> getBudgetVersionOverviews() {
-		return budgets;
-	}
-
-	public void setBudgetVersionOverviews(
-			List<ProposalDevelopmentBudgetExt> budgetVersionOverviews) {
-		this.budgets = budgetVersionOverviews;
-	}
+    @Override
+    public boolean isProposalBudget() {
+        return true;
+    }
 
     @Override
-	public List<ProposalDevelopmentBudgetExt> getBudgets() {
-		return budgets;
-	}
+    public BudgetParentDocument<DevelopmentProposal> getDocument() {
+        return getProposalDocument();
+    }
 
-	public void setBudgets(List<ProposalDevelopmentBudgetExt> budgets) {
-		this.budgets = budgets;
-	}
+    @Override
+    public Budget getNewBudget() {
+        return new ProposalDevelopmentBudgetExt();
+    }
+
+    @Override
+    public Integer getNextBudgetVersionNumber() {
+        return getDocument().getNextBudgetVersionNumber();
+    }
+
+    public List<ProposalDevelopmentBudgetExt> getBudgetVersionOverviews() {
+        return budgets;
+    }
+
+    public void setBudgetVersionOverviews(
+            List<ProposalDevelopmentBudgetExt> budgetVersionOverviews) {
+        this.budgets = budgetVersionOverviews;
+    }
+
+    @Override
+    public List<ProposalDevelopmentBudgetExt> getBudgets() {
+        return budgets;
+    }
+
+    public void setBudgets(List<ProposalDevelopmentBudgetExt> budgets) {
+        this.budgets = budgets;
+    }
 
     @Override
     public ProposalDevelopmentBudgetExt getLatestBudget() {
@@ -2137,21 +2280,21 @@ public class DevelopmentProposal extends KcPersistableBusinessObjectBase impleme
 
     @Override
     public ProposalDevelopmentBudgetExt getFinalBudget() {
-    	return finalBudget;
+        return finalBudget;
     }
 
 
-	public void setFinalBudget(ProposalDevelopmentBudgetExt finalBudget) {
-		this.finalBudget = finalBudget;
-	}
+    public void setFinalBudget(ProposalDevelopmentBudgetExt finalBudget) {
+        this.finalBudget = finalBudget;
+    }
 
-	public ProposalDevelopmentBudgetExt getLastSyncedBudget() {
-		return lastSyncedBudget;
-	}
+    public ProposalDevelopmentBudgetExt getLastSyncedBudget() {
+        return lastSyncedBudget;
+    }
 
-	public void setLastSyncedBudget(ProposalDevelopmentBudgetExt lastSyncedBudget) {
-		this.lastSyncedBudget = lastSyncedBudget;
-	}
+    public void setLastSyncedBudget(ProposalDevelopmentBudgetExt lastSyncedBudget) {
+        this.lastSyncedBudget = lastSyncedBudget;
+    }
 
     public ProposalState getHierarchyAwareProposalStatus() {
         if (isChild()) {
@@ -2238,4 +2381,35 @@ public class DevelopmentProposal extends KcPersistableBusinessObjectBase impleme
     public void setApproverId(String approverId) {
         this.approverId = approverId;
     }
+
+    /*
+     * Tufts RAS-:854: Return true if any previous narratives status is incomplete
+     */
+    public boolean isPrevNarrativeAttachmentsStatusInComplete() {
+        boolean prevNarrativeAttachmentStatusInComplete = false;
+        if (!getNarratives().isEmpty()) {
+            for (Narrative aNarrative : getNarratives()) {
+                if (aNarrative.getPreviousNarrativeStatus() != null
+                        && aNarrative.getPreviousNarrativeStatus().equals(ATTACHMENTS_INCOMPLETE_CODE)) {
+                    prevNarrativeAttachmentStatusInComplete = true;
+                    break;
+                }
+            }
+        }
+        return prevNarrativeAttachmentStatusInComplete;
+    }
+     public boolean isPrevInstituteAttachmentsStatusInComplete() {
+            boolean instituteStatusChange = false;
+            if (!getInstituteAttachments().isEmpty())
+            {
+                for (Narrative instNarrative : getInstituteAttachments()) {
+                    if (instNarrative.getPreviousNarrativeStatus()!=null
+                            && instNarrative.getPreviousNarrativeStatus().equals(ATTACHMENTS_INCOMPLETE_CODE)) {
+                        instituteStatusChange = true;
+                        break;
+                    }
+                }
+            }
+            return instituteStatusChange;
+        }
 }

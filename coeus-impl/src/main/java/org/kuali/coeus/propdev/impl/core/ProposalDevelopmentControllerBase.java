@@ -19,6 +19,7 @@ import org.kuali.coeus.common.framework.keyword.ScienceKeyword;
 import org.kuali.coeus.common.framework.person.PropAwardPersonRole;
 import org.kuali.coeus.common.notification.impl.bo.KcNotification;
 import org.kuali.coeus.common.notification.impl.bo.NotificationTypeRecipient;
+import org.kuali.coeus.common.notification.impl.rule.event.SendNotificationEvent;
 import org.kuali.coeus.common.notification.impl.service.KcNotificationService;
 import org.kuali.coeus.common.questionnaire.framework.answer.Answer;
 import org.kuali.coeus.common.questionnaire.framework.answer.AnswerHeader;
@@ -99,6 +100,7 @@ public abstract class ProposalDevelopmentControllerBase {
     public static final String DEVELOPMENT_PROPOSAL_NUMBER = "developmentProposal.proposalNumber";
     public static final String COI_DISCLOSURE_REQUIRED_ACTION_TYPE_CODE = "109";
     public static final String COI_DISCLOSURE_REQUIRED_NOTIFICATION = "COI disclosure required notification";
+    private static final String ATTACHMENTS_COMPLETE = "Complete";
     @Autowired
     @Qualifier("proposalDevelopmentNotificationRenderer")
     protected ProposalDevelopmentNotificationRenderer renderer;
@@ -150,7 +152,7 @@ public abstract class ProposalDevelopmentControllerBase {
     @Autowired
     @Qualifier("businessObjectService")
     private BusinessObjectService businessObjectService;
-    
+
     @Autowired
     @Qualifier("globalVariableService")
     private GlobalVariableService globalVariableService;
@@ -186,7 +188,7 @@ public abstract class ProposalDevelopmentControllerBase {
     @Autowired
     @Qualifier("propDevProjectRetrievalService")
     private ProjectRetrievalService propDevProjectRetrievalService;
-    
+
     @Autowired
     @Qualifier("proposalPersonCoiIntegrationService")
     ProposalPersonCoiIntegrationService proposalPersonCoiIntegrationService;
@@ -226,12 +228,12 @@ public abstract class ProposalDevelopmentControllerBase {
     protected DocumentFormBase createInitialForm(HttpServletRequest request) {
         return new ProposalDevelopmentDocumentForm();
     }
-    
+
     @ModelAttribute(value = "KualiForm")
     public UifFormBase initForm(HttpServletRequest request, HttpServletResponse response) {
         return  getKcCommonControllerService().initForm(this.createInitialForm(request), request, response);
     }
-     
+
     /**
      * Create the original set of Proposal Users for a new Proposal Development Document.
      * The creator the proposal is assigned to the AGGREGATOR role.
@@ -266,9 +268,9 @@ public abstract class ProposalDevelopmentControllerBase {
 
      public ModelAndView save(ProposalDevelopmentDocumentForm form, BindingResult result,
              HttpServletRequest request, HttpServletResponse response) {
-    	 return save(form);
+         return save(form);
      }
-     
+
      public ModelAndView save(ProposalDevelopmentDocumentForm form) {
          ProposalDevelopmentDocument proposalDevelopmentDocument = (ProposalDevelopmentDocument) form.getDocument();
 
@@ -297,6 +299,19 @@ public abstract class ProposalDevelopmentControllerBase {
          }
 
          if (StringUtils.equalsIgnoreCase(form.getPageId(), ProposalDevelopmentDataValidationConstants.ATTACHMENT_PAGE_ID)) {
+            if(form.getMethodToCall().equalsIgnoreCase("save"))
+            {
+                if((form.getDevelopmentProposal().isPrevNarrativeAttachmentsStatusInComplete()||
+                        form.getDevelopmentProposal().isPrevInstituteAttachmentsStatusInComplete()) && form.getDevelopmentProposal().getAttachmentsStatus().equals(ATTACHMENTS_COMPLETE)
+                        && form.getDevelopmentProposal().getProposalStateTypeCode().equals("2")){
+                    sendAttachmentCompleteNotifications(form);
+                }
+
+                if(form.getDevelopmentProposal().isOverallAttachmentsStatusIncomplete()
+                        && form.getDevelopmentProposal().getProposalStateTypeCode().equals("2")){
+                    sendAttachmentIncompleteNotifications(form);
+                }
+            }
              ((ProposalDevelopmentViewHelperServiceImpl)form.getViewHelperService()).populateAttachmentReferences(form.getDevelopmentProposal());
          }
 
@@ -353,7 +368,7 @@ public abstract class ProposalDevelopmentControllerBase {
          }
          final ModelAndView view;
          if (StringUtils.isNotBlank(form.getActionParamaterValue(UifParameters.NAVIGATE_TO_PAGE_ID)) && getGlobalVariableService().getMessageMap().hasNoErrors()) {
-        	 form.setDirtyForm(false);
+             form.setDirtyForm(false);
              view = getModelAndViewService().getModelAndView(form, form.getActionParamaterValue(UifParameters.NAVIGATE_TO_PAGE_ID));
          } else {
              view = getModelAndViewService().getModelAndView(form);
@@ -477,7 +492,7 @@ public abstract class ProposalDevelopmentControllerBase {
          String pageId = form.getActionParamaterValue(UifParameters.NAVIGATE_TO_PAGE_ID);
          final ModelAndView view;
          if (StringUtils.isNotBlank(pageId) && getGlobalVariableService().getMessageMap().hasNoErrors()) {
-        	 form.setDirtyForm(false);
+             form.setDirtyForm(false);
              view = getModelAndViewService().getModelAndView(form, pageId);
          } else {
              view = getModelAndViewService().getModelAndView(form);
@@ -496,7 +511,7 @@ public abstract class ProposalDevelopmentControllerBase {
 
          return view;
      }
-     
+
      protected void performCustomSave(DocumentBase document, Class<? extends DocumentEventBase> eventClazz) {
          try {
              getDocumentService().saveDocument(document, eventClazz);
@@ -513,7 +528,7 @@ public abstract class ProposalDevelopmentControllerBase {
                              .getDocumentNumber(), e);
          }
      }
-     
+
      protected ModelAndView navigate(ProposalDevelopmentDocumentForm form, BindingResult result, HttpServletRequest request, HttpServletResponse response)  {
          if (form.getDevelopmentProposal().getS2sOpportunity() != null && !getProposalDevelopmentService().isGrantsGovEnabledForProposal(form.getDevelopmentProposal())) {
              ((ProposalDevelopmentViewHelperServiceImpl)form.getViewHelperService()).clearOpportunity(form.getDevelopmentProposal());
@@ -569,7 +584,7 @@ public abstract class ProposalDevelopmentControllerBase {
         form.getEditableCollectionLines().get(selectedCollectionPath).clear();
         form.getEditableCollectionLines().get(selectedCollectionPath).addAll(indexes);
     }
-    
+
     protected KcAuthorizationService getKraAuthorizationService() {
         return kraAuthorizationService;
     }
@@ -593,7 +608,7 @@ public abstract class ProposalDevelopmentControllerBase {
     public void setTransactionalDocumentControllerService(TransactionalDocumentControllerService transactionalDocumentControllerService) {
         this.transactionalDocumentControllerService = transactionalDocumentControllerService;
     }
-    
+
     protected DocumentService getDocumentService() {
         return documentService;
     }
@@ -610,22 +625,22 @@ public abstract class ProposalDevelopmentControllerBase {
         this.legacyDataAdapter = legacyDataAdapter;
     }
 
-	protected ProposalRoleTemplateService getProposalRoleTemplateService() {
-		return proposalRoleTemplateService;
-	}
+    protected ProposalRoleTemplateService getProposalRoleTemplateService() {
+        return proposalRoleTemplateService;
+    }
 
-	public void setProposalRoleTemplateService(
-			ProposalRoleTemplateService proposalRoleTemplateService) {
-		this.proposalRoleTemplateService = proposalRoleTemplateService;
-	}    
+    public void setProposalRoleTemplateService(
+            ProposalRoleTemplateService proposalRoleTemplateService) {
+        this.proposalRoleTemplateService = proposalRoleTemplateService;
+    }
 
-	protected DataObjectService getDataObjectService() {
-		return dataObjectService;
-	}
+    protected DataObjectService getDataObjectService() {
+        return dataObjectService;
+    }
 
-	public void setDataObjectService(DataObjectService dataObjectService) {
-		this.dataObjectService = dataObjectService;
-	}
+    public void setDataObjectService(DataObjectService dataObjectService) {
+        this.dataObjectService = dataObjectService;
+    }
 
     public BusinessObjectService getBusinessObjectService() {
         return businessObjectService;
@@ -668,7 +683,7 @@ public abstract class ProposalDevelopmentControllerBase {
 
                             if (getParameterService().getParameterValueAsBoolean(Constants.KC_GENERIC_PARAMETER_NAMESPACE,Constants.KC_ALL_PARAMETER_DETAIL_TYPE_CODE, Constants.PROP_PERSON_COI_STATUS_FLAG) &&
                                     !getProposalPersonCoiIntegrationService().getProposalPersonCoiStatus(person).equals(CoiConstants.DISCLOSURE_NOT_REQUIRED)) {
-                            	sendCoiDisclosureRequiredNotification(developmentProposal,person);
+                                sendCoiDisclosureRequiredNotification(developmentProposal,person);
                             }
                         } else if (wasComplete && !isComplete) {
                             keyPersonnelService.saveCertDetails(person, null, null);
@@ -741,23 +756,23 @@ public abstract class ProposalDevelopmentControllerBase {
     }
 
     protected void sendCoiDisclosureRequiredNotification(DevelopmentProposal developmentProposal,ProposalPerson person) {
-    	ProposalDevelopmentNotificationContext context = new ProposalDevelopmentNotificationContext(developmentProposal, COI_DISCLOSURE_REQUIRED_ACTION_TYPE_CODE, COI_DISCLOSURE_REQUIRED_NOTIFICATION);
+        ProposalDevelopmentNotificationContext context = new ProposalDevelopmentNotificationContext(developmentProposal, COI_DISCLOSURE_REQUIRED_ACTION_TYPE_CODE, COI_DISCLOSURE_REQUIRED_NOTIFICATION);
         ((ProposalDevelopmentNotificationRenderer) context.getRenderer()).setDevelopmentProposal(developmentProposal);
-    	KcNotification notification = getKcNotificationService().createNotificationObject(context);
+        KcNotification notification = getKcNotificationService().createNotificationObject(context);
         if (notification.getMessage() != null) {
            getKcNotificationService().sendNotification(context,notification,createRecipientFromPerson(person));
         }
     }
-    
+
     protected List<NotificationTypeRecipient> createRecipientFromPerson(ProposalPerson person) {
-    	List<NotificationTypeRecipient> notificationRecipients = new ArrayList<>();
+        List<NotificationTypeRecipient> notificationRecipients = new ArrayList<>();
         NotificationTypeRecipient recipient = new NotificationTypeRecipient();
         recipient.setPersonId(person.getPersonId());
         recipient.setFullName(person.getFullName());
         notificationRecipients.add(recipient);
         return notificationRecipients;
     }
-    
+
     private void saveUpdateQuestionnaireAnswerHeaders(ProposalDevelopmentQuestionnaireHelper questionnaireHelper, String pageId) {
         boolean requiresUpdate = false;
         for (AnswerHeader answerHeader : questionnaireHelper.getAnswerHeaders()) {
@@ -903,7 +918,7 @@ public abstract class ProposalDevelopmentControllerBase {
                 if (result.length() > 0) {
                     return result.substring(0, result.length() - 1);
                 } else {
-                	return "";
+                    return "";
                 }
             }
             return null;
@@ -914,18 +929,18 @@ public abstract class ProposalDevelopmentControllerBase {
      * Editor to convert (to and from) a String list of exemption type codes to ProposalSpecialReviewExemption objects
      */
     protected class PropSpecialReviewExemptionTypeEditor extends CustomCollectionEditor {
- 		public PropSpecialReviewExemptionTypeEditor() {
- 			super(List.class, true);
- 		}
+        public PropSpecialReviewExemptionTypeEditor() {
+            super(List.class, true);
+        }
 
- 		@Override
+        @Override
         protected Object convertElement(Object element) {
- 			if (element instanceof String) {
- 				return new ProposalSpecialReviewExemption(null, getExemptionType(element));
- 			}
+            if (element instanceof String) {
+                return new ProposalSpecialReviewExemption(null, getExemptionType(element));
+            }
 
             return element;
- 		}
+        }
 
         @Override
         public String getAsText() {
@@ -944,10 +959,10 @@ public abstract class ProposalDevelopmentControllerBase {
             }
             return null;
         }
- 	}
+    }
 
     protected ExemptionType getExemptionType(Object element) {
- 	   return getDataObjectService().findUnique(ExemptionType.class, QueryByCriteria.Builder.forAttribute("code", element).build());
+       return getDataObjectService().findUnique(ExemptionType.class, QueryByCriteria.Builder.forAttribute("code", element).build());
     }
 
     public AuditHelper.ValidationState getValidationState(ProposalDevelopmentDocumentForm form) {
@@ -1003,6 +1018,35 @@ public abstract class ProposalDevelopmentControllerBase {
         }
     }
 
+    public void sendAttachmentCompleteNotifications(ProposalDevelopmentDocumentForm form) {
+        ProposalDevelopmentNotificationContext context =
+                new ProposalDevelopmentNotificationContext(form.getDevelopmentProposal(), "203", "Attachment Complete Notification");
+        ((ProposalDevelopmentNotificationRenderer) context.getRenderer()).setDevelopmentProposal(form.getDevelopmentProposal());
+        KcNotification notification = getKcNotificationService().createNotificationObject(context);
+        ProposalDevelopmentDocument document = form.getProposalDevelopmentDocument();
+        form.getNotificationHelper().setNotificationContext(context);
+        form.getNotificationHelper().initializeDefaultValues(context);
+        List<NotificationTypeRecipient> notificationRecipients = form.getNotificationHelper().getNotificationRecipients();
+        if (getKualiRuleService().applyRules(new SendNotificationEvent(document, notification, notificationRecipients))) {
+            form.getNotificationHelper().sendNotification();
+        }
+    }
+
+    public void sendAttachmentIncompleteNotifications (
+            ProposalDevelopmentDocumentForm form) {
+        ProposalDevelopmentNotificationContext context =
+                new ProposalDevelopmentNotificationContext(form.getDevelopmentProposal(), "304", "Notification sent when status of a narrative attachment changes from Complete to Incomplete.");
+        ((ProposalDevelopmentNotificationRenderer) context.getRenderer()).setDevelopmentProposal(form.getDevelopmentProposal());
+        KcNotification notification = getKcNotificationService().createNotificationObject(context);
+        ProposalDevelopmentDocument document = form.getProposalDevelopmentDocument();
+        form.getNotificationHelper().setNotificationContext(context);
+        form.getNotificationHelper().initializeDefaultValues(context);
+        List<NotificationTypeRecipient> notificationRecipients = form.getNotificationHelper().getNotificationRecipients();
+        if (getKualiRuleService().applyRules(new SendNotificationEvent(document, notification, notificationRecipients))) {
+            form.getNotificationHelper().sendNotification();
+        }
+    }
+
     protected ScienceKeyword getScienceKeyword(Object element) {
         return getDataObjectService().findUnique(ScienceKeyword.class, QueryByCriteria.Builder.forAttribute("code", element).build());
     }
@@ -1031,13 +1075,13 @@ public abstract class ProposalDevelopmentControllerBase {
         this.navigationControllerService = navigationControllerService;
     }
 
-	public GlobalVariableService getGlobalVariableService() {
-		return globalVariableService;
-	}
+    public GlobalVariableService getGlobalVariableService() {
+        return globalVariableService;
+    }
 
-	public void setGlobalVariableService(GlobalVariableService globalVariableService) {
-		this.globalVariableService = globalVariableService;
-	}
+    public void setGlobalVariableService(GlobalVariableService globalVariableService) {
+        this.globalVariableService = globalVariableService;
+    }
 
     protected ProposalDevelopmentPermissionsService getProposalDevelopmentPermissionsService() {
         return proposalDevelopmentPermissionsService;
@@ -1110,15 +1154,15 @@ public abstract class ProposalDevelopmentControllerBase {
     public void setPropDevProjectRetrievalService(ProjectRetrievalService propDevProjectRetrievalService) {
         this.propDevProjectRetrievalService = propDevProjectRetrievalService;
     }
-    
-    public ProposalPersonCoiIntegrationService getProposalPersonCoiIntegrationService() {
-		return proposalPersonCoiIntegrationService;
-	}
 
-	public void setProposalPersonCoiIntegrationService(
-			ProposalPersonCoiIntegrationService proposalPersonCoiIntegrationService) {
-		this.proposalPersonCoiIntegrationService = proposalPersonCoiIntegrationService;
-	}
+    public ProposalPersonCoiIntegrationService getProposalPersonCoiIntegrationService() {
+        return proposalPersonCoiIntegrationService;
+    }
+
+    public void setProposalPersonCoiIntegrationService(
+            ProposalPersonCoiIntegrationService proposalPersonCoiIntegrationService) {
+        this.proposalPersonCoiIntegrationService = proposalPersonCoiIntegrationService;
+    }
     public ProposalTypeService getProposalTypeService() {
         return proposalTypeService;
     }

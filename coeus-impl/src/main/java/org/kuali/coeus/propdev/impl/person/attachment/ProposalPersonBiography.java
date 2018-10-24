@@ -15,6 +15,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.kuali.coeus.common.framework.attachment.KcAttachmentDataDao;
 import org.kuali.coeus.common.framework.attachment.KcAttachmentService;
 import org.kuali.coeus.propdev.api.person.attachment.ProposalPersonBiographyContract;
+import org.kuali.coeus.propdev.impl.attachment.NarrativeStatus;
 import org.kuali.coeus.propdev.impl.attachment.ProposalDevelopmentAttachment;
 import org.kuali.coeus.propdev.impl.core.DevelopmentProposal;
 import org.kuali.coeus.sys.api.model.KcFile;
@@ -32,7 +33,7 @@ import java.sql.Timestamp;
 import java.util.Date;
 
 /**
- * 
+ *
  * This is bo for eps_prop_person_bio.
  */
 @Entity
@@ -71,6 +72,16 @@ public class ProposalPersonBiography extends KcPersistableBusinessObjectBase imp
     @Column(name = "CONTENT_TYPE")
     private String type;
 
+    // Tufts customization -- add status field
+    @Column(name = "STATUS_CODE")
+    private String statusCode;
+
+    // Tufts customization -- use the same status values as narrative attachments
+    @ManyToOne(cascade = { CascadeType.REFRESH })
+    @JoinColumn(name = "STATUS_CODE", referencedColumnName = "NARRATIVE_STATUS_CODE", insertable = false, updatable = false)
+    private NarrativeStatus narrativeStatus;
+
+
     @ManyToOne(cascade = { CascadeType.REFRESH })
     @JoinColumn(name = "DOCUMENT_TYPE_CODE", referencedColumnName = "DOCUMENT_TYPE_CODE", insertable = false, updatable = false)
     private PropPerDocType propPerDocType;
@@ -98,7 +109,7 @@ public class ProposalPersonBiography extends KcPersistableBusinessObjectBase imp
 
     @Transient
     private String url;
-    
+
     @Transient
     private transient DateTimeService dateTimeService;
 
@@ -447,6 +458,27 @@ public class ProposalPersonBiography extends KcPersistableBusinessObjectBase imp
 
     public void setKcAttachmentService(KcAttachmentService kcAttachmentService) {
         this.kcAttachmentService = kcAttachmentService;
+    }
+
+    // Tufts status code customization
+    public String getStatusCode()
+    {
+        return statusCode;
+    }
+
+    public void setStatusCode(String statusCode)
+    {
+        this.statusCode = statusCode;
+    }
+
+    public NarrativeStatus getNarrativeStatus()
+    {
+        return narrativeStatus;
+    }
+
+    public void setNarrativeStatus(NarrativeStatus narrativeStatus)
+    {
+        this.narrativeStatus = narrativeStatus;
     }
 
     @PostRemove

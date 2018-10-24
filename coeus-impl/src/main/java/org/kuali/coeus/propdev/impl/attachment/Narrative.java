@@ -122,6 +122,9 @@ public class Narrative extends KcPersistableBusinessObjectBase implements Hierar
     @Transient
     private transient KcAttachmentService kcAttachmentService;
 
+    @Transient
+    private transient String previousNarrativeStatus;
+
     @Override
     public void init(MultipartFile multipartFile) throws Exception {
         this.name = multipartFile.getOriginalFilename();
@@ -262,11 +265,22 @@ public class Narrative extends KcPersistableBusinessObjectBase implements Hierar
     }
 
     public String getModuleStatusCode() {
+        if(this.previousNarrativeStatus==null){
+            this.previousNarrativeStatus=moduleStatusCode;
+        }
         return moduleStatusCode;
     }
 
     public void setModuleStatusCode(String moduleStatusCode) {
         this.moduleStatusCode = moduleStatusCode;
+    }
+
+    public String getPreviousNarrativeStatus() {
+        return previousNarrativeStatus;
+    }
+
+    public void setPreviousNarrativeStatus(String previousNarrativeStatus) {
+        this.previousNarrativeStatus = previousNarrativeStatus;
     }
 
     @Override
@@ -372,7 +386,7 @@ public class Narrative extends KcPersistableBusinessObjectBase implements Hierar
     }
 
     /**
-     * 
+     *
      * This method set the institutional attachment type.  Since instituteattachmenttypecode is set as 'required' in DD.
      * So, it is set to narrativetypecode, and hence to return narrative type code.
      * @param institutionalAttachmentTypeCode
@@ -614,32 +628,32 @@ public class Narrative extends KcPersistableBusinessObjectBase implements Hierar
 
         @Override
         public int compareTo(NarrativeId other) {
-        	return new CompareToBuilder().append(this.developmentProposal, other.developmentProposal).append(this.moduleNumber, other.moduleNumber).toComparison();
+            return new CompareToBuilder().append(this.developmentProposal, other.developmentProposal).append(this.moduleNumber, other.moduleNumber).toComparison();
         }
 
-		public String getDevelopmentProposal() {
-			return developmentProposal;
-		}
+        public String getDevelopmentProposal() {
+            return developmentProposal;
+        }
 
-		public void setDevelopmentProposal(String developmentProposal) {
-			this.developmentProposal = developmentProposal;
-		}
+        public void setDevelopmentProposal(String developmentProposal) {
+            this.developmentProposal = developmentProposal;
+        }
     }
 
 
 
-	public DevelopmentProposal getDevelopmentProposal() {
-		return developmentProposal;
-	}
+    public DevelopmentProposal getDevelopmentProposal() {
+        return developmentProposal;
+    }
 
-	public void setDevelopmentProposal(DevelopmentProposal developmentProposal) {
-		this.developmentProposal = developmentProposal;
-	}
+    public void setDevelopmentProposal(DevelopmentProposal developmentProposal) {
+        this.developmentProposal = developmentProposal;
+    }
 
-	@Override
-	public String getProposalNumber() {
-		return getDevelopmentProposal().getProposalNumber();
-	}
+    @Override
+    public String getProposalNumber() {
+        return getDevelopmentProposal().getProposalNumber();
+    }
 
     public DateTimeService getDateTimeService() {
         if (dateTimeService == null)
